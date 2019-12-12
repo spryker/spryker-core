@@ -22,10 +22,10 @@ use Twig\Environment;
  */
 class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
-    protected const SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS = 'SpyCmsBlockGlossaryKeyMappings';
-    protected const PLACEHOLDER = 'placeholder';
-    protected const GLOSSARY_KEY = 'GlossaryKey';
-    protected const KEY = 'key';
+    protected const STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS = 'SpyCmsBlockGlossaryKeyMappings';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_PLACEHOLDER = 'placeholder';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_GLOSSARY_KEY = 'GlossaryKey';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_KEY = 'key';
 
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
@@ -67,13 +67,13 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
         $rendered = '';
 
         foreach ($blocks as $block) {
-            $blockTransfer = $this->mapCmsBlockToTransfer($block);
+            $cmsBlockTransfer = $this->mapCmsBlockToTransfer($block);
 
-            $isActive = $this->validateBlock($blockTransfer) && $this->validateDates($blockTransfer);
+            $isActive = $this->validateBlock($cmsBlockTransfer) && $this->validateDates($cmsBlockTransfer);
 
             if ($isActive) {
                 $rendered .= $twig->render($templatePath, [
-                    'placeholders' => $this->getPlaceholders($blockTransfer),
+                    'placeholders' => $this->getPlaceholders($cmsBlockTransfer),
                     'cmsContent' => $block,
                 ]);
             }
@@ -174,10 +174,10 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
         $cmsBlockTransfer = (new CmsBlockTransfer())->fromArray($cmsBlock, true);
         $cmsBlockGlossaryPlaceholderTransfers = new ArrayObject();
 
-        foreach ($cmsBlock[static::SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS] as $mapping) {
+        foreach ($cmsBlock[static::STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS] as $mapping) {
             $cmsBlockGlossaryPlaceholderTransfer = (new CmsBlockGlossaryPlaceholderTransfer())
-                ->setPlaceholder($mapping[static::PLACEHOLDER])
-                ->setTranslationKey($mapping[static::GLOSSARY_KEY][static::KEY]);
+                ->setPlaceholder($mapping[static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_PLACEHOLDER])
+                ->setTranslationKey($mapping[static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_GLOSSARY_KEY][static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_KEY]);
             $cmsBlockGlossaryPlaceholderTransfers->append($cmsBlockGlossaryPlaceholderTransfer);
         }
 
