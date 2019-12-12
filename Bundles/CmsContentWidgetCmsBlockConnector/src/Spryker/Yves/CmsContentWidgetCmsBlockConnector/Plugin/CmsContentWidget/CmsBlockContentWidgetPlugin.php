@@ -63,7 +63,6 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     public function contentWidgetFunction(Environment $twig, array $context, array $blockNames, $templateIdentifier = null): string
     {
         $blocks = $this->getBlockDataByNames($blockNames);
-        $templatePath = $this->resolveTemplatePath($templateIdentifier);
         $rendered = '';
 
         foreach ($blocks as $block) {
@@ -72,8 +71,12 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
             $isActive = $this->validateBlock($cmsBlockTransfer) && $this->validateDates($cmsBlockTransfer);
 
             if ($isActive) {
+                $templatePath = !$templateIdentifier && $cmsBlockTransfer->getCmsBlockTemplate() ?
+                    $cmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath() :
+                    $this->resolveTemplatePath($templateIdentifier);
+
                 $rendered .= $twig->render($templatePath, [
-                    'placeholders' => $this->getPlaceholders($cmsBlockTransfer),
+                    'placeholders' => $this->getPlaceholders($cmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings()),
                     'cmsContent' => $block,
                 ]);
             }
