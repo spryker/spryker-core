@@ -1,6 +1,11 @@
 <?php
 
-namespace Unit\Spryker\Zed\Category\Persistence;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\Category\Persistence;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
@@ -11,8 +16,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Category
  * @group Persistence

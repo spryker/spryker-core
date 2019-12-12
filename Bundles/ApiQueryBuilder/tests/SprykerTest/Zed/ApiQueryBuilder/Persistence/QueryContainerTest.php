@@ -1,6 +1,11 @@
 <?php
 
-namespace Functional\Spryker\Zed\ApiQueryBuilder\Persistence;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\ApiQueryBuilder\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiFilterTransfer;
@@ -18,8 +23,7 @@ use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
 /**
  * Auto-generated group annotations
  *
- * @group Functional
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group ApiQueryBuilder
  * @group Persistence

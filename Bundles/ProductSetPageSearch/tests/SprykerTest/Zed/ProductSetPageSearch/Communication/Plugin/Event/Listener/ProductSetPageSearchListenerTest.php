@@ -17,7 +17,6 @@ use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
-use Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductAbstractProductSetPageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetDataPageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSearchListener;
@@ -26,11 +25,8 @@ use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\Product
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchUnpublishListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageUrlSearchListener;
-use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToSearchBridge;
 use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainer;
 use Spryker\Zed\Url\Dependency\UrlEvents;
-use SprykerTest\Zed\ProductSetPageSearch\Business\ProductSetPageSearchBusinessFactoryMock;
-use SprykerTest\Zed\ProductSetPageSearch\ProductSetPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
@@ -74,6 +70,7 @@ class ProductSetPageSearchListenerTest extends Unit
         }
 
         $this->productSetFacadeInterface = $this->tester->getLocator()->productSet()->facade();
+        $this->tester->mockConfigMethod('isSendingToQueue', false);
     }
 
     /**
@@ -86,7 +83,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Act
         $productSetPageSearchListener = new ProductSetPageSearchListener();
-        $productSetPageSearchListener->setFacade($this->getProductSetPageSearchFacade());
+        $productSetPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -109,7 +106,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Act
         $productSetDataPageSearchListener = new ProductSetDataPageSearchListener();
-        $productSetDataPageSearchListener->setFacade($this->getProductSetPageSearchFacade());
+        $productSetDataPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -135,13 +132,13 @@ class ProductSetPageSearchListenerTest extends Unit
             $this->tester->generateProductSetTransfer(),
             $this->tester->generateProductSetTransfer(),
         ];
-        $this->tester->publishProductSetTransfers($productSetTransfers, $this->getProductSetPageSearchFacade());
+        $this->tester->publishProductSetTransfers($productSetTransfers, $this->tester->getFacade());
         $productSetBeforeUnpublish = SpyProductSetPageSearchQuery::create()->count();
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
         $this->productSetFacadeInterface->deleteProductSet($productSetTransfers[0]);
 
         $productSetSearchUnpublishListener = new ProductSetPageSearchUnpublishListener();
-        $productSetSearchUnpublishListener->setFacade($this->getProductSetPageSearchFacade());
+        $productSetSearchUnpublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($productSetDeletedId),
@@ -173,7 +170,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Act
         $productAbstractProductSetPageSearchListener = new ProductAbstractProductSetPageSearchListener();
-        $productAbstractProductSetPageSearchListener->setFacade($this->getProductSetPageSearchFacade());
+        $productAbstractProductSetPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -198,7 +195,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Act
         $productSetPageProductImageSetSearchListener = new ProductSetPageProductImageSetSearchListener();
-        $productSetPageProductImageSetSearchListener->setFacade($this->getProductSetPageSearchFacade());
+        $productSetPageProductImageSetSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -223,7 +220,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Act
         $productSetPageUrlSearchListener = new ProductSetPageUrlSearchListener();
-        $productSetPageUrlSearchListener->setFacade($this->getProductSetPageSearchFacade());
+        $productSetPageUrlSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -256,7 +253,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Act
         $productSetPageProductImageSearchListener = new ProductSetPageProductImageSearchListener();
-        $productSetPageProductImageSearchListener->setFacade($this->getProductSetPageSearchFacade());
+        $productSetPageProductImageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(209),
@@ -284,7 +281,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Act
         $productSetPageProductImageSetImageSearchListener = new ProductSetPageProductImageSetImageSearchListener();
-        $productSetPageProductImageSetImageSearchListener->setFacade($this->getProductSetPageSearchFacade());
+        $productSetPageProductImageSetImageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1021),
@@ -295,22 +292,6 @@ class ProductSetPageSearchListenerTest extends Unit
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertProductSetPageSearch();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade
-     */
-    protected function getProductSetPageSearchFacade(): ProductSetPageSearchFacade
-    {
-        $searchFacadeMock = $this->getMockBuilder(ProductSetPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
-        $searchFacadeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);
-        $factory = new ProductSetPageSearchBusinessFactoryMock($searchFacadeMock);
-        $factory->setConfig(new ProductSetPageSearchConfigMock());
-
-        $facade = new ProductSetPageSearchFacade();
-        $facade->setFactory($factory);
-
-        return $facade;
     }
 
     /**

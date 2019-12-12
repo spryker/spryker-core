@@ -7,23 +7,11 @@
 
 namespace Spryker\Client\Search\Dependency\Plugin;
 
-interface FacetSearchResultValueTransformerPluginInterface
-{
-    /**
-     * @api
-     *
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    public function transformForDisplay($value);
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface as SearchExtensionFacetSearchResultValueTransformerPluginInterface;
 
-    /**
-     * @api
-     *
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    public function transformFromDisplay($value);
+/**
+ * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface` instead.
+ */
+interface FacetSearchResultValueTransformerPluginInterface extends SearchExtensionFacetSearchResultValueTransformerPluginInterface
+{
 }

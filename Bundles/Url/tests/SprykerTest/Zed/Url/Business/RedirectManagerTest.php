@@ -1,6 +1,11 @@
 <?php
 
-namespace Unit\Spryker\Zed\Url\Business;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\Url\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RedirectTransfer;
@@ -16,8 +21,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainer;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Url
  * @group Business
