@@ -68,6 +68,7 @@
     <transfer name="PersistentCartChange">
         <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
         <property name="idQuote" type="int"/>
+        <property name="quote" type="Quote"/>
         <property name="isActiveCartChanged" type="bool"/>
     </transfer>
 
