@@ -55,7 +55,7 @@ class Operation implements OperationInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins = [];
 
@@ -99,7 +99,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[] $preCheckPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins

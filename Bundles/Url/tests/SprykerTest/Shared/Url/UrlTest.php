@@ -1,6 +1,11 @@
 <?php
 
-namespace Functional\Spryker\Shared\Url\Url;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Shared\Url\Url;
 
 use Codeception\Test\Unit;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -8,8 +13,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 /**
  * Auto-generated group annotations
  *
- * @group Functional
- * @group Spryker
+ * @group SprykerTest
  * @group Shared
  * @group Url
  * @group Url

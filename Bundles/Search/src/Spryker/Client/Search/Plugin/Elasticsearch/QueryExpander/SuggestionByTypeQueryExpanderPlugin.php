@@ -14,6 +14,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SuggestionByTypeQueryExpanderPlugin` instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class SuggestionByTypeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface

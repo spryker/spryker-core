@@ -1,6 +1,11 @@
 <?php
 
-namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Codeception\Test\Unit;
 use Silex\Application;
@@ -10,8 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Application
  * @group Communication

@@ -9,7 +9,8 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -21,20 +22,28 @@ abstract class AbstractCartRestResponseBuilder implements BaseCartRestResponseBu
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface
      */
-    protected $cartsResourceMapper;
+    protected $cartMapper;
+
+    /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface
+     */
+    protected $cartItemsMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface $cartItemsMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        CartsResourceMapperInterface $cartsResourceMapper
+        CartMapperInterface $cartMapper,
+        CartItemMapperInterface $cartItemsMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->cartsResourceMapper = $cartsResourceMapper;
+        $this->cartMapper = $cartMapper;
+        $this->cartItemsMapper = $cartItemsMapper;
     }
 
     /**
@@ -48,7 +57,7 @@ abstract class AbstractCartRestResponseBuilder implements BaseCartRestResponseBu
 
         foreach ($errors as $quoteErrorTransfer) {
             $restResponse->addError(
-                $this->cartsResourceMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                $this->cartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
                     $quoteErrorTransfer,
                     new RestErrorMessageTransfer()
                 )

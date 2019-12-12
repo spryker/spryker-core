@@ -1,6 +1,11 @@
 <?php
 
-namespace Functional\Spryker\Zed\Auth\Business;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\Auth\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
@@ -12,8 +17,7 @@ use Spryker\Zed\Auth\Business\AuthFacade;
 /**
  * Auto-generated group annotations
  *
- * @group Functional
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Auth
  * @group Business
