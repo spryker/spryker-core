@@ -18,7 +18,4 @@
     <transfer name="CartChange">
     </transfer>
 
-    <transfer name="PersistentCartChange">
-    </transfer>
-
 </transfers>
