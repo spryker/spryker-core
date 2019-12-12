@@ -33,6 +33,7 @@ interface PersistentCartFacadeInterface
      *  - Recalculates quote (-> Calculation).
      *  - Adds success message to messenger (-> Messenger).
      *  - Calls quote response extend plugins.
+     *  - Executes `CartOperationAddAfterPlugin` stack.
      *  - Returns updated quote.
      *
      * @api
@@ -56,8 +57,9 @@ interface PersistentCartFacadeInterface
      *  - Adds new item(s) to quote (requires, but not limited, a quantity > 0 for each new item).
      *  - Groups items in quote (-> ItemGrouper).
      *  - Recalculates quote (-> Calculation).
-     *  - Add successs message to messenger (-> Messenger).
+     *  - Add success message to messenger (-> Messenger).
      *  - Calls quote response extend plugins.
+     *  - Executes `CartOperationAddAfterPlugin` stack.
      *  - Returns updated quote.
      *
      * @api
