@@ -76,7 +76,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
                     $this->resolveTemplatePath($templateIdentifier);
 
                 $rendered .= $twig->render($templatePath, [
-                    'placeholders' => $this->getPlaceholders($cmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings()),
+                    'placeholders' => $this->getPlaceholders($cmsBlockTransfer),
                     'cmsContent' => $block,
                 ]);
             }
