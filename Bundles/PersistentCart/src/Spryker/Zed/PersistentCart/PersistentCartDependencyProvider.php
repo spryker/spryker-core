@@ -29,6 +29,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_RESPONSE_EXPANDER = 'PLUGINS_QUOTE_RESPONSE_EXPANDER';
     public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
+    public const PLUGINS_CART_OPERATION_ADD_AFTER = 'PLUGINS_CART_OPERATION_ADD_AFTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +48,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteResponseExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
         $container = $this->addCartAddItemStrategyPlugins($container);
+        $container = $this->addCartOperationAddAfterPlugins($container);
 
         return $container;
     }
@@ -177,6 +179,20 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartOperationAddAfterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_OPERATION_ADD_AFTER, function () {
+            return $this->getCartOperationAddAfterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
     protected function getQuoteItemFinderPlugin(): QuoteItemFinderPluginInterface
@@ -206,6 +222,14 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
     protected function getCartAddItemStrategyPlugins(Container $container): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartOperationAddAfterPluginInterface[]
+     */
+    protected function getCartOperationAddAfterPlugins(): array
     {
         return [];
     }
