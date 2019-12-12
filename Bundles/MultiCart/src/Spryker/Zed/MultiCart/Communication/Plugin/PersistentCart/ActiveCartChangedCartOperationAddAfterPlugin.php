@@ -21,12 +21,10 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartOperationAddAfterP
 class ActiveCartChangedCartOperationAddAfterPlugin extends AbstractPlugin implements CartOperationAddAfterPluginInterface
 {
     protected const GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
-    protected const GLOSSARY_KEY_MULTI_CART_ADD_ITEM_SUCCESS = 'multi_cart.cart.add_item.success';
 
     /**
      * {@inheritDoc}
      * - Adds success message in case active cart was changed.
-     * - Adds success messages that items were added to new active cart.
      *
      * @api
      *
@@ -43,34 +41,10 @@ class ActiveCartChangedCartOperationAddAfterPlugin extends AbstractPlugin implem
             return;
         }
 
-        $this->addSuccessMessage(
-            static::GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS,
-            ['%quote%' => $quoteResponseTransfer->getQuoteTransfer()->getName()]
-        );
-
-        foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            $this->addSuccessMessage(
-                static::GLOSSARY_KEY_MULTI_CART_ADD_ITEM_SUCCESS,
-                [
-                    '%quote%' => $quoteResponseTransfer->getQuoteTransfer()->getName(),
-                    '%item%' => $itemTransfer->getSku(),
-                ]
-            );
-        }
-    }
-
-    /**
-     * @param string $value
-     * @param string[] $params
-     *
-     * @return void
-     */
-    protected function addSuccessMessage(string $value, array $params = []): void
-    {
         $messageTransfer = (new MessageTransfer())
-            ->setValue($value)
-            ->setParameters($params);
+            ->setValue(static::GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS)
+            ->setParameters(['%quote%' => $quoteResponseTransfer->getQuoteTransfer()->getName()]);
 
-        $this->getFactory()->getMessengerFacade()->addSuccessMessage($messageTransfer);
+        $this->getFactory()->getMessengerFacade()->addInfoMessage($messageTransfer);
     }
 }
