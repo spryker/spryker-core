@@ -41,6 +41,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
             ->addOmsProductReservationUpdateListener($eventCollection)
             ->addOmsProductReservationDeleteListener($eventCollection)
             ->addProductOfferPublishListener($eventCollection)
+            ->addProductOfferStockPublishListener($eventCollection)
             ->addProductOfferStockCreateListener($eventCollection)
             ->addProductOfferStockUpdateListener($eventCollection)
             ->addProductOfferCreateListener($eventCollection)
@@ -81,6 +82,18 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
     protected function addOmsProductReservationUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_UPDATE, new OmsProductReservationStoragePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addProductOfferStockPublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH, new ProductOfferStockStoragePublishListener());
 
         return $this;
     }

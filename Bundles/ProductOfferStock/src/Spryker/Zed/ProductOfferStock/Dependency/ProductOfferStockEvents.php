@@ -24,4 +24,12 @@ interface ProductOfferStockEvents
      * @api
      */
     public const ENTITY_SPY_PRODUCT_OFFER_STOCK_UPDATE = 'Entity.spy_product_offer_stock.update';
+
+    /**
+     * Specification:
+     * - Represents product offer stock publish.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH = 'ProductOffer.spy_product_offer_stock.publish';
 }
