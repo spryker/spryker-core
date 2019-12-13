@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Zed\Oms\Dependency\OmsEvents;
+use Spryker\Zed\ProductOffer\Dependency\ProductOfferEvents;
 use Spryker\Zed\ProductOfferAvailability\Dependency\ProductOfferAvailabilityEvents;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\OmsProductReservationStoragePublishListener;
 
@@ -76,7 +78,7 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         ];
 
         // Act
-        $omsProductReservationStoragePublishListener->handleBulk($eventEntityTransfers, ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH);
+        $omsProductReservationStoragePublishListener->handleBulk($eventEntityTransfers, OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_CREATE);
 
         // Assert
         $productOfferAvailabilityStorageEntity = $this->tester->findProductOfferAvailabilityStorage(static::TEST_STORE_NAME, static::TEST_PRODUCT_OFFER_REFERENCE);

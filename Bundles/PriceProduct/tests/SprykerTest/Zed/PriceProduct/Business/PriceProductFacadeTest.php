@@ -931,7 +931,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductPriceReturnsTrueForSameSku(): void
+    public function testIsPriceProductMatchingItemReturnsTrueForSameSku(): void
     {
         // Arrange
         $sku = 'test-sku';
@@ -943,16 +943,16 @@ class PriceProductFacadeTest extends Unit
             ->setSku($sku);
 
         // Assert
-        $isProductPrice = $this->getPriceProductFacade()->isProductPrice($priceProductTransfer, $itemTransfer);
+        $isPriceProductMatchingItem = $this->getPriceProductFacade()->isPriceProductMatchingItem($priceProductTransfer, $itemTransfer);
 
         // Assert
-        $this->assertTrue($isProductPrice);
+        $this->assertTrue($isPriceProductMatchingItem);
     }
 
     /**
      * @return void
      */
-    public function testIsProductPriceReturnsFalseForDifferentSku(): void
+    public function testIsPriceProductMatchingItemReturnsFalseForDifferentSku(): void
     {
         // Arrange
         $priceProductTransfer = (new PriceProductTransfer())
@@ -962,9 +962,9 @@ class PriceProductFacadeTest extends Unit
             ->setSku('sku-2');
 
         // Assert
-        $isProductPrice = $this->getPriceProductFacade()->isProductPrice($priceProductTransfer, $itemTransfer);
+        $isPriceProductMatchingItem = $this->getPriceProductFacade()->isPriceProductMatchingItem($priceProductTransfer, $itemTransfer);
 
         // Assert
-        $this->assertTrue($isProductPrice);
+        $this->assertFalse($isPriceProductMatchingItem);
     }
 }
