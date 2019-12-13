@@ -32,34 +32,23 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
-     * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[] $restPaymentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
      */
     public function mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers(
-        RestCheckoutDataTransfer $restCheckoutDataTransfer,
-        array $restPaymentMethodsAttributesTransfers = []
+        RestCheckoutDataTransfer $restCheckoutDataTransfer
     ): array {
-        $paymentProviderTransfers = $restCheckoutDataTransfer->getPaymentProviders()->getPaymentProviders() ?? [];
+        $result = [];
 
-        $availablePaymentMethods = $restCheckoutDataTransfer->getAvailablePaymentMethods();
-        if (!$availablePaymentMethods) {
-            return $restPaymentMethodsAttributesTransfers;
-        }
-
-        $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($availablePaymentMethods);
-
-        foreach ($paymentProviderTransfers as $paymentProviderTransfer) {
-            foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
-                $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames($paymentProviderTransfer->getName(), $paymentMethodTransfer->getMethodName());
-                if (in_array($paymentSelection, $availablePaymentMethodsList)) {
-                    $restPaymentMethodsAttributesTransfers[$paymentMethodTransfer->getIdSalesPaymentMethodType()] =
-                        $this->createRestPaymentMethodAttributesTransfer($paymentProviderTransfer, $paymentMethodTransfer);
-                }
+        foreach ($restCheckoutDataTransfer->getAvailablePaymentMethods()->getMethods() as $paymentMethod) {
+            if (!$paymentMethod->getPaymentProvider()) {
+                continue;
             }
+            $restPaymentMethod = $this->createRestPaymentMethodAttributesTransfer($paymentMethod->getPaymentProvider(), $paymentMethod);
+            $result[$paymentMethod->getIdPaymentMethod()] = $restPaymentMethod;
         }
 
-        return $restPaymentMethodsAttributesTransfers;
+        return $result;
     }
 
     /**

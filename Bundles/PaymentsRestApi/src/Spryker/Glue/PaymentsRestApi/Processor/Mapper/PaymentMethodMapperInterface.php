@@ -13,12 +13,10 @@ interface PaymentMethodMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
-     * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[] $restPaymentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
      */
     public function mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers(
-        RestCheckoutDataTransfer $restCheckoutDataTransfer,
-        array $restPaymentMethodsAttributesTransfers = []
+        RestCheckoutDataTransfer $restCheckoutDataTransfer
     ): array;
 }
