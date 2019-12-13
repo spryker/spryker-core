@@ -11,7 +11,9 @@ interface ProductOfferAvailabilityStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Writes product offer availability data to storage by provided oms product reservation events.
+     * - Extracts oms product reservation ids from event transfers.
+     * - Gets availability for product offer oms product reservation ids.
+     * - Saves product offer availability to storage.
      *
      * @api
      *
@@ -23,7 +25,9 @@ interface ProductOfferAvailabilityStorageFacadeInterface
 
     /**
      * Specification:
-     * - Writes product offer availability data to storage by provided offer stock events.
+     * - Extracts product offer stock ids from event transfers.
+     * - Gets product offer availability product offer stock ids.
+     * - Saves product offer availability to storage.
      *
      * @api
      *
@@ -35,7 +39,9 @@ interface ProductOfferAvailabilityStorageFacadeInterface
 
     /**
      * Specification:
-     * - Writes product offer availability data to storage by provided offer events.
+     * - Extracts product offer ids from event transfers.
+     * - Gets product offer availability by product offer ids.
+     * - Saves product offer availability to storage.
      *
      * @api
      *

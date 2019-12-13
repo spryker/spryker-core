@@ -214,18 +214,18 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productConcreteAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     public function findOrCreateProductConcreteAvailabilityBySkuForStore(
         string $sku,
         StoreTransfer $storeTransfer,
-        ?ProductAvailabilityCriteriaTransfer $productConcreteAvailabilityTransfer = null
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): ?ProductConcreteAvailabilityTransfer {
         return $this->getFactory()
             ->createProductAvailabilityReader()
-            ->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer, $productConcreteAvailabilityTransfer);
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer, $productAvailabilityCriteriaTransfer);
     }
 
     /**

@@ -608,10 +608,10 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @return bool
      */
-    public function isProductPrice(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
+    public function isPriceProductMatchingItem(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
     {
         return $this->getFactory()
             ->createPriceProductMatcher()
-            ->isProductPrice($priceProductTransfer, $itemTransfer);
+            ->isPriceProductMatchingItem($priceProductTransfer, $itemTransfer);
     }
 }

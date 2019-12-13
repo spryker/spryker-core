@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\ProductOfferAvailabilityStorage\Communication\Plugin\AvailabilityStorage;
+
+use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityProviderStoragePluginInterface;
+use Spryker\Client\Kernel\AbstractPlugin;
+
+/**
+ * @method \Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageFactory getFactory()
+ * @method \Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageClientInterface getClient()
+ */
+class ProductOfferAvailabilityStorageProviderPlugin extends AbstractPlugin implements AvailabilityProviderStoragePluginInterface
+{
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(ProductViewTransfer $productViewTransfer): bool
+    {
+        return (bool)$productViewTransfer->getProductOfferReference();
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Returns true if product offer available by current store and provided ProductViewTransfer.productOfferReference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    public function isProductAvailable(ProductViewTransfer $productViewTransfer): bool
+    {
+        $storeTransfer = $this->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore();
+
+        $availabilityStorageTransfer = $this->getClient()
+            ->findAvailabilityByProductOfferReference($productViewTransfer->getProductOfferReference(), $storeTransfer->getName());
+
+        return $availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability()->isPositive() : false;
+    }
+}

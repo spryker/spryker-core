@@ -83,7 +83,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                 }
 
                 $productOfferStorageCollection->addProductOfferStorage(
-                    $this->findProductOfferByReference($concreteProductOffer)
+                    $this->findProductOfferStorageByReference($concreteProductOffer)
                 );
             }
         }
@@ -96,7 +96,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
      */
-    public function findProductOfferByReference(string $productOfferReference): ?ProductOfferStorageTransfer
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer
     {
         $merchantProductOfferKey = $this->generateKey($productOfferReference, MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME);
         $concreteProductOfferData = $this->storageClient->get($merchantProductOfferKey);

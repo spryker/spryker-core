@@ -52,5 +52,5 @@ interface MerchantProductOfferStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
      */
-    public function findProductOfferByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
 }

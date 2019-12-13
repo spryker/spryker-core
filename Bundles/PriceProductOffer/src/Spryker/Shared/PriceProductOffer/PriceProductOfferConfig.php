@@ -15,5 +15,5 @@ class PriceProductOfferConfig
      *
      * @api
      */
-    public const DIMENSION_TYPE = 'OFFER';
+    public const DIMENSION_TYPE_PRODUCT_OFFER = 'PRODUCT_OFFER';
 }

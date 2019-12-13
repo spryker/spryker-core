@@ -22,7 +22,7 @@ class ProductOfferAvailabilityStockProviderStrategyPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Checks if product offer availability requested, and strategy should be applied.
+     * - Returns true if ProductAvailabilityCriteriaTransfer contains product offer reference.
      *
      * @api
      *
@@ -59,12 +59,12 @@ class ProductOfferAvailabilityStockProviderStrategyPlugin extends AbstractPlugin
         StoreTransfer $storeTransfer,
         ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): ?ProductConcreteAvailabilityTransfer {
-        $productAvailabilityCriteriaTransfer
-            ->requireProductOffer()
+        $productAvailabilityCriteriaTransfer->requireProductOffer()
             ->getProductOffer()
-                ->requireProductOfferReference();
+            ->requireProductOfferReference();
 
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
+            ->setSku($sku)
             ->setStore($storeTransfer)
             ->setProductOfferReference($productAvailabilityCriteriaTransfer->getProductOffer()->getProductOfferReference());
 

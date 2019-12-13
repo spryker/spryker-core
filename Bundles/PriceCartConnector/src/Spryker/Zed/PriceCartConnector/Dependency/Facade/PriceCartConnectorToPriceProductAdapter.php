@@ -93,6 +93,17 @@ class PriceCartConnectorToPriceProductAdapter implements PriceCartToPriceProduct
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductMatchingItem(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
+    {
+        return $this->priceProductFacade->isPriceProductMatchingItem($priceProductTransfer, $itemTransfer);
+    }
+
+    /**
      * @deprecated Will be removed with the next major.
      *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
@@ -111,16 +122,5 @@ class PriceCartConnectorToPriceProductAdapter implements PriceCartToPriceProduct
         }
 
         return $priceProductTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    public function isProductPrice(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
-    {
-        return $this->priceProductFacade->isProductPrice($priceProductTransfer, $itemTransfer);
     }
 }

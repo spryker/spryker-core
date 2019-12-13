@@ -10,10 +10,12 @@ namespace Spryker\Zed\ProductOfferStockDataImport\Business\Step;
 use Orm\Zed\ProductOfferStock\Persistence\Base\SpyProductOfferStockQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductOfferStock\Dependency\ProductOfferStockEvents;
 use Spryker\Zed\ProductOfferStockDataImport\Business\DataSet\ProductOfferStockDataSetInterface;
 
-class ProductOfferStockWriterStep implements DataImportStepInterface
+class ProductOfferStockWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
         ProductOfferStockDataSetInterface::FK_STOCK,
@@ -38,6 +40,11 @@ class ProductOfferStockWriterStep implements DataImportStepInterface
         $productOfferStockEntity
             ->setQuantity($dataSet[ProductOfferStockDataSetInterface::QUANTITY])
             ->save();
+
+        $this->addPublishEvents(
+            ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH,
+            $productOfferStockEntity->getIdProductOfferStock()
+        );
     }
 
     /**

@@ -31,6 +31,6 @@ class PriceProductOfferPriceProductProviderPlugin extends AbstractPlugin impleme
     public function providePriceProductConcreteTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         return $this->getFacade()
-            ->getPriceProductConcreteTransfers($skus, $priceProductCriteriaTransfer);
+            ->getPriceProductOfferTransfers($skus);
     }
 }

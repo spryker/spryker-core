@@ -24,12 +24,18 @@ class ProductOfferCartChangeTransferNormalizerPlugin implements CartChangeTransf
      */
     public function isApplicable(CartChangeTransfer $cartChangeTransfer): bool
     {
-        return true;
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getProductOffer()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
      * {@inheritDoc}
-     * - Updates item identifier to product offer reference.
+     * - Sets itemTransfer.identifier same as product offer reference.
      *
      * @api
      *

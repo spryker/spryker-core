@@ -73,7 +73,6 @@
         <property name="sku" type="string"/>
         <property name="quote" type="Quote"/>
         <property name="quantity" type="int"/>
-        <property name="priceIdentifier" type="string"/>
         <property name="itemIdentifier" type="string"/>
     </transfer>
 

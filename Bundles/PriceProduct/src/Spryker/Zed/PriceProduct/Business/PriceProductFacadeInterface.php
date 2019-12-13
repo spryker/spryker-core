@@ -569,7 +569,7 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     * - Checks if price belongs to provided product.
+     * - Checks if price belongs to provided item.
      *
      * @api
      *
@@ -578,5 +578,5 @@ interface PriceProductFacadeInterface
      *
      * @return bool
      */
-    public function isProductPrice(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool;
+    public function isPriceProductMatchingItem(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool;
 }

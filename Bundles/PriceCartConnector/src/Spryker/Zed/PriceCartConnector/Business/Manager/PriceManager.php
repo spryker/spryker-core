@@ -117,7 +117,7 @@ class PriceManager implements PriceManagerInterface
     protected function getPriceProductTransferByItemTransfer(array $priceProductTransfers, ItemTransfer $itemTransfer): PriceProductTransfer
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            if ($this->priceProductFacade->isProductPrice($priceProductTransfer, $itemTransfer)) {
+            if ($this->priceProductFacade->isPriceProductMatchingItem($priceProductTransfer, $itemTransfer)) {
                 return $priceProductTransfer;
             }
         }

@@ -56,10 +56,10 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
      */
-    public function findProductOfferByReference(string $productOfferReference): ?ProductOfferStorageTransfer
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer
     {
         return $this->getFactory()
             ->createProductOfferStorageReader()
-            ->findProductOfferByReference($productOfferReference);
+            ->findProductOfferStorageByReference($productOfferReference);
     }
 }

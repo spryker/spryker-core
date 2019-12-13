@@ -73,9 +73,6 @@
     </transfer>
 
     <transfer name="ProductAvailabilityCriteria">
-        <property name="sku" type="string"/>
-        <property name="store" type="Store"/>
-        <property name="quantity" type="decimal"/>
     </transfer>
 
 </transfers>

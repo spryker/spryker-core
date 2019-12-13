@@ -180,7 +180,4 @@
     <transfer name="ProductAbstract">
     </transfer>
 
-    <transfer name="ProductAvailabilityCriteria">
-    </transfer>
-
 </transfers>
