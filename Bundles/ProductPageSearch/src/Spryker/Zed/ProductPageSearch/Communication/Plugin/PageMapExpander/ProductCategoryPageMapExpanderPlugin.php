@@ -26,6 +26,10 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
 {
     public const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
+    protected const KEY_SORTED_CATEGORIES = 'sorted_categories';
+    protected const KEY_ALL_NODE_PARENTS = 'all_node_parents';
+    protected const KEY_PRODUCT_ORDER = 'product_order';
+
     /**
      * @var array
      */
@@ -117,20 +121,20 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
         PageMapTransfer $pageMapTransfer,
         array $productData
     ): void {
-        $sortedCategories = $productData['sorted_categories'];
+        $sortedCategories = $productData[static::KEY_SORTED_CATEGORIES];
         $parentCategoryTreesToUpdateSorting = $this->getParentCategoryTreesToUpdateSorting($sortedCategories);
 
         foreach ($sortedCategories as $idCategoryNode => $sortedCategory) {
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
                 SortedCategoryQueryExpanderPlugin::buildSortFieldName($idCategoryNode),
-                $sortedCategory['product_order']
+                $sortedCategory[static::KEY_PRODUCT_ORDER]
             );
 
             $this->setSortingForTreeParents(
                 $pageMapBuilder,
                 $pageMapTransfer,
-                $sortedCategory['product_order'],
+                $sortedCategory[static::KEY_PRODUCT_ORDER],
                 $parentCategoryTreesToUpdateSorting[$idCategoryNode]
             );
         }
@@ -160,19 +164,19 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
      */
     protected function getSanitizedParentCategoryTree(array $sortedCategories, int $idCurrentCategoryNode): array
     {
-        if (!isset($sortedCategories[$idCurrentCategoryNode]['all_node_parents'])) {
+        if (!isset($sortedCategories[$idCurrentCategoryNode][static::KEY_ALL_NODE_PARENTS])) {
             return [];
         }
 
-        $idsCurrentCategoryAllNodeParents = $sortedCategories[$idCurrentCategoryNode]['all_node_parents'];
+        $idsCurrentCategoryAllNodeParents = $sortedCategories[$idCurrentCategoryNode][static::KEY_ALL_NODE_PARENTS];
 
         foreach ($sortedCategories as $idCategoryNode => $categoryNode) {
             if ($idCurrentCategoryNode === $idCategoryNode
-                || !isset($sortedCategories[$idCategoryNode]['all_node_parents'])) {
+                || !isset($sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS])) {
                 continue;
             }
 
-            $idsCategoryAllNodeParents = $sortedCategories[$idCategoryNode]['all_node_parents'];
+            $idsCategoryAllNodeParents = $sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS];
 
             if (!in_array($idCategoryNode, $idsCurrentCategoryAllNodeParents)) {
                 continue;

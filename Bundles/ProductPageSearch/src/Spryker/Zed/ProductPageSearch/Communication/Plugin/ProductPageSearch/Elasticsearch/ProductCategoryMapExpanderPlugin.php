@@ -124,6 +124,8 @@ class ProductCategoryMapExpanderPlugin extends AbstractPlugin implements Product
         array $productData
     ) {
         $sortedCategories = $productData[static::KEY_SORTED_CATEGORIES];
+        $parentCategoryTreesToUpdateSorting = $this->getParentCategoryTreesToUpdateSorting($sortedCategories);
+
         foreach ($sortedCategories as $idCategoryNode => $sortedCategory) {
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
@@ -134,34 +136,74 @@ class ProductCategoryMapExpanderPlugin extends AbstractPlugin implements Product
             $this->setSortingForTreeParents(
                 $pageMapBuilder,
                 $pageMapTransfer,
-                $idCategoryNode,
                 $sortedCategory[static::KEY_PRODUCT_ORDER],
-                $productData
+                $parentCategoryTreesToUpdateSorting[$idCategoryNode]
             );
         }
     }
 
     /**
+     * @param array $sortedCategories
+     *
+     * @return array
+     */
+    protected function getParentCategoryTreesToUpdateSorting(array $sortedCategories): array
+    {
+        $parentCategoryTreesToUpdateSorting = [];
+
+        foreach ($sortedCategories as $idCategoryNode => $sortedCategory) {
+            $parentCategoryTreesToUpdateSorting[$idCategoryNode] = $this->getSanitizedParentCategoryTree($sortedCategories, $idCategoryNode);
+        }
+
+        return $parentCategoryTreesToUpdateSorting;
+    }
+
+    /**
+     * @param array $sortedCategories
+     * @param int $idCurrentCategoryNode
+     *
+     * @return int[]
+     */
+    protected function getSanitizedParentCategoryTree(array $sortedCategories, int $idCurrentCategoryNode): array
+    {
+        if (!isset($sortedCategories[$idCurrentCategoryNode][static::KEY_ALL_NODE_PARENTS])) {
+            return [];
+        }
+
+        $idsCurrentCategoryAllNodeParents = $sortedCategories[$idCurrentCategoryNode][static::KEY_ALL_NODE_PARENTS];
+
+        foreach ($sortedCategories as $idCategoryNode => $categoryNode) {
+            if ($idCurrentCategoryNode === $idCategoryNode
+                || !isset($sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS])) {
+                continue;
+            }
+
+            $idsCategoryAllNodeParents = $sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS];
+
+            if (!in_array($idCategoryNode, $idsCurrentCategoryAllNodeParents)) {
+                continue;
+            }
+
+            $idsCurrentCategoryAllNodeParents = array_diff($idsCurrentCategoryAllNodeParents, $idsCategoryAllNodeParents);
+        }
+
+        return $idsCurrentCategoryAllNodeParents;
+    }
+
+    /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param int $idCategoryNode
      * @param int $productOrder
-     * @param array $productData
+     * @param int[] $idsParentCategoryNode
      *
      * @return void
      */
     protected function setSortingForTreeParents(
         PageMapBuilderInterface $pageMapBuilder,
         PageMapTransfer $pageMapTransfer,
-        $idCategoryNode,
         $productOrder,
-        array $productData
+        array $idsParentCategoryNode
     ) {
-        if (!isset($productData[static::KEY_SORTED_CATEGORIES][$idCategoryNode][static::KEY_ALL_NODE_PARENTS])) {
-            return;
-        }
-
-        $idsParentCategoryNode = $productData[static::KEY_SORTED_CATEGORIES][$idCategoryNode][static::KEY_ALL_NODE_PARENTS];
         foreach ($idsParentCategoryNode as $idParentCategoryNode) {
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
