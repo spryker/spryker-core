@@ -47,13 +47,14 @@ class ProductBundleReaderTest extends Unit
     ];
 
     /**
+     * @group her
      * @return void
      */
     public function testFindBundledProductsByIdProductConcreteShouldBuildTransferCollectionFromPersistence(): void
     {
         $productBundleRepositoryMock = $this->createProductBundleRepositoryMock();
-        $this->setupFindBundledProducts($this->fixtures, $productBundleRepositoryMock);
         $productBundleReaderMock = $this->createProductBundleReader($productBundleRepositoryMock);
+        $this->setupFindBundledProducts($this->fixtures, $productBundleReaderMock);
 
         $bundledProductsTransferCollection = $productBundleReaderMock->findBundledProductsByIdProductConcrete($this->fixtures['idProductConcrete']);
 
@@ -72,8 +73,8 @@ class ProductBundleReaderTest extends Unit
         $bundleAvailability = 5;
 
         $productBundleRepositoryMock = $this->createProductBundleRepositoryMock();
-        $this->setupFindBundledProducts($this->fixtures, $productBundleRepositoryMock);
         $productBundleReaderMock = $this->createProductBundleReader($productBundleRepositoryMock);
+        $this->setupFindBundledProducts($this->fixtures, $productBundleReaderMock);
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setIdProductConcrete($this->fixtures['idProductConcrete']);
@@ -95,21 +96,19 @@ class ProductBundleReaderTest extends Unit
     }
 
     /**
-     * <<<<<<< HEAD
-     *
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface|null $productBundleRepositoryMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface|null $productBundleToAvailabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductBundleReader(
-        ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
+        ?ProductBundleRepositoryInterface $productBundleRepositoryMock = null,
         ?ProductBundleToAvailabilityFacadeInterface $productBundleToAvailabilityFacadeMock = null,
         ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
-        if ($productBundleQueryContainerMock === null) {
-            $productBundleQueryContainerMock = $this->createProductQueryContainerMock();
+        if ($productBundleRepositoryMock === null) {
+            $productBundleRepositoryMock = $this->createProductBundleRepositoryMock();
         }
 
         if ($productBundleToAvailabilityFacadeMock === null) {
@@ -126,8 +125,8 @@ class ProductBundleReaderTest extends Unit
         }
 
         $productBundleReaderMock = $this->getMockBuilder(ProductBundleReader::class)
-            ->setConstructorArgs([$productBundleQueryContainerMock, $productBundleToAvailabilityFacadeMock, $storeFacadeMock ])
-            ->setMethods(['findBundledProducts', 'findProductConcreteAvailabilityBySkuForStore'])
+            ->setConstructorArgs([$productBundleRepositoryMock, $productBundleToAvailabilityFacadeMock, $storeFacadeMock ])
+            ->setMethods(['findBundledProductsByIdProductConcrete', 'findProductConcreteAvailabilityBySkuForStore'])
             ->getMock();
 
         return $productBundleReaderMock;
@@ -178,7 +177,7 @@ class ProductBundleReaderTest extends Unit
         $productBundleEntity->setFkBundledProduct($fixtures['fkBundledProduct']);
 
         $productBundleReaderMock->expects($this->once())
-            ->method('findBundledProducts')
+            ->method('findBundledProductsByIdProductConcrete')
             ->with($fixtures['idProductConcrete'])
             ->willReturn([$productBundleEntity]);
     }

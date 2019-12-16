@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
@@ -33,13 +34,16 @@ class ProductBundleReader implements ProductBundleReaderInterface
 
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleRepositoryInterface $productBundleRepository,
+        ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
         ProductBundleToStoreFacadeInterface $storeFacade
     ) {
         $this->productBundleRepository = $productBundleRepository;
+        $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
     }
 
