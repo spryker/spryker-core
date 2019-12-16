@@ -157,7 +157,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
     }
 
     /**
-     * @param array $sortedCategories
+     * @param array[] $sortedCategories
      * @param int $idCurrentCategoryNode
      *
      * @return int[]
@@ -188,7 +188,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
     }
 
     /**
-     * @param array $sortedCategories
+     * @param array[] $sortedCategories
      * @param int $idCategoryNode
      *
      * @return bool
@@ -199,7 +199,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
     }
 
     /**
-     * @param array $sortedCategories
+     * @param array[] $sortedCategories
      * @param int $idCurrentCategoryNode
      * @param int $idCategoryNode
      *
