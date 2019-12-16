@@ -934,7 +934,7 @@ class PriceProductFacadeTest extends Unit
     public function testIsPriceProductMatchingItemReturnsTrueForSameSku(): void
     {
         // Arrange
-        $sku = 'test-sku';
+        $sku = 'same-sku';
 
         $priceProductTransfer = (new PriceProductTransfer())
             ->setSkuProduct($sku);
@@ -942,7 +942,7 @@ class PriceProductFacadeTest extends Unit
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku);
 
-        // Assert
+        // Act
         $isPriceProductMatchingItem = $this->getPriceProductFacade()->isPriceProductMatchingItem($priceProductTransfer, $itemTransfer);
 
         // Assert
@@ -961,7 +961,7 @@ class PriceProductFacadeTest extends Unit
         $itemTransfer = (new ItemTransfer())
             ->setSku('sku-2');
 
-        // Assert
+        // Act
         $isPriceProductMatchingItem = $this->getPriceProductFacade()->isPriceProductMatchingItem($priceProductTransfer, $itemTransfer);
 
         // Assert

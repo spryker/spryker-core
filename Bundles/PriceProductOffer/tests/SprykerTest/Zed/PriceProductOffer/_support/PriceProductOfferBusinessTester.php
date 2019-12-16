@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\PriceProductOffer;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\ProductOfferTransfer;
-use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer;
 
 /**
  * Inherited Methods
@@ -34,28 +32,4 @@ class PriceProductOfferBusinessTester extends Actor
    /**
     * Define custom actions here
     */
-
-    /**
-     * @param string $sku
-     *
-     * @return void
-     */
-    public function createPriceProductOfferPriceForSku(string $sku): void
-    {
-        $storeTransfer = $this->haveStore();
-        $idCurrency = $this->haveCurrency();
-        $priceTypeTransfer = $this->havePriceType();
-        $productOfferTransfer = $this->haveProductOffer([
-           ProductOfferTransfer::CONCRETE_SKU => $sku,
-        ]);
-
-        (new SpyPriceProductOffer())
-           ->setFkProductOffer($productOfferTransfer->getIdProductOffer())
-           ->setFkStore($storeTransfer->getIdStore())
-           ->setFkCurrency($idCurrency)
-           ->setNetPrice(5)
-           ->setGrossPrice(4)
-           ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-           ->save();
-    }
 }

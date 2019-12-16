@@ -2,8 +2,7 @@ namespace: ProductOfferStock
 
 include:
     - tests/SprykerTest/Zed/ProductOfferStock
-
-actor: Tester
+    - tests/SprykerTest/Shared/ProductOfferStock
 
 paths:
     tests: tests

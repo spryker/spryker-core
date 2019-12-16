@@ -8,7 +8,11 @@
 namespace SprykerTest\Zed\ProductOfferAvailability\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -23,8 +27,6 @@ use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
  */
 class ProductOfferAvailabilityFacadeTest extends Unit
 {
-    protected const TEST_SKU = 'sku-1';
-
     /**
      * @var \SprykerTest\Zed\ProductOfferAvailability\ProductOfferAvailabilityBusinessTester
      */
@@ -36,16 +38,26 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     public function testIsProductSellableForRequestReturnsTrueIfProductOfferAvailableInRequestedQuantity(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->createStore();
-        $this->tester->createStockForStore($storeTransfer);
-        $productOfferTransfer = $this->tester->createProductOfferForSku(static::TEST_SKU);
-        $this->tester->createProductOfferStock(5, $storeTransfer, $productOfferTransfer);
+        $stockQuantity = 5;
+        $requestedQuantity = 1;
+
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
 
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
             ->setStore($storeTransfer)
-            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setSku(static::TEST_SKU)
-            ->setQuantity(1);
+            ->setProductOfferReference($productOfferStockTransfer->getProductOffer()->getProductOfferReference())
+            ->setSku($productOfferStockTransfer->getProductOffer()->getConcreteSku())
+            ->setQuantity($requestedQuantity);
 
         // Act
         $isProductOfferSellable = $this->tester->getFacade()
@@ -61,17 +73,26 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     public function testIsProductSellableForRequestReturnsFalseForNotAvailableForStoreProductOffer(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->createStore();
-        $this->tester->createStockForStore($storeTransfer);
-        $productOfferTransfer = $this->tester->createProductOfferForSku(static::TEST_SKU);
-        $this->tester->createProductOfferStock(5, $storeTransfer, $productOfferTransfer);
+        $stockQuantity = 0;
+        $requestedQuantity = 1;
 
-        $storeWithoutAvailability = $this->tester->createStore();
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
+
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
-            ->setStore($storeWithoutAvailability)
-            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setSku(static::TEST_SKU)
-            ->setQuantity(1);
+            ->setStore($storeTransfer)
+            ->setProductOfferReference($productOfferStockTransfer->getProductOffer()->getProductOfferReference())
+            ->setSku($productOfferStockTransfer->getProductOffer()->getConcreteSku())
+            ->setQuantity($requestedQuantity);
 
         // Act
         $isProductOfferSellable = $this->tester->getFacade()
@@ -87,17 +108,34 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     public function testIsProductSellableForRequestConsidersOmsProductReservations(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->createStore();
-        $this->tester->createStockForStore($storeTransfer);
-        $productOfferTransfer = $this->tester->createProductOfferForSku(static::TEST_SKU);
-        $this->tester->createProductOfferStock(5, $storeTransfer, $productOfferTransfer);
-        $this->tester->createOmsProductReservation(3, $storeTransfer->getName(), static::TEST_SKU);
+        $stockQuantity = 5;
+        $reservedQuantity = 3;
+        $requestedQuantity = 3;
+
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
+
+        $productOfferTransfer = $productOfferStockTransfer->getProductOffer();
+        $this->tester->haveOmsProductReservation([
+            OmsProductReservationTransfer::SKU => $productOfferTransfer->getConcreteSku(),
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => $reservedQuantity,
+            OmsProductReservationTransfer::FK_STORE => $storeTransfer->getIdStore(),
+        ]);
 
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
             ->setStore($storeTransfer)
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setSku(static::TEST_SKU)
-            ->setQuantity(3);
+            ->setSku($productOfferTransfer->getConcreteSku())
+            ->setQuantity($requestedQuantity);
 
         // Act
         $isProductOfferSellable = $this->tester->getFacade()
@@ -110,20 +148,36 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConcreteAvailabilityForRequestReturnsProductOfferAvailabilityAssumingOmsProductReservations()
+    public function testFindProductConcreteAvailabilityForRequestReturnsProductOfferAvailabilityAssumingOmsProductReservations(): void
     {
-        // Arrange
-        $storeTransfer = $this->tester->createStore();
-        $this->tester->createStockForStore($storeTransfer);
-        $productOfferTransfer = $this->tester->createProductOfferForSku(static::TEST_SKU);
-        $this->tester->createProductOfferStock(5, $storeTransfer, $productOfferTransfer);
-        $this->tester->createOmsProductReservation(3, $storeTransfer->getName(), static::TEST_SKU);
+        // Arrange=
+        $stockQuantity = 5;
+        $reservedQuantity = 3;
+        $expectedAvailability = $stockQuantity - $reservedQuantity;
+
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
+
+        $productOfferTransfer = $productOfferStockTransfer->getProductOffer();
+        $this->tester->haveOmsProductReservation([
+            OmsProductReservationTransfer::SKU => $productOfferTransfer->getConcreteSku(),
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => $reservedQuantity,
+            OmsProductReservationTransfer::FK_STORE => $storeTransfer->getIdStore(),
+        ]);
 
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
             ->setStore($storeTransfer)
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setSku(static::TEST_SKU)
-            ->setQuantity(3);
+            ->setSku($productOfferTransfer->getConcreteSku());
 
         // Act
         $productConcreteAvailabilityTransfer = $this->tester->getFacade()
@@ -131,6 +185,6 @@ class ProductOfferAvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($productConcreteAvailabilityTransfer);
-        $this->assertSame(2, $productConcreteAvailabilityTransfer->getAvailability()->toInt());
+        $this->assertSame($expectedAvailability, $productConcreteAvailabilityTransfer->getAvailability()->toInt());
     }
 }

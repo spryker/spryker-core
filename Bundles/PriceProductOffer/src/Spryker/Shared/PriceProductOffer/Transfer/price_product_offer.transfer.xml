@@ -6,6 +6,7 @@
     <transfer name="PriceProductOffer">
         <property name="idPriceProductOffer" type="int"/>
         <property name="fkProductOffer" type="int"/>
+        <property name="productOffer" type="ProductOffer"/>
         <property name="fkPriceType"  type="int"/>
         <property name="fkStore" type="int"/>
         <property name="fkCurrency" type="int"/>
@@ -15,6 +16,7 @@
 
     <transfer name="ProductOffer">
         <property name="productOfferReference" type="string"/>
+        <property name="concreteSku" type="string"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">

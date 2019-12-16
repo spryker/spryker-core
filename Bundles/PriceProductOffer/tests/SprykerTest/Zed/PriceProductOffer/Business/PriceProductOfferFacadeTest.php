@@ -23,6 +23,8 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
  */
 class PriceProductOfferFacadeTest extends Unit
 {
+    protected const NOT_EXISTING_SKU = 'non-existing-sku';
+
     /**
      * @var \SprykerTest\Zed\PriceProductOffer\PriceProductOfferBusinessTester
      */
@@ -31,32 +33,33 @@ class PriceProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceProductConcreteTransfersReturnsProductOfferPricesIfExists(): void
+    public function testGetPriceProductConcreteTransfersReturnsNothingIfPricesNotExist(): void
     {
         // Arrange
-        $sku = 'sku-1';
-
-        $this->tester->createPriceProductOfferPriceForSku($sku);
+        $this->tester->havePriceProductOffer();
 
         // Act
         $priceProductOfferTransfers = $this->tester->getFacade()
-            ->getPriceProductConcreteTransfers([$sku], new PriceProductCriteriaTransfer());
+            ->getPriceProductOfferTransfers(
+                [static::NOT_EXISTING_SKU],
+                new PriceProductCriteriaTransfer()
+            );
 
         // Assert
-        $this->assertNotEmpty($priceProductOfferTransfers);
+        $this->assertEmpty($priceProductOfferTransfers);
     }
 
     /**
      * @return void
      */
-    public function testGetPriceProductConcreteTransfersReturnsNothingIfPricesNotExist(): void
+    public function testGetPriceProductConcreteTransfersReturnsProductOfferPricesIfExists(): void
     {
         // Arrange
-        $sku = 'sku-1';
-        
+        $priceProductOfferTransfer = $this->tester->havePriceProductOffer();
+
         // Act
         $priceProductOfferTransfers = $this->tester->getFacade()
-            ->getPriceProductConcreteTransfers([$sku], new PriceProductCriteriaTransfer());
+            ->getPriceProductOfferTransfers([$priceProductOfferTransfer->getProductOffer()->getConcreteSku()], new PriceProductCriteriaTransfer());
 
         // Assert
         $this->assertNotEmpty($priceProductOfferTransfers);

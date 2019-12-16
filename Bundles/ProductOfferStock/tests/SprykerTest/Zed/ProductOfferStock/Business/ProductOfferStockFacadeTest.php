@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\ProductOfferStock\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -34,24 +37,31 @@ class ProductOfferStockFacadeTest extends Unit
     public function testCalculateProductOfferStockForRequestReturnsAvailableStockAmount(): void
     {
         // Arrange
-        $expectedStock = 5;
-        $productOfferReference = 'product-offer1';
+        $stockQuantity = 5;
+        $expectedResult = $stockQuantity;
 
-        $this->tester->truncateProductOffers();
         $storeTransfer = $this->tester->haveStore();
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
+
         $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
-            ->setProductOfferReference($productOfferReference)
+            ->setProductOfferReference($productOfferStockTransfer->getProductOffer()->getProductOfferReference())
             ->setStore($storeTransfer);
 
-        $this->tester->createProductOfferStock($expectedStock, $storeTransfer->getName(), $productOfferReference);
-
         // Act
-
         $productOfferStock = $this->tester->getFacade()
             ->calculateProductOfferStockForRequest($productOfferStockRequestTransfer);
 
         // Assert
-        $this->assertSame($expectedStock, $productOfferStock->toInt());
+        $this->assertSame($expectedResult, $productOfferStock->toInt());
     }
 
     /**
@@ -60,9 +70,8 @@ class ProductOfferStockFacadeTest extends Unit
     public function testCalculateProductOfferStockForRequestReturnsNothingIfProductOfferNotExists(): void
     {
         // Arrange
-        $notExistingProductOfferReference = 'product-offer1';
+        $notExistingProductOfferReference = 'not-existing-product-offer-reference';
 
-        $this->tester->truncateProductOffers();
         $storeTransfer = $this->tester->haveStore();
         $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
             ->setProductOfferReference($notExistingProductOfferReference)
