@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -99,21 +98,10 @@ class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements
             return;
         }
 
-        $itemResource = $this->restResourceBuilder->createRestResource(
-            CartsRestApiConfig::RESOURCE_CART_ITEMS,
-            $itemTransfer->getGroupKey(),
-            $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer($itemTransfer, $localeName)
-        );
-
-        $itemResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            sprintf(
-                '%s/%s/%s/%s',
-                CartsRestApiConfig::RESOURCE_CARTS,
-                $cartResource->getId(),
-                CartsRestApiConfig::RESOURCE_CART_ITEMS,
-                $itemTransfer->getGroupKey()
-            )
+        $itemResource = $this->cartItemResourceBuilder->buildCartItemResource(
+            $cartResource,
+            $itemTransfer,
+            $localeName
         );
 
         $cartResource->addRelationship($itemResource);

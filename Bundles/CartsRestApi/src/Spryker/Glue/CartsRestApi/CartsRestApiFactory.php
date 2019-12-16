@@ -20,10 +20,12 @@ use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdder;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleterInterface;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemResourceBuilder;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemResourceBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
-use Spryker\Glue\CartsRestApi\Processor\Expander\CartItemsByQuoteResourceRelationshipExpander;
-use Spryker\Glue\CartsRestApi\Processor\Expander\CartItemsByQuoteResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Expander\CartItemByQuoteResourceRelationshipExpander;
+use Spryker\Glue\CartsRestApi\Processor\Expander\CartItemByQuoteResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidator;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReader;
@@ -218,6 +220,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCartMapper(),
             $this->createCartItemMapper(),
+            $this->createCartItemResourceBuilder(),
             $this->getConfig()
         );
     }
@@ -231,6 +234,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCartMapper(),
             $this->createCartItemMapper(),
+            $this->createCartItemResourceBuilder(),
             $this->getConfig()
         );
     }
@@ -290,12 +294,22 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Expander\CartItemsByQuoteResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Expander\CartItemByQuoteResourceRelationshipExpanderInterface
      */
-    public function createCartItemsByQuoteResourceRelationshipExpander(): CartItemsByQuoteResourceRelationshipExpanderInterface
+    public function createCartItemByQuoteResourceRelationshipExpander(): CartItemByQuoteResourceRelationshipExpanderInterface
     {
-        return new CartItemsByQuoteResourceRelationshipExpander(
+        return new CartItemByQuoteResourceRelationshipExpander(
             $this->createCartReader(),
+            $this->createCartItemResourceBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemResourceBuilderInterface
+     */
+    public function createCartItemResourceBuilder(): CartItemResourceBuilderInterface
+    {
+        return new CartItemResourceBuilder(
             $this->getResourceBuilder(),
             $this->createCartItemMapper()
         );

@@ -68,7 +68,7 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
         $itemResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
             $itemTransfer->getGroupKey(),
-            $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer(
+            $this->cartItemMapper->mapItemTransferToRestItemsAttributesTransfer(
                 $itemTransfer,
                 $localeName
             )

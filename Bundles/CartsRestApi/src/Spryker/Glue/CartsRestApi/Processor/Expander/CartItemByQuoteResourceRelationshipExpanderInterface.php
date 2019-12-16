@@ -9,7 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CartItemsByQuoteResourceRelationshipExpanderInterface
+interface CartItemByQuoteResourceRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources

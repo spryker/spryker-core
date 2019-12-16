@@ -31,7 +31,7 @@ class CartItemsByQuoteResourceRelationshipPlugin extends AbstractPlugin implemen
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCartItemsByQuoteResourceRelationshipExpander()
+            ->createCartItemByQuoteResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
