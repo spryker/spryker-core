@@ -10,13 +10,15 @@ namespace Spryker\Zed\ConfigurableBundleCart\Business\Checker;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\ConfiguredBundleValidationRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundleCart\Persistence\ConfigurableBundleCartRepositoryInterface;
 
 class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlotCheckerInterface
 {
+    protected const KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID = 'configurableBundleTemplateUuid';
+    protected const KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS = 'configurableBundleTemplateSlotUuids';
+
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED = 'configured_bundle_cart.error.configured_bundle_cannot_be_added';
 
     /**
@@ -40,12 +42,12 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
     public function checkConfiguredBundleTemplateSlotCombination(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $messageTransfers = new ArrayObject();
-        $groupedConfiguredBundleValidationRequestTransfers = $this->getGroupedConfiguredBundleValidationRequestTransfers($cartChangeTransfer);
+        $configuredBundlesData = $this->getConfiguredBundlesData($cartChangeTransfer);
 
-        foreach ($groupedConfiguredBundleValidationRequestTransfers as $configuredBundleValidationRequestTransfer) {
+        foreach ($configuredBundlesData as $configuredBundleData) {
             $isSlotCombinationValid = $this->configurableBundleCartRepository->verifyConfigurableBundleTemplateSlots(
-                $configuredBundleValidationRequestTransfer->getTemplateUuid(),
-                $configuredBundleValidationRequestTransfer->getSlotUuids()
+                $configuredBundleData[static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID],
+                $configuredBundleData[static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS]
             );
 
             if (!$isSlotCombinationValid) {
@@ -61,12 +63,11 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleValidationRequestTransfer[]
+     * @return array
      */
-    protected function getGroupedConfiguredBundleValidationRequestTransfers(CartChangeTransfer $cartChangeTransfer): array
+    protected function getConfiguredBundlesData(CartChangeTransfer $cartChangeTransfer): array
     {
-        /** @var \Generated\Shared\Transfer\ConfiguredBundleValidationRequestTransfer[] $groupedConfiguredBundleValidationRequestTransfers */
-        $groupedConfiguredBundleValidationRequestTransfers = [];
+        $configuredBundlesData = [];
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$this->isConfiguredBundleItem($itemTransfer)) {
@@ -76,17 +77,16 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
             $configuredBundleTransfer = $itemTransfer->getConfiguredBundle();
             $configuredBundleGroupKey = $configuredBundleTransfer->getGroupKey();
 
-            if (!isset($groupedConfiguredBundleValidationRequestTransfers[$configuredBundleGroupKey])) {
-                $groupedConfiguredBundleValidationRequestTransfers[$configuredBundleGroupKey] = (new ConfiguredBundleValidationRequestTransfer())
-                    ->setTemplateUuid($configuredBundleTransfer->getTemplate()->getUuid());
+            if (!isset($configuredBundlesData[$configuredBundleGroupKey])) {
+                $configuredBundlesData[$configuredBundleGroupKey] = [
+                    static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID => $configuredBundleTransfer->getTemplate()->getUuid(),
+                ];
             }
 
-            $groupedConfiguredBundleValidationRequestTransfers[$configuredBundleGroupKey]->addSlotUuid(
-                $itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid()
-            );
+            $configuredBundlesData[$configuredBundleGroupKey][static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS][] = $itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid();
         }
 
-        return $groupedConfiguredBundleValidationRequestTransfers;
+        return $configuredBundlesData;
     }
 
     /**
