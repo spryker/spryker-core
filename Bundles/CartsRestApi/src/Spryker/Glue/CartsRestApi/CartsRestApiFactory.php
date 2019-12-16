@@ -22,6 +22,8 @@ use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
+use Spryker\Glue\CartsRestApi\Processor\Expander\CartItemsByQuoteResourceRelationshipExpander;
+use Spryker\Glue\CartsRestApi\Processor\Expander\CartItemsByQuoteResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidator;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReader;
@@ -215,7 +217,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createCartMapper(),
-            $this->createCartItemMapper()
+            $this->createCartItemMapper(),
+            $this->getConfig()
         );
     }
 
@@ -227,7 +230,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createCartMapper(),
-            $this->createCartItemMapper()
+            $this->createCartItemMapper(),
+            $this->getConfig()
         );
     }
 
@@ -282,6 +286,18 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartMapper(
             $this->getResourceBuilder(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Expander\CartItemsByQuoteResourceRelationshipExpanderInterface
+     */
+    public function createCartItemsByQuoteResourceRelationshipExpander(): CartItemsByQuoteResourceRelationshipExpanderInterface
+    {
+        return new CartItemsByQuoteResourceRelationshipExpander(
+            $this->createCartReader(),
+            $this->getResourceBuilder(),
+            $this->createCartItemMapper()
         );
     }
 

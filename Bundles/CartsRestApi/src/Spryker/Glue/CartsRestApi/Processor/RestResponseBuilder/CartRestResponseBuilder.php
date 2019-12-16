@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -76,26 +77,45 @@ class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements
         $cartResource->setPayload($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemResource = $this->restResourceBuilder->createRestResource(
-                CartsRestApiConfig::RESOURCE_CART_ITEMS,
-                $itemTransfer->getGroupKey(),
-                $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer($itemTransfer, $localeName)
-            );
-
-            $itemResource->addLink(
-                RestLinkInterface::LINK_SELF,
-                sprintf(
-                    '%s/%s/%s/%s',
-                    CartsRestApiConfig::RESOURCE_CARTS,
-                    $cartResource->getId(),
-                    CartsRestApiConfig::RESOURCE_CART_ITEMS,
-                    $itemTransfer->getGroupKey()
-                )
-            );
-
-            $cartResource->addRelationship($itemResource);
+            $this->addCartItemRelationships($cartResource, $itemTransfer, $localeName);
         }
 
         return $cartResource;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartResource
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function addCartItemRelationships(
+        RestResourceInterface $cartResource,
+        ItemTransfer $itemTransfer,
+        string $localeName
+    ): void {
+        if (!$this->cartsRestApiConfig->getAllowedCartItemEagerRelationship()) {
+            return;
+        }
+
+        $itemResource = $this->restResourceBuilder->createRestResource(
+            CartsRestApiConfig::RESOURCE_CART_ITEMS,
+            $itemTransfer->getGroupKey(),
+            $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer($itemTransfer, $localeName)
+        );
+
+        $itemResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            sprintf(
+                '%s/%s/%s/%s',
+                CartsRestApiConfig::RESOURCE_CARTS,
+                $cartResource->getId(),
+                CartsRestApiConfig::RESOURCE_CART_ITEMS,
+                $itemTransfer->getGroupKey()
+            )
+        );
+
+        $cartResource->addRelationship($itemResource);
     }
 }
