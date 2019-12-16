@@ -164,15 +164,14 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
      */
     protected function getSanitizedParentCategoryTree(array $sortedCategories, int $idCurrentCategoryNode): array
     {
-        if (!isset($sortedCategories[$idCurrentCategoryNode][static::KEY_ALL_NODE_PARENTS])) {
+        if (!$this->hasCategoryParentNodes($sortedCategories, $idCurrentCategoryNode)) {
             return [];
         }
 
         $currentCategoryParentNodeIds = $sortedCategories[$idCurrentCategoryNode][static::KEY_ALL_NODE_PARENTS];
 
         foreach ($sortedCategories as $idCategoryNode => $sortedCategory) {
-            if ($idCurrentCategoryNode === $idCategoryNode
-                || !isset($sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS])) {
+            if (!$this->canCategoryBeProcessed($sortedCategories, $idCurrentCategoryNode, $idCategoryNode)) {
                 continue;
             }
 
@@ -186,6 +185,34 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
         }
 
         return $currentCategoryParentNodeIds;
+    }
+
+    /**
+     * @param array $sortedCategories
+     * @param int $idCategoryNode
+     *
+     * @return bool
+     */
+    protected function hasCategoryParentNodes(array $sortedCategories, int $idCategoryNode): bool
+    {
+        return isset($sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS]);
+    }
+
+    /**
+     * @param array $sortedCategories
+     * @param int $idCurrentCategoryNode
+     * @param int $idCategoryNode
+     *
+     * @return bool
+     */
+    protected function canCategoryBeProcessed(array $sortedCategories, int $idCurrentCategoryNode, int $idCategoryNode): bool
+    {
+        if ($idCurrentCategoryNode === $idCategoryNode
+            || !$this->hasCategoryParentNodes($sortedCategories, $idCategoryNode)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
