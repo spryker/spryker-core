@@ -99,6 +99,18 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
             $merchantProfileQuery->filterByIsActive($merchantProfileCriteriaFilterTransfer->getIsActive());
         }
 
+        if (!$merchantProfileCriteriaFilterTransfer->getFilter()) {
+            return $merchantProfileQuery;
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getFilter()->getLimit() !== null) {
+            $merchantProfileQuery->setLimit($merchantProfileCriteriaFilterTransfer->getFilter()->getLimit());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getFilter()->getOffset() !== null) {
+            $merchantProfileQuery->setOffset($merchantProfileCriteriaFilterTransfer->getFilter()->getOffset());
+        }
+
         return $merchantProfileQuery;
     }
 }

@@ -62,6 +62,7 @@
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfile">
