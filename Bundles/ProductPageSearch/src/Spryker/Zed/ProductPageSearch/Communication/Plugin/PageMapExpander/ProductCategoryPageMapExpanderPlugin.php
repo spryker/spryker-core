@@ -85,7 +85,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
         array $allParentCategories,
         array $directParentCategories,
         array $productData
-    ) {
+    ): void {
         $boostedCategoryNames = $productData['boosted_category_names'];
         foreach ($directParentCategories as $idCategory) {
             if (isset($boostedCategoryNames[$idCategory])) {
