@@ -3,7 +3,7 @@
 
     <table name="spy_cms_slot_storage" phpName="SpyCmsSlotStorage" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_slot_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="cms_slot_key" required="true" type="VARCHAR" />
+        <column name="cms_slot_key" required="true" type="VARCHAR"/>
         <column name="data" type="LONGVARCHAR"/>
         <column name="key" type="VARCHAR" required="true"/>
 
