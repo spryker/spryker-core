@@ -53,8 +53,7 @@ class MerchantProfileEventResourceBulkRepositoryPlugin extends AbstractPlugin im
             ->getMerchantProfileFacade()
             ->find($merchantProfileCriteriaFilterTransfer);
 
-        return $merchantCollectionTransfer->getMerchantProfiles()
-            ->getArrayCopy();
+        return $merchantCollectionTransfer->getMerchantProfiles()->getArrayCopy();
     }
 
     /**
@@ -102,7 +101,6 @@ class MerchantProfileEventResourceBulkRepositoryPlugin extends AbstractPlugin im
      */
     protected function createMerchantProfileCriteriaFilterTransfer(FilterTransfer $filterTransfer): MerchantProfileCriteriaFilterTransfer
     {
-        return (new MerchantProfileCriteriaFilterTransfer())
-            ->setFilter($filterTransfer);
+        return (new MerchantProfileCriteriaFilterTransfer())->setFilter($filterTransfer);
     }
 }
