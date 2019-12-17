@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -17,10 +18,11 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
 {
     /**
      * @param string[] $skus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductOfferTransfers(array $skus): array
+    public function getPriceProductOfferTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         $priceProductOfferEntities = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
@@ -30,6 +32,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
             ->endUse()
             ->joinWithSpyPriceType()
             ->joinWithSpyCurrency()
+            ->filterByFkCurrency($priceProductCriteriaTransfer->getIdCurrency())
             ->find();
 
         $priceProductTransfers = [];
