@@ -56,7 +56,7 @@ interface PersistentCartFacadeInterface
      *  - Adds new item(s) to quote (requires, but not limited, a quantity > 0 for each new item).
      *  - Groups items in quote (-> ItemGrouper).
      *  - Recalculates quote (-> Calculation).
-     *  - Add success message to messenger (-> Messenger).
+     *  - Add successs message to messenger (-> Messenger).
      *  - Calls quote response extend plugins.
      *  - Returns updated quote.
      *
