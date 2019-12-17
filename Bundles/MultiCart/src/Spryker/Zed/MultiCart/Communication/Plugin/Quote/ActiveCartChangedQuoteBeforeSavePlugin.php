@@ -24,7 +24,7 @@ class ActiveCartChangedQuoteBeforeSavePlugin extends AbstractPlugin implements Q
 
     /**
      * {@inheritDoc}
-     * - Adds success message in case active cart was changed.
+     * - Adds info message in case active cart was changed.
      *
      * @api
      *

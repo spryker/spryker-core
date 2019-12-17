@@ -24,7 +24,7 @@ class ActiveSharedCartChangedQuoteBeforeSavePlugin extends AbstractPlugin implem
 
     /**
      * {@inheritDoc}
-     * - Adds success message in case active shared cart was changed.
+     * - Adds info message in case active shared cart was changed.
      *
      * @api
      *
