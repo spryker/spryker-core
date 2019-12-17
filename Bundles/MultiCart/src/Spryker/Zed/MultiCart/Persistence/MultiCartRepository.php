@@ -101,6 +101,6 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
 
         $quoteData = $quoteQuery->select([SpyQuoteTableMap::COL_ID_QUOTE, SpyQuoteTableMap::COL_IS_DEFAULT])->findOne();
 
-        return $quoteData[SpyQuoteTableMap::COL_IS_DEFAULT];
+        return $quoteData ? $quoteData[SpyQuoteTableMap::COL_IS_DEFAULT] : false;
     }
 }
