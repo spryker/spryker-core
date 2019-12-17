@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory getFactory()
@@ -161,5 +164,33 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         return $this->getFactory()
             ->createProductConcretePageSearchExpander()
             ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function expandProductMapWithCategoryData(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
+        return $this->getFactory()
+            ->createProductCategoryMapExpander()
+            ->expandProductMapWithCategoryData(
+                $pageMapTransfer,
+                $pageMapBuilder,
+                $productData,
+                $localeTransfer
+            );
     }
 }
