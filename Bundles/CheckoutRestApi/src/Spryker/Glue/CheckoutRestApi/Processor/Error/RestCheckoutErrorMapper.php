@@ -48,7 +48,8 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
     ): RestErrorMessageTransfer {
         return $this->mergeErrorDataWithErrorConfiguration(
             $restCheckoutErrorTransfer,
-            $restErrorMessageTransfer
+            $restErrorMessageTransfer,
+            $restCheckoutErrorTransfer->toArray()
         );
     }
 
@@ -67,30 +68,25 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
         return $this->mergeErrorDataWithErrorConfiguration(
             $restCheckoutErrorTransfer,
             $restErrorMessageTransfer,
-            $localeCode
+            $this->translateCheckoutErrorMessage($restCheckoutErrorTransfer, $localeCode)->toArray()
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutErrorTransfer $restCheckoutErrorTransfer
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
-     * @param string $localeCode
+     * @param array $errorData
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
     protected function mergeErrorDataWithErrorConfiguration(
         RestCheckoutErrorTransfer $restCheckoutErrorTransfer,
         RestErrorMessageTransfer $restErrorMessageTransfer,
-        string $localeCode = ''
+        array $errorData
     ): RestErrorMessageTransfer {
         $errorIdentifierMapping = $this->getErrorIdentifierMapping($restCheckoutErrorTransfer);
-        $errorData = $restCheckoutErrorTransfer->toArray();
 
         if ($errorIdentifierMapping) {
-            if ($localeCode) {
-                $restCheckoutErrorTransfer->setDetail($errorIdentifierMapping['detail']);
-                $errorData = $this->translateCheckoutErrorMessage($restCheckoutErrorTransfer, $localeCode)->toArray();
-            }
             $errorData = array_merge($errorIdentifierMapping, array_filter($errorData));
         }
 
