@@ -63,9 +63,9 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
     protected function addMerchantOpeningHoursWeekdayScheduleCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(
-                MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE,
-                new MerchantOpeningHoursWeekdayScheduleStoragePublishListener()
-            );
+            MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE,
+            new MerchantOpeningHoursWeekdayScheduleStoragePublishListener()
+        );
 
         return $this;
     }
