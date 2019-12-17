@@ -30,6 +30,7 @@ class ProductBundleMapper
             )
                 ->setIdProductConcrete($productBundleEntity->getFkBundledProduct())
                 ->setIdProductBundle($productBundleEntity->getFkProduct())
+                ->setQuantity($productBundleEntity->getQuantity())
                 ->setSku($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->getSku())
                 ->setIsActive($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->getIsActive());
         }
