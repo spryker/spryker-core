@@ -106,7 +106,7 @@ class ProductBundleBeforeUpdateListenerTest extends Unit
 
         // Act
         $bundledProductConcreteTransfer1->setIsActive(!$bundledProductConcreteTransfer1->getIsActive());
-        $productBundleBeforeUpdateListener->handle($bundledProductConcreteTransfer1, 'test.event');
+        $productBundleBeforeUpdateListener->handle($productBundleConcreteTransfer, 'test.event');
     }
 
     /**
