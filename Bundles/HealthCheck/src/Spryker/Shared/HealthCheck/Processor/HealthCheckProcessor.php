@@ -60,9 +60,9 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     public function process(?string $requestedServices = null): HealthCheckResponseTransfer
     {
         $healthCheckRequestTransfer = $this->createHealthCheckRequestTransfer($requestedServices);
-        $isValidaRequestedServices = $this->validator->validate($this->healthCheckPlugins, $healthCheckRequestTransfer);
+        $isValidRequestedServices = $this->validator->validate($this->healthCheckPlugins, $healthCheckRequestTransfer);
 
-        if ($isValidaRequestedServices === false) {
+        if ($isValidRequestedServices === false) {
             return $this->responseProcessor->processNonExistingServiceName();
         }
 

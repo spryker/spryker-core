@@ -11,5 +11,4 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class StorageConfig extends AbstractSharedConfig
 {
-    public const STORAGE_SERVICE_NAME = 'storage';
 }

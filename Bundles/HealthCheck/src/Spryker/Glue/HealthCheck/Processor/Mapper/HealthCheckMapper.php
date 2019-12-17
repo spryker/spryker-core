@@ -22,6 +22,6 @@ class HealthCheckMapper implements HealthCheckMapperInterface
         HealthCheckResponseTransfer $healthCheckResponseTransfer,
         RestHealthCheckResponseAttributesTransfer $restHealthCheckResponseAttributesTransfer
     ): RestHealthCheckResponseAttributesTransfer {
-        return $restHealthCheckResponseAttributesTransfer->fromArray($healthCheckResponseTransfer->modifiedToArray(), true);
+        return $restHealthCheckResponseAttributesTransfer->fromArray($healthCheckResponseTransfer->toArray(), true);
     }
 }

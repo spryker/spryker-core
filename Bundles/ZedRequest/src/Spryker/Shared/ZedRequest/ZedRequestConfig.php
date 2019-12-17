@@ -11,5 +11,4 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class ZedRequestConfig extends AbstractSharedConfig
 {
-    public const ZED_REQUEST_SERVICE_NAME = 'zed-request';
 }
