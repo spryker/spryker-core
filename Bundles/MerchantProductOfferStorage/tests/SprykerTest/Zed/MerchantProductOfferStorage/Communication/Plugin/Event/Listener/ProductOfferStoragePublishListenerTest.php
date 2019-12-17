@@ -175,10 +175,15 @@ class ProductOfferStoragePublishListenerTest extends Unit
      */
     protected function createProductOffer(array $productOfferData = [], array $productData = []): void
     {
+        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+
         $productOfferData[ProductOfferTransfer::FK_MERCHANT] = $this->tester->haveMerchant()->getIdMerchant();
         $productOfferData[ProductOfferTransfer::CONCRETE_SKU] = $this->tester->haveProduct($productData)->getSku();
 
-        $this->merchantProductOfferTransfer = $this->tester->haveProductOffer($productOfferData);
+        $productOfferTransfer = $this->tester->haveProductOffer($productOfferData)->addStore($storeTransfer);
+
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
+        $this->merchantProductOfferTransfer = $productOfferTransfer;
     }
 
     /**

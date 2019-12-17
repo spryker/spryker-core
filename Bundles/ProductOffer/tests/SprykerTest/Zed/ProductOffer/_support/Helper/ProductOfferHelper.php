@@ -9,7 +9,10 @@ namespace SprykerTest\Zed\ProductOffer\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
+use Generated\Shared\Transfer\ProductOfferStoreTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -34,5 +37,30 @@ class ProductOfferHelper extends Module
             ->create($productOfferTransfer);
 
         return $productOfferTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStoreTransfer
+     */
+    public function haveProductOfferStore(
+        ProductOfferTransfer $productOfferTransfer,
+        StoreTransfer $storeTransfer
+    ): ProductOfferStoreTransfer {
+        $productOfferTransfer->requireIdProductOffer();
+        $storeTransfer->requireIdStore();
+
+        $productOfferStoreEntity = new SpyProductOfferStore();
+        $productOfferStoreEntity->setFkProductOffer($productOfferTransfer->getIdProductOffer());
+        $productOfferStoreEntity->setFkStore($storeTransfer->getIdStore());
+        $productOfferStoreEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productOfferStoreEntity): void {
+            $productOfferStoreEntity->delete();
+        });
+
+        return (new ProductOfferStoreTransfer)->fromArray($productOfferStoreEntity->toArray(), true);
     }
 }
