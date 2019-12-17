@@ -116,7 +116,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      */
     public function grabDataFromResponseByJsonPath($jsonPath)
     {
-        return (new JsonObject($this->connectionModule->_getResponseContent()))->get($jsonPath);
+        return (new JsonObject($this->connectionModule->_getResponseContent(), true))->get($jsonPath);
     }
 
     /**
@@ -212,16 +212,28 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      * @part json
      *
      * @param string $type
+     *
+     * @return void
+     */
+    public function seeResponseDataContainsResourceCollectionOfType(string $type): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'type' => $type,
+        ], '$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
      * @param int $size
      *
      * @return void
      */
     public function seeResponseDataContainsResourceCollectionOfTypeWithSizeOf(string $type, int $size): void
     {
-        $this->getJsonPathModule()->seeResponseJsonPathContains([
-            'type' => $type,
-        ], '$.data[*]');
-        $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data')[0]);
+        $this->seeResponseDataContainsResourceCollectionOfType($type);
+        $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data'));
     }
 
     /**
@@ -242,6 +254,25 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     public function seeResponseDataContainsNonEmptyCollection(): void
     {
         $this->getJsonPathModule()->seeResponseMatchesJsonPath('$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $resourceName
+     * @param string $identifier
+     *
+     * @return array|mixed
+     */
+    public function grabIncludedByTypeAndId(string $resourceName, string $identifier)
+    {
+        $jsonPath = sprintf(
+            '$..included[?(@.type == \'%s\' and @.id == \'%s\')].attributes',
+            $resourceName,
+            $identifier
+        );
+
+        return $this->grabDataFromResponseByJsonPath($jsonPath)[0];
     }
 
     /**
@@ -338,6 +369,20 @@ class GlueRest extends REST implements LastConnectionProviderInterface
                 json_encode($id),
                 json_encode($type)
             )
+        );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
+     *
+     * @return void
+     */
+    public function dontSeeIncludesContainResourceOfType(string $type): void
+    {
+        $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath(
+            sprintf('$.included[?(@.type == %1$s)]', json_encode($type))
         );
     }
 
@@ -510,16 +555,14 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
-     *
      * @return \SprykerTest\Glue\Testify\Helper\JsonPath
      */
     protected function getJsonPathModule(): JsonPath
     {
-        $this->jsonPathModule = $this->jsonPathModule ?: $this->findModule(JsonPath::class);
-
-        if ($this->jsonPathModule === null) {
-            throw new ModuleException('GlueRest', 'The module requires JsonPath');
+        if (!$this->jsonPathModule instanceof JsonPath) {
+            /** @var \SprykerTest\Glue\Testify\Helper\JsonPath $module */
+            $module = $this->locateModule(JsonPath::class);
+            $this->jsonPathModule = $module;
         }
 
         return $this->jsonPathModule;

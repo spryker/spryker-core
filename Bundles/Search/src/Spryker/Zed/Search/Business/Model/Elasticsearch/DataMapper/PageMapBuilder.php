@@ -18,6 +18,9 @@ use Generated\Shared\Transfer\StringSortMapTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface as ProductPageSearchPageMapBuilderInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMapBuilderInterface
 {
     /**

@@ -28,7 +28,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Yves\\Router\\Helper\\": "tests/SprykerTest/Yves/Router/_support/Helper/"
     }
   },
   "autoload-dev": {

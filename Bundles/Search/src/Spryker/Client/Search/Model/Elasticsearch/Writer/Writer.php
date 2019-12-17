@@ -12,6 +12,9 @@ use Elastica\Document;
 use Elastica\Exception\NotFoundException;
 use Spryker\Client\Search\Exception\InvalidDataSetException;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class Writer implements WriterInterface
 {
     /**
