@@ -18,7 +18,7 @@ class PriceProductOfferStorageConfig
      *
      * @api
      *
-     * @uses Spryker\Shared\PriceProductOffer\PriceProductOfferConfig
+     * @uses \Spryker\Shared\PriceProductOffer\PriceProductOfferConfig::DIMENSION_TYPE_PRODUCT_OFFER
      */
     public const DIMENSION_TYPE_PRODUCT_OFFER = 'PRODUCT_OFFER';
 
