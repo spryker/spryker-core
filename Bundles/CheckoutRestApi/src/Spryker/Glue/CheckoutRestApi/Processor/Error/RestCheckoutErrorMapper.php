@@ -48,8 +48,7 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
     ): RestErrorMessageTransfer {
         return $this->mergeErrorDataWithErrorConfiguration(
             $restCheckoutErrorTransfer,
-            $restErrorMessageTransfer,
-            $restCheckoutErrorTransfer->toArray()
+            $restErrorMessageTransfer
         );
     }
 
@@ -68,25 +67,30 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
         return $this->mergeErrorDataWithErrorConfiguration(
             $restCheckoutErrorTransfer,
             $restErrorMessageTransfer,
-            $this->translateCheckoutErrorMessage($restCheckoutErrorTransfer, $localeCode)->toArray()
+            $localeCode
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutErrorTransfer $restCheckoutErrorTransfer
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
-     * @param array $errorData
+     * @param string $localeCode
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
     protected function mergeErrorDataWithErrorConfiguration(
         RestCheckoutErrorTransfer $restCheckoutErrorTransfer,
         RestErrorMessageTransfer $restErrorMessageTransfer,
-        array $errorData
+        string $localeCode = ''
     ): RestErrorMessageTransfer {
         $errorIdentifierMapping = $this->getErrorIdentifierMapping($restCheckoutErrorTransfer);
+        $errorData = $restCheckoutErrorTransfer->toArray();
 
         if ($errorIdentifierMapping) {
+            if ($localeCode) {
+                $restCheckoutErrorTransfer->setDetail($errorIdentifierMapping['detail']);
+                $errorData = $this->translateCheckoutErrorMessage($restCheckoutErrorTransfer, $localeCode)->toArray();
+            }
             $errorData = array_merge($errorIdentifierMapping, array_filter($errorData));
         }
 
@@ -113,6 +117,10 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
         RestCheckoutErrorTransfer $restCheckoutErrorTransfer,
         string $localeName
     ): RestCheckoutErrorTransfer {
+        if (!$restCheckoutErrorTransfer->getDetail()) {
+            return $restCheckoutErrorTransfer;
+        }
+
         $restCheckoutErrorDetail = $this->glossaryStorageClient->translate(
             $restCheckoutErrorTransfer->getDetail(),
             $localeName,
