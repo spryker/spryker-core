@@ -7,13 +7,14 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ProductForBundleBuilder;
 use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
@@ -162,21 +163,19 @@ class ProductBundleReaderTest extends Unit
      */
     protected function setupFindBundledProducts(array $fixtures, MockObject $productBundleReaderMock): void
     {
-        $productBundleEntity = new SpyProductBundle();
-        $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);
-        $productBundleEntity->setQuantity($fixtures['bundledProductQuantity']);
+        $ProductForBundleTransfer = (new ProductForBundleBuilder([
+            ProductForBundleTransfer::QUANTITY => $fixtures['bundledProductQuantity'],
+            ProductForBundleTransfer::SKU => $fixtures['bundledProductSku'],
+            ProductForBundleTransfer::ID_PRODUCT_CONCRETE => $fixtures['fkBundledProduct'],
+            ProductForBundleTransfer::ID_PRODUCT_BUNDLE => $fixtures['idProductBundle'],
+        ]))->build();
 
-        $productEntity = new SpyProduct();
-        $productEntity->setIdProduct($fixtures['fkBundledProduct']);
-        $productEntity->setSku($fixtures['bundledProductSku']);
-
-        $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
-
-        $productBundleEntity->setFkBundledProduct($fixtures['fkBundledProduct']);
+        $ProductForBundleTransferCollection = new ArrayObject();
+        $ProductForBundleTransferCollection->append($ProductForBundleTransfer);
 
         $productBundleReaderMock->expects($this->once())
             ->method('findBundledProductsByIdProductConcrete')
             ->with($fixtures['idProductConcrete'])
-            ->willReturn([$productBundleEntity]);
+            ->willReturn($ProductForBundleTransferCollection);
     }
 }
