@@ -10,6 +10,9 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\SearchConfig;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation\NumericFacetAggregation` instead.
+ */
 class NumericFacetAggregation extends AbstractFacetAggregation
 {
     public const STATS_SUFFIX = '-stats';
