@@ -68,7 +68,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
         CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
     ];
 
-    protected const ALLOW_CART_ITEM_EAGER_RELATIONSHIP = true;
+    protected const ALLOWED_CART_ITEM_EAGER_RELATIONSHIP = true;
 
     /**
      * @return array
@@ -172,6 +172,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
      */
     public function getAllowedCartItemEagerRelationship(): bool
     {
-        return static::ALLOW_CART_ITEM_EAGER_RELATIONSHIP;
+        return static::ALLOWED_CART_ITEM_EAGER_RELATIONSHIP;
     }
 }
