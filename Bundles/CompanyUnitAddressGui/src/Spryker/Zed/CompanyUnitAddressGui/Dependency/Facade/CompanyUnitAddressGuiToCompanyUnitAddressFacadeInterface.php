@@ -26,7 +26,7 @@ interface CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function update($companyUnitAddressTransfer);
+    public function update(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer

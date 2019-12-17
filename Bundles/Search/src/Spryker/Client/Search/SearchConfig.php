@@ -10,11 +10,18 @@ namespace Spryker\Client\Search;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Search\SearchConstants;
 
+/**
+ * @method \Spryker\Shared\Search\SearchConfig getSharedConfig()
+ */
 class SearchConfig extends AbstractBundleConfig
 {
     public const FACET_NAME_AGGREGATION_SIZE = 10;
 
+    protected const DEFAULT_SOURCE_IDENTIFIER = 'page';
+
     /**
+     * @deprecated Use source identifiers instead.
+     *
      * @return string
      */
     public function getSearchIndexName()
@@ -23,6 +30,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier` instead for vendor specific source identification.
+     *
      * @return string
      */
     public function getSearchDocumentType()
@@ -65,5 +74,13 @@ class SearchConfig extends AbstractBundleConfig
     public function getFacetNameAggregationSize()
     {
         return static::FACET_NAME_AGGREGATION_SIZE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultSourceIdentifier(): string
+    {
+        return static::DEFAULT_SOURCE_IDENTIFIER;
     }
 }

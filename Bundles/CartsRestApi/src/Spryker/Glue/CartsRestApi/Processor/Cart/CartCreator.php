@@ -10,7 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -18,9 +18,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class CartCreator implements CartCreatorInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface
      */
-    protected $cartsResourceMapper;
+    protected $cartMapper;
 
     /**
      * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
@@ -33,16 +33,16 @@ class CartCreator implements CartCreatorInterface
     protected $cartRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
-        CartsResourceMapperInterface $cartsResourceMapper,
+        CartMapperInterface $cartMapper,
         CartsRestApiClientInterface $cartsRestApiClient,
         CartRestResponseBuilderInterface $cartRestResponseBuilder
     ) {
-        $this->cartsResourceMapper = $cartsResourceMapper;
+        $this->cartMapper = $cartMapper;
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
     }
@@ -58,7 +58,7 @@ class CartCreator implements CartCreatorInterface
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
         $restUser = $restRequest->getRestUser();
-        $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
+        $quoteTransfer = $this->cartMapper->mapRestCartsAttributesTransferToQuoteTransfer(
             $restCartsAttributesTransfer,
             (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
         );
@@ -70,11 +70,9 @@ class CartCreator implements CartCreatorInterface
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        $restResource = $this->cartsResourceMapper->mapCartsResource(
+        return $this->cartRestResponseBuilder->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
+            $restRequest->getMetadata()->getLocale()
         );
-
-        return $this->cartRestResponseBuilder->createCartRestResponse($restResource);
     }
 }

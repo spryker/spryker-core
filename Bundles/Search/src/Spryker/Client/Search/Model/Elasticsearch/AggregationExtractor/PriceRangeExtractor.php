@@ -10,6 +10,9 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\PriceRangeExtractor` instead.
+ */
 class PriceRangeExtractor extends RangeExtractor
 {
     /**

@@ -56,17 +56,20 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     public function contentWidgetFunction(Environment $twig, array $context, array $blockNames, $templateIdentifier = null): string
     {
         $blocks = $this->getBlockDataByNames($blockNames);
-        $templatePath = $this->resolveTemplatePath($templateIdentifier);
         $rendered = '';
 
         foreach ($blocks as $block) {
-            $blockData = $this->getCmsBlockTransfer($block);
+            $cmsBlockTransfer = $this->getCmsBlockTransfer($block);
 
-            $isActive = $this->validateBlock($blockData) && $this->validateDates($blockData);
+            $isActive = $this->validateBlock($cmsBlockTransfer) && $this->validateDates($cmsBlockTransfer);
 
             if ($isActive) {
+                $templatePath = !$templateIdentifier && $cmsBlockTransfer->getCmsBlockTemplate() ?
+                    $cmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath() :
+                    $this->resolveTemplatePath($templateIdentifier);
+
                 $rendered .= $twig->render($templatePath, [
-                    'placeholders' => $this->getPlaceholders($blockData->getSpyCmsBlockGlossaryKeyMappings()),
+                    'placeholders' => $this->getPlaceholders($cmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings()),
                     'cmsContent' => $block,
                 ]);
             }
