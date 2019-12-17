@@ -248,8 +248,8 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     {
         $priceProductTransfers = $this->priceProductRepository->getProductConcretePricesByConcreteSkusAndCriteria($skus, $priceProductCriteriaTransfer);
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
         $priceProductTransfers = $this->executePriceProductProviderPlugins($priceProductTransfers, $skus, $priceProductCriteriaTransfer);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
 
         return $this->indexPriceProductTransfersByIdentifier($priceProductTransfers);
     }

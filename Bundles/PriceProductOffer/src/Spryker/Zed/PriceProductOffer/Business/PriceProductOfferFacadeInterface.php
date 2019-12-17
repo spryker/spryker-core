@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+
 interface PriceProductOfferFacadeInterface
 {
     /**
@@ -16,8 +18,9 @@ interface PriceProductOfferFacadeInterface
      * @api
      *
      * @param string[] $skus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductOfferTransfers(array $skus): array;
+    public function getPriceProductOfferTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

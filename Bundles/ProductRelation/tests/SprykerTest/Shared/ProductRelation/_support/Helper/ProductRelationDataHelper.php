@@ -22,16 +22,20 @@ class ProductRelationDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param string $skuAbstractProduct
+     * @param string $productAbstractSku
      * @param int $idProductAbstract
+     * @param string $productRelationType
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
-    public function haveProductRelation(string $skuAbstractProduct, int $idProductAbstract): ProductRelationTransfer
-    {
+    public function haveProductRelation(
+        string $productAbstractSku,
+        int $idProductAbstract,
+        string $productRelationType = ProductRelationTypes::TYPE_UP_SELLING
+    ): ProductRelationTransfer {
         $productRelationFacade = $this->getProductRelationFacade();
 
-        $productRelationTransfer = $this->createProductRelationTransfer($skuAbstractProduct, $idProductAbstract);
+        $productRelationTransfer = $this->createProductRelationTransfer($productAbstractSku, $idProductAbstract, $productRelationType);
 
         $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
 
@@ -64,25 +68,29 @@ class ProductRelationDataHelper extends Module
     }
 
     /**
-     * @param string $skuAbstractProduct
+     * @param string $productAbstractSku
      * @param int $idProductAbstractRelated
+     * @param string $productRelationType
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
-    protected function createProductRelationTransfer(string $skuAbstractProduct, int $idProductAbstractRelated): ProductRelationTransfer
-    {
+    protected function createProductRelationTransfer(
+        string $productAbstractSku,
+        int $idProductAbstractRelated,
+        string $productRelationType
+    ): ProductRelationTransfer {
         $productRelationTransfer = new ProductRelationTransfer();
         $productRelationTransfer->setFkProductAbstract($idProductAbstractRelated);
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setCondition('AND');
-        $ruleQuerySetTransfer->addRules($this->createProductAbstractSkuRuleTransfer($skuAbstractProduct));
+        $ruleQuerySetTransfer->addRules($this->createProductAbstractSkuRuleTransfer($productAbstractSku));
 
         $productRelationTransfer->setQuerySet($ruleQuerySetTransfer);
         $productRelationTransfer->setIsActive(true);
 
         $productRelationTypeTransfer = new ProductRelationTypeTransfer();
-        $productRelationTypeTransfer->setKey(ProductRelationTypes::TYPE_UP_SELLING);
+        $productRelationTypeTransfer->setKey($productRelationType);
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
 
         return $productRelationTransfer;
@@ -100,7 +108,7 @@ class ProductRelationDataHelper extends Module
         $ruleQuerySetTransfer->setField('spy_product_abstract.sku');
         $ruleQuerySetTransfer->setType('string');
         $ruleQuerySetTransfer->setInput('text');
-        $ruleQuerySetTransfer->setOperator('less_or_equal');
+        $ruleQuerySetTransfer->setOperator('equal');
         $ruleQuerySetTransfer->setValue($skuValueForFilter);
 
         return $ruleQuerySetTransfer;

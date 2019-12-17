@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface;
 
+/**
+ * @deprecated Will be removed in the next major version.
+ */
 class CodeClearer implements CodeClearerInterface
 {
     /**
@@ -44,6 +47,8 @@ class CodeClearer implements CodeClearerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
