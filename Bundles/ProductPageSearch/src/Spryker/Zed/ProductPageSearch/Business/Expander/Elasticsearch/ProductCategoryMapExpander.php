@@ -61,8 +61,8 @@ class ProductCategoryMapExpander implements ProductCategoryMapExpanderInterface
     /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param array $allParentCategories
-     * @param array $directParentCategories
+     * @param int[] $allParentCategories
+     * @param int[] $directParentCategories
      * @param array $productData
      *
      * @return void
@@ -73,7 +73,7 @@ class ProductCategoryMapExpander implements ProductCategoryMapExpanderInterface
         array $allParentCategories,
         array $directParentCategories,
         array $productData
-    ) {
+    ): void {
         $boostedCategoryNames = $productData[static::KEY_BOOSTED_CATEGORY_NAMES];
         foreach ($directParentCategories as $idCategory) {
             if (isset($boostedCategoryNames[$idCategory])) {
@@ -104,7 +104,7 @@ class ProductCategoryMapExpander implements ProductCategoryMapExpanderInterface
         PageMapBuilderInterface $pageMapBuilder,
         PageMapTransfer $pageMapTransfer,
         array $productData
-    ) {
+    ): void {
         $sortedCategories = $productData[static::KEY_SORTED_CATEGORIES];
         $parentCategoryTreesToUpdateSorting = $this->getParentCategoryTreesToUpdateSorting($sortedCategories);
 
