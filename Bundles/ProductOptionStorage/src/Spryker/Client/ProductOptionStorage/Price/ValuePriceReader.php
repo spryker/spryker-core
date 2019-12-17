@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductOptionStorage\Price;
 
-use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
+use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToCurrencyClientInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientInterface;
@@ -39,27 +39,57 @@ class ValuePriceReader implements ValuePriceReaderInterface
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientInterface $priceClient
      */
-    public function __construct(ProductOptionStorageToCurrencyClientInterface $currencyClient, ProductOptionStorageToPriceClientInterface $priceClient)
-    {
+    public function __construct(
+        ProductOptionStorageToCurrencyClientInterface $currencyClient,
+        ProductOptionStorageToPriceClientInterface $priceClient
+    ) {
         $this->currencyClient = $currencyClient;
         $this->priceClient = $priceClient;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
-    public function resolvePrices(ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer)
-    {
+    public function resolveProductAbstractOptionStorageTransferProductOptionValuePrices(
+        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+    ): ProductAbstractOptionStorageTransfer {
         $currentCurrencyCode = $this->getCurrentCurrencyCode();
         $currentPriceMode = $this->getCurrentPriceMode();
+        $productOptionValueStorageTransfers = [];
+        foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
+            $productOptionValueStorageTransfers[] = $productOptionGroupStorageTransfer->getProductOptionValues()
+                ->getArrayCopy();
+        }
+        $productOptionValueStorageTransfers = array_merge(...$productOptionValueStorageTransfers);
 
-        foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValue) {
-            $this->resolveValuePrice($productOptionValue, $currentCurrencyCode, $currentPriceMode);
+        foreach ($productOptionValueStorageTransfers as $productOptionValueStorageTransfer) {
+            $this->resolveProductOptionValuePrice(
+                $productOptionValueStorageTransfer,
+                $currentCurrencyCode,
+                $currentPriceMode
+            );
         }
 
-        return $productOptionGroupStorageTransfer;
+        return $productAbstractOptionStorageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     */
+    public function resolveProductAbstractOptionStorageTransfersProductOptionValuePrices(
+        array $productAbstractOptionStorageTransfers
+    ): array {
+        foreach ($productAbstractOptionStorageTransfers as $productAbstractOptionStorageTransfer) {
+            $this->resolveProductAbstractOptionStorageTransferProductOptionValuePrices(
+                $productAbstractOptionStorageTransfer
+            );
+        }
+
+        return $productAbstractOptionStorageTransfers;
     }
 
     /**
@@ -69,21 +99,20 @@ class ValuePriceReader implements ValuePriceReaderInterface
      *
      * @return void
      */
-    protected function resolveValuePrice(ProductOptionValueStorageTransfer $productOptionValueStorageTransfer, $currencyCode, $priceMode)
-    {
+    protected function resolveProductOptionValuePrice(
+        ProductOptionValueStorageTransfer $productOptionValueStorageTransfer,
+        string $currencyCode,
+        string $priceMode
+    ): void {
         $prices = $productOptionValueStorageTransfer->getPrices();
-
-        $productOptionValueStorageTransfer->setPrice(
-            isset($prices[$currencyCode]) ?
-                $prices[$currencyCode][$priceMode][ProductOptionConstants::AMOUNT] :
-                null
-        );
+        $price = $prices[$currencyCode][$priceMode][ProductOptionConstants::AMOUNT] ?? null;
+        $productOptionValueStorageTransfer->setPrice($price);
     }
 
     /**
      * @return string
      */
-    protected function getCurrentCurrencyCode()
+    protected function getCurrentCurrencyCode(): string
     {
         if (!isset(static::$currentCurrencyCodeBuffer)) {
             static::$currentCurrencyCodeBuffer = $this->currencyClient->getCurrent()->getCode();
@@ -95,7 +124,7 @@ class ValuePriceReader implements ValuePriceReaderInterface
     /**
      * @return string
      */
-    protected function getCurrentPriceMode()
+    protected function getCurrentPriceMode(): string
     {
         if (!isset(static::$currentPriceModeBuffer)) {
             static::$currentPriceModeBuffer = $this->priceClient->getCurrentPriceMode();

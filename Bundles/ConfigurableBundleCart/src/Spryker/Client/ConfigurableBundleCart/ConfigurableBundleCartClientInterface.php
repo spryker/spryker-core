@@ -7,11 +7,29 @@
 
 namespace Spryker\Client\ConfigurableBundleCart;
 
+use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 
 interface ConfigurableBundleCartClientInterface
 {
+    /**
+     * Specification:
+     * - Adds configured bundle to the cart.
+     * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
+     * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
+     * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many
+     * items were added in total to a specific slot.
+     * - Returns QuoteResponseTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addConfiguredBundle(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer;
+
     /**
      * Specification:
      * - Removes configured bundle from cart.

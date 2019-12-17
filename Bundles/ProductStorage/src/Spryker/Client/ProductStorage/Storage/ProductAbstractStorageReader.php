@@ -27,6 +27,12 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected const KEY_CATEGORIES = 'categories';
     protected const KEY_IMAGE_SETS = 'imageSets';
     protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+    protected const KEY_ID = 'id';
+
+    /**
+     * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     */
+    protected const KV_PREFIX = 'kv:';
 
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface
@@ -116,6 +122,80 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         $this->cacheProductAbstractDataByIdProductAbstractAndLocaleName($idProductAbstract, $localeName, $productStorageData);
 
         return $productStorageData;
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getBulkProductAbstractIdsByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        return $this->getProductAbstractIdsByMapping($mappingType, $identifiers, $localeName);
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    protected function getProductAbstractIdsByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $storageKeys = $this->getStorageKeysByMapping($mappingType, $identifiers, $localeName);
+        $mappingData = $this->storageClient->getMulti($storageKeys);
+        $mappingData = array_filter($mappingData);
+
+        if (count($mappingData) === 0) {
+            return [];
+        }
+
+        $identifiersByStorageKey = $this->getIdentifiersIndexedByStorageKey($storageKeys);
+        $productAbstractIds = [];
+        foreach ($mappingData as $storageKey => $mappingDataItem) {
+            $decodedMappingDataItem = json_decode($mappingDataItem, true);
+            $productAbstractIds[$identifiersByStorageKey[$storageKey]] = $decodedMappingDataItem[static::KEY_ID] ?? null;
+        }
+
+        return $productAbstractIds;
+    }
+
+    /**
+     * @param string[] $storageKeys
+     *
+     * @return string[]
+     */
+    protected function getIdentifiersIndexedByStorageKey(array $storageKeys): array
+    {
+        $identifiersByStorageKey = [];
+        foreach ($storageKeys as $identifier => $storageKey) {
+            $identifiersByStorageKey[static::KV_PREFIX . $storageKey] = $identifier;
+        }
+
+        return $identifiersByStorageKey;
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function getStorageKeysByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $storageKeys = [];
+        foreach ($identifiers as $identifier) {
+            $storageKeys[$identifier] = $this->getStorageKey(
+                sprintf('%s:%s', $mappingType, $identifier),
+                $localeName
+            );
+        }
+
+        return $storageKeys;
     }
 
     /**
@@ -227,26 +307,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      */
     public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
-        $storageKeys = [];
-        foreach ($identifiers as $identifier) {
-            $storageKeys[] = $this->getStorageKey(
-                sprintf('%s:%s', $mappingType, $identifier),
-                $localeName
-            );
-        }
-
-        $mappingData = $this->storageClient->getMulti($storageKeys);
-        $mappingData = array_filter($mappingData);
-
-        if (count($mappingData) === 0) {
-            return [];
-        }
-
-        $productAbstractIds = [];
-        foreach ($mappingData as $item) {
-            $productAbstractStorageData = json_decode($item, true);
-            $productAbstractIds[] = $productAbstractStorageData['id'] ?? null;
-        }
+        $productAbstractIds = $this->getProductAbstractIdsByMapping($mappingType, $identifiers, $localeName);
 
         return $this->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
