@@ -11,6 +11,7 @@
         <property name="sku" type="string"/>
         <property name="productOffer" type="ProductOffer"/>
         <property name="itemIdentifier" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ProductOffer">

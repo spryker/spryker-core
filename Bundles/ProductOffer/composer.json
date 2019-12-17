@@ -10,10 +10,14 @@
     "spryker/cart-extension": "^4.2.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/merchant": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/cart": "If you want to use Cart plugins."
   },
   "autoload": {
     "psr-4": {
