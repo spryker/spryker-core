@@ -12,6 +12,7 @@ use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
 
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
@@ -42,21 +43,29 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $productOfferStorageDeleter;
 
     /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface $productOfferStorageDeleter
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
-        ProductOfferStorageDeleterInterface $productOfferStorageDeleter
+        ProductOfferStorageDeleterInterface $productOfferStorageDeleter,
+        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productOfferFacade = $productOfferFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
         $this->productOfferStorageDeleter = $productOfferStorageDeleter;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -85,14 +94,24 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
-        $storedProductOfferReferences = [];
-        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
-            $storedProductOfferReferences[] = $productOfferTransfer->getProductOfferReference();
+        $productOfferReferencesToRemove = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $productOfferReferencesToRemove[$storeTransfer->getName()] = $productOfferReferences;
         }
 
-        $productOfferReferencesToDelete = array_diff($productOfferReferences, $storedProductOfferReferences);
-        $this->productOfferStorageDeleter->deleteProductOfferStorageCollectionByProductOfferReferences($productOfferReferencesToDelete);
+        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
+            $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
+            foreach ($productOfferTransfer->getStores() as $storeTransfer) {
+                unset($productOfferReferencesToRemove[$storeTransfer->getName()][array_search($productOfferTransfer->getProductOfferReference(), $productOfferReferences)]);
+            }
+        }
+
+        foreach ($productOfferReferencesToRemove as $store => $productOfferReferences) {
+            $this->productOfferStorageDeleter->deleteProductOfferStorageCollectionByProductOfferReferencesAndStore(
+                $productOfferReferences,
+                $store
+            );
+        }
     }
 
     /**

@@ -14,6 +14,7 @@ use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
 
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
@@ -44,21 +45,29 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $productConcreteOffersStorageDeleter;
 
     /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
-        ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter
+        ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter,
+        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productOfferFacade = $productOfferFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
         $this->productConcreteOffersStorageDeleter = $productConcreteOffersStorageDeleter;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -90,7 +99,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
         $productOffersGroupedBySku = $this->groupProductOfferByConcreteSku($productOfferCollectionTransfer);
 
-        $storedProductSkus = [];
+        $productSkusToRemove = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $productSkusToRemove[$storeTransfer->getName()] = $productSkus;
+        }
+
         foreach ($productOffersGroupedBySku as $sku => $data) {
             foreach ($data as $store => $productOfferReferenceList) {
                 $productConcreteProductOffersStorageEntity = SpyProductConcreteProductOffersStorageQuery::create()
@@ -100,11 +113,17 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
                 $productConcreteProductOffersStorageEntity->setData($productOfferReferenceList);
                 $productConcreteProductOffersStorageEntity->save();
+
+                unset($productSkusToRemove[$store][array_search($sku, $productSkus)]);
             }
         }
 
-        $productSkusToDelete = array_diff($productSkus, $storedProductSkus);
-        $this->productConcreteOffersStorageDeleter->deleteProductConcreteProductOffersStorageCollectionByProductSkus($productSkusToDelete);
+        foreach ($productSkusToRemove as $store => $productSkus) {
+            $this->productConcreteOffersStorageDeleter->deleteProductConcreteProductOffersStorageByProductSkusAndStore(
+                $productSkus,
+                $store
+            );
+        }
     }
 
     /**

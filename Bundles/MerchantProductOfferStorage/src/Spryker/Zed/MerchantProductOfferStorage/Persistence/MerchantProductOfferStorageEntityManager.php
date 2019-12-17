@@ -98,4 +98,48 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
             $productOfferStorageEntity->delete();
         }
     }
+
+    /**
+     * @param array $productSkus
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteProductConcreteProductOffersStorageByProductSkusAndStore(array $productSkus, string $storeName): void
+    {
+        $productConcreteProductOffersStorageEntities = $this->getFactory()
+            ->createProductConcreteProductOffersStoragePropelQuery()
+            ->filterByConcreteSku_In($productSkus)
+            ->filterByStore($storeName)
+            ->find();
+
+        foreach ($productConcreteProductOffersStorageEntities as $productConcreteProductOffersStorageEntity) {
+            $productConcreteProductOffersStorageEntity->delete();
+        }
+    }
+
+    /**
+     * @param string[] $productOfferReferences
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteProductOfferStorageEntitiesByProductOfferReferencesAndStore(
+        array $productOfferReferences,
+        string $storeName
+    ): void {
+        $productOfferStorageEntities = $this->getFactory()
+            ->createProductOfferStoragePropelQuery()
+            ->filterByProductOfferReference_In($productOfferReferences)
+            ->filterByStore($storeName)
+            ->find();
+
+        if (empty($productOfferStorageEntities)) {
+            return;
+        }
+
+        foreach ($productOfferStorageEntities as $productOfferStorageEntity) {
+            $productOfferStorageEntity->delete();
+        }
+    }
 }

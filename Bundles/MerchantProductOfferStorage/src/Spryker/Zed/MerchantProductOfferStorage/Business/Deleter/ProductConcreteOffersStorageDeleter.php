@@ -60,4 +60,18 @@ class ProductConcreteOffersStorageDeleter implements ProductConcreteOffersStorag
     {
         $this->merchantProductOfferStorageEntityManager->deleteProductConcreteProductOffersStorageEntitiesByProductSkus($productSkus);
     }
+
+    /**
+     * @param array $productSkus
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteProductConcreteProductOffersStorageByProductSkusAndStore(array $productSkus, string $storeName): void
+    {
+        $this->merchantProductOfferStorageEntityManager->deleteProductConcreteProductOffersStorageByProductSkusAndStore(
+            $productSkus,
+            $storeName
+        );
+    }
 }
