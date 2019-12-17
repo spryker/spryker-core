@@ -46,7 +46,7 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
     {
         foreach ($resources as $resource) {
             /**
-             * @var \Generated\Shared\Transfer\QuoteTransfer|null $payload
+             * @var \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
              */
             $quoteTransfer = $resource->getPayload();
             if (!$quoteTransfer instanceof QuoteTransfer) {
