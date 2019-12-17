@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductConcreteOffersStorage;
+namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
 interface ProductConcreteOffersStorageWriterInterface
 {
     /**
-     * @param string[] $productSkus
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
-    public function publish(array $productSkus): void;
+    public function writeProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void;
 
     /**
      * @param string[] $productSkus
      *
      * @return void
      */
-    public function unpublish(array $productSkus): void;
+    public function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void;
 }
