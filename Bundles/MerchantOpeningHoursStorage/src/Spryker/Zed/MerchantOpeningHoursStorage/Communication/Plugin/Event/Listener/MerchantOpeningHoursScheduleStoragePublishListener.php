@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursWeekdayScheduleTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -16,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Communication\MerchantOpeningHoursStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig getConfig()
  */
-class MerchantOpeningHoursWeekdayScheduleStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class MerchantOpeningHoursScheduleStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritDoc}
@@ -32,10 +31,7 @@ class MerchantOpeningHoursWeekdayScheduleStoragePublishListener extends Abstract
     {
         $merchantIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys(
-                $eventTransfers,
-                SpyMerchantOpeningHoursWeekdayScheduleTableMap::COL_FK_MERCHANT
-            );
+            ->getEventTransferIds($eventTransfers);
 
         $this->getFacade()->publish($merchantIds);
     }

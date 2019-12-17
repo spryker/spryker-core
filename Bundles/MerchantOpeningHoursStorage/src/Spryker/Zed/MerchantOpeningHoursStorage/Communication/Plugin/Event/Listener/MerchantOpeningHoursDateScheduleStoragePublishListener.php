@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursDateScheduleTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -31,7 +32,10 @@ class MerchantOpeningHoursDateScheduleStoragePublishListener extends AbstractPlu
     {
         $merchantIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
+            ->getEventTransferForeignKeys(
+                $eventTransfers,
+                SpyMerchantOpeningHoursDateScheduleTableMap::COL_FK_MERCHANT
+            );
 
         $this->getFacade()->publish($merchantIds);
     }
