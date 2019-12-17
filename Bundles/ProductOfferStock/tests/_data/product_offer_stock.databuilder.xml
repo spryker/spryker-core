@@ -10,5 +10,3 @@
         <property name="stock" dataBuilderRule="Stock"/>
     </transfer>
 </transfers>
-
-

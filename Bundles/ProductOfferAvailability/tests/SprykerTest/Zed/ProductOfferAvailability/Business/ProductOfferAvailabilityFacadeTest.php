@@ -105,7 +105,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellableForRequestConsidersOmsProductReservations(): void
+    public function testIsProductSellableForRequestReturnsFalseForReservedProductOffers(): void
     {
         // Arrange
         $stockQuantity = 5;

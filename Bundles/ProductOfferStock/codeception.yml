@@ -1,4 +1,4 @@
-namespace: ProductOfferStock
+namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Zed/ProductOfferStock

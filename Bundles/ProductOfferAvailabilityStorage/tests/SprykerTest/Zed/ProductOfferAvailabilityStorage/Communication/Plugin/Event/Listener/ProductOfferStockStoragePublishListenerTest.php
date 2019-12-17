@@ -88,6 +88,6 @@ class ProductOfferStockStoragePublishListenerTest extends Unit
             $productOfferStockTransfer->getProductOffer()->getProductOfferReference()
         );
 
-        $this->assertSame($expectedAvailability, $productOfferAvailability);
+        $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());
     }
 }
