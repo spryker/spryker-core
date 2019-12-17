@@ -102,6 +102,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             );
 
         $bundleProductEntity = new SpyProductBundle();
+        $bundleProductEntity->setFkProduct(1);
 
         $productBundleAvailabilityHandlerMock->method('findBundleProductEntityBySku')->willReturn($bundleProductEntity);
 
@@ -186,9 +187,11 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setQuantity($bundleQuantity);
         $productEntity = new SpyProduct();
+        $productEntity->setIdProduct(1);
 
         $productEntity->setSku($bundledItemSku);
         $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
+        $productBundleEntity->setFkProduct(1);
         $bundleItems[] = $productBundleEntity;
 
         $productBundleAvailabilityHandlerMock->method('getBundleItemsByIdProduct')
