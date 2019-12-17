@@ -49,6 +49,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     {
         $priceMode = $changeTransfer->getQuote()->getPriceMode();
         $currencyCode = $changeTransfer->getQuote()->getCurrency()->getCode();
+
         foreach ($changeTransfer->getItems() as $itemTransfer) {
             $this->expandProductOptionTransfers($itemTransfer, $priceMode, $currencyCode);
         }
@@ -59,11 +60,11 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
-     * @param string|null $currencyCode
+     * @param string $currencyCode
      *
      * @return void
      */
-    protected function expandProductOptionTransfers(ItemTransfer $itemTransfer, $priceMode, $currencyCode = null)
+    protected function expandProductOptionTransfers(ItemTransfer $itemTransfer, $priceMode, string $currencyCode)
     {
         $productOptions = $itemTransfer->getProductOptions();
 

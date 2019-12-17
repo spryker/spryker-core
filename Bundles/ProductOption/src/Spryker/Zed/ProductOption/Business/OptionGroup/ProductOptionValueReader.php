@@ -44,7 +44,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValue, $currencyCode = null)
+    public function getProductOption($idProductOptionValue, ?string $currencyCode = null)
     {
         $productOptionValueEntity = $this->findOptionValueById((int)$idProductOptionValue);
 
@@ -108,7 +108,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function hydrateProductOptionTransfer(SpyProductOptionValue $productOptionValueEntity, $currencyCode = null)
+    protected function hydrateProductOptionTransfer(SpyProductOptionValue $productOptionValueEntity, ?string $currencyCode = null)
     {
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->fromArray($productOptionValueEntity->toArray(), true);

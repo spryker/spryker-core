@@ -35,7 +35,7 @@ interface ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValue, $currencyCode = null);
+    public function getProductOption($idProductOptionValue, ?string $currencyCode = null);
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer

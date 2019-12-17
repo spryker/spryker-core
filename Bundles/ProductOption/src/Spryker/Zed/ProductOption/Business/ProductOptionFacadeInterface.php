@@ -92,7 +92,7 @@ interface ProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValueById($idProductOptionValue, $currencyCode = null);
+    public function getProductOptionValueById($idProductOptionValue, ?string $currencyCode = null);
 
     /**
      * Specification:
