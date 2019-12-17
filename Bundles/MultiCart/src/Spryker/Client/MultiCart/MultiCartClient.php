@@ -38,6 +38,8 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @api
      *
+     * @deprecated Use `setActiveQuote()` instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -47,6 +49,22 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
         return $this->getFactory()
             ->createCartUpdater()
             ->setDefaultQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartUpdater()
+            ->setActiveQuote($quoteTransfer);
     }
 
     /**

@@ -44,32 +44,24 @@ class CartOperation implements CartOperationInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartOperationAddAfterPluginInterface[]
-     */
-    protected $cartOperationAddAfterPlugins;
-
-    /**
      * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface $quoteResolver
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface $quoteItemOperations
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartOperationAddAfterPluginInterface[] $cartOperationAddAfterPlugins
      */
     public function __construct(
         QuoteItemFinderPluginInterface $itemFinderPlugin,
         QuoteResponseExpanderInterface $quoteResponseExpander,
         QuoteResolverInterface $quoteResolver,
         QuoteItemOperationInterface $quoteItemOperations,
-        PersistentCartToQuoteFacadeInterface $quoteFacade,
-        array $cartOperationAddAfterPlugins
+        PersistentCartToQuoteFacadeInterface $quoteFacade
     ) {
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->itemFinderPlugin = $itemFinderPlugin;
         $this->quoteResolver = $quoteResolver;
         $this->quoteItemOperation = $quoteItemOperations;
         $this->quoteFacade = $quoteFacade;
-        $this->cartOperationAddAfterPlugins = $cartOperationAddAfterPlugins;
     }
 
     /**
@@ -95,12 +87,7 @@ class CartOperation implements CartOperationInterface
             $persistentCartChangeTransfer->getQuote()
         );
 
-        $quoteResponseTransfer = $this->quoteItemOperation
-            ->addItems($persistentCartChangeTransfer->getItems()->getArrayCopy(), $quoteTransfer);
-
-        $this->executeCartOperationAddAfterPlugins($persistentCartChangeTransfer, $quoteResponseTransfer);
-
-        return $quoteResponseTransfer;
+        return $this->quoteItemOperation->addItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
     }
 
     /**
@@ -126,12 +113,7 @@ class CartOperation implements CartOperationInterface
             $persistentCartChangeTransfer->getQuote()
         );
 
-        $quoteResponseTransfer = $this->quoteItemOperation
-            ->addValidItems($persistentCartChangeTransfer->getItems()->getArrayCopy(), $quoteTransfer);
-
-        $this->executeCartOperationAddAfterPlugins($persistentCartChangeTransfer, $quoteResponseTransfer);
-
-        return $quoteResponseTransfer;
+        return $this->quoteItemOperation->addValidItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
     }
 
     /**
@@ -512,20 +494,5 @@ class CartOperation implements CartOperationInterface
         $quoteResponseTransfer->setIsSuccessful(false);
 
         return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return void
-     */
-    protected function executeCartOperationAddAfterPlugins(
-        PersistentCartChangeTransfer $persistentCartChangeTransfer,
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): void {
-        foreach ($this->cartOperationAddAfterPlugins as $cartOperationAddAfterPlugin) {
-            $cartOperationAddAfterPlugin->execute($persistentCartChangeTransfer, $quoteResponseTransfer);
-        }
     }
 }

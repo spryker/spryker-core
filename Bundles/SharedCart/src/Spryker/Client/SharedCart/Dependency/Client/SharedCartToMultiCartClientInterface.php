@@ -33,9 +33,18 @@ interface SharedCartToMultiCartClientInterface
     public function findQuoteById(int $idQuote): ?QuoteTransfer;
 
     /**
+     * @deprecated Use `setActiveQuote()` instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

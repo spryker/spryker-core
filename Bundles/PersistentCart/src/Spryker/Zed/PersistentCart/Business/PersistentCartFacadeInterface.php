@@ -33,7 +33,6 @@ interface PersistentCartFacadeInterface
      *  - Recalculates quote (-> Calculation).
      *  - Adds success message to messenger (-> Messenger).
      *  - Calls quote response extend plugins.
-     *  - Executes `CartOperationAddAfterPlugin` stack.
      *  - Returns updated quote.
      *
      * @api
@@ -59,7 +58,6 @@ interface PersistentCartFacadeInterface
      *  - Recalculates quote (-> Calculation).
      *  - Add success message to messenger (-> Messenger).
      *  - Calls quote response extend plugins.
-     *  - Executes `CartOperationAddAfterPlugin` stack.
      *  - Returns updated quote.
      *
      * @api
