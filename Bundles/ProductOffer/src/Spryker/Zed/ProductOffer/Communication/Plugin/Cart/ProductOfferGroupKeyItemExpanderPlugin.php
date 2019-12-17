@@ -22,7 +22,7 @@ class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements I
 
     /**
      * {@inheritDoc}
-     * - Expands items with product offer property with group key.
+     * - Expands item group key with product offer reference.
      *
      * @api
      *
@@ -33,7 +33,9 @@ class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements I
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setGroupKey($this->buildGroupKey($itemTransfer));
+            if ($itemTransfer->getProductOffer()) {
+                $itemTransfer->setGroupKey($this->buildGroupKey($itemTransfer));
+            }
         }
 
         return $cartChangeTransfer;
@@ -46,10 +48,6 @@ class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements I
      */
     protected function buildGroupKey(ItemTransfer $itemTransfer): string
     {
-        if ($itemTransfer->getProductOffer()) {
-            return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOffer()->getProductOfferReference();
-        }
-
-        return $itemTransfer->getGroupKey();
+        return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOffer()->getProductOfferReference();
     }
 }
