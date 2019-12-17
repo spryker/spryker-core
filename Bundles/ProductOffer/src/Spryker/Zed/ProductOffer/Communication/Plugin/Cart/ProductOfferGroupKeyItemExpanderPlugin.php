@@ -18,16 +18,19 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-    public const GROUP_KEY_DELIMITER = '_';
+    protected const GROUP_KEY_DELIMITER = '_';
 
     /**
+     * {@inheritDoc}
+     * - Expands items with product offer property with group key.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setGroupKey($this->buildGroupKey($itemTransfer));
@@ -43,6 +46,10 @@ class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements I
      */
     protected function buildGroupKey(ItemTransfer $itemTransfer): string
     {
-        return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOffer()->getProductOfferReference();
+        if ($itemTransfer->getProductOffer()) {
+            return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOffer()->getProductOfferReference();
+        }
+
+        return $itemTransfer->getGroupKey();
     }
 }
