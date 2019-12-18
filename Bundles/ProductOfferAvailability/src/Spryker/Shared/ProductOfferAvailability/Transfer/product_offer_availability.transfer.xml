@@ -26,6 +26,7 @@
     <transfer name="ProductConcreteAvailability">
         <property name="availability" type="decimal"/>
         <property name="sku" type="string"/>
+        <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferStockRequest">

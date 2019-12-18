@@ -32,6 +32,7 @@
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="skuProduct" type="string"/>
         <property name="itemIdentifier" type="string"/>
+        <property name="isMergeable" type="bool"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
@@ -42,6 +43,7 @@
     <transfer name="MoneyValue">
         <property name="fkStore" type="int"/>
         <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
     </transfer>
 
     <transfer name="Currency">
