@@ -174,6 +174,7 @@ class ProductMapper implements ProductMapperInterface
     public function mapProductConcreteEntitiesToProductConcreteTransfersWithoutAdditionalTransfers(SpyProduct $productEntity, ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $attributes = $this->utilEncodingService->decodeJson($productEntity->getAttributes());
+        
         return $productConcreteTransfer
             ->fromArray($productEntity->toArray(), true)
             ->setAttributes(is_array($attributes) ? $attributes : [])
