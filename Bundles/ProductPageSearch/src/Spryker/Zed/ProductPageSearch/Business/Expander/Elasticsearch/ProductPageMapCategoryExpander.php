@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch;
 
+use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedCategoryQueryExpanderPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderInterface
@@ -21,6 +21,8 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     protected const KEY_PRODUCT_ORDER = 'product_order';
     protected const KEY_CATEGORY_NAMES = 'category_names';
     protected const KEY_BOOSTED_CATEGORY_NAMES = 'boosted_category_names';
+
+    protected const PATTERN_SORT_FIELD_NAME = '%s:%d';
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -141,20 +143,20 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
         array $productData
     ): void {
         $sortedCategories = $productData[static::KEY_SORTED_CATEGORIES];
-        $parentCategoryTreesToUpdateSorting = $this->getParentCategoryTreesToUpdateSorting($sortedCategories);
+        $parentCategoryMap = $this->getParentCategoryMap($sortedCategories);
 
         foreach ($sortedCategories as $idCategoryNode => $sortedCategory) {
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
-                SortedCategoryQueryExpanderPlugin::buildSortFieldName($idCategoryNode),
+                $this->buildSortFieldName($idCategoryNode),
                 $sortedCategory[static::KEY_PRODUCT_ORDER]
             );
 
-            $this->setSortingForTreeParents(
+            $this->setSortingForCategoryParents(
                 $pageMapBuilder,
                 $pageMapTransfer,
                 $sortedCategory[static::KEY_PRODUCT_ORDER],
-                $parentCategoryTreesToUpdateSorting[$idCategoryNode]
+                $parentCategoryMap[$idCategoryNode]
             );
         }
     }
@@ -164,46 +166,46 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
      *
      * @return int[][]
      */
-    protected function getParentCategoryTreesToUpdateSorting(array $sortedCategories): array
+    protected function getParentCategoryMap(array $sortedCategories): array
     {
-        $parentCategoryTreesToUpdateSorting = [];
+        $parentCategoryMap = [];
 
         foreach ($sortedCategories as $idCategoryNode => $sortedCategory) {
-            $parentCategoryTreesToUpdateSorting[$idCategoryNode] = $this->getSanitizedParentCategoryTree($sortedCategories, $idCategoryNode);
+            $parentCategoryMap[$idCategoryNode] = $this->filterParentCategoryMap($sortedCategories, $idCategoryNode);
         }
 
-        return $parentCategoryTreesToUpdateSorting;
+        return $parentCategoryMap;
     }
 
     /**
      * @param array[] $sortedCategories
-     * @param int $idCurrentCategoryNode
+     * @param int $idCategoryNode
      *
      * @return int[]
      */
-    protected function getSanitizedParentCategoryTree(array $sortedCategories, int $idCurrentCategoryNode): array
+    protected function filterParentCategoryMap(array $sortedCategories, int $idCategoryNode): array
     {
-        if (!$this->hasCategoryParentNodes($sortedCategories, $idCurrentCategoryNode)) {
+        if (!$this->hasCategoryParentNodes($sortedCategories, $idCategoryNode)) {
             return [];
         }
 
-        $currentCategoryParentNodeIds = $sortedCategories[$idCurrentCategoryNode][static::KEY_ALL_NODE_PARENTS];
+        $currentCategoryParentNodeIds = $sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS];
 
-        foreach ($sortedCategories as $idCategoryNode => $sortedCategory) {
-            if (!$this->canCategoryBeProcessed($sortedCategories, $idCurrentCategoryNode, $idCategoryNode)) {
+        foreach ($sortedCategories as $idSortedCategoryNode => $sortedCategory) {
+            if ($idSortedCategoryNode === $idCategoryNode || !$this->hasCategoryParentNodes($sortedCategories, $idCategoryNode)) {
                 continue;
             }
 
-            $categoryParentNodeIds = $sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS];
+            $categoryParentNodeIds = $sortedCategories[$idSortedCategoryNode][static::KEY_ALL_NODE_PARENTS];
 
-            if (!in_array($idCategoryNode, $currentCategoryParentNodeIds, true)) {
+            if (!in_array($idSortedCategoryNode, $currentCategoryParentNodeIds, true)) {
                 continue;
             }
 
             $currentCategoryParentNodeIds = array_diff($currentCategoryParentNodeIds, $categoryParentNodeIds);
         }
 
-        return $currentCategoryParentNodeIds;
+        return array_diff($currentCategoryParentNodeIds, [$idCategoryNode]);
     }
 
     /**
@@ -218,18 +220,6 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     }
 
     /**
-     * @param array[] $sortedCategories
-     * @param int $idCurrentCategoryNode
-     * @param int $idCategoryNode
-     *
-     * @return bool
-     */
-    protected function canCategoryBeProcessed(array $sortedCategories, int $idCurrentCategoryNode, int $idCategoryNode): bool
-    {
-        return $idCurrentCategoryNode !== $idCategoryNode && $this->hasCategoryParentNodes($sortedCategories, $idCategoryNode);
-    }
-
-    /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param int $productOrder
@@ -237,7 +227,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
      *
      * @return void
      */
-    protected function setSortingForTreeParents(
+    protected function setSortingForCategoryParents(
         PageMapBuilderInterface $pageMapBuilder,
         PageMapTransfer $pageMapTransfer,
         $productOrder,
@@ -246,9 +236,23 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
         foreach ($parentCategoryNodeIds as $idParentCategoryNode) {
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
-                SortedCategoryQueryExpanderPlugin::buildSortFieldName($idParentCategoryNode),
+                $this->buildSortFieldName($idParentCategoryNode),
                 $productOrder
             );
         }
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return string
+     */
+    protected static function buildSortFieldName($idCategoryNode): string
+    {
+        return sprintf(
+            static::PATTERN_SORT_FIELD_NAME,
+            PageIndexMap::CATEGORY,
+            $idCategoryNode
+        );
     }
 }
