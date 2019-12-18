@@ -167,4 +167,14 @@ class ProductMapper implements ProductMapperInterface
 
         return $productConcreteTransfer;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function mapProductConcreteEntitiesToProductConcreteTransfersWithoutAdditionalTransfers(SpyProduct $productEntity, ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        return $productConcreteTransfer
+            ->fromArray($productEntity->toArray(), true)
+            ->setIdProductConcrete($productEntity->getIdProduct());
+    }
 }
