@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
+namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class CartItemResourceBuilder implements CartItemResourceBuilderInterface
+class ItemResponseBuilder implements ItemResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -45,7 +45,7 @@ class CartItemResourceBuilder implements CartItemResourceBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function buildCartItemResource(
+    public function createCartItemResource(
         RestResourceInterface $cartResource,
         ItemTransfer $itemTransfer,
         string $localeName
@@ -59,7 +59,31 @@ class CartItemResourceBuilder implements CartItemResourceBuilderInterface
             )
         );
 
-        return $this->addSelfLink($itemResource, $cartResource, $itemTransfer);
+        return $this->addSelfLinkToCartItemResource($itemResource, $cartResource, $itemTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $guestCartResource
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function createGuestCartItemResource(
+        RestResourceInterface $guestCartResource,
+        ItemTransfer $itemTransfer,
+        string $localeName
+    ): RestResourceInterface {
+        $itemResource = $this->restResourceBuilder->createRestResource(
+            CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
+            $itemTransfer->getGroupKey(),
+            $this->cartItemMapper->mapItemTransferToRestItemsAttributesTransfer(
+                $itemTransfer,
+                $localeName
+            )
+        );
+
+        return $this->addSelfLinkToCartGuestItemResource($itemResource, $guestCartResource, $itemTransfer);
     }
 
     /**
@@ -69,7 +93,7 @@ class CartItemResourceBuilder implements CartItemResourceBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function addSelfLink(
+    protected function addSelfLinkToCartItemResource(
         RestResourceInterface $itemResource,
         RestResourceInterface $cartResource,
         ItemTransfer $itemTransfer
@@ -81,6 +105,30 @@ class CartItemResourceBuilder implements CartItemResourceBuilderInterface
                 CartsRestApiConfig::RESOURCE_CARTS,
                 $cartResource->getId(),
                 CartsRestApiConfig::RESOURCE_CART_ITEMS,
+                $itemTransfer->getGroupKey()
+            )
+        );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $itemResource
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $guestCartResource
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function addSelfLinkToCartGuestItemResource(
+        RestResourceInterface $itemResource,
+        RestResourceInterface $guestCartResource,
+        ItemTransfer $itemTransfer
+    ): RestResourceInterface {
+        return $itemResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            sprintf(
+                '%s/%s/%s/%s',
+                CartsRestApiConfig::RESOURCE_GUEST_CARTS,
+                $guestCartResource->getId(),
+                CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
                 $itemTransfer->getGroupKey()
             )
         );

@@ -10,7 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface GuestCartRestResponseBuilderInterface extends BaseCartRestResponseBuilderInterface
+interface GuestCartRestResponseBuilderInterface
 {
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

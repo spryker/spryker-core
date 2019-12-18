@@ -9,7 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
-use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemResourceBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteResourceRelationshipExpanderInterface
@@ -20,29 +20,29 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
     protected $cartReader;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemResourceBuilderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface
      */
-    protected $cartItemResourceBuilder;
+    protected $itemResponseBuilder;
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
-     * @param \Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemResourceBuilderInterface $cartItemResourceBuilder
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface $itemResponseBuilder
      */
     public function __construct(
         CartReaderInterface $cartReader,
-        CartItemResourceBuilderInterface $cartItemResourceBuilder
+        ItemResponseBuilderInterface $itemResponseBuilder
     ) {
         $this->cartReader = $cartReader;
-        $this->cartItemResourceBuilder = $cartItemResourceBuilder;
+        $this->itemResponseBuilder = $itemResponseBuilder;
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
             /**
@@ -54,7 +54,7 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
             }
 
             foreach ($quoteTransfer->getItems() as $itemTransfer) {
-                $itemResource = $this->cartItemResourceBuilder->buildCartItemResource(
+                $itemResource = $this->itemResponseBuilder->createCartItemResource(
                     $resource,
                     $itemTransfer,
                     $restRequest->getMetadata()->getLocale()
@@ -63,7 +63,5 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
                 $resource->addRelationship($itemResource);
             }
         }
-
-        return $resources;
     }
 }
