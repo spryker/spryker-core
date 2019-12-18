@@ -28,6 +28,7 @@ class ProductOfferHelper extends Module
      */
     public function haveProductOffer(array $seedData = []): ProductOfferTransfer
     {
+        /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
         $productOfferTransfer = (new ProductOfferBuilder($seedData))->build();
         $productOfferTransfer->setIdProductOffer(null);
 
@@ -61,6 +62,8 @@ class ProductOfferHelper extends Module
             $productOfferStoreEntity->delete();
         });
 
-        return (new ProductOfferStoreTransfer)->fromArray($productOfferStoreEntity->toArray(), true);
+        $productOfferStoreTransfer = new ProductOfferStoreTransfer();
+
+        return $productOfferStoreTransfer->fromArray($productOfferStoreEntity->toArray(), true);
     }
 }
