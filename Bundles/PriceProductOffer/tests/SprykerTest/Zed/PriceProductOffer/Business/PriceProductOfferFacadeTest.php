@@ -56,8 +56,10 @@ class PriceProductOfferFacadeTest extends Unit
 
         // Act
         $priceProductOfferTransfers = $this->tester->getFacade()
-            ->getPriceProductOfferTransfers([
-                $priceProductOfferTransfer->getProductOffer()->getConcreteSku()],
+            ->getPriceProductOfferTransfers(
+                [
+                    $priceProductOfferTransfer->getProductOffer()->getConcreteSku(),
+                ],
                 (new PriceProductCriteriaTransfer())
                     ->setIdCurrency($priceProductOfferTransfer->getFkCurrency())
             );

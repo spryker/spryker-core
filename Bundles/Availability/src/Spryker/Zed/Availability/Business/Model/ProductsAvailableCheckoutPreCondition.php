@@ -70,7 +70,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param  string $itemIdentifier
+     * @param string $itemIdentifier
      *
      * @return \Spryker\DecimalObject\Decimal
      */
