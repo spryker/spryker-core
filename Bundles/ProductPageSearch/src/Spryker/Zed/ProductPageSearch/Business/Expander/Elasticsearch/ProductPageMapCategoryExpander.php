@@ -74,7 +74,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
         array $directParentCategories,
         array $productData
     ): void {
-        $this->setFullTextSearchForDirectParents($pageMapBuilder, $pageMapTransfer, $directParentCategories, $productData);
+        $this->setFullTextBoostedSearchForDirectParents($pageMapBuilder, $pageMapTransfer, $directParentCategories, $productData);
         $this->setFullTextSearchForAllParents($pageMapBuilder, $pageMapTransfer, $allParentCategories, $directParentCategories, $productData);
     }
 
@@ -86,7 +86,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
      *
      * @return void
      */
-    protected function setFullTextSearchForDirectParents(
+    protected function setFullTextBoostedSearchForDirectParents(
         PageMapBuilderInterface $pageMapBuilder,
         PageMapTransfer $pageMapTransfer,
         array $directParentCategories,
