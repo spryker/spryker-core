@@ -8,6 +8,13 @@
         <property name="store" type="Store"/>
     </transfer>
 
+    <transfer name="ProductOfferStock">
+        <property name="idProductOfferStock" type="int"/>
+        <property name="quantity" type="decimal"/>
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="stock" type="Stock"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="idStore" type="int"/>
     </transfer>

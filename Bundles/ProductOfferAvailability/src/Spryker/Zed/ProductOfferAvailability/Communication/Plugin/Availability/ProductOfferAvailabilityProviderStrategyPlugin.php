@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductOfferAvailability\Business\ProductOfferAvailabilityFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOfferAvailability\ProductOfferAvailabilityConfig getConfig()
  */
 class ProductOfferAvailabilityProviderStrategyPlugin extends AbstractPlugin implements AvailabilityProviderStrategyPluginInterface
 {

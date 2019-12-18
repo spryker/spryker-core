@@ -2,6 +2,9 @@ namespace: ProductOfferAvailabilityStorage
 
 actor: Tester
 
+include:
+    - tests/SprykerTest/Zed/ProductOfferAvailabilityStorage
+
 paths:
     tests: tests
     log: tests/_output
