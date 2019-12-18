@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
-interface ProductCategoryMapExpanderInterface
+interface ProductPageMapCategoryExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -21,7 +21,7 @@ interface ProductCategoryMapExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductMapWithCategoryData(
+    public function expandProductPageMapWithCategoryData(
         PageMapTransfer $pageMapTransfer,
         PageMapBuilderInterface $pageMapBuilder,
         array $productData,

@@ -39,7 +39,7 @@ class ProductCategoryMapExpanderPlugin extends AbstractPlugin implements Product
         array $productData,
         LocaleTransfer $localeTransfer
     ) {
-        return $this->getFacade()->expandProductMapWithCategoryData(
+        return $this->getFacade()->expandProductPageMapWithCategoryData(
             $pageMapTransfer,
             $pageMapBuilder,
             $productData,

@@ -178,15 +178,15 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductMapWithCategoryData(
+    public function expandProductPageMapWithCategoryData(
         PageMapTransfer $pageMapTransfer,
         PageMapBuilderInterface $pageMapBuilder,
         array $productData,
         LocaleTransfer $localeTransfer
     ): PageMapTransfer {
         return $this->getFactory()
-            ->createProductCategoryMapExpander()
-            ->expandProductMapWithCategoryData(
+            ->createProductPageMapCategoryExpander()
+            ->expandProductPageMapWithCategoryData(
                 $pageMapTransfer,
                 $pageMapBuilder,
                 $productData,

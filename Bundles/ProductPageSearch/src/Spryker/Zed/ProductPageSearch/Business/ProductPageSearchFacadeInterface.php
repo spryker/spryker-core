@@ -150,7 +150,7 @@ interface ProductPageSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductMapWithCategoryData(
+    public function expandProductPageMapWithCategoryData(
         PageMapTransfer $pageMapTransfer,
         PageMapBuilderInterface $pageMapBuilder,
         array $productData,

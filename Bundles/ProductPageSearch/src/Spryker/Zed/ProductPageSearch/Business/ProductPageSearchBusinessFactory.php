@@ -13,8 +13,8 @@ use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataM
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductAbstractSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductConcreteSearchDataMapper;
-use Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductCategoryMapExpander;
-use Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductCategoryMapExpanderInterface;
+use Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductPageMapCategoryExpander;
+use Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductPageMapCategoryExpanderInterface;
 use Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpander;
 use Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpanderInterface;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapper;
@@ -263,10 +263,10 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductCategoryMapExpanderInterface
+     * @return \Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductPageMapCategoryExpanderInterface
      */
-    public function createProductCategoryMapExpander(): ProductCategoryMapExpanderInterface
+    public function createProductPageMapCategoryExpander(): ProductPageMapCategoryExpanderInterface
     {
-        return new ProductCategoryMapExpander();
+        return new ProductPageMapCategoryExpander();
     }
 }

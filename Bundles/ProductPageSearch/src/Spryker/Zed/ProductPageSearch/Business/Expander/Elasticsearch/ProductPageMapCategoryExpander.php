@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedCategoryQueryExpanderPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
-class ProductCategoryMapExpander implements ProductCategoryMapExpanderInterface
+class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderInterface
 {
     protected const KEY_CATEGORY_NODE_IDS = 'category_node_ids';
     protected const KEY_ALL_PARENT_CATEGORY_NODE_IDS = 'all_parent_category_ids';
@@ -30,7 +30,7 @@ class ProductCategoryMapExpander implements ProductCategoryMapExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductMapWithCategoryData(
+    public function expandProductPageMapWithCategoryData(
         PageMapTransfer $pageMapTransfer,
         PageMapBuilderInterface $pageMapBuilder,
         array $productData,
@@ -74,22 +74,57 @@ class ProductCategoryMapExpander implements ProductCategoryMapExpanderInterface
         array $directParentCategories,
         array $productData
     ): void {
+        $this->setFullTextSearchForDirectParents($pageMapBuilder, $pageMapTransfer, $directParentCategories, $productData);
+        $this->setFullTextSearchForAllParents($pageMapBuilder, $pageMapTransfer, $allParentCategories, $directParentCategories, $productData);
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param int[] $directParentCategories
+     * @param array $productData
+     *
+     * @return void
+     */
+    protected function setFullTextSearchForDirectParents(
+        PageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $directParentCategories,
+        array $productData
+    ): void {
         $boostedCategoryNames = $productData[static::KEY_BOOSTED_CATEGORY_NAMES];
         foreach ($directParentCategories as $idCategory) {
-            if (isset($boostedCategoryNames[$idCategory])) {
-                $pageMapBuilder->addFullTextBoosted($pageMapTransfer, $boostedCategoryNames[$idCategory]);
-            }
-        }
-
-        $categoryNames = $productData[static::KEY_CATEGORY_NAMES];
-        foreach ($allParentCategories as $idCategory) {
-            if (in_array($idCategory, $directParentCategories)) {
+            if (!isset($boostedCategoryNames[$idCategory])) {
                 continue;
             }
 
-            if (isset($categoryNames[$idCategory])) {
-                $pageMapBuilder->addFullText($pageMapTransfer, $categoryNames[$idCategory]);
+            $pageMapBuilder->addFullTextBoosted($pageMapTransfer, $boostedCategoryNames[$idCategory]);
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param int[] $allParentCategories
+     * @param int[] $directParentCategories
+     * @param array $productData
+     *
+     * @return void
+     */
+    protected function setFullTextSearchForAllParents(
+        PageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $allParentCategories,
+        array $directParentCategories,
+        array $productData
+    ): void {
+        $categoryNames = $productData[static::KEY_CATEGORY_NAMES];
+        foreach ($allParentCategories as $idCategory) {
+            if (in_array($idCategory, $directParentCategories) || !isset($categoryNames[$idCategory])) {
+                continue;
             }
+
+            $pageMapBuilder->addFullText($pageMapTransfer, $categoryNames[$idCategory]);
         }
     }
 
@@ -127,7 +162,7 @@ class ProductCategoryMapExpander implements ProductCategoryMapExpanderInterface
     /**
      * @param array[] $sortedCategories
      *
-     * @return array
+     * @return int[][]
      */
     protected function getParentCategoryTreesToUpdateSorting(array $sortedCategories): array
     {
@@ -191,12 +226,7 @@ class ProductCategoryMapExpander implements ProductCategoryMapExpanderInterface
      */
     protected function canCategoryBeProcessed(array $sortedCategories, int $idCurrentCategoryNode, int $idCategoryNode): bool
     {
-        if ($idCurrentCategoryNode === $idCategoryNode
-            || !$this->hasCategoryParentNodes($sortedCategories, $idCategoryNode)) {
-            return false;
-        }
-
-        return true;
+        return $idCurrentCategoryNode !== $idCategoryNode && $this->hasCategoryParentNodes($sortedCategories, $idCategoryNode);
     }
 
     /**
