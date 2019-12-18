@@ -242,7 +242,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
         PageMapTransfer $pageMapTransfer,
         $productOrder,
         array $parentCategoryNodeIds
-    ) {
+    ): void {
         foreach ($parentCategoryNodeIds as $idParentCategoryNode) {
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
