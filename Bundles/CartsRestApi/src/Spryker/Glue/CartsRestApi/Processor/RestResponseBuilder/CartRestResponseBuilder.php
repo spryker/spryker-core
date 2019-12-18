@@ -102,6 +102,27 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        foreach ($errors as $quoteErrorTransfer) {
+            $restResponse->addError(
+                $this->cartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                    $quoteErrorTransfer,
+                    new RestErrorMessageTransfer()
+                )
+            );
+        }
+
+        return $restResponse;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
@@ -147,26 +168,5 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         );
 
         $cartResource->addRelationship($itemResource);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        foreach ($errors as $quoteErrorTransfer) {
-            $restResponse->addError(
-                $this->cartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
-                    $quoteErrorTransfer,
-                    new RestErrorMessageTransfer()
-                )
-            );
-        }
-
-        return $restResponse;
     }
 }
