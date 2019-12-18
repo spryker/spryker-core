@@ -71,7 +71,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
         foreach ($productOptions as &$productOptionTransfer) {
             $productOptionTransfer->requireIdProductOptionValue();
 
-            $productOptionTransfer = $this->productOptionFacade->getProductOptionValue(
+            $productOptionTransfer = $this->productOptionFacade->getProductOptionValueById(
                 $productOptionTransfer->getIdProductOptionValue(),
                 $currencyCode
             );
