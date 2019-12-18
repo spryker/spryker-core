@@ -12,7 +12,7 @@ interface MerchantProductOfferFacadeInterface
     /**
      * Specification:
      *  - Checks if merchant is active for items with product offers.
-     *  - Returns error messages for an items with inactive merchant.
+     *  - Returns error messages for items with inactive merchant.
      *
      * @api
      *

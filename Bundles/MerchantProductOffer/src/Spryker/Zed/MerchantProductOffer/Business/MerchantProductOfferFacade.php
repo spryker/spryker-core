@@ -26,7 +26,7 @@ class MerchantProductOfferFacade extends AbstractFacade implements MerchantProdu
     public function validateItems(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createProductOfferItemValidator()
+            ->createMerchantProductOfferItemValidator()
             ->validateItems($itemTransfers);
     }
 }

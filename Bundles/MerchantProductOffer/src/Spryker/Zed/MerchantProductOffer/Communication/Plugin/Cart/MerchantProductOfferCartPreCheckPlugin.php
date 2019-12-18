@@ -31,8 +31,7 @@ class MerchantProductOfferCartPreCheckPlugin extends AbstractPlugin implements C
      */
     public function check(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $messageTransfers = $this->getFacade()
-            ->validateItems($cartChangeTransfer->getItems()->getArrayCopy());
+        $messageTransfers = $this->getFacade()->validateItems($cartChangeTransfer->getItems()->getArrayCopy());
 
         return (new CartPreCheckResponseTransfer())
             ->setMessages(new ArrayObject($messageTransfers))

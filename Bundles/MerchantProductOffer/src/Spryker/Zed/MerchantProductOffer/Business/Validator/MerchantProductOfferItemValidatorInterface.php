@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Business\Validator;
 
-interface ProductOfferItemValidatorInterface
+interface MerchantProductOfferItemValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers

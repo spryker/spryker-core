@@ -8,19 +8,19 @@
 namespace Spryker\Zed\MerchantProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantProductOffer\Business\Validator\ProductOfferItemValidator;
-use Spryker\Zed\MerchantProductOffer\Business\Validator\ProductOfferItemValidatorInterface;
+use Spryker\Zed\MerchantProductOffer\Business\Validator\MerchantProductOfferItemValidator;
+use Spryker\Zed\MerchantProductOffer\Business\Validator\MerchantProductOfferItemValidatorInterface;
 use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOffer\MerchantProductOfferDependencyProvider;
 
 class MerchantProductOfferBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantProductOffer\Business\Validator\ProductOfferItemValidatorInterface
+     * @return \Spryker\Zed\MerchantProductOffer\Business\Validator\MerchantProductOfferItemValidatorInterface
      */
-    public function createProductOfferItemValidator(): ProductOfferItemValidatorInterface
+    public function createMerchantProductOfferItemValidator(): MerchantProductOfferItemValidatorInterface
     {
-        return new ProductOfferItemValidator(
+        return new MerchantProductOfferItemValidator(
             $this->getMerchantFacade()
         );
     }

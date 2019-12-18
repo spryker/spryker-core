@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToMerchantFacadeInterface;
 
-class ProductOfferItemValidator implements ProductOfferItemValidatorInterface
+class MerchantProductOfferItemValidator implements MerchantProductOfferItemValidatorInterface
 {
     protected const MESSAGE_TYPE_ERROR = 'error';
 
