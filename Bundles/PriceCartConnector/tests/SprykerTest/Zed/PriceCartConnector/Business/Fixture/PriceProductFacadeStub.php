@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\PriceCartConnector\Business\Fixture;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -113,6 +114,17 @@ class PriceProductFacadeStub extends PriceProductFacade
     public function getDefaultPriceTypeName(): string
     {
         return 'DEFAULT';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductMatchingItem(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
+    {
+        return $priceProductTransfer->getSkuProduct() === $itemTransfer->getSku();
     }
 
     /**
