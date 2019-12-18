@@ -25,10 +25,12 @@
 
     <transfer name="ProductConcreteAvailability">
         <property name="availability" type="decimal"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferStockRequest">
         <property name="productOfferReference" type="string"/>
+        <property name="store" type="Store"/>
     </transfer>
 
 </transfers>

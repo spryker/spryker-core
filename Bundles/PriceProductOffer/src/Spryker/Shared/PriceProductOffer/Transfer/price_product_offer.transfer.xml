@@ -21,6 +21,7 @@
 
     <transfer name="PriceProductCriteria">
         <property name="productOffer" type="ProductOffer"/>
+        <property name="idCurrency" type="int"/>
     </transfer>
 
     <transfer name="Item">
@@ -30,14 +31,17 @@
     <transfer name="PriceProduct">
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="skuProduct" type="string"/>
+        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
         <property name="type" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="MoneyValue">
         <property name="fkStore" type="int"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Currency">

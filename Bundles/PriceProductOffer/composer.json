@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/currency": "^3.0.0",
-    "spryker/currency": "^3.33.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/price-product": "^4.0.0",
     "spryker/price-product-extension": "^1.3.0",
     "spryker/product-offer": "^0.1.0",
@@ -14,6 +14,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
