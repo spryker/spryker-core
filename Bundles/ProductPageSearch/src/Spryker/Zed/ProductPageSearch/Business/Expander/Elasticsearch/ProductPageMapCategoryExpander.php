@@ -22,8 +22,6 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     protected const KEY_CATEGORY_NAMES = 'category_names';
     protected const KEY_BOOSTED_CATEGORY_NAMES = 'boosted_category_names';
 
-    protected const PATTERN_SORT_FIELD_NAME = '%s:%d';
-
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
@@ -250,7 +248,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     protected static function buildSortFieldName($idCategoryNode): string
     {
         return sprintf(
-            static::PATTERN_SORT_FIELD_NAME,
+            '%s:%d',
             PageIndexMap::CATEGORY,
             $idCategoryNode
         );
