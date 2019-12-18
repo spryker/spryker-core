@@ -215,7 +215,7 @@ class ProductPageSearchFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider expandProductPageMapWithCategoryDataShouldExpandProductMapDataWithProductCategoryDataDataProvider
+     * @dataProvider expandProductPageMapWithCategoryDataDataProvider
      *
      * @param array $productData
      * @param \Generated\Shared\Transfer\PageMapTransfer $expectedPageMapTransfer
@@ -249,7 +249,7 @@ class ProductPageSearchFacadeTest extends Unit
     /**
      * @return array
      */
-    public function expandProductPageMapWithCategoryDataShouldExpandProductMapDataWithProductCategoryDataDataProvider(): array
+    public function expandProductPageMapWithCategoryDataDataProvider(): array
     {
         return [
             'different parent categories' => $this->getDataWithDifferentParentCategories(),
@@ -263,16 +263,8 @@ class ProductPageSearchFacadeTest extends Unit
     protected function getDataWithDifferentParentCategories(): array
     {
         $productData = [
-            'category_node_ids' => [
-                0 => 14,
-                1 => 8,
-            ],
-            'all_parent_category_ids' => [
-                0 => 14,
-                1 => 1,
-                2 => 5,
-                3 => 8,
-            ],
+            'category_node_ids' => [14, 8],
+            'all_parent_category_ids' => [14, 1, 5, 8],
             'boosted_category_names' => [
                 14 => 'Variant Showcase',
                 8 => 'Tablets',
@@ -283,43 +275,36 @@ class ProductPageSearchFacadeTest extends Unit
             'sorted_categories' => [
                 14 => [
                     'product_order' => 36,
-                    'all_node_parents' => [
-                        0 => 14,
-                        1 => 1,
-                    ],
+                    'all_node_parents' => [14, 1],
                 ],
                 8 => [
                     'product_order' => 13,
-                    'all_node_parents' => [
-                        0 => 5,
-                        1 => 8,
-                        2 => 1,
-                    ],
+                    'all_node_parents' => [5, 8, 1],
                 ],
             ],
         ];
 
         $expectedPageMapTransfer = (new PageMapTransfer())
             ->setCategory((new CategoryMapTransfer())
-                ->setAllParents([14, 1, 5, 8])
-                ->setDirectParents([14, 8]))
+                ->setAllParents($productData['all_parent_category_ids'])
+                ->setDirectParents($productData['category_node_ids']))
             ->setFullText(['Computer'])
             ->setFullTextBoosted(['Variant Showcase', 'Tablets'])
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:14')
-                ->setValue(36))
+                ->setValue($productData['sorted_categories'][14]['product_order']))
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:1')
-                ->setValue(36))
+                ->setValue($productData['sorted_categories'][14]['product_order']))
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:8')
-                ->setValue(13))
+                ->setValue($productData['sorted_categories'][8]['product_order']))
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:5')
-                ->setValue(13))
+                ->setValue($productData['sorted_categories'][8]['product_order']))
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:1')
-                ->setValue(13));
+                ->setValue($productData['sorted_categories'][8]['product_order']));
 
         return [
             $productData,
@@ -334,17 +319,8 @@ class ProductPageSearchFacadeTest extends Unit
     protected function getDataWithParentCategoriesIntersected(): array
     {
         $productData = [
-            'category_node_ids' => [
-                0 => 18,
-                1 => 16,
-            ],
-            'all_parent_category_ids' => [
-                0 => 18,
-                1 => 16,
-                2 => 3,
-                3 => 2,
-                4 => 1,
-            ],
+            'category_node_ids' => [18, 16],
+            'all_parent_category_ids' => [18, 16, 3, 2, 1],
             'boosted_category_names' => [
                 18 => 'Vegetables',
                 16 => 'Food',
@@ -357,46 +333,36 @@ class ProductPageSearchFacadeTest extends Unit
             'sorted_categories' => [
                 16 => [
                     'product_order' => 5,
-                    'all_node_parents' => [
-                        0 => 16,
-                        1 => 3,
-                        2 => 1,
-                    ],
+                    'all_node_parents' => [16, 3, 1],
                 ],
                 18 => [
                     'product_order' => 24,
-                    'all_node_parents' => [
-                        0 => 18,
-                        1 => 16,
-                        2 => 3,
-                        3 => 2,
-                        4 => 1,
-                    ],
+                    'all_node_parents' => [18, 16, 3, 2, 1],
                 ],
             ],
         ];
 
         $expectedPageMapTransfer = (new PageMapTransfer())
             ->setCategory((new CategoryMapTransfer())
-                ->setAllParents([18, 16, 3, 2, 1])
-                ->setDirectParents([18, 16]))
+                ->setAllParents($productData['all_parent_category_ids'])
+                ->setDirectParents($productData['category_node_ids']))
             ->setFullText(['Camcorders', 'Cameras And Camcorder', 'Demoshop'])
             ->setFullTextBoosted(['Vegetables', 'Food'])
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:16')
-                ->setValue(5))
+                ->setValue($productData['sorted_categories'][16]['product_order']))
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:3')
-                ->setValue(5))
+                ->setValue($productData['sorted_categories'][16]['product_order']))
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:1')
-                ->setValue(5))
+                ->setValue($productData['sorted_categories'][16]['product_order']))
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:18')
-                ->setValue(24))
+                ->setValue($productData['sorted_categories'][18]['product_order']))
             ->addIntegerSort((new IntegerSortMapTransfer())
                 ->setName('category:2')
-                ->setValue(24));
+                ->setValue($productData['sorted_categories'][18]['product_order']));
 
         return [
             $productData,
