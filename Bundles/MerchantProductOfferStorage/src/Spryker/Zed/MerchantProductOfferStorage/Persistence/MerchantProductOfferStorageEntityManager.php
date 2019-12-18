@@ -52,7 +52,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
                 ->createProductOfferStorageMapper()
                 ->mapProductOfferTransferToProductOfferStorageTransfer($productOfferTransfer, (new ProductOfferStorageTransfer()));
 
-            $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
+            $productOfferStorageEntity->setData($productOfferStorageTransfer->toArray());
             $productOfferStorageEntity->save();
         }
     }
@@ -133,10 +133,6 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
             ->filterByProductOfferReference_In($productOfferReferences)
             ->filterByStore($storeName)
             ->find();
-
-        if (empty($productOfferStorageEntities)) {
-            return;
-        }
 
         foreach ($productOfferStorageEntities as $productOfferStorageEntity) {
             $productOfferStorageEntity->delete();

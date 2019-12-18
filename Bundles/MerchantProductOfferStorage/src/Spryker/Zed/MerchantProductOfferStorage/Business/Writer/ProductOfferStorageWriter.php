@@ -95,6 +95,8 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         $productOfferReferencesToRemove = [];
+        $flippedProductOfferReferences = array_flip($productOfferReferences);
+
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             $productOfferReferencesToRemove[$storeTransfer->getName()] = $productOfferReferences;
         }
@@ -102,7 +104,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
             foreach ($productOfferTransfer->getStores() as $storeTransfer) {
-                unset($productOfferReferencesToRemove[$storeTransfer->getName()][array_search($productOfferTransfer->getProductOfferReference(), $productOfferReferences)]);
+                unset($productOfferReferencesToRemove[$storeTransfer->getName()][$flippedProductOfferReferences[$productOfferTransfer->getProductOfferReference()]]);
             }
         }
 

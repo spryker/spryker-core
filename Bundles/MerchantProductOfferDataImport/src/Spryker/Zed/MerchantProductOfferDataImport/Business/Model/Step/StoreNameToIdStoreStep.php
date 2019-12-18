@@ -24,25 +24,36 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
         $storeName = $dataSet[MerchantProductOfferDataSetInterface::STORE_NAME];
+
         if (!isset($this->idStoreCache[$storeName])) {
-            $idStore = SpyStoreQuery::create()
-                ->select(SpyStoreTableMap::COL_ID_STORE)
-                ->findOneByName($storeName);
-
-            if (!$idStore) {
-                throw new EntityNotFoundException(sprintf('Could not find store by name "%s"', $storeName));
-            }
-
-            $this->idStoreCache[$storeName] = $idStore;
+            $this->addIdStoreToCache($storeName);
         }
 
         $dataSet[MerchantProductOfferDataSetInterface::ID_STORE] = $this->idStoreCache[$storeName];
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return void
+     */
+    protected function addIdStoreToCache(string $storeName): void
+    {
+        $idStore = SpyStoreQuery::create()
+            ->select(SpyStoreTableMap::COL_ID_STORE)
+            ->findOneByName($storeName);
+
+        if (!$idStore) {
+            throw new EntityNotFoundException(sprintf('Could not find store by name "%s"', $storeName));
+        }
+
+        $this->idStoreCache[$storeName] = $idStore;
     }
 }

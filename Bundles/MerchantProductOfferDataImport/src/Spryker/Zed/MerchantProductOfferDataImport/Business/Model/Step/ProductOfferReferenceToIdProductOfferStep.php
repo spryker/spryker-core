@@ -34,7 +34,7 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
         $productOfferReference = $dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE];
 
         if (!$productOfferReference) {
-            throw new InvalidDataException('"' . MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE . '" is required.');
+            throw new InvalidDataException(sprintf('"%s" is required.', MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE));
         }
 
         if (!isset($this->idProductOfferCache[$productOfferReference])) {
