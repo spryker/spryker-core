@@ -24,7 +24,7 @@ interface ProductConcreteOffersStorageDeleterInterface
     public function deleteProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void;
 
     /**
-     * @param array $productSkus
+     * @param string[] $productSkus
      * @param string $storeName
      *
      * @return void

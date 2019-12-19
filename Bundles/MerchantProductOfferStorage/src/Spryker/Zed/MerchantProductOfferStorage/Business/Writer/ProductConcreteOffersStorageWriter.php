@@ -108,7 +108,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
         foreach ($productOffersGroupedBySku as $sku => $productOfferReferencesGroupedByStore) {
             foreach ($productOfferReferencesGroupedByStore as $store => $productOfferReferenceList) {
-                $productConcreteProductOffersStorageEntity = $this->getProductConcreteProductOffersStorageQuery()
+                $productConcreteProductOffersStorageEntity = $this->getProductConcreteProductOffersStoragePropelQuery()
                     ->filterByConcreteSku($sku)
                     ->filterByStore($store)
                     ->findOneOrCreate();
@@ -166,7 +166,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     /**
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery
      */
-    protected function getProductConcreteProductOffersStorageQuery(): SpyProductConcreteProductOffersStorageQuery
+    protected function getProductConcreteProductOffersStoragePropelQuery(): SpyProductConcreteProductOffersStorageQuery
     {
         return SpyProductConcreteProductOffersStorageQuery::create();
     }
