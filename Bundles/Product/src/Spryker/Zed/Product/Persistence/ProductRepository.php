@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductUrlFilterTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
@@ -22,6 +22,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Util\PropelModelPager;
@@ -492,25 +493,17 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductUrlFilterTransfer $productUrlFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getProductsUrls(ProductUrlFilterTransfer $productUrlFilterTransfer): array
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array
     {
-        if (!count($productUrlFilterTransfer->getProductAbstractIds())) {
-            return [];
-        }
-
         $urlQuery = $this->getFactory()
             ->getUrlQueryContainer()
-            ->queryUrls()
-            ->filterByFkResourceProductAbstract_In($productUrlFilterTransfer->getProductAbstractIds());
+            ->queryUrls();
 
-        if ($productUrlFilterTransfer->getIdLocale()) {
-            $urlQuery->filterByFkLocale($productUrlFilterTransfer->getIdLocale());
-        }
-
+        $urlQuery = $this->setUrlFilters($urlQuery, $productUrlCriteriaFilterTransfer);
         $urlEntities = $urlQuery->find();
 
         $urlTransfers = [];
@@ -520,5 +513,26 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $urlTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function setUrlFilters(
+        SpyUrlQuery $urlQuery,
+        ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+    ): SpyUrlQuery {
+        if (count($productUrlCriteriaFilterTransfer->getProductAbstractIds())) {
+            $urlQuery->filterByFkResourceProductAbstract_In($productUrlCriteriaFilterTransfer->getProductAbstractIds());
+        }
+
+        if ($productUrlCriteriaFilterTransfer->getIdLocale()) {
+            $urlQuery->filterByFkLocale($productUrlCriteriaFilterTransfer->getIdLocale());
+        }
+
+        return $urlQuery;
     }
 }

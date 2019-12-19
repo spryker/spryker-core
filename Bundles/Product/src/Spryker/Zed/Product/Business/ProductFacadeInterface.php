@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductUrlFilterTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductFacadeInterface
@@ -936,17 +936,16 @@ interface ProductFacadeInterface
     public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
 
     /**
-     * Specification
-     *  - Retrieves url records from Persistence.
-     *  - Filters by criteria from UrlFilterTransfer.
-     *  - Expects the ProductUrlFilterTransfer::productAbstractIds to be provided.
-     *  - Returns array of UrlTransfer.
+     * Specification:
+     * - Retrieves url records from Persistence.
+     * - Filters by criteria from ProductUrlCriteriaFilterTransfer.
+     * - Returns array of UrlTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductUrlFilterTransfer $productUrlFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getProductsUrls(ProductUrlFilterTransfer $productUrlFilterTransfer): array;
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
 }

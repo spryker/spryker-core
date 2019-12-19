@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductUrlFilterTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 
 interface ProductCartConnectorToProductInterface
 {
@@ -66,9 +66,9 @@ interface ProductCartConnectorToProductInterface
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductUrlFilterTransfer $productUrlFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getProductsUrls(ProductUrlFilterTransfer $productUrlFilterTransfer): array;
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
 }

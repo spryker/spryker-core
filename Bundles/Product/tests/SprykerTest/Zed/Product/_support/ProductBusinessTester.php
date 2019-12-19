@@ -131,29 +131,29 @@ class ProductBusinessTester extends Actor
     /**
      * @return void
      */
-    public function createProductsUrls()
+    public function createProductsUrls(): void
     {
-        foreach ($this->productAbstractIds as $productAbstractId) {
-            foreach ($this->getLocaleFacade()->getAvailableLocales() as $localeId => $leLocaleName) {
+        foreach ($this->productAbstractIds as $idProductAbstract) {
+            foreach ($this->getLocaleFacade()->getAvailableLocales() as $idLocale => $localeName) {
                 $this->haveUrl([
-                    UrlTransfer::FK_LOCALE => $localeId,
-                    UrlTransfer::FK_RESOURCE_PRODUCT_ABSTRACT => $productAbstractId,
-                    UrlTransfer::URL => $this->getProductUrl($productAbstractId, $leLocaleName),
+                    UrlTransfer::FK_LOCALE => $idLocale,
+                    UrlTransfer::FK_RESOURCE_PRODUCT_ABSTRACT => $idProductAbstract,
+                    UrlTransfer::URL => $this->getProductUrl($idProductAbstract, $localeName),
                 ]);
             }
         }
     }
 
     /**
-     * @param int $productAbstractId
+     * @param int $idProductAbstract
      * @param string $localeName
      *
      * @return string
      */
-    public function getProductUrl(int $productAbstractId, string $localeName): string
+    public function getProductUrl(int $idProductAbstract, string $localeName): string
     {
         return sprintf(
-            static::PRODUCT_URL . $productAbstractId,
+            static::PRODUCT_URL . $idProductAbstract,
             $localeName
         );
     }

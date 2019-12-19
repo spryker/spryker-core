@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\Product\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductUrlFilterTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\ProductFacade;
 
@@ -140,23 +140,22 @@ class ProductFacadeTest extends Unit
      */
     public function testGetProductsUrlsByOneProductAbstractIdAndLocale(): void
     {
-        //Arrange
+        // Arrange
         $this->tester->createProductsUrls();
 
-        $productAbstractId = $this->tester->getProductAbstractIds()[0];
+        $idProductAbstract = $this->tester->getProductAbstractIds()[0];
 
-        $productUrlFilterTransfer = (new ProductUrlFilterTransfer())
-            ->setProductAbstractIds([$productAbstractId])
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())
+            ->setProductAbstractIds([$idProductAbstract])
             ->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
 
-        $correctUrl = $this->tester->getProductUrl($productAbstractId, $this->tester->getLocaleFacade()->getCurrentLocale()->getLocaleName());
+        $correctUrl = $this->tester->getProductUrl($idProductAbstract, $this->tester->getLocaleFacade()->getCurrentLocale()->getLocaleName());
 
         // Act
-        $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlFilterTransfer);
+        $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(1, $productsUrls);
-
         $this->assertSame($correctUrl, $productsUrls[0]->getUrl());
     }
 
@@ -165,14 +164,15 @@ class ProductFacadeTest extends Unit
      */
     public function testGetProductsUrlsByLocaleAndWithoutProductAbstractIds(): void
     {
-        //Arrange
+        // Arrange
         $this->tester->createProductsUrls();
 
-        $productUrlFilterTransfer = (new ProductUrlFilterTransfer())
-            ->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())->setIdLocale(
+            $this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale()
+        );
 
         // Act
-        $productUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlFilterTransfer);
+        $productUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(0, $productUrls);
@@ -186,11 +186,11 @@ class ProductFacadeTest extends Unit
         //Arrange
         $this->tester->createProductsUrls();
 
-        $productUrlFilterTransfer = (new ProductUrlFilterTransfer())
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())
             ->setProductAbstractIds([$this->tester->getProductAbstractIds()[0]]);
 
         // Act
-        $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlFilterTransfer);
+        $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(2, $productsUrls);

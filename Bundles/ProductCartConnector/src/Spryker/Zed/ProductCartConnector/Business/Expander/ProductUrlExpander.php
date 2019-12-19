@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ProductUrlFilterTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
@@ -41,7 +41,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItemTransfersWithUrl(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandItemTransfersWithUrls(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $productAbstractIds = $this->getProductAbstractIds($cartChangeTransfer);
 
@@ -49,16 +49,30 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
             return $cartChangeTransfer;
         }
 
-        $urlTransfers = $this->productFacade->getProductsUrls($this->createUrlFilterTransfer($productAbstractIds));
+        $urlTransfers = $this->productFacade->getProductUrls(
+            $this->createUrlFilterTransfer($productAbstractIds)
+        );
 
-        $mappedUrlTransfers = $this->getMappedProductUrls($urlTransfers);
+        return $this->expandItemTransfersWithProductAbstractUrls(
+            $cartChangeTransfer,
+            $this->getIndexedProductUrlTransfers($urlTransfers)
+        );
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function expandItemTransfersWithProductAbstractUrls(CartChangeTransfer $cartChangeTransfer, array $urlTransfers): CartChangeTransfer
+    {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $idProductAbstract = $itemTransfer->getIdProductAbstract();
 
-            if (isset($mappedUrlTransfers[$idProductAbstract])) {
+            if (isset($urlTransfers[$idProductAbstract])) {
                 $itemTransfer->setUrl(
-                    $mappedUrlTransfers[$idProductAbstract]->getUrl()
+                    $urlTransfers[$idProductAbstract]->getUrl()
                 );
             }
         }
@@ -69,11 +83,11 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductUrlFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer
      */
-    protected function createUrlFilterTransfer(array $productAbstractIds): ProductUrlFilterTransfer
+    protected function createUrlFilterTransfer(array $productAbstractIds): ProductUrlCriteriaFilterTransfer
     {
-        return (new ProductUrlFilterTransfer())
+        return (new ProductUrlCriteriaFilterTransfer())
             ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
             ->setProductAbstractIds($productAbstractIds);
     }
@@ -97,16 +111,16 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[] $mappedUrls
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    protected function getMappedProductUrls(array $urlTransfers): array
+    protected function getIndexedProductUrlTransfers(array $urlTransfers): array
     {
-        $mappedUrls = [];
+        $indexedUrlTransfers = [];
 
         foreach ($urlTransfers as $urlTransfer) {
-            $mappedUrls[$urlTransfer->getFkResourceProductAbstract()] = $urlTransfer;
+            $indexedUrlTransfers[$urlTransfer->getFkResourceProductAbstract()] = $urlTransfer;
         }
 
-        return $mappedUrls;
+        return $indexedUrlTransfers;
     }
 }

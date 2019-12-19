@@ -54,9 +54,9 @@ interface ProductCartConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads persisted urls from database by abstract product ids.
-     *  - Expands the items of the CartChangeTransfer with the abstract product's urls.
-     *  - Returns the expanded CartChangeTransfer.
+     * - Reads persisted URLs from database by abstract product IDs.
+     * - Expands CartChangeTransfer items with abstract product URLs.
+     * - Returns expanded CartChangeTransfer.
      *
      * @api
      *
@@ -64,5 +64,5 @@ interface ProductCartConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItemTransfersWithUrl(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandItemTransfersWithUrls(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

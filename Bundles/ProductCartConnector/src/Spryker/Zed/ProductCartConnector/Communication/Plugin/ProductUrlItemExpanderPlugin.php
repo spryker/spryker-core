@@ -20,7 +20,7 @@ class ProductUrlItemExpanderPlugin extends AbstractPlugin implements ItemExpande
 {
     /**
      * {@inheritDoc}
-     * - Expands items with product URL.
+     * - Expands items with abstract product URLs.
      *
      * @api
      *
@@ -30,6 +30,6 @@ class ProductUrlItemExpanderPlugin extends AbstractPlugin implements ItemExpande
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        return $this->getFacade()->expandItemTransfersWithUrl($cartChangeTransfer);
+        return $this->getFacade()->expandItemTransfersWithUrls($cartChangeTransfer);
     }
 }
