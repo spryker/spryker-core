@@ -1,22 +1,24 @@
 {
-  "name": "spryker/heartbeat",
+  "name": "spryker/health-check",
   "type": "library",
-  "description": "Heartbeat module",
+  "description": "HealthCheck module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/application": "^3.4.0",
-    "spryker/config": "^3.0.0",
-    "spryker/elastica": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
-    "spryker/kernel": "^3.33.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/storage": "^3.8.0",
+    "spryker/glue-application": "^1.22.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/health-check-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/router": "Use this module when you want to use the Router."
   },
   "autoload": {
     "psr-4": {
@@ -30,13 +32,9 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {
