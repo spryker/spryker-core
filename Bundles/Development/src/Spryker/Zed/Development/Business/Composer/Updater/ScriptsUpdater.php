@@ -50,8 +50,17 @@ class ScriptsUpdater implements UpdaterInterface
             $folders[] = 'tests/';
         }
 
-        $newCsCheck = 'phpcs -p -s --standard=vendor/spryker/code-sniffer/' . $standard . '/ruleset.xml ' . implode(' ', $folders);
-        $newCsFix = 'phpcbf -p --standard=vendor/spryker/code-sniffer/' . $standard . '/ruleset.xml ' . implode(' ', $folders);
+        $currentCsCheck = $jsonArray['scripts']['cs-check'] ?? '';
+        $ignores = '';
+        preg_match('/--ignore=[^ ]+/', $currentCsCheck, $matches);
+        if ($matches) {
+            $ignores = $matches[0] . ' ';
+        }
+
+        $standardPath = '--standard=vendor/spryker/code-sniffer/' . $standard . '/ruleset.xml ';
+
+        $newCsCheck = 'phpcs -p -s ' . $standardPath . $ignores . implode(' ', $folders);
+        $newCsFix = 'phpcbf -p ' . $standardPath . $ignores . implode(' ', $folders);
 
         $jsonArray['scripts']['cs-check'] = $newCsCheck;
         $jsonArray['scripts']['cs-fix'] = $newCsFix;
