@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\NestedRangeQuery` instead.
+ */
 class NestedRangeQuery extends AbstractNestedQuery
 {
     public const RANGE_DIVIDER = '-';

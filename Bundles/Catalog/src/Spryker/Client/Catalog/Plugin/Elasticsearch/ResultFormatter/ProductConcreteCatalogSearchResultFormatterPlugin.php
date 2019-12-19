@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**
- * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()
+ * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */
 class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {

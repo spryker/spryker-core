@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/form-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
@@ -15,6 +16,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
@@ -37,6 +39,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

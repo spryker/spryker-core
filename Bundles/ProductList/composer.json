@@ -11,7 +11,7 @@
     "spryker/messenger": "^3.0.0",
     "spryker/product": "^5.7.0 || ^6.11.0",
     "spryker/product-category": "^4.0.0",
-    "spryker/product-list-extension": "^1.0.0",
+    "spryker/product-list-extension": "^1.1.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/util-text": "^1.0.0"
   },
@@ -33,6 +33,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

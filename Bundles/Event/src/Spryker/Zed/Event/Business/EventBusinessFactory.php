@@ -43,7 +43,11 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     protected function createEventQueueProducer()
     {
-        return new EventQueueProducer($this->getQueueClient(), $this->getUtilEncodingService());
+        return new EventQueueProducer(
+            $this->getQueueClient(),
+            $this->getUtilEncodingService(),
+            $this->getConfig()
+        );
     }
 
     /**
