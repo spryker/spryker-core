@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer;
@@ -81,7 +82,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     {
         $priceMap = $this->getCurrencyFilteredPriceMap(
             $productOptionValueEntity->getProductOptionValuePrices(),
-            $this->getCurrentIdCurrency($currencyCode)
+            $this->getCurrency($currencyCode)->getIdCurrency()
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
@@ -106,7 +107,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     {
         $priceMap = $this->getCurrencyFilteredPriceMap(
             $productOptionValueEntity->getProductOptionValuePrices(),
-            $this->getCurrentIdCurrency($currencyCode)
+            $this->getCurrency($currencyCode)->getIdCurrency()
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
@@ -144,11 +145,11 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     /**
      * @param string|null $currencyCode
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrentIdCurrency(?string $currencyCode = null)
+    protected function getCurrency(?string $currencyCode = null): CurrencyTransfer
     {
-        return $this->currencyFacade->fromIsoCode($currencyCode ?? $this->currencyFacade->getCurrent()->getCode())->getIdCurrency();
+        return $this->currencyFacade->fromIsoCode($currencyCode ?? $this->currencyFacade->getCurrent()->getCode());
     }
 
     /**
