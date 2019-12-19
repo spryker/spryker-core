@@ -8,6 +8,7 @@
 namespace Spryker\Service\UtilSanitize;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\UtilSanitize\Dependency\External\UtilSanitizeToXssSanitizeInterface;
 use Spryker\Service\UtilSanitize\Model\ArrayFilter;
 use Spryker\Service\UtilSanitize\Model\Html;
 
@@ -27,5 +28,13 @@ class UtilSanitizeServiceFactory extends AbstractServiceFactory
     public function createArrayFilter()
     {
         return new ArrayFilter();
+    }
+
+    /**
+     * @return \Spryker\UtilSanitize\src\Spryker\Service\UtilSanitize\Dependency\External\UtilSanitizeToXssSanitizeInterface
+     */
+    public function getXssSanitizer(): UtilSanitizeToXssSanitizeInterface
+    {
+        return $this->getProvidedDependency(UtilSanitizeDependencyProvider::XSS_SANITIZER);
     }
 }

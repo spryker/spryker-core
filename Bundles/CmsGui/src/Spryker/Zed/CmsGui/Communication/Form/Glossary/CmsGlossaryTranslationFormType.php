@@ -91,6 +91,7 @@ class CmsGlossaryTranslationFormType extends AbstractType
             'constraints' => [
                 $this->getFactory()->createTwigContentConstraint(),
             ],
+            'sanitize_xss' => true,
         ]);
 
         return $this;

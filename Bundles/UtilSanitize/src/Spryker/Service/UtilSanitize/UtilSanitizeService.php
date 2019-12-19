@@ -62,4 +62,22 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
             ->createArrayFilter()
             ->filterOutBlankValuesRecursively($array);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $text
+     * @param string[] $allowedAttributes
+     * @param string[] $allowedHtmlTags
+     *
+     * @return string
+     */
+    public function sanitizeXss(string $text, array $allowedAttributes = [], array $allowedHtmlTags = []): string
+    {
+        return $this->getFactory()
+            ->getXssSanitizer()
+            ->sanitize($text, $allowedAttributes, $allowedHtmlTags);
+    }
 }

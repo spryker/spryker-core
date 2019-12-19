@@ -117,6 +117,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
         $builder->add(static::FIELD_PLACEHOLDER, TextType::class, [
             'label' => 'Placeholder',
             'disabled' => 'disabled',
+            'sanitize_xss' => true,
         ]);
 
         return $this;

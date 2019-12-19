@@ -23,6 +23,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunct
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -31,6 +32,8 @@ use Spryker\Zed\Kernel\Container;
  */
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
     public const GUI_TWIG_FILTERS = 'gui_twig_filters';
 
@@ -43,6 +46,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addTwigFunctions($container);
         $container = $this->addTwigFilter($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -111,5 +115,21 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getTwigFilters()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
+            return new GuiToUtilSanitizeServiceBridge(
+                $container->getLocator()->utilSanitize()->service()
+            );
+        });
+
+        return $container;
     }
 }
