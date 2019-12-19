@@ -64,7 +64,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
      *
      * @return void
      */
-    protected function expandProductOptionTransfers(ItemTransfer $itemTransfer, $priceMode, string $currencyCode)
+    protected function expandProductOptionTransfers(ItemTransfer $itemTransfer, string $priceMode, string $currencyCode): void
     {
         $productOptions = $itemTransfer->getProductOptions();
 
