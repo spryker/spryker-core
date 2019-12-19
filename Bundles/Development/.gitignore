@@ -23,13 +23,14 @@ composer.lock
 .phpunit.result.cache
 
 # built client resources
-/src/*/Zed/*/Static/Public
-/src/*/Zed/*/Static/Assets/sprite
+src/*/Zed/*/Static/Public
+src/*/Zed/*/Static/Assets/sprite
 
 # Propel classes
-/src/*/Zed/*/Persistence/Propel/Base/*
-/src/*/Zed/*/Persistence/Propel/Map/*
+src/*/Zed/*/Persistence/Propel/Base/*
+src/*/Zed/*/Persistence/Propel/Map/*
 
 # tests
-/tests/_output/*
-!/tests/_output/.gitkeep
+tests/**/_generated/
+tests/_output/*
+!tests/_output/.gitkeep
