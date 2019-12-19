@@ -1,6 +1,5 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
-* eol=lf
-* text=auto
+* eol=lf text=auto
 
 # Denote all files that are truly binary and should not be modified.
 *.png binary
