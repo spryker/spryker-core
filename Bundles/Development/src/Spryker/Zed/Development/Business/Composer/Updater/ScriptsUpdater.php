@@ -41,6 +41,14 @@ class ScriptsUpdater implements UpdaterInterface
      */
     protected function assertCsScripts(string $path, array $jsonArray): array
     {
+        $requiresCodeSniffer = is_dir($path . 'src');
+        if (!$requiresCodeSniffer) {
+            unset($jsonArray['scripts']['cs-check']);
+            unset($jsonArray['scripts']['cs-fix']);
+
+            return $jsonArray;
+        }
+
         $standard = $this->extractStandard($path);
         $folders = [
             'src/',
