@@ -7,10 +7,6 @@
     "galbar/jsonpath": "^1.0",
     "php": ">=7.2"
   },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {

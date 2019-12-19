@@ -7,10 +7,6 @@
     "justinrainbow/json-schema": "^5.2",
     "php": ">=7.2"
   },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {

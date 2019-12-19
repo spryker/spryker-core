@@ -27,9 +27,9 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider.",
     "spryker/config": "If you want to use Config.",
-    "spryker/event-dispatcher": "If you want to use the EventDispatcher plugin."
+    "spryker/event-dispatcher": "If you want to use the EventDispatcher plugin.",
+    "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
     "psr-4": {

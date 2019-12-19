@@ -9,8 +9,7 @@
     "spryker/sales": "^8.3.0 || ^10.0.0 || ^11.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {

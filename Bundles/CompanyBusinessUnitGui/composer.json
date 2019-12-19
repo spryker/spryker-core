@@ -15,6 +15,7 @@
     "spryker/util-text": "^1.2.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/company-user": "*",
     "spryker/customer": "*",
     "spryker/propel": "*",

@@ -8,8 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/data-import": "*",
-    "spryker/testify": "*"
+    "spryker/data-import": "*"
   },
   "suggest": {
     "spryker/data-import": "If you want to provide plugins to DataImport module"

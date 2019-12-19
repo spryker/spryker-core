@@ -26,8 +26,8 @@
   },
   "suggest": {
     "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
-    "spryker/silex": "If you want to use the ProductLabelTwigServiceProvider.",
-    "spryker/search": "(^6.4.0) If you want to use ProductLabelFacetValueTransformerPlugin."
+    "spryker/search": "(^6.4.0) If you want to use ProductLabelFacetValueTransformerPlugin.",
+    "spryker/silex": "If you want to use the ProductLabelTwigServiceProvider."
   },
   "autoload": {
     "psr-4": {

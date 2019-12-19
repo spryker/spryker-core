@@ -10,6 +10,7 @@
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/locale": "^3.0.0",
     "spryker/propel": "^3.0.0",
     "spryker/testify": "*"

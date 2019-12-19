@@ -14,8 +14,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/quote": "*",
-    "spryker/testify": "*"
+    "spryker/quote": "*"
   },
   "suggest": {
     "spryker/config": "If you want to use StoreApplicationPlugin",

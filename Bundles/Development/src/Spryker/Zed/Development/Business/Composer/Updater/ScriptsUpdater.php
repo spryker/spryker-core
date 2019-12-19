@@ -21,10 +21,10 @@ class ScriptsUpdater implements UpdaterInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         $path = pathinfo($composerJsonFile, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR;
-        $composerJson = $this->assertScripts($path, $composerJson);
+        $composerJson = $this->assertCsScripts($path, $composerJson);
 
         if (isset($composerJson['scripts']) && empty($composerJson['scripts'])) {
             $composerJson['scripts'] = new stdClass();
@@ -33,14 +33,13 @@ class ScriptsUpdater implements UpdaterInterface
         return $composerJson;
     }
 
-
     /**
      * @param string $path
      * @param array $jsonArray
      *
      * @return array
      */
-    protected function assertScripts(string $path, array $jsonArray): array
+    protected function assertCsScripts(string $path, array $jsonArray): array
     {
         $standard = $this->extractStandard($path);
         $folders = [

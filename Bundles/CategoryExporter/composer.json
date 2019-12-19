@@ -10,6 +10,9 @@
     "spryker/key-builder": "^1.0.0",
     "spryker/storage": "^3.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

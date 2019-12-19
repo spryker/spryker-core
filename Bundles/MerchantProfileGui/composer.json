@@ -19,8 +19,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/gui": "*",
-    "spryker/merchant": "*",
-    "spryker/testify": "*"
+    "spryker/merchant": "*"
   },
   "suggest": {
     "spryker/gui": "Required to use util text in plugins.",
