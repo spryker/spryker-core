@@ -40,7 +40,7 @@ class ProductOfferPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
      */
-    public function getStoreQuery(): SpyStoreQuery
+    public function getStorePropelQuery(): SpyStoreQuery
     {
         return $this->getProvidedDependency(ProductOfferDependencyProvider::PROPEL_QUERY_STORE);
     }

@@ -79,7 +79,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      */
     public function findStoresByFkProductOffer(int $fkProductOffer): array
     {
-        $storeEntities = $this->getFactory()->getStoreQuery()
+        $storeEntities = $this->getFactory()->getStorePropelQuery()
             ->useSpyProductOfferStoreQuery()
                 ->filterByFkProductOffer($fkProductOffer)
             ->endUse()
