@@ -169,12 +169,15 @@ class ProductMapper implements ProductMapperInterface
     }
 
     /**
-     * @inheritDoc
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function mapProductConcreteEntitiesToProductConcreteTransfersWithoutAdditionalTransfers(SpyProduct $productEntity, ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $attributes = $this->utilEncodingService->decodeJson($productEntity->getAttributes());
-        
+
         return $productConcreteTransfer
             ->fromArray($productEntity->toArray(), true)
             ->setAttributes(is_array($attributes) ? $attributes : [])
