@@ -58,7 +58,7 @@ class TravisDependencyFinder extends AbstractFileDependencyFinder
             $dependencyContainer->addDependency('CodeSniffer', $this->getType(), false, true);
         }
 
-        if (strpos($fileContent, 'vendor/bin/codecept') !== false) {
+        if (strpos($fileContent, 'codecept run') !== false) {
             $dependencyContainer->addDependency('Testify', $this->getType(), false, true);
         }
 
