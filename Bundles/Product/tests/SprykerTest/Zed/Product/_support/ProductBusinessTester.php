@@ -40,8 +40,6 @@ class ProductBusinessTester extends Actor
 {
     use _generated\ProductBusinessTesterActions;
 
-    protected const PRODUCT_URL = '/%s/product-';
-
     /**
      * @var int[]
      */
@@ -153,7 +151,7 @@ class ProductBusinessTester extends Actor
     public function getProductUrl(int $idProductAbstract, string $localeName): string
     {
         return sprintf(
-            static::PRODUCT_URL . $idProductAbstract,
+            '/%s/product-' . $idProductAbstract,
             $localeName
         );
     }
