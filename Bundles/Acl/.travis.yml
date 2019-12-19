@@ -21,7 +21,7 @@ before_install:
 
 install:
     - COMPOSER_MEMORY_LIMIT=-1 composer install --prefer-dist --no-interaction
-    - if [[ $PREFER_LOWEST == 1 ]]; then COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable ; fi
+    - if [[ $PREFER_LOWEST == 1 ]]; then COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction ; fi
     - if [[ $PREFER_LOWEST == 1 ]]; then COMPOSER_MEMORY_LIMIT=-1 composer require --dev dereuromark/composer-prefer-lowest; fi
 
 script:
