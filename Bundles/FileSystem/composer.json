@@ -9,6 +9,7 @@
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/flysystem-aws3v3-file-system": "*",
     "spryker/flysystem-ftp-file-system": "*",
     "spryker/flysystem-local-file-system": "*",

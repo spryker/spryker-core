@@ -31,6 +31,7 @@
     "spryker/application": "*",
     "spryker/calculation": "*",
     "spryker/checkout": "*",
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",

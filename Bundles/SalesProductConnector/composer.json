@@ -13,8 +13,7 @@
   },
   "require-dev": {
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to save product specific information during checkout"
