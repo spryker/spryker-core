@@ -10,7 +10,6 @@ namespace Spryker\Zed\Development\Business\Composer;
 use RuntimeException;
 use Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
-use stdClass;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\Word\CamelCaseToDash;
 
@@ -81,9 +80,6 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $composerJsonArray = $this->clean($composerJsonArray);
         $composerJsonArray = $this->order($composerJsonArray);
 
-        if (isset($composerJsonArray['scripts']) && empty($composerJsonArray['scripts'])) {
-            $composerJsonArray['scripts'] = new stdClass();
-        }
         $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
 

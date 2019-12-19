@@ -37,6 +37,7 @@ use Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite;
 use Spryker\Zed\Development\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
+use Spryker\Zed\Development\Business\Composer\Updater\ScriptsUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\TypeUpdater;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonPackageNameValidator;
@@ -1468,6 +1469,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             ->addUpdater($this->createComposerJsonRequireUpdater())
             ->addUpdater($this->createComposerJsonStabilityUpdater())
             ->addUpdater($this->createComposerJsonAutoloadUpdater())
+            ->addUpdater($this->createComposerJsonScriptsUpdater())
             ->addUpdater($this->createComposerJsonBranchAliasUpdater());
 
         return $updaterComposite;
@@ -1487,6 +1489,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonTypeUpdater()
     {
         return new TypeUpdater();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
+     */
+    protected function createComposerJsonScriptsUpdater()
+    {
+        return new ScriptsUpdater();
     }
 
     /**
