@@ -44,7 +44,7 @@ class RequireDevUpdater implements UpdaterInterface
 
         if ($requiresCodeSniffer && !isset($composerJson[static::KEY_REQUIRE_DEV][self::PACKAGE_CODE_SNIFFER])) {
             $composerJson[static::KEY_REQUIRE_DEV][static::PACKAGE_CODE_SNIFFER] = '*';
-        } else {
+        } elseif (!$requiresCodeSniffer) {
             unset($composerJson[static::KEY_REQUIRE_DEV][static::PACKAGE_CODE_SNIFFER]);
         }
 
