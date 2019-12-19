@@ -8,8 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/symfony": "^3.0.0",
-    "spryker/testify": "*"
+    "spryker/symfony": "^3.0.0"
   },
   "suggest": {
     "spryker/company-business-unit": "To get full functionality of the current module",

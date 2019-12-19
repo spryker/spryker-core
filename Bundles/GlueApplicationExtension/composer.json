@@ -10,8 +10,7 @@
     "spryker/code-sniffer": "*",
     "spryker/glue-application": "*",
     "spryker/kernel": "*",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
+    "spryker/symfony": "*"
   },
   "suggest": {
     "spryker/glue-application": "If you want to use plugins with glue application.",

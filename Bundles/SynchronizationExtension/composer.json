@@ -8,8 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel-orm": "*",
-    "spryker/testify": "*"
+    "spryker/propel-orm": "*"
   },
   "suggest": {
     "spryker/propel-orm": "*"

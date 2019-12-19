@@ -8,8 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/testify": "*"
+    "spryker/container": "*"
   },
   "suggest": {
     "spryker/container": "Add this module to use the Container."

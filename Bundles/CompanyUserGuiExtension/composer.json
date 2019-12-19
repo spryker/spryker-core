@@ -9,8 +9,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/gui": "*",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
+    "spryker/symfony": "*"
   },
   "suggest": {
     "spryker/gui": "If you want to use CompanyUserGuiExtension module plugin interfaces: ^3.13.1",

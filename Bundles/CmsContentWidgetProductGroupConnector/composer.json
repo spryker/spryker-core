@@ -9,8 +9,7 @@
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {

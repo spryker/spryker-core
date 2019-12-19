@@ -8,8 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/log": "*",
-    "spryker/testify": "*"
+    "spryker/log": "*"
   },
   "suggest": {
     "spryker/log": "If you want to use InstallerPluginInterface: ^1.0.0.",

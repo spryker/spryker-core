@@ -8,8 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/search": "*",
-    "spryker/testify": "*"
+    "spryker/search": "*"
   },
   "suggest": {
     "spryker/search": "If you want to use ProductConcretePageMapExpanderPluginInterface: ^1.0.0."

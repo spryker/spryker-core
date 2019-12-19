@@ -14,8 +14,7 @@
   "require-dev": {
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/oms": "*",
-    "spryker/testify": "*"
+    "spryker/oms": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins (SendEmailToGiftCardUser)",

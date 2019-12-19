@@ -17,8 +17,7 @@
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
     "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/testify": "*"
+    "spryker/symfony": "^3.0.0"
   },
   "suggest": {
     "spryker/container": "Add this module when you want to use the EventDispatcher plugins.",
