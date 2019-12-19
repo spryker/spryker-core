@@ -26,8 +26,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/manual-order-entry-gui": "*",
-    "spryker/testify": "*"
+    "spryker/manual-order-entry-gui": "*"
   },
   "suggest": {
     "spryker/calculation": "Recalculates prices for offer",

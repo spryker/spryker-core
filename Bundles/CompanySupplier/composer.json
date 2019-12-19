@@ -10,6 +10,7 @@
     "spryker/product": "^6.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

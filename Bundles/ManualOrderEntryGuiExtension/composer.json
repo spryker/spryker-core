@@ -7,8 +7,7 @@
     "php": ">=7.2"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/kernel": "^3.18.0"

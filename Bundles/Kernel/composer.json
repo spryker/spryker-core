@@ -21,7 +21,7 @@
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
-    "spryker/testify": "^3.3.0"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher."

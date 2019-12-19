@@ -26,8 +26,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/merchant-product-offer": "Required for using the Listeners",
     "spryker/event": "Required for using the Listeners",
+    "spryker/merchant-product-offer": "Required for using the Listeners",
     "spryker/propel-orm": "Required for using the synchronization data plugins"
   },
   "autoload": {

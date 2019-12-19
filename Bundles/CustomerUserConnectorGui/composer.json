@@ -15,6 +15,7 @@
     "spryker/user-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/util-text": "*"
   },
   "suggest": {

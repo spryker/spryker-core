@@ -8,8 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/kernel": "*",
-    "spryker/testify": "*"
+    "spryker/kernel": "*"
   },
   "suggest": {
     "spryker/kernel": "If you want to use content plugin"

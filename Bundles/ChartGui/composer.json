@@ -12,7 +12,6 @@
     "spryker/chart": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {

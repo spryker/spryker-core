@@ -9,8 +9,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/event-dispatcher": "*",
-    "spryker/testify": "*"
+    "spryker/event-dispatcher": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use EventDispatcherPlugin.",
