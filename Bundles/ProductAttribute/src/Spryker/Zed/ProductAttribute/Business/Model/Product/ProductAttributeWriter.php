@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
@@ -72,7 +71,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     public function saveAbstractAttributes($idProductAbstract, array $attributes)
     {
         $productAbstractTransfer = $this->productReader->getProductAbstractTransfer($idProductAbstract);
-        $attributesToSave = $this->getAttributesDataToSave($attributes, $productAbstractTransfer);
+        $attributesToSave = $this->getAttributesDataToSave($attributes);
         $nonLocalizedAttributes = $this->getNonLocalizedAttributes($attributesToSave);
 
         $productAbstractTransfer->setAttributes(
@@ -134,28 +133,25 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     }
 
     /**
-     * @param string[][] $attributes
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $attributes
      *
-     * @return string[][]
+     * @return array
      */
-    protected function getAttributesDataToSave(array $attributes, ProductAbstractTransfer $productAbstractTransfer): array
+    protected function getAttributesDataToSave(array $attributes)
     {
-        $removedAttributeKeys = $this->getRemovedAttributeKeys($attributes);
-        $attributeData = $this->getStoredAttributesDataToSave($productAbstractTransfer, $removedAttributeKeys);
+        $attributeData = [];
 
         foreach ($attributes as $attribute) {
             $key = $attribute[ProductAttributeKeyTransfer::KEY];
             $localeCode = $attribute['locale_code'];
             $value = $this->sanitizeString($attribute['value']);
 
-            if ($value === '' || $value === false || $attribute['id'] === null) {
+            if ($value === '' || $value === false) {
                 continue;
             }
 
             $attributeData[$localeCode][$key] = $value;
         }
-
 
         return $attributeData;
     }
@@ -183,73 +179,5 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         }
 
         return $productAbstractAttributes;
-    }
-
-    /**
-     * @param string[][] $attributes
-     *
-     * @return string[][]
-     */
-    protected function getRemovedAttributeKeys(array $attributes): array
-    {
-        $removedAttributeKeys = [];
-        foreach ($attributes as $attribute) {
-            if ($attribute['id'] !== null) {
-                continue;
-            }
-
-            $key = $attribute[ProductAttributeKeyTransfer::KEY];
-            $localeCode = $attribute['locale_code'];
-
-            $removedAttributeKeys[$localeCode][] = $key;
-        }
-
-        return $removedAttributeKeys;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param string[][] $removedAttributeKeys
-     *
-     * @return string[][]
-     */
-    protected function getStoredAttributesDataToSave(ProductAbstractTransfer $productAbstractTransfer, array $removedAttributeKeys): array
-    {
-        $storedAttributeData[] = $this->getStoredAttributesDataToSaveByLocale(
-            $productAbstractTransfer->getAttributes(),
-            ProductAttributeConfig::DEFAULT_LOCALE,
-            $removedAttributeKeys
-        );
-
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $storedLocalizedAttributeTransfer) {
-            $storedAttributeData[] = $this->getStoredAttributesDataToSaveByLocale(
-                $storedLocalizedAttributeTransfer->getAttributes(),
-                $storedLocalizedAttributeTransfer->getLocale()->getLocaleName(),
-                $removedAttributeKeys
-            );
-        }
-
-        return array_merge(...$storedAttributeData);
-    }
-
-    /**
-     * @param array $attributes
-     * @param string $localeName
-     * @param array $removedAttributeKeys
-     *
-     * @return array
-     */
-    protected function getStoredAttributesDataToSaveByLocale(array $attributes, string $localeName, array $removedAttributeKeys): array
-    {
-        $storedAttributeDataToSave = [];
-        foreach ($attributes as $attributeKey => $attributeValue) {
-            if (in_array($attributeKey, $removedAttributeKeys[$localeName], true)) {
-                continue;
-            }
-
-            $storedAttributeDataToSave[$localeName][$attributeKey] = $attributeValue;
-        }
-
-        return $storedAttributeDataToSave;
     }
 }
