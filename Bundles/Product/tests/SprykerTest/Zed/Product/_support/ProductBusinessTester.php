@@ -129,7 +129,7 @@ class ProductBusinessTester extends Actor
     /**
      * @return void
      */
-    public function createProductsUrls(): void
+    public function createProductUrls(): void
     {
         foreach ($this->productAbstractIds as $idProductAbstract) {
             foreach ($this->getLocaleFacade()->getAvailableLocales() as $idLocale => $localeName) {

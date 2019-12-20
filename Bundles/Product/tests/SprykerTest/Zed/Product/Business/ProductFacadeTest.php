@@ -138,10 +138,10 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductsUrlsByOneProductAbstractIdAndLocale(): void
+    public function testGetProductUrlsByOneProductAbstractIdAndLocale(): void
     {
         // Arrange
-        $this->tester->createProductsUrls();
+        $this->tester->createProductUrls();
 
         $idProductAbstract = $this->tester->getProductAbstractIds()[0];
 
@@ -152,27 +152,27 @@ class ProductFacadeTest extends Unit
         $correctUrl = $this->tester->getProductUrl($idProductAbstract, $this->tester->getLocaleFacade()->getCurrentLocale()->getLocaleName());
 
         // Act
-        $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlCriteriaFilterTransfer);
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
 
         // Assert
-        $this->assertCount(1, $productsUrls);
-        $this->assertSame($correctUrl, $productsUrls[0]->getUrl());
+        $this->assertCount(1, $productUrls);
+        $this->assertSame($correctUrl, $productUrls[0]->getUrl());
     }
 
     /**
      * @return void
      */
-    public function testGetProductsUrlsByLocaleAndWithoutProductAbstractIds(): void
+    public function testGetProductUrlsByLocaleAndWithoutProductAbstractIds(): void
     {
         // Arrange
-        $this->tester->createProductsUrls();
+        $this->tester->createProductUrls();
 
         $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())->setIdLocale(
             $this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale()
         );
 
         // Act
-        $productUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlCriteriaFilterTransfer);
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(0, $productUrls);
@@ -181,18 +181,18 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductsUrlsByProductAbstractIdAndWithoutLocale(): void
+    public function testGetProductUrlsByProductAbstractIdAndWithoutLocale(): void
     {
         // Ar   range
-        $this->tester->createProductsUrls();
+        $this->tester->createProductUrls();
 
         $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())
             ->setProductAbstractIds([$this->tester->getProductAbstractIds()[0]]);
 
         // Act
-        $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlCriteriaFilterTransfer);
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
 
         // Assert
-        $this->assertCount(2, $productsUrls);
+        $this->assertCount(2, $productUrls);
     }
 }
