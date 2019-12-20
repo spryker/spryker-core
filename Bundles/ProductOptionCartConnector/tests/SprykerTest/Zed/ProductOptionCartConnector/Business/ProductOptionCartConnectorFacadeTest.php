@@ -468,12 +468,12 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     protected function mockProductOptionFacade(ProductOptionTransfer $productOptionTransfer): void
     {
         $productOptionFacadeMock = $this->getMockBuilder(ProductOptionCartConnectorToProductOptionFacadeBridge::class)
-            ->setMethods(['getProductOptionValue'])
+            ->setMethods(['getProductOptionValueById'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $productOptionFacadeMock->expects($this->any())
-            ->method('getProductOptionValue')
+            ->method('getProductOptionValueById')
             ->willReturn($productOptionTransfer);
 
         $this->tester->setDependency(
