@@ -45,13 +45,13 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $productConcreteTransfer
      *
      * @return bool
      */
-    protected function hasProductConcreteProductBundle(ProductConcreteTransfer $productConcreteTransfer): bool
+    protected function hasProductConcreteProductBundle(TransferInterface $productConcreteTransfer): bool
     {
-        return (!$productConcreteTransfer instanceof ProductConcreteTransfer) || $productConcreteTransfer->getProductBundle() === null;
+        return ($productConcreteTransfer instanceof ProductConcreteTransfer) && $productConcreteTransfer->getProductBundle() !== null;
     }
 
     /**

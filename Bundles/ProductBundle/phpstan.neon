@@ -1,0 +1,4 @@
+parameters:
+    ignoreErrors:
+        - '#Parameter \#1 \$productConcreteTransfer of method .+ProductBundleBeforeUpdateListener::deactivateProductConcreteTransferIfAnyBundledProductsWereInactive\(\) expects .+\\ProductConcreteTransfer, .+\\TransferInterface given\.#'
+        - '#PHPDoc tag @param for parameter \$productConcreteTransfer with type .+\\TransferInterface is not subtype of native type .+\\ProductConcreteTransfer#'
