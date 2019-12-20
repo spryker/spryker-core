@@ -3,7 +3,7 @@
           namespace="Orm\Zed\Url\Persistence"
           package="src.Orm.Zed.Url.Persistence">
 
-    <table name="spy_url" phpName="SpyUrl">
+    <table name="spy_url">
         <column name="fk_resource_categorynode" type="INTEGER"/>
         <foreign-key name="spy_url-fk_resource_categorynode" foreignTable="spy_category_node" phpName="SpyCategoryNode" onDelete="CASCADE">
             <reference foreign="id_category_node" local="fk_resource_categorynode"/>
