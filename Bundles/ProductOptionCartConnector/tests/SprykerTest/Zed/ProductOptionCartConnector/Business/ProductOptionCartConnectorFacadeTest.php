@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductOptionCartConnector\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -419,7 +420,8 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     protected function createCartChangeTransfer(?string $priceMode): CartChangeTransfer
     {
         $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode($priceMode);
+            ->setPriceMode($priceMode)
+            ->setCurrency((new CurrencyTransfer())->setCode($this->getCurrentCurrencyCode()));
 
         $cartChangeTransfer = (new CartChangeTransfer())
             ->setQuote($quoteTransfer);
