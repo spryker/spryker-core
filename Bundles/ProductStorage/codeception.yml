@@ -2,7 +2,8 @@ namespace: SprykerTest
 actor: Tester
 
 include:
-    - tests/SprykerTest/Zed/ProductStorage
+    - tests/SprykerTest/Client/ProductStorage
+    #- tests/SprykerTest/Zed/ProductStorage
 
 paths:
     tests: tests
