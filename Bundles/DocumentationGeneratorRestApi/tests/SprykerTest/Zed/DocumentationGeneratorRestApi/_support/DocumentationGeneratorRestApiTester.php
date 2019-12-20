@@ -770,8 +770,10 @@ class DocumentationGeneratorRestApiTester extends Actor
             static::SCHEMA_NAME_REST_TEST_ALTERNATIVE_RELATIONSHIPS => [
                 'properties' => [
                     'test-resource-with-relationship' => [
-                        'items' => [
-                            '$ref' => static::SCHEMA_REF_REST_RELATIONSHIPS,
+                        'data' => [
+                            'items' => [
+                                '$ref' => static::SCHEMA_REF_REST_RELATIONSHIPS,
+                            ],
                         ],
                     ],
                 ],
