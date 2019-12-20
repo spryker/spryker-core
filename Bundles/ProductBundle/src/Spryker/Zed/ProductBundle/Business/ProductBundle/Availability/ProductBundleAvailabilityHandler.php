@@ -117,7 +117,9 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             static::$bundleItemEntityCache[$idConcreteProduct] = $this->productBundleQueryContainer
                 ->queryBundleProduct($idConcreteProduct)
                 ->joinWithSpyProductRelatedByFkBundledProduct()
-                ->filterByIsActive(true)
+                ->useSpyProductRelatedByFkBundledProductQuery()
+                    ->filterByIsActive(true)
+                ->endUse()
                 ->find()
                 ->getData();
         }
