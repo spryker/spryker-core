@@ -501,7 +501,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             $filterTransfer
         )->setFormatter(ModelCriteria::FORMAT_OBJECT)->find();
 
-        return $this->mapProductConcreteEntitiesToProductConcreteTransfersWithoutAdditionalTransfers($productConcreteEntities);
+        return $this->mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations($productConcreteEntities);
     }
 
     /**
@@ -509,13 +509,14 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    protected function mapProductConcreteEntitiesToProductConcreteTransfersWithoutAdditionalTransfers(ObjectCollection $productConcreteEntities): array
-    {
+    protected function mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations(
+        ObjectCollection $productConcreteEntities
+    ): array {
         $productConcreteTransfers = [];
         $productMapper = $this->getFactory()->createProductMapper();
 
         foreach ($productConcreteEntities as $productConcreteEntity) {
-            $productConcreteTransfers[] = $productMapper->mapProductConcreteEntitiesToProductConcreteTransfersWithoutAdditionalTransfers(
+            $productConcreteTransfers[] = $productMapper->mapProductConcreteEntityToProductConcreteTransfersWithoutRelations(
                 $productConcreteEntity,
                 new ProductConcreteTransfer()
             );

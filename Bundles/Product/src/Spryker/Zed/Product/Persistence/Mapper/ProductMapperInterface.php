@@ -53,7 +53,7 @@ interface ProductMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function mapProductConcreteEntitiesToProductConcreteTransfersWithoutAdditionalTransfers(
+    public function mapProductConcreteEntityToProductConcreteTransfersWithoutRelations(
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer;
