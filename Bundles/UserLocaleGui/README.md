@@ -1,6 +1,6 @@
 # UserLocaleGui Module
 [![Build Status](https://travis-ci.org/spryker/user-locale-gui.svg)](https://travis-ci.org/spryker/user-locale-gui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/user-locale-gui/badge.svg)](https://coveralls.io/github/spryker/user-locale-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Zed Gui for UserLocale module.
 

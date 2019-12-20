@@ -16,6 +16,7 @@
     </transfer>
 
     <transfer name="StorageAvailability">
+        <property name="concreteProductAvailableItems" type="array" singular="concreteProductAvailableItem"/>
     </transfer>
 
 </transfers>

@@ -1,4 +1,6 @@
 # ProductBundle Module
+[![Build Status](https://travis-ci.org/spryker/product-bundle.svg)](https://travis-ci.org/spryker/product-bundle)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Product bundles are two or more existing products combined into a new product for store display and sales purposes. Typically bundles consist of concrete products, because all items in the bundle need to be potential order items (i.e. have stock). The new (bundled) product does not physically exist in the bundled state. A bundle, when bought will still be handled as separate items in the order management system.
 ProductBundle provides all these product bundle features for combining multiple concrete products to a single one, and selling it.
@@ -147,7 +149,6 @@ instead of `CartOperationHandler` use `\Pyz\Yves\Cart\Handler\ProductBundleCartO
 
 3. Twig changes:
 
-
   * `src/Pyz/Yves/Cart/Theme/default/cart/parts/cart-item.twig` and `src/Pyz/Yves/Cart/Theme/default/cart/index.twig` - now handle product bundles.
   * Project has received a new module called `ProductBundle` in which the bundle grouper is currently stored. This groups items for presentation in `\Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper`
 
@@ -205,7 +206,6 @@ $bundleItemGrouper = $this->getFactory()->createProductBundleGroupper();
 ```
 
 Take the new implementation for listing order items, including `src/Pyz/Yves/Customer/Theme/default/order/partials/order-items.twig`.
-
 
 ## Documentation
 

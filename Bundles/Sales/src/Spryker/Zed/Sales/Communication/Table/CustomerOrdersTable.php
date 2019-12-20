@@ -18,6 +18,8 @@ use Spryker\Zed\Sales\SalesConfig;
 
 class CustomerOrdersTable extends OrdersTable
 {
+    protected const BASE_URL = '/sales/customer/';
+
     /**
      * @var string
      */
@@ -58,6 +60,7 @@ class CustomerOrdersTable extends OrdersTable
         );
         $this->customerReference = $customerReference;
         $this->salesQueryContainer = $salesQueryContainer;
+        $this->baseUrl = static::BASE_URL;
     }
 
     /**
