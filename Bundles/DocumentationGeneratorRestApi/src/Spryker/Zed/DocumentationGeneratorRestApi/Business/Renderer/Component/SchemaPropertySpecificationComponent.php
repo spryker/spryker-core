@@ -21,11 +21,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
     protected const KEY_ITEMS = 'items';
     protected const KEY_TYPE = 'type';
     protected const KEY_NULLABLE = 'nullable';
-    protected const KEY_DATA = 'data';
-
     protected const VALUE_TYPE_ARRAY = 'array';
-
-    protected const SCHEMA_REF_REST_RELATIONSHIPS = '#/components/schemas/RestRelationships';
 
     /**
      * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer|null $schemaPropertyComponentTransfer
@@ -54,10 +50,6 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
 
         $property = $this->addBasicPropertyData($property);
         $property = $this->addItemPropertyData($property);
-
-        if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference() === static::SCHEMA_REF_REST_RELATIONSHIPS) {
-            return [$this->schemaPropertyComponentTransfer->getName() => [static::KEY_DATA => $property]];
-        }
 
         return [$this->schemaPropertyComponentTransfer->getName() => $property];
     }
