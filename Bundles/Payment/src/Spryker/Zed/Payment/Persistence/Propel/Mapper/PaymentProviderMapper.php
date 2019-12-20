@@ -25,7 +25,8 @@ class PaymentProviderMapper
         SpyPaymentProvider $paymentProviderEntity,
         PaymentProviderTransfer $paymentProviderTransfer
     ): PaymentProviderTransfer {
-        return $paymentProviderTransfer->fromArray($paymentProviderEntity->toArray(), true);
+        return $paymentProviderTransfer->fromArray($paymentProviderEntity->toArray(), true)
+            ->setName($paymentProviderEntity->getPaymentProviderKey());
     }
 
     /**
