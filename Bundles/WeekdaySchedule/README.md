@@ -1,6 +1,6 @@
 # WeekdaySchedule Module
 [![Build Status](https://travis-ci.org/spryker/weekday-schedule.svg)](https://travis-ci.org/spryker/weekday-schedule)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/weekday-schedule/badge.svg)](https://coveralls.io/github/spryker/weekday-schedule)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 WeekdaySchedule module provides ability to configure a scheduling of weekdays and dates.
 
