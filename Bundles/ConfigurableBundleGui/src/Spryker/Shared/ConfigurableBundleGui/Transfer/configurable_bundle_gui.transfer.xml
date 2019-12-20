@@ -126,6 +126,7 @@
     </transfer>
 
     <transfer name="ProductListCategoryRelation">
+        <property name="categoryIds" type="int[]" singular="categoryIds"/>
     </transfer>
 
 </transfers>
