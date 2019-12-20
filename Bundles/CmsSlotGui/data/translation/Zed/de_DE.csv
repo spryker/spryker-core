@@ -5,11 +5,13 @@ Deactivate,Deaktivieren
 Description,Beschreibung
 Edit,Bearbeiten
 ID,ID
+"List of Slots","Liste der Slots"
 "List of Slots for","Liste der Slots für"
 "List of Templates","Liste der Vorlagen"
 Name,Name
 "Overview of Slots","Übersicht der Slots"
-Slots,Slots
+Ownership,Eigentum
 "Slot Key",Slot-Schlüssel
+Slots,Slots
 Status,Status
 Template,Vorlage

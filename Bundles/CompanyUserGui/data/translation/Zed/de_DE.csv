@@ -4,9 +4,9 @@
 "Company Users",Benutzer
 "Create Company User","Benutzer erstellen"
 "Customer Access",Kundenzugang
+"Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"
 E-Mail,E-Mail
 "Edit Company User","Benutzer bearbeiten"
 "List of Company Users","Liste der Benutzer"
 "Overview of Company Users","Übersicht der Benutzer"
 "User ID",Nutzer-ID
-"Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"

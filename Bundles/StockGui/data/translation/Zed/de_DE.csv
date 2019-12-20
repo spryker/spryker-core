@@ -1,0 +1,23 @@
+Actions,Aktionen
+Active,Aktiv
+Administration,
+"Available in store",
+"Available in the following store(s)",
+Configuration,
+"Create Warehouse",
+"Edit Warehouse",
+Inactive,Inaktiv
+"Is this warehouse available?",
+Name,Name
+No,Nein
+Status,Status
+"Stock not found",
+"Store relation",
+"This name is already in use.","Dieser Name wird schon benutzt."
+View,Ansicht
+"View Warehouse: ",
+"Warehouse has been successfully saved",
+"Warehouse has been successfully updated",
+"Warehouse ID","Warenhaus ID"
+Warehouses,Warenhäuser
+Yes,Ja

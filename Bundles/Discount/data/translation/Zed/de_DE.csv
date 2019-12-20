@@ -51,6 +51,7 @@ Name:,Name:
 No,Nein
 "No additional random characters","Keine weiteren zufälligen Zeichen"
 "No conditions, discount always applied.","Keine Bedingungen, Rabatt wird immer angewandt."
+"No returns for this order","Keine Rücksendungen für diese Bestellung"
 "No voucher codes were deleted.","Keine Gutscheincodes wurden gelöscht."
 Operation,Operation
 Overview,Übersicht
@@ -69,4 +70,3 @@ Value,Wert
 Voucher,Gutschein
 "Voucher Code",Gutscheincode
 Yes,Ja
-"No returns for this order","Keine Rücksendungen für diese Bestellung"

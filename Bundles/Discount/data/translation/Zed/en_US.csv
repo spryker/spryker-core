@@ -51,6 +51,7 @@ Name:,Name:
 No,No
 "No additional random characters","No additional random characters"
 "No conditions, discount always applied.","No conditions, discount always applied."
+"No returns for this order","No returns for this order"
 "No voucher codes were deleted.","No voucher codes were deleted."
 Operation,Operation
 Overview,Overview
@@ -69,4 +70,3 @@ Value,Value
 Voucher,Voucher
 "Voucher Code","Voucher Code"
 Yes,Yes
-"No returns for this order","No returns for this order"
