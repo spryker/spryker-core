@@ -116,9 +116,8 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         if (!isset(static::$bundleItemEntityCache[$idConcreteProduct]) || count(static::$bundleItemEntityCache[$idConcreteProduct]) === 0) {
             static::$bundleItemEntityCache[$idConcreteProduct] = $this->productBundleQueryContainer
                 ->queryBundleProduct($idConcreteProduct)
-                ->useSpyProductRelatedByFkBundledProductQuery()
-                    ->filterByIsActive(true)
-                ->endUse()
+                ->joinWithSpyProductRelatedByFkBundledProduct()
+                ->filterByIsActive(true)
                 ->find()
                 ->getData();
         }
