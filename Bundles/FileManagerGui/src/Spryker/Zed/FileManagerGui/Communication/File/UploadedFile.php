@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductSchedule\Communication\File;
+namespace Spryker\Zed\FileManagerGui\Communication\File;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 
