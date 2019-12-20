@@ -26,11 +26,4 @@ interface ProductOfferRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
     public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer;
-
-    /**
-     * @param int $fkProductOffer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function findStoresByFkProductOffer(int $fkProductOffer): array;
 }

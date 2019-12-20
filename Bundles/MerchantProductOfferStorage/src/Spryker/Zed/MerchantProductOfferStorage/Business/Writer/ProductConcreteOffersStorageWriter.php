@@ -87,45 +87,37 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param string[] $productSkus
+     * @param string[] $productConcreteSkus
      *
      * @return void
      */
-    public function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void
+    public function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productConcreteSkus): void
     {
-        $productSkus = array_unique($productSkus);
-        $flippedProductSkus = array_flip($productSkus);
+        $productConcreteSkus = array_unique($productConcreteSkus);
+        $flippedProductConcreteSkus = array_flip($productConcreteSkus);
 
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productSkus);
+        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productConcreteSkus);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
-        $productOffersGroupedBySku = $this->groupProductOfferReferencesByConcreteSku($productOfferCollectionTransfer);
+        $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productOfferCollectionTransfer);
 
-        $productSkusToRemove = [];
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $productSkusToRemove[$storeTransfer->getName()] = $productSkus;
-        }
+        $productConcreteSkusToRemove = $this->prepareProductConcreteSkusToRemoveList($productConcreteSkus);
 
-        foreach ($productOffersGroupedBySku as $sku => $productOfferReferencesGroupedByStore) {
-            foreach ($productOfferReferencesGroupedByStore as $store => $productOfferReferenceList) {
+        foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
+            foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferReferenceList) {
                 $productConcreteProductOffersStorageEntity = $this->getProductConcreteProductOffersStoragePropelQuery()
-                    ->filterByConcreteSku($sku)
-                    ->filterByStore($store)
+                    ->filterByConcreteSku($concreteSku)
+                    ->filterByStore($storeName)
                     ->findOneOrCreate();
 
                 $productConcreteProductOffersStorageEntity->setData($productOfferReferenceList);
                 $productConcreteProductOffersStorageEntity->save();
 
-                unset($productSkusToRemove[$store][$flippedProductSkus[$sku]]);
+                unset($productConcreteSkusToRemove[$storeName][$flippedProductConcreteSkus[$concreteSku]]);
             }
         }
 
-        foreach ($productSkusToRemove as $store => $productSkus) {
-            $this->productConcreteOffersStorageDeleter->deleteProductConcreteProductOffersStorageByProductSkusAndStore(
-                $productSkus,
-                $store
-            );
-        }
+        $this->deleteProductConcreteProductOffersStorage($productConcreteSkusToRemove);
     }
 
     /**
@@ -135,29 +127,29 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      */
     protected function groupProductOfferReferencesByConcreteSku(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
     {
-        $productOfferReferencesGroupedBySku = [];
+        $productOfferReferencesGroupedByConcreteSku = [];
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            if (!isset($productOfferReferencesGroupedBySku[$productOfferTransfer->getConcreteSku()])) {
-                $productOfferReferencesGroupedBySku[$productOfferTransfer->getConcreteSku()] = [];
+            if (!isset($productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()])) {
+                $productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()] = [];
             }
             foreach ($productOfferTransfer->getStores() as $storeTransfer) {
-                $productOfferReferencesGroupedBySku[$productOfferTransfer->getConcreteSku()][$storeTransfer->getName()][] =
+                $productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()][$storeTransfer->getName()][] =
                     mb_strtolower($productOfferTransfer->getProductOfferReference());
             }
         }
 
-        return $productOfferReferencesGroupedBySku;
+        return $productOfferReferencesGroupedByConcreteSku;
     }
 
     /**
-     * @param string[] $productSkus
+     * @param string[] $productConcreteSkus
      *
      * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    protected function createProductOfferCriteriaFilterTransfer(array $productSkus): ProductOfferCriteriaFilterTransfer
+    protected function createProductOfferCriteriaFilterTransfer(array $productConcreteSkus): ProductOfferCriteriaFilterTransfer
     {
         return (new ProductOfferCriteriaFilterTransfer())
-            ->setConcreteSkus($productSkus)
+            ->setConcreteSkus($productConcreteSkus)
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
@@ -169,5 +161,35 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected function getProductConcreteProductOffersStoragePropelQuery(): SpyProductConcreteProductOffersStorageQuery
     {
         return SpyProductConcreteProductOffersStorageQuery::create();
+    }
+
+    /**
+     * @param array $productConcreteSkusToRemove
+     *
+     * @return void
+     */
+    protected function deleteProductConcreteProductOffersStorage(array $productConcreteSkusToRemove): void
+    {
+        foreach ($productConcreteSkusToRemove as $storeName => $productSkus) {
+            $this->productConcreteOffersStorageDeleter->deleteProductConcreteProductOffersStorageByProductSkusAndStore(
+                $productSkus,
+                $storeName
+            );
+        }
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return array
+     */
+    protected function prepareProductConcreteSkusToRemoveList(array $productConcreteSkus): array
+    {
+        $productConcreteSkusToRemove = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $productConcreteSkusToRemove[$storeTransfer->getName()] = $productConcreteSkus;
+        }
+
+        return $productConcreteSkusToRemove;
     }
 }

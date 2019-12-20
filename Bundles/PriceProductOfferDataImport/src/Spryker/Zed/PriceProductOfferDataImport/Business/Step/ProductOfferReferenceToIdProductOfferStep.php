@@ -17,7 +17,7 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
     protected $idProductOffer = [];
 

@@ -17,9 +17,9 @@ interface ProductConcreteOffersStorageWriterInterface
     public function writeProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void;
 
     /**
-     * @param string[] $productSkus
+     * @param string[] $productConcreteSkus
      *
      * @return void
      */
-    public function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void;
+    public function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productConcreteSkus): void;
 }

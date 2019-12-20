@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOffer\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
@@ -39,12 +40,11 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferEntities = $productOfferQuery->find();
 
         foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = $this->getFactory()->createPropelProductOfferMapper()
+            $productOfferTransfer = $this->getFactory()
+                ->createPropelProductOfferMapper()
                 ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
 
-            foreach ($this->findStoresByFkProductOffer($productOfferTransfer->getIdProductOffer()) as $storeTransfer) {
-                $productOfferTransfer->addStore($storeTransfer);
-            }
+            $productOfferTransfer->setStores(new ArrayObject($this->findStoresByIdProductOffer($productOfferTransfer->getIdProductOffer())));
 
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
@@ -73,15 +73,15 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
-     * @param int $fkProductOffer
+     * @param int $idProductOffer
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function findStoresByFkProductOffer(int $fkProductOffer): array
+    protected function findStoresByIdProductOffer(int $idProductOffer): array
     {
         $storeEntities = $this->getFactory()->getStorePropelQuery()
             ->useSpyProductOfferStoreQuery()
-                ->filterByFkProductOffer($fkProductOffer)
+                ->filterByFkProductOffer($idProductOffer)
             ->endUse()
             ->find()
             ->getData();
