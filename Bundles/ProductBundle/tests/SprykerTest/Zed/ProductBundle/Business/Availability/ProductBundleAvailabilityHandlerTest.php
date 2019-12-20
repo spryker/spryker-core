@@ -63,7 +63,8 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleEntity = new SpyProductBundle();
         $productEntity = new SpyProduct();
 
-        $productEntity->setIdProduct($bundledId)->setSku($bundledSku);
+        $productEntity->setIdProduct($bundledId)
+            ->setSku($bundledSku);
         $productBundleEntity->setSpyProductRelatedByFkProduct($productEntity);
         $bundledProducts[] = $productBundleEntity;
 

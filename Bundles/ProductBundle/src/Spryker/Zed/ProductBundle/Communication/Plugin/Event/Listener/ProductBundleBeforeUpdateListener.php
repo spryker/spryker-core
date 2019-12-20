@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
@@ -35,26 +36,32 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
      */
     public function handle(TransferInterface $productConcreteTransfer, $eventName): void
     {
-        if (!$productConcreteTransfer instanceof ProductConcreteTransfer) {
+        if (!$this->hasProductConcreteProductBundle($productConcreteTransfer)) {
             return;
         }
 
-        $productConcreteTransfer = $this->deactivateProductBundleIfAnyBundledProductsWereInactive($productConcreteTransfer);
+        $productConcreteTransfer = $this->deactivateProductConcreteTransferIfAnyBundledProductsWereInactive($productConcreteTransfer);
         $this->updateBundleAvailability($productConcreteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return bool
+     */
+    protected function hasProductConcreteProductBundle(ProductConcreteTransfer $productConcreteTransfer): bool
+    {
+        return (!$productConcreteTransfer instanceof ProductConcreteTransfer) || $productConcreteTransfer->getProductBundle() === null;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function deactivateProductBundleIfAnyBundledProductsWereInactive(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    protected function deactivateProductConcreteTransferIfAnyBundledProductsWereInactive(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        if ($productConcreteTransfer->getProductBundle() === null) {
-            return $productConcreteTransfer;
-        }
-
-        foreach ($this->getBundledProducts($productConcreteTransfer) as $bundledProductTransfer) {
+        foreach ($this->getProductForBundleTransfers($productConcreteTransfer) as $bundledProductTransfer) {
             if (!$bundledProductTransfer->getIsActive()) {
                 $productConcreteTransfer->setIsActive(false);
 
@@ -72,10 +79,6 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
      */
     protected function updateBundleAvailability(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        if ($productConcreteTransfer->getProductBundle() === null) {
-            return;
-        }
-
         if (!$productConcreteTransfer->isPropertyModified(ProductConcreteTransfer::IS_ACTIVE)) {
             return;
         }
@@ -88,21 +91,19 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    protected function getBundledProducts(ProductConcreteTransfer $productConcreteTransfer): array
+    protected function getProductForBundleTransfers(ProductConcreteTransfer $productConcreteTransfer): ArrayObject
     {
-        return $this->getFacade()
-            ->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete())
-            ->getArrayCopy();
+        return $this->getFacade()->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductBundleTransfer[]
      */
-    protected function getProductBundlesForBundledProduct(ProductConcreteTransfer $productConcreteTransfer): array
+    protected function getProductBundlesForBundledProduct(ProductConcreteTransfer $productConcreteTransfer): ArrayObject
     {
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
@@ -110,6 +111,6 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
         $productBundleCollectionTransfer = $this->getFacade()
             ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
 
-        return $productBundleCollectionTransfer->getProductBundles()->getArrayCopy();
+        return $productBundleCollectionTransfer->getProductBundles();
     }
 }

@@ -93,7 +93,7 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @deprecated Will be removed in the next major.
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductConcrete
      *

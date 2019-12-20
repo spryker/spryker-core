@@ -50,7 +50,7 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Will be removed in the next major.
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductBundle
      *
@@ -61,7 +61,7 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Will be removed in the next major.
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductConcrete
      *

@@ -22,6 +22,8 @@ use Spryker\Zed\ProductBundle\Communication\Plugin\Event\Listener\ProductBundleB
 class ProductBundleEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
