@@ -97,7 +97,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restPaymentProviderTransfer->setPaymentProviderName($paymentProviderTransfer->getName());
 
             foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
-                $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames($restPaymentProviderTransfer->getPaymentProviderName(), $paymentMethodTransfer->getMethodName());
+                $paymentSelection = $this->findPaymentSelectionByPaymentProviderAndMethodNames($restPaymentProviderTransfer->getPaymentProviderName(), $paymentMethodTransfer->getMethodName());
                 if ($paymentSelection && in_array($paymentSelection, $availablePaymentMethodsList)) {
                     $restPaymentMethodTransfer = (new RestPaymentMethodTransfer())
                         ->setPaymentMethodName($paymentMethodTransfer->getMethodName());
@@ -155,14 +155,10 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return string|null
      */
-    protected function getPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): ?string
+    protected function findPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): ?string
     {
         $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
 
-        if (!isset($paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName])) {
-            return null;
-        }
-
-        return $paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName];
+        return $paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName] ?? null;
     }
 }
