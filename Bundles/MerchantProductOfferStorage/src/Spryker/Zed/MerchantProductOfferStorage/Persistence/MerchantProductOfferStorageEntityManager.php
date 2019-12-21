@@ -19,18 +19,19 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     /**
      * @param string $concreteSku
      * @param array $data
+     * @param string $storeName
      *
      * @return void
      */
-    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data): void
+    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data, string $storeName): void
     {
         $productConcreteProductOffersStorageEntity = $this->getFactory()
             ->createProductConcreteProductOffersStoragePropelQuery()
             ->filterByConcreteSku($concreteSku)
+            ->filterByStore($storeName)
             ->findOneOrCreate();
 
         $productConcreteProductOffersStorageEntity->setData($data);
-
         $productConcreteProductOffersStorageEntity->save();
     }
 
@@ -41,17 +42,20 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
      */
     public function saveProductOfferStorage(ProductOfferTransfer $productOfferTransfer): void
     {
-        $productOfferStorageEntity = $this->getFactory()
-            ->createProductOfferStoragePropelQuery()
-            ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->findOneOrCreate();
+        foreach ($productOfferTransfer->getStores() as $storeTransfer) {
+            $productOfferStorageEntity = $this->getFactory()
+                ->createProductOfferStoragePropelQuery()
+                ->filterByStore($storeTransfer->getName())
+                ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
+                ->findOneOrCreate();
 
-        $productOfferStorageTransfer = $this->getFactory()
-            ->createProductOfferStorageMapper()
-            ->mapProductOfferTransferToProductOfferStorageTransfer($productOfferTransfer, (new ProductOfferStorageTransfer()));
+            $productOfferStorageTransfer = $this->getFactory()
+                ->createProductOfferStorageMapper()
+                ->mapProductOfferTransferToProductOfferStorageTransfer($productOfferTransfer, (new ProductOfferStorageTransfer()));
 
-        $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
-        $productOfferStorageEntity->save();
+            $productOfferStorageEntity->setData($productOfferStorageTransfer->toArray());
+            $productOfferStorageEntity->save();
+        }
     }
 
     /**
@@ -61,18 +65,11 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
      */
     public function deleteProductConcreteProductOffersStorageEntitiesByProductSkus(array $productSkus): void
     {
-        $productConcreteProductOffersStorageEntities = $this->getFactory()
+        $this->getFactory()
             ->createProductConcreteProductOffersStoragePropelQuery()
             ->filterByConcreteSku_In($productSkus)
-            ->find();
-
-        if (empty($productConcreteProductOffersStorageEntities)) {
-            return;
-        }
-
-        foreach ($productConcreteProductOffersStorageEntities as $productConcreteProductOffersStorageEntity) {
-            $productConcreteProductOffersStorageEntity->delete();
-        }
+            ->find()
+            ->delete();
     }
 
     /**
@@ -82,17 +79,44 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
      */
     public function deleteProductOfferStorageEntitiesByProductOfferReferences(array $productOfferReferences): void
     {
-        $productOfferStorageEntities = $this->getFactory()
+        $this->getFactory()
             ->createProductOfferStoragePropelQuery()
             ->filterByProductOfferReference_In($productOfferReferences)
-            ->find();
+            ->find()
+            ->delete();
+    }
 
-        if (empty($productOfferStorageEntities)) {
-            return;
-        }
+    /**
+     * @param string[] $productSkus
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteProductConcreteProductOffersStorageByProductSkusAndStore(array $productSkus, string $storeName): void
+    {
+        $this->getFactory()
+            ->createProductConcreteProductOffersStoragePropelQuery()
+            ->filterByConcreteSku_In($productSkus)
+            ->filterByStore($storeName)
+            ->find()
+            ->delete();
+    }
 
-        foreach ($productOfferStorageEntities as $productOfferStorageEntity) {
-            $productOfferStorageEntity->delete();
-        }
+    /**
+     * @param string[] $productOfferReferences
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteProductOfferStorageEntitiesByProductOfferReferencesAndStore(
+        array $productOfferReferences,
+        string $storeName
+    ): void {
+        $this->getFactory()
+            ->createProductOfferStoragePropelQuery()
+            ->filterByProductOfferReference_In($productOfferReferences)
+            ->filterByStore($storeName)
+            ->find()
+            ->delete();
     }
 }

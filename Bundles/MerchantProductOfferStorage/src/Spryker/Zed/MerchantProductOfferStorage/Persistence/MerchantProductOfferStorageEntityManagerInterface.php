@@ -14,10 +14,11 @@ interface MerchantProductOfferStorageEntityManagerInterface
     /**
      * @param string $concreteSku
      * @param array $data
+     * @param string $storeName
      *
      * @return void
      */
-    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data): void;
+    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data, string $storeName): void;
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
@@ -39,4 +40,26 @@ interface MerchantProductOfferStorageEntityManagerInterface
      * @return void
      */
     public function deleteProductOfferStorageEntitiesByProductOfferReferences(array $productOfferReferences): void;
+
+    /**
+     * @param string[] $productSkus
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteProductConcreteProductOffersStorageByProductSkusAndStore(
+        array $productSkus,
+        string $storeName
+    ): void;
+
+    /**
+     * @param string[] $productOfferReferences
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteProductOfferStorageEntitiesByProductOfferReferencesAndStore(
+        array $productOfferReferences,
+        string $storeName
+    ): void;
 }

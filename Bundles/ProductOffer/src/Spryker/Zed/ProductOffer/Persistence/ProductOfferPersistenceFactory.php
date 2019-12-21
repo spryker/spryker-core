@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ProductOffer\Persistence;
 
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapper;
 use Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapperInterface;
+use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()
@@ -33,5 +35,13 @@ class ProductOfferPersistenceFactory extends AbstractPersistenceFactory
     public function createPropelProductOfferMapper(): ProductOfferMapperInterface
     {
         return new ProductOfferMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
+     */
+    public function getStorePropelQuery(): SpyStoreQuery
+    {
+        return $this->getProvidedDependency(ProductOfferDependencyProvider::PROPEL_QUERY_STORE);
     }
 }
