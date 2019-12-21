@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor` instead.
+ */
 class CategoryExtractor implements AggregationExtractorInterface
 {
     public const DOC_COUNT = 'doc_count';

@@ -1,7 +1,8 @@
 # Security Module
 [![Build Status](https://travis-ci.org/spryker/security.svg)](https://travis-ci.org/spryker/security)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-Security module contains security related code.
+Module provides a SecurityApplicationPlugin, which can be used to secure resources.
 
 ## Installation
 
