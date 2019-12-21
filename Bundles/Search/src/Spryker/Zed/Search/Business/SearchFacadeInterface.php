@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -335,4 +336,14 @@ interface SearchFacadeInterface
      * @return void
      */
     public function installSources(LoggerInterface $messenger): void;
+
+    /**
+     * Specification:
+     * - Executes health check for the search service.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer;
 }
