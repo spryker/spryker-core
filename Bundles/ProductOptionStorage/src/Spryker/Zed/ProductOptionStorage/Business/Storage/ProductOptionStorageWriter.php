@@ -339,21 +339,21 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 
     /**
      * @param int[] $productAbstractIds
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery[][] $productAbstractProductOptionGroupEntities
+     * @param array[] $productOptions
      * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
      *
      * @return int[]
      */
     protected function getProductAbstractIdsToRemove(
         array $productAbstractIds,
-        array $productAbstractProductOptionGroupEntities,
+        array $productOptions,
         array $productAbstractOptionStorageEntities
     ): array {
         $productAbstractIdsWithDeactivatedGroups = $this->productOptionStorageReader
             ->getProductAbstractIdsWithDeactivatedGroups($productAbstractIds);
         $productAbstractIdsRemoved = array_diff(
             array_keys($productAbstractOptionStorageEntities),
-            array_keys($productAbstractProductOptionGroupEntities)
+            array_keys($productOptions)
         );
 
         return $productAbstractIdsWithDeactivatedGroups + $productAbstractIdsRemoved;
