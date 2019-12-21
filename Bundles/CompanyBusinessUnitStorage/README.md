@@ -1,6 +1,6 @@
 # CompanyBusinessUnitStorage Module
 [![Build Status](https://travis-ci.org/spryker/company-business-unit-storage.svg)](https://travis-ci.org/spryker/company-business-unit-storage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/company-business-unit-storage/badge.svg)](https://coveralls.io/github/spryker/company-business-unit-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module is used for expanding CompanyUser storage data with company business unit id.
 
