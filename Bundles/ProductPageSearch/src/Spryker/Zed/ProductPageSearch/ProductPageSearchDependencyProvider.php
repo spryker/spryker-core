@@ -446,7 +446,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addPriceProductQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRICE_PRODUCT] = function () {
+        $container->set(static:: PROPEL_QUERY_PRICE_PRODUCT, $container->factory(function () {
             return SpyPriceProductQuery::create();
         };
 
