@@ -8,7 +8,7 @@
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/product": "^6.15.0"
+    "spryker/product": "^6.16.0"
   },
   "require-dev": {
     "spryker/cart": "*",
