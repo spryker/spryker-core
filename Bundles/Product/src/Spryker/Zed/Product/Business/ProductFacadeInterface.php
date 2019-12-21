@@ -924,7 +924,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product concrete transfers according to given filter.
+     * - Retrieves product concrete transfers according to given filter.
      *
      * @api
      *
@@ -936,8 +936,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product concrete transfers according to given filter.
-     *  - Maps only data from `spy_product` table without any joined data for performance reasons.
+     * - Retrieves product concrete transfers according to given filter.
+     * - Maps only data from `spy_product` table without any joined data for performance reasons.
      *
      * @api
      *

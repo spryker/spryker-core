@@ -516,7 +516,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         $productMapper = $this->getFactory()->createProductMapper();
 
         foreach ($productConcreteEntities as $productConcreteEntity) {
-            $productConcreteTransfers[] = $productMapper->mapProductConcreteEntityToProductConcreteTransfersWithoutRelations(
+            $productConcreteTransfers[] = $productMapper->mapProductConcreteEntityToProductConcreteTransferWithoutRelations(
                 $productConcreteEntity,
                 new ProductConcreteTransfer()
             );

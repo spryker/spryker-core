@@ -174,7 +174,7 @@ class ProductMapper implements ProductMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function mapProductConcreteEntityToProductConcreteTransfersWithoutRelations(
+    public function mapProductConcreteEntityToProductConcreteTransferWithoutRelations(
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
