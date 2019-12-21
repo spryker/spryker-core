@@ -11,10 +11,12 @@ use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodTransfer;
 use Generated\Shared\Transfer\RestPaymentProviderTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodTransfer;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException;
 
 class CheckoutDataMapper implements CheckoutDataMapperInterface
 {
@@ -33,11 +35,13 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
     public function mapRestCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer(
-        RestCheckoutDataTransfer $restCheckoutDataTransfer
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
         $restCheckoutDataResponseAttributesTransfer = new RestCheckoutDataResponseAttributesTransfer();
 
@@ -97,13 +101,20 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restPaymentProviderTransfer->setPaymentProviderName($paymentProviderTransfer->getName());
 
             foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
-                $paymentSelection = $this->findPaymentSelectionByPaymentProviderAndMethodNames($restPaymentProviderTransfer->getPaymentProviderName(), $paymentMethodTransfer->getMethodName());
-                if ($paymentSelection && in_array($paymentSelection, $availablePaymentMethodsList)) {
-                    $restPaymentMethodTransfer = (new RestPaymentMethodTransfer())
-                        ->setPaymentMethodName($paymentMethodTransfer->getMethodName());
-                    $restPaymentMethodTransfer->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($paymentSelection));
-                    $restPaymentProviderTransfer->addPaymentMethod($restPaymentMethodTransfer);
+                $restPaymentMethodTransfer = (new RestPaymentMethodTransfer());
+                $restPaymentMethodTransfer->setPaymentMethodName($paymentMethodTransfer->getMethodName());
+
+                if ($this->config->isPaymentProviderMethodToStateMachineMappingEnabled()) {
+                    $restPaymentMethodTransfer = $this->setPaymentMethodNameFromPaymentSelection(
+                        $restPaymentMethodTransfer,
+                        $availablePaymentMethodsList,
+                        $restPaymentProviderTransfer->getPaymentProviderName(),
+                        $paymentMethodTransfer->getMethodName()
+                    );
                 }
+
+                $restPaymentMethodTransfer->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($paymentMethodTransfer->getMethodName()));
+                $restPaymentProviderTransfer->addPaymentMethod($restPaymentMethodTransfer);
             }
             $restCheckoutDataResponseAttributesTransfer->addPaymentProvider($restPaymentProviderTransfer);
         }
@@ -150,15 +161,47 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestPaymentMethodTransfer $restPaymentMethodTransfer
+     * @param string[] $availablePaymentMethodsList
      * @param string $paymentProviderName
      * @param string $paymentMethodName
      *
-     * @return string|null
+     * @return \Generated\Shared\Transfer\RestPaymentMethodTransfer
      */
-    protected function findPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): ?string
+    protected function setPaymentMethodNameFromPaymentSelection(
+        RestPaymentMethodTransfer $restPaymentMethodTransfer,
+        array $availablePaymentMethodsList,
+        string $paymentProviderName,
+        string $paymentMethodName
+    ): RestPaymentMethodTransfer {
+        $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames($paymentProviderName, $paymentMethodName);
+        if (in_array($paymentSelection, $availablePaymentMethodsList, true)) {
+            $restPaymentMethodTransfer->setPaymentMethodName($paymentMethodName);
+        }
+
+        return $restPaymentMethodTransfer;
+    }
+
+    /**
+     * @param string $paymentProviderName
+     * @param string $paymentMethodName
+     *
+     * @throws \Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException
+     *
+     * @return string
+     */
+    protected function getPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): string
     {
         $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
 
-        return $paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName] ?? null;
+        if (!isset($paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName])) {
+            throw new PaymentMethodNotConfiguredException(sprintf(
+                'Payment method "%s" for payment provider "%s" is not configured in CheckoutRestApiConfig::getPaymentProviderMethodToStateMachineMapping()',
+                $paymentMethodName,
+                $paymentProviderName
+            ));
+        }
+
+        return $paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName];
     }
 }
