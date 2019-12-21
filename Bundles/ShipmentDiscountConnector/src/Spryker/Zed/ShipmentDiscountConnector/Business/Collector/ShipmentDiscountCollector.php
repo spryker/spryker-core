@@ -70,7 +70,7 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
     {
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getShipment() === null) {
+            if (!$expenseTransfer->getShipment()) {
                 continue;
             }
 
