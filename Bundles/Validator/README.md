@@ -1,6 +1,6 @@
 # Validator Module
 [![Build Status](https://travis-ci.org/spryker/validator.svg)](https://travis-ci.org/spryker/validator)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/validator/badge.svg)](https://coveralls.io/github/spryker/validator)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Validator module provides a plugin that adds a validator to the Application.
 

@@ -26,8 +26,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/merchant-product-offer": "Required for using the Listeners",
     "spryker/event": "Required for using the Listeners",
+    "spryker/merchant-product-offer": "Required for using the Listeners",
     "spryker/propel-orm": "Required for using the synchronization data plugins"
   },
   "autoload": {
@@ -42,6 +42,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
