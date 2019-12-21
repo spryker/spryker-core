@@ -156,7 +156,7 @@ class AttributeReader implements AttributeReaderInterface
             ->queryProductAttributeCollection()
             ->joinWithSpyProductManagementAttributeValue()
             ->useSpyProductManagementAttributeValueQuery()
-                ->joinWithSpyProductManagementAttributeValueTranslation()
+                ->leftJoinWithSpyProductManagementAttributeValueTranslation()
             ->endUse()
             ->find();
 
