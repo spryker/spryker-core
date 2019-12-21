@@ -11,8 +11,7 @@
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/navigations-rest-api": "If you want to expand navigation resource with category nodes relationship."

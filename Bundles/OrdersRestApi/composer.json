@@ -13,8 +13,7 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."

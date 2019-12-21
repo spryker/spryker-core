@@ -229,7 +229,7 @@ class Discount implements DiscountInterface
             $voucherCodes[] = $voucherDiscountTransfer->getVoucherCode();
         }
 
-        return $voucherCodes;
+        return array_merge($voucherCodes, $quoteTransfer->getUsedNotAppliedVoucherCodes());
     }
 
     /**

@@ -9,7 +9,8 @@
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/calculation": "*"
+    "spryker/calculation": "*",
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/calculation": "If you want to use Calculation plugins."

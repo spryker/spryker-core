@@ -9,8 +9,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/gui": "*",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
+    "spryker/symfony": "*"
   },
   "suggest": {
     "spryker/gui": "Required to use table in plugins.",

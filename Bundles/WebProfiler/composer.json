@@ -19,8 +19,7 @@
     "spryker/config": "^3.0.0",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use the Router module.",

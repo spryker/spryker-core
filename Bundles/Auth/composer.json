@@ -15,6 +15,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
     "spryker/discount": "*",

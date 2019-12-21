@@ -9,8 +9,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/gui": "*",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
+    "spryker/symfony": "*"
   },
   "suggest": {
     "spryker/gui": "If you want to use ProductListGui plugins. Minimum required version: ^1.0.0",

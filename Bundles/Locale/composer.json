@@ -12,6 +12,7 @@
     "spryker/propel-orm": "^1.8.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",

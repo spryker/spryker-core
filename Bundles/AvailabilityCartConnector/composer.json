@@ -12,8 +12,7 @@
     "spryker/transfer": "^3.18.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."

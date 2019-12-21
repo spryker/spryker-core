@@ -9,8 +9,7 @@
   },
   "require-dev": {
     "spryker/cart": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."

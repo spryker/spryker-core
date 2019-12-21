@@ -1,6 +1,6 @@
 # CatalogSearchRestApi Module
 [![Build Status](https://travis-ci.org/spryker/catalog-search-rest-api.svg)](https://travis-ci.org/spryker/catalog-search-rest-api)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/catalog-search-rest-api/badge.svg)](https://coveralls.io/github/spryker/catalog-search-rest-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 CatalogSearchRestApi module provides rest API endpoints to search products and search suggestions.
 
