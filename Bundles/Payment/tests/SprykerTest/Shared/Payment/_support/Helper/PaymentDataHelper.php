@@ -47,6 +47,8 @@ EOF;
 
     /**
      * @param \SprykerTest\Shared\Store\Helper\StoreDataHelper $storeDataHelper
+     *
+     * @return void
      */
     public function _inject(StoreDataHelper $storeDataHelper)
     {
@@ -87,6 +89,7 @@ EOF;
      */
     public function havePaymentProvider(array $override = []): PaymentProviderTransfer
     {
+        /** @var \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer */
         $paymentProviderTransfer = (new PaymentProviderBuilder())->seed($override)->build();
 
         $paymentProviderEntity = SpyPaymentProviderQuery::create()
@@ -108,6 +111,7 @@ EOF;
      */
     public function havePaymentMethod(array $override = []): PaymentMethodTransfer
     {
+        /** @var \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer */
         $paymentMethodTransfer = (new PaymentMethodBuilder())->seed($override)->build();
 
         if (!$paymentMethodTransfer->getIdPaymentProvider() || !$paymentMethodTransfer->getPaymentProvider()) {

@@ -131,6 +131,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
+     *
      * @return array
      */
     protected function getAvailablePaymentMethodsList(RestCheckoutDataTransfer $checkoutDataTransfer): array
@@ -332,7 +333,6 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             if (!$isPaymentMethodRequested) {
                 continue;
             }
-
 
             if (in_array($paymentMethodTransfer->getMethodName(), $availablePaymentMethodsList)) {
                 $restCheckoutDataResponseAttributesTransfer->addSelectedPaymentMethod(

@@ -167,6 +167,7 @@
     <transfer name="PaymentProvider">
         <property name="name" type="string"/>
         <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
+        <property name="paymentProviderKey" type="string"/>
     </transfer>
 
     <transfer name="PaymentMethods">
@@ -206,6 +207,7 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -239,10 +241,6 @@
         <property name="idSalesShipment" type="int"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
-    </transfer>
-
-    <transfer name="Store">
-        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="RestErrorCollection">
