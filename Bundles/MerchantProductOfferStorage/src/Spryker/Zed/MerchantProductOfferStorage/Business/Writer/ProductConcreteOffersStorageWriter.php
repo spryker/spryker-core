@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
-use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
@@ -105,13 +104,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
             foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferReferenceList) {
-                $productConcreteProductOffersStorageEntity = $this->getProductConcreteProductOffersStoragePropelQuery()
-                    ->filterByConcreteSku($concreteSku)
-                    ->filterByStore($storeName)
-                    ->findOneOrCreate();
-
-                $productConcreteProductOffersStorageEntity->setData($productOfferReferenceList);
-                $productConcreteProductOffersStorageEntity->save();
+                $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage(
+                    $concreteSku,
+                    $productOfferReferenceList,
+                    $storeName
+                );
 
                 unset($productConcreteSkusToRemove[$storeName][$flippedProductConcreteSkus[$concreteSku]]);
             }
@@ -153,14 +150,6 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery
-     */
-    protected function getProductConcreteProductOffersStoragePropelQuery(): SpyProductConcreteProductOffersStorageQuery
-    {
-        return SpyProductConcreteProductOffersStorageQuery::create();
     }
 
     /**

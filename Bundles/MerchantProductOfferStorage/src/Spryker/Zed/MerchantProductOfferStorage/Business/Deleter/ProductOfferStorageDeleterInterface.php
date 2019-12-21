@@ -29,7 +29,7 @@ interface ProductOfferStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteProductOfferStorageEntitiesByProductOfferReferencesAndStore(
+    public function deleteProductOfferStorageCollectionByProductOfferReferencesAndStore(
         array $productOfferReferences,
         string $storeName
     ): void;

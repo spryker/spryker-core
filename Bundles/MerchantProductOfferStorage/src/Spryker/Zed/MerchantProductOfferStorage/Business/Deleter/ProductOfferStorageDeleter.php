@@ -67,7 +67,7 @@ class ProductOfferStorageDeleter implements ProductOfferStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteProductOfferStorageEntitiesByProductOfferReferencesAndStore(array $productOfferReferences, string $storeName): void
+    public function deleteProductOfferStorageCollectionByProductOfferReferencesAndStore(array $productOfferReferences, string $storeName): void
     {
         $this->merchantProductOfferStorageEntityManager->deleteProductOfferStorageEntitiesByProductOfferReferencesAndStore(
             $productOfferReferences,

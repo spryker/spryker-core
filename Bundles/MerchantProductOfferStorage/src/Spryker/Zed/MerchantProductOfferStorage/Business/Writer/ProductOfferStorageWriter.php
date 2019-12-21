@@ -109,7 +109,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         }
 
         foreach ($productOfferReferencesToRemove as $storeName => $productOfferReferences) {
-            $this->productOfferStorageDeleter->deleteProductOfferStorageEntitiesByProductOfferReferencesAndStore(
+            $this->productOfferStorageDeleter->deleteProductOfferStorageCollectionByProductOfferReferencesAndStore(
                 $productOfferReferences,
                 $storeName
             );

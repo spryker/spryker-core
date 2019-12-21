@@ -19,18 +19,19 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     /**
      * @param string $concreteSku
      * @param array $data
+     * @param string $storeName
      *
      * @return void
      */
-    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data): void
+    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data, string $storeName): void
     {
         $productConcreteProductOffersStorageEntity = $this->getFactory()
             ->createProductConcreteProductOffersStoragePropelQuery()
             ->filterByConcreteSku($concreteSku)
+            ->filterByStore($storeName)
             ->findOneOrCreate();
 
         $productConcreteProductOffersStorageEntity->setData($data);
-
         $productConcreteProductOffersStorageEntity->save();
     }
 
