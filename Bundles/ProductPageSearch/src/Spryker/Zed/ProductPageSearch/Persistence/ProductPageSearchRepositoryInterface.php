@@ -29,4 +29,13 @@ interface ProductPageSearchRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
     public function getProductEntityTransfers(array $productIds): array;
+
+    /**
+     * @module PriceProduct
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getPriceProductIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
 }

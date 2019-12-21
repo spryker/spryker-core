@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductDefaultTableMap;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -16,7 +15,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  */
-class ProductPagePriceProductDefaultSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
+class PriceProductDefaultProductPagePublishListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -32,11 +31,7 @@ class ProductPagePriceProductDefaultSearchListener extends AbstractProductPageSe
     {
         $this->preventTransaction();
         $priceProductStoreIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyPriceProductDefaultTableMap::COL_FK_PRICE_PRODUCT_STORE);
-        $productAbstractIds = $this->getQueryContainer()
-            ->queryPriceProductByPriceProductStoreIds($priceProductStoreIds)
-            ->select(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->find()
-            ->getData();
+        $productAbstractIds = $this->getFacade()->getPriceProductIdsByPriceProductStoreIds($priceProductStoreIds);
 
         $this->publish($productAbstractIds);
     }

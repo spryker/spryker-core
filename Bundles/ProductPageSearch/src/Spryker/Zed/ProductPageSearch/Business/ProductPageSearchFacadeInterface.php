@@ -130,4 +130,16 @@ interface ProductPageSearchFacadeInterface
     public function expandProductConcretePageSearchTransferWithProductImages(
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
     ): ProductConcretePageSearchTransfer;
+
+    /**
+     * Specification:
+     * - Gets price product ids by price product store ids.
+     *
+     * @api
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getPriceProductIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
 }

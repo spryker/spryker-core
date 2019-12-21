@@ -162,4 +162,18 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
             ->createProductConcretePageSearchExpander()
             ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getPriceProductIdsByPriceProductStoreIds(array $priceProductStoreIds): array
+    {
+        return $this->getRepository()->getPriceProductIdsByPriceProductStoreIds($priceProductStoreIds);
+    }
 }
