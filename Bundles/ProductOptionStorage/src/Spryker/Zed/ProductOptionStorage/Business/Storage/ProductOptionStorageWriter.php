@@ -88,12 +88,16 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         }
 
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
-        $productAbstractIdsWithDeactivatedGroups = $this->productOptionStorageReader->getProductAbstractIdsWithDeactivatedGroups($productAbstractIds);
+        $productAbstractIdsToRemove = $this->getProductAbstractIdsToRemove(
+            $productAbstractIds,
+            $productOptions,
+            $productAbstractOptionStorageEntities
+        );
 
-        if ($productAbstractIdsWithDeactivatedGroups) {
+        if ($productAbstractIdsToRemove) {
             $deletableProductAbstractOptionStorageEntities = $this->filterProductAbstractOptionStorageEntitiesByProductAbstractIds(
                 $productAbstractOptionStorageEntities,
-                $productAbstractIdsWithDeactivatedGroups
+                $productAbstractIdsToRemove
             );
 
             $this->deleteProductAbstractOptionStorageEntities($deletableProductAbstractOptionStorageEntities);
@@ -331,5 +335,27 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         }
 
         return $moneyValueCollection;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery[][] $productAbstractProductOptionGroupEntities
+     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
+     *
+     * @return int[]
+     */
+    protected function getProductAbstractIdsToRemove(
+        array $productAbstractIds,
+        array $productAbstractProductOptionGroupEntities,
+        array $productAbstractOptionStorageEntities
+    ): array {
+        $productAbstractIdsWithDeactivatedGroups = $this->productOptionStorageReader
+            ->getProductAbstractIdsWithDeactivatedGroups($productAbstractIds);
+        $productAbstractIdsRemoved = array_diff(
+            array_keys($productAbstractOptionStorageEntities),
+            array_keys($productAbstractProductOptionGroupEntities)
+        );
+
+        return $productAbstractIdsWithDeactivatedGroups + $productAbstractIdsRemoved;
     }
 }
