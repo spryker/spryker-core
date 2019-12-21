@@ -42,7 +42,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetProductImageSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageLocalizedAttributesSearchListener;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceProductStoreSearchListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceProductDefaultSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceTypeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractListener;
@@ -390,7 +390,7 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductPagePriceProductStoreSearchListenerStoreData(): void
+    public function testProductPagePriceProductDefaultSearchListenerStoreData(): void
     {
         // Prepare
         $priceProductIds = [
@@ -403,15 +403,15 @@ class ProductPageSearchListenerTest extends Unit
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
         // Act
-        $productPagePriceProductStoreSearchListener = new ProductPagePriceProductStoreSearchListener();
-        $productPagePriceProductStoreSearchListener->setFacade($this->tester->getFacade());
+        $productPagePriceProductDefaultSearchListener = new ProductPagePriceProductDefaultSearchListener();
+        $productPagePriceProductDefaultSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT => $this->priceProductTransfer->getIdPriceProduct(),
             ]),
         ];
-        $productPagePriceProductStoreSearchListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE);
+        $productPagePriceProductDefaultSearchListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE);
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();

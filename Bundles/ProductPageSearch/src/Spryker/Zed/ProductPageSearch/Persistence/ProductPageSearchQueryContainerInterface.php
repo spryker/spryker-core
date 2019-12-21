@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
@@ -208,4 +209,18 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
      */
     public function queryProductSearchByProductConcreteIdsAndLocaleIsoCodes(array $productConcreteIds, array $localeIsoCodes): SpyProductSearchQuery;
+
+    /**
+     * Specification:
+     * - Returns `SpyPriceProductQuery` filtered by price product store ids.
+     *
+     * @api
+     *
+     * @module PriceProduct
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    public function queryPriceProductByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery;
 }

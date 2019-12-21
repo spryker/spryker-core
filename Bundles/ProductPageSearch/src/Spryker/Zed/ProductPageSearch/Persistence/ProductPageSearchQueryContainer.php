@@ -15,6 +15,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -183,6 +184,26 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->endUse()
             ->filterByFkProduct_In($productConcreteIds)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @module PriceProduct
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    public function queryPriceProductByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery
+    {
+        return $this->getFactory()
+            ->getPriceProductQuery()
+            ->usePriceProductStoreQuery()
+                ->filterByIdPriceProductStore_In($priceProductStoreIds)
+            ->endUse();
     }
 
     /**

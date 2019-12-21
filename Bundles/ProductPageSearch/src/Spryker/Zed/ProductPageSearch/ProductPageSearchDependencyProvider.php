@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch;
 
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
@@ -85,6 +86,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
     public const PROPEL_QUERY_PRODUCT_SEARCH = 'PROPEL_QUERY_PRODUCT_SEARCH';
     public const PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER';
+    public const PROPEL_QUERY_PRICE_PRODUCT = 'PROPEL_QUERY_PRICE_PRODUCT_DEFAULT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -222,6 +224,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addCategoryNodePropelQuery($container);
         $container = $this->addProductPropelQuery($container);
         $container = $this->addProductSearchPropelQuery($container);
+        $container = $this->addPriceProductQuery($container);
 
         return $container;
     }
@@ -434,5 +437,19 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function getProductAbstractMapExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRICE_PRODUCT] = function () {
+            return SpyPriceProductQuery::create();
+        };
+
+        return $container;
     }
 }
