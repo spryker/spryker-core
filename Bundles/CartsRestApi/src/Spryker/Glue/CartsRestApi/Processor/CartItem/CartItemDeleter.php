@@ -57,6 +57,10 @@ class CartItemDeleter implements CartItemDeleterInterface
     {
         $cartItemRequestTransfer = $this->createCartItemRequestTransfer($restRequest);
 
+        if (!$cartItemRequestTransfer->getQuoteUuid()) {
+            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
+        }
+
         $quoteResponseTransfer = $this->cartsRestApiClient->removeItem($cartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
