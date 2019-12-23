@@ -50,7 +50,7 @@ class ProductCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandItemTransfersWithUrlForCartWithItem(): void
+    public function testExpandItemTransfersWithUrlsForCartWithItem(): void
     {
         // Arrange
         $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => 'en_US']);
@@ -75,7 +75,7 @@ class ProductCartConnectorFacadeTest extends Unit
             ->addItem((new ItemTransfer())->setIdProductAbstract(static::PRODUCT_ABSTRACT_ID));
 
         // Act
-        $this->tester->getFacade()->expandItemTransfersWithUrl($cartChangeTransfer);
+        $this->tester->getFacade()->expandItemTransfersWithUrls($cartChangeTransfer);
 
         // Assert
         $this->assertEquals($productUrl->getUrl(), $cartChangeTransfer->getItems()->offsetGet(0)->getUrl());
@@ -84,13 +84,13 @@ class ProductCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandItemTransfersWithUrlForEmptyCart(): void
+    public function testExpandItemTransfersWithUrlsForEmptyCart(): void
     {
         // Arrange
         $cartChangeTransfer = new CartChangeTransfer();
 
         // Act
-        $this->tester->getFacade()->expandItemTransfersWithUrl($cartChangeTransfer);
+        $this->tester->getFacade()->expandItemTransfersWithUrls($cartChangeTransfer);
 
         // Assert
         $this->assertCount(0, $cartChangeTransfer->getItems());
