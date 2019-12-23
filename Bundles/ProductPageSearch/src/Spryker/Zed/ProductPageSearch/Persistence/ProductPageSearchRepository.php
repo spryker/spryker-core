@@ -172,6 +172,10 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     public function getPriceProductIdsByPriceProductStoreIds(array $priceProductStoreIds): array
     {
+        if (!$priceProductStoreIds) {
+            return [];
+        }
+
         return $this->getFactory()
             ->getPriceProductQuery()
             ->select(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT)
