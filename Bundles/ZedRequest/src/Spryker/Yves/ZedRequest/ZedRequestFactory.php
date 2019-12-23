@@ -7,8 +7,11 @@
 
 namespace Spryker\Yves\ZedRequest;
 
+use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\ZedRequest\HealthCheck\HealthCheckInterface;
+use Spryker\Yves\ZedRequest\HealthCheck\ZedRequestHealthCheck;
 use Spryker\Yves\ZedRequest\Plugin\ZedRequestHeaderMiddleware;
 use Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin;
 use Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin;
@@ -53,5 +56,23 @@ class ZedRequestFactory extends AbstractFactory
     protected function getUtilNetworkService()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_UTIL_NETWORK);
+    }
+
+    /**
+     * @return \Spryker\Yves\ZedRequest\HealthCheck\HealthCheckInterface
+     */
+    public function createZedRequestHealthChecker(): HealthCheckInterface
+    {
+        return new ZedRequestHealthCheck(
+            $this->getZedRequestClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    public function getZedRequestClient(): ZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }
