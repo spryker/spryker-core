@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -154,6 +155,18 @@ class ProductBusinessTester extends Actor
             '/%s/product-' . $idProductAbstract,
             $localeName
         );
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return int
+     */
+    public function getUrlsCount(int $idLocale): int
+    {
+        return SpyUrlQuery::create()
+            ->filterByFkLocale($idLocale)
+            ->count();
     }
 
     /**
