@@ -9,6 +9,7 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {},
   "extra": {
     "branch-alias": {
       "dev-master": "5.0.x-dev"

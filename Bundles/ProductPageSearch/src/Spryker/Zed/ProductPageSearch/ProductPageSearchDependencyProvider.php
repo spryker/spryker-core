@@ -247,9 +247,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        });
+        }));
 
         return $container;
     }
