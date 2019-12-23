@@ -89,7 +89,7 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     ): array {
         return $this->shipmentMethodMapper
             ->mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
-                $shipmentMethodsTransfer->getMethods()->getArrayCopy()
+                $shipmentMethodsTransfer->getMethods()
             );
     }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -17,13 +18,13 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
      * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
     public function mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
-        array $shipmentMethodTransfers,
+        ArrayObject $shipmentMethodTransfers,
         array $restShipmentMethodsAttributesTransfers = []
     ): array {
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {

@@ -41,17 +41,17 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
     public function mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers(
         RestCheckoutDataTransfer $restCheckoutDataTransfer
     ): array {
-        $result = [];
+        $restPaymentMethodsAttributesTransfers = [];
 
-        foreach ($restCheckoutDataTransfer->getAvailablePaymentMethods()->getMethods() as $paymentMethod) {
-            if (!$paymentMethod->getPaymentProvider()) {
+        foreach ($restCheckoutDataTransfer->getAvailablePaymentMethods()->getMethods() as $paymentMethodTransfer) {
+            if (!$paymentMethodTransfer->getPaymentProvider()) {
                 continue;
             }
-            $restPaymentMethod = $this->createRestPaymentMethodAttributesTransfer($paymentMethod->getPaymentProvider(), $paymentMethod);
-            $result[$paymentMethod->getIdPaymentMethod()] = $restPaymentMethod;
+            $restPaymentMethod = $this->createRestPaymentMethodAttributesTransfer($paymentMethodTransfer);
+            $restPaymentMethodsAttributesTransfers[$paymentMethodTransfer->getIdPaymentMethod()] = $restPaymentMethod;
         }
 
-        return $result;
+        return $restPaymentMethodsAttributesTransfers;
     }
 
     /**
@@ -180,24 +180,24 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer
      */
     protected function createRestPaymentMethodAttributesTransfer(
-        PaymentProviderTransfer $paymentProviderTransfer,
         PaymentMethodTransfer $paymentMethodTransfer
     ): RestPaymentMethodsAttributesTransfer {
         $paymentMethodName = $paymentMethodTransfer->getName();
         $paymentMethodKey = $paymentMethodTransfer->getMethodName();
-        $paymentProviderName = $paymentProviderTransfer->getPaymentProviderKey();
+        $paymentProviderName = $paymentMethodTransfer->getPaymentProvider()->getPaymentProviderKey();
 
         return (new RestPaymentMethodsAttributesTransfer())
             ->setPaymentMethodName($paymentMethodName)
             ->setPaymentProviderName($paymentProviderName)
             ->setPriority($this->config->getPaymentMethodPriority()[$paymentMethodKey] ?? null)
-            ->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($paymentProviderName, $paymentMethodKey));
+            ->setRequiredRequestData(
+                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderName, $paymentMethodKey)
+            );
     }
 
     /**
