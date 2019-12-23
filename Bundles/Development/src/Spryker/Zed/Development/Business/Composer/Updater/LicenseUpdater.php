@@ -30,7 +30,7 @@ class LicenseUpdater implements UpdaterInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         $modulePath = dirname($composerJsonFile->getPathname());
         $license = static::LICENSE_TYPE_PROPRIETARY;

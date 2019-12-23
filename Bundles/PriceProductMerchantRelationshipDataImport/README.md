@@ -1,6 +1,6 @@
 # PriceProductMerchantRelationshipDataImport Module
 [![Build Status](https://travis-ci.org/spryker/price-product-merchant-relationship-data-import.svg)](https://travis-ci.org/spryker/price-product-merchant-relationship-data-import)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-merchant-relationship-data-import/badge.svg)](https://coveralls.io/github/spryker/price-product-merchant-relationship-data-import)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module has demo data and importer for price products for merchant relations.
 

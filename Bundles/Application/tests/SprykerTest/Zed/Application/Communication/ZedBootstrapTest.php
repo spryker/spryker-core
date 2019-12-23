@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Application\Communication;
+namespace SprykerTest\Zed\Application\Communication;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Application\Communication\ZedBootstrap;
@@ -13,8 +13,7 @@ use Spryker\Zed\Application\Communication\ZedBootstrap;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Application
  * @group Communication

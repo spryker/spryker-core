@@ -34,7 +34,7 @@ class ComposerUpdaterComposite implements ComposerUpdaterCompositeInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         foreach ($this->updater as $updater) {
             $composerJson = $updater->update($composerJson, $composerJsonFile);

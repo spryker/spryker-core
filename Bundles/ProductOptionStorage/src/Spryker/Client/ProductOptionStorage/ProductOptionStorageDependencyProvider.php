@@ -13,6 +13,7 @@ use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageTo
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceBridge;
+use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -23,7 +24,10 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     public const STORE = 'STORE';
 
     /**
@@ -37,6 +41,7 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addStore($container);
 
         return $container;
@@ -94,6 +99,22 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
         $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductOptionStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductOptionStorageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
 
         return $container;
     }

@@ -135,6 +135,7 @@ var ContentItemEditor = function(options) {
             var selection = window.getSelection();
             selection.removeAllRanges();
             selection.addRange(range);
+            range.collapse(false);
         };
 
         if (isWidgetWrapper) {

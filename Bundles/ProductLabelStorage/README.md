@@ -1,7 +1,6 @@
 # ProductLabelStorage Module
-[![Build Status](https://travis-ci.org/spryker/ProductLabelStorage.svg)](https://travis-ci.org/spryker/ProductLabelStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductLabelStorage/badge.svg)](https://coveralls.io/github/spryker/ProductLabelStorage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductLabelStorage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductLabelStorage/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/product-label-storage.svg)](https://travis-ci.org/spryker/product-label-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ## Installation
 
