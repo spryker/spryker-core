@@ -90,8 +90,8 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
         $productAbstractIdsToRemove = $this->getProductAbstractIdsToRemove(
             $productAbstractIds,
-            $productOptions,
-            $productAbstractOptionStorageEntities
+            array_keys($productOptions),
+            array_keys($productAbstractOptionStorageEntities)
         );
 
         if ($productAbstractIdsToRemove) {
@@ -339,22 +339,19 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 
     /**
      * @param int[] $productAbstractIds
-     * @param array[] $productOptions
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
+     * @param int[] $storedProductAbstractIds
+     * @param int[] $productAbstractIdsFromStorage
      *
      * @return int[]
      */
     protected function getProductAbstractIdsToRemove(
         array $productAbstractIds,
-        array $productOptions,
-        array $productAbstractOptionStorageEntities
+        array $storedProductAbstractIds,
+        array $productAbstractIdsFromStorage
     ): array {
         $productAbstractIdsWithDeactivatedGroups = $this->productOptionStorageReader
             ->getProductAbstractIdsWithDeactivatedGroups($productAbstractIds);
-        $productAbstractIdsRemoved = array_diff(
-            array_keys($productAbstractOptionStorageEntities),
-            array_keys($productOptions)
-        );
+        $productAbstractIdsRemoved = array_diff($productAbstractIdsFromStorage, $storedProductAbstractIds);
 
         return $productAbstractIdsWithDeactivatedGroups + $productAbstractIdsRemoved;
     }
