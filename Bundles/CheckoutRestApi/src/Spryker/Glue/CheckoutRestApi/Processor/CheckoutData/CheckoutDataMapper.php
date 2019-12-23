@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
-use Generated\Shared\Transfer\PaymentMethodTransfer;
-use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -23,15 +21,24 @@ use Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredE
 class CheckoutDataMapper implements CheckoutDataMapperInterface
 {
     /**
+     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface[]
+     */
+    protected $checkoutDataResponseMapperPlugins;
+
+    /**
      * @var \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig
      */
     protected $config;
 
     /**
+     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface[] $checkoutDataResponseMapperPlugins
      * @param \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig $config
      */
-    public function __construct(CheckoutRestApiConfig $config)
-    {
+    public function __construct(
+        array $checkoutDataResponseMapperPlugins,
+        CheckoutRestApiConfig $config
+    ) {
+        $this->checkoutDataResponseMapperPlugins = $checkoutDataResponseMapperPlugins;
         $this->config = $config;
     }
 
@@ -51,26 +58,26 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentProviders(
-            $restCheckoutDataTransfer,
-            $restCheckoutDataResponseAttributesTransfer
-        );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethods(
-            $restCheckoutDataTransfer,
-            $restCheckoutDataResponseAttributesTransfer
-        );
+        if ($this->config->getAllowPaymentProvidersInAttributes()) {
+            $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentProviders(
+                $restCheckoutDataTransfer,
+                $restCheckoutDataResponseAttributesTransfer
+            );
+        }
+        if ($this->config->getAllowShipmentMethodsInAttributes()) {
+            $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethods(
+                $restCheckoutDataTransfer,
+                $restCheckoutDataResponseAttributesTransfer
+            );
+        }
 
-        $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedPaymentMethods(
-            $restCheckoutDataTransfer,
-            $restCheckoutDataResponseAttributesTransfer,
-            $restCheckoutRequestAttributesTransfer
-        );
-
-        $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedShipmentMethods(
-            $restCheckoutDataTransfer,
-            $restCheckoutDataResponseAttributesTransfer,
-            $restCheckoutRequestAttributesTransfer
-        );
+        foreach ($this->checkoutDataResponseMapperPlugins as $checkoutDataResponseMapperPlugin) {
+            $restCheckoutDataResponseAttributesTransfer = $checkoutDataResponseMapperPlugin->mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
+                $restCheckoutDataTransfer,
+                $restCheckoutRequestAttributesTransfer,
+                $restCheckoutDataResponseAttributesTransfer
+            );
+        }
 
         return $restCheckoutDataResponseAttributesTransfer;
     }
@@ -110,16 +117,22 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        foreach ($checkoutDataTransfer->getPaymentProviders()->getPaymentProviders() as $paymentProvider) {
+        foreach ($checkoutDataTransfer->getPaymentProviders()->getPaymentProviders() as $paymentProviderTransfer) {
             $restPaymentProviderTransfer = new RestPaymentProviderTransfer();
-            $restPaymentProviderTransfer->setPaymentProviderName($paymentProvider->getPaymentProviderKey());
+            $restPaymentProviderTransfer->setPaymentProviderName($paymentProviderTransfer->getPaymentProviderKey());
 
-            foreach ($paymentProvider->getPaymentMethods() as $paymentMethodTransfer) {
-                $restPaymentMethodTransfer = new RestPaymentMethodTransfer();
-                $restPaymentMethodTransfer->setPaymentMethodName($paymentMethodTransfer->getMethodName());
-                $restPaymentMethodTransfer->setRequiredRequestData(
-                    $this->config->getRequiredRequestDataForPaymentMethod($paymentMethodTransfer->getMethodName())
-                );
+            foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
+                $paymentSelection = $this->findPaymentSelectionByPaymentProviderAndMethodNames($paymentProviderTransfer->getPaymentProviderKey(), $paymentMethodTransfer->getName());
+
+                if (!$paymentSelection) {
+                    continue;
+                }
+
+                $restPaymentMethodTransfer = (new RestPaymentMethodTransfer())
+                    ->setPaymentMethodName($paymentMethodTransfer->getName())
+                    ->setRequiredRequestData(
+                        $this->config->getRequiredRequestDataForPaymentMethod($paymentMethodTransfer->getMethodName())
+                    );
 
                 $restPaymentProviderTransfer->addPaymentMethod($restPaymentMethodTransfer);
             }
@@ -150,21 +163,25 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @throws \Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException
      *
-     * @return string
+     * @return string|null
      */
-    protected function getPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): string
+    protected function findPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): ?string
     {
-        $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
+        if ($this->config->isPaymentProviderMethodToStateMachineMappingEnabled()) {
+            $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
 
-        if (!isset($paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName])) {
-            throw new PaymentMethodNotConfiguredException(sprintf(
-                'Payment method "%s" for payment provider "%s" is not configured in CheckoutRestApiConfig::getPaymentProviderMethodToStateMachineMapping()',
-                $paymentMethodName,
-                $paymentProviderName
-            ));
+            if (!isset($paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName])) {
+                throw new PaymentMethodNotConfiguredException(sprintf(
+                    'Payment method "%s" for payment provider "%s" is not configured in CheckoutRestApiConfig::getPaymentProviderMethodToStateMachineMapping()',
+                    $paymentMethodName,
+                    $paymentProviderName
+                ));
+            }
+
+            return $paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName];
         }
 
-        return $paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName];
+        return $paymentMethodName;
     }
 
     /**
@@ -217,171 +234,5 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         $restShipmentMethodTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
 
         return $restShipmentMethodTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
-     */
-    protected function mapSelectedShipmentMethods(
-        RestCheckoutDataTransfer $restCheckoutDataTransfer,
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): RestCheckoutDataResponseAttributesTransfer {
-        $idSelectedShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment() ?
-            $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod() : null;
-
-        if (!$idSelectedShipmentMethod) {
-            return $restCheckoutDataResponseAttributesTransfer;
-        }
-
-        foreach ($restCheckoutDataTransfer->getShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
-            if ($shipmentMethodTransfer->getIdShipmentMethod() === $idSelectedShipmentMethod) {
-                $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
-                    $shipmentMethodTransfer,
-                    new RestShipmentMethodTransfer()
-                );
-
-                $restCheckoutDataResponseAttributesTransfer->addSelectedShipmentMethod($restShipmentMethodTransfer);
-            }
-        }
-
-        return $restCheckoutDataResponseAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
-     */
-    protected function mapSelectedPaymentMethods(
-        RestCheckoutDataTransfer $checkoutDataTransfer,
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): RestCheckoutDataResponseAttributesTransfer {
-        if (!$restCheckoutRequestAttributesTransfer->getPayments()->count()) {
-            return $restCheckoutDataResponseAttributesTransfer;
-        }
-
-        $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($checkoutDataTransfer);
-
-        $paymentProviders = $checkoutDataTransfer->getPaymentProviders()->getPaymentProviders();
-        foreach ($paymentProviders as $paymentProviderTransfer) {
-            $isPaymentProviderRequested = $this->isPaymentProviderRequested(
-                $restCheckoutRequestAttributesTransfer,
-                $paymentProviderTransfer
-            );
-
-            if (!$isPaymentProviderRequested) {
-                continue;
-            }
-
-            $this->addSelectedPaymentMethodToRestCheckoutDataResponseAttributesTransfer(
-                $restCheckoutDataResponseAttributesTransfer,
-                $paymentProviderTransfer,
-                $restCheckoutRequestAttributesTransfer,
-                $availablePaymentMethodsList
-            );
-        }
-
-        return $restCheckoutDataResponseAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
-     *
-     * @return bool
-     */
-    protected function isPaymentProviderRequested(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        PaymentProviderTransfer $paymentProviderTransfer
-    ): bool {
-        foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
-            if ($restPaymentTransfer->getPaymentProviderName() === $paymentProviderTransfer->getName()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
-     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param string[] $availablePaymentMethodsList
-     *
-     * @return void
-     */
-    protected function addSelectedPaymentMethodToRestCheckoutDataResponseAttributesTransfer(
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
-        PaymentProviderTransfer $paymentProviderTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        array $availablePaymentMethodsList
-    ): void {
-        foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
-            $isPaymentMethodRequested = $this->isPaymentMethodRequested(
-                $restCheckoutRequestAttributesTransfer,
-                $paymentMethodTransfer
-            );
-            if (!$isPaymentMethodRequested) {
-                continue;
-            }
-
-            if (in_array($paymentMethodTransfer->getMethodName(), $availablePaymentMethodsList)) {
-                $restCheckoutDataResponseAttributesTransfer->addSelectedPaymentMethod(
-                    $this->createRestPaymentMethodTransfer(
-                        $paymentMethodTransfer,
-                        $paymentProviderTransfer,
-                        $paymentMethodTransfer->getMethodName()
-                    )
-                );
-            }
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     *
-     * @return bool
-     */
-    protected function isPaymentMethodRequested(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        PaymentMethodTransfer $paymentMethodTransfer
-    ): bool {
-        foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
-            if ($paymentMethodTransfer->getMethodName() === $restPaymentTransfer->getPaymentMethodName()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
-     * @param string $paymentSelection
-     *
-     * @return \Generated\Shared\Transfer\RestPaymentMethodTransfer
-     */
-    protected function createRestPaymentMethodTransfer(
-        PaymentMethodTransfer $paymentMethodTransfer,
-        PaymentProviderTransfer $paymentProviderTransfer,
-        string $paymentSelection
-    ): RestPaymentMethodTransfer {
-        return (new RestPaymentMethodTransfer())
-            ->setPaymentMethodName($paymentMethodTransfer->getMethodName())
-            ->setPaymentProviderName($paymentProviderTransfer->getName())
-            ->setRequiredRequestData(
-                $this->config->getRequiredRequestDataForPaymentMethod($paymentSelection)
-            );
     }
 }

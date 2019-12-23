@@ -5,35 +5,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShipmentsRestApi\Processor\Mapper;
+namespace Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
-interface ShipmentMethodMapperInterface
+interface CheckoutDataResponseMapperPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
+     * Specification:
+     * - Fills RestCheckoutDataResponseAttributesTransfer's properties using data from RestCheckoutDataResponseTransfer.
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
-     */
-    public function mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
-        array $shipmentMethodTransfers,
-        array $restShipmentMethodsAttributesTransfers = []
-    ): array;
-
-    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
     public function mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer;
 }

@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\PaymentsRestApi\Processor\Mapper;
+namespace Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
 
-interface PaymentMethodMapperInterface
+/**
+ * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
+ */
+class SelectedShipmentMethodCheckoutDataResponseMapperPlugin extends AbstractPlugin implements CheckoutDataResponseMapperPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
+     * {@inheritDoc}
+     * - Maps RestCheckoutDataResponseAttributesTransfer.selectedShipmentMethods.
+     * - Uses RestCheckoutRequestAttributesTransfer.shipment information to find the shipment method in the RestCheckoutDataTransfer.
      *
-     * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
-     */
-    public function mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers(
-        RestCheckoutDataTransfer $restCheckoutDataTransfer
-    ): array;
-
-    /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
@@ -33,5 +33,12 @@ interface PaymentMethodMapperInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
-    ): RestCheckoutDataResponseAttributesTransfer;
+    ): RestCheckoutDataResponseAttributesTransfer {
+        return $this->getFactory()->createShipmentMethodMapper()
+            ->mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
+                $restCheckoutDataTransfer,
+                $restCheckoutRequestAttributesTransfer,
+                $restCheckoutResponseAttributesTransfer
+            );
+    }
 }

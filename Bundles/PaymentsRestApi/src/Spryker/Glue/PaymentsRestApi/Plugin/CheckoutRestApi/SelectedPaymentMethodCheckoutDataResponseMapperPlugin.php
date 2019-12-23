@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\PaymentsRestApi\Processor\Mapper;
+namespace Spryker\Glue\PaymentsRestApi\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
 
-interface PaymentMethodMapperInterface
+/**
+ * @method \Spryker\Glue\PaymentsRestApi\PaymentsRestApiFactory getFactory()
+ */
+class SelectedPaymentMethodCheckoutDataResponseMapperPlugin extends AbstractPlugin implements CheckoutDataResponseMapperPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
+     * {@inheritDoc}
+     * - Maps RestCheckoutDataResponseAttributesTransfer.selectedPaymentMethods.
+     * - Uses RestCheckoutRequestAttributesTransfer.payments information to find the payment method in the RestCheckoutDataTransfer.
      *
-     * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
-     */
-    public function mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers(
-        RestCheckoutDataTransfer $restCheckoutDataTransfer
-    ): array;
-
-    /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
@@ -33,5 +33,12 @@ interface PaymentMethodMapperInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
-    ): RestCheckoutDataResponseAttributesTransfer;
+    ): RestCheckoutDataResponseAttributesTransfer {
+        return $this->getFactory()->createPaymentMethodMapper()
+            ->mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
+                $restCheckoutDataTransfer,
+                $restCheckoutRequestAttributesTransfer,
+                $restCheckoutResponseAttributesTransfer
+            );
+    }
 }

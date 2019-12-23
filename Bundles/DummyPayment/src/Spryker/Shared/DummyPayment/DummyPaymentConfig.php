@@ -12,6 +12,6 @@ interface DummyPaymentConfig
     public const PROVIDER_NAME = 'DummyPayment';
     public const PAYMENT_METHOD_INVOICE = 'dummyPaymentInvoice';
     public const PAYMENT_METHOD_CREDIT_CARD = 'dummyPaymentCreditCard';
-    public const PAYMENT_METHOD_NAME_INVOICE = 'invoice';
-    public const PAYMENT_METHOD_NAME_CREDIT_CARD = 'credit card';
+    public const PAYMENT_METHOD_NAME_INVOICE = 'Invoice';
+    public const PAYMENT_METHOD_NAME_CREDIT_CARD = 'Credit Card';
 }
