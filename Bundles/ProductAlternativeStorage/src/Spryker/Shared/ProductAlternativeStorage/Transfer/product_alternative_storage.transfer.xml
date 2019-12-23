@@ -33,6 +33,9 @@
     </transfer>
 
     <transfer name="ProductConcrete">
+        <property name="fkProductAbstract" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
     </transfer>
 
 </transfers>

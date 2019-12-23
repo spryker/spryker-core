@@ -5,10 +5,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/configurable-bundle": "^1.0.0",
+    "spryker/configurable-bundle": "^2.1.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/propel-orm": "^1.5.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/product-image": "^3.8.0",
+    "spryker/product-storage": "^1.7.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
@@ -37,9 +39,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

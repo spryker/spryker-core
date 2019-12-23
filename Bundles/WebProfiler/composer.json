@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/application-extension": "^1.0.0",
+    "spryker/form-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.2.0",
     "spryker/twig": "^3.4.0",
@@ -18,8 +19,7 @@
     "spryker/config": "^3.0.0",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use the Router module.",
@@ -34,6 +34,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

@@ -103,7 +103,7 @@ class QuoteCartNoteSetter implements QuoteCartNoteSetterInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function findQuoteItems(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): array
+    protected function findQuoteItems(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): array
     {
         return $this->quoteItemFinderPlugin->findItem($quoteTransfer, $sku, $groupKey);
     }

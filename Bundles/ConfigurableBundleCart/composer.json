@@ -6,8 +6,8 @@
   "require": {
     "php": ">=7.2",
     "spryker/cart": "^7.3.0",
-    "spryker/cart-extension": "^1.9.0 || ^2.5.0 || ^4.1.0",
-    "spryker/configurable-bundle": "^1.0.0",
+    "spryker/cart-extension": "^1.10.0 || ^2.6.0 || ^4.2.0",
+    "spryker/configurable-bundle": "^1.0.0 || ^2.0.0",
     "spryker/kernel": "^3.33.0"
   },
   "require-dev": {
@@ -27,6 +27,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

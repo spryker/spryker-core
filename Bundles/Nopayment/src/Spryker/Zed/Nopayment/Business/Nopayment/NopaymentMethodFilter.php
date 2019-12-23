@@ -35,7 +35,7 @@ class NopaymentMethodFilter
      */
     public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getTotals()->getPriceToPay() === 0) {
+        if ($quoteTransfer->getTotals() && $quoteTransfer->getTotals()->getPriceToPay() === 0) {
             return $this->disallowRegularPaymentMethods($paymentMethodsTransfer);
         }
 

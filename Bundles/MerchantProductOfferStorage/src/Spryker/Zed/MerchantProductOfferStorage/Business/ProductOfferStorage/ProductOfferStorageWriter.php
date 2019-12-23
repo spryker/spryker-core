@@ -43,7 +43,9 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             $productOfferStorageEntity = SpyProductOfferStorageQuery::create()
                 ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
                 ->findOneOrCreate();
-            $productOfferStorageEntity->setData($this->createProductOfferStorageTransfer($productOfferTransfer)->modifiedToArray());
+            $productOfferStorageTransfer = $this->createProductOfferStorageTransfer($productOfferTransfer);
+            
+            $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
 
             $productOfferStorageEntity->save();
         }
@@ -75,6 +77,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferStorageTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
         $productOfferStorageTransfer->setIdMerchant($productOfferTransfer->getFkMerchant());
         $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        $productOfferStorageTransfer->setMerchantSku($productOfferTransfer->getMerchantSku());
 
         return $productOfferStorageTransfer;
     }
