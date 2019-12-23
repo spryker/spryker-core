@@ -23,7 +23,7 @@ class BranchAliasUpdater implements UpdaterInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         if (!Config::hasValue(DevelopmentConstants::COMPOSER_BRANCH_ALIAS)) {
             return $composerJson;
