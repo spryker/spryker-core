@@ -176,6 +176,7 @@
 
     <transfer name="PaymentMethod">
         <property name="methodName" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Quote">

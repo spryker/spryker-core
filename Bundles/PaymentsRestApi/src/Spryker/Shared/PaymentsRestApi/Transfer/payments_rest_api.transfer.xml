@@ -35,11 +35,15 @@
 
     <transfer name="PaymentMethod">
         <property name="methodName" type="string"/>
+        <property name="paymentProvider" type="PaymentProvider"/>
+        <property name="idPaymentMethod" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="PaymentProvider">
         <property name="name" type="string"/>
         <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
+        <property name="paymentProviderKey" type="string"/>
     </transfer>
 
     <transfer name="PaymentMethods">
@@ -53,5 +57,13 @@
 
     <transfer name="PaymentProviderCollection">
         <property name="paymentProviders" type="PaymentProvider[]" singular="paymentProvider"/>
+    </transfer>
+
+    <transfer name="RestCheckoutDataResponseAttributes">
+        <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
+    </transfer>
+
+    <transfer name="RestPaymentMethod">
+        <property name="paymentMethodName" type="string"/>
     </transfer>
 </transfers>

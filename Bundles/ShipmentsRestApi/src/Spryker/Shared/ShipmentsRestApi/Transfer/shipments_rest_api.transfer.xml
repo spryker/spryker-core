@@ -85,4 +85,13 @@
     <transfer name="RestCheckoutData">
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
     </transfer>
+
+    <transfer name="RestCheckoutDataResponseAttributes">
+        <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
+    </transfer>
+
+    <transfer name="RestShipmentMethod">
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+    </transfer>
 </transfers>
