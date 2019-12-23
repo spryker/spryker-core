@@ -14,7 +14,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
- * @deprecated Use ProductConcretePageSearchEventResourceBulkRepositoryPlugin instead.
+ * @deprecated Use `ProductConcretePageSearchEventResourceBulkRepositoryPlugin` instead.
+ *
+ * @see \Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\ProductConcretePageSearchEventResourceBulkRepositoryPlugin
  *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()

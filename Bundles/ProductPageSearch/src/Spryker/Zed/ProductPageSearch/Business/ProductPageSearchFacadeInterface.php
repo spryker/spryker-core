@@ -99,7 +99,9 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
+     * @deprecated Use `ProductPageSearchFacadeInterface::getProductConcretePageSearchCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface::getProductConcretePageSearchCollectionByFilter()
      *
      * @param int[] $productIds
      *

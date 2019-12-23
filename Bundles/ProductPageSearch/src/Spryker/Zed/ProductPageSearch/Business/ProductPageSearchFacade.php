@@ -119,7 +119,9 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
+     * @deprecated Use `ProductPageSearchFacade::getProductConcretePageSearchCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade::getProductConcretePageSearchCollectionByFilter()
      *
      * @param int[] $productIds
      *

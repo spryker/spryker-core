@@ -23,7 +23,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductPageSearchRepository extends AbstractRepository implements ProductPageSearchRepositoryInterface
 {
     /**
-     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
+     * @deprecated Use `ProductPageSearchRepository::getProductConcretePageSearchCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository::getProductConcretePageSearchCollectionByFilter()
      *
      * @param int[] $productIds
      *
@@ -151,7 +153,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @module Product
      *
-     * @deprecated Use getProductCollectionByFilter instead.
+     * @deprecated Use `ProductPageSearchRepository::getProductCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository::getProductCollectionByFilter()
      *
      * @param int[] $productIds
      *

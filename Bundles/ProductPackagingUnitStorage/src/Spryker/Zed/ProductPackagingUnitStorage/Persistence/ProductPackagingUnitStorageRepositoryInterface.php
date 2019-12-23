@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPackagingUnitStorageRepositoryInterface
 {
     /**
-     * @deprecated Use getProductAbstractPackagingStorageCollectionByFilter instead.
+     * @deprecated Use `ProductPackagingUnitStorageRepositoryInterface::getProductAbstractPackagingStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface::getProductAbstractPackagingStorageCollectionByFilter()
      *
      * @param int[] $productAbstractIds
      *
@@ -28,14 +30,18 @@ interface ProductPackagingUnitStorageRepositoryInterface
     public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
 
     /**
-     * @deprecated Use getProductAbstractPackagingStorageCollectionByFilter instead.
+     * @deprecated Use `ProductPackagingUnitStorageRepositoryInterface::getProductAbstractPackagingStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface::getProductAbstractPackagingStorageCollectionByFilter()
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array;
 
     /**
-     * @deprecated Use getProductPackagingLeadProductCollectionByFilter instead.
+     * @deprecated Use `ProductPackagingUnitStorageRepositoryInterface::getProductPackagingLeadProductCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface::getProductPackagingLeadProductCollectionByFilter()
      *
      * @param int[] $productAbstractIds
      *

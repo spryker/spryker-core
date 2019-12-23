@@ -34,7 +34,9 @@ interface ContentStorageRepositoryInterface
     public function findAllContentStorage(): array;
 
     /**
-     * @deprecated Use getContentCollectionByFilter instead.
+     * @deprecated Use `ContentStorageRepositoryInterface::getContentCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface::getContentCollectionByFilter()
      *
      * @param array $contentIds
      *

@@ -99,14 +99,18 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
 
     /**
-     * @deprecated Use getProductAlternativeStorageCollectionByFilter instead.
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findAllProductAlternativeStorageEntities(): array;
 
     /**
-     * @deprecated Use getProductAlternativeStorageCollectionByFilter instead.
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()
      *
      * @param int[] $productAlternativeStorageIds
      *
@@ -115,14 +119,18 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array;
 
     /**
-     * @deprecated Use getProductReplacementForStorageCollectionByFilter instead.
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findAllProductReplacementForStorageEntities(): array;
 
     /**
-     * @deprecated Use getProductReplacementForStorageCollectionByFilter instead.
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()
      *
      * @param int[] $productReplacementForStorageIds
      *

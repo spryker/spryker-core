@@ -31,7 +31,9 @@ class CustomerAccessStorageRepository extends AbstractRepository implements Cust
     }
 
     /**
-     * @deprecated Use findFilteredCustomerAccessStorageEntities instead.
+     * @deprecated Use `CustomerAccessStorageRepository::findFilteredCustomerAccessStorageEntities()` instead.
+     *
+     * @see \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepository::findFilteredCustomerAccessStorageEntities()
      *
      * @return \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage[]
      */

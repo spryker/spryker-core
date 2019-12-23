@@ -12,7 +12,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
- * @deprecated Use ProductAlternativeSynchronizationDataBulkPlugin instead.
+ * @deprecated Use `ProductAlternativeSynchronizationDataBulkPlugin` instead.
+ *
+ * @see \Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Synchronization\ProductAlternativeSynchronizationDataBulkPlugin
  *
  * @method \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface getFacade()

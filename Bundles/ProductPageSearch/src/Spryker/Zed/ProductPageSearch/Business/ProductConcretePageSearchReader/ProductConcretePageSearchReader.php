@@ -26,7 +26,9 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
-     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
+     * @deprecated Use `ProductConcretePageSearchReader::getProductConcretePageSearchCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReader::getProductConcretePageSearchCollectionByFilter()
      *
      * @param int[] $productIds
      *

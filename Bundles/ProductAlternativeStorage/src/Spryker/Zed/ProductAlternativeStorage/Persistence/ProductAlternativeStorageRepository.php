@@ -213,7 +213,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use getProductAlternativeStorageCollectionByFilter instead.
+     * @deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
@@ -226,7 +228,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use getProductAlternativeStorageCollectionByFilter instead.
+     * @deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()
      *
      * @param int[] $productAlternativeStorageIds
      *
@@ -242,8 +246,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use getAllProductReplacementForStorageByFilter instead.
-     *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findAllProductReplacementForStorageEntities(): array
@@ -255,7 +257,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use getProductReplacementForStorageCollectionByFilter instead.
+     * @deprecated Use `ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilter()
      *
      * @param int[] $productReplacementForStorageIds
      *

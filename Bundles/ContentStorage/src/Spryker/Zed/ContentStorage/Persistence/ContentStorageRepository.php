@@ -83,7 +83,9 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     }
 
     /**
-     * @deprecated Use getContentCollectionByFilter instead.
+     * @deprecated Use `ContentStorageRepository::getContentCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepository::getContentCollectionByFilter()
      *
      * @param array $contentIds
      *

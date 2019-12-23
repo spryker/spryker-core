@@ -17,7 +17,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyUserStorageRepository extends AbstractRepository implements CompanyUserStorageRepositoryInterface
 {
     /**
-     * @deprecated Use getCompanyUserStorageCollectionByFilter instead.
+     * @deprecated Use `CompanyUserStorageRepository::getCompanyUserStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepository::getCompanyUserStorageCollectionByFilter()
      *
      * @param array $companyUserIds
      *
@@ -37,7 +39,9 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
     }
 
     /**
-     * @deprecated Use getCompanyUserStorageCollectionByFilter instead.
+     * @deprecated Use `CompanyUserStorageRepository::getCompanyUserStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepository::getCompanyUserStorageCollectionByFilter()
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */

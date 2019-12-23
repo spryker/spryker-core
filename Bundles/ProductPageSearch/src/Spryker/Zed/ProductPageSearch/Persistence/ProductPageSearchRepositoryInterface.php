@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPageSearchRepositoryInterface
 {
     /**
-     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
+     * @deprecated Use `ProductPageSearchRepositoryInterface::getProductConcretePageSearchCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface::getProductConcretePageSearchCollectionByFilter()
      *
      * @param int[] $productIds
      *
@@ -28,7 +30,9 @@ interface ProductPageSearchRepositoryInterface
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
 
     /**
-     * @deprecated Use getProductCollectionByFilter instead.
+     * @deprecated Use `ProductPageSearchRepositoryInterface::getProductCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface::getProductCollectionByFilter()
      *
      * @param int[] $productIds
      *

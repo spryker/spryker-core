@@ -77,7 +77,9 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @module ProductPackagingUnit
      *
-     * @deprecated Use getProductPackagingLeadProductCollectionByFilter instead.
+     * @deprecated Use `ProductPackagingUnitStorageRepository::getProductPackagingLeadProductCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepository::getProductPackagingLeadProductCollectionByFilter()
      *
      * @param int[] $productAbstractIds
      *

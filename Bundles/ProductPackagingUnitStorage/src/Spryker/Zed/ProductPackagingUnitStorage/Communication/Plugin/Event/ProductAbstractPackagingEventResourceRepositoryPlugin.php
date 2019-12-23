@@ -14,7 +14,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 
 /**
- * @deprecated Use ProductAbstractPackagingEventResourceBulkRepositoryPlugin instead.
+ * @deprecated Use `ProductAbstractPackagingEventResourceBulkRepositoryPlugin` instead.
+ *
+ * @see \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\ProductAbstractPackagingEventResourceBulkRepositoryPlugin
  *
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()

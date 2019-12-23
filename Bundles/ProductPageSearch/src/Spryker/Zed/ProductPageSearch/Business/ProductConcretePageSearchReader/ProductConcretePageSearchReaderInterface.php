@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductConcretePageSearchReaderInterface
 {
     /**
-     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
+     * @deprecated Use `ProductConcretePageSearchReaderInterface::getProductConcretePageSearchCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface::getProductConcretePageSearchCollectionByFilter()
      *
      * @param int[] $productIds
      *
