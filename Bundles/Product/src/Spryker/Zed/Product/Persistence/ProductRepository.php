@@ -496,10 +496,10 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
     {
-        $productConcreteEntities = $this->buildQueryFromCriteria(
-            $this->getFactory()->createProductQuery(),
-            $filterTransfer
-        )->setFormatter(ModelCriteria::FORMAT_OBJECT)->find();
+        $productQuery = $this->getFactory()->createProductQuery();
+        $productConcreteEntities = $this->buildQueryFromCriteria($productQuery, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
 
         return $this->mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations($productConcreteEntities);
     }
