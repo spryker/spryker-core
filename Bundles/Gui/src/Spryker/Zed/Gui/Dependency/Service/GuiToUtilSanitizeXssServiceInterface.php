@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Gui\Dependency\Service;
 
-interface GuiToUtilSanitizeServiceInterface
+interface GuiToUtilSanitizeXssServiceInterface
 {
     /**
      * @param string $text
      * @param string[] $allowedAttributes
-     * @param array $allowedHtmlTags
+     * @param string[] $allowedHtmlTags
      *
      * @return string
      */

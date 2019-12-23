@@ -48,18 +48,4 @@ interface UtilSanitizeServiceInterface
      * @return array
      */
     public function filterOutBlankValuesRecursively(array $array): array;
-
-    /**
-     * Specification:
-     *  - Sanitizes untrusted HTML to prevent XSS attacks.
-     *
-     * @api
-     *
-     * @param string $text
-     * @param string[] $allowedAttributes
-     * @param array $allowedHtmlTags
-     *
-     * @return string
-     */
-    public function sanitizeXss(string $text, array $allowedAttributes = [], array $allowedHtmlTags = []): string;
 }

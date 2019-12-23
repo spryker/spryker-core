@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilSanitize\Dependency\External;
+namespace Spryker\Service\UtilSanitizeXss\Dependency\External;
 
 use voku\helper\AntiXSS;
 
-class UtilSanitizeToVokuAntiXssAdapter implements UtilSanitizeToXssSanitizeInterface
+class UtilSanitizeToAntiXssAdapter implements UtilSanitizeToXssSanitizeInterface
 {
     /**
      * @var \voku\helper\AntiXSS
      */
-    protected $vokuAntiXss;
+    protected $antiXss;
 
     public function __construct()
     {
-        $this->vokuAntiXss = new AntiXSS();
+        $this->antiXss = new AntiXSS();
     }
 
     /**
@@ -30,9 +30,9 @@ class UtilSanitizeToVokuAntiXssAdapter implements UtilSanitizeToXssSanitizeInter
      */
     public function sanitize(string $text, array $allowedAttributes = [], array $allowedHtmlTags = []): string
     {
-        $this->vokuAntiXss->removeEvilAttributes($allowedAttributes);
-        $this->vokuAntiXss->removeEvilHtmlTags($allowedHtmlTags);
+        $this->antiXss->removeEvilAttributes($allowedAttributes);
+        $this->antiXss->removeEvilHtmlTags($allowedHtmlTags);
 
-        return $this->vokuAntiXss->xss_clean($text);
+        return $this->antiXss->xss_clean($text);
     }
 }

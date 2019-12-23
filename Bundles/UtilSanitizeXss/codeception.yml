@@ -1,4 +1,4 @@
-namespace: VokuAntiXss
+namespace: UtilSanitizeXss
 actor: Tester
 paths:
     tests: tests

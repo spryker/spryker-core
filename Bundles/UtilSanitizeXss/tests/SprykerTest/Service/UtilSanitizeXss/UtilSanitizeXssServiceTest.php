@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilSanitize;
+namespace Spryker\UtilSanitizeXss\tests\SprykerTest\Service\UtilSanitizeXss;
 
-use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
+use Codeception\Test\Unit;
 
-class UtilSanitizeDependencyProvider extends AbstractBundleDependencyProvider
+class UtilSanitizeXssServiceTest extends Unit
 {
+
 }

@@ -12,6 +12,7 @@ use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\SanitizeXssTypeExtension;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceInterface;
+use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormTypeExtensionInterface;
@@ -50,14 +51,15 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSanitizeXssTypeExtension(): FormTypeExtensionInterface
     {
-        return new SanitizeXssTypeExtension($this->getUtilSanitizeService());
+        return new SanitizeXssTypeExtension($this->getUtilSanitizeXssService());
     }
 
     /**
-     * @return \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function getUtilSanitizeService(): GuiToUtilSanitizeServiceInterface
+    public function getUtilSanitizeXssService(): GuiToUtilSanitizeXssServiceInterface
     {
-        return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_SANITIZE);
+        return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
     }
 }

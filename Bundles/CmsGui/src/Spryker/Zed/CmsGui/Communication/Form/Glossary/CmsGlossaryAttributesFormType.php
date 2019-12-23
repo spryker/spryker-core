@@ -118,6 +118,8 @@ class CmsGlossaryAttributesFormType extends AbstractType
             'label' => 'Placeholder',
             'disabled' => 'disabled',
             'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
+            'allowed_html_tags' => ['iframe'],
         ]);
 
         return $this;

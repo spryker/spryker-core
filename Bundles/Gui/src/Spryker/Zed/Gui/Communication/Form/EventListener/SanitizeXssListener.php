@@ -7,30 +7,23 @@
 
 namespace Spryker\Zed\Gui\Communication\Form\EventListener;
 
-use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceInterface;
+use Spryker\Zed\Gui\Communication\Form\Type\Extension\SanitizeXssTypeExtension;
+use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 class SanitizeXssListener implements EventSubscriberInterface
 {
-    protected const ATTRIBUTES_WHITELIST = [
-        'style',
-    ];
-
-    protected const HTML_TAGS_WHITELIST = [
-        'iframe',
-    ];
-
     /**
-     * @var \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceInterface
+     * @var \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @param \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface $utilSanitizeService
      */
-    public function __construct(GuiToUtilSanitizeServiceInterface $utilSanitizeService)
+    public function __construct(GuiToUtilSanitizeXssServiceInterface $utilSanitizeService)
     {
         $this->utilSanitizeService = $utilSanitizeService;
     }
@@ -58,10 +51,11 @@ class SanitizeXssListener implements EventSubscriberInterface
             return;
         }
 
+        $formConfig = $event->getForm()->getConfig();
         $event->setData($this->utilSanitizeService->sanitizeXss(
             $data,
-            static::ATTRIBUTES_WHITELIST,
-            static::HTML_TAGS_WHITELIST
+            $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_ATTRIBUTES, []),
+            $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_HTML_TAGS, [])
         ));
     }
 }

@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\Gui\Dependency\Service;
 
-class GuiToUtilSanitizeServiceBridge implements GuiToUtilSanitizeServiceInterface
+class GuiToUtilSanitizeXssServiceBridge implements GuiToUtilSanitizeXssServiceInterface
 {
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
+     * @var \Spryker\Service\UtilSanitizeXss\UtilSanitizeXssServiceInterface
      */
-    protected $utilSanitizeService;
+    protected $utilSanitizeXssService;
 
     /**
-     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitizeXss\UtilSanitizeXssServiceInterface $utilSanitizeXssService
      */
-    public function __construct($utilSanitizeService)
+    public function __construct($utilSanitizeXssService)
     {
-        $this->utilSanitizeService = $utilSanitizeService;
+        $this->utilSanitizeXssService = $utilSanitizeXssService;
     }
 
     /**
@@ -31,6 +31,6 @@ class GuiToUtilSanitizeServiceBridge implements GuiToUtilSanitizeServiceInterfac
      */
     public function sanitizeXss(string $text, array $allowedAttributes = [], array $allowedHtmlTags = []): string
     {
-        return $this->utilSanitizeService->sanitizeXss($text, $allowedAttributes, $allowedHtmlTags);
+        return $this->utilSanitizeXssService->sanitizeXss($text, $allowedAttributes, $allowedHtmlTags);
     }
 }

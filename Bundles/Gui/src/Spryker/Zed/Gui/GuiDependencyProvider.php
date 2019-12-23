@@ -24,15 +24,16 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceBridge;
+use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @method \Spryker\Zed\Gui\GuiConfig getConfig()
+ * @method GuiConfig getConfig()
  */
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const SERVICE_UTIL_SANITIZE_XSS = 'SERVICE_UTIL_SANITIZE_XSS';
 
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
     public const GUI_TWIG_FILTERS = 'gui_twig_filters';
@@ -46,7 +47,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addTwigFunctions($container);
         $container = $this->addTwigFilter($container);
-        $container = $this->addUtilSanitizeService($container);
+        $container = $this->addUtilSanitizeXssService($container);
 
         return $container;
     }
@@ -116,19 +117,18 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container): Container
+    protected function addUtilSanitizeXssService(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
-            return new GuiToUtilSanitizeServiceBridge(
-                $container->getLocator()->utilSanitize()->service()
+        $container[static::SERVICE_UTIL_SANITIZE_XSS] = function (Container $container) {
+            return new GuiToUtilSanitizeXssServiceBridge(
+                $container->getLocator()->utilSanitizeXss()->service()
             );
-        });
+        };
 
         return $container;
     }
