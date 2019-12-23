@@ -40,16 +40,16 @@ class OrderReader implements OrderReaderInterface
     /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface $orderResourceMapper
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface $orderMapper
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        OrderMapperInterface $orderResourceMapper
+        OrderMapperInterface $orderMapper
     ) {
         $this->salesClient = $salesClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->orderMapper = $orderResourceMapper;
+        $this->orderMapper = $orderMapper;
     }
 
     /**

@@ -143,21 +143,6 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
-     *
-     * @return array
-     */
-    protected function getAvailablePaymentMethodsList(RestCheckoutDataTransfer $checkoutDataTransfer): array
-    {
-        $availablePaymentMethodsList = [];
-        foreach ($checkoutDataTransfer->getAvailablePaymentMethods()->getMethods() as $paymentMethodTransfer) {
-            $availablePaymentMethodsList[] = $paymentMethodTransfer->getMethodName();
-        }
-
-        return $availablePaymentMethodsList;
-    }
-
-    /**
      * @param string $paymentProviderName
      * @param string $paymentMethodName
      *

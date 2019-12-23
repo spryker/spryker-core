@@ -58,7 +58,6 @@
     </transfer>
 
     <transfer name="PaymentMethod">
-        <property name="idSalesPaymentMethodType" type="int"/>
         <property name="methodName" type="string"/>
         <property name="idPaymentMethod" type="int"/>
         <property name="idPaymentProvider" type="int"/>

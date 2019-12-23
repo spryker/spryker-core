@@ -122,18 +122,6 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     /**
      * @part json
      *
-     * @param string $jsonPath
-     *
-     * @return array|mixed
-     */
-    public function grabDataFromResponseByJsonPathSmartGet($jsonPath)
-    {
-        return (new JsonObject($this->connectionModule->_getResponseContent(), true))->get($jsonPath);
-    }
-
-    /**
-     * @part json
-     *
      * @param string $link
      *
      * @return void

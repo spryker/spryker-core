@@ -8,6 +8,7 @@
     <transfer name="ShipmentMethod">
         <property name="name" dataBuilderRule="word"/>
         <property name="isActive" dataBuilderRule="=1"/>
+        <property name="fkShipmentCarrier" dataBuilderRule="=1"/>
         <property name="taxRate" dataBuilderRule="randomFloat(2, 0, 99)"/>
     </transfer>
 
