@@ -73,7 +73,7 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
      */
     public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array
     {

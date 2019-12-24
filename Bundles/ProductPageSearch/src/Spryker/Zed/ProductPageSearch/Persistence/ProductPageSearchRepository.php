@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use PDO;
@@ -197,10 +196,6 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array
     {
-        if (!$productIds) {
-            $productIds = $this->getAllProductIds();
-        }
-
         $productConcretePageSearchEntities = $this->getFactory()
             ->createProductConcretePageSearchQuery()
             ->filterByFkProduct_In($productIds)
@@ -211,16 +206,5 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         return $this->mapProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getAllProductIds(): array
-    {
-        return SpyProductQuery::create()
-            ->select([SpyProductTableMap::COL_ID_PRODUCT])
-            ->find()
-            ->toArray();
     }
 }

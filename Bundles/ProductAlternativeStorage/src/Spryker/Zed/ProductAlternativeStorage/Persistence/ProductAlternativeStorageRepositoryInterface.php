@@ -142,7 +142,7 @@ interface ProductAlternativeStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer[]
      */
     public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array;
 
@@ -150,7 +150,7 @@ interface ProductAlternativeStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productReplacementForStorageIds
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
      */
     public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array;
 }

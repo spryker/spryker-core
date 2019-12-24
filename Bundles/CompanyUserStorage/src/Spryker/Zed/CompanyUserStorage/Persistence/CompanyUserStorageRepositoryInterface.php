@@ -33,9 +33,9 @@ interface CompanyUserStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array $companyUserIds
+     * @param int[] $companyUserIds
      *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
      */
     public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $companyUserIds): array;
 }

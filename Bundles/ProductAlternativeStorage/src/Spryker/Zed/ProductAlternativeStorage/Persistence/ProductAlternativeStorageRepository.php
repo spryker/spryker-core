@@ -280,7 +280,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer[]
      */
     public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array
     {
@@ -291,17 +291,14 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             $query->filterByIdProductAlternativeStorage_In($productAlternativeStorageIds);
         }
 
-        return $query->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset())
-            ->find()
-            ->getArrayCopy();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productReplacementForStorageIds
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
      */
     public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array
     {
@@ -312,9 +309,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             $query->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds);
         }
 
-        return $query->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset())
-            ->find()
-            ->getArrayCopy();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

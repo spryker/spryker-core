@@ -54,12 +54,10 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
     }
 
     /**
-     * @module CompanyUserStorage
-     *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array $companyUserIds
+     * @param int[] $companyUserIds
      *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
      */
     public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $companyUserIds): array
     {
@@ -70,9 +68,6 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
             $query->filterByFkCompanyUser_In($companyUserIds);
         }
 
-        return $query->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset())
-            ->find()
-            ->getArrayCopy(SpyCompanyUserStorageEntityTransfer::FK_COMPANY_USER); // indexing resulting array with corresponding companyUserIds
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }
