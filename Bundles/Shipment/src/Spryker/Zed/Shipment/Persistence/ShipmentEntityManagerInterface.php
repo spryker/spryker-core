@@ -47,11 +47,32 @@ interface ShipmentEntityManagerInterface
     public function saveSalesShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): ShipmentMethodTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function updateShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): ShipmentMethodTransfer;
+
+    /**
      * @param int $idShipmentMethod
      *
      * @return void
      */
     public function deleteMethodByIdMethod(int $idShipmentMethod): void;
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function deleteShipmentMethodStoreRelationsByIdShipmentMethod(int $idShipmentMethod): void;
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function deleteShipmentMethodPricesByIdShipmentMethod(int $idShipmentMethod): void;
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
@@ -60,4 +81,20 @@ interface ShipmentEntityManagerInterface
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     public function saveSalesExpense(ExpenseTransfer $expenseTransfer, OrderTransfer $orderTransfer): ExpenseTransfer;
+
+    /**
+     * @param array $idStores
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function removeShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void;
+
+    /**
+     * @param array $idStores
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function addShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void;
 }

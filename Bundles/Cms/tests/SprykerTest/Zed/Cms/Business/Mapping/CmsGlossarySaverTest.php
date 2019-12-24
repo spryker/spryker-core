@@ -32,7 +32,7 @@ class CmsGlossarySaverTest extends CmsMocks
     /**
      * @return void
      */
-    public function testSaveCmsGlossaryShouldPersistGivenTransfer()
+    public function testSaveCmsGlossaryShouldPersistGivenTransfer(): void
     {
         $cmsGlossarySaverMock = $this->createCmsGlossarySaverMock();
 
@@ -68,7 +68,7 @@ class CmsGlossarySaverTest extends CmsMocks
     /**
      * @return void
      */
-    public function testSaveCmsGlossaryShouldPersistGivenTransferWhenUpdatingExisting()
+    public function testSaveCmsGlossaryShouldPersistGivenTransferWhenUpdatingExisting(): void
     {
         $cmsGlossarySaverMock = $this->createCmsGlossarySaverMock();
 
@@ -145,7 +145,7 @@ class CmsGlossarySaverTest extends CmsMocks
     /**
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    protected function createCmsGlossaryTransfer()
+    protected function createCmsGlossaryTransfer(): CmsGlossaryTransfer
     {
         $cmsGlossaryTransfer = new CmsGlossaryTransfer();
 

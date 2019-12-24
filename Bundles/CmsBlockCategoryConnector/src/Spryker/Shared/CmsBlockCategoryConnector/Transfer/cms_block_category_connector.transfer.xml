@@ -24,4 +24,9 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="CategoryTemplate">
+        <property name="idCategoryTemplate" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

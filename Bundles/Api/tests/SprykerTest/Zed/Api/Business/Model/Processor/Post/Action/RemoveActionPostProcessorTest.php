@@ -32,7 +32,7 @@ class RemoveActionPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -40,10 +40,9 @@ class RemoveActionPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageOne()
+    public function testProcessWithDefaultsPageOne(): void
     {
-        $config = new ApiConfig();
-        $processor = new RemoveActionPostProcessor($config);
+        $processor = new RemoveActionPostProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setResourceAction(ApiConfig::ACTION_DELETE);

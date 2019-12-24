@@ -12,36 +12,32 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPackagingUnitStorageRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): array;
+    public function findProductPackagingUnitStorageEntitiesByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * @param int $idProductAbstract
+     * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer[]
      */
-    public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
-
-    /**
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
-     */
-    public function findAllProductAbstractPackagingStorageEntities(): array;
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
-     */
-    public function getProductPackagingLeadProductEntityTransfersByProductAbstractIds(array $productAbstractIds): array;
+    public function findPackagingProductsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer[]
      */
-    public function findFilteredProductAbstractPackagingUnitStorages(FilterTransfer $filterTransfer, array $productAbstractIds = []): array;
+    public function findFilteredProductPackagingUnit(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitStorageEntityTransfer[]
+     */
+    public function findFilteredProductPackagingUnitStorageEntityTransfers(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
 }

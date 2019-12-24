@@ -7,7 +7,13 @@
 
 namespace SprykerTest\Zed\CmsBlockStorage;
 
+use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
+use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
+use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
+use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * Inherited Methods
@@ -29,7 +35,39 @@ class CmsBlockStorageCommunicationTester extends Actor
 {
     use _generated\CmsBlockStorageCommunicationTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param int[] $storeIds
+     * @param int[] $localeIds
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     */
+    public function createCmsBlock(array $storeIds, array $localeIds): CmsBlockTransfer
+    {
+        $cmsBlockTransfer = $this->haveCmsBlock([
+           CmsBlockTransfer::STORE_RELATION => [
+               StoreRelationTransfer::ID_STORES => $storeIds,
+           ],
+        ]);
+
+        $translations = new ArrayObject();
+
+        foreach ($localeIds as $localeId) {
+            $translations->append((new CmsBlockGlossaryPlaceholderTranslationTransfer())
+                ->setFkLocale($localeId)
+                ->setTranslation('Test translation'));
+        }
+
+        $placeholder = new CmsBlockGlossaryPlaceholderTransfer();
+        $placeholder->setTranslations($translations);
+        $placeholder->setPlaceholder('placeholder');
+        $placeholder->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
+        $placeholder->setTemplateName($cmsBlockTransfer->getTemplateName());
+
+        $glossary = new CmsBlockGlossaryTransfer();
+        $glossary->addGlossaryPlaceholder($placeholder);
+
+        $this->getLocator()->cmsBlock()->facade()->saveGlossary($glossary);
+
+        return $cmsBlockTransfer;
+    }
 }

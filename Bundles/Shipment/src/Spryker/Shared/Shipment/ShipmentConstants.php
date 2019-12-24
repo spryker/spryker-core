@@ -12,11 +12,6 @@ namespace Spryker\Shared\Shipment;
  */
 interface ShipmentConstants
 {
-    /**
-     * @deprecated Use \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE instead.
-     */
-    public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
-
     public const PRICE_MODE_NET = 'NET_MODE';
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 

@@ -42,7 +42,7 @@ class ProductImageStorageCommunicationTester extends Actor
     /**
      * @return bool
      */
-    public function isSuiteProject()
+    public function isSuiteProject(): bool
     {
         if (getenv(static::PARAM_PROJECT) === static::PROJECT_SUITE) {
             return true;

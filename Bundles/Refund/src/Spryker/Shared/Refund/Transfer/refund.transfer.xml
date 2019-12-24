@@ -44,4 +44,7 @@
         <property name="canceledAmount" type="int"/>
     </transfer>
 
+    <transfer name="Money">
+    </transfer>
+
 </transfers>

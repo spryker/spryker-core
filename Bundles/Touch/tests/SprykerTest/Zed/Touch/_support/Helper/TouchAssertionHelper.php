@@ -111,7 +111,7 @@ class TouchAssertionHelper extends Module
      *
      * @return void
      */
-    public function assertTouchActiveAfter($itemType, $itemId, DateTime $dateTime, $message = '')
+    public function assertTouchActiveAfter(string $itemType, int $itemId, DateTime $dateTime, string $message = ''): void
     {
         $this->assertTouchActive($itemType, $itemId, $message);
         $this->assertTouchAfter($itemType, $itemId, $dateTime, $message);

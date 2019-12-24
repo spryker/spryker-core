@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\ConfigurableBundleCart\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleCart\Business\ConfigurableBundleCartBusinessFactory getFactory()
+ * @method \Spryker\Zed\ConfigurableBundleCart\Persistence\ConfigurableBundleCartRepositoryInterface getRepository()
  */
 class ConfigurableBundleCartFacade extends AbstractFacade implements ConfigurableBundleCartFacadeInterface
 {
@@ -61,5 +64,53 @@ class ConfigurableBundleCartFacade extends AbstractFacade implements Configurabl
         return $this->getFactory()
             ->createConfiguredBundleQuantityChecker()
             ->checkConfiguredBundleQuantity($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandConfiguredBundleItemsWithQuantityPerSlot(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createConfiguredBundleQuantityExpander()
+            ->expandConfiguredBundleItemsWithQuantityPerSlot($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandConfiguredBundleItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createConfiguredBundleGroupKeyExpander()
+            ->expandConfiguredBundleItemsWithGroupKey($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkConfiguredBundleTemplateSlotCombination(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createConfiguredBundleTemplateSlotChecker()
+            ->checkConfiguredBundleTemplateSlotCombination($cartChangeTransfer);
     }
 }

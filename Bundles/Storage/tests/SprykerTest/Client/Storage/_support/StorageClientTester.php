@@ -23,6 +23,7 @@ use ReflectionClass;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Client\Storage\StorageConfig getModuleConfig()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -37,7 +38,7 @@ class StorageClientTester extends Actor
      *
      * @return void
      */
-    public function setProtectedProperty($object, $propertyName, $value)
+    public function setProtectedProperty($object, string $propertyName, $value): void
     {
         $storageClientReflection = new ReflectionClass($object);
         $bufferedValuesReflection = $storageClientReflection->getProperty($propertyName);

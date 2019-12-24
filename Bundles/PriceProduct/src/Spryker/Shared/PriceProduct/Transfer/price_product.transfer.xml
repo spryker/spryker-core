@@ -91,6 +91,7 @@
         <property name="priceMode" type="string"/>
         <property name="quantity" type="int"/>
         <property name="sumPrice" type="int"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
     <transfer name="Store">
@@ -109,6 +110,9 @@
         <property name="joinType" type="string"/>
         <property name="right" type="array" singular="right"/>
         <property name="left" type="array" singular="left"/>
+    </transfer>
+
+    <transfer name="Quote">
     </transfer>
 
 </transfers>

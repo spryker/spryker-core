@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\ProductNew\Business\ProductNewBusinessFactory;
+use Spryker\Zed\ProductNew\Business\ProductNewFacadeInterface;
 use Spryker\Zed\ProductNew\ProductNewConfig;
 
 /**
@@ -36,7 +37,7 @@ class ProductNewFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -46,12 +47,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider validTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToAssignShouldReturnValidTimeRangeResults($newFrom, $newTo)
+    public function testFindProductsToAssignShouldReturnValidTimeRangeResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $this->tester->haveProductLabel([
@@ -79,12 +80,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider invalidTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToAssignShouldNotReturnInvalidTimeRangeResults($newFrom, $newTo)
+    public function testFindProductsToAssignShouldNotReturnInvalidTimeRangeResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $this->tester->haveProductLabel([
@@ -105,12 +106,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider validTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToAssignShouldNotReturnAlreadyAssignedResults($newFrom, $newTo)
+    public function testFindProductsToAssignShouldNotReturnAlreadyAssignedResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -135,12 +136,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider invalidTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToDeassignShouldReturnValidTimeRangeResults($newFrom, $newTo)
+    public function testFindProductsToDeassignShouldReturnValidTimeRangeResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -172,12 +173,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider validTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToDeassignShouldNotReturnInvalidTimeRangeResults($newFrom, $newTo)
+    public function testFindProductsToDeassignShouldNotReturnInvalidTimeRangeResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -202,12 +203,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider invalidTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToDeassignShouldNotReturnNotAssignedResults($newFrom, $newTo)
+    public function testFindProductsToDeassignShouldNotReturnNotAssignedResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $this->tester->haveProductLabel([
@@ -228,7 +229,7 @@ class ProductNewFacadeTest extends Unit
     /**
      * @return string
      */
-    protected function getLabelNewName()
+    protected function getLabelNewName(): string
     {
         return 'TEST_NEW_LABEL';
     }
@@ -236,8 +237,9 @@ class ProductNewFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ProductNew\Business\ProductNewFacadeInterface
      */
-    protected function getFacade()
+    protected function getFacade(): ProductNewFacadeInterface
     {
+        /** @var \Spryker\Zed\ProductNew\ProductNewConfig|\PHPUnit\Framework\MockObject\MockObject $configMock */
         $configMock = $this->getMockBuilder(ProductNewConfig::class)->getMock();
         $configMock->method('getLabelNewName')->willReturn($this->getLabelNewName());
 
@@ -253,7 +255,7 @@ class ProductNewFacadeTest extends Unit
     /**
      * @return array
      */
-    public function validTimeRangeProductsToAssignDataProvider()
+    public function validTimeRangeProductsToAssignDataProvider(): array
     {
         return [
             'simple time range' => [
@@ -274,7 +276,7 @@ class ProductNewFacadeTest extends Unit
     /**
      * @return array
      */
-    public function invalidTimeRangeProductsToAssignDataProvider()
+    public function invalidTimeRangeProductsToAssignDataProvider(): array
     {
         return [
             'time range in the future' => [
@@ -303,7 +305,7 @@ class ProductNewFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function cleanProductNewDates()
+    protected function cleanProductNewDates(): void
     {
         $newFromFieldName = SpyProductAbstractTableMap::getTableMap()->getColumn(SpyProductAbstractTableMap::COL_NEW_FROM)->getPhpName();
         $newToFieldName = SpyProductAbstractTableMap::getTableMap()->getColumn(SpyProductAbstractTableMap::COL_NEW_TO)->getPhpName();

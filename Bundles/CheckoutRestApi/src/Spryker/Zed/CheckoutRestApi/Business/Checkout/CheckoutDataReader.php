@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
-use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -87,11 +86,15 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
+        $storeTransfer = $quoteTransfer->requireStore()
+            ->getStore()
+                ->requireName();
+
         $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
-            ->setPaymentProviders($this->getPaymentProviders())
+            ->setPaymentProviders($this->paymentFacade->getAvailablePaymentProvidersForStore($storeTransfer->getName()))
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
 
@@ -109,22 +112,14 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     {
         $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
 
-        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer|false $shipmentMethodsTransfer */
-        $shipmentMethodsTransfer = current($shipmentMethodsCollectionTransfer->getShipmentMethods());
-
-        if ($shipmentMethodsTransfer === false) {
+        if ($shipmentMethodsCollectionTransfer->getShipmentMethods()->count() === 0) {
             return new ShipmentMethodsTransfer();
         }
 
-        return $shipmentMethodsTransfer;
-    }
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
 
-    /**
-     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
-     */
-    protected function getPaymentProviders(): PaymentProviderCollectionTransfer
-    {
-        return $this->paymentFacade->getAvailablePaymentProviders();
+        return $shipmentMethodsTransfer;
     }
 
     /**

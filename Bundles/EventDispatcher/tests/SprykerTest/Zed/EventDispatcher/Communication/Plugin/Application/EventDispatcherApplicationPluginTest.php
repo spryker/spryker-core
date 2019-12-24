@@ -12,9 +12,11 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin;
+use Spryker\Zed\EventDispatcher\EventDispatcherDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +32,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class EventDispatcherApplicationPluginTest extends Unit
 {
-    public const SERVICE_DISPATCHER = 'dispatcher';
+    protected const SERVICE_DISPATCHER = 'dispatcher';
+
     public const DUMMY_EVENT = 'DUMMY_EVENT';
 
     /**
@@ -53,6 +56,24 @@ class EventDispatcherApplicationPluginTest extends Unit
         //Assert
         $this->assertTrue($container->has(static::SERVICE_DISPATCHER));
         $this->assertInstanceOf(EventDispatcherInterface::class, $container->get(static::SERVICE_DISPATCHER));
+    }
+
+    /**
+     * @return void
+     */
+    public function testEventDispatcherSetNewTraceableDispatcher(): void
+    {
+        //Arrange
+        $container = $this->createContainer();
+        $container = $this->tester->provideTraceableEventDispatcher($container);
+        $eventDispatcherApplicationPlugin = $this->createEventDispatcherApplicationPlugin();
+
+        //Act
+        $container = $eventDispatcherApplicationPlugin->provide($container);
+
+        //Assert
+        $this->assertTrue($container->has(static::SERVICE_DISPATCHER));
+        $this->assertInstanceOf(TraceableEventDispatcher::class, $container->get(static::SERVICE_DISPATCHER));
     }
 
     /**
@@ -101,6 +122,26 @@ class EventDispatcherApplicationPluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testEventDispatcherCanBeExtendedWithPlugins(): void
+    {
+        // Arrange
+        $container = $this->createContainer();
+        $eventDispatcherApplicationPlugin = $this->createEventDispatcherApplicationPlugin();
+        $this->tester->setDependency(EventDispatcherDependencyProvider::PLUGINS_EVENT_DISPATCHER_PLUGINS, [
+            $this->tester->mockEventDispatcherPlugin(),
+        ]);
+
+        //Act
+        $container = $eventDispatcherApplicationPlugin->provide($container);
+        $eventDispatcher = $this->getEventDispatcher($container);
+
+        //Assert
+        $this->assertTrue($eventDispatcher->hasListeners('foo'));
+    }
+
+    /**
      * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function createContainer(): ContainerInterface
@@ -126,7 +167,7 @@ class EventDispatcherApplicationPluginTest extends Unit
             /**
              * @return array
              */
-            public static function getSubscribedEvents()
+            public static function getSubscribedEvents(): array
             {
                 return [
                     EventDispatcherApplicationPluginTest::DUMMY_EVENT => 'onDummyEvent',

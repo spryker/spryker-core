@@ -23,7 +23,7 @@ class ZedNavigationFacadeTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testBuildNavigationShouldReturnArrayWithMenuAsKey()
+    public function testBuildNavigationShouldReturnArrayWithMenuAsKey(): void
     {
         $navigation = $this->getFacade()->buildNavigation('');
 

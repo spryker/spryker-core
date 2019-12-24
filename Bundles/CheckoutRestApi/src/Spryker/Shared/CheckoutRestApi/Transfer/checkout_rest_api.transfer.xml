@@ -176,6 +176,7 @@
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="uuid" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Item">
@@ -217,6 +218,16 @@
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="idSalesShipment" type="int"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="requestedDeliveryDate" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

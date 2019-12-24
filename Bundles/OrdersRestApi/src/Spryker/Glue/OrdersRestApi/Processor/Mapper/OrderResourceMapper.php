@@ -7,13 +7,29 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
+use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 
 class OrderResourceMapper implements OrderResourceMapperInterface
 {
+    /**
+     * @var \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
+     */
+    protected $restOrderItemsAttributesMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[] $restOrderItemsAttributesMapperPlugins
+     */
+    public function __construct(array $restOrderItemsAttributesMapperPlugins)
+    {
+        $this->restOrderItemsAttributesMapperPlugins = $restOrderItemsAttributesMapperPlugins;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -48,7 +64,38 @@ class OrderResourceMapper implements OrderResourceMapperInterface
 
         $restOrderDetailsAttributesTransfer = $this->mapOrderShippingAddressTransferToRestOrderDetailsAttributesTransfer($orderTransfer, $restOrderDetailsAttributesTransfer);
 
+        $restOrderItemsAttributesTransfers = [];
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $restOrderItemsAttributesTransfers[] = $this->mapItemTransferToRestOrderItemsAttributesTransfer(
+                $itemTransfer,
+                new RestOrderItemsAttributesTransfer()
+            );
+        }
+
+        $restOrderDetailsAttributesTransfer->setItems(new ArrayObject($restOrderItemsAttributesTransfers));
+
         return $restOrderDetailsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
+     */
+    protected function mapItemTransferToRestOrderItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+    ): RestOrderItemsAttributesTransfer {
+        $restOrderItemsAttributesTransfer = $restOrderItemsAttributesTransfer->fromArray($itemTransfer->toArray(), true);
+        foreach ($this->restOrderItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
+            $restOrderItemsAttributesTransfer = $restOrderItemsAttributesMapperPlugin->mapItemTransferToRestOrderItemsAttributesTransfer(
+                $itemTransfer,
+                $restOrderItemsAttributesTransfer
+            );
+        }
+
+        return $restOrderItemsAttributesTransfer;
     }
 
     /**
@@ -82,7 +129,8 @@ class OrderResourceMapper implements OrderResourceMapperInterface
             return null;
         }
 
-        $firstItemTransfer = current($orderTransfer->getItems());
+        /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+        $firstItemTransfer = $orderTransfer->getItems()->getIterator()->current();
         if ($firstItemTransfer->getShipment() === null
             || $firstItemTransfer->getShipment()->getShippingAddress() === null
         ) {

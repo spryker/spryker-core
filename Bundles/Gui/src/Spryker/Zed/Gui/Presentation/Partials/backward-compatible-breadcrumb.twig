@@ -1,20 +1,13 @@
 {% if breadcrumbs|length > 0 %}
-    <ol class="breadcrumb">
-        <li>
-            <a href="/">{{ 'Dashboard' | trans }}</a>
-        </li>
-        {% for breadcrumbItem in breadcrumbs %}
-            <li>
-                {% if loop.last == true %}
-                    <strong>{{ breadcrumbItem.label | trans }}</strong>
-                {% else %}
-                    {%  if breadcrumbItem.uri is not empty %}
-                        <a href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title | trans }}">{{ breadcrumbItem.label | trans }}</a>
-                    {% else %}
-                        {{ breadcrumbItem.label | trans }}
-                    {% endif %}
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ol>
+    <script type="module" src="https://unpkg.com/@spryker/backoffice-ui@0.1.0/backoffice/backoffice-ui/backoffice-ui.esm.js"></script>
+    <script nomodule src="https://unpkg.com/@spryker/backoffice-ui@0.1.0/backoffice/backoffice-ui/backoffice-ui.js"></script>
+
+    {% set breadcrumbsList = breadcrumbs | reduce((accumulator, breadcrumb) => (
+        accumulator | merge([{
+            'label': breadcrumb.label | trans,
+            'uri': breadcrumb.uri,
+        }])
+    ), []) %}
+
+    <spryker-breadcrumbs class="page-breadcrumbs" breadcrumbs="{{ breadcrumbsList | json_encode() }}" />
 {% endif %}

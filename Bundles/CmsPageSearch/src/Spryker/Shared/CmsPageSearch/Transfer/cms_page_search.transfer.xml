@@ -54,4 +54,11 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="CmsVersionData">
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
 </transfers>

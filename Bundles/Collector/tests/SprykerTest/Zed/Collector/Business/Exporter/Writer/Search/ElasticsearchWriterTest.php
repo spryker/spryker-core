@@ -48,7 +48,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCreateDocumentsWithValidDataSet()
+    public function testWriteCreateDocumentsWithValidDataSet(): void
     {
         $dataSet = $this->getValidTestDataSet();
         $writer = $this->getElasticsearchWriter();
@@ -56,12 +56,11 @@ class ElasticsearchWriterTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
-     *
      * @return void
      */
-    public function testWriteCreateDocumentsWithInValidDataSet()
+    public function testWriteCreateDocumentsWithInValidDataSet(): void
     {
+        $this->expectException('Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException');
         $dataSet = $this->getInValidTestDataSet();
         $writer = $this->getElasticsearchWriter();
         $writer->write($dataSet);
@@ -72,7 +71,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();
@@ -87,7 +86,7 @@ class ElasticsearchWriterTest extends Unit
      *
      * @return array
      */
-    protected function getValidTestDataSet()
+    protected function getValidTestDataSet(): array
     {
         return [
             'key1' => 'value1',
@@ -100,7 +99,7 @@ class ElasticsearchWriterTest extends Unit
      *
      * @return array
      */
-    protected function getInValidTestDataSet()
+    protected function getInValidTestDataSet(): array
     {
         return ['value1', 'value2'];
     }
@@ -108,7 +107,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter
      */
-    protected function getElasticsearchWriter()
+    protected function getElasticsearchWriter(): ElasticsearchWriter
     {
         return new ElasticsearchWriter($this->client, '', '');
     }

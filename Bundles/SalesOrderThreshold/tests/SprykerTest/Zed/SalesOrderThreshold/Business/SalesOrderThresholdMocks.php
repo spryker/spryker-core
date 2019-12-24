@@ -27,12 +27,13 @@ abstract class SalesOrderThresholdMocks extends Test
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|null $factory
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdBusinessFactory|null $factory
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface
      */
     protected function createSalesOrderThresholdFacadeMock(?MockObject $factory = null): MockObject
     {
+        /** @var \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacade|\PHPUnit\Framework\MockObject\MockObject $mockObject */
         $mockObject = $this->getMockBuilder(SalesOrderThresholdFacade::class)
             ->enableProxyingToOriginalMethods()
             ->getMock();

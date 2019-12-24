@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\CustomerNote\Helper;
 
 use Codeception\Module;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
+use Spryker\Zed\CustomerNote\Business\CustomerNoteFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CustomerNoteDataHelper extends Module
@@ -21,7 +22,7 @@ class CustomerNoteDataHelper extends Module
     /**
      * @return \Spryker\Zed\CustomerNote\Business\CustomerNoteFacadeInterface
      */
-    protected function getCustomerNoteFacade()
+    protected function getCustomerNoteFacade(): CustomerNoteFacadeInterface
     {
         return $this->getLocator()->customerNote()->facade();
     }
@@ -49,7 +50,7 @@ class CustomerNoteDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
-    public function haveCustomerNote(int $fkUser, int $fkCustomer)
+    public function haveCustomerNote(int $fkUser, int $fkCustomer): SpyCustomerNoteEntityTransfer
     {
         return $this->getCustomerNoteFacade()->addNote(
             $this->getCustomerNoteTransfer($fkUser, $fkCustomer)

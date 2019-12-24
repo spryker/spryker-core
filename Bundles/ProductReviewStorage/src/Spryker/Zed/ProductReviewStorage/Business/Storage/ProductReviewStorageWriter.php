@@ -19,6 +19,8 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     protected $queryContainer;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;

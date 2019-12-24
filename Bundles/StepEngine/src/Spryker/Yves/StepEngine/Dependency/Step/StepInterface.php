@@ -59,7 +59,7 @@ interface StepInterface
     /**
      * Escape route when preConditions are not satisfied user will be redirected to provided route.
      *
-     * @return string
+     * @return string|null
      */
     public function getEscapeRoute();
 

@@ -23,12 +23,14 @@
 
         <property name="offerDiscount" type="int"/>
         <property name="offerFee" type="int"/>
-        <property name="stock" type="int"/>
         <property name="savingAmount" type="int"/>
+
         <property name="originUnitGrossPrice" type="int"/>
         <property name="originUnitNetPrice" type="int"/>
+
         <property name="unitSubtotalAggregation" type="int"/>
         <property name="sumSubtotalAggregation" type="int"/>
+
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
     </transfer>
@@ -92,5 +94,20 @@
         <property name="lastPage" type="int"/>
         <property name="nextPage" type="int"/>
         <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+    </transfer>
+
+    <transfer name="Filter">
+    </transfer>
+
+    <transfer name="OrderList">
+    </transfer>
+
+    <transfer name="Order">
     </transfer>
 </transfers>
