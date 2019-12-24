@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -63,34 +62,5 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
         return $this->getFactory()
             ->getProductPackagingUnitFacade()
             ->findProductIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
-     */
-    public function getProductPackagingLeadProductCollectionByFilter(FilterTransfer $filterTransfer): array
-    {
-        return $this->getRepository()->getProductPackagingLeadProductCollectionByFilter($filterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productAbstractIds
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
-     */
-    public function getProductAbstractPackagingStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array
-    {
-        return $this->getRepository()->getProductAbstractPackagingStorageCollectionByFilter($filterTransfer, $productAbstractIds);
     }
 }
