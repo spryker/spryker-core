@@ -207,9 +207,9 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
 
-        // Assert
         $updatedProductListTransfer = $this->tester->findProductListById($productListTransfer->getIdProductList());
 
+        // Assert
         $this->assertNull($updatedProductListTransfer->getFkMerchantRelationship());
     }
 }
