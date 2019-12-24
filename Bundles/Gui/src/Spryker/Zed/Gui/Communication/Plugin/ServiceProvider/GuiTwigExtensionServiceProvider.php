@@ -15,6 +15,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\GuiFilterTwigPlugin` instead.
+ *
+ * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigPlugin` instead.
+ *
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */

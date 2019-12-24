@@ -35,7 +35,7 @@ class SourcePriceSanitizerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -68,7 +68,7 @@ class SourcePriceSanitizerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createSourcePriceSanitizerMock(): MockObject
     {

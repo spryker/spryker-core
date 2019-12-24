@@ -32,7 +32,7 @@ class OptionsActionPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -40,10 +40,9 @@ class OptionsActionPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageOne()
+    public function testProcessWithDefaultsPageOne(): void
     {
-        $config = new ApiConfig();
-        $processor = new OptionsActionPostProcessor($config);
+        $processor = new OptionsActionPostProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setResourceAction(ApiConfig::ACTION_OPTIONS);

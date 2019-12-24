@@ -93,11 +93,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if ($module) {
             $paths = $this->getPaths($module);
+            if (empty($paths)) {
+                throw new RuntimeException('No path found for module ' . $module);
+            }
         } else {
-            $paths[$this->config->getPathToRoot()] = $this->config->getPathToRoot();
-        }
-        if (empty($paths)) {
-            throw new RuntimeException('No path found for module ' . $module);
+            $paths = [
+                $this->config->getPathToRoot() => $this->config->getPathToRoot(),
+            ];
         }
 
         $resultCode = 0;
@@ -114,11 +116,19 @@ class PhpstanRunner implements PhpstanRunnerInterface
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
             }
         }
-        if ($this->errorCount) {
+        if ($this->getErrorCount()) {
             $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
         }
 
         return $resultCode;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getErrorCount(): int
+    {
+        return $this->errorCount;
     }
 
     /**
@@ -177,8 +187,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $output->write($processOutputBuffer);
             $processOutputBuffer = '';
         });
-
-        $processOutputBuffer = '';
 
         if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
             $this->phpstanConfigFileManager->deleteConfigFile($configFilePath);

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
- * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
@@ -23,6 +22,28 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  */
 class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
+    protected const COL_ID_PRODUCT_CONCRETE = '.id_product_concrete';
+
+    /**
+     * {@inheritDoc}
+     * - Returns array of product concrete transfers.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getData(int $offset, int $limit): array
+    {
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFactory()
+            ->getProductFacade()
+            ->getProductConcretesByFilter($filterTransfer);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -33,23 +54,6 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
     public function getResourceName(): string
     {
         return ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
-     */
-    public function getData(int $offset, int $limit): array
-    {
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-
-        return $this->getFacade()->getProductCollectionByFilter($filterTransfer);
     }
 
     /**
@@ -73,7 +77,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductTableMap::COL_ID_PRODUCT;
+        return static::COL_ID_PRODUCT_CONCRETE;
     }
 
     /**
@@ -85,6 +89,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyProductTableMap::COL_ID_PRODUCT)
             ->setOffset($offset)
             ->setLimit($limit);
     }

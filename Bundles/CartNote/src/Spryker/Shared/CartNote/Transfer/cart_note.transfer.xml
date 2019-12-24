@@ -5,10 +5,15 @@
 
     <transfer name="Quote">
         <property name="cartNote" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="Item">
         <property name="cartNote" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="Order">
@@ -17,6 +22,7 @@
 
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteCartNoteRequest">
@@ -31,6 +37,10 @@
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
         <property name="cartNote" type="string"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
 </transfers>

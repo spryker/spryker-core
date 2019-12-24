@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
-use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -119,10 +119,6 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @deprecated Use `ProductPageSearchFacade::getProductConcretePageSearchCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade::getProductConcretePageSearchCollectionByFilter()
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -155,29 +151,15 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    public function getProductCollectionByFilter(FilterTransfer $filterTransfer): array
-    {
-        return $this->getRepository()->getProductCollectionByFilter($filterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
-     */
-    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array
-    {
+    public function expandProductConcretePageSearchTransferWithProductImages(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
         return $this->getFactory()
-            ->createProductConcretePageSearchReader()
-            ->getProductConcretePageSearchCollectionByFilter($filterTransfer, $productIds);
+            ->createProductConcretePageSearchExpander()
+            ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
     }
 }

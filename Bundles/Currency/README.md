@@ -12,5 +12,6 @@ composer require spryker/currency
 
 [Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/utilities/currency.html)
 
-[![Build Status](https://travis-ci.org/spryker/Currency.svg?branch=master)](https://travis-ci.org/spryker/Currency)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/Currency/badge.svg?branch=master)](https://coveralls.io/github/spryker/Currency?branch=master)
+[![Build Status](https://travis-ci.org/spryker/currency.svg)](https://travis-ci.org/spryker/currency)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+

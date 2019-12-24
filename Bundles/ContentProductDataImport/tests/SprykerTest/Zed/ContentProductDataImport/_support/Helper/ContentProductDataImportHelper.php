@@ -37,7 +37,7 @@ class ContentProductDataImportHelper extends Module
     {
         $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($locale);
 
-        $this->assertContains($products, $contentLocalized->getParameters());
+        $this->assertStringContainsString($products, $contentLocalized->getParameters());
     }
 
     /**

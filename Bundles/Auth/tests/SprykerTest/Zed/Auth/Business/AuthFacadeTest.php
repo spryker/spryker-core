@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Auth\Business;
+namespace SprykerTest\Zed\Auth\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
@@ -17,8 +17,7 @@ use Spryker\Zed\Auth\Business\AuthFacade;
 /**
  * Auto-generated group annotations
  *
- * @group Functional
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Auth
  * @group Business
@@ -38,7 +37,7 @@ class AuthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -48,7 +47,7 @@ class AuthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testResetRequestCheckIfStatusIsActiveAndTokenIsSet()
+    public function testResetRequestCheckIfStatusIsActiveAndTokenIsSet(): void
     {
         $userEntity = $this->createTestUser();
         $userEntity->save();
@@ -67,7 +66,7 @@ class AuthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRequestPasswordEmailNotExistingShouldReturnFalse()
+    public function testRequestPasswordEmailNotExistingShouldReturnFalse(): void
     {
         $result = $this->authFacade->requestPasswordReset('username1@example.com');
         $this->assertFalse($result);
@@ -76,7 +75,7 @@ class AuthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPasswordResetWhenTokenIsValidStateShouldBeChangedToUsed()
+    public function testPasswordResetWhenTokenIsValidStateShouldBeChangedToUsed(): void
     {
         $userEntity = $this->createTestUser();
         $userEntity->save();
@@ -98,7 +97,7 @@ class AuthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateTokenExpirityShouldStateSetToExpired()
+    public function testValidateTokenExpirityShouldStateSetToExpired(): void
     {
         $userEntity = $this->createTestUser();
         $userEntity->save();
@@ -123,7 +122,7 @@ class AuthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePasswordWhenTokenProvidedNotSavedToDatabase()
+    public function testValidatePasswordWhenTokenProvidedNotSavedToDatabase(): void
     {
         $resetStatus = $this->authFacade->isValidPasswordResetToken('NERAMANES');
         $this->assertFalse($resetStatus);
@@ -132,7 +131,7 @@ class AuthFacadeTest extends Unit
     /**
      * @return \Orm\Zed\User\Persistence\SpyUser
      */
-    protected function createTestUser()
+    protected function createTestUser(): SpyUser
     {
         $userEntity = new SpyUser();
         $userEntity->setUsername(self::TEST_MAIL);

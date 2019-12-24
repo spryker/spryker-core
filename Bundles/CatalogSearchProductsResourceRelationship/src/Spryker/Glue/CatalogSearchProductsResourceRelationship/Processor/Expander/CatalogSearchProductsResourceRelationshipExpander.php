@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expander;
 
+use ArrayObject;
 use Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -40,37 +41,81 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        foreach ($resources as $resource) {
-            $attributes = $resource->getAttributes();
-            if ($attributes && $attributes->offsetGet(static::KEY_ABSTRACT_PRODUCTS)) {
-                $products = $attributes->offsetGet(static::KEY_ABSTRACT_PRODUCTS)->getArrayCopy();
-                $this->addAbstractProductsToResource($products, $resource, $restRequest);
+        $allProductAbstractSkus = $this->getProductAbstractSkus($resources);
 
-                return;
+        $productAbstractRestResources = $this->productsResource
+            ->getProductAbstractsBySkus(array_merge(...array_values($allProductAbstractSkus)), $restRequest);
+
+        foreach ($resources as $restResource) {
+            if (!array_key_exists($this->getRestResourceIdentifier($restResource), $allProductAbstractSkus)) {
+                continue;
             }
-            if ($attributes && $attributes->offsetGet(static::KEY_PRODUCTS)) {
-                $products = $attributes->offsetGet(static::KEY_PRODUCTS)->getArrayCopy();
-                $this->addAbstractProductsToResource($products, $resource, $restRequest);
+
+            foreach ($allProductAbstractSkus[$this->getRestResourceIdentifier($restResource)] as $productAbstractSku) {
+                if (!array_key_exists($productAbstractSku, $productAbstractRestResources)) {
+                    continue;
+                }
+
+                $restResource->addRelationship($productAbstractRestResources[$productAbstractSku]);
             }
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer[] $products
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      *
-     * @return void
+     * @return array
      */
-    protected function addAbstractProductsToResource(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
+    protected function getProductAbstractSkus(array $resources): array
     {
-        foreach ($products as $product) {
-            if ($product->getAbstractSku()) {
-                $abstractProduct = $this->productsResource->findProductAbstractBySku($product->getAbstractSku(), $restRequest);
-                if ($abstractProduct) {
-                    $resource->addRelationship($abstractProduct);
-                }
+        $productAbstractSkus = [];
+
+        foreach ($resources as $resource) {
+            $attributes = $resource->getAttributes();
+
+            if ($attributes && $attributes->offsetExists(static::KEY_ABSTRACT_PRODUCTS)) {
+                $productAbstractSkus[$this->getRestResourceIdentifier($resource)] = $this->getProductAbstractSkusForRestResource(
+                    $attributes->offsetGet(static::KEY_ABSTRACT_PRODUCTS)
+                );
+
+                continue;
+            }
+
+            if ($attributes && $attributes->offsetExists(static::KEY_PRODUCTS)) {
+                $productAbstractSkus[$this->getRestResourceIdentifier($resource)] = $this->getProductAbstractSkusForRestResource(
+                    $attributes->offsetGet(static::KEY_PRODUCTS)
+                );
             }
         }
+
+        return $productAbstractSkus;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
+     *
+     * @return string
+     */
+    protected function getRestResourceIdentifier(RestResourceInterface $restResource): string
+    {
+        return $restResource->getType() . ':' . $restResource->getId();
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer[] $products
+     *
+     * @return string[]
+     */
+    protected function getProductAbstractSkusForRestResource(ArrayObject $products): array
+    {
+        $productAbstractSkus = [];
+
+        foreach ($products as $product) {
+            if ($product->getAbstractSku()) {
+                $productAbstractSkus[] = $product->getAbstractSku();
+            }
+        }
+
+        return $productAbstractSkus;
     }
 }

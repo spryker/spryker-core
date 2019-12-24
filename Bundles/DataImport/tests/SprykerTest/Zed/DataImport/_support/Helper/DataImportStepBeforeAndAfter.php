@@ -17,7 +17,7 @@ class DataImportStepBeforeAndAfter implements DataImportStepInterface, DataImpor
     /**
      * @return void
      */
-    public function beforeExecute()
+    public function beforeExecute(): void
     {
     }
 
@@ -26,14 +26,14 @@ class DataImportStepBeforeAndAfter implements DataImportStepInterface, DataImpor
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
     }
 
     /**
      * @return void
      */
-    public function afterExecute()
+    public function afterExecute(): void
     {
     }
 }

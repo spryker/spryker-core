@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitUserDataImportPlugin;
 use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -67,12 +68,11 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     *
      * @return void
      */
     public function testImportCompanyBusinessUnitUserThrowsExceptionWhenCompanyUserKeyNotFound(): void
     {
+        $this->expectException(DataImportException::class);
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(static::IMPORT_COMPANY_BUSINESS_UNIT_USER_WITH_INVALID_COMPANY_USER_CSV);
 
         $companyBusinessUnitUserDataImportPlugin = new CompanyBusinessUnitUserDataImportPlugin();

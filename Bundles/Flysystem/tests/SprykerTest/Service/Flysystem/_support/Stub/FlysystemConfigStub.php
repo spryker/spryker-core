@@ -17,7 +17,7 @@ class FlysystemConfigStub extends SprykerFlysystemConfig
     /**
      * @return array
      */
-    public function getFilesystemConfig()
+    public function getFilesystemConfig(): array
     {
         $testDataFlysystemRootDirectory = Configuration::dataDir() . FlysystemServiceTest::ROOT_DIRECTORY;
 

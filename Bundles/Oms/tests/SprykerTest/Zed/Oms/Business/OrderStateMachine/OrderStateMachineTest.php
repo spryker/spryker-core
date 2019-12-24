@@ -42,7 +42,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationConditionsArrayShouldConvertedToCollection()
+    public function testInstantiationConditionsArrayShouldConvertedToCollection(): void
     {
         $orderStateMachine = new OrderStateMachine(
             $this->getQueryContainerMock(),
@@ -66,7 +66,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithConditionCollection()
+    public function testInstantiationWithConditionCollection(): void
     {
         $conditionCollection = new ConditionCollection();
         $conditionCollection->add($this->getConditionMock(), self::CONDITION_NAME);
@@ -93,7 +93,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationCommandsArrayShouldConvertedToCollection()
+    public function testInstantiationCommandsArrayShouldConvertedToCollection(): void
     {
         $orderStateMachine = new OrderStateMachine(
             $this->getQueryContainerMock(),
@@ -117,7 +117,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithCommandCollection()
+    public function testInstantiationWithCommandCollection(): void
     {
         $commandCollection = new CommandCollection();
         $commandCollection->add($this->getCommandMock(), self::COMMAND_NAME);

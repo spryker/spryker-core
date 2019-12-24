@@ -49,7 +49,7 @@ class LocaleFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -62,7 +62,7 @@ class LocaleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAvailableLocalesToBeArrayType()
+    public function testAvailableLocalesToBeArrayType(): void
     {
         $this->assertIsArray($this->localeNames);
     }
@@ -70,7 +70,7 @@ class LocaleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAvailableLocalesAreTheSameAsConfiguredOnes()
+    public function testAvailableLocalesAreTheSameAsConfiguredOnes(): void
     {
         $this->assertSame(
             array_values($this->availableLocales),
@@ -81,7 +81,7 @@ class LocaleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAvailableLocalesHasDifferentIdsThanConfiguredOnes()
+    public function testAvailableLocalesHasDifferentIdsThanConfiguredOnes(): void
     {
         $this->assertNotSame(
             array_keys($this->availableLocales),

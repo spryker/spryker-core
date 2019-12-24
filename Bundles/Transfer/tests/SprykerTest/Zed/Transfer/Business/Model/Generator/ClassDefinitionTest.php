@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
+use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
+use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\TransferConfig;
 
@@ -28,7 +31,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testGetNameShouldReturnNormalizedTransferName()
+    public function testGetNameShouldReturnNormalizedTransferName(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -42,7 +45,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testIfOnePropertyIsSetGetPropertiesShouldReturnArrayWithOneProperty()
+    public function testIfOnePropertyIsSetGetPropertiesShouldReturnArrayWithOneProperty(): void
     {
         $property = $this->getProperty('property1', 'string');
         $transferDefinition = [
@@ -70,7 +73,7 @@ class ClassDefinitionTest extends Unit
      *
      * @return array
      */
-    private function getProperty($name, $type, $singular = null, $return = null, array $bundles = [])
+    private function getProperty(string $name, string $type, ?string $singular = null, ?string $return = null, array $bundles = []): array
     {
         $property = [
             'name' => $name,
@@ -90,7 +93,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testIfMoreThenOnePropertyIsSetGetPropertiesShouldReturnArrayWithAllProperties()
+    public function testIfMoreThenOnePropertyIsSetGetPropertiesShouldReturnArrayWithAllProperties(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -118,7 +121,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testIfPropertyTypeIsArrayWithNameShouldBeMarkedAsArray()
+    public function testIfPropertyTypeIsArrayWithNameShouldBeMarkedAsArray(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -137,7 +140,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testIfPropertyNameIsCapitalizedNameShouldBeNormalized()
+    public function testIfPropertyNameIsCapitalizedNameShouldBeNormalized(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -156,7 +159,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testIfPropertyTypeIsCollectionTheReturnTypeShouldBeAnArrayObject()
+    public function testIfPropertyTypeIsCollectionTheReturnTypeShouldBeAnArrayObject(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -175,7 +178,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testIfPropertyTypeIsTransferObjectTheReturnTypeShouldBeTransferObject()
+    public function testIfPropertyTypeIsTransferObjectTheReturnTypeShouldBeTransferObject(): void
     {
         $property = $this->getProperty('property1', 'Type');
 
@@ -196,7 +199,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testSimplePropertyShouldHaveOnlyGetterAndSetter()
+    public function testSimplePropertyShouldHaveOnlyGetterAndSetter(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -209,7 +212,7 @@ class ClassDefinitionTest extends Unit
         $methods = $classDefinition->getMethods();
 
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false, false);
         $this->assertEquals($expectedSetter, $givenSetter);
 
         $givenGetter = $methods['getProperty1'];
@@ -220,7 +223,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testSimpleStringPropertyShouldHaveOnlySetterWithoutTypeHint()
+    public function testSimpleStringPropertyShouldHaveOnlySetterWithoutTypeHint(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -232,7 +235,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false, false);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }
@@ -240,7 +243,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testCollectionPropertyShouldHaveOnlySetterWithTypeAsTypeHint()
+    public function testCollectionPropertyShouldHaveOnlySetterWithTypeAsTypeHint(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -252,7 +255,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', [], false, false);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }
@@ -260,7 +263,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testCollectionPropertyShouldHaveGetSetAndAdd()
+    public function testCollectionPropertyShouldHaveGetSetAndAdd(): void
     {
         $bundles = ['Bundle1'];
 
@@ -274,7 +277,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', $bundles, false);
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', $bundles, false, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
@@ -289,7 +292,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testTypedArray()
+    public function testTypedArray(): void
     {
         $bundles = ['Bundle1'];
 
@@ -320,7 +323,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testCollectionPropertyWithSingularDefinitionShouldHaveAddWithDefinedName()
+    public function testCollectionPropertyWithSingularDefinitionShouldHaveAddWithDefinedName(): void
     {
         $property = $this->getProperty('properties', 'Type[]', 'property');
 
@@ -334,7 +337,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTIES', [], false);
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTIES', [], false, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
@@ -355,10 +358,11 @@ class ClassDefinitionTest extends Unit
      * @param string|null $constant
      * @param array $bundles
      * @param bool|null $hasDefaultNull
+     * @param bool|null $valueObject
      *
      * @return array
      */
-    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null)
+    private function getMethod(string $method, string $property, ?string $var = null, ?string $return = null, ?string $typeHint = null, ?string $constant = null, array $bundles = [], ?bool $hasDefaultNull = null, ?bool $valueObject = null): array
     {
         $method = [
             'name' => $method,
@@ -385,6 +389,10 @@ class ClassDefinitionTest extends Unit
             $method['hasDefaultNull'] = $hasDefaultNull;
         }
 
+        if ($valueObject !== null) {
+            $method['valueObject'] = $valueObject;
+        }
+
         return $method;
     }
 
@@ -400,7 +408,7 @@ class ClassDefinitionTest extends Unit
      *
      * @return array
      */
-    private function getGetMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null)
+    private function getGetMethod(string $method, string $property, ?string $var = null, ?string $return = null, ?string $typeHint = null, ?string $constant = null, array $bundles = [], ?bool $hasDefaultNull = null): array
     {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles, $hasDefaultNull);
         unset($method['typeHint']);
@@ -420,7 +428,7 @@ class ClassDefinitionTest extends Unit
      *
      * @return array
      */
-    private function getCollectionMethod($method, $property, $parent, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [])
+    private function getCollectionMethod(string $method, string $property, string $parent, ?string $var = null, ?string $return = null, ?string $typeHint = null, ?string $constant = null, array $bundles = []): array
     {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles);
         $method['parent'] = $parent;
@@ -430,12 +438,11 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
-     *
      * @return void
      */
-    public function testInvalidPropertyNameShouldThrowException()
+    public function testInvalidPropertyNameShouldThrowException(): void
     {
+        $this->expectException(InvalidNameException::class);
         $property = $this->getProperty('invalid_property_name', 'string');
 
         $transferDefinition = [
@@ -457,7 +464,7 @@ class ClassDefinitionTest extends Unit
      *
      * @return array
      */
-    private function getPropertyAssociative($name, $type, $singular = null, $return = null, array $bundles = [], $isAssociative = false)
+    private function getPropertyAssociative(string $name, string $type, ?string $singular = null, ?string $return = null, array $bundles = [], $isAssociative = false): array
     {
         $property = [
             'name' => $name,
@@ -477,7 +484,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testTypedAssociativeSimpleArray()
+    public function testTypedAssociativeSimpleArray(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -504,7 +511,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testTypedAssociativeCollectionArray()
+    public function testTypedAssociativeCollectionArray(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -531,7 +538,7 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
-    public function testTypedYesAssociativeCollectionArray()
+    public function testTypedYesAssociativeCollectionArray(): void
     {
         $transferDefinition = [
             'name' => 'name',
@@ -556,12 +563,11 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
-     *
      * @return void
      */
-    public function testInvalidAssociativeTypeException()
+    public function testInvalidAssociativeTypeException(): void
     {
+        $this->expectException(InvalidAssociativeTypeException::class);
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getPropertyAssociative('property1', 'string', null, null, [], true)],
@@ -572,12 +578,11 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
-     *
      * @return void
      */
-    public function testInvalidAssociativeValueException()
+    public function testInvalidAssociativeValueException(): void
     {
+        $this->expectException(InvalidAssociativeValueException::class);
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getPropertyAssociative('properties', 'string[]', 'property', null, [], 'Yeah')],

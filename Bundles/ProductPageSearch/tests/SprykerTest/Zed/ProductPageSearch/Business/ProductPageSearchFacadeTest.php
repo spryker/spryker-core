@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\ProductPageSearch\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
 
 /**
@@ -36,7 +39,7 @@ class ProductPageSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->tester->setUp();
@@ -93,5 +96,116 @@ class ProductPageSearchFacadeTest extends Unit
             $this->assertEquals($productConcreteTransfer->getIdProductConcrete(), $productConcretePageSearchTransfer->getFkProduct());
             $this->assertContains($productConcretePageSearchTransfer->getStore(), $storeNames);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageSearchTransferWithProductImagesExpandsDataWithProductImages(): void
+    {
+        // Arrange
+        $localeTransfer = $this->tester->haveLocale();
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+            ProductImageSetTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            ProductImageSetTransfer::LOCALE => $localeTransfer,
+        ]);
+
+        $productConcretePageSearchTransfer = (new ProductConcretePageSearchTransfer())
+            ->setFkProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setLocale($localeTransfer->getLocaleName());
+
+        // Act
+        $expandedProductConcretePageSearchTransfer = $this->productPageSearchFacade
+            ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
+
+        // Assert
+        $this->assertContains(
+            $productImageSetTransfer->getProductImages()->offsetGet(0)->toArray(false, true),
+            $expandedProductConcretePageSearchTransfer->getImages()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageSearchTransferWithProductImagesExpandsProductWithoutImages(): void
+    {
+        // Arrange
+        $localeTransfer = $this->tester->haveLocale();
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $productConcretePageSearchTransfer = (new ProductConcretePageSearchTransfer())
+            ->setFkProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setLocale($localeTransfer->getLocaleName());
+
+        // Act
+        $expandedProductConcretePageSearchTransfer = $this->productPageSearchFacade
+            ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
+
+        // Assert
+        $this->assertEmpty($expandedProductConcretePageSearchTransfer->getImages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageSearchTransferWithProductImagesExpandsProductWithoutLocale(): void
+    {
+        // Arrange
+        $localeTransfer = $this->tester->haveLocale();
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+            ProductImageSetTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+        ]);
+
+        $productConcretePageSearchTransfer = (new ProductConcretePageSearchTransfer())
+            ->setFkProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setLocale($localeTransfer->getLocaleName());
+
+        // Act
+        $expandedProductConcretePageSearchTransfer = $this->productPageSearchFacade
+            ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
+
+        // Assert
+        $this->assertEmpty($expandedProductConcretePageSearchTransfer->getImages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageSearchTransferWithProductImagesExpandsProductWithoutRequiredLocaleField(): void
+    {
+        // Arrange
+        $productConcretePageSearchTransfer = (new ProductConcretePageSearchTransfer())
+            ->setFkProduct($this->tester->haveProduct()->getIdProductConcrete())
+            ->setLocale(null);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->productPageSearchFacade
+            ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageSearchTransferWithProductImagesExpandsProductWithoutRequiredIdProductField(): void
+    {
+        // Arrange
+        $productConcretePageSearchTransfer = (new ProductConcretePageSearchTransfer())
+            ->setFkProduct(null)
+            ->setLocale($this->tester->haveLocale()->getLocaleName());
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->productPageSearchFacade
+            ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
     }
 }

@@ -22,15 +22,15 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function publishProductAbstractPackaging(array $productAbstractIds): void
+    public function publishProductPackagingUnit(array $productConcreteIds): void
     {
         $this->getFactory()
-            ->createProductPackagingStorageWriter()
-            ->publish($productAbstractIds);
+            ->createProductPackagingUnitStorageWriter()
+            ->publishProductPackagingUnit($productConcreteIds);
     }
 
     /**
@@ -38,15 +38,15 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function unpublishProductAbstractPackaging(array $productAbstractIds): void
+    public function unpublishProductPackagingUnit(array $productConcreteIds): void
     {
         $this->getFactory()
-            ->createProductPackagingStorageWriter()
-            ->unpublish($productAbstractIds);
+            ->createProductPackagingUnitStorageWriter()
+            ->unpublishProductPackagingUnit($productConcreteIds);
     }
 
     /**
@@ -58,27 +58,11 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
         return $this->getFactory()
             ->getProductPackagingUnitFacade()
-            ->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
-     */
-    public function getProductAbstractPackagingStorageTransfersByProductAbstractIds(array $productAbstractIds): array
-    {
-        return $this->getFactory()
-            ->createProductPackagingStorageReader()
-            ->getProductAbstractPackagingStorageTransfer($productAbstractIds);
+            ->findProductIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
 
     /**

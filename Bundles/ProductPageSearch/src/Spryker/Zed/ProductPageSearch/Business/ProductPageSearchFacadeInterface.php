@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
-use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 
 interface ProductPageSearchFacadeInterface
 {
@@ -99,10 +99,6 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `ProductPageSearchFacadeInterface::getProductConcretePageSearchCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface::getProductConcretePageSearchCollectionByFilter()
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -122,28 +118,16 @@ interface ProductPageSearchFacadeInterface
     public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void;
 
     /**
-     * Specification
-     * - Returns ProductEntityTransfer collection by filter.
+     * Specification:
+     * - Expands ProductConcretePageSearchTransfer with images data and returns the modified object.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    public function getProductCollectionByFilter(FilterTransfer $filterTransfer): array;
-
-    /**
-     * Specification
-     * - Finds product concrete page search entities by given concrete product ids.
-     * - Returns ContentEntityTransfer collection by filter.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
-     */
-    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array;
+    public function expandProductConcretePageSearchTransferWithProductImages(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer;
 }

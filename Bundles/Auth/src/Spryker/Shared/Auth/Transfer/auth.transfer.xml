@@ -10,5 +10,14 @@
         <property name="status" type="string"/>
     </transfer>
 
+    <transfer name="User">
+        <property name="password" type="string"/>
+        <property name="lastLogin" type="string"/>
+        <property name="idUser" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="username" type="string"/>
+    </transfer>
+
 </transfers>
 

@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class SplittableOrderItemTransformer implements SplittableOrderItemTransformerInterface
 {
+    protected const DIVISION_SCALE = 10;
+
     /**
      * @see \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer
      *
@@ -23,6 +25,8 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
      */
     public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
+        $itemTransfer->requireAmount();
+
         $transformedItemsCollection = new ItemCollectionTransfer();
         $quantity = $itemTransfer->getQuantity();
 
@@ -44,8 +48,8 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
         $transformedItemTransfer = new ItemTransfer();
         $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
         $transformedItemTransfer->setQuantity(1);
-        $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-        $transformedItemTransfer->setAmount((int)$amountPerQuantity);
+        $amountPerQuantity = $itemTransfer->getAmount()->divide($itemTransfer->getQuantity(), static::DIVISION_SCALE);
+        $transformedItemTransfer->setAmount($amountPerQuantity);
         $transformedProductOptions = new ArrayObject();
 
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {

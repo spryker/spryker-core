@@ -20,10 +20,13 @@ use Spryker\Zed\Event\Dependency\EventCollection;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollection;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Event\EventDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use SprykerTest\Zed\Event\Stub\TestEventBulkListenerPluginStub;
 
 /**
  * Auto-generated group annotations
@@ -41,9 +44,14 @@ class EventFacadeTest extends Unit
     public const TEST_EVENT_NAME = 'test.event';
 
     /**
+     * @var \SprykerTest\Zed\Event\EventBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function testTriggerShouldHandleGivenListener()
+    public function testTriggerShouldHandleGivenListener(): void
     {
         $eventFacade = $this->createEventFacade();
         $transferObject = $this->createTransferObjectMock();
@@ -66,7 +74,7 @@ class EventFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerWhenEventProvidedWithSubscriberShouldHandleListener()
+    public function testTriggerWhenEventProvidedWithSubscriberShouldHandleListener(): void
     {
         $eventFacade = $this->createEventFacade();
         $transferObject = $this->createTransferObjectMock();
@@ -101,7 +109,7 @@ class EventFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerWhenQueueUsedShouldEnqueueListener()
+    public function testTriggerWhenQueueUsedShouldEnqueueListener(): void
     {
         $eventFacade = $this->createEventFacade();
         $transferObject = $this->createTransferObjectMock();
@@ -129,7 +137,7 @@ class EventFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProcessEnqueuedMessagesShouldHandleProvidedEvents()
+    public function testProcessEnqueuedMessagesShouldHandleProvidedEvents(): void
     {
         $eventFacade = $this->createEventFacade();
         $transferObject = $this->createTransferObjectMock();
@@ -141,7 +149,9 @@ class EventFacadeTest extends Unit
 
         $queueReceivedMessageTransfer = $this->createQueueReceiveMessageTransfer($eventListenerMock, $transferObject);
 
-        $messages[] = $queueReceivedMessageTransfer;
+        $messages = [
+            $queueReceivedMessageTransfer,
+        ];
 
         $processedMessages = $eventFacade->processEnqueuedMessages($messages);
 
@@ -153,7 +163,7 @@ class EventFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProcessEnqueuedMessagesShouldMarkAsFailedWhenDataIsMissing()
+    public function testProcessEnqueuedMessagesShouldMarkAsFailedWhenDataIsMissing(): void
     {
         $eventFacade = $this->createEventFacade();
 
@@ -164,7 +174,9 @@ class EventFacadeTest extends Unit
 
         $queueReceivedMessageTransfer = $this->createQueueReceiveMessageTransfer();
 
-        $messages[] = $queueReceivedMessageTransfer;
+        $messages = [
+            $queueReceivedMessageTransfer,
+        ];
 
         $processedMessages = $eventFacade->processEnqueuedMessages($messages);
 
@@ -173,6 +185,30 @@ class EventFacadeTest extends Unit
         $this->assertFalse($processedQueueReceivedMessageTransfer->getAcknowledge());
         $this->assertTrue($processedQueueReceivedMessageTransfer->getReject());
         $this->assertTrue($processedQueueReceivedMessageTransfer->getHasError());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessEnqueuedMessageWillSendOnlyErroredMessageFromBulkToRetry(): void
+    {
+        //Arrange
+        $eventCollection = $this->createEventListenerCollection();
+        $eventBulkListenerStub = new TestEventBulkListenerPluginStub();
+        $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventBulkListenerStub);
+        $messages = [
+            $this->createQueueReceiveMessageTransfer($eventBulkListenerStub, $this->createTransferObjectMock()),
+            $this->createQueueReceiveMessageTransfer($eventBulkListenerStub, $this->createTransferObjectMock()),
+        ];
+
+        //Act
+        $processedMessages = $this->createEventFacade()->processEnqueuedMessages($messages);
+
+        //Assert
+        $this->assertTrue($processedMessages[0]->getAcknowledge());
+        $this->assertEquals('retry', $processedMessages[0]->getRoutingKey());
+        $this->assertTrue($processedMessages[1]->getAcknowledge());
+        $this->assertNull($processedMessages[1]->getRoutingKey());
     }
 
     /**
@@ -194,9 +230,18 @@ class EventFacadeTest extends Unit
     }
 
     /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface
+     */
+    protected function createEventBulkListenerMock()
+    {
+        return $this->getMockBuilder(EventBulkHandlerInterface::class)
+            ->getMock();
+    }
+
+    /**
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function createEventListenerCollection()
+    protected function createEventListenerCollection(): EventCollectionInterface
     {
         return new EventCollection();
     }
@@ -204,7 +249,7 @@ class EventFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Event\Business\EventFacade
      */
-    protected function createEventFacade()
+    protected function createEventFacade(): EventFacade
     {
         return new EventFacade();
     }
@@ -212,7 +257,7 @@ class EventFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
      */
-    protected function createEventSubscriberCollection()
+    protected function createEventSubscriberCollection(): EventSubscriberCollectionInterface
     {
         return new EventSubscriberCollection();
     }
@@ -246,8 +291,7 @@ class EventFacadeTest extends Unit
         ?EventToQueueInterface $queueClientMock = null,
         ?EventCollectionInterface $eventCollection = null,
         ?EventSubscriberCollectionInterface $eventSubscriberCollection = null
-    ) {
-
+    ): EventBusinessFactory {
         if ($queueClientMock === null) {
             $queueClientMock = $this->createQueueClientMock();
         }
@@ -285,16 +329,15 @@ class EventFacadeTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface|null $eventListenerMock
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface|null $eventListenerMock
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
     protected function createQueueReceiveMessageTransfer(
-        ?EventHandlerInterface $eventListenerMock = null,
+        ?EventBaseHandlerInterface $eventListenerMock = null,
         ?TransferInterface $transferObject = null
-    ) {
-
+    ): QueueReceiveMessageTransfer {
         $message = [
             EventQueueSendMessageBodyTransfer::LISTENER_CLASS_NAME => ($eventListenerMock) ? get_class($eventListenerMock) : null,
             EventQueueSendMessageBodyTransfer::TRANSFER_CLASS_NAME => ($transferObject) ? get_class($transferObject) : null,

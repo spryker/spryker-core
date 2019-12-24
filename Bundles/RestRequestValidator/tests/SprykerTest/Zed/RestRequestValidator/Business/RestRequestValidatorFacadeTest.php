@@ -246,7 +246,7 @@ class RestRequestValidatorFacadeTest extends Unit
      */
     protected function getExpectedResult(StoreTransfer $store): array
     {
-        return $expected = (new RestRequestValidatorToYamlAdapter())->parseFile(
+        return (new RestRequestValidatorToYamlAdapter())->parseFile(
             $this->getFixtureDirectory('Merged') . $store->getName() . DIRECTORY_SEPARATOR . 'result.validation.yaml'
         );
     }
@@ -258,7 +258,7 @@ class RestRequestValidatorFacadeTest extends Unit
      */
     protected function getActualResult(StoreTransfer $store): array
     {
-        return $expected = (new RestRequestValidatorToYamlAdapter())->parseFile(
+        return (new RestRequestValidatorToYamlAdapter())->parseFile(
             $this->getFixtureDirectory('Result') . $store->getName() . DIRECTORY_SEPARATOR . 'validation.cache'
         );
     }

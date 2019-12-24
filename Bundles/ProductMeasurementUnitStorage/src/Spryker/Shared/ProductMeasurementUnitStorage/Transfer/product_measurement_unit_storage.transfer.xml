@@ -34,6 +34,44 @@
 
     <transfer name="ProductConcrete">
         <property name="baseMeasurementUnit" type="ProductMeasurementUnit"/>
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+        <property name="isDefault" type="bool"/>
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="fkProductMeasurementUnit" type="int"/>
+        <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnit">
+        <property name="idProductMeasurementUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementBaseUnit">
+        <property name="fkProductMeasurementUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

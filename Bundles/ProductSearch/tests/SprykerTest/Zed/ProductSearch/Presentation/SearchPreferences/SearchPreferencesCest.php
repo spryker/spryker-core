@@ -28,7 +28,7 @@ class SearchPreferencesCest
      *
      * @return void
      */
-    public function showListOfFilters(ProductSearchPresentationTester $i)
+    public function showListOfFilters(ProductSearchPresentationTester $i): void
     {
         $i->amOnPage(SearchPreferencesPage::URL_LIST);
         $i->seeElement(SearchPreferencesPage::SELECTOR_SEARCH_PREFERENCES_LIST);
@@ -39,7 +39,7 @@ class SearchPreferencesCest
      *
      * @return void
      */
-    public function addAndEditAndDeactivateAttributeToSearch(ProductSearchPresentationTester $i)
+    public function addAndEditAndDeactivateAttributeToSearch(ProductSearchPresentationTester $i): void
     {
         $attributeKey = 'foooooo';
         $i->addAttributeToSearch($attributeKey);
@@ -52,7 +52,7 @@ class SearchPreferencesCest
      *
      * @return void
      */
-    public function synchronizeFilterPreferences(ProductSearchPresentationTester $i)
+    public function synchronizeFilterPreferences(ProductSearchPresentationTester $i): void
     {
         $attributeKey = 'foooooo';
         $i->addAttributeToSearch($attributeKey);
