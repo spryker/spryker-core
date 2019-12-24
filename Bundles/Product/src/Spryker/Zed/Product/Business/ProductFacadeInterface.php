@@ -924,7 +924,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product concrete transfers according to given filter.
+     * - Retrieves product concrete transfers according to given filter.
      *
      * @api
      *
@@ -933,4 +933,17 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves product concrete transfers according to given filter.
+     * - Maps only data from `spy_product` table without any joined data for performance reasons.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

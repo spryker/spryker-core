@@ -13,6 +13,8 @@ use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataM
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductAbstractSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductConcreteSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductPageMapCategoryExpander;
+use Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductPageMapCategoryExpanderInterface;
 use Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpander;
 use Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpanderInterface;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapper;
@@ -258,5 +260,13 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getProductAbstractMapExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductPageMapCategoryExpanderInterface
+     */
+    public function createProductPageMapCategoryExpander(): ProductPageMapCategoryExpanderInterface
+    {
+        return new ProductPageMapCategoryExpander();
     }
 }
