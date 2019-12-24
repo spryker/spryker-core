@@ -151,27 +151,30 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param int|null $idProduct
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $ProductConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function buildProductConcreteTransfer(
         ProductAbstractTransfer $productAbstractTransfer,
         FormInterface $form,
-        $idProduct = null
+        $ProductConcreteTransfer = null
     ) {
         $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
 
-        $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setIdProductConcrete($idProduct)
-            ->setAttributes($this->getConcreteAttributes($form->getData(), $idProduct))
+        if ($ProductConcreteTransfer === null) {
+            $productConcreteTransfer = new ProductConcreteTransfer();
+            $productConcreteTransfer->setIsActive(false);
+        }
+
+        $productConcreteTransfer
+            ->setAttributes($this->getConcreteAttributes(
+                $form->getData(),
+                $ProductConcreteTransfer->getIdProductConcrete()
+            ))
             ->setSku($sku)
             ->setAbstractSku($productAbstractTransfer->getSku())
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
-
-        if ($idProduct === null) {
-            $productConcreteTransfer->setIsActive(false);
-        }
 
         $productConcreteTransfer = $this->assignProductToBeBundled($form, $productConcreteTransfer);
         $productConcreteTransfer = $this->assignProductsToBeRemovedFromBundle($form, $productConcreteTransfer);
@@ -180,7 +183,11 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         foreach ($localeCollection as $localeTransfer) {
             $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
 
-            $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer($form->get($formName), $localeTransfer, $idProduct);
+            $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer(
+                $form->get($formName),
+                $localeTransfer,
+                $ProductConcreteTransfer->getIdProductConcrete()
+            );
 
             $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
