@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/kernel": "^3.33.0",
     "voku/anti-xss": "^4.1.20"
   },
   "require-dev": {

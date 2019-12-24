@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\SanitizeXssTypeExtension;
-use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -56,7 +55,6 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @return \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getUtilSanitizeXssService(): GuiToUtilSanitizeXssServiceInterface
     {

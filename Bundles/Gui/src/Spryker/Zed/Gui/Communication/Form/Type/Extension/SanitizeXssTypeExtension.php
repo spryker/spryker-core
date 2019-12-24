@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Gui\Communication\Form\Type\Extension;
 
 use Spryker\Zed\Gui\Communication\Form\EventListener\SanitizeXssListener;
-use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

@@ -23,13 +23,12 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunct
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
-use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeServiceBridge;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @method GuiConfig getConfig()
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -117,6 +116,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
