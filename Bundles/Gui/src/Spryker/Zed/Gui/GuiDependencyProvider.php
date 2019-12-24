@@ -124,11 +124,11 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilSanitizeXssService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_SANITIZE_XSS] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE_XSS, function (Container $container) {
             return new GuiToUtilSanitizeXssServiceBridge(
                 $container->getLocator()->utilSanitizeXss()->service()
             );
-        };
+        });
 
         return $container;
     }
