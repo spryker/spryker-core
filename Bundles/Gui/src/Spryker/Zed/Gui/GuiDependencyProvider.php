@@ -44,6 +44,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addTwigFunctions($container);
         $container = $this->addTwigFilter($container);
         $container = $this->addUtilSanitizeXssService($container);

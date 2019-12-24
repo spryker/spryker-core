@@ -24,14 +24,14 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
     /**
      * @var \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface
      */
-    protected $utilSanitizeService;
+    protected $utilSanitizeXssService;
 
     /**
      * @param \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface $utilSanitizeService
      */
     public function __construct(GuiToUtilSanitizeXssServiceInterface $utilSanitizeService)
     {
-        $this->utilSanitizeService = $utilSanitizeService;
+        $this->utilSanitizeXssService = $utilSanitizeService;
     }
 
     /**
@@ -77,7 +77,7 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options[static::OPTION_SANITIZE_XSS]) {
-            $builder->addEventSubscriber(new SanitizeXssListener($this->utilSanitizeService));
+            $builder->addEventSubscriber(new SanitizeXssListener($this->utilSanitizeXssService));
         }
     }
 }

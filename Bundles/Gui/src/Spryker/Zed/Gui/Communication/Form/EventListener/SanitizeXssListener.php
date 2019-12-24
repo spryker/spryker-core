@@ -18,14 +18,14 @@ class SanitizeXssListener implements EventSubscriberInterface
     /**
      * @var \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface
      */
-    protected $utilSanitizeService;
+    protected $utilSanitizeXssService;
 
     /**
      * @param \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface $utilSanitizeService
      */
     public function __construct(GuiToUtilSanitizeXssServiceInterface $utilSanitizeService)
     {
-        $this->utilSanitizeService = $utilSanitizeService;
+        $this->utilSanitizeXssService = $utilSanitizeService;
     }
 
     /**
@@ -52,13 +52,13 @@ class SanitizeXssListener implements EventSubscriberInterface
         }
 
         $formConfig = $event->getForm()->getConfig();
-        $data = $this->utilSanitizeService->sanitizeXss(
+        $data = $this->utilSanitizeXssService->sanitizeXss(
             $data,
             $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_ATTRIBUTES, []),
             $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_HTML_TAGS, [])
         );
 
-        $event->setData($this->utilSanitizeService->sanitizeXss(
+        $event->setData($this->utilSanitizeXssService->sanitizeXss(
             $data,
             $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_ATTRIBUTES, []),
             $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_HTML_TAGS, [])
