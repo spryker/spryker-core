@@ -133,6 +133,13 @@ interface ProductRepositoryInterface
     public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
 
     /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]

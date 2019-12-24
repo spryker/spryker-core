@@ -384,12 +384,12 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array
     {
-        $productEntityTransfers = $this->buildQueryFromCriteria(
+        $productConcreteEntities = $this->buildQueryFromCriteria(
             $this->getFactory()->createProductQuery(),
             $filterTransfer
         )->setFormatter(ModelCriteria::FORMAT_OBJECT)->find();
 
-        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productEntityTransfers);
+        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productConcreteEntities);
     }
 
     /**
@@ -490,6 +490,42 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $productAbstractTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        $productQuery = $this->getFactory()->createProductQuery();
+        $productConcreteEntities = $this->buildQueryFromCriteria($productQuery, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
+
+        return $this->mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations($productConcreteEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productConcreteEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations(
+        ObjectCollection $productConcreteEntities
+    ): array {
+        $productConcreteTransfers = [];
+        $productMapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $productConcreteTransfers[] = $productMapper->mapProductConcreteEntityToProductConcreteTransferWithoutRelations(
+                $productConcreteEntity,
+                new ProductConcreteTransfer()
+            );
+        }
+
+        return $productConcreteTransfers;
     }
 
     /**

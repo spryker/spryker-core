@@ -1091,6 +1091,20 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getRawProductConcreteTransfersByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
