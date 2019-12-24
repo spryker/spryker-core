@@ -22,10 +22,18 @@ class UrlResolverResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves collection of urls by the `url` parameter provided in GET request."
      *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
+     *          "parameters": [
+     *              {
+     *                  "name": "Accept-Language",
+     *                  "in": "header"
+     *              },
+     *              {
+     *                  "name": "url",
+     *                  "in": "query",
+     *                  "required": true,
+     *                  "description": "URL to resolve."
+     *              }
+     *          ],
      *          "responses": {
      *              "404": "Not found.",
      *              "422": "Unprocessable entity."

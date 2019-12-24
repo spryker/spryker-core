@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Money\Plugin\MoneyPlugin;
 use Spryker\Shared\Search\SearchConfig;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactory` instead.
+ */
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
 {
     /**
