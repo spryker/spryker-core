@@ -80,6 +80,8 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory::getProductAbstractPageMapExpanderPlugins()` instead.
+     *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
      */
     public function getProductPageMapExpanderPlugins()
@@ -102,7 +104,7 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getConcreteProductPageMapExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER);
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_MAP_EXPANDER);
     }
 
     /**

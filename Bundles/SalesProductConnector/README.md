@@ -1,6 +1,6 @@
 # SalesProductConnector Module
-[![Build Status](https://travis-ci.org/spryker/SalesProductConnector.svg)](https://travis-ci.org/spryker/SalesProductConnector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/SalesProductConnector/badge.svg)](https://coveralls.io/github/spryker/SalesProductConnector)
+[![Build Status](https://travis-ci.org/spryker/sales-product-connector.svg)](https://travis-ci.org/spryker/sales-product-connector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 SalesProductConnector provides plugins to populate order items with additional product related data.
 
