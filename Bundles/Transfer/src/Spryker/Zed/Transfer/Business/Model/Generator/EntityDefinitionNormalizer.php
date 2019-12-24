@@ -113,7 +113,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected function getTransferType($type)
     {
         $type = mb_strtolower($type);
-        if (!preg_match('/^int|^integer|^float|^double|^decimal|^string|^array|^\[\]|^bool|^boolean/', $type)) {
+        if (!preg_match('/^(int|integer|float|double|decimal|string|array|\[\]|bool|boolean)$/', $type)) {
             return 'string';
         }
 
