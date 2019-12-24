@@ -11,6 +11,9 @@ use Elastica\Suggest\Completion;
 use Elastica\Suggest\Phrase;
 use Elastica\Suggest\Term;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder` instead.
+ */
 class SuggestBuilder implements SuggestBuilderInterface
 {
     /**

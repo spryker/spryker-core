@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Reader;
 
 use Elastica\Client;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class Reader implements ReaderInterface
 {
     public const READER_NAME = 'elastic-search-reader';

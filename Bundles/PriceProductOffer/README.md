@@ -1,6 +1,6 @@
 # PriceProductOffer Module
 [![Build Status](https://travis-ci.org/spryker/price-product-offer.svg)](https://travis-ci.org/spryker/price-product-offer)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-offer/badge.svg)](https://coveralls.io/github/spryker/price-product-offer)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 PriceProductOffer provides product offer price related functionality,price type, store relation and currency/price mode. 
 
