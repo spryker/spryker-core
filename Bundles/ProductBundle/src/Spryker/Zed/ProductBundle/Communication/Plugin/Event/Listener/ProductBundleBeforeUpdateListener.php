@@ -36,6 +36,7 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
      */
     public function handle(TransferInterface $productConcreteTransfer, $eventName): void
     {
+        // @todo Remove this plugin and use instead ProductBundleProductConcreteActivatorAfterUpdatePlugin.
         if (!$this->hasProductConcreteProductBundle($productConcreteTransfer)) {
             return;
         }

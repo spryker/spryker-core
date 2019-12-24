@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundleFacade;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Throwable;
 
@@ -49,6 +51,11 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer)
     {
         if ($productConcreteTransfer->getProductBundle() === null) {
+            // @todo Check if this method is ok or check it inside ProductBundleProductConcreteActivatorAfterUpdatePlugin.
+            $facade = new ProductBundleFacade();
+            $facade->updateAffectedBundlesAvailability($productConcreteTransfer->getSku());
+
+
             return $productConcreteTransfer;
         }
 
@@ -77,6 +84,22 @@ class ProductBundleWriter implements ProductBundleWriterInterface
         $this->productBundleStockWriter->updateStock($productConcreteTransfer);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductBundleTransfer[]
+     */
+    protected function getProductBundlesForBundledProduct(ProductConcreteTransfer $productConcreteTransfer): ArrayObject
+    {
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
+
+        $productBundleCollectionTransfer = $this->getFacade()
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
+
+        return $productBundleCollectionTransfer->getProductBundles();
     }
 
     /**
