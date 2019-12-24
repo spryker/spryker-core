@@ -5,7 +5,8 @@
 
 'use strict';
 
-var SelectTableAPI = require('../../../../../../ProductListGui/assets/Zed/js/modules/select-table-api');
+// TODO: To add a dependency to ProductListGui module and reuse SelectTableAPI functionality in next major release.
+var SelectTableAPI = require('../select-table-api/select-table-api');
 
 $(document).ready(function () {
     var availableProductsTable = new SelectTableAPI();
