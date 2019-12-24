@@ -75,11 +75,11 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      */
     protected function removeItemsWithoutPrice(QuoteTransfer $quoteTransfer, array $productWithoutPricesIdentifiers): QuoteTransfer
     {
-        foreach ($productWithoutPricesIdentifiers as $identifier) {
-            $key = $this->findItemKeyByIdentifier($quoteTransfer->getItems(), $identifier);
+        foreach ($productWithoutPricesIdentifiers as $itemIdentifier) {
+            $key = $this->findItemKeyByIdentifier($quoteTransfer->getItems(), $itemIdentifier);
 
             if ($key !== null) {
-                $this->addFilterMessage($identifier);
+                $this->addFilterMessage($itemIdentifier);
                 $quoteTransfer->getItems()->offsetUnset($key);
             }
         }
@@ -89,19 +89,29 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param string $identifier
+     * @param string $itemIdentifier
      *
      * @return int|null
      */
-    protected function findItemKeyByIdentifier(ArrayObject $itemTransfers, string $identifier): ?int
+    protected function findItemKeyByIdentifier(ArrayObject $itemTransfers, string $itemIdentifier): ?int
     {
         foreach ($itemTransfers as $key => $itemTransfer) {
-            if ($itemTransfer->getItemIdentifier() === $identifier) {
+            if ($this->getItemIdentifier($itemTransfer) === $itemIdentifier) {
                 return (int)$key;
             }
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
+    {
+        return $itemTransfer->getItemIdentifier() ?: $itemTransfer->getSku();
     }
 
     /**
@@ -227,8 +237,8 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      */
     protected function getProductWithoutPriceIdentifiers(array $priceProductTransfers, array $items): array
     {
-        $itemPriceIdentifiers = array_map(function (ItemTransfer $item) {
-            return $item->getItemIdentifier();
+        $itemPriceIdentifiers = array_map(function (ItemTransfer $itemTransfer) {
+            return $this->getItemIdentifier($itemTransfer);
         }, $items);
 
         $validProductPriceIdentifiers = array_map(function (PriceProductTransfer $priceProductTransfer) {

@@ -197,7 +197,7 @@ class Operation implements OperationInterface
 
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
-        $cartChangeTransfer->setItems($this->setDefaultItemIdentifiers($cartChangeTransfer->getItems()));
+
         $cartChangeTransfer = $this->normalizeCartChangeTransfer($cartChangeTransfer);
         $this->addInfoMessages(
             $this->getNotificationMessages($cartChangeTransfer)
@@ -280,8 +280,6 @@ class Operation implements OperationInterface
         if ($this->quoteFacade->isQuoteLocked($quoteTransfer)) {
             return $quoteTransfer;
         }
-
-        $quoteTransfer->setItems($this->setDefaultItemIdentifiers($quoteTransfer->getItems()));
 
         $quoteValidationResponseTransfer = $this->quoteFacade->validateQuote($quoteTransfer);
         if (!$quoteValidationResponseTransfer->getIsSuccessful()) {

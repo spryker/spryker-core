@@ -58,7 +58,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
             $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenItemIdentifier(
                 $itemsInCart,
-                $itemTransfer->getItemIdentifier()
+                $this->getItemIdentifier($itemTransfer)
             );
 
             $currentItemQuantity += $itemTransfer->getQuantity();
@@ -88,6 +88,16 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
+    {
+        return $itemTransfer->getItemIdentifier() ?: $itemTransfer->getSku();
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $itemIdentifier
      *
@@ -98,9 +108,10 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $quantity = 0;
 
         foreach ($items as $itemTransfer) {
-            if ($itemTransfer->getItemIdentifier() !== $itemIdentifier) {
+            if ($this->getItemIdentifier($itemTransfer) !== $itemIdentifier) {
                 continue;
             }
+
             $quantity += $itemTransfer->getQuantity();
         }
 
