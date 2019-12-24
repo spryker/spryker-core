@@ -127,7 +127,7 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function getPriceProductQuery(): SpyPriceProductQuery
+    public function getPriceProductPropelQuery(): SpyPriceProductQuery
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT);
     }

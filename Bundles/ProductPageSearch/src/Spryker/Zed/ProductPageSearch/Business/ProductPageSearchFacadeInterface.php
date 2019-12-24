@@ -159,7 +159,8 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification:
-     * - Gets price product ids by price product store ids.
+     * - Returns price product ids for the given price product store ids.
+     * - Returns empty array when price produce ids is empty.
      *
      * @api
      *

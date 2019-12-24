@@ -224,7 +224,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addCategoryNodePropelQuery($container);
         $container = $this->addProductPropelQuery($container);
         $container = $this->addProductSearchPropelQuery($container);
-        $container = $this->addPriceProductQuery($container);
+        $container = $this->addPriceProductPropelQuery($container);
 
         return $container;
     }
@@ -444,7 +444,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPriceProductQuery(Container $container): Container
+    protected function addPriceProductPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_PRICE_PRODUCT, $container->factory(function () {
             return SpyPriceProductQuery::create();

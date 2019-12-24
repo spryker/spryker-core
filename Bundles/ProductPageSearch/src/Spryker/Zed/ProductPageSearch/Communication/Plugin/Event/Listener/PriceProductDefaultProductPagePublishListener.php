@@ -20,6 +20,8 @@ class PriceProductDefaultProductPagePublishListener extends AbstractProductPageS
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
