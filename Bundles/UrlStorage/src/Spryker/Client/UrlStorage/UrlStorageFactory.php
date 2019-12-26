@@ -10,6 +10,7 @@ namespace Spryker\Client\UrlStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToLocaleClientInterface;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStoreClientInterface;
+use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToUtilEncodingServiceInterface;
 use Spryker\Client\UrlStorage\KeyBuilder\UrlRedirectStorageKeyBuilder;
 use Spryker\Client\UrlStorage\KeyBuilder\UrlRedirectStorageKeyBuilderInterface;
 use Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapper;
@@ -31,6 +32,7 @@ class UrlStorageFactory extends AbstractFactory
         return new UrlStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
+            $this->getUtilEncodingService(),
             $this->getUrlStorageResourceMapperPlugins()
         );
     }
@@ -106,5 +108,13 @@ class UrlStorageFactory extends AbstractFactory
     public function getLocaleClient(): UrlStorageToLocaleClientInterface
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): UrlStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(UrlStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

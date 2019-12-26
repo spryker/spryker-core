@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
+use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToUtilEncodingServiceInterface;
 use Spryker\Client\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\Kernel\Store;
 
@@ -30,6 +31,11 @@ class UrlStorageReader implements UrlStorageReaderInterface
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[]
      */
     protected $urlStorageResourceMapperPlugins;
@@ -37,12 +43,18 @@ class UrlStorageReader implements UrlStorageReaderInterface
     /**
      * @param \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface $storageClient
      * @param \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[] $resourceMapperPlugins
      */
-    public function __construct(UrlStorageToStorageInterface $storageClient, UrlStorageToSynchronizationServiceInterface $synchronizationService, array $resourceMapperPlugins)
-    {
+    public function __construct(
+        UrlStorageToStorageInterface $storageClient,
+        UrlStorageToSynchronizationServiceInterface $synchronizationService,
+        UrlStorageToUtilEncodingServiceInterface $utilEncodingService,
+        array $resourceMapperPlugins
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->utilEncodingService = $utilEncodingService;
         $this->urlStorageResourceMapperPlugins = $resourceMapperPlugins;
     }
 
@@ -54,7 +66,8 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     public function matchUrl($url, $localeName)
     {
-        $urlDetails = $this->getUrlFromStorage($url);
+        $urlDetails = $this->getUrlsFromStorage([$url])[0] ?? null;
+
         if (!$urlDetails) {
             return [];
         }
@@ -84,38 +97,15 @@ class UrlStorageReader implements UrlStorageReaderInterface
     }
 
     /**
-     * @param array $urlDetails
-     *
-     * @return string|null
-     */
-    protected function getLocaleNameFromUrlDetails(array $urlDetails): ?string
-    {
-        if (!isset($urlDetails['locale_urls'])) {
-            return null;
-        }
-
-        foreach ($urlDetails['locale_urls'] as $localeUrl) {
-            if ($localeUrl['fk_locale'] === $urlDetails['fk_locale']) {
-                return $localeUrl['locale_name'];
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @param string $url
      *
      * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
      */
     public function findUrlStorageTransferByUrl($url)
     {
-        $urlDetails = $this->getUrlFromStorage($url);
-        if (!$urlDetails) {
-            return null;
-        }
+        $urlStorageTransfers = $this->getUrlStorageTransferByUrls([$url]);
 
-        return (new UrlStorageTransfer())->fromArray($urlDetails, true);
+        return $urlStorageTransfers[0] ?? null;
     }
 
     /**
@@ -134,20 +124,23 @@ class UrlStorageReader implements UrlStorageReaderInterface
     }
 
     /**
-     * @param string $url
+     * @param array $urlDetails
      *
-     * @return array
+     * @return string|null
      */
-    protected function getUrlFromStorage($url)
+    protected function getLocaleNameFromUrlDetails(array $urlDetails): ?string
     {
-        if (UrlStorageConfig::isCollectorCompatibilityMode()) {
-            return $this->getCollectorUrlData($url);
+        if (!isset($urlDetails['locale_urls'])) {
+            return null;
         }
 
-        $urlKey = $this->getUrlKey($url);
-        $urlStorageData = $this->storageClient->get($urlKey);
+        foreach ($urlDetails['locale_urls'] as $localeUrl) {
+            if ($localeUrl['fk_locale'] === $urlDetails['fk_locale']) {
+                return $localeUrl['locale_name'];
+            }
+        }
 
-        return $urlStorageData;
+        return null;
     }
 
     /**
@@ -229,12 +222,28 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     protected function getUrlsFromStorage(array $urlCollection): array
     {
+        if (UrlStorageConfig::isCollectorCompatibilityMode()) {
+            $urlStorageData = [];
+            foreach ($urlCollection as $url) {
+                $urlStorageData[] = $this->getCollectorUrlData($url);
+            }
+
+            return $urlStorageData;
+        }
+
         $storageKeys = [];
         foreach ($urlCollection as $url) {
             $storageKeys[] = $this->getUrlKey($url);
         }
 
-        return array_filter($this->storageClient->getMulti($storageKeys));
+        $urlStorageData = $this->storageClient->getMulti($storageKeys);
+
+        $decodedUrlStorageDataItem = [];
+        foreach ($urlStorageData as $urlStorageDataItem) {
+            $decodedUrlStorageDataItem[] = $this->utilEncodingService->decodeJson($urlStorageDataItem, true);
+        }
+
+        return array_filter($decodedUrlStorageDataItem);
     }
 
     /**
@@ -246,10 +255,8 @@ class UrlStorageReader implements UrlStorageReaderInterface
     {
         $urlStorageTransfers = [];
         foreach ($urlStorageData as $urlStorageDataItem) {
-            $decodedUrlStorageDataItem = json_decode($urlStorageDataItem, true);
-
-            $urlStorageTransfers[$decodedUrlStorageDataItem[static::URL]] = (new UrlStorageTransfer())
-                ->fromArray($decodedUrlStorageDataItem, true);
+            $urlStorageTransfers[$urlStorageDataItem[static::URL]] = (new UrlStorageTransfer())
+                ->fromArray($urlStorageDataItem, true);
         }
 
         return $urlStorageTransfers;

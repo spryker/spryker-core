@@ -55,7 +55,7 @@ interface UrlStorageClientInterface
     /**
      * Specification:
      * - Gets multiple URLs data from storage.
-     * - Returns collection of UrlRedirectStorageTransfer.
+     * - Returns collection of UrlStorageTransfer.
      *
      * @api
      *
