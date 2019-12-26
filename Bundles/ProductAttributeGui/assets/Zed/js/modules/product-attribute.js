@@ -460,22 +460,22 @@ $(document).ready(function() {
         }
     });
 
-    $('#saveButton').on('click', function(event, ui) {
-        attributeManager.save();
-    });
-
     $("#attribute_values_form").submit(function(e) {
         e.preventDefault();
         return false;
     });
 
-
-    $('#productAttributesTable').DataTable({
+    var productAttributesTable = $('#productAttributesTable').DataTable({
         'columnDefs': [{
             'targets': -1,
             'orderable': false
         }],
         destroy: true
+    });
+
+    $('#saveButton').on('click', function() {
+        productAttributesTable.search('').draw(false);
+        attributeManager.save();
     });
 
     $('#attribute_form').on('keypress', function(e) {

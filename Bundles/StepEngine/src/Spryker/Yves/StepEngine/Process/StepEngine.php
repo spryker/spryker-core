@@ -83,7 +83,7 @@ class StepEngine implements StepEngineInterface
         }
 
         if (!$currentStep->requireInput($dataTransfer)) {
-            $this->executeWithoutInput($currentStep, $request, $dataTransfer);
+            $dataTransfer = $this->executeWithoutInput($currentStep, $request, $dataTransfer);
 
             return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $dataTransfer));
         }
@@ -92,7 +92,7 @@ class StepEngine implements StepEngineInterface
         }
 
         if (!$formCollection) {
-            $this->executeWithoutInput($currentStep, $request, $dataTransfer);
+            $dataTransfer = $this->executeWithoutInput($currentStep, $request, $dataTransfer);
 
             return $this->getTemplateVariables($currentStep, $dataTransfer);
         }
@@ -127,13 +127,15 @@ class StepEngine implements StepEngineInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      */
     protected function executeWithoutInput(StepInterface $currentStep, Request $request, AbstractTransfer $dataTransfer)
     {
         $dataTransfer = $currentStep->execute($request, $dataTransfer);
 
         $this->dataContainer->set($dataTransfer);
+
+        return $dataTransfer;
     }
 
     /**
