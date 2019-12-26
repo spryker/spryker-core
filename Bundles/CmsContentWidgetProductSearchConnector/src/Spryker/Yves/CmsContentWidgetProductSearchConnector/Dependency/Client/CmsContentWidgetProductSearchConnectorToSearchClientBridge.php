@@ -23,11 +23,13 @@ class CmsContentWidgetProductSearchConnectorToSearchClientBridge implements CmsC
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet
+     * @return mixed
      */
     public function searchQueryString($searchString, $limit = null, $offset = null)
     {

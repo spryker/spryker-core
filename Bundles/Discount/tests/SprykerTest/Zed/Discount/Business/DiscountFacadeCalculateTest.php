@@ -260,6 +260,33 @@ class DiscountFacadeCalculateTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testWhenQuoteHaveUsedNotAppliedVoucherCodes(): void
+    {
+        // Arrange
+        $discountEntity = $this->createDiscountEntity(
+            '',
+            'sku = "*"',
+            DiscountConstants::TYPE_VOUCHER
+        );
+
+        $code1 = 'code1';
+        $this->createVoucherCode($code1, $discountEntity);
+
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer->addUsedNotAppliedVoucherCode($code1);
+
+        // Act
+        $quoteTransfer = $this->getFacade()->calculateDiscounts($quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
+        $this->assertCount(1, $quoteTransfer->getUsedNotAppliedVoucherCodes());
+        $this->assertEquals($code1, $quoteTransfer->getVoucherDiscounts()[0]->getVoucherCode());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer(): QuoteTransfer

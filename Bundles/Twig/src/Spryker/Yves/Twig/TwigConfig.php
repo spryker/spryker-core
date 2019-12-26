@@ -77,9 +77,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $paths
+     * @param string[] $paths
      *
-     * @return array
+     * @return string[]
      */
     protected function addCoreTemplatePaths(array $paths)
     {

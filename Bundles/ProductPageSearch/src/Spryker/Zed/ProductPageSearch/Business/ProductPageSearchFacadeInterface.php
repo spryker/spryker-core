@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
+
 interface ProductPageSearchFacadeInterface
 {
     /**
@@ -114,4 +119,41 @@ interface ProductPageSearchFacadeInterface
      * @return void
      */
     public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void;
+
+    /**
+     * Specification:
+     * - Expands ProductConcretePageSearchTransfer with images data and returns the modified object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
+     */
+    public function expandProductConcretePageSearchTransferWithProductImages(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer;
+
+    /**
+     * Specification:
+     * - Expands PageMapTransfer with category map data.
+     * - Expands PageMapTransfer with full text search data.
+     * - Expands PageMapTransfer with sorting data.
+     * - Returns expanded PageMapTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function expandProductPageMapWithCategoryData(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer;
 }

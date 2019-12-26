@@ -5,14 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Dependency\Plugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
-interface QueryInterface
-{
-    /**
-     * @api
-     *
-     * @return mixed A query object.
-     */
-    public function getSearchQuery();
-}
+// @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface` instead.
+class_alias(
+    QueryInterface::class,
+    'Spryker\Client\Search\Dependency\Plugin\QueryInterface'
+);
