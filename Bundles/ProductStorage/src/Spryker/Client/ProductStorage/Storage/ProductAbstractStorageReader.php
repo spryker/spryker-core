@@ -407,7 +407,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
         $productAbstractStorageData = $this->getBulkProductAbstractStorageData($productAbstractIds, $localeName);
 
-        return $productAbstractStorageData + $cachedProductAbstractStorageData;
+        return $cachedProductAbstractStorageData + $productAbstractStorageData;
     }
 
     /**
