@@ -58,9 +58,9 @@ interface CompanyUserStorageFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $companyUserIds
      *
      * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
      */
-    public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array;
+    public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $companyUserIds): array;
 }

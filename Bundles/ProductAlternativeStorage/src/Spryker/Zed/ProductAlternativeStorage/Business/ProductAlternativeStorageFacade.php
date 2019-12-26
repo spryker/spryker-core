@@ -84,12 +84,12 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productReplacementForStorageIds
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array
+    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array
     {
-        return $this->getRepository()->getProductReplacementForStorageCollectionByFilter($filterTransfer, $ids);
+        return $this->getRepository()->getProductReplacementForStorageCollectionByFilter($filterTransfer, $productReplacementForStorageIds);
     }
 }

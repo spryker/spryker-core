@@ -187,8 +187,6 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
-     * @module ProductPageSearch
-     *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productIds
      *
