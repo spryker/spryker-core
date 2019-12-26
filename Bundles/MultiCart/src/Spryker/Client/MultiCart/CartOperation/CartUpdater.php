@@ -136,6 +136,7 @@ class CartUpdater implements CartUpdaterInterface
      */
     public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        $quoteTransfer->setIsDefault(true);
         $quoteResponseTransfer = $this->updateQuote($quoteTransfer);
         $this->zedRequestClient->addResponseMessagesToMessenger();
 

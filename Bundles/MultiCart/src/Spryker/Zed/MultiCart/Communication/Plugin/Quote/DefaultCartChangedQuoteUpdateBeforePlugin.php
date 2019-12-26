@@ -18,7 +18,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
  * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
  * @method \Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface getRepository()
  */
-class ActiveCartChangedQuoteBeforeSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class DefaultCartChangedQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     protected const GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
 
@@ -34,7 +34,8 @@ class ActiveCartChangedQuoteBeforeSavePlugin extends AbstractPlugin implements Q
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($this->getRepository()->isQuoteDefault($quoteTransfer->getIdQuote())) {
+        if ($quoteTransfer->getCustomer()->getCustomerReference() !== $quoteTransfer->getCustomerReference()
+            || $this->getFacade()->isQuoteDefault($quoteTransfer->getIdQuote())) {
             return $quoteTransfer;
         }
 

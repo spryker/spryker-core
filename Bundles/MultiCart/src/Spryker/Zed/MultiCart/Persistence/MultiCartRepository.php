@@ -94,12 +94,10 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
      */
     public function isQuoteDefault(int $idQuote): bool
     {
-        $quoteData = $this->getFactory()
+        return $this->getFactory()
             ->createQuoteQuery()
             ->filterByIdQuote($idQuote)
-            ->select([SpyQuoteTableMap::COL_ID_QUOTE, SpyQuoteTableMap::COL_IS_DEFAULT])
-            ->findOne();
-
-        return $quoteData[SpyQuoteTableMap::COL_IS_DEFAULT] ?? false;
+            ->filterByIsDefault(true)
+            ->exists();
     }
 }

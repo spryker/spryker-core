@@ -18,7 +18,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
-class ActiveSharedCartChangedQuoteBeforeSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class DefaultSharedCartChangedQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     protected const GLOSSARY_KEY_SHARED_CART_SET_DEFAULT_SUCCESS = 'shared_cart.cart.set_default.success';
 
@@ -38,7 +38,7 @@ class ActiveSharedCartChangedQuoteBeforeSavePlugin extends AbstractPlugin implem
             return $quoteTransfer;
         }
 
-        $isSharedQuoteDefault = $this->getRepository()->isSharedQuoteDefault(
+        $isSharedQuoteDefault = $this->getFacade()->isSharedQuoteDefault(
             $quoteTransfer->getIdQuote(),
             $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
         );
