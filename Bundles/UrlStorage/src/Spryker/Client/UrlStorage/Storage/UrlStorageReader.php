@@ -105,7 +105,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     {
         $urlStorageTransfers = $this->getUrlStorageTransferByUrls([$url]);
 
-        return $urlStorageTransfers[0] ?? null;
+        return current($urlStorageTransfers) ? current($urlStorageTransfers) : null;
     }
 
     /**
