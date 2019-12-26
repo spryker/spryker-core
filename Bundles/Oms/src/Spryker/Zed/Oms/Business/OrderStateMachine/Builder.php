@@ -535,6 +535,6 @@ class Builder implements BuilderInterface
      */
     protected function createSubProcessPathPattern($fileName)
     {
-        return '/\b' . dirname($fileName) . '\b/';
+        return '/\b' . preg_quote(dirname($fileName), '/') . '\b/';
     }
 }
