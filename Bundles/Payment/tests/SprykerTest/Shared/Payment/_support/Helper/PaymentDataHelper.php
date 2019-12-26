@@ -7,54 +7,18 @@
 
 namespace SprykerTest\Shared\Payment\Helper;
 
-use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\PaymentMethodBuilder;
 use Generated\Shared\DataBuilder\PaymentProviderBuilder;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStore;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
-use SprykerTest\Shared\Store\Helper\StoreDataHelper;
 
-class PaymentDataHelper extends Module implements DependsOnModule
+class PaymentDataHelper extends Module
 {
-    /**
-     * @var \SprykerTest\Shared\Store\Helper\StoreDataHelper
-     */
-    protected $storeDataHelper;
-
-    protected const ERROR_DEPENDENCY_MESSAGE = <<<EOF
-Example configuring StoreDataHelper as backend for REST module.
---
-modules:
-    enabled:
-        - \SprykerTest\Shared\Payment\Helper\PaymentDataHelper:
-            depends: \SprykerTest\Shared\Store\Helper\StoreDataHelper
---
-EOF;
-
-    /**
-     * @return array
-     */
-    public function _depends(): array
-    {
-        return [StoreDataHelper::class => static::ERROR_DEPENDENCY_MESSAGE];
-    }
-
-    /**
-     * @param \SprykerTest\Shared\Store\Helper\StoreDataHelper $storeDataHelper
-     *
-     * @return void
-     */
-    public function _inject(StoreDataHelper $storeDataHelper)
-    {
-        $this->storeDataHelper = $storeDataHelper;
-    }
-
     /**
      * @return void
      */
@@ -111,31 +75,21 @@ EOF;
      */
     public function havePaymentMethod(array $override = []): PaymentMethodTransfer
     {
-        /** @var \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer */
         $paymentMethodTransfer = (new PaymentMethodBuilder())->seed($override)->build();
-
-        if (!$paymentMethodTransfer->getIdPaymentProvider() || !$paymentMethodTransfer->getPaymentProvider()) {
-            $paymentProviderTransfer = $this->havePaymentProvider();
-            $paymentMethodTransfer->setIdPaymentProvider($paymentProviderTransfer->getIdPaymentProvider());
-            $paymentMethodTransfer->setPaymentProvider($paymentProviderTransfer);
-        }
-
         $paymentMethodEntity = SpyPaymentMethodQuery::create()
             ->filterByPaymentMethodKey($paymentMethodTransfer->getMethodName())
             ->filterByName($paymentMethodTransfer->getName())
             ->findOneOrCreate();
-
         $paymentMethodEntity->setFkPaymentProvider($paymentMethodTransfer->getIdPaymentProvider());
         $paymentMethodEntity->fromArray($paymentMethodTransfer->modifiedToArray());
+
         $paymentMethodEntity->save();
 
         $paymentMethodTransfer->setIdPaymentMethod($paymentMethodEntity->getIdPaymentMethod());
         $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation();
 
         if (!$storeRelationTransfer) {
-            $storeRelationTransfer = new StoreRelationTransfer();
-            $defaultStoreId = $this->storeDataHelper->grabDefaultStore()->getIdStore();
-            $storeRelationTransfer->setIdStores([$defaultStoreId]);
+            return $paymentMethodTransfer;
         }
 
         foreach ($storeRelationTransfer->getIdStores() as $idStore) {
