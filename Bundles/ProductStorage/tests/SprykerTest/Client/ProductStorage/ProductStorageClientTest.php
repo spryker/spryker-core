@@ -10,6 +10,7 @@ namespace SprykerTest\Client\ProductStorage;
 use Codeception\Test\Unit;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\ProductStorageDependencyProvider;
+use Spryker\Client\ProductStorage\ProductStorageFactory;
 
 /**
  * Auto-generated group annotations
@@ -64,7 +65,7 @@ class ProductStorageClientTest extends Unit
         $this->tester->setDependency(
             ProductStorageDependencyProvider::CLIENT_STORAGE,
             $storageClientMock,
-            ProductStorageDependencyProvider::class
+            ProductStorageFactory::class
         );
 
         return $storageClientMock;
