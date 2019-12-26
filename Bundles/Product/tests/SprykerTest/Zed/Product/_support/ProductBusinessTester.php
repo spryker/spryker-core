@@ -9,11 +9,14 @@ namespace SprykerTest\Zed\Product;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -54,6 +57,9 @@ class ProductBusinessTester extends Actor
     public function setUpDatabase(): void
     {
         $this->insertProducts();
+
+        $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'en_US']);
+        $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'de_DE']);
     }
 
     /**
@@ -119,6 +125,48 @@ class ProductBusinessTester extends Actor
 
         $this->productAbstractIds = $productAbstractIds;
         $this->productConcreteIds = $productConcreteIds;
+    }
+
+    /**
+     * @return void
+     */
+    public function createProductUrls(): void
+    {
+        foreach ($this->productAbstractIds as $idProductAbstract) {
+            foreach ($this->getLocaleFacade()->getAvailableLocales() as $idLocale => $localeName) {
+                $this->haveUrl([
+                    UrlTransfer::FK_LOCALE => $idLocale,
+                    UrlTransfer::FK_RESOURCE_PRODUCT_ABSTRACT => $idProductAbstract,
+                    UrlTransfer::URL => $this->getProductUrl($idProductAbstract, $localeName),
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function getProductUrl(int $idProductAbstract, string $localeName): string
+    {
+        return sprintf(
+            '/%s/product-' . $idProductAbstract,
+            $localeName
+        );
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return int
+     */
+    public function getUrlsCount(int $idLocale): int
+    {
+        return SpyUrlQuery::create()
+            ->filterByFkLocale($idLocale)
+            ->count();
     }
 
     /**
