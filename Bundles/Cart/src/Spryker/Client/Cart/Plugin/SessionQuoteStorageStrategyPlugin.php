@@ -388,7 +388,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      */
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->getQuote();
+        $quoteTransfer = (new QuoteTransfer())->fromArray($this->getQuote()->modifiedToArray(), true);
         $quoteTransfer->setCurrency($currencyTransfer);
         if (count($quoteTransfer->getItems())) {
             $quoteTransfer = $this->getCartZedStub()->reloadItems($quoteTransfer);

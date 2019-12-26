@@ -1,6 +1,6 @@
 # Agent Module
 [![Build Status](https://travis-ci.org/spryker/agent.svg)](https://travis-ci.org/spryker/agent)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/agent/badge.svg)](https://coveralls.io/github/spryker/agent)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Agent allows to create agents from Zed users who can manage selected Yves users.
 

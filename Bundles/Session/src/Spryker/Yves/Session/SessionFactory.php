@@ -7,12 +7,15 @@
 
 namespace Spryker\Yves\Session;
 
+use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\Model\SessionStorage;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Session\Model\HealthCheck\HealthCheckInterface;
+use Spryker\Yves\Session\Model\HealthCheck\SessionHealthCheck;
 use Spryker\Yves\Session\Model\SessionHandlerFactory;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
@@ -148,5 +151,23 @@ class SessionFactory extends AbstractFactory
         $sessionStorage = $this->createSessionStorage();
 
         return new NativeSessionStorage($sessionStorage->getOptions(), $sessionStorage->getAndRegisterHandler());
+    }
+
+    /**
+     * @return \Spryker\Yves\Session\Model\HealthCheck\HealthCheckInterface
+     */
+    public function createSessionHealthChecker(): HealthCheckInterface
+    {
+        return new SessionHealthCheck(
+            $this->getSessionClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    public function getSessionClient(): SessionClientInterface
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::CLIENT_SESSION);
     }
 }

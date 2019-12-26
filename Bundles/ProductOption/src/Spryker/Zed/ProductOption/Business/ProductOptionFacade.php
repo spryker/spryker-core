@@ -80,14 +80,15 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @api
      *
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValueById($idProductOptionValue)
+    public function getProductOptionValueById($idProductOptionValue, ?string $currencyCode = null)
     {
         return $this->getFactory()
             ->createProductOptionValueReader()
-            ->getProductOption($idProductOptionValue);
+            ->getProductOption($idProductOptionValue, $currencyCode);
     }
 
     /**
