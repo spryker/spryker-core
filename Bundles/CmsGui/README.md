@@ -1,4 +1,6 @@
 # CmsGui Module
+[![Build Status](https://travis-ci.org/spryker/cms-gui.svg)](https://travis-ci.org/spryker/cms-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 CmsGui is a user interface module to manage CMS functionality in the Zed Administration Interface.
 
@@ -26,5 +28,4 @@ To enable it overwrite `CmsConfig::appendPrefixToCmsPageUrl` method in project a
 ## Documentation
 
 [Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/content_management/cms/cms.html)
-
 

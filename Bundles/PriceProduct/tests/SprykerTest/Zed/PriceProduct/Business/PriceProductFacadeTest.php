@@ -931,6 +931,233 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetValidPricesReturnsProductPricesUsingAbstractProduct(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $priceProductTransfer = $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
+            ->setSku($productConcreteTransfer->getSku());
+
+        //Act
+        $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
+
+        //Assert
+        $this->assertCount(1, $resultPriceProductTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
+        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+
+        $this->assertEquals($priceProductTransfer->getIdProductAbstract(), $resultPriceProductTransfer->getIdProductAbstract());
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsProductPricesUsingConcreteProduct(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $priceProductTransfer = $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getIdProductConcrete()
+        );
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
+            ->setSku($productConcreteTransfer->getSku());
+
+        //Act
+        $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
+
+        //Assert
+        $this->assertCount(1, $resultPriceProductTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
+        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+
+        $this->assertEquals($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsProductPricesMergingConcreteWithAbstract(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+
+        $priceProductTransfer = $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productConcreteTransfer->getSku()
+        );
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
+            ->setSku($productConcreteTransfer->getSku());
+
+        //Act
+        $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
+
+        //Assert
+        $this->assertCount(1, $resultPriceProductTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
+        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsProductPricesMergingConcreteWithAbstractWithDifferentCurrencies(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $priceProductTransfer = $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getFkProductAbstract(),
+            static::EUR_ISO_CODE
+        );
+
+        $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productConcreteTransfer->getSku(),
+            static::USD_ISO_CODE
+        );
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
+            ->setSku($productConcreteTransfer->getSku());
+
+        //Act
+        $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
+
+        //Assert
+        $this->assertCount(1, $resultPriceProductTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
+        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getFkCurrency(),
+            $resultPriceProductTransfer->getMoneyValue()->getFkCurrency()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param int $idAbstractProduct
+     * @param string|null $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProductForAbstractProduct(
+        string $abstractSku,
+        int $idAbstractProduct,
+        ?string $currencyIsoCode = null
+    ): PriceProductTransfer {
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setIdProductAbstract($idAbstractProduct)
+            ->setSkuProductAbstract($abstractSku)
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType($this->createSharedPriceProductConfig()->getPriceDimensionDefault())
+            );
+
+        $moneyValueTransfer = $this->createMoneyValueTransfer(
+            rand(10, 100),
+            rand(1, 9),
+            $this->createStoreFacade()->getCurrentStore(),
+            $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE)
+        );
+
+        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        return $this->getPriceProductFacade()->createPriceForProduct($priceProductTransfer);
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param int $idConcreteProduct
+     * @param string|null $sku
+     * @param string|null $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProductForConcreteProduct(
+        string $abstractSku,
+        int $idConcreteProduct,
+        ?string $sku = null,
+        ?string $currencyIsoCode = null
+    ): PriceProductTransfer {
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setIdProduct($idConcreteProduct)
+            ->setSkuProductAbstract($abstractSku)
+            ->setSkuProduct($sku)
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType($this->createSharedPriceProductConfig()->getPriceDimensionDefault())
+            );
+
+        $moneyValueTransfer = $this->createMoneyValueTransfer(
+            rand(10, 100),
+            rand(1, 9),
+            $this->createStoreFacade()->getCurrentStore(),
+            $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE)
+        );
+
+        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        return $this->getPriceProductFacade()->createPriceForProduct($priceProductTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testIsPriceProductMatchingItemReturnsTrueForSameSku(): void
     {
         // Arrange
