@@ -61,7 +61,11 @@ class ProductStorageClientTest extends Unit
     protected function getStorageClientMock(): ProductStorageToStorageClientInterface
     {
         $storageClientMock = $this->getMockBuilder(ProductStorageToStorageClientInterface::class)->getMock();
-        $this->tester->setDependency(ProductStorageDependencyProvider::CLIENT_STORAGE, $storageClientMock);
+        $this->tester->setDependency(
+            ProductStorageDependencyProvider::CLIENT_STORAGE,
+            $storageClientMock,
+            ProductStorageDependencyProvider::class
+        );
 
         return $storageClientMock;
     }
