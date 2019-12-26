@@ -55,7 +55,6 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $facade = new ProductBundleFacade();
             $facade->updateAffectedBundlesAvailability($productConcreteTransfer->getSku());
 
-
             return $productConcreteTransfer;
         }
 
