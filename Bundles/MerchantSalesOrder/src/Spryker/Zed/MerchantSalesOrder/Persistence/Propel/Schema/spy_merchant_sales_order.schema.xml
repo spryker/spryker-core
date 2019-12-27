@@ -4,7 +4,7 @@
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\MerchantSalesOrder\Persistence" package="src.Orm.Zed.MerchantSalesOrder.Persistence"
 >
-    <table name="spy_merchant_sales_order" phpName="SpyMerchantSalesOrder">
+    <table name="spy_merchant_sales_order">
         <column name="id_merchant_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="merchant_sales_order_reference" required="true" type="VARCHAR" size="255"/>
         <column name="merchant_reference" type="VARCHAR" required="true" size="255"/>
