@@ -16,6 +16,7 @@
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
+    "spryker/catalog": "*",
     "spryker/category": "*",
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
@@ -26,12 +27,15 @@
     "spryker/product-search": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
+    "spryker/search": "*",
     "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
     "spryker/event": "To use event behavior.",
-    "spryker/merchant-product-offer": "Required for using the Listeners"
+    "spryker/merchant-product-offer": "Required for using the Listeners",
+    "spryker/search": "If you want to use Search plugins."
   },
   "autoload": {
     "psr-4": {
