@@ -20,6 +20,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductOfferSearchRepository extends AbstractRepository implements MerchantProductOfferSearchRepositoryInterface
 {
+    protected const KEY_ID = 'id';
+    protected const KEY_NAME = 'name';
+
     /**
      * @param int[] $productAbstractIds
      *
@@ -36,16 +39,17 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, Criteria::INNER_JOIN);
 
-        $data = $productOfferPropelQuery->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyMerchantTableMap::COL_NAME])
+        $data = $productOfferPropelQuery
+            ->select([static::KEY_ID, static::KEY_NAME])
             ->where(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' IN (' . implode(',', $productAbstractIds) . ')')
-            ->withColumn(SpyMerchantTableMap::COL_NAME)
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
+            ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_NAME)
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ID)
             ->find()
             ->getData();
 
         $productAbstractIdMerchantNamesMap = [];
         foreach ($data as $row) {
-            $productAbstractIdMerchantNamesMap[$row[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]][] = $row[SpyMerchantTableMap::COL_NAME];
+            $productAbstractIdMerchantNamesMap[$row[static::KEY_ID]][] = $row[static::KEY_NAME];
         }
 
         return $productAbstractIdMerchantNamesMap;

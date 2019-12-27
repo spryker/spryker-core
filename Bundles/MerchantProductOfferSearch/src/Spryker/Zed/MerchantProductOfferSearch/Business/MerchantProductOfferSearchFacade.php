@@ -20,15 +20,15 @@ class MerchantProductOfferSearchFacade extends AbstractFacade implements Merchan
      *
      * @api
      *
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return int[]
+     * @return void
      */
-    public function getProductAbstractIdsByMerchantIds(array $merchantIds): array
+    public function writeMerchantProductOfferSearchCollectionByIdMerchantEvents(array $eventTransfers): void
     {
-        return $this->getFactory()
-            ->createProductAbstractReader()
-            ->getProductAbstractIdsByMerchantIds($merchantIds);
+        $this->getFactory()
+            ->createMerchantProductOfferSearchWriter()
+            ->writeMerchantProductOfferSearchCollectionByIdMerchantEvents($eventTransfers);
     }
 
     /**
@@ -36,15 +36,15 @@ class MerchantProductOfferSearchFacade extends AbstractFacade implements Merchan
      *
      * @api
      *
-     * @param int[] $merchantProfileIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return int[]
+     * @return void
      */
-    public function getProductAbstractIdsByMerchantProfileIds(array $merchantProfileIds): array
+    public function writeMerchantProductOfferSearchCollectionByIdMerchantProfileEvents(array $eventTransfers): void
     {
-        return $this->getFactory()
-            ->createProductAbstractReader()
-            ->getProductAbstractIdsByMerchantProfileIds($merchantProfileIds);
+        $this->getFactory()
+            ->createMerchantProductOfferSearchWriter()
+            ->writeMerchantProductOfferSearchCollectionByIdMerchantProfileEvents($eventTransfers);
     }
 
     /**
@@ -52,14 +52,14 @@ class MerchantProductOfferSearchFacade extends AbstractFacade implements Merchan
      *
      * @api
      *
-     * @param int[] $productOfferIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return int[]
+     * @return void
      */
-    public function getProductAbstractIdsByProductOfferIds(array $productOfferIds): array
+    public function writeMerchantProductOfferSearchCollectionByIdMerchantProductOfferEvents(array $eventTransfers): void
     {
-        return $this->getFactory()
-            ->createProductAbstractReader()
-            ->getProductAbstractIdsByProductOfferIds($productOfferIds);
+        $this->getFactory()
+            ->createMerchantProductOfferSearchWriter()
+            ->writeMerchantProductOfferSearchCollectionByIdMerchantProductOfferEvents($eventTransfers);
     }
 }

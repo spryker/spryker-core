@@ -11,37 +11,49 @@ interface MerchantProductOfferSearchFacadeInterface
 {
     /**
      * Specification:
+     *  - Gets merchant ids from eventTransfers.
      *  - Retrieve list of abstract product ids by merchant ids.
+     *  - Queries all product abstract with the given abstract product ids.
+     *  - Stores data as json encoded to storage table.
+     *  - Sends a copy of data to queue based on module config.
      *
      * @api
      *
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return int[]
+     * @return void
      */
-    public function getProductAbstractIdsByMerchantIds(array $merchantIds): array;
+    public function writeMerchantProductOfferSearchCollectionByIdMerchantEvents(array $eventTransfers): void;
 
     /**
      * Specification:
+     *  - Gets merchant profile ids from eventTransfers.
      *  - Retrieve list of abstract product ids by merchant profile ids.
+     *  - Queries all product abstract with the given abstract product ids.
+     *  - Stores data as json encoded to storage table.
+     *  - Sends a copy of data to queue based on module config.
      *
      * @api
      *
-     * @param int[] $merchantProfileIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return int[]
+     * @return void
      */
-    public function getProductAbstractIdsByMerchantProfileIds(array $merchantProfileIds): array;
+    public function writeMerchantProductOfferSearchCollectionByIdMerchantProfileEvents(array $eventTransfers): void;
 
     /**
      * Specification:
+     *  - Gets merchant product offer ids from eventTransfers.
      *  - Retrieve list of abstract product ids by product offer ids.
+     *  - Queries all product abstract with the given abstract product ids.
+     *  - Stores data as json encoded to storage table.
+     *  - Sends a copy of data to queue based on module config.
      *
      * @api
      *
-     * @param int[] $productOfferIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return int[]
+     * @return void
      */
-    public function getProductAbstractIdsByProductOfferIds(array $productOfferIds): array;
+    public function writeMerchantProductOfferSearchCollectionByIdMerchantProductOfferEvents(array $eventTransfers): void;
 }

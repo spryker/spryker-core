@@ -16,9 +16,8 @@ use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\M
 /**
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantProductOfferSearch\Communication\MerchantProductOfferSearchCommunicationFactory getFactory()
  */
-class MerchantProductOfferEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
+class MerchantProductOfferSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
      * @api

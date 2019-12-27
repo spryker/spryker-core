@@ -16,8 +16,17 @@
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
+    "spryker/category": "*",
     "spryker/event": "*",
-    "spryker/merchant-product-offer": "*"
+    "spryker/locale": "*",
+    "spryker/merchant-product-offer": "*",
+    "spryker/product-attribute": "*",
+    "spryker/product-category": "*",
+    "spryker/product-search": "*",
+    "spryker/propel": "*",
+    "spryker/queue": "*",
+    "spryker/store": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "To use event behavior.",

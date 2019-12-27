@@ -11,7 +11,6 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\MerchantProductOfferSearch\Communication\MerchantProductOfferSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
@@ -29,10 +28,6 @@ class MerchantProductOfferSearchEventListener extends AbstractPlugin implements 
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $productOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-
-        $productAbstractIds = $this->getFacade()->getProductAbstractIdsByProductOfferIds($productOfferIds);
-
-        $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds);
+        $this->getFacade()->writeMerchantProductOfferSearchCollectionByIdMerchantProductOfferEvents($eventTransfers);
     }
 }
