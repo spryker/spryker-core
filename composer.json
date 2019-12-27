@@ -626,6 +626,7 @@
     "spryker/util-network": "*",
     "spryker/util-price": "*",
     "spryker/util-sanitize": "*",
+    "spryker/util-sanitize-xss": "*",
     "spryker/util-text": "*",
     "spryker/util-uuid-generator": "*",
     "spryker/util-validate": "*",
