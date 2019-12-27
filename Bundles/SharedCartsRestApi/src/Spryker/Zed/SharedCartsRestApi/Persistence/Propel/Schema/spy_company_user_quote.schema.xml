@@ -5,7 +5,7 @@
           namespace="Orm\Zed\SharedCart\Persistence"
           package="src.Orm.Zed.SharedCart.Persistence">
 
-    <table name="spy_quote_company_user" idMethod="native" allowPkInsert="true" phpName="SpyQuoteCompanyUser">
+    <table name="spy_quote_company_user" idMethod="native" allowPkInsert="true">
         <column name="uuid" required="false" type="VARCHAR" size="255"/>
         <unique name="spy_quote_company_user-unique-uuid">
             <unique-column name="uuid"/>
