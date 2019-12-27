@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\ProductStorage;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ProductAbstractStorageBuilder;
+use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\ProductStorageDependencyProvider;
 use Spryker\Client\ProductStorage\ProductStorageFactory;
@@ -34,7 +36,7 @@ class ProductStorageClientTest extends Unit
     public function testGetBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameReturnsCorrectData(): void
     {
         // Arrange
-        $productAbstractStorageTransfer = $this->tester->haveProductAbstractStorage();
+        $productAbstractStorageTransfer = $this->getProductAbstractStorage();
         $idProductAbstract = $productAbstractStorageTransfer->getIdProductAbstract();
         $localeName = 'DE';
 
@@ -69,5 +71,15 @@ class ProductStorageClientTest extends Unit
         );
 
         return $storageClientMock;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     */
+    protected function getProductAbstractStorage(array $seedData = []): ProductAbstractStorageTransfer
+    {
+        return (new ProductAbstractStorageBuilder($seedData))->build();
     }
 }
