@@ -78,8 +78,7 @@
                         {% include '@Sales/Detail/boxes/item-group.twig' with {groups: itemGroups[shipmentOrderItems.hash]} %}
                     {% endif %}
 
-                    {% set items = shipmentOrderItems.items | filter(item => item.relatedBundleItemIdentifier is empty) %}
-                    {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: items} %}
+                    {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items} %}
                 </tbody>
             </table>
         {% endfor %}

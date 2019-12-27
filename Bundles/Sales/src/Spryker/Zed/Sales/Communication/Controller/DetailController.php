@@ -61,7 +61,7 @@ class DetailController extends AbstractController
         $groupedOrderItems = $this->getFacade()
             ->getUniqueOrderItems($orderTransfer->getItems());
 
-//        dd($groupedOrderItems);
+        // TODO: replace items (related to bundle) to bundle items
 
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
