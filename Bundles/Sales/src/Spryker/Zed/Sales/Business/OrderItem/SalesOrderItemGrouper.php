@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\OrderItem;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
@@ -31,6 +32,69 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
         }
 
         return $calculatedOrderItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array
+    {
+        $calculatedOrderItems = $this->getUniqueItems($orderTransfer);
+        $calculatedOrderBundleItems = $this->getUniqueBundleItems($orderTransfer);
+
+        return array_merge($calculatedOrderItems, $calculatedOrderBundleItems);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getUniqueItems(OrderTransfer $orderTransfer): array
+    {
+        $calculatedOrderItems = [];
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+                continue;
+            }
+
+            $key = $itemTransfer->requireGroupKey()->getGroupKey();
+
+            if (!isset($calculatedOrderItems[$key])) {
+                $calculatedOrderItems[$key] = clone $itemTransfer;
+                continue;
+            }
+
+            $calculatedOrderItems[$key] = $this->setQuantityAndPriceOfUniqueOrderItem($calculatedOrderItems[$key], $itemTransfer);
+        }
+
+        return $calculatedOrderItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getUniqueBundleItems(OrderTransfer $orderTransfer): array
+    {
+        $calculatedOrderBundleItems = [];
+
+        foreach ($orderTransfer->getBundleItems() as $itemTransfer) {
+            $bundleItemIdentifier = $itemTransfer->requireBundleItemIdentifier()->getBundleItemIdentifier();
+
+            if (!isset($calculatedOrderItems[$bundleItemIdentifier])) {
+                $calculatedOrderBundleItems[$bundleItemIdentifier] = clone $itemTransfer;
+                continue;
+            }
+
+            $calculatedOrderBundleItems[$bundleItemIdentifier] = $this->setQuantityAndPriceOfUniqueOrderItem($calculatedOrderBundleItems[$bundleItemIdentifier], $itemTransfer);
+        }
+
+        return array_values($calculatedOrderBundleItems);
     }
 
     /**

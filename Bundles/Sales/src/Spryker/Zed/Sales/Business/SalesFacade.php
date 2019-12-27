@@ -379,4 +379,20 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createSalesAddressExpander()
             ->expandWithCustomerOrSalesAddress($addressTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array
+    {
+        return $this->getFactory()
+            ->createSalesOrderItemGrouper()
+            ->getUniqueItemsFromOrder($orderTransfer);
+    }
 }
