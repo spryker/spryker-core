@@ -3,7 +3,7 @@
           namespace="Orm\Zed\Sales\Persistence"
           package="src.Orm.Zed.Sales.Persistence">
 
-    <table name="spy_sales_order" phpName="SpySalesOrder">
+    <table name="spy_sales_order">
         <column name="fk_order_source" type="INTEGER"/>
 
         <foreign-key name="spy_sales_order-fk_order_source" foreignTable="spy_order_source" phpName="OrderSource">
