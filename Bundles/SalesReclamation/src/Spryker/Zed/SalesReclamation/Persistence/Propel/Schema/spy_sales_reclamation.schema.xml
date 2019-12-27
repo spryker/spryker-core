@@ -6,7 +6,7 @@
           package="src.Orm.Zed.SalesReclamation.Persistence"
 >
 
-    <table name="spy_sales_reclamation" phpName="SpySalesReclamation">
+    <table name="spy_sales_reclamation">
         <column name="id_sales_reclamation" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
@@ -26,7 +26,7 @@
         <id-method-parameter value="spy_sales_reclamation_pk_seq"/>
     </table>
 
-    <table name="spy_sales_reclamation_item" phpName="SpySalesReclamationItem">
+    <table name="spy_sales_reclamation_item">
         <column name="id_sales_reclamation_item" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_reclamation" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>

@@ -91,18 +91,6 @@ $(document).ready(function() {
         $(this).parents('form').first().submit();
     });
 
-    $('.more-history').click(function(e) {
-        e.preventDefault();
-        var idProductItem = $(this).data('id');
-        var $history = $('#history_details_' + idProductItem);
-        var $button = $('#history-btn-' + idProductItem);
-        var isHidden = $history.hasClass('hidden');
-
-        $history.toggleClass('hidden', !isHidden);
-        $button.toggleClass('is-hidden', !isHidden);
-        $button.toggleClass('is-shown', isHidden);
-    });
-
     $('.item-check').click(function() {
         var countChecked = $(".item-check[type='checkbox']:checked").length;
         var totalCheckboxItems = $('.item-check').length;
