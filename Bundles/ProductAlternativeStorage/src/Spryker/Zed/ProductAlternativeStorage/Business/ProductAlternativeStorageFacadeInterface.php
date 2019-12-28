@@ -53,11 +53,14 @@ interface ProductAlternativeStorageFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productAlternativeStorageIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array;
+    public function getProductAlternativeStorageCollectionByFilter(
+        FilterTransfer $filterTransfer,
+        array $productAlternativeStorageIds
+    ): array;
 
     /**
      * Specification:
@@ -70,5 +73,8 @@ interface ProductAlternativeStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array;
+    public function getProductReplacementForStorageCollectionByFilter(
+        FilterTransfer $filterTransfer,
+        array $productReplacementForStorageIds
+    ): array;
 }

@@ -69,13 +69,16 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productAlternativeStorageIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array
-    {
-        return $this->getRepository()->getProductAlternativeStorageCollectionByFilter($filterTransfer, $ids);
+    public function getProductAlternativeStorageCollectionByFilter(
+        FilterTransfer $filterTransfer,
+        array $productAlternativeStorageIds
+    ): array {
+        return $this->getRepository()
+            ->getProductAlternativeStorageCollectionByFilter($filterTransfer, $productAlternativeStorageIds);
     }
 
     /**
@@ -88,8 +91,11 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array
-    {
-        return $this->getRepository()->getProductReplacementForStorageCollectionByFilter($filterTransfer, $productReplacementForStorageIds);
+    public function getProductReplacementForStorageCollectionByFilter(
+        FilterTransfer $filterTransfer,
+        array $productReplacementForStorageIds
+    ): array {
+        return $this->getRepository()
+            ->getProductReplacementForStorageCollectionByFilter($filterTransfer, $productReplacementForStorageIds);
     }
 }
