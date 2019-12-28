@@ -105,23 +105,21 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productConcreteAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     public function findOrCreateProductConcreteAvailabilityBySkuForStore(
         string $concreteSku,
         StoreTransfer $storeTransfer,
-        ?ProductAvailabilityCriteriaTransfer $productConcreteAvailabilityTransfer = null
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): ?ProductConcreteAvailabilityTransfer {
         $storeTransfer = $this->assertStoreTransfer($storeTransfer);
 
-        foreach ($this->availabilityStockProviderStrategyPlugins as $availabilityStockProviderStrategyPlugin) {
-            if (!$availabilityStockProviderStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productConcreteAvailabilityTransfer)) {
-                continue;
-            }
+        $customProductConcreteAvailabilityTransfer = $this->findCustomAvailabilityForConcreteProduct($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer);
 
-            return $availabilityStockProviderStrategyPlugin->findProductConcreteAvailabilityForStore($concreteSku, $storeTransfer, $productConcreteAvailabilityTransfer);
+        if ($customProductConcreteAvailabilityTransfer) {
+            return $customProductConcreteAvailabilityTransfer;
         }
 
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
@@ -132,6 +130,29 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
         }
 
         return $productConcreteAvailabilityTransfer;
+    }
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    protected function findCustomAvailabilityForConcreteProduct(
+        string $concreteSku,
+        StoreTransfer $storeTransfer,
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ): ?ProductConcreteAvailabilityTransfer {
+        foreach ($this->availabilityStockProviderStrategyPlugins as $availabilityStockProviderStrategyPlugin) {
+            if (!$availabilityStockProviderStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
+                continue;
+            }
+
+            return $availabilityStockProviderStrategyPlugin->findProductConcreteAvailabilityForStore($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer);
+        }
+
+        return null;
     }
 
     /**

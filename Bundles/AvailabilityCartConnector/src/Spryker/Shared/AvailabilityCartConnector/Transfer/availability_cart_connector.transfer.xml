@@ -21,7 +21,6 @@
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="amount" type="decimal"/>
-        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">

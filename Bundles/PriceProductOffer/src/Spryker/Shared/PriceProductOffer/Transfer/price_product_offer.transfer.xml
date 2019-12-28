@@ -31,7 +31,6 @@
     <transfer name="PriceProduct">
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="skuProduct" type="string"/>
-        <property name="itemIdentifier" type="string"/>
         <property name="isMergeable" type="bool"/>
         <property name="priceTypeName" type="string"/>
         <property name="moneyValue" type="MoneyValue"/>

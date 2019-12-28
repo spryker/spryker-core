@@ -56,9 +56,9 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 continue;
             }
 
-            $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenItemIdentifier(
+            $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
                 $itemsInCart,
-                $this->getItemIdentifier($itemTransfer)
+                $itemTransfer->getSku()
             );
 
             $currentItemQuantity += $itemTransfer->getQuantity();
@@ -66,12 +66,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
                 ->fromArray($itemTransfer->toArray(), true);
 
-            $isSellable = $this->availabilityFacade->isProductSellableForStore(
-                $itemTransfer->getSku(),
-                new Decimal($currentItemQuantity),
-                $storeTransfer,
-                $productAvailabilityCriteriaTransfer
-            );
+            $isSellable = $this->isProductSellableForStore($itemTransfer, new Decimal($currentItemQuantity), $storeTransfer, $productAvailabilityCriteriaTransfer);
 
             if (!$isSellable) {
                 $availability = $this->findProductConcreteAvailability($itemTransfer, $storeTransfer, $productAvailabilityCriteriaTransfer);
@@ -88,30 +83,18 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return string
-     */
-    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
-    {
-        return $itemTransfer->getItemIdentifier() ?: $itemTransfer->getSku();
-    }
-
-    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param string $itemIdentifier
+     * @param string $sku
      *
      * @return int
      */
-    protected function calculateCurrentCartQuantityForGivenItemIdentifier(ArrayObject $items, string $itemIdentifier)
+    protected function calculateCurrentCartQuantityForGivenSku(ArrayObject $items, $sku)
     {
         $quantity = 0;
-
         foreach ($items as $itemTransfer) {
-            if ($this->getItemIdentifier($itemTransfer) !== $itemIdentifier) {
+            if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
-
             $quantity += $itemTransfer->getQuantity();
         }
 
@@ -165,6 +148,28 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 ->requireStore();
 
         return $cartChangeTransfer->getQuote()->getStore();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Spryker\DecimalObject\Decimal $currentItemQuantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+     *
+     * @return bool
+     */
+    protected function isProductSellableForStore(
+        ItemTransfer $itemTransfer,
+        Decimal $currentItemQuantity,
+        StoreTransfer $storeTransfer,
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ) {
+        return $this->availabilityFacade->isProductSellableForStore(
+            $itemTransfer->getSku(),
+            $currentItemQuantity,
+            $storeTransfer,
+            $productAvailabilityCriteriaTransfer
+        );
     }
 
     /**

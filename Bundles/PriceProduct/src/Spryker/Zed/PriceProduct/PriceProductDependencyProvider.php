@@ -38,7 +38,6 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
     public const PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE = 'PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE';
     public const PLUGIN_PRICE_PRODUCT_PROVIDER = 'PLUGIN_PRICE_PRODUCT_PROVIDER';
-    public const PLUGIN_PRICE_PRODUCT_MATCHER_STRATEGY = 'PLUGIN_PRICE_PRODUCT_MATCHER_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -56,7 +55,6 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceDimensionAbstractSaverPlugins($container);
         $container = $this->addPriceDimensionConcreteSaverPlugins($container);
         $container = $this->addPriceProductProviderPlugins($container);
-        $container = $this->addPriceProductMatcherStrategyPlugins($container);
         $container = $this->addPriceProductDimensionExpanderStrategyPlugins($container);
         $container = $this->addPriceProductPricesExtractorPlugins($container);
         $container = $this->addPriceProductStorePreDeletePlugins($container);
@@ -250,20 +248,6 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPriceProductMatcherStrategyPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGIN_PRICE_PRODUCT_MATCHER_STRATEGY, function () {
-            return $this->getPriceProductMatcherStrategyPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUtilEncodingService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
@@ -335,14 +319,6 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductProviderPluginInterface[]
      */
     public function getPriceProductProviderPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductMatcherStrategyPluginInterface[]
-     */
-    public function getPriceProductMatcherStrategyPlugins(): array
     {
         return [];
     }

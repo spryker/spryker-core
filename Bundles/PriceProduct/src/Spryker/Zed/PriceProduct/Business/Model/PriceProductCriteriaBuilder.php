@@ -182,7 +182,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
      */
-    public function buildCriteriaTransfersFromFilterTransfersIndexedByIdentifier(array $priceProductFilterTransfers): array
+    public function buildCriteriaTransfersFromFilterTransfersIndexedBySku(array $priceProductFilterTransfers): array
     {
         $storeTransfers = $this->getStoreTransfersForPriceProductFilters($priceProductFilterTransfers);
         $storeTransfers = $this->indexStoreTransfersByStoreName($storeTransfers);
@@ -190,7 +190,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
         $currencyTransfers = $this->getCurrencyTransfersForPriceProductFilters($priceProductFilterTransfers);
         $currencyTransfers = $this->indexCurrencyTransfersByIsoCode($currencyTransfers);
 
-        $priceProductCriteriaTransferIndexedByIdentifier = [];
+        $priceProductCriteriaTransferIndexedBySku = [];
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
             $currencyTransfer = $currencyTransfers[$priceProductFilterTransfer->getCurrencyIsoCode()] ?? $this->getDefaultCurrencyForCurrentStore();
             $storeTransfer = $storeTransfers[$priceProductFilterTransfer->getStoreName()] ?? $this->getCurrentStore();
@@ -215,10 +215,10 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
                     $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName())
                 );
 
-            $priceProductCriteriaTransferIndexedByIdentifier[$priceProductFilterTransfer->getItemIdentifier() ?: $priceProductFilterTransfer->getSku()] = $priceProductCriteriaTransfer;
+            $priceProductCriteriaTransferIndexedBySku[$priceProductFilterTransfer->getSku()] = $priceProductCriteriaTransfer;
         }
 
-        return $priceProductCriteriaTransferIndexedByIdentifier;
+        return $priceProductCriteriaTransferIndexedBySku;
     }
 
     /**

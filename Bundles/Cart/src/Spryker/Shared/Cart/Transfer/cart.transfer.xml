@@ -34,7 +34,6 @@
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
         <property name="messages" type="Message[]" singular="message"/>
         <property name="unitPrice" type="int"/>
-        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">

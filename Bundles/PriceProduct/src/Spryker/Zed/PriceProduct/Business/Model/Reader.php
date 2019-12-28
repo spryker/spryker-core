@@ -531,16 +531,16 @@ class Reader implements ReaderInterface
     {
         $mergedPriceProductTransfers = [];
 
-        foreach ($indexedAbstractPriceProductTransfers as $identifier => $abstractPriceProductTransfers) {
-            $mergedPriceProductTransfers[$identifier] = $this->priceProductService->mergeConcreteAndAbstractPrices(
+        foreach ($indexedAbstractPriceProductTransfers as $sku => $abstractPriceProductTransfers) {
+            $mergedPriceProductTransfers[$sku] = $this->priceProductService->mergeConcreteAndAbstractPrices(
                 $abstractPriceProductTransfers,
-                $indexedConcretePriceProductTransfers[$identifier] ?? []
+                $indexedConcretePriceProductTransfers[$sku] ?? []
             );
         }
 
-        foreach ($indexedConcretePriceProductTransfers as $identifier => $concretePriceProductTransfers) {
-            $mergedPriceProductTransfers[$identifier] = $this->priceProductService->mergeConcreteAndAbstractPrices(
-                $indexedAbstractPriceProductTransfers[$identifier] ?? [],
+        foreach ($indexedConcretePriceProductTransfers as $sku => $concretePriceProductTransfers) {
+            $mergedPriceProductTransfers[$sku] = $this->priceProductService->mergeConcreteAndAbstractPrices(
+                $indexedAbstractPriceProductTransfers[$sku] ?? [],
                 $concretePriceProductTransfers
             );
         }
@@ -556,18 +556,13 @@ class Reader implements ReaderInterface
      */
     protected function resolveProductPrices(array $priceProductTransfers, array $priceProductFilterTransfers): array
     {
-        $priceProductCriteriaTransfersByIdentifier = $this
+        $priceProductCriteriaTransfersBySku = $this
             ->priceProductCriteriaBuilder
-            ->buildCriteriaTransfersFromFilterTransfersIndexedByIdentifier($priceProductFilterTransfers);
+            ->buildCriteriaTransfersFromFilterTransfersIndexedBySku($priceProductFilterTransfers);
 
         $resolvedPriceProductTransfers = [];
-
-        foreach ($priceProductTransfers as $identifier => $pricesByIdentifier) {
-            if (!isset($priceProductCriteriaTransfersByIdentifier[$identifier])) {
-                continue;
-            }
-
-            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria($pricesByIdentifier, $priceProductCriteriaTransfersByIdentifier[$identifier]);
+        foreach ($priceProductTransfers as $sku => $pricesBySku) {
+            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria($pricesBySku, $priceProductCriteriaTransfersBySku[$sku]);
 
             if ($this->isPriceProductHasValidMoneyValue($resolvedItemPrice, $priceProductFilterTransfers)) {
                 $resolvedPriceProductTransfers[] = $resolvedItemPrice;
@@ -620,12 +615,12 @@ class Reader implements ReaderInterface
             return $priceProductFilterTransfer->getSku();
         }, $priceProductFilterTransfers);
 
-        $concretePricesByIdentifier = $this->priceProductConcreteReader->getProductConcretePricesByConcreteSkusAndCriteria(
+        $concretePricesBySku = $this->priceProductConcreteReader->getProductConcretePricesByConcreteSkusAndCriteria(
             $productConcreteSkus,
             $priceProductCriteriaTransfer
         );
 
-        return $concretePricesByIdentifier;
+        return $concretePricesBySku;
     }
 
     /**
