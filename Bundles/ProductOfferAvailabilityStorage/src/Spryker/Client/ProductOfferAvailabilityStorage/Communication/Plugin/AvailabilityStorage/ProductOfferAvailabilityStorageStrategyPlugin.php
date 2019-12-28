@@ -8,14 +8,14 @@
 namespace Spryker\Client\ProductOfferAvailabilityStorage\Communication\Plugin\AvailabilityStorage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityProviderStoragePluginInterface;
+use Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageFactory getFactory()
  * @method \Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageClientInterface getClient()
  */
-class ProductOfferAvailabilityStorageProviderPlugin extends AbstractPlugin implements AvailabilityProviderStoragePluginInterface
+class ProductOfferAvailabilityStorageStrategyPlugin extends AbstractPlugin implements AvailabilityStorageStrategyPluginInterface
 {
     /**
      * {@inheritDoc}

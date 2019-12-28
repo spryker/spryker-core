@@ -32,26 +32,26 @@ class Sellable implements SellableInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface[]
+     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[]
      */
-    protected $availabilityProviderStrategyPlugins;
+    protected $availabilityStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface $availabilityHandler
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface[] $availabilityProviderStrategyPlugins
+     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[] $availabilityStrategyPlugins
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
         AvailabilityHandlerInterface $availabilityHandler,
         AvailabilityToStoreFacadeInterface $storeFacade,
-        array $availabilityProviderStrategyPlugins
+        array $availabilityStrategyPlugins
     ) {
         $this->availabilityRepository = $availabilityRepository;
         $this->availabilityHandler = $availabilityHandler;
         $this->storeFacade = $storeFacade;
-        $this->availabilityProviderStrategyPlugins = $availabilityProviderStrategyPlugins;
+        $this->availabilityStrategyPlugins = $availabilityStrategyPlugins;
     }
 
     /**
@@ -68,12 +68,12 @@ class Sellable implements SellableInterface
         StoreTransfer $storeTransfer,
         ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): bool {
-        foreach ($this->availabilityProviderStrategyPlugins as $availabilityProviderStrategyPlugin) {
-            if (!$availabilityProviderStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
+        foreach ($this->availabilityStrategyPlugins as $availabilityStrategyPlugin) {
+            if (!$availabilityStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
                 continue;
             }
 
-            $customProductConcreteAvailability = $availabilityProviderStrategyPlugin->findProductConcreteAvailabilityForStore($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer);
+            $customProductConcreteAvailability = $availabilityStrategyPlugin->findProductConcreteAvailabilityForStore($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer);
 
             return $customProductConcreteAvailability
                 ? $this->isProductConcreteSellable($customProductConcreteAvailability, $quantity)

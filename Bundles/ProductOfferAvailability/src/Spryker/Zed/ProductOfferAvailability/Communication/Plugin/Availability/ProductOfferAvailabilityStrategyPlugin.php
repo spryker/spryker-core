@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface;
+use Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductOfferAvailability\Business\ProductOfferAvailabilityFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOfferAvailability\ProductOfferAvailabilityConfig getConfig()
  */
-class ProductOfferAvailabilityProviderStrategyPlugin extends AbstractPlugin implements AvailabilityProviderStrategyPluginInterface
+class ProductOfferAvailabilityStrategyPlugin extends AbstractPlugin implements AvailabilityStrategyPluginInterface
 {
     /**
      * {@inheritDoc}

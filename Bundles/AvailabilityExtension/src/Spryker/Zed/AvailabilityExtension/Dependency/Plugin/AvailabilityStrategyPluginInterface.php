@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface AvailabilityProviderStrategyPluginInterface
+interface AvailabilityStrategyPluginInterface
 {
     /**
-     * - Returns true if availability provider is applicable.
+     * - Returns true if availability strategy is applicable.
      *
      * @api
      *

@@ -9,7 +9,7 @@ namespace Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface AvailabilityProviderStoragePluginInterface
+interface AvailabilityStorageStrategyPluginInterface
 {
     /**
      * Specification:

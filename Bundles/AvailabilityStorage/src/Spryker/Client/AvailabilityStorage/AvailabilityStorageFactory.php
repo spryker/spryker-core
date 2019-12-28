@@ -34,7 +34,7 @@ class AvailabilityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityProviderStoragePluginInterface[]
+     * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[]
      */
     public function getAvailabilityStorageStrategyPlugins(): array
     {
