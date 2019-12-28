@@ -135,14 +135,14 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     protected function findCustomAvailabilityForConcreteProduct(
         string $concreteSku,
         StoreTransfer $storeTransfer,
-        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
     ): ?ProductConcreteAvailabilityTransfer {
         foreach ($this->availabilityStockProviderStrategyPlugins as $availabilityStockProviderStrategyPlugin) {
             if (!$availabilityStockProviderStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
