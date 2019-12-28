@@ -86,7 +86,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->createAvailabilityHandler(),
             $this->getStoreFacade(),
             $this->getProductFacade(),
-            $this->getAvailabilityStockProviderStrategyPlugins()
+            $this->getAvailabilityProviderStrategyPlugins()
         );
     }
 
@@ -166,13 +166,5 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getAvailabilityProviderStrategyPlugins(): array
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::PLUGINS_AVAILABILITY_PROVIDER_STRATEGY);
-    }
-
-    /**
-     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStockProviderStrategyPluginInterface[]
-     */
-    public function getAvailabilityStockProviderStrategyPlugins(): array
-    {
-        return $this->getProvidedDependency(AvailabilityDependencyProvider::PLUGINS_AVAILABILITY_STOCK_PROVIDER_STRATEGY);
     }
 }

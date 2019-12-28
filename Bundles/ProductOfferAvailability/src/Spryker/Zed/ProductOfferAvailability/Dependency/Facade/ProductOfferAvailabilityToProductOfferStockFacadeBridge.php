@@ -30,8 +30,8 @@ class ProductOfferAvailabilityToProductOfferStockFacadeBridge implements Product
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal
+    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal
     {
-        return $this->productOfferStockFacade->calculateProductOfferStockForRequest($productOfferStockRequestTransfer);
+        return $this->productOfferStockFacade->getProductOfferStock($productOfferStockRequestTransfer);
     }
 }

@@ -37,7 +37,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER';
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
     public const PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE = 'PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE';
-    public const PLUGIN_PRICE_PRODUCT_PROVIDER = 'PLUGIN_PRICE_PRODUCT_PROVIDER';
+    public const PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER = 'PLUGIN_PRICE_PRODUCT_PROVIDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -54,7 +54,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceProductService($container);
         $container = $this->addPriceDimensionAbstractSaverPlugins($container);
         $container = $this->addPriceDimensionConcreteSaverPlugins($container);
-        $container = $this->addPriceProductProviderPlugins($container);
+        $container = $this->addPriceProductExternalProviderPlugins($container);
         $container = $this->addPriceProductDimensionExpanderStrategyPlugins($container);
         $container = $this->addPriceProductPricesExtractorPlugins($container);
         $container = $this->addPriceProductStorePreDeletePlugins($container);
@@ -234,10 +234,10 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPriceProductProviderPlugins(Container $container): Container
+    protected function addPriceProductExternalProviderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_PRICE_PRODUCT_PROVIDER, function () {
-            return $this->getPriceProductProviderPlugins();
+        $container->set(static::PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER, function () {
+            return $this->getPriceProductExternalProviderPlugins();
         });
 
         return $container;
@@ -316,9 +316,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductProviderPluginInterface[]
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
      */
-    public function getPriceProductProviderPlugins(): array
+    public function getPriceProductExternalProviderPlugins(): array
     {
         return [];
     }

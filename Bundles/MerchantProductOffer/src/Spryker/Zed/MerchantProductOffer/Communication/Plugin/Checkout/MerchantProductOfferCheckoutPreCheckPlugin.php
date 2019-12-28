@@ -35,20 +35,6 @@ class MerchantProductOfferCheckoutPreCheckPlugin extends AbstractPlugin implemen
     {
         $messageTransfers = $this->getFacade()->validateItems($quoteTransfer->getItems()->getArrayCopy());
 
-        $checkoutResponseTransfer
-            ->setErrors(new ArrayObject($this->mapMessageTransfersToCheckoutErrorTransfers($messageTransfers)))
-            ->setIsSuccess(!$messageTransfers);
-
-        return !$messageTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer[]
-     */
-    protected function mapMessageTransfersToCheckoutErrorTransfers(array $messageTransfers): array
-    {
         $checkoutErrorTransfers = [];
 
         foreach ($messageTransfers as $messageTransfer) {
@@ -57,6 +43,10 @@ class MerchantProductOfferCheckoutPreCheckPlugin extends AbstractPlugin implemen
                 ->setParameters($messageTransfer->getParameters());
         }
 
-        return $checkoutErrorTransfers;
+        $checkoutResponseTransfer
+            ->setErrors(new ArrayObject($checkoutErrorTransfers))
+            ->setIsSuccess(!$messageTransfers);
+
+        return !$messageTransfers;
     }
 }

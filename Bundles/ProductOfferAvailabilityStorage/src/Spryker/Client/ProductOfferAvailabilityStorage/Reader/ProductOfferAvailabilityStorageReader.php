@@ -43,7 +43,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer|null
      */
-    public function findAvailabilityByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
+    public function findByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
     {
         $productOfferAvailabilityStorageTransferData = $this->storageClient->get(
             $this->generateKey($productOfferReference, $storeName)

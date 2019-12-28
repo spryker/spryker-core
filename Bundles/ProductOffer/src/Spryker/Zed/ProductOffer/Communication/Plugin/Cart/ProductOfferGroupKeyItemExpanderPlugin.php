@@ -33,7 +33,7 @@ class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements I
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getProductOffer()) {
+            if ($itemTransfer->getProductOfferReference()) {
                 $itemTransfer->setGroupKey($this->buildGroupKey($itemTransfer));
             }
         }
@@ -48,6 +48,6 @@ class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements I
      */
     protected function buildGroupKey(ItemTransfer $itemTransfer): string
     {
-        return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOffer()->getProductOfferReference();
+        return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOfferReference();
     }
 }

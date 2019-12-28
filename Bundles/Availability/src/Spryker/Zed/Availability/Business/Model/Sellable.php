@@ -69,11 +69,15 @@ class Sellable implements SellableInterface
         ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): bool {
         foreach ($this->availabilityProviderStrategyPlugins as $availabilityProviderStrategyPlugin) {
-            if (!$availabilityProviderStrategyPlugin->isApplicable($concreteSku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
+            if (!$availabilityProviderStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
                 continue;
             }
 
-            return $availabilityProviderStrategyPlugin->isProductSellableForStore($concreteSku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer);
+            $customProductConcreteAvailability = $availabilityProviderStrategyPlugin->findProductConcreteAvailabilityForStore($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer);
+
+            return $customProductConcreteAvailability
+                ? $this->isProductConcreteSellable($customProductConcreteAvailability, $quantity)
+                : false;
         }
 
         $storeTransfer = $this->assertStoreTransfer($storeTransfer);

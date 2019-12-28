@@ -25,7 +25,7 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="productOffer" type="ProductOffer"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="PriceProduct">

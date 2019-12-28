@@ -66,7 +66,12 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
                 ->fromArray($itemTransfer->toArray(), true);
 
-            $isSellable = $this->isProductSellableForStore($itemTransfer, new Decimal($currentItemQuantity), $storeTransfer, $productAvailabilityCriteriaTransfer);
+            $isSellable = $this->availabilityFacade->isProductSellableForStore(
+                $itemTransfer->getSku(),
+                new Decimal($currentItemQuantity),
+                $storeTransfer,
+                $productAvailabilityCriteriaTransfer
+            );
 
             if (!$isSellable) {
                 $availability = $this->findProductConcreteAvailability($itemTransfer, $storeTransfer, $productAvailabilityCriteriaTransfer);
@@ -148,28 +153,6 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 ->requireStore();
 
         return $cartChangeTransfer->getQuote()->getStore();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Spryker\DecimalObject\Decimal $currentItemQuantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
-     *
-     * @return bool
-     */
-    protected function isProductSellableForStore(
-        ItemTransfer $itemTransfer,
-        Decimal $currentItemQuantity,
-        StoreTransfer $storeTransfer,
-        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
-    ) {
-        return $this->availabilityFacade->isProductSellableForStore(
-            $itemTransfer->getSku(),
-            $currentItemQuantity,
-            $storeTransfer,
-            $productAvailabilityCriteriaTransfer
-        );
     }
 
     /**

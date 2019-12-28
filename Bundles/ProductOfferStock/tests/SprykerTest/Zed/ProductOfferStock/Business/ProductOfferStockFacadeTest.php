@@ -34,7 +34,7 @@ class ProductOfferStockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateProductOfferStockForRequestReturnsAvailableStockAmount(): void
+    public function testGetProductOfferStockReturnsAvailableStockAmount(): void
     {
         // Arrange
         $stockQuantity = 5;
@@ -58,7 +58,7 @@ class ProductOfferStockFacadeTest extends Unit
 
         // Act
         $productOfferStock = $this->tester->getFacade()
-            ->calculateProductOfferStockForRequest($productOfferStockRequestTransfer);
+            ->getProductOfferStock($productOfferStockRequestTransfer);
 
         // Assert
         $this->assertSame($expectedResult, $productOfferStock->toInt());
@@ -67,7 +67,7 @@ class ProductOfferStockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateProductOfferStockForRequestReturnsNothingIfProductOfferNotExists(): void
+    public function testGetProductOfferStockReturnsNothingIfProductOfferNotExists(): void
     {
         // Arrange
         $notExistingProductOfferReference = 'not-existing-product-offer-reference';
@@ -79,7 +79,7 @@ class ProductOfferStockFacadeTest extends Unit
 
         // Act
         $productOfferStock = $this->tester->getFacade()
-            ->calculateProductOfferStockForRequest($productOfferStockRequestTransfer);
+            ->getProductOfferStock($productOfferStockRequestTransfer);
 
         // Assert
         $this->assertSame(0, $productOfferStock->toInt());

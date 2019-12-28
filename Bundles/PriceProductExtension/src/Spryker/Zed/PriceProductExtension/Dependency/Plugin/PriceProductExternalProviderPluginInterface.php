@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 
-interface PriceProductProviderPluginInterface
+interface PriceProductExternalProviderPluginInterface
 {
     /**
      * Specification:

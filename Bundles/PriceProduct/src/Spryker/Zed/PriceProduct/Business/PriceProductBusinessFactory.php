@@ -216,7 +216,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductService(),
             $this->createPriceProductExpander(),
             $this->createPriceProductReaderPluginExecutor(),
-            $this->getPriceProductProviderPlugins()
+            $this->getPriceProductExternalProviderPlugins()
         );
     }
 
@@ -451,11 +451,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductProviderPluginInterface[]
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
      */
-    public function getPriceProductProviderPlugins(): array
+    public function getPriceProductExternalProviderPlugins(): array
     {
-        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_PROVIDER);
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER);
     }
 
     /**

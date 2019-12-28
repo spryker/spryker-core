@@ -9,13 +9,13 @@ namespace Spryker\Zed\PriceProductOffer\Communication\Plugin\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductProviderPluginInterface;
+use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductOffer\Business\PriceProductOfferFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
-class PriceProductOfferPriceProductProviderPlugin extends AbstractPlugin implements PriceProductProviderPluginInterface
+class PriceProductOfferPriceProductExternalProviderPlugin extends AbstractPlugin implements PriceProductExternalProviderPluginInterface
 {
     /**
      * {@inheritDoc}

@@ -9,7 +9,6 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="productOffer" type="ProductOffer"/>
         <property name="merchantReference" type="string"/>
         <property name="sku" type="string"/>
     </transfer>

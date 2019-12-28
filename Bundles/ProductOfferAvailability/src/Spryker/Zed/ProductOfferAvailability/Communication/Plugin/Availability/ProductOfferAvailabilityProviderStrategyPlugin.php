@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductOfferAvailability\Communication\Plugin\Availability;
 
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -22,59 +22,53 @@ class ProductOfferAvailabilityProviderStrategyPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Returns true if criteria transfer contains product offer reference.
+     * - Returns true if ProductAvailabilityCriteriaTransfer contains product offer reference.
      *
      * @api
      *
-     * @param string $concreteSku
-     * @param \Spryker\DecimalObject\Decimal $quantity
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return bool
      */
     public function isApplicable(
-        string $concreteSku,
-        Decimal $quantity,
+        string $sku,
         StoreTransfer $storeTransfer,
-        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): bool {
-        return $productAvailabilityCriteriaTransfer
-            && $productAvailabilityCriteriaTransfer->getProductOffer()
-            && $productAvailabilityCriteriaTransfer->getProductOffer()->getProductOfferReference();
+        return $productAvailabilityCriteriaTransfer && $productAvailabilityCriteriaTransfer->getProductOfferReference();
     }
 
     /**
      * {@inheritDoc}
-     * - Returns true if product offer is available in requested quantity.
+     * - Returns product concrete availability for product offer.
      *
      * @api
      *
-     * @param string $concreteSku
-     * @param \Spryker\DecimalObject\Decimal $quantity
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function isProductSellableForStore(
-        string $concreteSku,
-        Decimal $quantity,
+    public function findProductConcreteAvailabilityForStore(
+        string $sku,
         StoreTransfer $storeTransfer,
-        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
-    ): bool {
-        $productAvailabilityCriteriaTransfer
-            ->requireProductOffer()
-            ->getProductOffer()
-            ->requireProductOfferReference();
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
+    ): ?ProductConcreteAvailabilityTransfer {
+        if (!$productAvailabilityCriteriaTransfer) {
+            return null;
+        }
+
+        $productAvailabilityCriteriaTransfer->requireProductOfferReference();
 
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
-            ->setSku($concreteSku)
-            ->setQuantity($quantity)
-            ->setProductOfferReference($productAvailabilityCriteriaTransfer->getProductOffer()->getProductOfferReference())
-            ->setStore($storeTransfer);
+            ->setSku($sku)
+            ->setStore($storeTransfer)
+            ->setProductOfferReference($productAvailabilityCriteriaTransfer->getProductOfferReference());
 
         return $this->getFacade()
-            ->isProductSellableForRequest($productOfferAvailabilityRequestTransfer);
+            ->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
     }
 }

@@ -9,7 +9,7 @@
 
     <transfer name="Item">
         <property name="sku" type="string"/>
-        <property name="productOffer" type="ProductOffer"/>
+        <property name="productOfferReference" type="string"/>
         <property name="groupKey" type="string"/>
     </transfer>
 

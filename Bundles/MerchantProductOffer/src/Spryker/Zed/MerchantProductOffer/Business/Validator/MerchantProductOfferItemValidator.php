@@ -46,7 +46,7 @@ class MerchantProductOfferItemValidator implements MerchantProductOfferItemValid
         $messageTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            if (!$itemTransfer->getProductOffer()) {
+            if (!$itemTransfer->getMerchantReference()) {
                 continue;
             }
 

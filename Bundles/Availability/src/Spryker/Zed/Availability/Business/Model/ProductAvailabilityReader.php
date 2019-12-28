@@ -38,29 +38,29 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStockProviderStrategyPluginInterface[]
+     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface[]
      */
-    protected $availabilityStockProviderStrategyPlugins;
+    protected $availabilityProviderStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface $availabilityHandler
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStockProviderStrategyPluginInterface[] $availabilityStockProviderStrategyPlugins
+     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface[] $availabilityProviderStrategyPlugins
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
         AvailabilityHandlerInterface $availabilityHandler,
         AvailabilityToStoreFacadeInterface $storeFacade,
         AvailabilityToProductFacadeInterface $productFacade,
-        array $availabilityStockProviderStrategyPlugins
+        array $availabilityProviderStrategyPlugins
     ) {
         $this->availabilityRepository = $availabilityRepository;
         $this->availabilityHandler = $availabilityHandler;
         $this->storeFacade = $storeFacade;
         $this->productFacade = $productFacade;
-        $this->availabilityStockProviderStrategyPlugins = $availabilityStockProviderStrategyPlugins;
+        $this->availabilityProviderStrategyPlugins = $availabilityProviderStrategyPlugins;
     }
 
     /**
@@ -116,10 +116,12 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     ): ?ProductConcreteAvailabilityTransfer {
         $storeTransfer = $this->assertStoreTransfer($storeTransfer);
 
-        $customProductConcreteAvailabilityTransfer = $this->findCustomAvailabilityForConcreteProduct($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer);
+        foreach ($this->availabilityProviderStrategyPlugins as $availabilityStockProviderStrategyPlugin) {
+            if (!$availabilityStockProviderStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
+                continue;
+            }
 
-        if ($customProductConcreteAvailabilityTransfer) {
-            return $customProductConcreteAvailabilityTransfer;
+            return $availabilityStockProviderStrategyPlugin->findProductConcreteAvailabilityForStore($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer);
         }
 
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
@@ -130,29 +132,6 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
         }
 
         return $productConcreteAvailabilityTransfer;
-    }
-
-    /**
-     * @param string $concreteSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
-     */
-    protected function findCustomAvailabilityForConcreteProduct(
-        string $concreteSku,
-        StoreTransfer $storeTransfer,
-        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
-    ): ?ProductConcreteAvailabilityTransfer {
-        foreach ($this->availabilityStockProviderStrategyPlugins as $availabilityStockProviderStrategyPlugin) {
-            if (!$availabilityStockProviderStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
-                continue;
-            }
-
-            return $availabilityStockProviderStrategyPlugin->findProductConcreteAvailabilityForStore($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer);
-        }
-
-        return null;
     }
 
     /**

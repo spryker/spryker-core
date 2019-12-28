@@ -48,7 +48,7 @@ class ProductOfferAvailabilityStorageProviderPlugin extends AbstractPlugin imple
             ->getCurrentStore();
 
         $availabilityStorageTransfer = $this->getClient()
-            ->findAvailabilityByProductOfferReference($productViewTransfer->getProductOfferReference(), $storeTransfer->getName());
+            ->findByProductOfferReference($productViewTransfer->getProductOfferReference(), $storeTransfer->getName());
 
         return $availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability()->isPositive() : false;
     }
