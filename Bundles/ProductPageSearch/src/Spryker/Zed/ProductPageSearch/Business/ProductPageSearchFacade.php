@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPageSearch\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
@@ -203,8 +204,22 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @return int[]
      */
-    public function getPriceProductIdsByPriceProductStoreIds(array $priceProductStoreIds): array
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array
     {
-        return $this->getRepository()->getPriceProductIdsByPriceProductStoreIds($priceProductStoreIds);
+        return $this->getRepository()->getProductAbstractIdsByPriceProductStoreIds($priceProductStoreIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductPageLoadTransferWithPriceData(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
+    {
+        return $this->getFactory()->createPriceProductPageExpander()->expandProductPageLoadTransferWithPricesData($productPageLoadTransfer);
     }
 }

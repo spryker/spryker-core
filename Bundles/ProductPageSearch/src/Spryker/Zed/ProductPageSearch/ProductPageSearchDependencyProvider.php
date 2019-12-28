@@ -107,10 +107,6 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
-            return new ProductPageSearchToPriceProductBridge($container->getLocator()->priceProduct()->facade());
-        };
-
         $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductPageSearchToCategoryBridge($container->getLocator()->category()->facade());
         };
@@ -150,6 +146,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addStoreFacade($container);
         $container = $this->addProductImageFacade($container);
         $container = $this->addProductSearchFacade($container);
+        $container = $this->addPriceProductFacade($container);
 
         return $container;
     }
@@ -190,6 +187,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductSearchFacade($container);
         $container = $this->addProductConcreteMapExpanderPlugins($container);
         $container = $this->addProductAbstractMapExpanderPlugins($container);
+        $container = $this->addPriceProductFacade($container);
 
         return $container;
     }
@@ -449,6 +447,20 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::PROPEL_QUERY_PRICE_PRODUCT, $container->factory(function () {
             return SpyPriceProductQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
+            return new ProductPageSearchToPriceProductBridge($container->getLocator()->priceProduct()->facade());
+        });
 
         return $container;
     }

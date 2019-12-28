@@ -33,7 +33,7 @@ class PriceProductDefaultProductPagePublishListener extends AbstractProductPageS
     {
         $this->preventTransaction();
         $priceProductStoreIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyPriceProductDefaultTableMap::COL_FK_PRICE_PRODUCT_STORE);
-        $productAbstractIds = $this->getFacade()->getPriceProductIdsByPriceProductStoreIds($priceProductStoreIds);
+        $productAbstractIds = $this->getFacade()->getProductAbstractIdsByPriceProductStoreIds($priceProductStoreIds);
 
         $this->publish($productAbstractIds);
     }

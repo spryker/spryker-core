@@ -15,6 +15,8 @@ use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductAbstractSearchDataM
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductConcreteSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductPageMapCategoryExpander;
 use Spryker\Zed\ProductPageSearch\Business\Expander\Elasticsearch\ProductPageMapCategoryExpanderInterface;
+use Spryker\Zed\ProductPageSearch\Business\Expander\PriceProductPageExpander;
+use Spryker\Zed\ProductPageSearch\Business\Expander\PriceProductPageExpanderInterface;
 use Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpander;
 use Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpanderInterface;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapper;
@@ -268,5 +270,24 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductPageMapCategoryExpander(): ProductPageMapCategoryExpanderInterface
     {
         return new ProductPageMapCategoryExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductInterface
+     */
+    public function getPriceProductFacade()
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Expander\PriceProductPageExpanderInterface
+     */
+    public function createPriceProductPageExpander(): PriceProductPageExpanderInterface
+    {
+        return new PriceProductPageExpander(
+            $this->getPriceProductFacade(),
+            $this->getStoreFacade()
+        );
     }
 }

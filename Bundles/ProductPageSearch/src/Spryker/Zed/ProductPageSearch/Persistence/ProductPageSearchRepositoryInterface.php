@@ -37,5 +37,5 @@ interface ProductPageSearchRepositoryInterface
      *
      * @return int[]
      */
-    public function getPriceProductIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
 }
