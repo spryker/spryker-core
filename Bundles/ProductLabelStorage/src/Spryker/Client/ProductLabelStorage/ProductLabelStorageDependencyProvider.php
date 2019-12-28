@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientBridge;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceBridge;
+use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilEncodingServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -20,6 +21,7 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const STORE = 'STORE';
 
     /**
@@ -27,10 +29,12 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addStore($container);
 
         return $container;
@@ -60,6 +64,22 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
         $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductLabelStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductLabelStorageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
 
         return $container;
     }

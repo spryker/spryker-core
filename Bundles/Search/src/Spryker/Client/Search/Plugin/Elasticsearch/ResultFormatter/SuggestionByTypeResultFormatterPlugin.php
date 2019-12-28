@@ -12,6 +12,8 @@ use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SuggestionByTypeQueryExpanderPlugin;
 
 /**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SuggestionByTypeResultFormatterPlugin` instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class SuggestionByTypeResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin

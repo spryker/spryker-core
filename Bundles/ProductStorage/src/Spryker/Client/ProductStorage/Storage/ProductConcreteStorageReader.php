@@ -260,10 +260,13 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     public function getBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
         $storageKeys = $this->generateMappingStorageKeys($mappingType, $identifiers, $localeName);
-        $productConcreteIds = [];
         $mappings = $this->storageClient->getMulti($storageKeys);
+        $productConcreteIds = [];
         foreach ($mappings as $mapping) {
-            $productConcreteIds[] = $this->utilEncodingService->decodeJson($mapping, true)[static::KEY_ID];
+            $decodedMapping = $this->utilEncodingService->decodeJson($mapping, true);
+            if ($decodedMapping) {
+                $productConcreteIds[] = $decodedMapping[static::KEY_ID];
+            }
         }
 
         if (!$productConcreteIds) {
@@ -424,12 +427,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param string[] $identifiers
      * @param string $localeName
      *
-     * @return array
+     * @return string[]
      */
-    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName)
+    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName): array
     {
         $mappingKeys = [];
-
         foreach ($identifiers as $identifier) {
             $mappingKeys[] = $this->getStorageKey($mappingType . ':' . $identifier, $localeName);
         }
@@ -447,7 +449,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     {
         $productConcreteStorageData = [];
         foreach ($productStorageDataCollection as $productStorageData) {
-            $productStorageData = json_decode($productStorageData, true);
+            $productStorageData = $this->utilEncodingService->decodeJson($productStorageData, true);
             $idProductConcrete = $productStorageData[static::KEY_ID_PRODUCT_CONCRETE];
             $productConcreteStorageData[$idProductConcrete] = $productStorageData;
 
