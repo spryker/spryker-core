@@ -14,19 +14,19 @@ interface ProductOfferAvailabilityStorageWriterInterface
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByOmsProductReservationKeyEvents(array $eventTransfers): void;
+    public function writeCollectionByOmsProductReservationIdEvents(array $eventTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByProductOfferStockKeyEvents(array $eventTransfers): void;
+    public function writeCollectionByProductOfferStockIdEvents(array $eventTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByProductOfferKeyEvents(array $eventTransfers): void;
+    public function writeCollectionByProductOfferIdEvents(array $eventTransfers): void;
 }

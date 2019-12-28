@@ -71,7 +71,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByOmsProductReservationKeyEvents(array $eventTransfers): void
+    public function writeCollectionByOmsProductReservationIdEvents(array $eventTransfers): void
     {
         $omsProductReservationIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
@@ -86,7 +86,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByProductOfferStockKeyEvents(array $eventTransfers): void
+    public function writeCollectionByProductOfferStockIdEvents(array $eventTransfers): void
     {
         $productOfferStockIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
@@ -101,7 +101,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByProductOfferKeyEvents(array $eventTransfers): void
+    public function writeCollectionByProductOfferIdEvents(array $eventTransfers): void
     {
         $productOfferIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 

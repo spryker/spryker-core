@@ -25,11 +25,11 @@ class ProductOfferAvailabilityStorageFacade extends AbstractFacade implements Pr
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByOmsProductReservationKeyEvents(array $eventTransfers): void
+    public function writeCollectionByOmsProductReservationIdEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createProductOfferAvailabilityStorageWriter()
-            ->writeProductOfferAvailabilityStorageCollectionByOmsProductReservationKeyEvents($eventTransfers);
+            ->writeCollectionByOmsProductReservationIdEvents($eventTransfers);
     }
 
     /**
@@ -41,11 +41,11 @@ class ProductOfferAvailabilityStorageFacade extends AbstractFacade implements Pr
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByProductOfferStockKeyEvents(array $eventTransfers): void
+    public function writeCollectionByProductOfferStockIdEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createProductOfferAvailabilityStorageWriter()
-            ->writeProductOfferAvailabilityStorageCollectionByProductOfferStockKeyEvents($eventTransfers);
+            ->writeCollectionByProductOfferStockIdEvents($eventTransfers);
     }
 
     /**
@@ -57,10 +57,10 @@ class ProductOfferAvailabilityStorageFacade extends AbstractFacade implements Pr
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByProductOfferKeyEvents(array $eventTransfers): void
+    public function writeCollectionByProductOfferIdEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createProductOfferAvailabilityStorageWriter()
-            ->writeProductOfferAvailabilityStorageCollectionByProductOfferKeyEvents($eventTransfers);
+            ->writeCollectionByProductOfferIdEvents($eventTransfers);
     }
 }
