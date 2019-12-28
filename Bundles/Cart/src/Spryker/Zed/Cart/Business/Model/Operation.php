@@ -316,20 +316,6 @@ class Operation implements OperationInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function setDefaultItemIdentifiers(ArrayObject $itemTransfers): ArrayObject
-    {
-        foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->setItemIdentifier($itemTransfer->getSku());
-        }
-
-        return $itemTransfers;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

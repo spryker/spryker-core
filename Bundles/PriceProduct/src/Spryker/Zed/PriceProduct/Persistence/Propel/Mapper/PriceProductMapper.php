@@ -203,7 +203,6 @@ class PriceProductMapper
         return $priceProductTransfer
             ->fromArray($priceProductStoreEntityData, true)
             ->setSkuProduct($sku)
-            ->setItemIdentifier($sku)
             ->setIdProduct($priceProductEntity->getFkProduct())
             ->setIdProductAbstract($priceProductEntity->getFkProductAbstract())
             ->setPriceType($priceTypeTransfer)

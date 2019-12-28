@@ -17,7 +17,6 @@
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="groupKey" type="string"/>
         <property name="isMergeable" type="bool"/>
-        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -73,7 +72,6 @@
         <property name="sku" type="string"/>
         <property name="quote" type="Quote"/>
         <property name="quantity" type="int"/>
-        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">
@@ -115,10 +113,6 @@
     </transfer>
 
     <transfer name="Quote">
-    </transfer>
-
-    <transfer name="Item">
-        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

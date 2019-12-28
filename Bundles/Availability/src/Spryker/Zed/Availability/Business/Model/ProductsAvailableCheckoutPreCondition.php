@@ -52,7 +52,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $storeTransfer = $quoteTransfer->getStore();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $quantity = $this->getAccumulatedItemQuantityForGivenItemIdentifier($quoteTransfer, $itemTransfer->getItemIdentifier() ?: $itemTransfer->getSku());
+            $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer->getSku());
 
             $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
                 ->fromArray($itemTransfer->toArray(), true);
@@ -70,18 +70,16 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $itemIdentifier
+     * @param string $sku
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAccumulatedItemQuantityForGivenItemIdentifier(QuoteTransfer $quoteTransfer, string $itemIdentifier): Decimal
+    protected function getAccumulatedItemQuantityForGivenItemSku(QuoteTransfer $quoteTransfer, string $sku): Decimal
     {
         $quantity = new Decimal(0);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $quoteItemIdentifier = $itemTransfer->getItemIdentifier() ?: $itemTransfer->getSku();
-
-            if ($quoteItemIdentifier !== $itemIdentifier) {
+            if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
 

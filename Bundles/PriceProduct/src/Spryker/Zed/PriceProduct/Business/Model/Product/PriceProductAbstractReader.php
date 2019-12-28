@@ -341,7 +341,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductAbstract($priceProductTransfers);
 
-        return $this->indexPriceProductTransferByProductIdentifier($priceProductTransfers);
+        return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
     }
 
     /**
@@ -349,11 +349,11 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
      */
-    protected function indexPriceProductTransferByProductIdentifier(array $priceProductTransfers): array
+    protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
     {
         $indexedPriceProductTransfers = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $indexedPriceProductTransfers[$priceProductTransfer->getItemIdentifier() ?: $priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
+            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
         }
 
         return $indexedPriceProductTransfers;

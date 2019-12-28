@@ -31,7 +31,6 @@ class PriceProductOfferMapper implements PriceProductOfferMapperInterface
                     ->setType(PriceProductOfferConfig::DIMENSION_TYPE_PRODUCT_OFFER)
                     ->setProductOfferReference($priceProductOfferEntity->getSpyProductOffer()->getProductOfferReference())
             )
-            ->setItemIdentifier($priceProductOfferEntity->getSpyProductOffer()->getProductOfferReference())
             ->setIsMergeable(false)
             ->setPriceTypeName($priceProductOfferEntity->getSpyPriceType()->getName())
             ->setMoneyValue(

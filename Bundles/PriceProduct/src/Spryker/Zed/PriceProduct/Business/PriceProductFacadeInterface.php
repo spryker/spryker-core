@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -566,17 +565,4 @@ interface PriceProductFacadeInterface
     public function isPriceProductByProductIdentifierAndPriceTypeExists(
         PriceProductTransfer $priceProductTransfer
     ): bool;
-
-    /**
-     * Specification:
-     * - Checks if price belongs to provided item.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    public function isPriceProductMatchingItem(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool;
 }
