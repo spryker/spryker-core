@@ -29,16 +29,16 @@ class AvailabilityStorageFactory extends AbstractFactory
     {
         return new ProductViewAvailabilityExpander(
             $this->createAvailabilityStorageReader(),
-            $this->getAvailabilityProviderStorageStrategyPlugins()
+            $this->getAvailabilityStorageStrategyPlugins()
         );
     }
 
     /**
      * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityProviderStoragePluginInterface[]
      */
-    public function getAvailabilityProviderStorageStrategyPlugins(): array
+    public function getAvailabilityStorageStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::PLUGINS_POST_PRODUCT_VIEW_AVAILABILITY_EXPAND);
+        return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::PLUGINS_AVAILABILITY_STORAGE_STRATEGY);
     }
 
     /**

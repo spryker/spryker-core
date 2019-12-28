@@ -20,18 +20,18 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
     /**
      * @var \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityProviderStoragePluginInterface[]
      */
-    protected $availabilityProviderStorageStrategyPlugins;
+    protected $availabilityStorageStrategyPlugins;
 
     /**
      * @param \Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReaderInterface $availabilityStorageReader
-     * @param \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityProviderStoragePluginInterface[] $availabilityProviderStorageStrategyPlugins
+     * @param \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityProviderStoragePluginInterface[] $availabilityStorageStrategyPlugins
      */
     public function __construct(
         AvailabilityStorageReaderInterface $availabilityStorageReader,
-        array $availabilityProviderStorageStrategyPlugins
+        array $availabilityStorageStrategyPlugins
     ) {
         $this->availabilityStorageReader = $availabilityStorageReader;
-        $this->availabilityProviderStorageStrategyPlugins = $availabilityProviderStorageStrategyPlugins;
+        $this->availabilityStorageStrategyPlugins = $availabilityStorageStrategyPlugins;
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
             $productViewTransfer->setAvailable($concreteProductAvailableItems[$productViewTransfer->getSku()]);
         }
 
-        $productViewTransfer = $this->executeAvailabilityProviderStorageStrategyPlugins($productViewTransfer);
+        $productViewTransfer = $this->executeAvailabilityStorageStrategyPlugins($productViewTransfer);
 
         return $productViewTransfer;
     }
@@ -66,12 +66,12 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function executeAvailabilityProviderStorageStrategyPlugins(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    protected function executeAvailabilityStorageStrategyPlugins(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
-        foreach ($this->availabilityProviderStorageStrategyPlugins as $availabilityProviderStorageStrategyPlugin) {
-            if ($availabilityProviderStorageStrategyPlugin->isApplicable($productViewTransfer)) {
+        foreach ($this->availabilityStorageStrategyPlugins as $availabilityStorageStrategyPlugin) {
+            if ($availabilityStorageStrategyPlugin->isApplicable($productViewTransfer)) {
                 $productViewTransfer->setAvailable(
-                    $availabilityProviderStorageStrategyPlugin->isProductAvailable($productViewTransfer)
+                    $availabilityStorageStrategyPlugin->isProductAvailable($productViewTransfer)
                 );
             }
         }
