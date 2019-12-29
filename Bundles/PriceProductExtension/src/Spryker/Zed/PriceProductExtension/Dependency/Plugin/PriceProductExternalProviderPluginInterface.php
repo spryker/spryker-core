@@ -22,5 +22,5 @@ interface PriceProductExternalProviderPluginInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function providePriceProductConcreteTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+    public function providePriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

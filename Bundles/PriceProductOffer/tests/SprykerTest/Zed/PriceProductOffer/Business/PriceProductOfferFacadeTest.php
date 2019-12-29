@@ -33,11 +33,11 @@ class PriceProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceProductConcreteTransfersReturnsNothingIfPricesNotExist(): void
+    public function testGetPriceProductTransfersReturnsNothingIfPricesNotExist(): void
     {
         // Act
         $priceProductOfferTransfers = $this->tester->getFacade()
-            ->getPriceProductOfferTransfers(
+            ->getPriceProductTransfers(
                 [static::NOT_EXISTING_SKU],
                 new PriceProductCriteriaTransfer()
             );
@@ -49,14 +49,14 @@ class PriceProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceProductConcreteTransfersReturnsProductOfferPricesIfExists(): void
+    public function testGetPriceProductTransfersReturnsProductOfferPricesIfExists(): void
     {
         // Arrange
         $priceProductOfferTransfer = $this->tester->havePriceProductOffer();
 
         // Act
         $priceProductOfferTransfers = $this->tester->getFacade()
-            ->getPriceProductOfferTransfers(
+            ->getPriceProductTransfers(
                 [
                     $priceProductOfferTransfer->getProductOffer()->getConcreteSku(),
                 ],

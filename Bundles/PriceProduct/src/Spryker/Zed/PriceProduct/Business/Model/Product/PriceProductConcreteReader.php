@@ -279,7 +279,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     protected function executePriceProductExternalProviderPlugins(array $priceProductTransfers, array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         foreach ($this->priceProductExternalProviderPlugins as $priceProductExternalProviderPlugin) {
-            $priceProductTransfers = array_merge($priceProductTransfers, $priceProductExternalProviderPlugin->providePriceProductConcreteTransfers(
+            $priceProductTransfers = array_merge($priceProductTransfers, $priceProductExternalProviderPlugin->providePriceProductTransfers(
                 $skus,
                 $priceProductCriteriaTransfer
             ));

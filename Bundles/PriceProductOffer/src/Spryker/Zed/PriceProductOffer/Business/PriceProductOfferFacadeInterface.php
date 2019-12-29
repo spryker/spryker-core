@@ -22,5 +22,5 @@ interface PriceProductOfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductOfferTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+    public function getPriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

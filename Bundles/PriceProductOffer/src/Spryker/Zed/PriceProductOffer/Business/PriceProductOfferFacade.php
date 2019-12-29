@@ -26,9 +26,9 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductOfferTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    public function getPriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         return $this->getRepository()
-            ->getPriceProductOfferTransfers($skus, $priceProductCriteriaTransfer);
+            ->getPriceProductTransfers($skus, $priceProductCriteriaTransfer);
     }
 }

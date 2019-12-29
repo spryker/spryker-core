@@ -28,9 +28,9 @@ class PriceProductOfferPriceProductExternalProviderPlugin extends AbstractPlugin
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function providePriceProductConcreteTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    public function providePriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         return $this->getFacade()
-            ->getPriceProductOfferTransfers($skus, $priceProductCriteriaTransfer);
+            ->getPriceProductTransfers($skus, $priceProductCriteriaTransfer);
     }
 }
