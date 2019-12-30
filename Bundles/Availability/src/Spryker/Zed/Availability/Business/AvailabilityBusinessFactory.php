@@ -44,7 +44,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new Sellable(
             $this->getRepository(),
             $this->createAvailabilityHandler(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getAvailabilityStrategyPlugins()
         );
     }
 
@@ -84,7 +85,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createAvailabilityHandler(),
             $this->getStoreFacade(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
+            $this->getAvailabilityStrategyPlugins()
         );
     }
 
@@ -156,5 +158,13 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getProductFacade(): AvailabilityToProductFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[]
+     */
+    public function getAvailabilityStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::PLUGINS_AVAILABILITY_STRATEGY);
     }
 }

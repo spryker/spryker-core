@@ -41,6 +41,15 @@ interface ProductPageSearchRepositoryInterface
     public function getProductEntityTransfers(array $productIds): array;
 
     /**
+     * @module PriceProduct
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]

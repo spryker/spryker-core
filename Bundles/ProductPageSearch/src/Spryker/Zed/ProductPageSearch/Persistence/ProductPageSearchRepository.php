@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
@@ -169,6 +170,29 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         }
 
         return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @module PriceProduct
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array
+    {
+        if (!$priceProductStoreIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getPriceProductPropelQuery()
+            ->select(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->usePriceProductStoreQuery()
+                ->filterByIdPriceProductStore_In($priceProductStoreIds)
+            ->endUse()
+            ->find()
+            ->toArray();
     }
 
     /**

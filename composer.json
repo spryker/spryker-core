@@ -642,6 +642,10 @@
     "spryker/wishlists-rest-api": "*",
     "spryker/zed-navigation": "*",
     "spryker/zed-request": "*",
-    "spryker/zend": "*"
+    "spryker/zend": "*",
+    "spryker/availability-extension": "*",
+    "spryker/availability-storage-extension": "*",
+    "spryker/product-offer-availability": "*",
+    "spryker-shop/cart-page-extension": "*"
   }
 }
