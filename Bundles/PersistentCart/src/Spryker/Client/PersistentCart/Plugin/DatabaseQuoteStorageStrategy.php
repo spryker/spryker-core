@@ -414,7 +414,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $quoteResponseTransfer = $this->updateQuoteWithCurrency($quoteTransfer, $customerTransfer, $currencyTransfer);
 
-        if (count($this->getFactory()->getZedRequestClient()->getResponsesErrorMessages()) !== 0) {
+        if ($this->getFactory()->getZedRequestClient()->getResponsesErrorMessages()) {
             $quoteResponseTransfer->setIsSuccessful(false);
         }
 
