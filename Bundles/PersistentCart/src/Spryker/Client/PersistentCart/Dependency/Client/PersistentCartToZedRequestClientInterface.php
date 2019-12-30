@@ -29,4 +29,9 @@ interface PersistentCartToZedRequestClientInterface
      * @return void
      */
     public function addResponseMessagesToMessenger(): void;
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array;
 }

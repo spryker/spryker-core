@@ -10,6 +10,7 @@ namespace Spryker\Client\PersistentCart\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
@@ -408,17 +409,51 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      */
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
     {
+        $quoteTransfer = $this->getQuoteClient()->getQuote();
+        $previousCurrencyTransfer = $quoteTransfer->getCurrency();
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $quoteResponseTransfer = $this->updateQuoteWithCurrency($quoteTransfer, $customerTransfer, $currencyTransfer);
+
+        if (count($this->getFactory()->getZedRequestClient()->getResponsesErrorMessages()) !== 0) {
+            $quoteResponseTransfer->setIsSuccessful(false);
+        }
+
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+            $this->getFactory()->getZedRequestClient()->addResponseMessagesToMessenger();
+            $quoteResponseTransfer = $this->updateQuoteWithCurrency(
+                $quoteTransfer,
+                $customerTransfer,
+                $previousCurrencyTransfer
+            );
+
+            return $quoteResponseTransfer;
+        }
+
+        $this->updateQuote($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function updateQuoteWithCurrency(
+        QuoteTransfer $quoteTransfer,
+        CustomerTransfer $customerTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): QuoteResponseTransfer {
         $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
-        $quoteUpdateRequestTransfer->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
-        $quoteUpdateRequestTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+        $quoteUpdateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
+        $quoteUpdateRequestTransfer->setCustomer($customerTransfer);
         $quoteUpdateRequestAttributesTransfer = new QuoteUpdateRequestAttributesTransfer();
         $quoteUpdateRequestAttributesTransfer->setCurrency($currencyTransfer);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
-        $quoteResponseTransfer = $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
-        $this->updateQuote($quoteResponseTransfer);
-
-        return $quoteResponseTransfer;
+        return $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
     }
 
     /**
