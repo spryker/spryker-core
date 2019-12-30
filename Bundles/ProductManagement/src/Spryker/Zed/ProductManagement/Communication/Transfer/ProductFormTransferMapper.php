@@ -151,18 +151,18 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $ProductConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function buildProductConcreteTransfer(
         ProductAbstractTransfer $productAbstractTransfer,
         FormInterface $form,
-        $ProductConcreteTransfer = null
+        $productConcreteTransfer = null
     ) {
         $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
 
-        if ($ProductConcreteTransfer === null) {
+        if ($productConcreteTransfer === null) {
             $productConcreteTransfer = new ProductConcreteTransfer();
             $productConcreteTransfer->setIsActive(false);
         }
@@ -170,7 +170,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productConcreteTransfer
             ->setAttributes($this->getConcreteAttributes(
                 $form->getData(),
-                $ProductConcreteTransfer->getIdProductConcrete()
+                $productConcreteTransfer->getIdProductConcrete()
             ))
             ->setSku($sku)
             ->setAbstractSku($productAbstractTransfer->getSku())
@@ -186,7 +186,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer(
                 $form->get($formName),
                 $localeTransfer,
-                $ProductConcreteTransfer->getIdProductConcrete()
+                $productConcreteTransfer->getIdProductConcrete()
             );
 
             $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
