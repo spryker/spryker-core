@@ -107,10 +107,12 @@
 
     <transfer name="Message">
         <property name="type" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
         <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="Quote">
@@ -119,10 +121,17 @@
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
         <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantReference" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>
