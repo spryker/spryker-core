@@ -48,7 +48,7 @@ class VaultBusinessTester extends Actor
         $vaultConfig = (new VaultConfig())
             ->setSharedConfig($sharedVaultConfig);
 
-        $vaultBusinessFactory = (new VaultBusinessFactory())
+        $vaultBusinessFactory = $this->getFactory()
             ->setConfig($vaultConfig);
 
         $vaultFacade = $this->getFacade()
@@ -64,7 +64,7 @@ class VaultBusinessTester extends Actor
      */
     public function getVaultFacadeWithConfig(VaultConfig $vaultConfig): VaultFacadeInterface
     {
-        $vaultBusinessFactory = (new VaultBusinessFactory())
+        $vaultBusinessFactory = $this->getFactory()
             ->setConfig($vaultConfig);
 
         $vaultFacade = $this->getFacade()

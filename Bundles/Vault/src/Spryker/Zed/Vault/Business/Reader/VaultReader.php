@@ -79,7 +79,7 @@ class VaultReader implements VaultReaderInterface
      *
      * @return string
      */
-    public function getInitializingVector(VaultDepositTransfer $vaultDepositTransfer): string
+    protected function getInitializingVector(VaultDepositTransfer $vaultDepositTransfer): string
     {
         if (!$this->vaultConfig->useByteStringForEncryptionInitializationVector()) {
             return $vaultDepositTransfer->getInitialVector();
