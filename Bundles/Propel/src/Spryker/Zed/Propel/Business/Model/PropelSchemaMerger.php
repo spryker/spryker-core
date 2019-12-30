@@ -12,13 +12,16 @@ use DOMDocument;
 use DOMElement;
 use DOMNodeList;
 use SimpleXMLElement;
-use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
+use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
+    protected const RANDOM_STRING_LENGTH = 32;
+    protected const PATTERN_ANONYMOUS_ELEMENT = 'anonymous_%s';
+
     protected const SOURCE_CORE = 'core';
     protected const SOURCE_PROJECT = 'project';
 
@@ -28,11 +31,20 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface
+     */
+    protected $utilTextService;
+
+    /**
+     * @param \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface $utilTextService
      * @param \Spryker\Zed\Propel\PropelConfig|null $config
      */
-    public function __construct(?PropelConfig $config = null)
-    {
+    public function __construct(
+        PropelToUtilTextServiceInterface $utilTextService,
+        ?PropelConfig $config = null
+    ) {
         $this->config = $config;
+        $this->utilTextService = $utilTextService;
     }
 
     /**
@@ -334,8 +346,10 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         }
 
         if (empty($elementName) || is_array($elementName)) {
-            $utilTextService = new UtilTextService();
-            $elementName = 'anonymous_' . $utilTextService->generateRandomString(32);
+            $elementName = sprintf(
+                static::PATTERN_ANONYMOUS_ELEMENT,
+                $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH)
+            );
         }
 
         return $elementName;

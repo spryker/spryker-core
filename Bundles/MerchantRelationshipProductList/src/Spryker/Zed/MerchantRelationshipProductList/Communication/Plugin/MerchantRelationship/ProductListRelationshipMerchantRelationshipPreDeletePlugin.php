@@ -12,18 +12,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\MerchantRelationshipProductList\Communication\Plugin\MerchantRelationship\ProductListRelationshipMerchantRelationshipPreDeletePlugin` instead.
- *
  * @method \Spryker\Zed\MerchantRelationshipProductList\Business\MerchantRelationshipProductListFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
  */
-class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin implements MerchantRelationshipPreDeletePluginInterface
+class ProductListRelationshipMerchantRelationshipPreDeletePlugin extends AbstractPlugin implements MerchantRelationshipPreDeletePluginInterface
 {
     /**
      * {@inheritDoc}
      * - Finds product lists by merchant relationship.
      * - Does nothing if the relationships are not found.
-     * - Removes found product lists.
+     * - Removes merchant relationship from product lists.
      *
      * @api
      *
@@ -33,6 +31,6 @@ class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin impl
      */
     public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
-        $this->getFacade()->deleteProductListsByMerchantRelationship($merchantRelationshipTransfer);
+        $this->getFacade()->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
     }
 }

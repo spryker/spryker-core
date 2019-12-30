@@ -191,4 +191,25 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         $this->assertFalse($productListResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $productListResponseTransfer->getMessages());
     }
+
+    /**
+     * @return void
+     */
+    public function testClearMerchantRelationshipFromProductListsUnassignsMerchantRelationshipFromProductList(): void
+    {
+        // Arrange
+        $this->tester->truncateProductListTableRelations();
+        $this->tester->clearProductListTable();
+
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $productListTransfer = $this->tester->createProductListWithMerchantRelationship($merchantRelationshipTransfer);
+
+        // Act
+        $this->tester->getFacade()->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
+
+        $updatedProductListTransfer = $this->tester->findProductListById($productListTransfer->getIdProductList());
+
+        // Assert
+        $this->assertNull($updatedProductListTransfer->getFkMerchantRelationship());
+    }
 }
