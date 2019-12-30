@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPageSearch\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 interface ProductPageSearchFacadeInterface
@@ -156,4 +157,31 @@ interface ProductPageSearchFacadeInterface
         array $productData,
         LocaleTransfer $localeTransfer
     ): PageMapTransfer;
+
+    /**
+     * Specification:
+     * - Returns abstract product ids for the given price product store ids.
+     * - Returns empty array when price produce ids is empty.
+     *
+     * @api
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
+
+    /**
+     * Specification:
+     * - Expands ProductPageLoadTransfer with price data and returns the modified object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductPageLoadTransferWithPriceData(
+        ProductPageLoadTransfer $productPageLoadTransfer
+    ): ProductPageLoadTransfer;
 }
