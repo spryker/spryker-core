@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -117,6 +118,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
+        $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($checkoutDataTransfer->getAvailablePaymentMethods());
+
         foreach ($checkoutDataTransfer->getPaymentProviders()->getPaymentProviders() as $paymentProviderTransfer) {
             $restPaymentProviderTransfer = new RestPaymentProviderTransfer();
             $restPaymentProviderTransfer->setPaymentProviderName($paymentProviderTransfer->getPaymentProviderKey());
@@ -124,7 +127,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
                 $paymentSelection = $this->findPaymentSelectionByPaymentProviderAndMethodNames($paymentProviderTransfer->getPaymentProviderKey(), $paymentMethodTransfer->getName());
 
-                if (!$paymentSelection) {
+                if (!$paymentSelection || !in_array($paymentMethodTransfer->getMethodName(), $availablePaymentMethodsList)) {
                     continue;
                 }
 
@@ -219,5 +222,20 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         $restShipmentMethodTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
 
         return $restShipmentMethodTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethods
+     *
+     * @return array
+     */
+    protected function getAvailablePaymentMethodsList(PaymentMethodsTransfer $availablePaymentMethods): array
+    {
+        $availablePaymentMethodsList = [];
+        foreach ($availablePaymentMethods->getMethods() as $paymentMethodTransfer) {
+            $availablePaymentMethodsList[] = $paymentMethodTransfer->getMethodName();
+        }
+
+        return $availablePaymentMethodsList;
     }
 }

@@ -93,5 +93,6 @@
     <transfer name="RestShipmentMethod">
         <property name="defaultGrossPrice" type="int"/>
         <property name="defaultNetPrice" type="int"/>
+        <property name="price" type="int"/>
     </transfer>
 </transfers>
