@@ -26,6 +26,7 @@ use Spryker\Zed\Vault\VaultConfig;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Vault\Business\VaultFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -47,6 +48,22 @@ class VaultBusinessTester extends Actor
         $vaultConfig = (new VaultConfig())
             ->setSharedConfig($sharedVaultConfig);
 
+        $vaultBusinessFactory = (new VaultBusinessFactory())
+            ->setConfig($vaultConfig);
+
+        $vaultFacade = $this->getFacade()
+            ->setFactory($vaultBusinessFactory);
+
+        return $vaultFacade;
+    }
+
+    /**
+     * @param \Spryker\Zed\Vault\VaultConfig $vaultConfig
+     *
+     * @return \Spryker\Zed\Vault\Business\VaultFacadeInterface
+     */
+    public function getVaultFacadeWithConfig(VaultConfig $vaultConfig): VaultFacadeInterface
+    {
         $vaultBusinessFactory = (new VaultBusinessFactory())
             ->setConfig($vaultConfig);
 
