@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
@@ -192,5 +193,22 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
                 $productData,
                 $localeTransfer
             );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcretePageSearchReader()
+            ->getProductConcretePageSearchCollectionByFilter($filterTransfer, $productIds);
     }
 }
