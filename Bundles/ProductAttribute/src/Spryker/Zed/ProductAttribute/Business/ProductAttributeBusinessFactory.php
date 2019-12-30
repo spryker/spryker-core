@@ -213,7 +213,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface
      */
-    protected function getUtilSanitizeXssService(): ProductAttributeToUtilSanitizeXssServiceInterface
+    public function getUtilSanitizeXssService(): ProductAttributeToUtilSanitizeXssServiceInterface
     {
         return $this->getProvidedDependency(ProductAttributeDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
     }

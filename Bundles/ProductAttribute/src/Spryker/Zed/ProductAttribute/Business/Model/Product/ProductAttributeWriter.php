@@ -39,27 +39,27 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     /**
      * @var \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface
      */
-    protected $sanitizeXssService;
+    protected $utilSanitizeXssService;
 
     /**
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $reader
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface $productReader
-     * @param \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface $sanitizeXssService
+     * @param \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface $utilSanitizeXssService
      */
     public function __construct(
         ProductAttributeReaderInterface $reader,
         ProductAttributeToLocaleInterface $localeFacade,
         ProductAttributeToProductInterface $productFacade,
         ProductReaderInterface $productReader,
-        ProductAttributeToUtilSanitizeXssServiceInterface $sanitizeXssService
+        ProductAttributeToUtilSanitizeXssServiceInterface $utilSanitizeXssService
     ) {
         $this->reader = $reader;
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
         $this->productReader = $productReader;
-        $this->sanitizeXssService = $sanitizeXssService;
+        $this->utilSanitizeXssService = $utilSanitizeXssService;
     }
 
     /**
@@ -163,7 +163,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
      */
     protected function sanitizeString(string $string): string
     {
-        return $this->sanitizeXssService->sanitizeXss($string);
+        return $this->utilSanitizeXssService->sanitizeXss($string);
     }
 
     /**
