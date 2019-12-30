@@ -30,6 +30,7 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
 
     <transfer name="Quote">
@@ -163,6 +164,8 @@
         <property name="unitPriceToPayAggregation" type="int"/>
         <property name="sumProductOptionPriceAggregation" type="int"/>
         <property name="unitProductOptionPriceAggregation" type="int"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">
