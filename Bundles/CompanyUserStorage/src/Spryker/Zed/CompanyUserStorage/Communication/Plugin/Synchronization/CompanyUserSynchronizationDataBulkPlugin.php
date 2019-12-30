@@ -65,7 +65,7 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
         foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
 
-            /** @var array $data */
+            /** @var string $data */
             $data = $companyUserStorageEntity->getData();
             $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($companyUserStorageEntity->getKey());
