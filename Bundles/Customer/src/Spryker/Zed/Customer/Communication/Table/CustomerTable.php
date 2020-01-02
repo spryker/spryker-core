@@ -97,8 +97,8 @@ class CustomerTable extends AbstractTable
             SpyCustomerTableMap::COL_ID_CUSTOMER,
             SpyCustomerTableMap::COL_EMAIL,
             SpyCustomerTableMap::COL_CREATED_AT,
-            SpyCustomerAddressTableMap::COL_FIRST_NAME,
-            SpyCustomerAddressTableMap::COL_LAST_NAME,
+            SpyCustomerTableMap::COL_FIRST_NAME,
+            SpyCustomerTableMap::COL_LAST_NAME,
             SpyCustomerAddressTableMap::COL_ZIP_CODE,
             SpyCustomerAddressTableMap::COL_CITY,
         ]);
