@@ -8,6 +8,7 @@
 namespace Spryker\Client\PriceProductOfferStorage\Plugin\PriceProductStorage;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface;
@@ -32,7 +33,10 @@ class PriceProductOfferStorageExpanderPlugin extends AbstractPlugin implements P
     public function expand(ProductViewTransfer $productViewTransfer, PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductFilterTransfer
     {
         if ($productViewTransfer->getProductOfferReference()) {
-            $priceProductFilterTransfer->setProductOfferReference($productViewTransfer->getProductOfferReference());
+            $productOfferTransfer = (new ProductOfferTransfer())
+                ->setProductOfferReference($productViewTransfer->getProductOfferReference());
+
+            $priceProductFilterTransfer->setProductOffer($productOfferTransfer);
         }
 
         return $priceProductFilterTransfer;

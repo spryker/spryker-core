@@ -21,6 +21,16 @@ class CustomerOrdersTable extends OrdersTable
     protected const BASE_URL = '/sales/customer/';
 
     /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\CustomerController
+     */
+    protected const CUSTOMER_ORDERS_TABLE_BASE_URL = '/sales/customer';
+
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\CustomerController::ordersTableAction()
+     */
+    protected const CUSTOMER_ORDERS_TABLE_URL = '/orders-table?%s=%s';
+
+    /**
      * @var string
      */
     protected $customerReference;
@@ -70,7 +80,8 @@ class CustomerOrdersTable extends OrdersTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setUrl(sprintf('orders-table?%s=%s', SalesConfig::PARAM_CUSTOMER_REFERENCE, $this->customerReference));
+        $this->baseUrl = static::CUSTOMER_ORDERS_TABLE_BASE_URL;
+        $config->setUrl(sprintf(static::CUSTOMER_ORDERS_TABLE_URL, SalesConfig::PARAM_CUSTOMER_REFERENCE, $this->customerReference));
 
         return parent::configure($config);
     }

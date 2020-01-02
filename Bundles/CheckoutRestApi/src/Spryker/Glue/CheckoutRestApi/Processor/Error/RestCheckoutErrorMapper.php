@@ -113,6 +113,10 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
         RestCheckoutErrorTransfer $restCheckoutErrorTransfer,
         string $localeName
     ): RestCheckoutErrorTransfer {
+        if (!$restCheckoutErrorTransfer->getDetail()) {
+            return $restCheckoutErrorTransfer;
+        }
+
         $restCheckoutErrorDetail = $this->glossaryStorageClient->translate(
             $restCheckoutErrorTransfer->getDetail(),
             $localeName,
