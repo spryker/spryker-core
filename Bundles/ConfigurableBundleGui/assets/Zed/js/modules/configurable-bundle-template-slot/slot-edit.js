@@ -5,7 +5,7 @@
 
 'use strict';
 
-var SelectTableAPI = require('../../../../../../ProductListGui/assets/Zed/js/modules/select-table-api');
+var SelectTableAPI = require('../select-table-api/select-table-api');
 
 $(document).ready(function () {
     var availableProductsTable = new SelectTableAPI();
