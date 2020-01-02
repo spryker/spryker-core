@@ -30,7 +30,6 @@
     "spryker/code-sniffer": "*",
     "spryker/currency": "*",
     "spryker/oms": "*",
-    "spryker/product-bundle": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
