@@ -51,13 +51,17 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
         }
 
         $nestedSortField = $sortConfigTransfer->getFieldName() . '.' . $sortConfigTransfer->getName();
-        $query->addSort(
-            [
-                $nestedSortField => [
-                    'order' => $sortConfig->getSortDirection($sortParamName),
-                    'mode' => 'min',
-                ],
-            ]
-        );
+        $sortRules = [
+            $nestedSortField => [
+                'order' => $sortConfig->getSortDirection($sortParamName),
+                'mode' => 'min',
+            ],
+        ];
+
+        if ($sortConfig->getUnmappedType($sortParamName)) {
+            $sortRules[$nestedSortField]['unmapped_type'] = $sortConfig->getUnmappedType($sortParamName);
+        }
+
+        $query->addSort($sortRules);
     }
 }
