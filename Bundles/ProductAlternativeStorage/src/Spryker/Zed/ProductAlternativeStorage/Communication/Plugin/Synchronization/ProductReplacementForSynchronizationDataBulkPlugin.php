@@ -99,7 +99,7 @@ class ProductReplacementForSynchronizationDataBulkPlugin extends AbstractPlugin 
 
         return $this->getFactory()
             ->createProductReplacementForStorageMapper()
-            ->mapProductReplacementForStorageEntitiesToSynchronizationDataTransfers($productReplacementForStorageEntities);
+            ->mapProductReplacementForStorageEntityTransfersToSynchronizationDataTransfers($productReplacementForStorageEntities);
     }
 
     /**

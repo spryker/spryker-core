@@ -31,4 +31,22 @@ class ProductReplacementForStorageMapper implements ProductReplacementForStorage
 
         return $synchronizationDataTransfers;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[] $productReplacementForStorageEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function mapProductReplacementForStorageEntityTransfersToSynchronizationDataTransfers(array $productReplacementForStorageEntityTransfers): array
+    {
+        $synchronizationDataTransfers = [];
+
+        foreach ($productReplacementForStorageEntityTransfers as $productReplacementForStorageEntity) {
+            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
+                ->setData($productReplacementForStorageEntity->getData())
+                ->setKey($productReplacementForStorageEntity->getKey());
+        }
+
+        return $synchronizationDataTransfers;
+    }
 }

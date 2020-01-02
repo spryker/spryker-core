@@ -100,7 +100,7 @@ class ProductAlternativeSynchronizationDataBulkPlugin extends AbstractPlugin imp
 
         return $this->getFactory()
             ->createProductAlternativeStorageMapper()
-            ->mapProductAlternativeStorageEntitiesToSynchronizationDataTransfers($productAlternativeStorageEntities);
+            ->mapProductAlternativeStorageEntityTransfersToSynchronizationDataTransfers($productAlternativeStorageEntities);
     }
 
     /**

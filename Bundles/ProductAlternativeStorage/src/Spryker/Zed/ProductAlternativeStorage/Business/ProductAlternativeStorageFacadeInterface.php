@@ -55,7 +55,7 @@ interface ProductAlternativeStorageFacadeInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
      */
     public function getProductAlternativeStorageCollectionByFilter(
         FilterTransfer $filterTransfer,

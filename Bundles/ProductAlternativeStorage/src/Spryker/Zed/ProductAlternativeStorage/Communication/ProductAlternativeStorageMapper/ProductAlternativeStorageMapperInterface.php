@@ -15,4 +15,11 @@ interface ProductAlternativeStorageMapperInterface
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function mapProductAlternativeStorageEntitiesToSynchronizationDataTransfers(array $productAlternativeStorageEntities): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[] $productAlternativeStorageEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function mapProductAlternativeStorageEntityTransfersToSynchronizationDataTransfers(array $productAlternativeStorageEntityTransfers): array;
 }

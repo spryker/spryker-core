@@ -31,4 +31,22 @@ class ProductAlternativeStorageMapper implements ProductAlternativeStorageMapper
 
         return $synchronizationDataTransfers;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[] $productAlternativeStorageEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function mapProductAlternativeStorageEntityTransfersToSynchronizationDataTransfers(array $productAlternativeStorageEntityTransfers): array
+    {
+        $synchronizationDataTransfers = [];
+
+        foreach ($productAlternativeStorageEntityTransfers as $productAlternativeStorageEntity) {
+            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
+                ->setData($productAlternativeStorageEntity->getData())
+                ->setKey($productAlternativeStorageEntity->getKey());
+        }
+
+        return $synchronizationDataTransfers;
+    }
 }

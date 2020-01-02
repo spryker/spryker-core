@@ -29,6 +29,7 @@
         <column name="id_product_replacement_for_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
 
         <id-method-parameter value="id_product_replacement_for_storage_pk_seq"/>
 
