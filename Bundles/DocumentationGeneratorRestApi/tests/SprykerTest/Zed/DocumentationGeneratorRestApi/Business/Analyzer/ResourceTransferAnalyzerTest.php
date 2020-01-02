@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\TestEntityTransfer;
 
 /**
  * Auto-generated group annotations
@@ -80,7 +81,17 @@ class ResourceTransferAnalyzerTest extends Unit
     /**
      * @return void
      */
-    public function testGetTransferMetadataShouldReturnArrayWithCorrectTransferMetada(): void
+    public function testIsTransferValidShouldReturnFalseForEntityTransferClass(): void
+    {
+        $result = $this->resourceTransferAnalyzer->isTransferValid(TestEntityTransfer::class);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetTransferMetadataShouldReturnArrayWithCorrectTransferMetadata(): void
     {
         $metadata = $this->resourceTransferAnalyzer->getTransferMetadata(new RestTestAttributesTransfer());
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use ReflectionClass;
+use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
@@ -29,7 +30,9 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
      */
     public function isTransferValid(string $transferClassName): bool
     {
-        return class_exists($transferClassName) && is_subclass_of($transferClassName, AbstractTransfer::class);
+        return class_exists($transferClassName)
+            && is_subclass_of($transferClassName, AbstractTransfer::class)
+            && !is_subclass_of($transferClassName, AbstractEntityTransfer::class);
     }
 
     /**
