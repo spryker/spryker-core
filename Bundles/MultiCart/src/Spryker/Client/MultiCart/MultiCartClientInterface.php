@@ -31,7 +31,7 @@ interface MultiCartClientInterface
      *
      * @api
      *
-     * @deprecated Use `setActiveQuote()` instead.
+     * @deprecated Use `markQuoteAsDefault()` instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -41,8 +41,7 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Marks quote as active.
-     * - Marks all other customer carts as inactive.
+     * - Marks quote as default.
      *
      * @api
      *
@@ -50,7 +49,7 @@ interface MultiCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

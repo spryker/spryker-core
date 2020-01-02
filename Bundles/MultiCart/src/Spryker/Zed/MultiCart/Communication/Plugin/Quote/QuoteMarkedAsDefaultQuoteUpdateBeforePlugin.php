@@ -18,13 +18,14 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
  * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
  * @method \Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface getRepository()
  */
-class DefaultCartChangedQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class QuoteMarkedAsDefaultQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     protected const GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
+    protected const GLOSSARY_KEY_PARAMETER_QUOTE = '%quote%';
 
     /**
      * {@inheritDoc}
-     * - Adds info message in case active cart was changed.
+     * - Adds info message quote was marked as default.
      *
      * @api
      *
@@ -34,14 +35,17 @@ class DefaultCartChangedQuoteUpdateBeforePlugin extends AbstractPlugin implement
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getCustomer()->getCustomerReference() !== $quoteTransfer->getCustomerReference()
-            || $this->getFacade()->isQuoteDefault($quoteTransfer->getIdQuote())) {
+        if ($quoteTransfer->getCustomer()->getCustomerReference() !== $quoteTransfer->getCustomerReference()) {
+            return $quoteTransfer;
+        }
+
+        if ($this->getFacade()->isQuoteDefault($quoteTransfer->getIdQuote())) {
             return $quoteTransfer;
         }
 
         $messageTransfer = (new MessageTransfer())
             ->setValue(static::GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS)
-            ->setParameters(['%quote%' => $quoteTransfer->getName()]);
+            ->setParameters([static::GLOSSARY_KEY_PARAMETER_QUOTE => $quoteTransfer->getName()]);
 
         $this->getFactory()->getMessengerFacade()->addInfoMessage($messageTransfer);
 

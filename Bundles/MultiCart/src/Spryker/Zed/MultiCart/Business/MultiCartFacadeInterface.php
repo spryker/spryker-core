@@ -93,8 +93,8 @@ interface MultiCartFacadeInterface
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 
     /**
-     * Specification
-     * - Check if a quote with specified ID is default
+     * Specification:
+     * - Check if a quote with specified ID is marked as default.
      *
      * @api
      *

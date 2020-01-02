@@ -18,13 +18,14 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
-class DefaultSharedCartChangedQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class SharedQuoteMarkedAsDefaultQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     protected const GLOSSARY_KEY_SHARED_CART_SET_DEFAULT_SUCCESS = 'shared_cart.cart.set_default.success';
+    protected const GLOSSARY_KEY_PARAMETER_QUOTE = '%quote%';
 
     /**
      * {@inheritDoc}
-     * - Adds info message in case active shared cart was changed.
+     * - Adds info message if shared quote was marked as default.
      *
      * @api
      *
@@ -49,7 +50,7 @@ class DefaultSharedCartChangedQuoteUpdateBeforePlugin extends AbstractPlugin imp
 
         $messageTransfer = (new MessageTransfer())
             ->setValue(static::GLOSSARY_KEY_SHARED_CART_SET_DEFAULT_SUCCESS)
-            ->setParameters(['%quote%' => $quoteTransfer->getName()]);
+            ->setParameters([static::GLOSSARY_KEY_PARAMETER_QUOTE => $quoteTransfer->getName()]);
 
         $this->getFactory()->getMessengerFacade()->addInfoMessage($messageTransfer);
 
