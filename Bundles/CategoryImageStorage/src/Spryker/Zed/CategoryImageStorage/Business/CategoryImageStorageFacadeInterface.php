@@ -38,14 +38,14 @@ interface CategoryImageStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns CategoryImageStorage collection by filter and categoryIds.
+     * - Returns CategoryImageStorageTransfer collection by filter and category ids.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer[]
      */
-    public function getCategoryImageStorageCollectionByFilter(FilterTransfer $filterTransfer, array $categoryIds): array;
+    public function getCategoryImageStorageCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array;
 }

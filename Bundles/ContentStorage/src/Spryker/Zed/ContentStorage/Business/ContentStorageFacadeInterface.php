@@ -27,13 +27,13 @@ interface ContentStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns ContentEntityTransfer collection by filter.
+     * - Returns ContentStorageTransfer collection by filter.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
      */
     public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array;
 }

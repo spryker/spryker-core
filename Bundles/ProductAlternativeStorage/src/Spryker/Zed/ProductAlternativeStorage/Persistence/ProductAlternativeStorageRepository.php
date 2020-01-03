@@ -213,11 +213,11 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     *@see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds()
+     *
      * @deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findAllProductAlternativeStorageEntities(): array
     {
@@ -228,13 +228,13 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()
-     *
      * @param int[] $productAlternativeStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     *@deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds()
+     *
      */
     public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array
     {
@@ -257,13 +257,13 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilter()
-     *
      * @param int[] $productReplacementForStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     *@deprecated Use `ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds()
+     *
      */
     public function findProductReplacementForStorageEntitiesByIds(array $productReplacementForStorageIds): array
     {
@@ -280,7 +280,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array
+    public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array
     {
         $query = $this->getFactory()
             ->createProductAlternativeStoragePropelQuery();
@@ -298,7 +298,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array
+    public function getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array
     {
         $query = $this->getFactory()
             ->createProductReplacementForStoragePropelQuery();

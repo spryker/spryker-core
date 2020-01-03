@@ -60,8 +60,8 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
     {
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $companyUserStorageEntities = $this->getFacade()->getCompanyUserStorageCollectionByFilter($filterTransfer, $ids);
-
+        $companyUserStorageEntities = $this->getFacade()->getCompanyUserStorageCollectionByFilterAndCompanyUserIds($filterTransfer, $ids);
+// @todo: REfactor this like `CategoryImageSynchronizationDataBulkPlugin`
         foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
 

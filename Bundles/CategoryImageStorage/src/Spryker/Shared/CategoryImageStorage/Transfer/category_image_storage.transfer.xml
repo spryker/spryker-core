@@ -7,6 +7,8 @@
         <property name="idCategoryImage" type="int"/>
         <property name="externalUrlLarge" type="string"/>
         <property name="externalUrlSmall" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="CategoryImageSetStorage">

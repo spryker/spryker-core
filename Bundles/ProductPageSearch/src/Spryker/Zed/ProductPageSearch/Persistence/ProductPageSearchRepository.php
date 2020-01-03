@@ -25,7 +25,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @deprecated Use `ProductPageSearchRepository::getProductConcretePageSearchCollectionByFilter()` instead.
      *
-     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository::getProductConcretePageSearchCollectionByFilter()
+     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository::getProductConcretePageSearchCollectionByFilterAndProductIds()
      *
      * @param int[] $productIds
      *
@@ -216,14 +216,13 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    public function getProductConcretePageSearchCollectionByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array
     {
-        $productConcretePageSearchEntities = $this->getFactory()
+        $productConcretePageSearchQuery = $this->getFactory()
             ->createProductConcretePageSearchQuery()
-            ->filterByFkProduct_In($productIds)
-            ->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset())
-            ->find();
+            ->filterByFkProduct_In($productIds);
+
+        $productConcretePageSearchEntities = $this->buildQueryFromCriteria($productConcretePageSearchQuery, $filterTransfer)->find();
 
         return $this->mapProductConcretePageSearchEntities(
             $productConcretePageSearchEntities

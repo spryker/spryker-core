@@ -53,7 +53,7 @@ interface CompanyUserStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns CompanyUserStorage collection by filter and ids.
+     * - Returns CompanyUserStorage collection by filter and company user ids.
      *
      * @api
      *
@@ -62,5 +62,5 @@ interface CompanyUserStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
      */
-    public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $companyUserIds): array;
+    public function getCompanyUserStorageCollectionByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array;
 }

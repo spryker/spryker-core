@@ -41,10 +41,10 @@ class ProductAlternativeStorageMapper implements ProductAlternativeStorageMapper
     {
         $synchronizationDataTransfers = [];
 
-        foreach ($productAlternativeStorageEntityTransfers as $productAlternativeStorageEntity) {
+        foreach ($productAlternativeStorageEntityTransfers as $productAlternativeStorageEntityTransfer) {
             $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
-                ->setData($productAlternativeStorageEntity->getData())
-                ->setKey($productAlternativeStorageEntity->getKey());
+                ->setData($productAlternativeStorageEntityTransfer->getData())
+                ->setKey($productAlternativeStorageEntityTransfer->getKey());
         }
 
         return $synchronizationDataTransfers;

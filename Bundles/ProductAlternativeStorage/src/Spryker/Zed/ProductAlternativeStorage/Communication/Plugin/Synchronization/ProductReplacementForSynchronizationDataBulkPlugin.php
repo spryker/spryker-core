@@ -95,7 +95,7 @@ class ProductReplacementForSynchronizationDataBulkPlugin extends AbstractPlugin 
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productReplacementForStorageEntities = $this->getFacade()->getProductReplacementForStorageCollectionByFilter($filterTransfer, $ids);
+        $productReplacementForStorageEntities = $this->getFacade()->getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds($filterTransfer, $ids);
 
         return $this->getFactory()
             ->createProductReplacementForStorageMapper()

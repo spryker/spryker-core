@@ -61,10 +61,9 @@ class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin im
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productConcretePageSearchTransfers = $this->getFacade()->getProductConcretePageSearchCollectionByFilter($filterTransfer, $productConcreteIds);
-
+        $productConcretePageSearchTransfers = $this->getFacade()->getProductConcretePageSearchCollectionByFilterAndProductIds($filterTransfer, $productConcreteIds);
+// @todo: REfactor this like `CategoryImageSynchronizationDataBulkPlugin`
         $synchronizationDataTransfers = [];
-        /** @var \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer */
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             $synchronizationDataTransfer->setData($productConcretePageSearchTransfer->getData());

@@ -188,7 +188,7 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification:
-     * - Provides ProductConcretePage collection according to passed filter and ids.
+     * - Provides ProductConcretePage collection by filter and product ids.
      *
      * @api
      *
@@ -197,7 +197,7 @@ interface ProductPageSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchCollectionByFilter(
+    public function getProductConcretePageSearchCollectionByFilterAndProductIds(
         FilterTransfer $filterTransfer,
         array $productIds
     ): array;

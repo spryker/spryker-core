@@ -41,10 +41,10 @@ class ProductReplacementForStorageMapper implements ProductReplacementForStorage
     {
         $synchronizationDataTransfers = [];
 
-        foreach ($productReplacementForStorageEntityTransfers as $productReplacementForStorageEntity) {
+        foreach ($productReplacementForStorageEntityTransfers as $productReplacementForStorageEntityTransfer) {
             $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
-                ->setData($productReplacementForStorageEntity->getData())
-                ->setKey($productReplacementForStorageEntity->getKey());
+                ->setData($productReplacementForStorageEntityTransfer->getData())
+                ->setKey($productReplacementForStorageEntityTransfer->getKey());
         }
 
         return $synchronizationDataTransfers;

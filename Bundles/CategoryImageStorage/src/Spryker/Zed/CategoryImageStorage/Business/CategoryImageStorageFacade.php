@@ -53,10 +53,10 @@ class CategoryImageStorageFacade extends AbstractFacade implements CategoryImage
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer[]
      */
-    public function getCategoryImageStorageCollectionByFilter(FilterTransfer $filterTransfer, array $categoryIds): array
+    public function getCategoryImageStorageCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array
     {
-        return $this->getRepository()->getCategoryImageStorageCollectionByFilter($filterTransfer, $categoryIds);
+        return $this->getRepository()->getCategoryImageStorageCollectionByFilterAndCategoryIds($filterTransfer, $categoryIds);
     }
 }

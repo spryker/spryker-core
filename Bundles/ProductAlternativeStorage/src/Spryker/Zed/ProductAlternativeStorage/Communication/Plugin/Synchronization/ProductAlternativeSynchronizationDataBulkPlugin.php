@@ -96,7 +96,7 @@ class ProductAlternativeSynchronizationDataBulkPlugin extends AbstractPlugin imp
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productAlternativeStorageEntities = $this->getFacade()->getProductAlternativeStorageCollectionByFilter($filterTransfer, $ids);
+        $productAlternativeStorageEntities = $this->getFacade()->getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds($filterTransfer, $ids);
 
         return $this->getFactory()
             ->createProductAlternativeStorageMapper()

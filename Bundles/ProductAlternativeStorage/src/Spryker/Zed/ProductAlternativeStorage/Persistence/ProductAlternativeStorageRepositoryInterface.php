@@ -99,42 +99,42 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
 
     /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     *@see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds()
+     *
      * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findAllProductAlternativeStorageEntities(): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()
-     *
      * @param int[] $productAlternativeStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     *@deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds()
+     *
      */
     public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array;
 
     /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     *@see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds()
+     *
      * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findAllProductReplacementForStorageEntities(): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()
-     *
      * @param int[] $productReplacementForStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     *@deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds()
+     *
      */
     public function findProductReplacementForStorageEntitiesByIds(array $productReplacementForStorageIds): array;
 
@@ -144,7 +144,7 @@ interface ProductAlternativeStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array;
+    public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -152,5 +152,5 @@ interface ProductAlternativeStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array;
+    public function getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array;
 }

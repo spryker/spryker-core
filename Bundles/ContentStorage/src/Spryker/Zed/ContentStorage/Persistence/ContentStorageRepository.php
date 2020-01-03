@@ -25,19 +25,12 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      */
     public function findContentStorageByContentIds(array $contentIds): array
     {
-        $contentStorageTransfers = [];
         $contentStorageEntities = $this->getFactory()
             ->createContentStorageQuery()
             ->filterByFkContent($contentIds, Criteria::IN)
             ->find();
 
-        foreach ($contentStorageEntities as $contentStorageEntity) {
-            $contentStorageTransfers[] = $this->getFactory()
-                ->createContentStorageMapper()
-                ->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer());
-        }
-
-        return $contentStorageTransfers;
+        return $this->mapContentStorageEntityCollectionToContentStorageTransferCollection($contentStorageEntities);
     }
 
     /**
@@ -68,18 +61,11 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      */
     public function findAllContentStorage(): array
     {
-        $contentStorageTransfers = [];
         $contentStorageEntities = $this->getFactory()
             ->createContentStorageQuery()
             ->find();
 
-        foreach ($contentStorageEntities as $contentStorageEntity) {
-            $contentStorageTransfers[] = $this->getFactory()
-                ->createContentStorageMapper()
-                ->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer());
-        }
-
-        return $contentStorageTransfers;
+        return $this->mapContentStorageEntityCollectionToContentStorageTransferCollection($contentStorageEntities);
     }
 
     /**
@@ -107,13 +93,35 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
      */
     public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->getContentQuery();
 
-        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        $contentStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+
+        return $this->mapContentStorageEntityCollectionToContentStorageTransferCollection($contentStorageEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyContentEntityTransfer[] $contentStorageEntities
+     *
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     */
+    protected function mapContentStorageEntityCollectionToContentStorageTransferCollection(array $contentStorageEntities): array
+    {
+        $contentStorageMapper = $this->getFactory()->createContentStorageMapper();
+        $contentStorageTransfers = [];
+
+        foreach ($contentStorageEntities as $contentStorageEntity) {
+            $contentStorageTransfers[] = $contentStorageMapper->mapContentStorageEntityToTransfer(
+                $contentStorageEntity,
+                new ContentStorageTransfer()
+            );
+        }
+
+        return $contentStorageTransfers;
     }
 }

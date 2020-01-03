@@ -12,22 +12,22 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface CompanyUserStorageRepositoryInterface
 {
     /**
-     * @deprecated Use `CompanyUserStorageRepositoryInterface::getCompanyUserStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getCompanyUserStorageCollectionByFilter()
-     *
      * @param array $companyUserIds
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     *@deprecated Use `CompanyUserStorageRepositoryInterface::getCompanyUserStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getCompanyUserStorageCollectionByFilterAndCompanyUserIds()
+     *
      */
     public function findCompanyUserStorageEntities(array $companyUserIds): array;
 
     /**
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     *@see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getCompanyUserStorageCollectionByFilterAndCompanyUserIds()
+     *
      * @deprecated Use `CompanyUserStorageRepositoryInterface::getCompanyUserStorageCollectionByFilter()` instead.
      *
-     * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getCompanyUserStorageCollectionByFilter()
-     *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
     public function findAllCompanyUserStorageEntities(): array;
 
@@ -37,5 +37,5 @@ interface CompanyUserStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
      */
-    public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $companyUserIds): array;
+    public function getCompanyUserStorageCollectionByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array;
 }

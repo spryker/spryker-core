@@ -36,14 +36,14 @@ class ContentStorageEventResourceBulkRepositoryPlugin extends AbstractPlugin imp
 
     /**
      * {@inheritDoc}
-     * - Returns ContentEntityTransfer collection.
+     * - Returns ContentStorageTransfer collection.
      *
      * @api
      *
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(int $offset, int $limit): array
     {

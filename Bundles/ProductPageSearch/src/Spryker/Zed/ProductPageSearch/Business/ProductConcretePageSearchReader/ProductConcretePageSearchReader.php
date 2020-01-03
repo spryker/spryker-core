@@ -28,7 +28,7 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     /**
      * @deprecated Use `ProductConcretePageSearchReader::getProductConcretePageSearchCollectionByFilter()` instead.
      *
-     * @see \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReader::getProductConcretePageSearchCollectionByFilter()
+     * @see \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReader::getProductConcretePageSearchCollectionByFilterAndProductIds()
      *
      * @param int[] $productIds
      *
@@ -87,8 +87,8 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    public function getProductConcretePageSearchCollectionByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array
     {
-        return $this->repository->getProductConcretePageSearchCollectionByFilter($filterTransfer, $productIds);
+        return $this->repository->getProductConcretePageSearchCollectionByFilterAndProductIds($filterTransfer, $productIds);
     }
 }

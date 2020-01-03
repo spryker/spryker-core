@@ -234,10 +234,10 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    public function getProductConcretePageSearchCollectionByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array
     {
         return $this->getFactory()
             ->createProductConcretePageSearchReader()
-            ->getProductConcretePageSearchCollectionByFilter($filterTransfer, $productIds);
+            ->getProductConcretePageSearchCollectionByFilterAndProductIds($filterTransfer, $productIds);
     }
 }

@@ -73,12 +73,12 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilter(
+    public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
         array $productAlternativeStorageIds
     ): array {
         return $this->getRepository()
-            ->getProductAlternativeStorageCollectionByFilter($filterTransfer, $productAlternativeStorageIds);
+            ->getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds($filterTransfer, $productAlternativeStorageIds);
     }
 
     /**
@@ -91,11 +91,11 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilter(
+    public function getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,
         array $productReplacementForStorageIds
     ): array {
         return $this->getRepository()
-            ->getProductReplacementForStorageCollectionByFilter($filterTransfer, $productReplacementForStorageIds);
+            ->getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds($filterTransfer, $productReplacementForStorageIds);
     }
 }

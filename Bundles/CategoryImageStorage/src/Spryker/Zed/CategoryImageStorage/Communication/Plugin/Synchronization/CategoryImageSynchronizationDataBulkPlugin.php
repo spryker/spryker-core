@@ -8,8 +8,6 @@
 namespace Spryker\Zed\CategoryImageStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\CategoryImageStorage\CategoryImageStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -48,6 +46,7 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritDoc}
+     * - Returns SynchronizationDataTransfer collection.
      *
      * @api
      *
@@ -59,15 +58,13 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $categoryImageStorageEntityTransfers = $this->getFacade()->getCategoryImageStorageCollectionByFilter($filterTransfer, $ids);
 
-        foreach ($categoryImageStorageEntityTransfers as $categoryImageStorageEntityTransfer) {
-            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($categoryImageStorageEntityTransfer);
-        }
+        $categoryImageStorageTransfers = $this->getFacade()->getCategoryImageStorageCollectionByFilterAndCategoryIds($filterTransfer, $ids);
 
-        return $synchronizationDataTransfers;
+        return $this->getFactory()
+            ->createCategoryImageStorageMapper()
+            ->mapCategoryImageStorageTransferCollectionToSynchronizationDataTransferCollection($categoryImageStorageTransfers);
     }
 
     /**
@@ -104,22 +101,6 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getCategoryImageSynchronizationPoolName();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
-     */
-    protected function createSynchronizationDataTransfer(
-        SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
-    ): SynchronizationDataTransfer {
-        /** @var string $categoryImageStorageData */
-        $categoryImageStorageData = $categoryImageStorageEntityTransfer->getData();
-
-        return (new SynchronizationDataTransfer())
-            ->setData($categoryImageStorageData)
-            ->setKey($categoryImageStorageEntityTransfer->getKey());
     }
 
     /**
