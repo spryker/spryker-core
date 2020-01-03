@@ -84,7 +84,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $localeTransfers = $this->localeFacade->getLocaleCollection();
         $glossaryKeyTransfers = $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers(
-            $this->prepareGlossaryKeys($productAttributeEntityCollection),
+            $glossaryKeys,
             $localeTransfers
         );
         $indexedTranslationTransfers = $this
@@ -121,7 +121,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
                 continue;
             }
 
-            $indexedTranslationTransfers[$glossaryKeyTransfer->getKey()][$localeTransfer->getIdLocale()] = $translationTransfer->getValue();
+            $indexedTranslationTransfers[$glossaryKeyTransfer->getKey()][$localeTransfer->getLocaleName()] = $translationTransfer->getValue();
         }
 
         return $indexedTranslationTransfers;
@@ -168,7 +168,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     {
         $glossaryKeys = [];
         foreach ($productAttributeEntityCollection as $productAttributeEntity) {
-            $glossaryKeys[] = $this->glossaryKeyBuilder->buildGlossaryKey(
+            $glossaryKeys[] = $this->buildGlossaryKeyFromAttributeKey(
                 $productAttributeEntity->getSpyProductAttributeKey()->getKey()
             );
         }
@@ -238,7 +238,8 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
         foreach ($availableLocales as $localeTransfer) {
-            $keyTranslation = $translationsByLocaleNameAndGlossaryKey[$attributeTransfer->getKey()][$localeTransfer->getLocaleName()] ?? $this->getAttributeKeyTranslation($attributeTransfer->getKey(), $localeTransfer);
+            $glossaryKey = $this->buildGlossaryKeyFromAttributeKey($attributeTransfer->getKey());
+            $keyTranslation = $translationsByLocaleNameAndGlossaryKey[$glossaryKey][$localeTransfer->getLocaleName()] ?? $this->getAttributeKeyTranslation($glossaryKey, $localeTransfer);
 
             $localizedAttributeKeyTransfer = new LocalizedProductManagementAttributeKeyTransfer();
             $localizedAttributeKeyTransfer
@@ -253,14 +254,22 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
     /**
      * @param string $attributeKey
+     *
+     * @return string
+     */
+    protected function buildGlossaryKeyFromAttributeKey(string $attributeKey): string
+    {
+        return $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
+    }
+
+    /**
+     * @param string $glossaryKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string|null
      */
-    protected function getAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
+    protected function getAttributeKeyTranslation(string $glossaryKey, LocaleTransfer $localeTransfer)
     {
-        $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
-
         if ($this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
             return $this->glossaryFacade
                 ->getTranslation($glossaryKey, $localeTransfer)
