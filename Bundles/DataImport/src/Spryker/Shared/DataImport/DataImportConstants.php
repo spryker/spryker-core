@@ -18,4 +18,36 @@ interface DataImportConstants
      * - Can be used to have a small set of import data for e.g. testing or development.
      */
     public const IMPORT_FILE_ROOT_PATH = 'IMPORT_FILE_ROOT_PATH';
+
+    /**
+     * Specification:
+     * - Defines data import queue reader chunk size.
+     *
+     * @api
+     */
+    public const QUEUE_READER_CHUNK_SIZE = 'DATA_IMPORT:QUEUE_READER_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Defines the size of the chunk to be used for writing messages into the queue in bulk.
+     *
+     * @api
+     */
+    public const QUEUE_WRITER_CHUNK_SIZE = 'DATA_IMPORT:QUEUE_WRITER_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Defines the size of the chunk to be used in publisher for triggering events to the queue.
+     *
+     * @api
+     */
+    public const PUBLISHER_TRIGGER_CHUNK_SIZE = 'DATA_IMPORT:PUBLISHER_TRIGGER_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Defines the size of the chunk to be used in publisher for flushing local cache of events.
+     *
+     * @api
+     */
+    public const PUBLISHER_FLUSH_CHUNK_SIZE = 'DATA_IMPORT:PUBLISHER_FLUSH_CHUNK_SIZE';
 }

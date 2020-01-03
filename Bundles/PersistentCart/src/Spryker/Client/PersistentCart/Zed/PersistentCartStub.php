@@ -96,6 +96,24 @@ class PersistentCartStub implements PersistentCartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\PersistentCart\Communication\Controller\GatewayController::updateQuantityAction()
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call(
+            '/persistent-cart/gateway/update-quantity',
+            $persistentCartChangeTransfer
+        );
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -213,6 +231,19 @@ class PersistentCartStub implements PersistentCartStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/replace-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -221,6 +252,32 @@ class PersistentCartStub implements PersistentCartStubInterface
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/update-and-reload-quote', $quoteUpdateRequestTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceQuoteByCustomerAndStore(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/replace-quote-by-customer-and-store', $quoteTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/reset-quote-lock', $quoteTransfer);
 
         return $quoteResponseTransfer;
     }

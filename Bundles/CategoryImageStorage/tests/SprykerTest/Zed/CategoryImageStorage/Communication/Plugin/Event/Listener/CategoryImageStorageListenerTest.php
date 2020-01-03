@@ -26,6 +26,7 @@ use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\Categor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryImageStorage
@@ -54,9 +55,9 @@ class CategoryImageStorageListenerTest extends Unit
     protected $categoryImageSetTransfer;
 
     /**
-     * {@inheritdoc}
+     * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -70,8 +71,6 @@ class CategoryImageStorageListenerTest extends Unit
     }
 
     /**
-     * @void
-     *
      * @return void
      */
     public function testCategoryImagePublishStorageListenerStoreData(): void
@@ -155,7 +154,61 @@ class CategoryImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function _after()
+    public function testCategoryImageSetStorageListenerSortsImagesBySortOrderAsc(): void
+    {
+        // Assign
+        $this->cleanupCategoryImageStorage();
+        $categoryImageSetTransfer = $this->tester->createCategoryImageSetWithOrderedImages([3, 1, 0, 2]);
+        $categoryTransfer = $this->tester->createCategoryWithImageSet($categoryImageSetTransfer);
+
+        $categoryImagePublishStorageListener = new CategoryImagePublishStorageListener();
+        $categoryImagePublishStorageListener->setFacade($this->tester->getFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory()),
+        ];
+
+        // Act
+        $categoryImagePublishStorageListener->handleBulk($eventTransfers, CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH);
+        $categoryImages = $this->tester->getCategoryImages($categoryTransfer->getIdCategory());
+
+        // Assert
+        $this->tester->assertSortingBySortOrder($categoryImages);
+
+        $this->tester->deleteCategoryWithImageSet($categoryTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryImagePublishStorageListenerSortsImagesByIdCategoryImageSetToCategoryImageAsc(): void
+    {
+        // Assign
+        $this->cleanupCategoryImageStorage();
+        $categoryImageSetTransfer = $this->tester->createCategoryImageSetWithOrderedImages([0, 0, 0]);
+        $categoryTransfer = $this->tester->createCategoryWithImageSet($categoryImageSetTransfer);
+
+        $categoryImagePublishStorageListener = new CategoryImagePublishStorageListener();
+        $categoryImagePublishStorageListener->setFacade($this->tester->getFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory()),
+        ];
+
+        // Act
+        $categoryImagePublishStorageListener->handleBulk($eventTransfers, CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH);
+        $categoryImages = $this->tester->getCategoryImages($categoryTransfer->getIdCategory());
+
+        // Assert
+        $this->tester->assertSortingByIdCategoryImageSetToCategoryImage($categoryImages);
+
+        $this->tester->deleteCategoryWithImageSet($categoryTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function _after(): void
     {
         parent::_after();
 
@@ -177,7 +230,7 @@ class CategoryImageStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertCategoryImageStorage($beforeCount)
+    protected function assertCategoryImageStorage(int $beforeCount): void
     {
         $afterCount = SpyCategoryImageStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);

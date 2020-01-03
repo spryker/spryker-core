@@ -12,12 +12,15 @@ use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
 use Spryker\Client\Quote\Exception\StorageStrategyNotFound;
 use Spryker\Client\Quote\QuoteConfig;
+use Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSession;
+use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
+use Spryker\Client\Quote\StorageStrategy\StorageStrategyProviderInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
@@ -26,6 +29,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Quote
@@ -38,7 +42,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testNotLoggedInCustomerCanUseSessionStorageOnly()
+    public function testNotLoggedInCustomerCanUseSessionStorageOnly(): void
     {
         $customerClient = $this->createCustomerClientMock();
         $customerClient->method('isLoggedIn')->willReturn(false);
@@ -61,7 +65,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testLoggedInCustomerCanUseSessionStorage()
+    public function testLoggedInCustomerCanUseSessionStorage(): void
     {
         $customerClient = $this->createCustomerClientMock();
         $customerClient->method('isLoggedIn')->willReturn(true);
@@ -84,7 +88,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testLoggedInCustomerCanUseDatabaseStorage()
+    public function testLoggedInCustomerCanUseDatabaseStorage(): void
     {
         $customerClient = $this->createCustomerClientMock();
         $customerClient->method('isLoggedIn')->willReturn(true);
@@ -107,7 +111,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testUsingIncorrectStorageTypeLeadsToError()
+    public function testUsingIncorrectStorageTypeLeadsToError(): void
     {
         $customerClient = $this->createCustomerClientMock();
 
@@ -141,7 +145,7 @@ class StorageStrategyProviderTest extends Unit
      *
      * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyProviderInterface
      */
-    protected function createStorageStrategyProvider(QuoteConfig $quoteConfig, array $storageStrategyList)
+    protected function createStorageStrategyProvider(QuoteConfig $quoteConfig, array $storageStrategyList): StorageStrategyProviderInterface
     {
         return new StorageStrategyProvider($quoteConfig, $storageStrategyList);
     }
@@ -151,33 +155,36 @@ class StorageStrategyProviderTest extends Unit
      *
      * @return \Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy
      */
-    protected function createDatabaseStorageStrategy(QuoteToCustomerClientInterface $customerClient)
+    protected function createDatabaseStorageStrategy(QuoteToCustomerClientInterface $customerClient): DatabaseStorageStrategy
     {
         return new DatabaseStorageStrategy(
             $customerClient,
             $this->createQuoteZedStubMock(),
             $this->createQuoteSession(),
             $this->createQuoteLockStatusValidatorMock(),
-            $this->createQuoteEditStatusValidatorMock()
+            $this->createQuoteEditStatusValidatorMock(),
+            $this->createQuoteLockerMock(),
+            []
         );
     }
 
     /**
      * @return \Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy
      */
-    protected function createSessionStorageStrategy()
+    protected function createSessionStorageStrategy(): SessionStorageStrategy
     {
         return new SessionStorageStrategy(
             $this->createQuoteSession(),
             $this->createQuoteLockStatusValidatorMock(),
-            $this->createQuoteEditStatusValidatorMock()
+            $this->createQuoteEditStatusValidatorMock(),
+            $this->createQuoteLockerMock()
         );
     }
 
     /**
      * @return \Spryker\Client\Quote\Session\QuoteSessionInterface
      */
-    protected function createQuoteSession()
+    protected function createQuoteSession(): QuoteSessionInterface
     {
         $sessionContainer = new Session(new MockArraySessionStorage());
         $sessionClient = new SessionClient();
@@ -227,5 +234,13 @@ class StorageStrategyProviderTest extends Unit
     {
         return $this->getMockBuilder(QuoteToCurrencyClientInterface::class)
             ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface
+     */
+    protected function createQuoteLockerMock()
+    {
+        return $this->createMock(QuoteLockerInterface::class);
     }
 }

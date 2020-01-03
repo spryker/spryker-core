@@ -1,100 +1,53 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 'use strict';
 
-function getSelectedItems(idOrderItem) {
-    var selectedItems = [];
+$(document).ready(function () {
+    $('.sales-order-item-group-element button').click(function(e) {
+        e.preventDefault();
+        var keyItemGroup = $(this).closest('.sales-order-item-group-element').data('group-key');
+        var $groupTable = $('.order-group-items-table-' + keyItemGroup);
+        var $idGroupItems = $groupTable.find('input[name="order-item"]');
+        var idGroupItemsCheckedList = [];
+        var idGroupItemsFullList = [];
+        var $form = $(this).closest('form');
+        var formAction = $form.attr('action');
 
-    if (parseInt(idOrderItem) > 0) {
-        selectedItems.push(idOrderItem);
+        $idGroupItems.each(function () {
+            idGroupItemsFullList.push($(this).val());
 
-        return selectedItems;
-    }
+            if ($(this).prop('checked')) {
+                idGroupItemsCheckedList.push($(this).val());
+            }
+        });
 
-    $('.item-check').each(function(){
-        if ($(this).prop('checked') === true) {
-            selectedItems.push($(this).val());
+        if (!idGroupItemsCheckedList.length) {
+            idGroupItemsCheckedList = idGroupItemsFullList;
         }
-    });
 
-    return selectedItems;
-}
+        var finalUrl = formAction + '&' + $.param({items: idGroupItemsCheckedList});
 
-function createTriggerUrl(idOrder, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order';
-    var parameters = {
-        event: eventName,
-        'id-sales-order': idOrder,
-        redirect: '/sales/detail?id-sales-order=' + idOrder
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
-function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order-items';
-    var parameters = {
-        event: eventName,
-        'id-sales-order-item': idOrderItem,
-        redirect: '/sales/detail?id-sales-order=' + idOrder
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
-function disableTrigger($item) {
-    $item
-        .prop('disabled', true)
-        .addClass('disabled');
-}
-
-$(document).ready(function() {
-    $('.trigger-order-single-event').click(function(e){
-        e.preventDefault();
-
-        var $item = $(this);
-
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-        var idOrderItem = $item.data('id-item');
-
-        window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
-    });
-
-    $('.trigger-order-event').click(function(e){
-        e.preventDefault();
-
-        var $item = $(this);
-        
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-
-        window.location = createTriggerUrl(idOrder, eventName);
+        $(this).prop('disabled', true).addClass('disabled');
+        $form.attr('action', finalUrl);
+        $form.submit();
     });
 
     $('.item-check').click(function(){
-        var countChecked = $(".item-check[type='checkbox']:checked").length;
-        var totalCheckboxItems = $('.item-check').length;
+        var $table = $(this).closest('table');
+        var $checkAllOrders = $table.find('.check-all-orders');
+        var countChecked = $table.find('.item-check[type="checkbox"]:checked').length;
+        var totalCheckboxItems = $table.find('.item-check').length;
 
         if (totalCheckboxItems === countChecked) {
-            $('#check-all-orders').prop('checked', true);
+            $checkAllOrders.prop('checked', true);
 
-            return true;
+            return;
         }
 
-        $('#check-all-orders').prop('checked', false);
-
-        return true;
+        $checkAllOrders.prop('checked', false);
     });
 
     $('.more-attributes').click(function(e){
@@ -128,15 +81,7 @@ $(document).ready(function() {
         $('#split_form_row_' + theID).toggle();
     });
 
-    $('#check-all-orders').click(function(){
-        if ($(this).prop('checked') === true) {
-            var checked = true;
-        } else {
-            var checked = false;
-        }
-
-        $('.item-check').each(function(){
-            $(this).prop('checked', checked);
-        });
+    $('.check-all-orders').click(function(){
+        $(this).closest('table').find('.item-check').prop('checked', $(this).prop('checked'));
     });
 });

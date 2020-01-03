@@ -64,6 +64,7 @@ class CsvReader implements CsvReaderInterface
     protected function createCsvMeta($filename)
     {
         $csvFile = $this->createCsvFile($filename);
+
         return new CsvMeta($csvFile);
     }
 

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProductMerchantRelationshipDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -99,7 +100,9 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
      */
     protected function createMerchantRelationship(int $idMerchant, string $key): void
     {
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
         $this->tester->haveMerchantRelationship([
             'merchantRelationshipKey' => $key,
@@ -109,10 +112,11 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportFacade
+     * @return \Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function getFacadeMock()
+    public function getFacadeMock(): PriceProductMerchantRelationshipDataImportFacade
     {
+        /** @var \Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $factoryMock */
         $factoryMock = $this->getMockBuilder(PriceProductMerchantRelationshipDataImportBusinessFactory::class)
             ->setMethods(
                 [

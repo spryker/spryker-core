@@ -21,7 +21,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
 class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,15 +57,15 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
     {
         $query = $this->getQueryContainer()->queryProductSetPageSearchPageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductSetPageSearch();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -77,7 +77,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +89,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

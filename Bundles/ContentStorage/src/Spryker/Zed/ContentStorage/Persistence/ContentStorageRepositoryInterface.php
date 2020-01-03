@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Persistence;
 
-use ArrayObject;
-
 /**
  * @method \Spryker\Zed\ContentStorage\Persistence\ContentStoragePersistenceFactory getFactory()
  */
@@ -17,24 +15,26 @@ interface ContentStorageRepositoryInterface
     /**
      * @param int[] $contentIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
      */
-    public function findContentStorageByContentIds(array $contentIds): ArrayObject;
+    public function findContentStorageByContentIds(array $contentIds): array;
 
     /**
      * @param array $contentIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ContentTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
-    public function findContentByIds(array $contentIds): ArrayObject;
+    public function findContentByIds(array $contentIds): array;
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
      */
-    public function findAllContentStorage(): ArrayObject;
+    public function findAllContentStorage(): array;
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\ContentTransfer[]
+     * @param array $contentIds
+     *
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
      */
-    public function findAllContent(): ArrayObject;
+    public function findContentByContentIds(array $contentIds): array;
 }

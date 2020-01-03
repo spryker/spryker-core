@@ -62,3 +62,7 @@ ul.locale > li {
 .select2-results__option--highlighted .select2-result-repository__title { color: white; }
 .select2-results__option--highlighted .select2-result-repository__forks, .select2-results__option--highlighted .select2-result-repository__stargazers, .select2-results__option--highlighted .select2-result-repository__description, .select2-results__option--highlighted .select2-result-repository__watchers { color: #c6dcef; }
 .select2.select2-container {min-width: 300px}
+
+.image-collection:last-child .image-collection-delimiter {
+  display: none;
+}

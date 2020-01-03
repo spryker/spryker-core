@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CategoryPageEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class CategoryPageEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,15 +47,15 @@ class CategoryPageEventResourceQueryContainerPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryCategoryNodesByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class CategoryPageEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\SharedCart\Zed;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
@@ -27,4 +29,18 @@ interface SharedCartStubInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function getShareDetailsByIdQuoteAction(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
+     */
+    public function findQuotePermissionGroupById(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
 }

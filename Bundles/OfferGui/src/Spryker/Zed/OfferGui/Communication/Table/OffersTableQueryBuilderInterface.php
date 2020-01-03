@@ -13,7 +13,7 @@ interface OffersTableQueryBuilderInterface
     public const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
     public function buildQuery();
 }

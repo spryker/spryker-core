@@ -9,6 +9,9 @@ namespace Spryker\Client\ContentStorage\Exception;
 
 use Exception;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class MissingContentTermTypePluginException extends Exception
 {
 }

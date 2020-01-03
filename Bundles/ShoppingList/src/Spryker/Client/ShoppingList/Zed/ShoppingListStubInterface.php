@@ -133,6 +133,7 @@ interface ShoppingListStubInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *

@@ -22,14 +22,21 @@ class CompanyUsersResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a company user by id."
      *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
-     *              "501": "Not implemented."
+     *              "404": "Company user not found."
      *          }
      *     },
      *     "getCollection": {
      *          "summary": [
      *              "Retrieves list of company users."
-     *          ]
+     *          ],
+     *          "responses": {
+     *              "403": "Unauthorized request."
+     *          }
      *     }
      * })
      *
@@ -39,6 +46,10 @@ class CompanyUsersResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCompanyUserReader()->getCompanyUsersByCustomerReference($restRequest);
+        if (!$restRequest->getResource()->getId()) {
+            return $this->getFactory()->createCompanyUserReader()->getCompanyUserCollection($restRequest);
+        }
+
+        return $this->getFactory()->createCompanyUserReader()->getCompanyUserByResourceId($restRequest);
     }
 }

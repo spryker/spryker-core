@@ -14,6 +14,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemG
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle
@@ -27,7 +28,7 @@ class ProductBundleCartItemGroupKeyExpanderTest extends Unit
     /**
      * @return void
      */
-    public function testExpandBundleItemGroupKeyShouldIncludeBundledIdentifierIntoGroupKey()
+    public function testExpandBundleItemGroupKeyShouldIncludeBundledIdentifierIntoGroupKey(): void
     {
         $productBundleCartItemGroupKeyExpander = $this->createGroupKeyExpander();
 
@@ -44,13 +45,13 @@ class ProductBundleCartItemGroupKeyExpanderTest extends Unit
 
         $updateBundledItemTransfer = $updatedCartChangeTransfer->getItems()[0];
 
-        $this->assertContains($itemTransfer->getRelatedBundleItemIdentifier(), $updateBundledItemTransfer->getGroupKey());
+        $this->assertStringContainsString($itemTransfer->getRelatedBundleItemIdentifier(), $updateBundledItemTransfer->getGroupKey());
     }
 
     /**
      * @return void
      */
-    public function testExpandBundleGroupKeyShouldMakeBundledItemsWithSameSkuHaveUniqueGroupKey()
+    public function testExpandBundleGroupKeyShouldMakeBundledItemsWithSameSkuHaveUniqueGroupKey(): void
     {
         $productBundleCartItemGroupKeyExpander = $this->createGroupKeyExpander();
 
@@ -79,7 +80,7 @@ class ProductBundleCartItemGroupKeyExpanderTest extends Unit
     /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander
      */
-    protected function createGroupKeyExpander()
+    protected function createGroupKeyExpander(): ProductBundleCartItemGroupKeyExpander
     {
         return new ProductBundleCartItemGroupKeyExpander();
     }

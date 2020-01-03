@@ -231,6 +231,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
                 $glossaryAttributesTransfer->getPlaceholder()
             );
         }
+
         return $translationKey;
     }
 

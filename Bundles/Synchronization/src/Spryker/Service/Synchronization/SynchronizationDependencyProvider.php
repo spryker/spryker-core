@@ -18,12 +18,14 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Service\Kernel\Container
      */
     public function provideServiceDependencies(Container $container)
     {
         $container = $this->addSynchronizationStorageKeyPlugins($container);
         $this->addSynchronizationSearchKeyPlugins($container);
+
+        return $container;
     }
 
     /**

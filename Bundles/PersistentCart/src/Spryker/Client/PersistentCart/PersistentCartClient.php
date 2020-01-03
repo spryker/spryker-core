@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PersistentCart;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
@@ -18,7 +19,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class PersistentCartClient extends AbstractClient implements PersistentCartClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +33,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +47,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +61,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +75,35 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceQuoteByCustomerAndStore(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createZedPersistentCartStub()->replaceQuoteByCustomerAndStore($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteWriter()->persist($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,5 +116,21 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
         return $this->getFactory()
             ->createGuestCartCustomerReferenceGenerator()
             ->generateGuestCartCustomerReference($customerReference);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function reloadQuoteForCustomer(CustomerTransfer $customerTransfer): void
+    {
+        $this->getFactory()
+            ->createCustomerQuoteCleaner()
+            ->reloadQuoteForCustomer($customerTransfer);
     }
 }

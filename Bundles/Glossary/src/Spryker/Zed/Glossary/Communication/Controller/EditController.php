@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface getRepository()
  */
 class EditController extends AbstractController
 {
@@ -62,10 +63,12 @@ class EditController extends AbstractController
 
             if ($glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer)) {
                 $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESS, ['%d' => $idGlossaryKey]);
+
                 return $this->redirectResponse('/glossary');
             }
 
             $this->addErrorMessage(static::MESSAGE_UPDATE_ERROR);
+
             return $this->redirectResponse('/glossary');
         }
 

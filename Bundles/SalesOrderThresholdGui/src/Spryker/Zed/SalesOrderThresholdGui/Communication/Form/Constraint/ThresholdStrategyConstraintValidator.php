@@ -102,6 +102,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
     {
         /** @var \Symfony\Component\Form\Form $form */
         $form = $this->context->getObject();
+
         return $form->getParent()->getData();
     }
 }

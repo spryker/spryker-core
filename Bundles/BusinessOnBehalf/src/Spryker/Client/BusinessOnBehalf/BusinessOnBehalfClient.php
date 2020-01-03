@@ -19,7 +19,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -58,5 +58,21 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
     public function unsetDefaultCompanyUser(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         return $this->getFactory()->createZedBusinessOnBehalfStub()->unsetDefaultCompanyUser($customerTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCustomerChecker()
+            ->isCompanyUserChangeAllowed($customerTransfer);
     }
 }

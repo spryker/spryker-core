@@ -19,7 +19,7 @@ class Config
     /**
      * @var \ArrayObject|null
      */
-    protected static $config = null;
+    protected static $config;
 
     /**
      * @var self|null
@@ -30,11 +30,6 @@ class Config
      * @var \Spryker\Shared\Config\Profiler|null
      */
     private static $profiler;
-
-    /**
-     * @var bool
-     */
-    private static $isProfilerEnabled;
 
     /**
      * @return \Spryker\Shared\Config\Config
@@ -88,27 +83,11 @@ class Config
      */
     protected static function addProfileData($key, $default, $value)
     {
-        if (!static::isProfilerEnabled()) {
-            return;
-        }
-
         if (!static::$profiler) {
             static::$profiler = new Profiler();
         }
 
         static::$profiler->add($key, $default, $value);
-    }
-
-    /**
-     * @return bool
-     */
-    protected static function isProfilerEnabled()
-    {
-        if (static::$isProfilerEnabled === null) {
-            static::$isProfilerEnabled = (static::hasValue(ConfigConstants::ENABLE_WEB_PROFILER)) ? static::$config[ConfigConstants::ENABLE_WEB_PROFILER] : false;
-        }
-
-        return static::$isProfilerEnabled;
     }
 
     /**
@@ -136,23 +115,23 @@ class Config
      */
     public static function hasKey($key)
     {
-        return array_key_exists($key, static::$config);
+        if (static::$config === null) {
+            return false;
+        }
+
+        return static::$config->offsetExists($key);
     }
 
     /**
-     * @param string|null $environment
+     * @param string|null $environmentName
      *
      * @return void
      */
-    public static function init($environment = null)
+    public static function init(?string $environmentName = null): void
     {
-        if ($environment === null) {
-            $environment = Environment::getInstance()->getEnvironment();
-        }
-
-        $storeName = Store::getInstance()->getStoreName();
-
         $config = new ArrayObject();
+        $environmentName = $environmentName ?? static::getEnvironmentName();
+        $storeName = static::getStore()->getStoreName();
 
         /*
          * e.g. config_default.php
@@ -162,7 +141,7 @@ class Config
         /*
          * e.g. config_default-production.php
          */
-        static::buildConfig('default-' . $environment, $config);
+        static::buildConfig('default-' . $environmentName, $config);
 
         /*
          * e.g. config_default_DE.php
@@ -172,7 +151,7 @@ class Config
         /*
          * e.g. config_default-production_DE.php
          */
-        static::buildConfig('default-' . $environment . '_' . $storeName, $config);
+        static::buildConfig('default-' . $environmentName . '_' . $storeName, $config);
 
         /*
          * e.g. config_local_test.php
@@ -211,5 +190,21 @@ class Config
         }
 
         return $config;
+    }
+
+    /**
+     * @return string
+     */
+    private static function getEnvironmentName(): string
+    {
+        return APPLICATION_ENV;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    private static function getStore(): Store
+    {
+        return Store::getInstance();
     }
 }

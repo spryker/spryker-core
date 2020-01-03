@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        name="zed"
+        xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+        namespace="Orm\Zip\Zap\Persistence"
+        package="src.Orm.Zip.Zap.Persistence">
+
+    <table name="spy_zip_zap" idMethod="native" phpName="SpyZipZap">
+        <column name="id_zip_zap" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" required="true" type="INTEGER"/>
+    </table>
+
+</database>

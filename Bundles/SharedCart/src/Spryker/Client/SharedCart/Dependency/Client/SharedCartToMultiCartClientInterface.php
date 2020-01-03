@@ -8,6 +8,7 @@
 namespace Spryker\Client\SharedCart\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SharedCartToMultiCartClientInterface
@@ -30,4 +31,11 @@ interface SharedCartToMultiCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function findQuoteById(int $idQuote): ?QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

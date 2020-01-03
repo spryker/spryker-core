@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,9 +45,9 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($ids);
+        $query = $this->getQueryContainer()->queryAvailabilityByAvailabilityAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
@@ -55,7 +55,7 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

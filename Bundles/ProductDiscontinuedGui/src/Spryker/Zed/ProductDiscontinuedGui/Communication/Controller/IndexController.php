@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -53,6 +54,8 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @deprecated Use IndexController::restore() instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -73,7 +76,37 @@ class IndexController extends AbstractController
 
             return $this->redirectToReferer($request);
         }
+
         $this->addErrorMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_ERROR);
+        $this->addErrorMessagesFromResponseTransfer($productDiscontinuedResponseTransfer);
+
+        return $this->redirectToReferer($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function restoreAction(Request $request)
+    {
+        $idProductConcrete = $this->castId($request->get(static::PARAM_ID_PRODUCT_CONCRETE));
+
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
+            ->setIdProduct($idProductConcrete);
+
+        $productDiscontinuedResponseTransfer = $this->getFactory()
+            ->getProductDiscontinuedFacade()
+            ->unmarkProductAsDiscontinued($productDiscontinueRequestTransfer);
+
+        if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS);
+
+            return $this->redirectToReferer($request);
+        }
+
+        $this->addErrorMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_ERROR);
+        $this->addErrorMessagesFromResponseTransfer($productDiscontinuedResponseTransfer);
 
         return $this->redirectToReferer($request);
     }
@@ -86,5 +119,17 @@ class IndexController extends AbstractController
     protected function redirectToReferer(Request $request): RedirectResponse
     {
         return $this->redirectResponse($request->headers->get(static::HEADER_REFERER) . static::TAB_KEY_DISCONTINUE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer $productDiscontinuedResponseTransfer
+     *
+     * @return void
+     */
+    protected function addErrorMessagesFromResponseTransfer(ProductDiscontinuedResponseTransfer $productDiscontinuedResponseTransfer)
+    {
+        foreach ($productDiscontinuedResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+        }
     }
 }

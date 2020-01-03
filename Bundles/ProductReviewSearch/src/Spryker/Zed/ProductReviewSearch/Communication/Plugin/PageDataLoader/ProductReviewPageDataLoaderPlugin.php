@@ -13,7 +13,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
 
 /**
  * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductReviewSearch\Communication\ProductReviewSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductReviewSearch\ProductReviewSearchConfig getConfig()
  * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface getQueryContainer()

@@ -13,6 +13,8 @@ use Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider;
 use Spryker\Shared\Config\Config;
 
 /**
+ * @deprecated Use `Spryker\Zed\Http\Communication\Plugin\EventDispatcher\HstsHeaderEventDispatcher` instead.
+ *
  * HTTP Strict Transport Security support as a ServiceProvider
  *
  * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
@@ -37,6 +39,7 @@ class ZedHstsServiceProvider extends AbstractHstsServiceProvider implements Serv
         if (Config::hasKey(ApplicationConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG)) {
             $config = Config::get(ApplicationConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG);
         }
+
         return $config;
     }
 }

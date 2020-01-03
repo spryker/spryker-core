@@ -74,4 +74,16 @@ interface PermissionFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Returns a permission collection fetched by storage plugins by identifier.
+     *
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getPermissionsByIdentifier(string $identifier): PermissionCollectionTransfer;
 }

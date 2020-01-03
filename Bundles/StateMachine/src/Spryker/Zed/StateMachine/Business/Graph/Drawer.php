@@ -91,12 +91,12 @@ class Drawer implements DrawerInterface
     /**
      * @var int|null
      */
-    protected $fontSizeBig = null;
+    protected $fontSizeBig;
 
     /**
      * @var int|null
      */
-    protected $fontSizeSmall = null;
+    protected $fontSizeSmall;
 
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
@@ -253,9 +253,10 @@ class Drawer implements DrawerInterface
     protected function addNode(StateInterface $state, $attributes = [], $name = null, $highlighted = false)
     {
         $name = $name === null ? $state->getName() : $name;
+        $labelName = $state->getDisplay() ?: $name;
 
         $label = [];
-        $label[] = str_replace(' ', $this->br, trim($name));
+        $label[] = str_replace(' ', $this->br, trim($labelName));
 
         if ($state->hasFlags()) {
             $flags = implode(', ', $state->getFlags());

@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,9 +45,9 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryCmsPageVersionByIds($ids);
+        $query = $this->getQueryContainer()->queryCmsPageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
@@ -55,7 +55,7 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

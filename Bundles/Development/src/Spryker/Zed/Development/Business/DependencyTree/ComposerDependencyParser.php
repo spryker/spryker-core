@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
@@ -28,6 +29,19 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     public const TYPE_EXCLUDE_DEV = 'exclude-dev';
 
     /**
+     * @var \Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface
+     */
+    protected $composerNameFinder;
+
+    /**
+     * @param \Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface $composerNameFinder
+     */
+    public function __construct(ComposerNameFinderInterface $composerNameFinder)
+    {
+        $this->composerNameFinder = $composerNameFinder;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
      *
      * @return array
@@ -37,34 +51,37 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
         $dependencyCollectionTransfer = $this->getOverwrittenDependenciesForBundle($dependencyCollectionTransfer);
         $composerDependencyCollectionTransfer = $this->getParsedComposerDependenciesForBundle($dependencyCollectionTransfer->getModule());
 
-        $moduleNames = $this->getBundleDependencyNames($dependencyCollectionTransfer);
-        $moduleNamesInSrc = $this->getBundleDependencyNamesInSrc($dependencyCollectionTransfer);
-        $moduleNamesInTests = $this->getBundleDependencyNamesInTests($dependencyCollectionTransfer);
+        $composerNames = $this->getComposerNames($dependencyCollectionTransfer);
+        $composerNamesInSrc = $this->getComposerNamesForInSrcUsedModules($dependencyCollectionTransfer);
+        $composerNamesInTests = $this->getComposerNamesForInTestsUsedModules($dependencyCollectionTransfer);
 
         $suggestedNames = $this->getSuggested($composerDependencyCollectionTransfer);
         $requireNames = $this->getRequireNames($composerDependencyCollectionTransfer);
         $requireDevNames = $this->getRequireNames($composerDependencyCollectionTransfer, true);
 
-        $allModuleNames = array_unique(array_merge($moduleNames, $requireNames, $requireDevNames, $suggestedNames));
-        sort($allModuleNames);
+        $allComposerNames = $composerNames + $requireNames + $requireDevNames + $suggestedNames;
+        asort($allComposerNames);
 
         $dependencies = [];
 
-        foreach ($allModuleNames as $moduleName) {
-            if ($dependencyCollectionTransfer->getModule()->getName() === $moduleName) {
+        $currentComposerName = sprintf('%s/%s', $dependencyCollectionTransfer->getModule()->getOrganization()->getNameDashed(), $dependencyCollectionTransfer->getModule()->getNameDashed());
+
+        foreach ($allComposerNames as $moduleName => $composerName) {
+            if ($currentComposerName === $composerName) {
                 continue;
             }
 
             $dependencies[] = [
-                'dependencyModule' => $moduleName,
-                'types' => $this->getDependencyTypes($moduleName, $dependencyCollectionTransfer),
-                'isOptional' => $this->getIsOptional($moduleName, $dependencyCollectionTransfer),
-                'src' => in_array($moduleName, $moduleNamesInSrc) ? $moduleName : '',
-                'tests' => in_array($moduleName, $moduleNamesInTests) ? $moduleName : '',
-                'composerRequire' => in_array($moduleName, $requireNames) ? $moduleName : '',
-                'composerRequireDev' => in_array($moduleName, $requireDevNames) ? $moduleName : '',
-                'suggested' => in_array($moduleName, $suggestedNames) ? $moduleName : '',
-                'isOwnExtensionModule' => $this->isOwnExtensionModule($moduleName, $dependencyCollectionTransfer),
+                'moduleName' => $moduleName,
+                'composerName' => $composerName,
+                'types' => $this->getDependencyTypes($composerName, $dependencyCollectionTransfer),
+                'isOptional' => $this->getIsOptional($composerName, $dependencyCollectionTransfer),
+                'src' => in_array($composerName, $composerNamesInSrc) ? $composerName : '',
+                'tests' => in_array($composerName, $composerNamesInTests) ? $composerName : '',
+                'composerRequire' => in_array($composerName, $requireNames) ? $composerName : '',
+                'composerRequireDev' => in_array($composerName, $requireDevNames) ? $composerName : '',
+                'suggested' => in_array($composerName, $suggestedNames) ? $composerName : '',
+                'isOwnExtensionModule' => $this->isOwnExtensionModule($composerName, $dependencyCollectionTransfer),
             ];
         }
 
@@ -72,17 +89,17 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     }
 
     /**
-     * @param string $moduleName
+     * @param string $composerName
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
      * @return bool
      */
-    protected function getIsOptional($moduleName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
+    protected function getIsOptional($composerName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
     {
         $isOptional = true;
         $isInTestsOnly = true;
         foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $moduleDependencyTransfer) {
-            if ($moduleDependencyTransfer->getModule() === $moduleName) {
+            if ($moduleDependencyTransfer->getComposerName() === $composerName) {
                 foreach ($moduleDependencyTransfer->getDependencies() as $dependencyTransfer) {
                     if (!$dependencyTransfer->getIsInTest()) {
                         $isInTestsOnly = false;
@@ -98,16 +115,16 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     }
 
     /**
-     * @param string $moduleName
+     * @param string $composerName
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
      * @return string[]
      */
-    protected function getDependencyTypes($moduleName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer): array
+    protected function getDependencyTypes($composerName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer): array
     {
         $dependencyTypes = [];
         foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $moduleDependencyTransfer) {
-            if ($moduleDependencyTransfer->getModule() !== $moduleName) {
+            if ($moduleDependencyTransfer->getComposerName() !== $composerName) {
                 continue;
             }
 
@@ -124,14 +141,14 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      *
      * @return array
      */
-    protected function getBundleDependencyNames(DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
+    protected function getComposerNames(DependencyCollectionTransfer $moduleDependencyCollectionTransfer): array
     {
-        $moduleNames = [];
+        $composerNames = [];
         foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $moduleDependencyTransfer) {
-            $moduleNames[] = $moduleDependencyTransfer->getModule();
+            $composerNames[$moduleDependencyTransfer->getModule()] = $moduleDependencyTransfer->getComposerName();
         }
 
-        return $moduleNames;
+        return array_unique($composerNames);
     }
 
     /**
@@ -139,18 +156,18 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      *
      * @return array
      */
-    protected function getBundleDependencyNamesInSrc(DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
+    protected function getComposerNamesForInSrcUsedModules(DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
     {
-        $moduleNames = [];
+        $composerNames = [];
         foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $moduleDependencyTransfer) {
             foreach ($moduleDependencyTransfer->getDependencies() as $dependencyTransfer) {
                 if (!$dependencyTransfer->getIsInTest()) {
-                    $moduleNames[] = $moduleDependencyTransfer->getModule();
+                    $composerNames[$moduleDependencyTransfer->getModule()] = $moduleDependencyTransfer->getComposerName();
                 }
             }
         }
 
-        return $moduleNames;
+        return $composerNames;
     }
 
     /**
@@ -158,23 +175,23 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      *
      * @return array
      */
-    protected function getBundleDependencyNamesInTests(DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
+    protected function getComposerNamesForInTestsUsedModules(DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
     {
-        $moduleNames = [];
-        foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $dependencyBundleTransfer) {
-            foreach ($dependencyBundleTransfer->getDependencies() as $dependencyTransfer) {
+        $composerNames = [];
+        foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $moduleDependencyTransfer) {
+            foreach ($moduleDependencyTransfer->getDependencies() as $dependencyTransfer) {
                 if ($dependencyTransfer->getIsInTest()) {
-                    $moduleNames[] = $dependencyBundleTransfer->getModule();
+                    $composerNames[$moduleDependencyTransfer->getModule()] = $moduleDependencyTransfer->getComposerName();
                 }
             }
         }
 
-        return $moduleNames;
+        return $composerNames;
     }
 
     /**
      * If a dependency is optional it needs to be in suggest.
-     * Return all module names which are marked as optional.
+     * Return all composer names which are marked as optional.
      *
      * @param \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer
      *
@@ -182,14 +199,14 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      */
     protected function getSuggested(ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer)
     {
-        $composerModuleNames = [];
+        $composerNames = [];
         foreach ($composerDependencyCollectionTransfer->getComposerDependencies() as $composerDependency) {
             if ($composerDependency->getName() && $composerDependency->getIsOptional()) {
-                $composerModuleNames[] = $composerDependency->getName();
+                $composerNames[$composerDependency->getModuleName()] = $composerDependency->getName();
             }
         }
 
-        return $composerModuleNames;
+        return $composerNames;
     }
 
     /**
@@ -200,14 +217,14 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      */
     protected function getRequireNames(ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer, $isDev = false)
     {
-        $composerModuleNames = [];
+        $composerNames = [];
         foreach ($composerDependencyCollectionTransfer->getComposerDependencies() as $composerDependency) {
             if ($composerDependency->getName() && $composerDependency->getIsDev() === $isDev) {
-                $composerModuleNames[] = $composerDependency->getName();
+                $composerNames[$composerDependency->getModuleName()] = $composerDependency->getName();
             }
         }
 
-        return $composerModuleNames;
+        return $composerNames;
     }
 
     /**
@@ -228,7 +245,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
 
         $dependencyCollectionTransfer->setDependencyModules(new ArrayObject());
         foreach ($dependencyModulesCollectionTransfer as $moduleDependencyTransfer) {
-            if (!in_array($moduleDependencyTransfer->getModule(), $excluded)) {
+            if (!in_array($moduleDependencyTransfer->getComposerName(), $excluded)) {
                 $dependencyCollectionTransfer->addDependencyModule($moduleDependencyTransfer);
             }
         }
@@ -329,11 +346,12 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             if (strpos($package, 'spryker') !== 0) {
                 continue;
             }
-            $bundle = $this->getBundleName($package);
+            $module = $this->getBundleName($package);
 
             $composerDependencyTransfer = new ComposerDependencyTransfer();
             $composerDependencyTransfer
-                ->setName($bundle)
+                ->setName($package)
+                ->setModuleName($module)
                 ->setIsDev($isDev);
 
             $composerDependencyCollectionTransfer->addComposerDependency($composerDependencyTransfer);
@@ -341,22 +359,23 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     }
 
     /**
-     * @param array $require
+     * @param array $suggested
      * @param \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer
      *
      * @return void
      */
-    protected function addSuggestedDependencies(array $require, ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer)
+    protected function addSuggestedDependencies(array $suggested, ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer)
     {
-        foreach ($require as $package => $version) {
+        foreach ($suggested as $package => $description) {
             if (strpos($package, 'spryker') !== 0) {
                 continue;
             }
-            $bundle = $this->getBundleName($package);
+            $module = $this->getBundleName($package);
 
             $composerDependencyTransfer = new ComposerDependencyTransfer();
             $composerDependencyTransfer
-                ->setName($bundle)
+                ->setName($package)
+                ->setModuleName($module)
                 ->setIsOptional(true);
 
             $composerDependencyCollectionTransfer->addComposerDependency($composerDependencyTransfer);
@@ -405,19 +424,23 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
 
     /**
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
-     * @param string $declaredDependency
+     * @param string $composerName
      * @param bool $isInTest
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    protected function addDeclaredDependency(DependencyCollectionTransfer $moduleDependencyCollectionTransfer, $declaredDependency, $isInTest = false)
+    protected function addDeclaredDependency(DependencyCollectionTransfer $moduleDependencyCollectionTransfer, string $composerName, $isInTest = false)
     {
+        $moduleName = $this->getBundleName($composerName);
+
         $dependencyModuleTransfer = new DependencyModuleTransfer();
         $dependencyTransfer = new DependencyTransfer();
-        $dependencyTransfer->setModule($declaredDependency);
+        $dependencyTransfer->setModule($moduleName);
+        $dependencyTransfer->setComposerName($composerName);
         $dependencyTransfer->setIsInTest($isInTest);
         $dependencyModuleTransfer->addDependency($dependencyTransfer);
-        $dependencyModuleTransfer->setModule($declaredDependency);
+        $dependencyModuleTransfer->setModule($moduleName);
+        $dependencyModuleTransfer->setComposerName($composerName);
         $moduleDependencyCollectionTransfer->addDependencyModule($dependencyModuleTransfer);
 
         return $moduleDependencyCollectionTransfer;

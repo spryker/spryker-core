@@ -31,6 +31,7 @@ class PriceModeSwitchController extends AbstractController
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
         if (count($quoteTransfer->getItems()) > 0) {
             $this->addErrorMessage(static::PRICE_MODE_SWITCH_ERROR_TRANSLATION_KEY);
+
             return $this->createRedirectResponse($request);
         }
 

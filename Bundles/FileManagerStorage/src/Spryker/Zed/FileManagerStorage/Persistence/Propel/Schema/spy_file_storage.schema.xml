@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\FileManagerStorage\Persistence"
           package="src.Orm.Zed.FileManagerStorage.Persistence">
 
-    <table name="spy_file_storage" phpName="SpyFileStorage">
+    <table name="spy_file_storage">
         <column name="id_file_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="file_name" type="varchar"/>
         <column name="fk_file" type="integer"/>

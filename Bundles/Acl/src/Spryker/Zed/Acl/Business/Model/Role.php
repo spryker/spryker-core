@@ -146,7 +146,7 @@ class Role implements RoleInterface
     {
         $groupRoles = $this->getGroupRoles($idAclGroup);
 
-        foreach ($groupRoles as $groupRole) {
+        foreach ($groupRoles->getRoles() as $groupRole) {
             $rolesTransfer->addRole($groupRole);
         }
     }

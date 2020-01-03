@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class AccessTokensResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -27,12 +27,13 @@ class AccessTokensResourceRoutePlugin extends AbstractPlugin implements Resource
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection->addPost('post', false);
+        $resourceRouteCollection->addGet('get', false);
 
         return $resourceRouteCollection;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +45,7 @@ class AccessTokensResourceRoutePlugin extends AbstractPlugin implements Resource
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +57,7 @@ class AccessTokensResourceRoutePlugin extends AbstractPlugin implements Resource
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

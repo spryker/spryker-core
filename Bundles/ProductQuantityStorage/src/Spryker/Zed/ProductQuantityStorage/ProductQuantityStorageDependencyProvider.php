@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantityStorage;
 
+use Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToEventBehaviorFacadeBridge;
@@ -19,6 +20,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_QUANTITY = 'FACADE_PRODUCT_QUANTITY';
+    public const PROPEL_QUERY_PRODUCT_QUANTITY = 'PROPEL_QUERY_PRODUCT_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -84,6 +86,10 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
+
+        $container->set(static::PROPEL_QUERY_PRODUCT_QUANTITY, function () {
+            return SpyProductQuantityQuery::create();
+        });
 
         return $container;
     }

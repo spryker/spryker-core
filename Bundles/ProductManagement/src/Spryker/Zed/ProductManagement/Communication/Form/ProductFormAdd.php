@@ -536,12 +536,12 @@ class ProductFormAdd extends AbstractType
             'label' => 'Tax Set',
             'required' => true,
             'choices' => array_flip($options[static::OPTION_TAX_RATES]),
-            'choices_as_values' => true,
             'placeholder' => '-',
             'constraints' => [
                 new NotBlank(),
             ],
         ]);
+
         return $this;
     }
 
@@ -698,12 +698,14 @@ class ProductFormAdd extends AbstractType
                 if ($value !== null) {
                     $value = new DateTime($value);
                 }
+
                 return $value;
             },
             function ($value) {
                 if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }
+
                 return $value;
             }
         );

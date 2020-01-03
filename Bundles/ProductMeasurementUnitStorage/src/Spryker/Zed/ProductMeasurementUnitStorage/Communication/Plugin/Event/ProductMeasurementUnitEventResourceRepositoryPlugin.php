@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Event\ProductMeasurementUnitEventResourceBulkRepositoryPlugin instead.
+ *
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Business\ProductMeasurementUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Communication\ProductMeasurementUnitStorageCommunicationFactory getFactory()
@@ -22,7 +24,7 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +36,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,14 +46,11 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->findProductMeasurementUnitTransfers($ids);
-        }
-        return $this->getFacade()->findAllProductMeasurementUnitTransfers();
+        return $this->getRepository()->getProductMeasurementUnitEntityTransfersByIds($ids);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -63,7 +62,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

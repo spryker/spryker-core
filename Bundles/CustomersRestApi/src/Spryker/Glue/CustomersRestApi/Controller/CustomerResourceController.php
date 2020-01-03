@@ -72,7 +72,7 @@ class CustomerResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCustomerWriter()
-            ->registerCustomer($restCustomersAttributesTransfer);
+            ->registerCustomer($restRequest, $restCustomersAttributesTransfer);
     }
 
     /**

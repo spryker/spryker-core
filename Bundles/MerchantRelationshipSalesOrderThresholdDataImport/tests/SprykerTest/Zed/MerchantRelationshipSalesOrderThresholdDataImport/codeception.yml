@@ -24,8 +24,9 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\Company\Helper\CompanyHelper
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantRelationship\Helper\MerchantRelationshipHelper
                 - \SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold\Helper\MerchantRelationshipSalesOrderThresholdHelper
                 - \SprykerTest\Zed\SalesOrderThreshold\Helper\SalesOrderThresholdHelper

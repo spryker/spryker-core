@@ -365,6 +365,7 @@ class UrlCollector extends AbstractStoragePropelCollector
         WriterInterface $storeWriter,
         $touchKeyPointer
     ) {
+        /** @var string[] $oldUrl */
         $oldUrl = $storeReader->read($touchKeyPointer);
 
         if (isset($oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY])

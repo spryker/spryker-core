@@ -8,11 +8,10 @@
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface GuestCartItemAdderInterface extends CartItemAdderInterface
+interface GuestCartItemAdderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -20,7 +19,7 @@ interface GuestCartItemAdderInterface extends CartItemAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addItem(
+    public function addItemToGuestCart(
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface;

@@ -19,7 +19,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for company-roles resource.
      *
      * @api
@@ -30,14 +30,13 @@ class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addGet(CompanyRolesRestApiConfig::ACTION_COMPANY_ROLES_GET);
+        $resourceRouteCollection->addGet('get');
 
         return $resourceRouteCollection;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +48,7 @@ class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoute
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +60,7 @@ class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoute
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

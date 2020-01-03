@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustomerConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,9 +45,11 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @return void
      */
@@ -57,9 +59,25 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @return void
+     */
+    public function installOauthCustomerScope(): void
+    {
+        $this->getFactory()
+            ->createOauthCustomerScopeInstaller()
+            ->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @return string
      */
@@ -69,9 +87,11 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @return string
      */

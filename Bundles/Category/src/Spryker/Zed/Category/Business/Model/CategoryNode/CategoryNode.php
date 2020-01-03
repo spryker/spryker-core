@@ -133,6 +133,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         if ($categoryTransfer->getIsActive()) {
             $this->categoryToucher->touchCategoryNodeActiveRecursively($idCategoryNode);
+
             return;
         }
 

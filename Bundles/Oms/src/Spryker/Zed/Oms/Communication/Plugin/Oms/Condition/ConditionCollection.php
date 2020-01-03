@@ -22,7 +22,7 @@ class ConditionCollection implements ConditionCollectionInterface, HasAwareColle
     protected $conditions = [];
 
     /**
-     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface $condition
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface $condition
      * @param string $name
      *
      * @throws \InvalidArgumentException

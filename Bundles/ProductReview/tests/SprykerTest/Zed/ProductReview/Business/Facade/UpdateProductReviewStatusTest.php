@@ -16,6 +16,7 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductReview
@@ -34,7 +35,7 @@ class UpdateProductReviewStatusTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductReviewStatusPersistsChangesToDatabase()
+    public function testUpdateProductReviewStatusPersistsChangesToDatabase(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -61,7 +62,7 @@ class UpdateProductReviewStatusTest extends Unit
      *
      * @return void
      */
-    public function testUpdateProductReviewStatusTouchesProductReviewSearchResource($inputStatus, $isTouchActive)
+    public function testUpdateProductReviewStatusTouchesProductReviewSearchResource(string $inputStatus, bool $isTouchActive): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -78,6 +79,7 @@ class UpdateProductReviewStatusTest extends Unit
         // Assert
         if ($isTouchActive) {
             $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransferToUpdate->getIdProductReview(), 'Product review should have been touched as active.');
+
             return;
         }
 
@@ -87,7 +89,7 @@ class UpdateProductReviewStatusTest extends Unit
     /**
      * @return array
      */
-    public function statusDataProvider()
+    public function statusDataProvider(): array
     {
         return [
             'pending status' => [SpyProductReviewTableMap::COL_STATUS_PENDING, false],
@@ -103,7 +105,7 @@ class UpdateProductReviewStatusTest extends Unit
      *
      * @return void
      */
-    public function testUpdateProductReviewStatusTouchesProductReviewAbstractSearchResource($inputStatus)
+    public function testUpdateProductReviewStatusTouchesProductReviewAbstractSearchResource(string $inputStatus): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -124,7 +126,7 @@ class UpdateProductReviewStatusTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductReviewReturnsUpdatedTransfer()
+    public function testUpdateProductReviewReturnsUpdatedTransfer(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -150,7 +152,7 @@ class UpdateProductReviewStatusTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductReviewStatusThrowsExceptionWhenProductReviewIdIsNotProvidedInTransfer()
+    public function testUpdateProductReviewStatusThrowsExceptionWhenProductReviewIdIsNotProvidedInTransfer(): void
     {
         // Arrange
         $productReviewTransferToUpdate = (new ProductReviewBuilder([
@@ -167,7 +169,7 @@ class UpdateProductReviewStatusTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductReviewStatusThrowsExceptionWhenProductReviewStatusIsNotProvidedInTransfer()
+    public function testUpdateProductReviewStatusThrowsExceptionWhenProductReviewStatusIsNotProvidedInTransfer(): void
     {
         // Arrange
         $productReviewTransferToUpdate = (new ProductReviewBuilder([

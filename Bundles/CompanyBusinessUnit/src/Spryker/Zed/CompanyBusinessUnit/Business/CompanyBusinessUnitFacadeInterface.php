@@ -91,6 +91,7 @@ interface CompanyBusinessUnitFacadeInterface
     /**
      * Specification:
      * - Returns the business units for the given company and filters.
+     * - Executes company business unit transfer expander plugins on each item in the collection.
      *
      * @api
      *
@@ -180,4 +181,19 @@ interface CompanyBusinessUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
     public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a company business unit by uuid.
+     * - Requires uuid to be set on CompanyBusinessUnitTransfer provided as a parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
 }

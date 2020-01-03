@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote
@@ -21,8 +22,8 @@ use Codeception\Test\Unit;
  */
 class GuestQuoteCleanerTest extends Unit
 {
-    protected const MESSAGE_SHOULD_BE_DELETED = 'Quote should have been deleted from database.';
-    protected const MESSAGE_SHOULD_NOT_BE_DELETED = 'Quote should not have been deleted from database.';
+    protected const ERROR_MESSAGE_SHOULD_BE_DELETED = 'Quote should have been deleted from database.';
+    protected const ERROR_MESSAGE_SHOULD_NOT_BE_DELETED = 'Quote should not have been deleted from database.';
 
     /**
      * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
@@ -42,7 +43,7 @@ class GuestQuoteCleanerTest extends Unit
 
         // Assert
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
-        $this->assertNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_BE_DELETED);
+        $this->assertNull($findQuoteResponseTransfer->getQuoteTransfer(), static::ERROR_MESSAGE_SHOULD_BE_DELETED);
     }
 
     /**
@@ -58,6 +59,6 @@ class GuestQuoteCleanerTest extends Unit
 
         // Assert
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
-        $this->assertNotNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_NOT_BE_DELETED);
+        $this->assertNotNull($findQuoteResponseTransfer->getQuoteTransfer(), static::ERROR_MESSAGE_SHOULD_NOT_BE_DELETED);
     }
 }

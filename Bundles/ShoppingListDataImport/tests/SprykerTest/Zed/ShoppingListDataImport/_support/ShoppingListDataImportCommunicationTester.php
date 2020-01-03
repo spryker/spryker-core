@@ -20,6 +20,7 @@ use Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -112,7 +113,7 @@ class ShoppingListDataImportCommunicationTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function createCompanyBusinessUnit($companyTransfer): CompanyBusinessUnitTransfer
+    public function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
     {
         return $this->haveCompanyBusinessUnit(
             [
@@ -130,6 +131,7 @@ class ShoppingListDataImportCommunicationTester extends Actor
     {
         $customerTransfer = $this->haveCustomer()
             ->fromArray($seeds, true);
+
         return $this->getCustomerFacade()->updateCustomer($customerTransfer);
     }
 

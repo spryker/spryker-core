@@ -24,6 +24,7 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine
@@ -39,7 +40,7 @@ class FinderTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testGetActiveProcessShouldReturnProcessesRegisteredByHandler()
+    public function testGetActiveProcessShouldReturnProcessesRegisteredByHandler(): void
     {
         $statemachineHandlerMock = $this->createStateMachineHandlerMock();
         $statemachineHandlerMock->expects($this->once())
@@ -69,7 +70,7 @@ class FinderTest extends StateMachineMocks
      *
      * @return void
      */
-    public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems()
+    public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems(): void
     {
         $manualEvents = [
            'state name' => [
@@ -102,7 +103,7 @@ class FinderTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testGetItemWithFlagShouldReturnStatesMarkedWithGivenFlag()
+    public function testGetItemWithFlagShouldReturnStatesMarkedWithGivenFlag(): void
     {
         $states = [];
         $state = new State();
@@ -147,7 +148,7 @@ class FinderTest extends StateMachineMocks
         $stateMachineItemStateQuery->method('find')->willReturn([$stateMachineItemEntity]);
 
         $stateMachineQueryContainerMock->expects($this->once())
-            ->method('queryItemsByIdStateMachineProcessAndItemStates')
+            ->method('queryItemsByStateMachineProcessNameAndItemStates')
             ->willReturn($stateMachineItemStateQuery);
 
         $finder = $this->createFinder(null, $builderMock, $stateMachineQueryContainerMock);
@@ -176,8 +177,7 @@ class FinderTest extends StateMachineMocks
         ?HandlerResolverInterface $handlerResolverMock = null,
         ?BuilderInterface $builderMock = null,
         ?StateMachineQueryContainerInterface $stateMachineQueryContainerMock = null
-    ) {
-
+    ): Finder {
         if ($builderMock === null) {
             $builderMock = $this->createBuilderMock();
         }

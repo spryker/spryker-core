@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class DiscountPromotionCalculationFormDataExpanderPlugin extends AbstractPlugin implements DiscountFormDataProviderExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,15 +41,15 @@ class DiscountPromotionCalculationFormDataExpanderPlugin extends AbstractPlugin 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param array|null $data
      *
-     * @param array $data
-     *
-     * @return array
+     * @return array|null
      */
-    public function expandDataProviderData(array $data)
+    public function expandDataProviderData(?array $data)
     {
         return $data;
     }

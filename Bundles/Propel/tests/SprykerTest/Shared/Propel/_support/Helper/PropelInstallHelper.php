@@ -10,8 +10,6 @@ namespace SprykerTest\Shared\Propel\Helper;
 use Codeception\Configuration;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\PropelFacade;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -23,7 +21,7 @@ class PropelInstallHelper extends Module
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
      */
-    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    public function __construct(ModuleContainer $moduleContainer, ?array $config = null)
     {
         parent::__construct($moduleContainer, $config);
 
@@ -35,14 +33,13 @@ class PropelInstallHelper extends Module
     /**
      * @return void
      */
-    protected function initPropel()
+    protected function initPropel(): void
     {
         $this->copyFromTestBundle();
 
         $this->getFacade()->cleanPropelSchemaDirectory();
         $this->getFacade()->copySchemaFilesToTargetDirectory();
         $this->getFacade()->createDatabaseIfNotExists();
-        $this->getFacade()->convertConfig();
 
         $this->runCommands();
     }
@@ -50,7 +47,7 @@ class PropelInstallHelper extends Module
     /**
      * @return void
      */
-    private function runCommands()
+    private function runCommands(): void
     {
         foreach ($this->getCommands() as $command) {
             $this->runCommand($command);
@@ -60,7 +57,7 @@ class PropelInstallHelper extends Module
     /**
      * @return array
      */
-    private function getCommands()
+    private function getCommands(): array
     {
         return [
             $this->createDiffCommand(),
@@ -72,19 +69,15 @@ class PropelInstallHelper extends Module
     /**
      * @return string
      */
-    private function getModelBuildCommand()
+    private function getModelBuildCommand(): string
     {
-        $config = Config::get(PropelConstants::PROPEL);
-        return $this->getBaseCommand()
-        . ' vendor/bin/propel model:build'
-        . $this->getConfigDirectoryForCommand($config)
-        . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
+        return $this->getBaseCommand() . ' vendor/bin/console propel:model:build';
     }
 
     /**
      * @return string
      */
-    private function getBaseCommand()
+    private function getBaseCommand(): string
     {
         return 'APPLICATION_ENV=' . APPLICATION_ENV
         . ' APPLICATION_STORE=' . APPLICATION_STORE
@@ -93,40 +86,19 @@ class PropelInstallHelper extends Module
     }
 
     /**
-     * @param array $config
-     *
      * @return string
      */
-    private function getConfigDirectoryForCommand(array $config)
+    private function createDiffCommand(): string
     {
-        return ' --config-dir ' . $config['paths']['phpConfDir'];
-    }
-
-    /**
-     * @return array
-     */
-    private function createDiffCommand()
-    {
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = $this->getBaseCommand()
-            . ' vendor/bin/propel diff'
-            . $this->getConfigDirectoryForCommand($config)
-            . ' --schema-dir ' . $config['paths']['schemaDir'];
-
-        return $command;
+        return $this->getBaseCommand() . ' vendor/bin/console propel:diff';
     }
 
     /**
      * @return string
      */
-    private function createMigrateCommand()
+    private function createMigrateCommand(): string
     {
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = $this->getBaseCommand()
-            . ' vendor/bin/propel migrate'
-            . $this->getConfigDirectoryForCommand($config);
-
-        return $command;
+        return $this->getBaseCommand() . ' vendor/bin/console propel:migrate';
     }
 
     /**
@@ -134,11 +106,11 @@ class PropelInstallHelper extends Module
      *
      * @return void
      */
-    protected function runCommand($command)
+    protected function runCommand(string $command): void
     {
         $process = new Process($command, Configuration::projectDir());
         $process->setTimeout(600);
-        $process->mustRun(function ($type, $buffer) use ($command) {
+        $process->mustRun(function ($type, $buffer) use ($command): void {
             if ($type === Process::ERR) {
                 echo $command . ' Failed:' . PHP_EOL;
                 echo $buffer;
@@ -149,7 +121,7 @@ class PropelInstallHelper extends Module
     /**
      * @return \Spryker\Zed\Propel\Business\PropelFacade
      */
-    private function getFacade()
+    private function getFacade(): PropelFacade
     {
         return new PropelFacade();
     }
@@ -159,7 +131,7 @@ class PropelInstallHelper extends Module
      *
      * @return void
      */
-    private function copyFromTestBundle()
+    private function copyFromTestBundle(): void
     {
         $testBundleSchemaDirectory = Configuration::projectDir() . 'src/Spryker/Zed/*/Persistence/Propel/Schema';
         if (count(glob($testBundleSchemaDirectory)) === 0) {
@@ -187,7 +159,7 @@ class PropelInstallHelper extends Module
      *
      * @return \Symfony\Component\Finder\Finder
      */
-    private function getBundleSchemaFinder($testBundleSchemaDirectory)
+    private function getBundleSchemaFinder(string $testBundleSchemaDirectory): Finder
     {
         $finder = new Finder();
         $finder->files()->in($testBundleSchemaDirectory)->name('*.schema.xml');
@@ -200,7 +172,7 @@ class PropelInstallHelper extends Module
      *
      * @return string
      */
-    private function getTargetSchemaDirectory()
+    private function getTargetSchemaDirectory(): string
     {
         $pathForSchemas = APPLICATION_ROOT_DIR . '/src/Spryker/Zed/Testify/Persistence/Propel/Schema';
         $this->createTargetSchemaDirectoryIfNotExists($pathForSchemas);
@@ -213,7 +185,7 @@ class PropelInstallHelper extends Module
      *
      * @return void
      */
-    private function createTargetSchemaDirectoryIfNotExists($pathForSchemas)
+    private function createTargetSchemaDirectoryIfNotExists(string $pathForSchemas): void
     {
         if (!is_dir($pathForSchemas)) {
             mkdir($pathForSchemas, 0775, true);

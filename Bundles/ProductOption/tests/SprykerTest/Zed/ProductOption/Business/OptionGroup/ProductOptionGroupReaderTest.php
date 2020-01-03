@@ -18,6 +18,7 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -28,15 +29,24 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionGroupReaderTest extends MockProvider
 {
+    protected const VALUE_ID_PRODUCT_OPTION_GROUP = 1;
+
     /**
      * @return void
      */
-    public function testGetProductOptionGroupByIdThrowsExceptionWhenOptionDoesNotExist()
+    public function testGetProductOptionGroupByIdThrowsExceptionWhenOptionDoesNotExist(): void
     {
         // Assign
+        $queryContainerMock = $this->getQueryContainerMock();
+
+        $queryContainerMock->expects($this->once())
+            ->method('queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById')
+            ->with(static::VALUE_ID_PRODUCT_OPTION_GROUP)
+            ->willThrowException(new ProductOptionGroupNotFoundException());
+
         $productGroupReader = new ProductOptionGroupReader(
             $this->createProductOptionValuePriceHydratorMock(),
-            $this->getQueryContainerMock(),
+            $queryContainerMock,
             $this->createGlossaryFacadeMock(),
             $this->createLocaleFacadeMock()
         );
@@ -45,7 +55,7 @@ class ProductOptionGroupReaderTest extends MockProvider
         $this->expectException(ProductOptionGroupNotFoundException::class);
 
         // Act
-        $productGroupReader->getProductOptionGroupById(1);
+        $productGroupReader->getProductOptionGroupById(static::VALUE_ID_PRODUCT_OPTION_GROUP);
     }
 
     /**
@@ -53,7 +63,7 @@ class ProductOptionGroupReaderTest extends MockProvider
      *
      * @return void
      */
-    public function testGetProductOptionGroupByIdReturnsProductOptionGroupTransfer()
+    public function testGetProductOptionGroupByIdReturnsProductOptionGroupTransfer(): void
     {
         // Assign
         $localeFacadeMock = $this->createLocaleFacadeMock();
@@ -72,7 +82,7 @@ class ProductOptionGroupReaderTest extends MockProvider
         );
 
         // Act
-        $productOptionGroupTransfer = $productGroupReader->getProductOptionGroupById(1);
+        $productOptionGroupTransfer = $productGroupReader->getProductOptionGroupById(static::VALUE_ID_PRODUCT_OPTION_GROUP);
 
         // Assert
         $this->assertInstanceOf(ProductOptionGroupTransfer::class, $productOptionGroupTransfer);

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\ProductConcretePageSearchEventResourceBulkRepositoryPlugin
+ *
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
@@ -23,7 +25,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +37,7 @@ class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,9 +47,9 @@ class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductConcreteByIds($ids);
+        $query = $this->getQueryContainer()->queryProductConcreteByProductIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
@@ -55,7 +57,7 @@ class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +69,7 @@ class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,6 +77,6 @@ class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT;
+        return SpyProductTableMap::COL_ID_PRODUCT;
     }
 }

@@ -36,13 +36,6 @@ interface FinderInterface
     public function isOrderFlaggedAll($idOrder, $flag);
 
     /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku);
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return array
@@ -82,14 +75,14 @@ interface FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
     /**
      * @param int $idSalesOrder
      *
-     * @return array
+     * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 

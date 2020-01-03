@@ -32,6 +32,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
     public const PLUGINS_QUOTE_MAPPER = 'PLUGINS_QUOTE_MAPPER';
+    public const PLUGINS_CHECKOUT_DATA_VALIDATOR = 'PLUGINS_CHECKOUT_DATA_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -50,6 +51,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentFacade($container);
         $container = $this->addCalculationFacade($container);
         $container = $this->addQuoteMapperPlugins($container);
+        $container = $this->addCheckoutDataValidatorPlugins($container);
 
         return $container;
     }
@@ -181,9 +183,31 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCheckoutDataValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_DATA_VALIDATOR, function () {
+            return $this->getCheckoutDataValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
      */
     protected function getQuoteMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[]
+     */
+    protected function getCheckoutDataValidatorPlugins(): array
     {
         return [];
     }

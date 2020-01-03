@@ -15,6 +15,9 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisio
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\CarrierDiscountDecisionRule instead.
+ */
 class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {
     /**
@@ -73,7 +76,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
     {
         $idShipmentCarrier = $this->getIdShipmentCarrierByQuote($quoteTransfer);
 
-        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
+        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, (string)$idShipmentCarrier)) {
             return true;
         }
 
@@ -99,6 +102,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
 
         if ($shipment->getMethod()) {
             $shipmentMethodTransfer = $this->shipmentFacade->findMethodById($shipment->getMethod()->getIdShipmentMethod());
+
             return $shipmentMethodTransfer->getFkShipmentCarrier();
         }
 

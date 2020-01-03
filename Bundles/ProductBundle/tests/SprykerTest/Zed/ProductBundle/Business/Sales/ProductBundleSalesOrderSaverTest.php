@@ -21,6 +21,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle
@@ -34,7 +35,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveSaleOrderBundleItemsShouldPersistGivenBundleItems()
+    public function testSaveSaleOrderBundleItemsShouldPersistGivenBundleItems(): void
     {
         $productBundleMock = $this->createProductBundleSalesOrderSaverMock();
 

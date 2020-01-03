@@ -19,7 +19,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class SingleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Creates a single quote for customer.
      *  - Checks that customer does not have a quote already.
      *  - Returns QuoteResponseTransfer with error if customer already has a quote.

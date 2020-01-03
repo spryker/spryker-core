@@ -34,4 +34,14 @@ class ShipmentsRestApiToShipmentFacadeBridge implements ShipmentsRestApiToShipme
     {
         return $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
     }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod)
+    {
+        return $this->shipmentFacade->findMethodById($idShipmentMethod);
+    }
 }

@@ -1,0 +1,4 @@
+key,type,name,description,skus.default,skus.en_US,skus.de_DE
+"apl1","content_abstract_product_list","APL Name 1","APL Description 1","204,205","",""
+apl2,content_abstract_product_list,APL Name 2,APL Description 2,"191,190","","156,154"
+apl3,content_abstract_product_list,APL Name 3,APL Description 3,"180,171","152,151",""

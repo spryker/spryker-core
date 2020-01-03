@@ -11,10 +11,12 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund
@@ -29,7 +31,7 @@ class AbstractRefundCalculatorTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function getOrderTransferWithoutRefundedItems()
+    protected function getOrderTransferWithoutRefundedItems(): OrderTransfer
     {
         $orderTransfer = new OrderTransfer();
 
@@ -53,7 +55,7 @@ class AbstractRefundCalculatorTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function getOrderTransferWithRefundedItem()
+    protected function getOrderTransferWithRefundedItem(): OrderTransfer
     {
         $orderTransfer = new OrderTransfer();
 
@@ -77,7 +79,7 @@ class AbstractRefundCalculatorTest extends Unit
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function getSalesOrderItemOne()
+    protected function getSalesOrderItemOne(): SpySalesOrderItem
     {
         $salesOrderItem = new SpySalesOrderItem();
         $salesOrderItem->setIdSalesOrderItem(1);
@@ -88,11 +90,32 @@ class AbstractRefundCalculatorTest extends Unit
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function getSalesOrderItemTwo()
+    protected function getSalesOrderItemTwo(): SpySalesOrderItem
     {
         $salesOrderItem = new SpySalesOrderItem();
         $salesOrderItem->setIdSalesOrderItem(2);
 
         return $salesOrderItem;
+    }
+
+    /**
+     * @param int $amount
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\RefundTransfer
+     */
+    protected function getRefundTransferWithAmountAndItem(int $amount = 100, ?ItemTransfer $itemTransfer = null): RefundTransfer
+    {
+        $refundTransfer = new RefundTransfer();
+        $refundTransfer->setAmount($amount);
+
+        if ($itemTransfer === null) {
+            $itemTransfer = new ItemTransfer();
+            $itemTransfer->setIdSalesOrderItem(1);
+        }
+
+        $refundTransfer->addItem($itemTransfer);
+
+        return $refundTransfer;
     }
 }

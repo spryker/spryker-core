@@ -43,7 +43,7 @@ class CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge implements CompanyUn
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function update($companyUnitAddressTransfer)
+    public function update(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
         return $this->companyUnitAddressFacade->update($companyUnitAddressTransfer);
     }
@@ -66,7 +66,6 @@ class CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge implements CompanyUn
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-
         return $this->companyUnitAddressFacade->getCompanyUnitAddressCollection($criteriaFilterTransfer);
     }
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage;
 
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToEventBehaviorFacadeBridge;
@@ -20,6 +22,8 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
     public const REPOSITORY_PRODUCT_MEASUREMENT_UNIT = 'REPOSITORY_PRODUCT_MEASUREMENT_UNIT';
+    public const PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT = 'PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT';
+    public const PROPEL_QUERY_PRODUCT_MEASUREMENT_UNIT = 'PROPEL_QUERY_PRODUCT_MEASUREMENT_UNIT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -89,6 +93,14 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
+
+        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT, function () {
+            return SpyProductMeasurementSalesUnitQuery::create();
+        });
+
+        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_UNIT, function () {
+            return SpyProductMeasurementUnitQuery::create();
+        });
 
         return $container;
     }

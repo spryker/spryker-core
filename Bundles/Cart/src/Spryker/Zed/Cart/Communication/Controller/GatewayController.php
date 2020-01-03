@@ -40,11 +40,31 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCartAction(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->addToCart($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItemAction(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFacade()->remove($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCartAction(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->removeFromCart($cartChangeTransfer);
     }
 
     /**
@@ -65,5 +85,15 @@ class GatewayController extends AbstractGatewayController
     public function validateQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->validateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLockAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->resetQuoteLock($quoteTransfer);
     }
 }

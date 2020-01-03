@@ -23,7 +23,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 class RedirectEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class RedirectEventResourceQueryContainerPlugin extends AbstractPlugin implement
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,15 +47,15 @@ class RedirectEventResourceQueryContainerPlugin extends AbstractPlugin implement
     {
         $query = $this->getQueryContainer()->queryRedirects($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class RedirectEventResourceQueryContainerPlugin extends AbstractPlugin implement
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
+use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -45,9 +46,10 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->innerJoinWithSpyCategoryImageSetToCategoryImage()
             ->useSpyCategoryImageSetToCategoryImageQuery()
                 ->innerJoinWithSpyCategoryImage()
-                ->orderBySortOrder()
             ->endUse()
             ->filterByFkCategory_In($categoryIds);
+
+        $categoryImageSetsQuery = $this->sortCategoryImageSetToCategoryImageQuery($categoryImageSetsQuery);
 
         return $this->buildQueryFromCriteria($categoryImageSetsQuery)->find();
     }
@@ -81,5 +83,21 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->select([static::FK_CATEGORY])
             ->addAnd(SpyCategoryImageSetTableMap::COL_FK_CATEGORY, null, ModelCriteria::NOT_EQUAL)
             ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery $categoryImageSetToCategoryImageQuery
+     *
+     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery
+     */
+    protected function sortCategoryImageSetToCategoryImageQuery(
+        SpyCategoryImageSetQuery $categoryImageSetToCategoryImageQuery
+    ): SpyCategoryImageSetQuery {
+        $categoryImageSetToCategoryImageQuery->useSpyCategoryImageSetToCategoryImageQuery()
+                ->orderBySortOrder()
+                ->orderByIdCategoryImageSetToCategoryImage()
+            ->endUse();
+
+        return $categoryImageSetToCategoryImageQuery;
     }
 }

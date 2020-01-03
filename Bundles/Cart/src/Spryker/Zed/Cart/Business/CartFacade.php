@@ -18,11 +18,12 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
@@ -31,7 +32,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +46,21 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartOperation()->addToCart($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +74,21 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartOperation()->removeFromCart($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +102,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +116,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -98,5 +127,19 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     public function cleanUpItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()->createQuoteCleaner()->cleanUpItemGroupKeyPrefix($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteLocker()->resetQuoteLock($quoteTransfer);
     }
 }

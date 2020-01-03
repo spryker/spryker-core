@@ -34,7 +34,7 @@ interface LabelDictionaryReaderInterface
     public function findLabelByLocalizedName($labelName, $localeName);
 
     /**
-     * @param int $labelName
+     * @param string $labelName
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null

@@ -18,11 +18,20 @@ class QuoteLocker implements QuoteLockerInterface
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
+     * @var \Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface[]
      */
-    public function __construct(QuoteApprovalToQuoteFacadeInterface $quoteFacade)
-    {
+    protected $quoteApprovalUnlockPreCheckPlugins;
+
+    /**
+     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface[] $quoteApprovalUnlockPreCheckPlugins
+     */
+    public function __construct(
+        QuoteApprovalToQuoteFacadeInterface $quoteFacade,
+        array $quoteApprovalUnlockPreCheckPlugins
+    ) {
         $this->quoteFacade = $quoteFacade;
+        $this->quoteApprovalUnlockPreCheckPlugins = $quoteApprovalUnlockPreCheckPlugins;
     }
 
     /**
@@ -43,7 +52,27 @@ class QuoteLocker implements QuoteLockerInterface
      */
     public function unlockQuote(QuoteTransfer $quoteTransfer): void
     {
+        if (!$this->executeQuoteApprovalUnlockPreCheckPlugins($quoteTransfer)) {
+            return;
+        }
+
         $quoteTransfer = $this->quoteFacade->unlockQuote($quoteTransfer);
         $this->quoteFacade->updateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function executeQuoteApprovalUnlockPreCheckPlugins(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($this->quoteApprovalUnlockPreCheckPlugins as $quoteApprovalUnlockPreCheckPlugin) {
+            if (!$quoteApprovalUnlockPreCheckPlugin->check($quoteTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

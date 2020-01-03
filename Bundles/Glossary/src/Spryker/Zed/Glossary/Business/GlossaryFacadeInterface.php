@@ -297,4 +297,42 @@ interface GlossaryFacadeInterface
      * @return array
      */
     public function getKeySuggestions($keyFragment);
+
+    /**
+     * Specifications:
+     * - Finds all translations for specified key and locales.
+     *
+     * @api
+     *
+     * @param string $glossaryKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array;
+
+    /**
+     * Specifications:
+     * - Finds all translations for specified keys and locale transfers.
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array;
+
+    /**
+     * Specifications:
+     * - Returns glossary key transfers by array of glossary keys.
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array;
 }

@@ -11,6 +11,8 @@ use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Zed\Country\Business\Country\CountryReader;
 use Spryker\Zed\Country\Business\Country\CountryReaderInterface;
 use Spryker\Zed\Country\Business\Internal\Install;
+use Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidator;
+use Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidatorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -71,6 +73,14 @@ class CountryBusinessFactory extends AbstractBusinessFactory
         return new CountryReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidatorInterface
+     */
+    public function createCountryCheckoutDataValidator(): CountryCheckoutDataValidatorInterface
+    {
+        return new CountryCheckoutDataValidator($this->createCountryManager());
     }
 
     /**

@@ -71,6 +71,16 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantityAction(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->updateQuantity($persistentCartChangeTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -158,5 +168,25 @@ class GatewayController extends AbstractGatewayController
     public function updateAndReloadQuoteAction(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->updateAndReloadQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceQuoteByCustomerAndStoreAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->replaceQuoteByCustomerAndStore($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLockAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->resetQuoteLock($quoteTransfer);
     }
 }

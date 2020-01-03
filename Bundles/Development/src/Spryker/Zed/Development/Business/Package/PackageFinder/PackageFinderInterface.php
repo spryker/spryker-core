@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Development\Business\Package\PackageFinder;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 interface PackageFinderInterface
 {
     /**

@@ -11,6 +11,9 @@ use InvalidArgumentException;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterInterface;
 
+/**
+ * @deprecated Use `AllModuleFinder` instead.
+ */
 class AllBundleFinder implements AllBundleFinderInterface
 {
     /**
@@ -71,15 +74,15 @@ class AllBundleFinder implements AllBundleFinderInterface
      */
     protected function findBundles($path, $namespace, array $allBundles)
     {
-        $directories = [];
-
         try {
+            /** @var \SplFileInfo[] $directories */
             $directories = (new Finder())
                 ->directories()
                 ->in($path)
                 ->depth('== 0');
         } catch (InvalidArgumentException $e) {
             // ~ Directory does not exist. It's not an error.
+            return $allBundles;
         }
 
         foreach ($directories as $dir) {
@@ -104,6 +107,7 @@ class AllBundleFinder implements AllBundleFinderInterface
             $path = APPLICATION_SOURCE_DIR . '/' . $projectNamespace . '/*';
             $allBundles = $this->findBundles($path, $projectNamespace, $allBundles);
         }
+
         return $allBundles;
     }
 
@@ -117,6 +121,7 @@ class AllBundleFinder implements AllBundleFinderInterface
         $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/Spryker/*';
         $namespace = 'Spryker';
         $allBundles = $this->findBundles($path, $namespace, $allBundles);
+
         return $allBundles;
     }
 
@@ -134,6 +139,7 @@ class AllBundleFinder implements AllBundleFinderInterface
             $path = APPLICATION_VENDOR_DIR . '/' . $namespaceDir . '/*/src/*/*';
             $allBundles = $this->findBundles($path, $coreNamespace, $allBundles);
         }
+
         return $allBundles;
     }
 
@@ -148,6 +154,7 @@ class AllBundleFinder implements AllBundleFinderInterface
             $expl = explode('/', $bundleData['directory']);
             $allBundles[$i]['application'] = $expl[count($expl) - 2];
         }
+
         return $allBundles;
     }
 }

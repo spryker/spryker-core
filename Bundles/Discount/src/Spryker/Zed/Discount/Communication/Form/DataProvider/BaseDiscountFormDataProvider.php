@@ -15,9 +15,9 @@ class BaseDiscountFormDataProvider
     protected $options = [];
 
     /**
-     * @var array
+     * @var mixed
      */
-    protected $data = [];
+    protected $data;
 
     /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface[] $formExpanderPlugins
@@ -33,7 +33,7 @@ class BaseDiscountFormDataProvider
     }
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getData()
     {

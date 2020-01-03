@@ -23,7 +23,7 @@ use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 class ProductAbstractLabelEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductAbstractLabelEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,9 +45,9 @@ class ProductAbstractLabelEventResourceQueryContainerPlugin extends AbstractPlug
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductLabelProductAbstractByIds($ids);
+        $query = $this->getQueryContainer()->queryProductLabelProductAbstractByPrimaryIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
@@ -55,7 +55,7 @@ class ProductAbstractLabelEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ProductAbstractLabelEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

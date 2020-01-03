@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeBridge;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge;
 
 /**
@@ -18,6 +19,7 @@ use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\Prod
 class ProductDiscontinuedProductBundleConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+    public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
     public const PROPEL_QUERY_PRODUCT_DISCONTINUED = 'PROPEL_QUERY_PRODUCT_DISCONTINUED';
 
     /**
@@ -29,6 +31,7 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addProductDiscontinuedFacade($container);
+        $container = $this->addProductBundleFacade($container);
 
         return $container;
     }
@@ -56,6 +59,22 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
         $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
             return new ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge(
                 $container->getLocator()->productDiscontinued()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductBundleFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+            return new ProductDiscontinuedProductBundleConnectorToProductBundleFacadeBridge(
+                $container->getLocator()->productBundle()->facade()
             );
         };
 

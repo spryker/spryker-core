@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -89,6 +90,23 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
             ->createShoppingListCustomerStoragePropelQuery()
             ->filterByIdShoppingListCustomerStorage_In($shoppingListCustomerStorageIds)
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $shoppingListCustomerStorageEntityIds
+     *
+     * @return \Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer[]
+     */
+    public function findFilteredShoppingListCustomerStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): array
+    {
+        $query = $this->getFactory()->createShoppingListCustomerStoragePropelQuery();
+
+        if ($shoppingListCustomerStorageEntityIds) {
+            $query->filterByIdShoppingListCustomerStorage_In($shoppingListCustomerStorageEntityIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 
     /**

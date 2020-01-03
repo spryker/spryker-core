@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -47,5 +48,23 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
         }
 
         return $productDiscontinuedStorageEntities->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productDiscontinuedStorageEntityIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
+     */
+    public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntityIds = []): array
+    {
+        $query = $this->getFactory()
+            ->createProductDiscontinuedStoragePropelQuery();
+
+        if ($productDiscontinuedStorageEntityIds) {
+            $query->filterByIdProductDiscontinuedStorage_In($productDiscontinuedStorageEntityIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

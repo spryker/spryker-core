@@ -66,6 +66,7 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
             ->setName($dataSet[ProductMeasurementUnitDataSet::COLUMN_NAME])
             ->setDefaultPrecision($this->filterDefaultPrecision($dataSet[ProductMeasurementUnitDataSet::COLUMN_DEFAULT_PRECISION]))
             ->save();
+
         return $productMeasurementUnitEntity;
     }
 }

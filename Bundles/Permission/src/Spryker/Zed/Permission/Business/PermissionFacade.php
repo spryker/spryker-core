@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PermissionFacade extends AbstractFacade implements PermissionFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,5 +86,19 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
         return $this->getFactory()
             ->createPermissionFinder()
             ->findMergedRegisteredNonInfrastructuralPermissions();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getPermissionsByIdentifier(string $identifier): PermissionCollectionTransfer
+    {
+        return $this->getFactory()->createPermissionFinder()->getPermissionsByIdentifier($identifier);
     }
 }

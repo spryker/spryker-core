@@ -17,9 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CustomerNoteRepository extends AbstractRepository implements CustomerNoteRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param int $idCustomer
      *

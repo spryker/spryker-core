@@ -1,0 +1,29 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Scheduled Prices: Import dry run' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Your scheduled prices have been published' | trans} %}
+
+        {% block widget_content %}
+            
+            {{ 'Your prices are now available to your customers based on their start and end date.' | trans }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

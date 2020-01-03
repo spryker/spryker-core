@@ -18,6 +18,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR = 'PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR';
+    public const PLUGINS_CHECKOUT_RESPONSE_MAPPER = 'PLUGINS_CHECKOUT_RESPONSE_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -29,6 +30,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
         $container = $this->addGlossaryStorageClient($container);
         $container = $this->addCheckoutRequestAttributesValidatorPlugins($container);
+        $container = $this->addCheckoutResponseMapperPlugins($container);
 
         return $container;
     }
@@ -65,6 +67,28 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
      */
     protected function getCheckoutRequestAttributesValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCheckoutResponseMapperPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CHECKOUT_RESPONSE_MAPPER] = function () {
+            return $this->getCheckoutResponseMapperPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
+     */
+    protected function getCheckoutResponseMapperPlugins(): array
     {
         return [];
     }

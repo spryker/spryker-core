@@ -26,7 +26,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyUserInvitationClient extends AbstractClient implements CompanyUserInvitationClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,7 +43,7 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -77,7 +77,7 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -111,7 +111,7 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

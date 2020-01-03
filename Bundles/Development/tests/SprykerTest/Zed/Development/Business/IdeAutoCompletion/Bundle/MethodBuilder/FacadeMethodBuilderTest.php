@@ -15,6 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -34,13 +35,13 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMethodNameIsFacade()
+    public function testMethodNameIsFacade(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
             ->expects($this->any())
             ->method('findFileByName')
-            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', null, null));
+            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', 'foo', 'bar'));
 
         $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 
@@ -50,7 +51,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupIsPerformedInBusinessLayer()
+    public function testFileLookupIsPerformedInBusinessLayer(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -64,7 +65,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupPrefersInterface()
+    public function testFileLookupPrefersInterface(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -74,8 +75,8 @@ class FacadeMethodBuilderTest extends Unit
                 [$this->equalTo('FooBundleFacadeInterface.php'), $this->anything()]
             )
             ->will($this->onConsecutiveCalls(
-                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', null, null),
-                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', null, null)
+                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', 'foo', 'bar'),
+                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', 'foo', 'bar')
             ));
 
         $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
@@ -86,7 +87,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupFallsBackToConcreteClassIfInterfaceIsMissing()
+    public function testFileLookupFallsBackToConcreteClassIfInterfaceIsMissing(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -98,7 +99,7 @@ class FacadeMethodBuilderTest extends Unit
             )
             ->will($this->onConsecutiveCalls(
                 null,
-                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', null, null)
+                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', 'foo', 'bar')
             ));
 
         $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
@@ -138,7 +139,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    protected function getBundleTransfer()
+    protected function getBundleTransfer(): IdeAutoCompletionBundleTransfer
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');

@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
  */
 class ProductOptionGroupForm extends AbstractType
 {
@@ -186,7 +187,6 @@ class ProductOptionGroupForm extends AbstractType
             [
                 'label' => 'Tax set',
                 'choices' => array_flip($options[self::OPTION_TAX_SETS]),
-                'choices_as_values' => true,
             ]
         );
 

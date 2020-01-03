@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Dependency\Facade;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 class SharedCartToCustomerFacadeBridge implements SharedCartToCustomerFacadeInterface
@@ -22,6 +23,16 @@ class SharedCartToCustomerFacadeBridge implements SharedCartToCustomerFacadeInte
     public function __construct($customerFacade)
     {
         $this->customerFacade = $customerFacade;
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer
+    {
+        return $this->customerFacade->findCustomerByReference($customerReference);
     }
 
     /**

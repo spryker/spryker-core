@@ -51,7 +51,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
      */
     protected function getProcess($command)
     {
-        $process = new Process($command);
+        $process = new Process(explode(' ', $command));
         $process->setTimeout(null);
 
         return $process;

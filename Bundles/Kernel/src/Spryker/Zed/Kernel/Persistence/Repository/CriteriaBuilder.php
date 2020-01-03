@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Kernel\Persistence\Repository;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class CriteriaBuilder implements CriteriaBuilderInterface
@@ -34,8 +35,8 @@ class CriteriaBuilder implements CriteriaBuilderInterface
             $criteria->setOffset($filterTransfer->getOffset());
         }
 
-        if ($filterTransfer->getOrderBy() && $filterTransfer->getOrderDirection()) {
-            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
+        if ($filterTransfer->getOrderBy()) {
+            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection() ?? Criteria::ASC);
         }
 
         return $criteria;

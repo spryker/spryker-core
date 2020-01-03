@@ -1,0 +1,13 @@
+carts:
+  post:
+    name:
+      - NotBlank
+      - Length:
+          max: 30
+  patch:
+      name:
+        - Optional:
+            constraints:
+              - NotBlank
+              - Length:
+                  max: 30

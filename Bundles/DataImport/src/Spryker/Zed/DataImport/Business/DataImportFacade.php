@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class DataImportFacade extends AbstractFacade implements DataImportFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,5 +51,20 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
     public function publish(): void
     {
         $this->getFactory()->createDataImporterPublisher()->triggerEvents();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $queueName
+     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItems
+     *
+     * @return void
+     */
+    public function writeDataSetItemsToQueue(string $queueName, array $dataSetItems): void
+    {
+        $this->getFactory()->createQueueWriter()->write($queueName, $dataSetItems);
     }
 }

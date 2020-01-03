@@ -14,7 +14,7 @@ class FileReader implements FileReaderInterface
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return array
+     * @return string[][]
      */
     public function readFile(UploadedFile $file): array
     {

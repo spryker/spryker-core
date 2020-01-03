@@ -12,6 +12,7 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer
@@ -28,7 +29,7 @@ class TransferCleanerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $testDirectory = $this->getTestDirectory();
         if (!is_dir($testDirectory)) {
@@ -41,15 +42,15 @@ class TransferCleanerTest extends Unit
     /**
      * @return string
      */
-    private function getTestDirectory()
+    private function getTestDirectory(): string
     {
-        return __DIR__ . '/test_files/';
+        return codecept_data_dir('test_files/tmp/');
     }
 
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $testFile1 = $this->getTestDirectory() . static::TEST_FILE_NAME;
         if (file_exists($testFile1)) {
@@ -64,7 +65,7 @@ class TransferCleanerTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldDeleteAllFilesInADirectory()
+    public function testExecuteShouldDeleteAllFilesInADirectory(): void
     {
         $this->assertTrue(file_exists($this->getTestDirectory() . static::TEST_FILE_NAME));
 

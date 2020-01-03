@@ -7,11 +7,13 @@
 
 namespace SprykerTest\Zed\ProductManagement\Presentation;
 
+use PHPUnit\Framework\Assert;
 use SprykerTest\Zed\ProductManagement\PageObject\ProductManagementProductListPage;
 use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement
@@ -22,38 +24,46 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 class ProductManagementProductEditCest
 {
     /**
-     * @skip Fix me
-     *
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
 
-        $i->listDataTable(ProductManagementProductListPage::URL . '/index/table');
+        $i->amOnPage(ProductManagementProductListPage::URL);
+
+        $i->waitForElementVisible('.dataTables_scrollBody');
+
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
     }
 
     /**
-     * @skip Fix me
-     *
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
      * @return void
      */
-    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i)
+    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i): void
     {
+        Assert::markTestSkipped('Re-enable when GLUE-9675 is done');
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
 
-        $i->listDataTable(ProductManagementProductListPage::URL . '/index/table');
+        $i->amOnPage(ProductManagementProductListPage::URL);
+
+        $i->waitForElementVisible('.dataTables_scrollBody');
+
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
         $i->click('Save');
-        $i->seeResponseCodeIs(200);
+
+        $i->waitForJS('return document.readyState == "complete"');
+
+        $alertText = $i->grabTextFrom('.alert-success');
+
+        $i->assertNotEmpty($alertText);
     }
 }

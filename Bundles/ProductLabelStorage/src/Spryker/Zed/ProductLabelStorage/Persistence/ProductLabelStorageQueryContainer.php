@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -81,6 +82,8 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int[] $productLabelProductAbstractIds
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
@@ -94,6 +97,23 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
             ->joinWithSpyProductLabel()
             ->orderBy(SpyProductLabelTableMap::COL_POSITION)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productLabelProductAbstractIds
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductLabelProductAbstractByPrimaryIds(array $productLabelProductAbstractIds): SpyProductLabelProductAbstractQuery
+    {
+        return $this->getFactory()
+            ->getProductLabelQuery()
+            ->queryAllProductLabelProductAbstractRelations()
+            ->filterByIdProductLabelProductAbstract_In($productLabelProductAbstractIds);
     }
 
     /**

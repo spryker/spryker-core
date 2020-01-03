@@ -23,7 +23,7 @@ use Spryker\Zed\ProductGroup\Dependency\ProductGroupEvents;
 class ProductGroupEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductGroupEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,15 +47,15 @@ class ProductGroupEventResourceQueryContainerPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryProductAbstractGroupByGroupIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ProductGroupEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

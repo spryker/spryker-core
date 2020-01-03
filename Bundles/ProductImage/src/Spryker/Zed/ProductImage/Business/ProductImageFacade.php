@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductImage\Business\ProductImageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageRepositoryInterface getRepository()
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
@@ -87,6 +90,22 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageReader()
             ->getProductImagesSetCollectionByProductId($idProduct);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getProductImagesSetCollectionByProductIdForCurrentLocale($idProduct);
     }
 
     /**
@@ -196,7 +215,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -212,7 +231,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -229,7 +248,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -247,7 +266,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -260,5 +279,53 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageReader()
             ->findProductImagesSetCollectionById($idProductImageSet);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     * @param string $productImageSetName
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     */
+    public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
+    {
+        return $this->getFactory()
+            ->createProductImageBulkReader()
+            ->getProductImagesByProductIdsAndProductImageSetName($productIds, $productImageSetName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array
+    {
+        return $this->getRepository()->getProductConcreteIds($productImageFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param string $localeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject
+    {
+        return $this->getFactory()
+            ->createProductImageSetResolver()
+            ->resolveProductImageSetsForLocale($productImageSetTransfers, $localeName);
     }
 }

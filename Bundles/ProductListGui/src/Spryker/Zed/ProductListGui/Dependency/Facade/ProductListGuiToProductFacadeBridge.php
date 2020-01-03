@@ -25,7 +25,7 @@ class ProductListGuiToProductFacadeBridge implements ProductListGuiToProductFaca
     /**
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {

@@ -90,7 +90,7 @@ interface TransitionLogInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getLogForOrder(SpySalesOrder $order);
 }

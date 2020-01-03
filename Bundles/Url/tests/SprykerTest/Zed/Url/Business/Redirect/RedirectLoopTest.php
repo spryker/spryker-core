@@ -14,10 +14,12 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
+use Spryker\Zed\Url\Business\Exception\RedirectLoopException;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Url
@@ -36,7 +38,7 @@ class RedirectLoopTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -44,14 +46,11 @@ class RedirectLoopTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Url\Business\Exception\RedirectLoopException
-     *
      * @return void
      */
-    public function testCreatingCyclicRedirectsThrowsException()
+    public function testCreatingCyclicRedirectsThrowsException(): void
     {
-        self::markTestSkipped();
-
+        $this->expectException(RedirectLoopException::class);
         $localeTransfer = $this->prepareTestData();
 
         $sourceUrlTransfer = new UrlTransfer();
@@ -71,7 +70,7 @@ class RedirectLoopTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function prepareTestData()
+    protected function prepareTestData(): LocaleTransfer
     {
         $localeEntity = $this->createLocaleEntity();
         $localeTransfer = new LocaleTransfer();
@@ -85,7 +84,7 @@ class RedirectLoopTest extends Unit
     /**
      * @return \Orm\Zed\Locale\Persistence\SpyLocale
      */
-    protected function createLocaleEntity()
+    protected function createLocaleEntity(): SpyLocale
     {
         $localeEntity = new SpyLocale();
         $localeEntity
@@ -102,7 +101,7 @@ class RedirectLoopTest extends Unit
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlRedirectEntity($source, $target, SpyLocale $localeEntity)
+    protected function createUrlRedirectEntity(string $source, string $target, SpyLocale $localeEntity): SpyUrl
     {
         $redirectEntity = new SpyUrlRedirect();
         $redirectEntity
@@ -125,7 +124,7 @@ class RedirectLoopTest extends Unit
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlEntity(SpyLocale $localeEntity, $url)
+    protected function createUrlEntity(SpyLocale $localeEntity, string $url): SpyUrl
     {
         $urlEntity = new SpyUrl();
         $urlEntity
@@ -141,7 +140,7 @@ class RedirectLoopTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function mapEntityToTransfer(SpyUrl $urlEntity)
+    protected function mapEntityToTransfer(SpyUrl $urlEntity): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($urlEntity->toArray(), true);

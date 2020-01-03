@@ -23,7 +23,7 @@ use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,15 +47,15 @@ class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin impleme
     {
         $query = $this->getQueryContainer()->queryProductSetByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

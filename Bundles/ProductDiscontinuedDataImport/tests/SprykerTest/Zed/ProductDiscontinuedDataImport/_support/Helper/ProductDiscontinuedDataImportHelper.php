@@ -23,7 +23,7 @@ class ProductDiscontinuedDataImportHelper extends Module
     {
         $this->deleteProductDiscountedData();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () {
+        $this->getDataCleanupHelper()->_addCleanup(function (): void {
             $this->deleteProductDiscountedData();
         });
     }

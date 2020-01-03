@@ -66,6 +66,8 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
         if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName())) {
             $productLabelTransfer = new ProductLabelTransfer();
             $productLabelTransfer->setName($this->config->getProductDiscontinueLabelName());
+            $productLabelTransfer->setFrontEndReference($this->config->getProductDiscontinueLabelFrontEndReference());
+
             $this->addDataToProductLabelTransfer($productLabelTransfer);
             $this->productLabelFacade->createLabel(
                 $productLabelTransfer
@@ -75,6 +77,7 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
         $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName());
 
         if ($productLabelTransfer) {
+            $productLabelTransfer->setFrontEndReference($this->config->getProductDiscontinueLabelFrontEndReference());
             $this->addDataToProductLabelTransfer($productLabelTransfer);
             $this->productLabelFacade->updateLabel($productLabelTransfer);
         }

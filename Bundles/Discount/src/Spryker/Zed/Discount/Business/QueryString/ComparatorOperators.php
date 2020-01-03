@@ -96,6 +96,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
         foreach ($this->operators as $operator) {
             $comparatorExpressions[] = $operator->getExpression();
         }
+
         return $comparatorExpressions;
     }
 

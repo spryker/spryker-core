@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductQuantity\Dependency\ProductQuantityEvents;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Event\ProductQuantityEventResourceBulkRepositoryPlugin instead.
+ *
  * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductQuantityStorage\Communication\ProductQuantityStorageCommunicationFactory getFactory()
@@ -22,7 +24,7 @@ use Spryker\Zed\ProductQuantity\Dependency\ProductQuantityEvents;
 class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,24 +36,21 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->findProductQuantityByProductIdsTransfers($ids);
-        }
-        return $this->getFacade()->findProductQuantityTransfers();
+        return $this->getRepository()->getProductQuantityEntityTransfersByProductIds($ids);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -63,7 +62,7 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

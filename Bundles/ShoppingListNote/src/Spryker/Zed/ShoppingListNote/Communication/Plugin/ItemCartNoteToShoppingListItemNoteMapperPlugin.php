@@ -13,13 +13,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface;
 
 /**
- * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
  */
 class ItemCartNoteToShoppingListItemNoteMapperPlugin extends AbstractPlugin implements ItemToShoppingListItemMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Copies the item cart note to shopping list item note if not empty.
      *
      * @api

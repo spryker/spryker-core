@@ -39,7 +39,7 @@ class DeployPreparePropelConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -50,10 +50,10 @@ class DeployPreparePropelConsole extends Console
         ];
 
         foreach ($dependingCommands as $commandName) {
-            $this->runDependingCommand($commandName);
+            $exitCode = $this->runDependingCommand($commandName);
 
             if ($this->hasError()) {
-                return $this->getLastExitCode();
+                return $exitCode;
             }
         }
 
@@ -64,13 +64,14 @@ class DeployPreparePropelConsole extends Console
      * @param string $command
      * @param array $arguments
      *
-     * @return void
+     * @return int
      */
     protected function runDependingCommand($command, array $arguments = [])
     {
         $command = $this->getApplication()->find($command);
         $arguments['command'] = $command;
         $input = new ArrayInput($arguments);
-        $command->run($input, $this->output);
+
+        return $command->run($input, $this->output);
     }
 }

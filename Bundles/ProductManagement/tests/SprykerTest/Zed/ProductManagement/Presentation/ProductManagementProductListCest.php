@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement
@@ -26,11 +27,11 @@ class ProductManagementProductListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage(ProductManagementProductListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products');
+        $i->seeBreadcrumbNavigation('Products / Products');
     }
 }

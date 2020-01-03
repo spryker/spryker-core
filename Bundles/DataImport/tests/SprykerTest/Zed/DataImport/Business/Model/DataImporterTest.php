@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\DataImport\Model;
+namespace SprykerTest\Zed\DataImport\Business\Model;
 
 use Codeception\Test\Unit;
 use Exception;
@@ -15,27 +15,29 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport
+ * @group Business
  * @group Model
  * @group DataImporterTest
  * Add your own group annotations below this line
- * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
+ * @property \SprykerTest\Zed\DataImport\DataImportBusinessTester $tester
  */
 class DataImporterTest extends Unit
 {
     public const IMPORTER_TYPE = 'specific-importer';
 
     /**
-     * @var \SprykerTest\Zed\DataImport\BusinessTester
+     * @var \SprykerTest\Zed\DataImport\DataImportBusinessTester
      */
     protected $tester;
 
     /**
      * @return void
      */
-    public function testGetImporterTypeReturnsString()
+    public function testGetImporterTypeReturnsString(): void
     {
         $dataImporter = $this->getDataImporter();
 
@@ -45,7 +47,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportReturnsReport()
+    public function testImportReturnsReport(): void
     {
         $dataImporter = $this->getDataImporter();
 
@@ -55,7 +57,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportWithConfigurableDataReaderShouldReConfigureDataReader()
+    public function testImportWithConfigurableDataReaderShouldReConfigureDataReader(): void
     {
         $dataImporter = $this->getDataImporter();
 
@@ -69,7 +71,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportExecutesDataSets()
+    public function testImportExecutesDataSets(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataImporter->addDataSetStepBroker($this->tester->getDataSetMock());
@@ -80,7 +82,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportExecutesBeforeImportHooks()
+    public function testImportExecutesBeforeImportHooks(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataImporter->addBeforeImportHook($this->tester->getBeforeImportHookMock());
@@ -91,7 +93,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportExecutesAfterImportHooks()
+    public function testImportExecutesAfterImportHooks(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataImporter->addAfterImportHook($this->tester->getAfterImportHookMock());
@@ -102,7 +104,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportThrowsExceptionWhenThrowExceptionFlagSet()
+    public function testImportThrowsExceptionWhenThrowExceptionFlagSet(): void
     {
         $this->expectException(Exception::class);
 
@@ -119,7 +121,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportLogsExceptionWhenThrowExceptionFlagNotSet()
+    public function testImportLogsExceptionWhenThrowExceptionFlagNotSet(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataSetImporter = $this->tester->getFactory()->createDataSetStepBroker();
@@ -129,6 +131,23 @@ class DataImporterTest extends Unit
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setThrowException(false);
         $dataImporter->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportReturnsReportWithMessagesWhenThrowExceptionFlagNotSet(): void
+    {
+        $dataImporter = $this->getDataImporter();
+        $dataSetImporter = $this->tester->getFactory()->createDataSetStepBroker();
+        $dataSetImporter->addStep($this->tester->getFailingDataImportStepMock());
+        $dataImporter->addDataSetStepBroker($dataSetImporter);
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setThrowException(false);
+        $dataImportReportTransfer = $dataImporter->import($dataImportConfigurationTransfer);
+
+        $this->assertTrue($dataImportReportTransfer->getMessages()->count() > 0);
     }
 
     /**

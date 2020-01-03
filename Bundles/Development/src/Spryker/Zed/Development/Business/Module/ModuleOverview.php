@@ -8,29 +8,21 @@
 namespace Spryker\Zed\Development\Business\Module;
 
 use Generated\Shared\Transfer\ModuleOverviewTransfer;
-use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface;
-use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface;
+use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
 
 class ModuleOverview implements ModuleOverviewInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface
+     * @var \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface
      */
-    protected $projectModuleFinder;
+    protected $moduleFinderFacade;
 
     /**
-     * @var \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface
+     * @param \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade
      */
-    protected $moduleFinder;
-
-    /**
-     * @param \Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface $projectModuleFinder
-     * @param \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface $moduleFinder
-     */
-    public function __construct(ProjectModuleFinderInterface $projectModuleFinder, ModuleFinderInterface $moduleFinder)
+    public function __construct(DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade)
     {
-        $this->projectModuleFinder = $projectModuleFinder;
-        $this->moduleFinder = $moduleFinder;
+        $this->moduleFinderFacade = $moduleFinderFacade;
     }
 
     /**
@@ -54,7 +46,7 @@ class ModuleOverview implements ModuleOverviewInterface
      */
     protected function addProjectModules(array $moduleOverviewTransferCollection): array
     {
-        $projectModules = $this->projectModuleFinder->getProjectModules();
+        $projectModules = $this->moduleFinderFacade->getProjectModules();
 
         foreach (array_keys($projectModules) as $moduleKey) {
             $moduleName = $this->getModuleNameFromModuleKey($moduleKey);
@@ -78,7 +70,7 @@ class ModuleOverview implements ModuleOverviewInterface
      */
     protected function addCoreModules(array $moduleOverviewTransferCollection): array
     {
-        $coreModules = $this->moduleFinder->getModules();
+        $coreModules = $this->moduleFinderFacade->getModules();
 
         foreach (array_keys($coreModules) as $moduleKey) {
             $moduleName = $this->getModuleNameFromModuleKey($moduleKey);

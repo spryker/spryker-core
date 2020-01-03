@@ -1,15 +1,19 @@
 {# this template is used to render the table without ajax call #}
-<table class="table table-striped table-bordered table-hover">
-    <tr>
-        {% for title in table.header %}
-            <td>{{ title | trans }}</td>
-        {% endfor %}
-    </tr>
-    {% for rows in table.data %}
+<table class="table table-striped table-bordered table-hover" {% if id %} id="{{ id }}" {% endif %}>
+    <thead>
         <tr>
-            {% for column in rows %}
-                <td>{{ column }}</td>
+            {% for title in table.header %}
+                <th>{{ title | trans }}</th>
             {% endfor %}
         </tr>
-    {% endfor %}
+    </thead>
+    <tbody>
+        {% for rows in table.data %}
+            <tr>
+                {% for column in rows %}
+                    <td>{{ column }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>

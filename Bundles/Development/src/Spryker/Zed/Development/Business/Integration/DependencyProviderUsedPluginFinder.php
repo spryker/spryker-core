@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
 use Generated\Shared\Transfer\PluginTransfer;
-use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface;
+use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -22,9 +22,9 @@ use Symfony\Component\Finder\SplFileInfo;
 class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPluginFinderInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface
+     * @var \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface
      */
-    protected $projectModuleFinder;
+    protected $moduleFinderFacade;
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -32,12 +32,12 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface $projectModuleFinder
+     * @param \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    public function __construct(ProjectModuleFinderInterface $projectModuleFinder, DevelopmentConfig $config)
+    public function __construct(DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade, DevelopmentConfig $config)
     {
-        $this->projectModuleFinder = $projectModuleFinder;
+        $this->moduleFinderFacade = $moduleFinderFacade;
         $this->config = $config;
     }
 
@@ -48,7 +48,7 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
      */
     public function getUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer
     {
-        $projectModules = $this->projectModuleFinder->getProjectModules($moduleFilterTransfer);
+        $projectModules = $this->moduleFinderFacade->getProjectModules($moduleFilterTransfer);
         $dependencyProviderCollectionTransfer = new DependencyProviderCollectionTransfer();
 
         foreach ($projectModules as $moduleTransfer) {

@@ -30,6 +30,14 @@ class ContentStorageConfig
 
     /**
      * Specification:
+     * - Content key as used for storage value structure.
+     *
+     * @api
+     */
+    public const ID_CONTENT = 'idContent';
+
+    /**
+     * Specification:
      * - Queue name as used for processing content messages.
      *
      * @api

@@ -7,14 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientBridge;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientBridge;
-use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
-use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCreatorPluginException;
-use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
-use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -27,8 +20,10 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
-    public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
-    public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
+
+    public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
+    public const PLUGINS_CART_ITEM_EXPANDER = 'PLUGINS_CART_ITEM_EXPANDER';
+    public const PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -38,55 +33,10 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
-        $container = $this->addCartClient($container);
-        $container = $this->addZedRequestClient($container);
-        $container = $this->addQuoteClient($container);
         $container = $this->addPersistentCartClient($container);
-        $container = $this->addQuoteCollectionReaderPlugin($container);
-        $container = $this->addQuoteCreatorPlugin($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCartClient(Container $container): Container
-    {
-        $container[static::CLIENT_CART] = function (Container $container) {
-            return new CartsRestApiToCartClientBridge($container->getLocator()->cart()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addZedRequestClient(Container $container): Container
-    {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return new CartsRestApiToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addQuoteClient(Container $container): Container
-    {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
-            return new CartsRestApiToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        $container = $this->addCustomerExpanderPlugins($container);
+        $container = $this->addRestCartItemsAttributesMapperPlugins($container);
+        $container = $this->addCartItemExpanderPlugins($container);
 
         return $container;
     }
@@ -98,9 +48,9 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPersistentCartClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new CartsRestApiToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -110,11 +60,11 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addQuoteCollectionReaderPlugin(Container $container): Container
+    protected function addCustomerExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_COLLECTION_READER] = function () {
-            return $this->getQuoteCollectionReaderPlugin();
-        };
+        $container->set(static::PLUGINS_CUSTOMER_EXPANDER, function () {
+            return $this->getCustomerExpanderPlugins();
+        });
 
         return $container;
     }
@@ -124,42 +74,50 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addQuoteCreatorPlugin(Container $container): Container
+    protected function addRestCartItemsAttributesMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_CREATOR] = function () {
-            return $this->getQuoteCreatorPlugin();
-        };
+        $container->set(static::PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER, function () {
+            return $this->getRestCartItemsAttributesMapperPlugins();
+        });
 
         return $container;
     }
 
     /**
-     * @throws \Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException
+     * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
+     * @return \Spryker\Glue\Kernel\Container
      */
-    protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
+    protected function addCartItemExpanderPlugins(Container $container): Container
     {
-        throw new MissingQuoteCollectionReaderPluginException(sprintf(
-            'Missing instance of %s! You need to configure QuoteCollectionReaderPlugin ' .
-            'in your own CartsRestApiDependencyProvider::getQuoteCollectionReaderPlugin() ' .
-            'to be able to read quote collection.',
-            QuoteCollectionReaderPluginInterface::class
-        ));
+        $container->set(static::PLUGINS_CART_ITEM_EXPANDER, function () {
+            return $this->getCartItemExpanderPlugins();
+        });
+
+        return $container;
     }
 
     /**
-     * @throws \Spryker\Glue\CartsRestApi\Exception\MissingQuoteCreatorPluginException
-     *
-     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
-    protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
+    protected function getCustomerExpanderPlugins(): array
     {
-        throw new MissingQuoteCreatorPluginException(sprintf(
-            'Missing instance of %s! You need to configure QuoteCreatorPluginInterface ' .
-            'in your own CartsRestApiDependencyProvider::getQuoteCreatorPlugin() ' .
-            'to be able to create quote.',
-            QuoteCreatorPluginInterface::class
-        ));
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface[]
+     */
+    protected function getCartItemExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[]
+     */
+    protected function getRestCartItemsAttributesMapperPlugins(): array
+    {
+        return [];
     }
 }

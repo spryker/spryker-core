@@ -8,12 +8,17 @@
 namespace SprykerTest\Shared\Discount\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\DiscountBuilder;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
 use Generated\Shared\DataBuilder\DiscountGeneralBuilder;
 use Generated\Shared\DataBuilder\DiscountVoucherBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
+use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -28,7 +33,7 @@ class DiscountDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
      */
-    public function haveDiscount(array $override = [], array $discountAmounts = [])
+    public function haveDiscount(array $override = [], array $discountAmounts = []): DiscountGeneralTransfer
     {
         $discountFacade = $this->getDiscountFacade();
 
@@ -53,7 +58,7 @@ class DiscountDataHelper extends Module
         $this->debugSection('Discount Id', $discountId);
 
         $cleanupModule = $this->getDataCleanupHelper();
-        $cleanupModule->_addCleanup(function () use ($discountId) {
+        $cleanupModule->_addCleanup(function () use ($discountId): void {
             $this->debug('Deleting Discount: ' . $discountId);
             $this->getDiscountQuery()->queryDiscount()->findByIdDiscount($discountId)->delete();
         });
@@ -79,7 +84,7 @@ class DiscountDataHelper extends Module
     /**
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
-    private function getDiscountFacade()
+    private function getDiscountFacade(): DiscountFacadeInterface
     {
         return $this->getLocator()->discount()->facade();
     }
@@ -87,7 +92,7 @@ class DiscountDataHelper extends Module
     /**
      * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
-    private function getDiscountQuery()
+    private function getDiscountQuery(): DiscountQueryContainer
     {
         return $this->getLocator()->discount()->queryContainer();
     }
@@ -95,7 +100,7 @@ class DiscountDataHelper extends Module
     /**
      * @return void
      */
-    public function resetCurrentDiscounts()
+    public function resetCurrentDiscounts(): void
     {
         $discounts = SpyDiscountQuery::create()->find();
         Propel::disableInstancePooling();
@@ -103,5 +108,26 @@ class DiscountDataHelper extends Module
             $discountEntity->setIsActive(false);
             $discountEntity->save();
         }
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
+     */
+    public function haveSalesDiscount(array $seedData = []): SpySalesDiscount
+    {
+        $discountTransfer = (new DiscountBuilder($seedData))->build();
+        $data = array_merge($discountTransfer->toArray(false), $seedData);
+        $salesDiscountEntity = new SpySalesDiscount();
+        $salesDiscountEntity->fromArray($data);
+        $salesDiscountEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesDiscountEntity): void {
+            $this->debug('Deleting Discount: ' . $salesDiscountEntity->getIdSalesDiscount());
+            $salesDiscountEntity->delete();
+        });
+
+        return $salesDiscountEntity;
     }
 }

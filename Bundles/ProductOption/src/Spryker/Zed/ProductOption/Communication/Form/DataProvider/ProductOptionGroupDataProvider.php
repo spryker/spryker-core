@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\ProductOption\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
@@ -90,9 +91,6 @@ class ProductOptionGroupDataProvider
     protected function createTaxSetsList()
     {
         $taxSetCollection = $this->taxFacade->getTaxSets();
-        if (!$taxSetCollection) {
-            return [];
-        }
 
         $taxSetList = [];
         foreach ($taxSetCollection->getTaxSets() as $taxSetTransfer) {

@@ -49,4 +49,16 @@ class PriceProductToCurrencyFacadeBridge implements PriceProductToCurrencyFacade
     {
         return $this->currencyFacade->getDefaultCurrencyForCurrentStore();
     }
+
+    /**
+     * @api
+     *
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array
+    {
+        return $this->currencyFacade->getCurrencyTransfersByIsoCodes($isoCodes);
+    }
 }

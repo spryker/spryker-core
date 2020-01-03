@@ -56,6 +56,7 @@ class CmsRedirectForm extends AbstractType
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];
                 }
+
                 return [Constraint::DEFAULT_GROUP];
             },
         ]);

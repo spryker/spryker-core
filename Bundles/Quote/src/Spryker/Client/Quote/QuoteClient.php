@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class QuoteClient extends AbstractClient implements QuoteClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -28,7 +28,7 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +54,7 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +80,7 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,5 +91,19 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()->getStorageStrategy()->isQuoteEditable($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->getStorageStrategy()->lockQuote($quoteTransfer);
     }
 }

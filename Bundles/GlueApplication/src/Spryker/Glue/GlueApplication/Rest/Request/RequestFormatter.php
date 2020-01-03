@@ -160,7 +160,6 @@ class RequestFormatter implements RequestFormatterInterface
         RequestBuilderInterface $requestBuilder,
         array $queryParameters
     ): void {
-
         if (!isset($queryParameters[RequestConstantsInterface::QUERY_INCLUDE])) {
             $requestBuilder->setExcludeRelationship(
                 !$this->glueApplicationConfig->isEagerRelationshipsLoadingEnabled()
@@ -171,12 +170,14 @@ class RequestFormatter implements RequestFormatterInterface
 
         if (!$queryParameters[RequestConstantsInterface::QUERY_INCLUDE]) {
             $requestBuilder->setExcludeRelationship(true);
+
             return;
         }
 
         $includes = explode(',', trim($queryParameters[RequestConstantsInterface::QUERY_INCLUDE]));
         if (count($includes) === 0) {
             $requestBuilder->setExcludeRelationship(true);
+
             return;
         }
 
@@ -195,7 +196,6 @@ class RequestFormatter implements RequestFormatterInterface
         RequestBuilderInterface $requestBuilder,
         array $queryParameters
     ): void {
-
         if (!isset($queryParameters[RequestConstantsInterface::QUERY_FIELDS]) ||
             !is_array($queryParameters[RequestConstantsInterface::QUERY_FIELDS])) {
             return;

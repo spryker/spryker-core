@@ -18,4 +18,11 @@ interface ShipmentsRestApiToShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod);
 }

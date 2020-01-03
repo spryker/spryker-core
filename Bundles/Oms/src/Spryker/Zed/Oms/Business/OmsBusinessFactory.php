@@ -13,6 +13,10 @@ use Spryker\Zed\Oms\Business\Mail\MailHandler;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
+use Spryker\Zed\Oms\Business\OrderStateMachine\ManualEventReader;
+use Spryker\Zed\Oms\Business\OrderStateMachine\ManualEventReaderInterface;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReader;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReaderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
@@ -112,6 +116,18 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\ManualEventReaderInterface
+     */
+    public function createManualOrderReader(): ManualEventReaderInterface
+    {
+        return new ManualEventReader(
+            $this->createOrderItemManualEventReader(),
+            $this->getSalesFacade(),
+            $this->getOmsManualEventGrouperPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
      */
     public function createOrderStateMachineTimeout()
@@ -189,7 +205,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
-    protected function getGraph()
+    public function getGraph()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGIN_GRAPH);
     }
@@ -227,7 +243,9 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createActiveProcessFetcher(),
             $this->getQueryContainer(),
             $this->getReservationHandlerPlugins(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository(),
+            $this->getReservationAggregationStrategyPlugins()
         );
     }
 
@@ -258,7 +276,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[]
      */
-    protected function getReservationHandlerPlugins()
+    public function getReservationHandlerPlugins()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION);
     }
@@ -266,7 +284,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
      */
-    protected function getSalesFacade()
+    public function getSalesFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES);
     }
@@ -274,7 +292,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface
      */
-    protected function getUtilTextService()
+    public function getUtilTextService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_TEXT);
     }
@@ -282,7 +300,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface
      */
-    protected function getUtilNetworkService()
+    public function getUtilNetworkService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_NETWORK);
     }
@@ -290,7 +308,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface
      */
-    protected function getUtilSanitizeService()
+    public function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
@@ -302,7 +320,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         $mailHandler = new MailHandler(
             $this->getSalesFacade(),
-            $this->getMailFacade()
+            $this->getMailFacade(),
+            $this->getOmsOrderMailExpanderPlugins()
         );
 
         return $mailHandler;
@@ -322,7 +341,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface
      */
-    protected function getMailFacade()
+    public function getMailFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
     }
@@ -330,7 +349,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface
      */
-    protected function getStoreFacade()
+    public function getStoreFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_STORE);
     }
@@ -338,7 +357,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
      */
-    protected function getReservationExportPlugins()
+    public function getReservationExportPlugins()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_EXPORT);
     }
@@ -351,5 +370,39 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderStateMachineFlagReader(
             $this->createOrderStateMachineBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReaderInterface
+     */
+    public function createOrderItemManualEventReader(): OrderItemManualEventReaderInterface
+    {
+        return new OrderItemManualEventReader(
+            $this->createOrderStateMachineBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
+     */
+    public function getOmsOrderMailExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_ORDER_MAIL_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
+     */
+    public function getOmsManualEventGrouperPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_MANUAL_EVENT_GROUPER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
+     */
+    public function getReservationAggregationStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_AGGREGATION);
     }
 }

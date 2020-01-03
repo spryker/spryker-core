@@ -28,4 +28,9 @@ interface ProductStorageToProductQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProduct();
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstract();
 }

@@ -22,20 +22,13 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
     protected $moduleFinder;
 
     /**
-     * @var array
-     */
-    protected $options;
-
-    /**
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[] $generators
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface $moduleFinder
-     * @param array $options
      */
-    public function __construct(array $generators, BundleFinderInterface $moduleFinder, array $options)
+    public function __construct(array $generators, BundleFinderInterface $moduleFinder)
     {
         $this->generators = $generators;
         $this->moduleFinder = $moduleFinder;
-        $this->options = $options;
     }
 
     /**
@@ -46,60 +39,7 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
         $moduleTransferCollection = $this->moduleFinder->find();
 
         foreach ($this->generators as $generator) {
-            $fileContent = $generator->generate($moduleTransferCollection);
-
-            $this->saveFile($generator->getName(), $fileContent);
-        }
-    }
-
-    /**
-     * @param string $generatorName
-     * @param string $fileContent
-     *
-     * @return void
-     */
-    protected function saveFile($generatorName, $fileContent)
-    {
-        $targetDirectory = $this->getTargetDirectory();
-
-        $this->makeDirIfNotExists($targetDirectory);
-
-        $fileName = "{$generatorName}.php";
-
-        file_put_contents($targetDirectory . $fileName, $fileContent);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTargetDirectory()
-    {
-        $baseDirectory = rtrim(
-            $this->options[IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY],
-            DIRECTORY_SEPARATOR
-        );
-
-        $applicationPathFragment = trim(
-            str_replace(
-                IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
-                $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
-                $this->options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN]
-            ),
-            DIRECTORY_SEPARATOR
-        );
-
-        return "{$baseDirectory}/{$applicationPathFragment}/";
-    }
-
-    /**
-     * @param string $directory
-     *
-     * @return void
-     */
-    protected function makeDirIfNotExists($directory)
-    {
-        if (!is_dir($directory)) {
-            mkdir($directory, $this->options[IdeAutoCompletionConstants::DIRECTORY_PERMISSION], true);
+            $generator->generate($moduleTransferCollection);
         }
     }
 }

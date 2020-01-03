@@ -65,7 +65,6 @@ class MerchantRelationshipPriceDimensionForm extends AbstractType
         $builder->add(PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP, ChoiceType::class, [
             'choices' => $options[static::OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES],
             'placeholder' => static::FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP,
-            'choices_as_values' => true,
             'label' => static::FIELD_LABEL_MERCHANT_RELATIONSHIP,
             'attr' => [
                 'template_path' => $this->getTemplatePath(),

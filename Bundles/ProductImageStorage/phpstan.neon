@@ -2,3 +2,4 @@ parameters:
     ignoreErrors:
         - '#Method .+ProductImageStorageQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
         - '#Call to an undefined method .+ModelCriteria::innerJoinWithSpyProduct\(\)#'
+        - '#Parameter \#1 $reference of method .+SynchronizationDataTransfer::setReference\(\) expects string|null, int given#'

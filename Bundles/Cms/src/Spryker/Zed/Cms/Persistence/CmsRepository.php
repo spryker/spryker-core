@@ -17,9 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CmsRepository extends AbstractRepository implements CmsRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param int $idCmsPage
      *

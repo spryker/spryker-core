@@ -14,6 +14,8 @@ use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReader
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReaderInterface;
 use Spryker\Zed\ProductListSearch\Business\ProductList\ProductDataToProductListMapTransferMapper;
 use Spryker\Zed\ProductListSearch\Business\ProductList\ProductDataToProductListMapTransferMapperInterface;
+use Spryker\Zed\ProductListSearch\Business\ProductPage\ProductPageDataExpander;
+use Spryker\Zed\ProductListSearch\Business\ProductPage\ProductPageDataExpanderInterface;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface;
 use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 
@@ -55,5 +57,15 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductConcretePageSearchExpander(): ProductConcretePageSearchExpanderInterface
     {
         return new ProductConcretePageSearchExpander($this->getProductListFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListSearch\Business\ProductPage\ProductPageDataExpanderInterface
+     */
+    public function createProductPageDataExpander(): ProductPageDataExpanderInterface
+    {
+        return new ProductPageDataExpander(
+            $this->getProductListFacade()
+        );
     }
 }

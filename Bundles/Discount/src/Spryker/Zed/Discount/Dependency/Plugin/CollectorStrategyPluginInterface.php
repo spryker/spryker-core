@@ -27,7 +27,6 @@ interface CollectorStrategyPluginInterface
     public function accept(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * Specification:
      *
      * - Should return array of discountable items to which discount should be used.

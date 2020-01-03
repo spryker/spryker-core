@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
 interface ProductListGuiToProductListFacadeInterface
@@ -14,16 +15,16 @@ interface ProductListGuiToProductListFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): void;
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
@@ -31,4 +32,11 @@ interface ProductListGuiToProductListFacadeInterface
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function removeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 }

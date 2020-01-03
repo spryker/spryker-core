@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -23,7 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +38,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +55,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -70,7 +71,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +87,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +103,23 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer|null
+     */
+    public function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer
+    {
+        return $this->getFactory()
+            ->createPriceTypeReader()
+            ->findPriceTypeByName($priceTypeName);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -118,7 +135,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -132,7 +149,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -149,7 +166,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -165,7 +182,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -181,7 +198,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -195,7 +212,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -213,7 +230,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -229,7 +246,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -245,7 +262,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -261,7 +278,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -280,7 +297,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -296,11 +313,12 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -314,12 +332,13 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -334,7 +353,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -351,7 +370,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -365,7 +384,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -381,7 +400,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -397,7 +416,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -411,7 +430,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -430,11 +449,11 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param array|int[] $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -446,7 +465,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -462,12 +481,13 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -482,7 +502,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -498,7 +518,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -512,5 +532,68 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->createPriceProductAbstractReader()
             ->findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria($productAbstractIds, $priceProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void
+    {
+        $this->getFactory()
+            ->createPriceProductRemover()
+            ->removePriceProductStore($priceProductTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void
+    {
+        $this->getFactory()
+            ->createPriceProductDefaultRemover()
+            ->removePriceProductDefaultsForPriceProduct($priceProductTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getValidPrices($priceProductFilterTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(PriceProductTransfer $priceProductTransfer): bool
+    {
+        return $this->getRepository()
+            ->isPriceProductByProductIdentifierAndPriceTypeExists($priceProductTransfer);
     }
 }

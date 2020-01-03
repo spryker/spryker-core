@@ -57,6 +57,7 @@ class CustomerPermissionQuoteResponseExpander implements QuoteResponseExpanderIn
     {
         if ($customerTransfer->getCompanyUserTransfer()) {
             $customerTransfer->setPermissions(null);
+
             return $this->customerFacade->getCustomer($customerTransfer)->getPermissions();
         }
 

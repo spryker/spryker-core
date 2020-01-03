@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyClient extends AbstractClient implements CompanyClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class CompanyClient extends AbstractClient implements CompanyClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,5 +46,23 @@ class CompanyClient extends AbstractClient implements CompanyClientInterface
         return $this->getFactory()
             ->createZedCompanyStub()
             ->getCompanyById($companyTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyStub()
+            ->findCompanyByUuid($companyTransfer);
     }
 }

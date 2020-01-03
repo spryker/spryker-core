@@ -19,7 +19,7 @@ interface PriceProductStoragePriceDimensionPluginInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices(int $idProductConcrete): array; //todo change to collection transfer
+    public function findProductConcretePrices(int $idProductConcrete): array;
 
     /**
      * * Specification:

@@ -18,4 +18,11 @@ interface ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeIn
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function markProductAsDiscontinued(ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer): ProductDiscontinuedResponseTransfer;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return bool
+     */
+    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool;
 }

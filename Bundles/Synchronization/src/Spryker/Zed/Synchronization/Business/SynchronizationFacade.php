@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SynchronizationFacade extends AbstractFacade implements SynchronizationFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,7 +91,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,9 +107,11 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use SynchronizationFacade::executeResolvedPluginsBySourcesWithIds() instead.
      *
      * @param string[] $resources
      *
@@ -121,7 +123,22 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $resources
+     * @param int[] $ids
+     *
+     * @return void
+     */
+    public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids)
+    {
+        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySourcesWithIds($resources, $ids);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *

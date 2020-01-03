@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
 
 interface PropelFacadeInterface
@@ -43,6 +44,8 @@ interface PropelFacadeInterface
      * - File is placed in configured phpConfDir
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return void
      */
@@ -145,6 +148,8 @@ interface PropelFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $backupPath
      *
      * @return void
@@ -156,6 +161,8 @@ interface PropelFacadeInterface
      * - Imports database backup for configured driver from `$backupPath`.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $backupPath
      *
@@ -184,4 +191,25 @@ interface PropelFacadeInterface
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
      */
     public function validateSchemaXmlFiles(): SchemaValidationTransfer;
+
+    /**
+     * Specification:
+     * - Runs raw SQL script for dropping all database tables, without dropping the database.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function dropDatabaseTables(): void;
+
+    /**
+     * Specification:
+     * - Executes health check for the database.
+     * - Checks that connection has been established.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeDatabaseHealthCheck(): HealthCheckServiceResponseTransfer;
 }

@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 
-use Exception;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
@@ -23,6 +23,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
     public const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
     public const QUANTITY = 'quantity';
+    protected const DIVISION_SCALE = 10;
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
@@ -79,6 +80,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
         if ($bundleProductEntity === null) {
             $this->removeBundleStock($productConcreteTransfer);
+
             return $productConcreteTransfer;
         }
 
@@ -91,9 +93,6 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $this->updateBundleStock($productConcreteTransfer, $bundleTotalStockPerWarehouse);
             $this->productBundleQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->productBundleQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -177,12 +176,13 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 static::IS_NEVER_OUT_OF_STOCK => $productStockEntity->getIsNeverOutOfStock(),
             ];
         }
+
         return $bundledItemStock;
     }
 
     /**
      * @param array $bundledItemStock
-     * @param array $bundledItemQuantity
+     * @param int[] $bundledItemQuantity
      *
      * @return array
      */
@@ -190,13 +190,13 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     {
         $bundleTotalStockPerWarehouse = [];
         foreach ($bundledItemStock as $idStock => $warehouseStock) {
-            $bundleStock = 0;
+            $bundleStock = new Decimal(0);
             $isAllNeverOutOfStock = true;
             foreach ($warehouseStock as $idProduct => $productStockQuantity) {
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
                 $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = (int)floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
+                $itemStock = (new Decimal($productStockQuantity[static::QUANTITY]))->divide($bundleItemQuantity, static::DIVISION_SCALE);
 
                 if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;
@@ -212,21 +212,23 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }
+
         return $bundleTotalStockPerWarehouse;
     }
 
     /**
-     * @param int $bundleStock
-     * @param int $itemStock
+     * @param \Spryker\DecimalObject\Decimal $bundleStock
+     * @param \Spryker\DecimalObject\Decimal $itemStock
      * @param bool $isNeverOutOfStock
      *
      * @return bool
      */
-    protected function isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)
+    protected function isCurrentStockIsLowestWithingBundle(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
     {
-        if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
+        if (($bundleStock->greaterThan($itemStock) || $bundleStock->isZero()) && !$isNeverOutOfStock) {
             return true;
         }
+
         return false;
     }
 
@@ -306,7 +308,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     protected function removeBundleStock(ProductConcreteTransfer $productConcreteTransfer)
     {
         foreach ($this->findProductStocks($productConcreteTransfer->getIdProductConcrete()) as $stockProductEntity) {
-            $stockProductEntity->setQuantity(0);
+            $stockProductEntity->setQuantity(new Decimal(0));
             $stockProductEntity->setIsNeverOutOfStock(false);
             $stockProductEntity->save();
 
@@ -337,10 +339,12 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             if (isset($bundleTotalStockPerWarehouse[$productStockEntity->getFkStock()])) {
                 continue;
             }
-            $productStockEntity->setQuantity(0);
+
+            $productStockEntity->setQuantity(new Decimal(0));
             $productStockEntity->setIsNeverOutOfStock(false);
             $productStockEntity->save();
         }
+
         return $bundleTotalStockPerWarehouse;
     }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UrlStorage\Persistence;
 
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorageQuery;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -15,6 +16,8 @@ use Spryker\Zed\UrlStorage\UrlStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface getEntityManager()
  */
 class UrlStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -32,6 +35,14 @@ class UrlStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createSpyStorageUrlRedirectQuery()
     {
         return SpyUrlRedirectStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function getUrlQuery(): SpyUrlQuery
+    {
+        return $this->getProvidedDependency(UrlStorageDependencyProvider::PROPEL_QUERY_URL);
     }
 
     /**

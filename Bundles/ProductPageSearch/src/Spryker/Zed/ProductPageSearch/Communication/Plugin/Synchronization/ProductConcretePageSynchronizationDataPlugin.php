@@ -24,7 +24,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,6 +66,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             $synchronizationDataTransfer->setData($productConcretePageSearchTransfer->getData());
             $synchronizationDataTransfer->setKey($productConcretePageSearchTransfer->getKey());
+            $synchronizationDataTransfer->setStore($productConcretePageSearchTransfer->getStore());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
@@ -73,7 +74,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -85,7 +86,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -97,7 +98,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

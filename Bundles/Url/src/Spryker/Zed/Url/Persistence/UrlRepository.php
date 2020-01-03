@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Url\Persistence;
 
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -23,13 +24,7 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
      */
     public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
     {
-        $urlEntity = $this->getFactory()
-            ->createUrlQuery()
-            ->setIgnoreCase(true)
-            ->filterByUrl($urlTransfer->getUrl())
-            ->_or()
-            ->filterByIdUrl($urlTransfer->getIdUrl())
-            ->findOne();
+        $urlEntity = $this->prepareUrlCaseInsensitiveQuery($urlTransfer)->findOne();
 
         if ($urlEntity === null) {
             return null;
@@ -46,14 +41,30 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
      */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer, bool $ignoreRedirects): bool
     {
-        return $this->getFactory()
+        $urlQuery = $this->prepareUrlCaseInsensitiveQuery($urlTransfer);
+
+        if ($ignoreRedirects) {
+            $urlQuery->filterByFkResourceRedirect(null, Criteria::ISNULL);
+        }
+
+        return $urlQuery->exists();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function prepareUrlCaseInsensitiveQuery(UrlTransfer $urlTransfer): SpyUrlQuery
+    {
+        $urlQuery = $this->getFactory()
             ->createUrlQuery()
-            ->filterByUrl($urlTransfer->getUrl())
-            ->_or()
-            ->filterByIdUrl($urlTransfer->getIdUrl())
-            ->_if($ignoreRedirects)
-                ->filterByFkResourceRedirect(null, Criteria::ISNULL)
-            ->_endif()
-            ->exists();
+            ->setIgnoreCase(true);
+
+        if ($urlTransfer->getUrl() !== null) {
+            return $urlQuery->filterByUrl($urlTransfer->getUrl());
+        }
+
+        return $urlQuery->filterByIdUrl($urlTransfer->getIdUrl());
     }
 }

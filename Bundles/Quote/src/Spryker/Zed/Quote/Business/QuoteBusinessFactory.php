@@ -18,10 +18,14 @@ use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfigurator;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface;
 use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
 use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidator;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidatorInterface;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -41,7 +45,10 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createQuoteWriterPluginExecutor(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->createQuoteValidator(),
+            $this->createQuoteFieldsConfigurator(),
+            $this->getQuoteExpandBeforeCreatePlugins()
         );
     }
 
@@ -73,7 +80,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteReader(
             $this->getRepository(),
-            $this->getQuoteExpanderPlugins()
+            $this->getQuoteExpanderPlugins(),
+            $this->getStoreFacade()
         );
     }
 
@@ -108,6 +116,27 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getConfig(),
             $this->getQuoteDeleteBeforePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface
+     */
+    public function createQuoteValidator(): QuoteValidatorInterface
+    {
+        return new QuoteValidator(
+            $this->getQuoteValidatorPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfigurator
+     */
+    public function createQuoteFieldsConfigurator(): QuoteFieldsConfiguratorInterface
+    {
+        return new QuoteFieldsConfigurator(
+            $this->getConfig(),
+            $this->getQuoteFieldsAllowedForSavingProviderPlugins()
         );
     }
 
@@ -152,6 +181,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[]
+     */
+    public function getQuoteExpandBeforeCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE);
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteUpdateAfterPlugins(): array
@@ -181,5 +218,21 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteDeleteAfterPlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_DELETE_AFTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
+     */
+    public function getQuoteValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
+     */
+    public function getQuoteFieldsAllowedForSavingProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER);
     }
 }

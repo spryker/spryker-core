@@ -82,15 +82,17 @@ interface ProductOptionFacadeInterface
      * Specification:
      * - Reads product option from persistence.
      * - Net and gross unit prices are calculated using current store, and current currency.
+     * - If currency code not provided it will use default store currency.
      * - Uses default store (fkStore = NULL) prices when the option has no currency definition for the current store.
      *
      * @api
      *
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValueById($idProductOptionValue);
+    public function getProductOptionValueById($idProductOptionValue, ?string $currencyCode = null);
 
     /**
      * Specification:
@@ -135,8 +137,8 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Calculate tax rate for current quote
-     *  - Set tax rate perecentage
+     *  - Calculate tax rates for current quote level (BC) or item level shipping addresses.
+     *  - Set tax rate percentages for item product options.
      *
      * @api
      *
@@ -180,6 +182,8 @@ interface ProductOptionFacadeInterface
      *   - items are ordered by ID.
      *
      * @api
+     *
+     * @deprecated Not used anymore.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -279,4 +283,17 @@ interface ProductOptionFacadeInterface
      * @return bool
      */
     public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
+
+    /**
+     * Specification:
+     * - Retrieves product option group name and status for all abstract products by provided IDs.
+     * - Returns ProductAbstractOptionGroupStatusTransfer[] array with 'idProductAbstract', 'isActive' and 'productOptionGroupName' values.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     */
+    public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
 }

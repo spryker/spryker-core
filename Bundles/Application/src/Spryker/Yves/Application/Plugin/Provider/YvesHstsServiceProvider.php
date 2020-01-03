@@ -13,6 +13,8 @@ use Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider;
 use Spryker\Shared\Config\Config;
 
 /**
+ * @deprecated Use `Spryker\Yves\Http\Plugin\EventDispatcher\HstsHeaderEventDispatcherPlugin` instead.
+ *
  * HTTP Strict Transport Security support as a ServiceProvider
  *
  * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
@@ -37,6 +39,7 @@ class YvesHstsServiceProvider extends AbstractHstsServiceProvider implements Ser
         if (Config::hasKey(ApplicationConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG)) {
             $config = Config::get(ApplicationConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG);
         }
+
         return $config;
     }
 }

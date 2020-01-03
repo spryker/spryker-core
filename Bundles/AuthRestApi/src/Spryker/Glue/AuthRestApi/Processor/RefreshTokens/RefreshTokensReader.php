@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -59,9 +59,7 @@ class RefreshTokensReader implements RefreshTokensReaderInterface
         $oauthRequestTransfer->fromArray($restRefreshTokenAttributesTransfer->toArray(), true);
 
         $oauthRequestTransfer
-            ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_REFRESH_TOKEN)
-            ->setClientId($this->authRestApiConfig->getClientId())
-            ->setClientSecret($this->authRestApiConfig->getClientSecret());
+            ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_REFRESH_TOKEN);
 
         $oauthResponseTransfer = $this->oauthClient->processAccessTokenRequest($oauthRequestTransfer);
 

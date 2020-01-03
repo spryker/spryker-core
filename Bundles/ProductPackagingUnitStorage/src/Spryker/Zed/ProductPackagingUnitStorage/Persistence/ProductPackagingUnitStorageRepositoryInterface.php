@@ -7,29 +7,37 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductPackagingUnitStorageRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): array;
+    public function findProductPackagingUnitStorageEntitiesByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * @param int $idProductAbstract
+     * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer[]
      */
-    public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
+    public function findPackagingProductsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer[]
      */
-    public function findAllProductAbstractPackagingStorageEntities(): array;
+    public function findFilteredProductPackagingUnit(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
 
     /**
-     * @return int[]
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitStorageEntityTransfer[]
      */
-    public function findProductAbstractIdsWithProductPackagingUnit(): array;
+    public function findFilteredProductPackagingUnitStorageEntityTransfers(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
 }

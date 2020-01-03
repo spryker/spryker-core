@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitAddressDataImportPlugin;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
 use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -43,10 +44,11 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
     public function testImportCompanyBusinessUnitAddress(): void
     {
         $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COUNTRY => $this->tester->haveCountry()->getIdCountry(),
             CompanyUnitAddressTransfer::KEY => static::COMPANY_ADDRESS_KEY,
         ]);
-
         $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
             CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
         ]);
 
@@ -57,12 +59,11 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     *
      * @return void
      */
     public function testImportCompanyBusinessUnitAddressThrowsExceptionWhenCompanyAddressKeyNotFound(): void
     {
+        $this->expectException(DataImportException::class);
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(static::IMPORT_COMPANY_BUSINESS_UNIT_ADDRESS_WITH_INVALID_COMPANY_ADDRESS_CSV);
 
         $companyBusinessUnitAddressDataImportPlugin = new CompanyBusinessUnitAddressDataImportPlugin();

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShipmentsRestApi\Business;
 
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
@@ -28,4 +30,17 @@ interface ShipmentsRestApiFacadeInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Verifies if shipment method is valid.
+     * - Returns CheckoutResponseTransfer with error if any check was failed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateShipmentMethodCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
 }

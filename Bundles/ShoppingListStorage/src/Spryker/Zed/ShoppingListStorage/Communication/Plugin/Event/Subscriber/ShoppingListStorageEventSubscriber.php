@@ -18,7 +18,7 @@ use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\Shopping
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStoragePublishListener;
 
 /**
- * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingListStorage\Communication\ShoppingListStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
  */

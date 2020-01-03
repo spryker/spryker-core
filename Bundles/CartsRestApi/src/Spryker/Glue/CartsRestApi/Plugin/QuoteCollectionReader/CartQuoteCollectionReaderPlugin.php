@@ -13,12 +13,14 @@ use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPl
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed in the next major.
+ *
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns quote collection transfer with single quote for customer.
      *
      * @api

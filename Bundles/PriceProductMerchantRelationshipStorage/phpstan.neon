@@ -1,4 +1,3 @@
 parameters:
     ignoreErrors:
-    - '#Method Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager::save().+invoked with 0 parameters, 1 required.#'
-    - '#Call to an undefined method.+Orm\\Zed\\Company\\Persistence\\.+useMerchantRelationshipQuery()#'
+        - '#Call to an undefined method .+PropelConditionalProxy::filterByFkCompanyBusinessUnit_In\(\)#'

@@ -49,7 +49,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idOrderItem
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[]
      */
     public function getManualEvents($idOrderItem)
     {
@@ -63,7 +63,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -80,7 +80,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return array
+     * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -97,7 +97,7 @@ class Finder implements FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[]
      */
     protected function getManualEventsByOrderItemEntity(SpySalesOrderItem $orderItem)
     {
@@ -168,30 +168,6 @@ class Finder implements FinderInterface
     public function isOrderFlaggedExcludeFromCustomer($idOrder)
     {
         return $this->isOrderFlaggedAll($idOrder, OmsConfig::STATE_TYPE_FLAG_EXCLUDE_FROM_CUSTOMER);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku)
-    {
-        return $this->getOrderItemsForSku($this->retrieveReservedStates(), $sku, false);
-    }
-
-    /**
-     * @param array $states
-     * @param string $sku
-     * @param bool $returnTest
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    protected function getOrderItemsForSku(array $states, $sku, $returnTest = true)
-    {
-        $orderItems = $this->queryContainer->querySalesOrderItemsForSku($states, $sku, $returnTest);
-
-        return $orderItems;
     }
 
     /**

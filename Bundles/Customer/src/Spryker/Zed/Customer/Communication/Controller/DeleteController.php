@@ -37,6 +37,7 @@ class DeleteController extends AbstractController
             $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
+
             return $this->redirectResponse('/customer');
         }
 
@@ -61,10 +62,12 @@ class DeleteController extends AbstractController
             $this->getFacade()->anonymizeCustomer($customerTransfer);
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
+
             return $this->redirectResponse('/customer');
         }
 
         $this->addSuccessMessage('Customer successfully deleted');
+
         return $this->redirectResponse('/customer');
     }
 }

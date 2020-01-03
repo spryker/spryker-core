@@ -48,6 +48,10 @@ use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\ReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\Business\Model\WriterInterface;
+use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover;
+use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemoverInterface;
+use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemover;
+use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
@@ -211,7 +215,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getPriceProductService(),
             $this->createPriceProductExpander(),
-            $this->createPriceProductReaderPluginExecutor()
+            $this->createPriceProductReaderPluginExecutor(),
+            $this->getPriceProductExternalProviderPlugins()
         );
     }
 
@@ -324,6 +329,29 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface
+     */
+    public function createPriceProductRemover(): PriceProductRemoverInterface
+    {
+        return new PriceProductRemover(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createPriceProductStoreWriterPluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemoverInterface
+     */
+    public function createPriceProductDefaultRemover(): PriceProductDefaultRemoverInterface
+    {
+        return new PriceProductDefaultRemover(
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
     public function getProductFacade(): PriceProductToProductFacadeInterface
@@ -420,6 +448,14 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductPricesExtractorPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
+     */
+    public function getPriceProductExternalProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER);
     }
 
     /**

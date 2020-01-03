@@ -144,7 +144,6 @@ class CmsBlockType extends AbstractType
             'property_path' => static::FIELD_CATEGORIES . '[' . $idCmsBlockCategoryPosition . ']',
             'label' => 'Categories: ' . $positionName,
             'choices' => array_flip($categoryList),
-            'choices_as_values' => true,
             'multiple' => true,
             'required' => false,
         ]);

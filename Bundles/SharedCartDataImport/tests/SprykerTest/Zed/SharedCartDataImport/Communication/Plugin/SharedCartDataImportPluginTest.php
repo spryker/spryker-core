@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
+use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionStoragePlugin;
 use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Zed\SharedCart\Communication\Plugin\RemoveSharedQuoteBeforeQuoteDeletePlugin;
 use Spryker\Zed\SharedCartDataImport\Communication\Plugin\SharedCartDataImportPlugin;
@@ -23,6 +24,7 @@ use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SharedCartDataImport
@@ -62,6 +64,9 @@ class SharedCartDataImportPluginTest extends Unit
 
         $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION, [
             new ReadSharedCartPermissionPlugin(),
+        ]);
+        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
+                new QuotePermissionStoragePlugin(),
         ]);
 
         $this->tester->setDependency(

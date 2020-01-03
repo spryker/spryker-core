@@ -22,6 +22,8 @@ interface TwigConstants
     public const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
 
     /**
+     * @deprecated Use `\Spryker\Shared\Twig\TwigConfig::getYvesThemeName()` instead.
+     *
      * Specification:
      * - Defines the used theme name for Yves.
      * - Default theme name is "default".

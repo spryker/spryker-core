@@ -59,13 +59,19 @@ class CreateController extends AbstractController
             $modifiedData = $data->modifiedToArray();
             $quoteTransfer->fromArray($modifiedData);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() === true && $form->isValid() === true) {
                 $quoteTransfer = $formPlugin->handleData($quoteTransfer, $form, $request);
             } else {
                 $allFormsAreValid = false;
             }
 
             $forms[] = $form;
+        }
+
+        $orderForm = $this->getFactory()->createOrderForm($quoteTransfer);
+        $orderForm->handleRequest($request);
+        if ($orderForm->isSubmitted() === false || $orderForm->isValid() === false) {
+            $allFormsAreValid = false;
         }
 
         if ($this->isReadyToCreateOrder($allFormsAreValid, $allFormPlugins, $filteredFormPlugins, $skippedFormPlugins)) {
@@ -84,6 +90,7 @@ class CreateController extends AbstractController
         }
 
         return $this->viewResponse([
+            'orderForm' => $orderForm->createView(),
             'forms' => $formsView,
             'previousStepName' => static::PREVIOUS_STEP_NAME,
             'nextStepName' => static::NEXT_STEP_NAME,

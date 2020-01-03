@@ -13,13 +13,14 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
-use Symfony\Component\Console\Event\ConsoleExceptionEvent;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Console
@@ -33,7 +34,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetSubscribedEventsShouldReturnArray()
+    public function testGetSubscribedEventsShouldReturnArray(): void
     {
         $consoleLogPlugin = new ConsoleLogPlugin();
 
@@ -43,7 +44,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testOnConsoleCommandShouldCallLogger()
+    public function testOnConsoleCommandShouldCallLogger(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('info');
@@ -57,7 +58,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testOnConsoleTerminatedShouldCallLogger()
+    public function testOnConsoleTerminatedShouldCallLogger(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('info');
@@ -71,15 +72,15 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testOnConsoleExceptionShouldCallLogger()
+    public function testOnConsoleExceptionShouldCallLogger(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('error');
 
         $consoleLogPlugin = $this->getConsoleLogPluginMock($loggerMock);
-        $event = new ConsoleExceptionEvent(new Command('test-command'), new ArrayInput([]), new ConsoleOutput(), new Exception(), 0);
+        $event = new ConsoleErrorEvent(new ArrayInput([]), new ConsoleOutput(), new Exception(), new Command('test-command'));
 
-        $consoleLogPlugin->onConsoleException($event);
+        $consoleLogPlugin->onConsoleError($event);
     }
 
     /**

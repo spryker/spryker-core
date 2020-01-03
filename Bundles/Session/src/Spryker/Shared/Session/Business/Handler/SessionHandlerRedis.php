@@ -11,6 +11,9 @@ use Predis\Client;
 use SessionHandlerInterface;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
+/**
+ * @deprecated Use `Spryker\Shared\SessionRedis\Handler\SessionHandlerRedis` instead.
+ */
 class SessionHandlerRedis implements SessionHandlerInterface
 {
     public const METRIC_SESSION_DELETE_TIME = 'Redis/Session_delete_time';

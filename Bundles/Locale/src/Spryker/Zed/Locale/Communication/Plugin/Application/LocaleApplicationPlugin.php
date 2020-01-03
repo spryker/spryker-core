@@ -27,7 +27,7 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     protected const BC_FEATURE_FLAG_LOCALE_LISTENER = 'BC_FEATURE_FLAG_LOCALE_LISTENER';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Provides locale service.
      *
      * @api
@@ -38,14 +38,14 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::BC_FEATURE_FLAG_LOCALE_LISTENER, false);
-        $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container): string {
+        $container[static::BC_FEATURE_FLAG_LOCALE_LISTENER] = false;
+        $container[static::SERVICE_LOCALE] = function (ContainerInterface $container): string {
             $localeTransfer = $this->getFactory()->getLocalePlugin()->getLocaleTransfer($container);
 
             $this->getFacade()->setCurrentLocale($localeTransfer);
 
             return $localeTransfer->getLocaleName();
-        });
+        };
 
         return $container;
     }

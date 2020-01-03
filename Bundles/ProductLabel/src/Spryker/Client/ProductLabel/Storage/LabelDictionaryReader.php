@@ -54,7 +54,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param int $labelName
+     * @param string $labelName
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
@@ -67,7 +67,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param int $labelName
+     * @param string $labelName
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null

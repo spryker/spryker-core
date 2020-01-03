@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\MerchantRelationship\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantRelationshipBuilder;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
-use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -32,7 +30,7 @@ class MerchantRelationshipHelper extends Module
 
         $merchantRelationshipTransfer = $this->createOrUpdateMerchantRelationship($merchantRelationshipTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantRelationshipTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantRelationshipTransfer): void {
             $this->cleanupMerchantRelationship($merchantRelationshipTransfer);
         });
 
@@ -82,47 +80,5 @@ class MerchantRelationshipHelper extends Module
             ->merchantRelationship()
             ->facade()
             ->deleteMerchantRelationship($merchantRelationshipTransfer);
-    }
-
-    /**
-     * @param int $idMerchantRelationship
-     *
-     * @return void
-     */
-    public function assertMerchantRelationshipNotExists(int $idMerchantRelationship): void
-    {
-        $query = $this->getMerchantRelationshipQuery()
-            ->filterByIdMerchantRelationship($idMerchantRelationship);
-
-        $this->assertSame(0, $query->count());
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
-     */
-    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
-    {
-        return SpyMerchantRelationshipQuery::create();
-    }
-
-    /**
-     * @param int $idMerchantRelationship
-     *
-     * @return void
-     */
-    public function assertMerchantRelationshipToCompanyBusinessUnitNotExists(int $idMerchantRelationship): void
-    {
-        $query = $this->getMerchantRelationshipToCompanyBusinessUnitQuery()
-            ->filterByFkMerchantRelationship($idMerchantRelationship);
-
-        $this->assertSame(0, $query->count());
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery
-     */
-    protected function getMerchantRelationshipToCompanyBusinessUnitQuery(): SpyMerchantRelationshipToCompanyBusinessUnitQuery
-    {
-        return SpyMerchantRelationshipToCompanyBusinessUnitQuery::create();
     }
 }

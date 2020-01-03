@@ -16,6 +16,7 @@ use Spryker\Zed\Locale\LocaleDependencyProvider;
 /**
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
  * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface getRepository()
  */
 class LocaleBusinessFactory extends AbstractBusinessFactory
 {
@@ -26,7 +27,8 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     {
         return new LocaleManager(
             $this->getQueryContainer(),
-            $this->createTransferGenerator()
+            $this->createTransferGenerator(),
+            $this->getRepository()
         );
     }
 

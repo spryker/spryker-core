@@ -13,6 +13,7 @@ use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductC
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper\CompanyBusinessUnitPriceProductMapper;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper\CompanyBusinessUnitPriceProductMapperInterface;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper\PriceProductMerchantRelationship\PriceProductMerchantRelationshipMapper;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageDependencyProvider;
 
 /**
@@ -52,5 +53,13 @@ class PriceProductMerchantRelationshipStoragePersistenceFactory extends Abstract
     public function createPriceProductAbstractMerchantRelationshipStorageQuery(): SpyPriceProductAbstractMerchantRelationshipStorageQuery
     {
         return SpyPriceProductAbstractMerchantRelationshipStorageQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper\PriceProductMerchantRelationship\PriceProductMerchantRelationshipMapper
+     */
+    public function createPriceProductMerchantRelationshipMapper(): PriceProductMerchantRelationshipMapper
+    {
+        return new PriceProductMerchantRelationshipMapper();
     }
 }

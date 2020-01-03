@@ -9,10 +9,11 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter;
 
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
 
-interface AdapterInterface extends CreateDatabaseInterface, DropDatabaseInterface, ExportDatabaseInterface, ImportDatabaseInterface
+interface AdapterInterface extends CreateDatabaseInterface, DropDatabaseInterface, ExportDatabaseInterface, ImportDatabaseInterface, DropDatabaseTablesInterface
 {
     /**
      * @return string

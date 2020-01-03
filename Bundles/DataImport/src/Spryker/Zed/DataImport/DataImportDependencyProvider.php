@@ -9,9 +9,11 @@ namespace Spryker\Zed\DataImport;
 
 use Propel\Runtime\Propel;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
+use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -27,6 +29,8 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
     public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
     public const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
+    public const CLIENT_QUEUE = 'CLIENT_QUEUE';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const STORE = 'store';
 
     /**
@@ -44,6 +48,8 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDataImportBeforeImportHookPlugins($container);
         $container = $this->addDataImportAfterImportHookPlugins($container);
         $container = $this->addDataImportDefaultWriterPlugins($container);
+        $container = $this->addQueueClient($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -196,5 +202,33 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     protected function getDataImportDefaultWriterPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQueueClient(Container $container): Container
+    {
+        $container[static::CLIENT_QUEUE] = function (Container $container) {
+            return new DataImportToQueueClientBridge($container->getLocator()->queue()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new DataImportToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        };
+
+        return $container;
     }
 }

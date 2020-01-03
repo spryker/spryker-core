@@ -96,7 +96,6 @@ class VoucherForm extends AbstractType
                 'placeholder' => 'No additional random characters',
                 'required' => false,
                 'choices' => array_flip($this->createCodeLengthRangeList()),
-                'choices_as_values' => true,
             ]
         );
 

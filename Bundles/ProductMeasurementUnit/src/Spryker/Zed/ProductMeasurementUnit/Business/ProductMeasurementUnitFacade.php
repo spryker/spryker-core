@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
@@ -23,7 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeasurementUnitFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +40,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +56,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +72,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +88,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -103,7 +104,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -117,7 +118,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -131,7 +132,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -143,7 +144,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -159,7 +160,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -175,7 +176,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -189,7 +190,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -205,7 +206,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -224,7 +225,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -241,7 +242,37 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->findFilteredProductMeasurementUnitTransfers($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitReader()
+            ->findFilteredProductMeasurementSalesUnitTransfers($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *

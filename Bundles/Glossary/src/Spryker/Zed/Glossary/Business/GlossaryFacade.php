@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface getRepository()
  */
 class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
 {
@@ -89,7 +90,7 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -276,7 +277,7 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -387,5 +388,55 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
         return $this->getFactory()
             ->createKeyManager()
             ->getKeySuggestions($keyFragment);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $glossaryKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
+    {
+        return $this->getFactory()
+            ->createTranslationReader()
+            ->getTranslationsByGlossaryKeyAndLocaleTransfers($glossaryKey, $localeTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array
+    {
+        return $this->getFactory()
+            ->createTranslationReader()
+            ->getTranslationsByGlossaryKeysAndLocaleTransfers($glossaryKeys, $localeTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array
+    {
+        return $this->getFactory()
+            ->createGlossaryKeyReader()
+            ->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
     }
 }

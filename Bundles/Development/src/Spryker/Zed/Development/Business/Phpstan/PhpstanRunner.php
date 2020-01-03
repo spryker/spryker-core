@@ -31,7 +31,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
     public const DEFAULT_LEVEL = 'defaultLevel';
     public const MEMORY_LIMIT = '512M';
     public const CODE_SUCCESS = 0;
-    public const CODE_ERROR = 0;
 
     public const OPTION_DRY_RUN = 'dry-run';
     public const OPTION_VERBOSE = 'verbose';
@@ -93,11 +92,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if ($module) {
             $paths = $this->getPaths($module);
+            if (empty($paths)) {
+                throw new RuntimeException('No path found for module ' . $module);
+            }
         } else {
-            $paths[$this->config->getPathToRoot()] = $this->config->getPathToRoot();
-        }
-        if (empty($paths)) {
-            throw new RuntimeException('No path found for module ' . $module);
+            $paths = [
+                $this->config->getPathToRoot() => $this->config->getPathToRoot(),
+            ];
         }
 
         $resultCode = 0;
@@ -114,11 +115,19 @@ class PhpstanRunner implements PhpstanRunnerInterface
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
             }
         }
-        if ($this->errorCount) {
+        if ($this->getErrorCount()) {
             $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
         }
 
         return $resultCode;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getErrorCount(): int
+    {
+        return $this->errorCount;
     }
 
     /**
@@ -151,16 +160,31 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
             $output->writeln($command);
+
             return static::CODE_SUCCESS;
         }
 
-        $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
+        if ($output->isVerbose()) {
+            $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
+        }
 
         $process = $this->getProcess($command);
-        $process->run(function ($type, $buffer) use ($output) {
+
+        $processOutputBuffer = '';
+
+        $process->run(function ($type, $buffer) use ($output, &$processOutputBuffer) {
             $this->addErrors($buffer);
 
-            $output->write($buffer);
+            preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
+            if (!$matches && !$output->isVeryVerbose()) {
+                $processOutputBuffer .= $buffer;
+
+                return;
+            }
+
+            $processOutputBuffer .= $buffer;
+            $output->write($processOutputBuffer);
+            $processOutputBuffer = '';
         });
 
         if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
@@ -177,7 +201,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     protected function getProcess($command)
     {
-        return new Process($command, null, null, null, 0);
+        return new Process(explode(' ', $command), null, null, null, 0);
     }
 
     /**

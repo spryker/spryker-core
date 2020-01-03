@@ -9,7 +9,6 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use PDO;
 use SessionHandlerInterface;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
@@ -120,11 +119,10 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $startTime = microtime(true);
 
         $store = Store::getInstance()->getStoreName();
-        $environment = Environment::getInstance()->getEnvironment();
         $query = 'SELECT * FROM session WHERE session.key=? AND session.store=? AND session.environment=? AND session.expires >= session.updated_at + ' . $this->lifetime . ' LIMIT 1';
 
         $statement = $this->connection->prepare($query);
-        $statement->execute([$key, $store, $environment]);
+        $statement->execute([$key, $store, $this->getEnvironmentName()]);
         $result = $statement->fetch();
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
@@ -146,7 +144,6 @@ class SessionHandlerMysql implements SessionHandlerInterface
         }
 
         $startTime = microtime(true);
-        $environment = Environment::getInstance()->getEnvironment();
         $data = json_encode($sessionData);
         $expireTimestamp = time() + $this->lifetime;
         $expires = date('Y-m-d H:i:s', $expireTimestamp);
@@ -156,7 +153,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $query = 'REPLACE INTO session (session.key, session.value, session.store, session.environment, session.expires, session.updated_at) VALUES (?,?,?,?,?,?)';
 
         $statement = $this->connection->prepare($query);
-        $result = $statement->execute([$key, $data, $storeName, $environment, $expires, $timestamp]);
+        $result = $statement->execute([$key, $data, $storeName, $this->getEnvironmentName(), $expires, $timestamp]);
 
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
@@ -211,5 +208,15 @@ class SessionHandlerMysql implements SessionHandlerInterface
 
         $statement = $this->connection->query($query);
         $statement->execute();
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return string
+     */
+    protected function getEnvironmentName(): string
+    {
+        return APPLICATION_ENV;
     }
 }

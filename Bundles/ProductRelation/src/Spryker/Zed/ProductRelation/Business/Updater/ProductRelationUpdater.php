@@ -110,6 +110,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
             $this->utilEncodingService->decodeJson($productRelationEntity->getQuerySetData(), true),
             true
         );
+
         return $queryRuleBuilderSetTransfer;
     }
 }

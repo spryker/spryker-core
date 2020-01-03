@@ -7,55 +7,127 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCartsAttributesTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class GuestCartUpdater implements GuestCartUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface
      */
-    protected $quoteClient;
+    protected $guestCartRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $persistentCartClient;
+    protected $cartsRestApiClient;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface
+     */
+    protected $cartMapper;
+
+    /**
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     */
+    protected $customerExpanderPlugins;
+
+    /**
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
-        CartsRestApiToQuoteClientInterface $quoteClient,
-        CartsRestApiToPersistentCartClientInterface $persistentCartClient
+        GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
+        CartsRestApiClientInterface $cartsRestApiClient,
+        CartMapperInterface $cartMapper,
+        array $customerExpanderPlugins
     ) {
-        $this->quoteClient = $quoteClient;
-        $this->persistentCartClient = $persistentCartClient;
+        $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
+        $this->cartsRestApiClient = $cartsRestApiClient;
+        $this->cartMapper = $cartMapper;
+        $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function updateQuote(
+        RestRequestInterface $restRequest,
+        RestCartsAttributesTransfer $restCartsAttributesTransfer
+    ): RestResponseInterface {
+        $restUser = $restRequest->getRestUser();
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restUser->getSurrogateIdentifier())
+            ->setCustomerReference($restUser->getNaturalIdentifier());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
+        $quoteTransfer = $this->cartMapper->mapRestCartsAttributesTransferToQuoteTransfer(
+            $restCartsAttributesTransfer,
+            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
+        );
+
+        $quoteTransfer
+            ->setUuid($restRequest->getResource()->getId())
+            ->setCustomerReference($restUser->getNaturalIdentifier())
+            ->setCustomer($customerTransfer);
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->guestCartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
+        }
+
+        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restRequest->getMetadata()->getLocale()
+        );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer
-    {
-        $quoteTransfer = $this->quoteClient->getQuote();
-        if (!$quoteTransfer->getIdQuote()) {
+    public function updateGuestCartCustomerReferenceOnCreate(
+        RestRequestInterface $restRequest,
+        CustomerTransfer $customerTransfer
+    ): CustomerTransfer {
+        if (!$restRequest->getRestUser()) {
             return $customerTransfer;
         }
 
-        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestTransfer())
+            ->setAnonymousCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setCustomerReference($customerTransfer->getCustomerReference());
-        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setCustomer($customerTransfer)
-            ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-        $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+
+        $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeCustomerExpanderPlugins(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
+    {
+        foreach ($this->customerExpanderPlugins as $customerExpanderPlugin) {
+            $customerTransfer = $customerExpanderPlugin->expand($customerTransfer, $restRequest);
+        }
 
         return $customerTransfer;
     }

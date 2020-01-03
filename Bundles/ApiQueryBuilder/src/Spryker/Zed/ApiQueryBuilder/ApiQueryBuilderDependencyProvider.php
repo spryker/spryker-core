@@ -89,6 +89,7 @@ class ApiQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ApiQueryBuilderToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
+
         return $container;
     }
 }

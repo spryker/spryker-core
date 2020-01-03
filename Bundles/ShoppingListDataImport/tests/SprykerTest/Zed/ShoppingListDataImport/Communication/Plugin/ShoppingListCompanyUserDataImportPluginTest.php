@@ -16,12 +16,14 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
+use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingListDataImport\Communication\Plugin\ShoppingListCompanyUserDataImportPlugin;
 use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShoppingListDataImport
@@ -61,6 +63,9 @@ class ShoppingListCompanyUserDataImportPluginTest extends Unit
         $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION, [
             new ReadShoppingListPermissionPlugin(),
             new WriteShoppingListPermissionPlugin(),
+        ]);
+        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
+            new ShoppingListPermissionStoragePlugin(),
         ]);
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
         $this->tester->getShoppingListFacade()->installShoppingListPermissions();

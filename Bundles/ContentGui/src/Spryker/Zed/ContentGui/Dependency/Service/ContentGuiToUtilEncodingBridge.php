@@ -27,7 +27,7 @@ class ContentGuiToUtilEncodingBridge implements ContentGuiToUtilEncodingInterfac
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
     public function encodeJson($value, $options = null, $depth = null)
     {
@@ -40,7 +40,7 @@ class ContentGuiToUtilEncodingBridge implements ContentGuiToUtilEncodingInterfac
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {

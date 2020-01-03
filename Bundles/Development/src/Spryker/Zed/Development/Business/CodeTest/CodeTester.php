@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\Development\Business\CodeTest;
 
-use ErrorException;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
+use RuntimeException;
+use Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface;
+use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
+use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeTester
 {
@@ -21,131 +26,275 @@ class CodeTester
 
     public const OPTION_TYPE_EXCLUDE = 'exclude';
 
-    /**
-     * @var string
-     */
-    protected $applicationRoot;
+    public const OPTION_DRY_RUN = 'dry-run';
+
+    protected const CODE_SUCCESS = 0;
+    protected const CODE_ERROR = 1;
 
     /**
-     * @var string
+     * @var \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface
      */
-    protected $pathToBundles;
+    protected $developmentToModuleFinderFacade;
 
     /**
-     * @param string $applicationRoot
-     * @param string $pathToBundles
+     * @var \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface
      */
-    public function __construct($applicationRoot, $pathToBundles)
-    {
-        $this->applicationRoot = $applicationRoot;
-        $this->pathToBundles = $pathToBundles;
+    protected $argumentBuilder;
+
+    /**
+     * @var \Spryker\Zed\Development\DevelopmentConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface $developmentToModuleFinderFacade
+     * @param \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface $argumentBuilder
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     */
+    public function __construct(
+        DevelopmentToModuleFinderFacadeInterface $developmentToModuleFinderFacade,
+        CodeceptionArgumentsBuilderInterface $argumentBuilder,
+        DevelopmentConfig $config
+    ) {
+        $this->developmentToModuleFinderFacade = $developmentToModuleFinderFacade;
+        $this->argumentBuilder = $argumentBuilder;
+        $this->config = $config;
     }
 
     /**
-     * @param string|null $bundle
+     * Runs `vendor/bin/codecept run`.
+     * If module is given, it will run over this (core) module. Otherwise runs over project level.
+     *
+     * @param string|null $moduleName
      * @param array $options
      *
-     * @throws \ErrorException
+     * @throws \RuntimeException
      *
-     * @return void
+     * @return int
      */
-    public function runTest($bundle, array $options = [])
+    public function runTest(?string $moduleName, array $options = []): int
     {
-        $path = $this->resolvePath($bundle);
-
-        if (!is_dir($path)) {
-            $message = 'This path does not exist';
-            if (!empty($bundle)) {
-                $message = 'This bundle does not exist';
+        if (!$moduleName) {
+            if ($options[static::OPTION_INITIALIZE] && !$options[static::OPTION_DRY_RUN]) {
+                $this->runCodeceptionBuild($options);
             }
 
-            throw new ErrorException($message);
+            return $this->runTestCommand(null, $options);
         }
 
-        $this->runTestCommand($path, $options);
-    }
-
-    /**
-     * @param string $bundle
-     *
-     * @return string
-     */
-    protected function resolvePath($bundle)
-    {
-        if ($bundle) {
-            $bundle = $this->normalizeBundleName($bundle);
-
-            return $this->getPathToBundle($bundle);
+        $moduleFilterTransfer = $this->buildModuleFilterTransfer($moduleName);
+        $modules = $this->developmentToModuleFinderFacade->getModules($moduleFilterTransfer);
+        if (!$modules) {
+            throw new RuntimeException('No matching core modules found.');
         }
 
-        return $this->applicationRoot;
+        $result = static::CODE_SUCCESS;
+        foreach ($modules as $module) {
+            $path = $module->getPath();
+
+            if (!$this->runTestCommand($path, $options)) {
+                $result = static::CODE_ERROR;
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * @param string $bundle
+     * Runs `vendor/bin/codecept fixtures`.
+     * If module is given, it will run over this (core) module. Otherwise runs over project level.
      *
-     * @return string
-     */
-    protected function normalizeBundleName($bundle)
-    {
-        $filter = new UnderscoreToCamelCase();
-
-        return ucfirst($filter->filter($bundle));
-    }
-
-    /**
-     * @param string $bundle
-     *
-     * @return string
-     */
-    protected function getPathToBundle($bundle)
-    {
-        return $this->pathToBundles . $bundle . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @param string $path
+     * @param string|null $moduleName
      * @param array $options
      *
-     * @return void
+     * @throws \RuntimeException
+     *
+     * @return int
      */
-    protected function runTestCommand($path, array $options)
+    public function runFixtures(?string $moduleName, array $options = []): int
     {
-        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
-        $config = '';
+        if (!$moduleName) {
+            if ($options[static::OPTION_INITIALIZE] && !$options[static::OPTION_DRY_RUN]) {
+                $this->runCodeceptionBuild($options);
+            }
 
-        if ($pathToFiles) {
-            $config .= ' -c ' . $pathToFiles;
+            return $this->runFixturesCommand(null, $options);
         }
 
-        if ($options[static::OPTION_GROUP]) {
-            $config .= ' -g ' . $options[static::OPTION_GROUP];
+        $moduleFilterTransfer = $this->buildModuleFilterTransfer($moduleName);
+        $modules = $this->developmentToModuleFinderFacade->getModules($moduleFilterTransfer);
+        if (!$modules) {
+            throw new RuntimeException('No matching core modules found.');
         }
 
-        if ($options[static::OPTION_TYPE_EXCLUDE]) {
-            $config .= ' -x ' . $options[static::OPTION_TYPE_EXCLUDE];
+        $result = static::CODE_SUCCESS;
+        foreach ($modules as $module) {
+            $path = $module->getPath();
+
+            if (!$this->runFixturesCommand($path, $options)) {
+                $result = static::CODE_ERROR;
+            }
         }
 
-        if ($options[static::OPTION_VERBOSE]) {
-            $config .= ' -v';
+        return $result;
+    }
+
+    /**
+     * @param string|null $moduleName
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer
+     */
+    protected function buildModuleFilterTransfer(?string $moduleName): ModuleFilterTransfer
+    {
+        $moduleFilterTransfer = new ModuleFilterTransfer();
+        if ($moduleName === null) {
+            return $moduleFilterTransfer;
         }
 
-        if ($options[static::OPTION_INITIALIZE]) {
-            $command = 'vendor/bin/codecept build';
-            $process = new Process($command, $this->applicationRoot, null, null, 4800);
-            $process->run(function ($type, $buffer) use ($options) {
-                if ($options[static::OPTION_VERBOSE]) {
-                    echo $buffer;
-                }
-            });
-            echo 'Test classes generated.';
+        if (strpos($moduleName, '.') === false) {
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($moduleName);
+            $moduleFilterTransfer->setModule($moduleTransfer);
+
+            return $moduleFilterTransfer;
         }
 
-        $command = 'vendor/bin/codecept run' . $config;
+        return $this->addFilterDetails($moduleName, $moduleFilterTransfer);
+    }
 
-        $process = new Process($command, $this->applicationRoot, null, null, 4800);
+    /**
+     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer
+     */
+    protected function addFilterDetails(string $moduleName, ModuleFilterTransfer $moduleFilterTransfer): ModuleFilterTransfer
+    {
+        $moduleFragments = explode('.', $moduleName);
+
+        $organization = array_shift($moduleFragments);
+        $moduleName = array_shift($moduleFragments);
+
+        if ($moduleName === null) {
+            $moduleName = $organization;
+            $organization = null;
+        }
+
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer->setName($moduleName);
+        $moduleFilterTransfer->setModule($moduleTransfer);
+
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName($organization);
+        $moduleFilterTransfer->setOrganization($organizationTransfer);
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param string|null $path
+     * @param array $options
+     *
+     * @return int
+     */
+    protected function runTestCommand(?string $path, array $options): int
+    {
+        $commandLine = [];
+
+        $commandLine[] = 'vendor/bin/codecept';
+        $commandLine[] = 'run';
+
+        if ($path) {
+            $options['config'] = $path;
+        }
+
+        $commandLine = array_merge(
+            $commandLine,
+            $this->argumentBuilder
+                ->build($options)
+                ->getArguments()
+        );
+
+        if ($options[static::OPTION_DRY_RUN]) {
+            return $this->dryRun($commandLine);
+        }
+
+        $process = new Process($commandLine, $this->config->getPathToRoot(), null, null, $this->config->getProcessTimeout());
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
+        return $process->getExitCode();
+    }
+
+    /**
+     * @param string|null $path
+     * @param array $options
+     *
+     * @return int
+     */
+    protected function runFixturesCommand(?string $path, array $options): int
+    {
+        if ($options[static::OPTION_INITIALIZE] && !$options[static::OPTION_DRY_RUN]) {
+            $this->runCodeceptionBuild($options);
+        }
+
+        $commandLine = [];
+
+        $commandLine[] = 'vendor/bin/codecept';
+        $commandLine[] = 'fixtures';
+
+        $commandLine = array_merge(
+            $commandLine,
+            $this->argumentBuilder
+                ->build($options)
+                ->getArguments()
+        );
+
+        $process = new Process($commandLine, $this->config->getPathToRoot(), null, null, $this->config->getProcessTimeout());
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+
+        return $process->getExitCode();
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function runCodeceptionBuild(array $options): void
+    {
+        $commandLine = [];
+
+        $commandLine[] = 'vendor/bin/codecept';
+        $commandLine[] = 'build';
+
+        $process = new Process($commandLine, $this->config->getPathToRoot(), null, null, $this->config->getProcessTimeout());
+        $process->run(function ($type, $buffer) use ($options) {
+            if ($options[static::OPTION_VERBOSE]) {
+                echo $buffer;
+            }
+        });
+    }
+
+    /**
+     * @param string[] $command
+     *
+     * @return int
+     */
+    protected function dryRun(array $command): int
+    {
+        $output = [];
+        foreach ($command as $line) {
+            if (strpos($line, ' ') !== false) {
+                $line = '"' . $line . '"';
+            }
+            $output[] = $line;
+        }
+        echo implode(' ', $output) . PHP_EOL;
+
+        return static::CODE_SUCCESS;
     }
 }

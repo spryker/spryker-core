@@ -31,11 +31,9 @@ interface CustomerApiFacadeInterface
      *
      * @api
      *
-     * @internal param ApiFilterTransfer $apiFilterTransfer
-     *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function getCustomer($idCustomer);
 

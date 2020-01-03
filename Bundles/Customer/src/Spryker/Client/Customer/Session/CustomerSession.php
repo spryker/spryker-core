@@ -113,6 +113,37 @@ class CustomerSession implements CustomerSessionInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $this->sessionClient->set(
+            static::SESSION_KEY,
+            $customerTransfer
+        );
+
+        $this->invalidateCustomerTransferCache();
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerRawData(): ?CustomerTransfer
+    {
+        $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
+
+        if ($customerTransfer === null) {
+            return null;
+        }
+
+        return $customerTransfer;
+    }
+
+    /**
      * @return void
      */
     public function markCustomerAsDirty()

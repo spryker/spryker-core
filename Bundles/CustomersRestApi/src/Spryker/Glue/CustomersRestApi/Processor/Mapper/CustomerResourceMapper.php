@@ -25,11 +25,14 @@ class CustomerResourceMapper implements CustomerResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer $restCustomersResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer
      */
-    public function mapCustomerTransferToRestCustomersResponseAttributesTransfer(CustomerTransfer $customerTransfer): RestCustomersResponseAttributesTransfer
-    {
-        return (new RestCustomersResponseAttributesTransfer())->fromArray($customerTransfer->toArray(), true);
+    public function mapCustomerTransferToRestCustomersResponseAttributesTransfer(
+        CustomerTransfer $customerTransfer,
+        RestCustomersResponseAttributesTransfer $restCustomersResponseAttributesTransfer
+    ): RestCustomersResponseAttributesTransfer {
+        return $restCustomersResponseAttributesTransfer->fromArray($customerTransfer->toArray(), true);
     }
 }

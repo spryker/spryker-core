@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -19,30 +20,16 @@ interface GuestCartRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface;
+    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer, string $localeName): RestResponseInterface;
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartNotFoundErrorRestResponse(): RestResponseInterface;
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createGuestCartErrorRestResponseFromErrorMessageTransfer(array $errors): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartIdMissingError(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createAnonymousCustomerUniqueIdEmptyErrorRestResponse(): RestResponseInterface;
+    public function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface;
 }

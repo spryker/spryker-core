@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductStorage\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductStorageQueryContainerInterface extends QueryContainerInterface
@@ -21,6 +23,18 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - Returns a a query for the table `spy_product_abstract` filtered by product abstract ids.
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractByProductAbstractIds(array $productAbstractIds): SpyProductAbstractQuery;
+
+    /**
      * @api
      *
      * @param array $productIds
@@ -28,6 +42,18 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
      */
     public function queryProductConcreteByIds(array $productIds);
+
+    /**
+     * Specification:
+     * - Returns a a query for the table `spy_product` filtered by product ids.
+     *
+     * @api
+     *
+     * @param array $productIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductConcreteByProductIds(array $productIds): SpyProductQuery;
 
     /**
      * @api

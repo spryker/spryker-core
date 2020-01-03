@@ -10,11 +10,13 @@ namespace SprykerTest\Zed\Transfer\Business\Model;
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\TransferValidator;
+use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer
@@ -33,14 +35,15 @@ class TransferValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidate()
+    public function testValidate(): void
     {
         $sourceDirectories = [
-            __DIR__ . '/Fixtures/Shared/Test/Transfer/',
+            codecept_data_dir('Shared/Test/Transfer/'),
         ];
         $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
         $messenger = $this->getMessengerMock();
-        $transferValidator = new TransferValidator($messenger, $definitionFinder);
+        $config = new TransferConfig();
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
 
         $options = [
             'bundle' => null,
@@ -52,11 +55,57 @@ class TransferValidatorTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testValidateWithBC(): void
+    {
+        $sourceDirectories = [
+            codecept_data_dir('Shared/Error/Transfer/'),
+        ];
+        $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
+        $messenger = $this->getMessengerMock();
+        $config = new TransferConfig();
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
+
+        $options = [
+            'bundle' => null,
+            'verbose' => true,
+        ];
+        $result = $transferValidator->validate($options);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWithoutBC(): void
+    {
+        $sourceDirectories = [
+            codecept_data_dir('Shared/Error/Transfer/'),
+        ];
+        $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
+        $messenger = $this->getMessengerMock();
+        $config = $this->getTransferConfigMock();
+        $config->expects($this->any())->method('isTransferNameValidated')->willReturn(true);
+
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
+
+        $options = [
+            'bundle' => null,
+            'verbose' => true,
+        ];
+        $result = $transferValidator->validate($options);
+
+        $this->assertFalse($result);
+    }
+
+    /**
      * @param array $sourceDirectories
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder
      */
-    protected function getDefinitionFinder($sourceDirectories)
+    protected function getDefinitionFinder(array $sourceDirectories): TransferDefinitionFinder
     {
         $this->output = new ConsoleOutput();
         $definitionFinder = new TransferDefinitionFinder(
@@ -72,5 +121,13 @@ class TransferValidatorTest extends Unit
     protected function getMessengerMock()
     {
         return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Transfer\TransferConfig
+     */
+    protected function getTransferConfigMock()
+    {
+        return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
     }
 }

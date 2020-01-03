@@ -72,7 +72,6 @@ class CompanyUserRoleByCompanyForm extends AbstractType
         $builder->add(static::FIELD_COMPANY_ROLE_COLLECTION, ChoiceType::class, [
             'choices' => $options[static::OPTION_COMPANY_ROLE_CHOICES],
             'constraints' => $this->createCompanyRoleCollectionConstraints(),
-            'choices_as_values' => true,
             'label' => false,
             'expanded' => true,
             'required' => true,

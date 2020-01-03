@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
+use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,62 +26,89 @@ class EditGlossaryController extends AbstractCmsBlockController
      */
     public function indexAction(Request $request)
     {
-        $cmsBlockTransfer = $this->findCmsBlockById($request);
+        $idCmsBlock = $request->query->get(static::URL_PARAM_ID_CMS_BLOCK);
+        $cmsBlockTransfer = $this->findCmsBlockById($idCmsBlock);
 
-        if ($cmsBlockTransfer === null) {
+        if (!$cmsBlockTransfer) {
             $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);
             $redirectUrl = Url::generate('/cms-block-gui/list-block')->build();
 
             return $this->redirectResponse($redirectUrl);
         }
 
-        $glossaryTransfer = $this->getFactory()
-            ->getCmsBlockFacade()
-            ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
-
-        $placeholderTabs = $this->getFactory()
-            ->createCmsBlockPlaceholderTabs($glossaryTransfer);
-
-        $glossaryFormDataProvider = $this->getFactory()
-            ->createCmsBlockGlossaryFormDataProvider();
-
-        $glossaryForm = $this->getFactory()
-            ->getCmsBlockGlossaryForm($glossaryFormDataProvider, $cmsBlockTransfer->getIdCmsBlock())
-            ->handleRequest($request);
+        $idCmsBlock = $cmsBlockTransfer->getIdCmsBlock();
+        $glossaryForm = $this->getGlossaryForm($idCmsBlock, $request);
 
         if ($glossaryForm->isSubmitted()) {
             if ($glossaryForm->isValid()) {
-                $this->getFactory()
-                    ->getCmsBlockFacade()
-                    ->saveGlossary($glossaryForm->getData());
-
-                $this->addSuccessMessage('Placeholder translations successfully updated.');
-
-                $redirectUrl = Url::generate(
-                    '/cms-block-gui/edit-glossary/index',
-                    [static::URL_PARAM_ID_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock()]
-                )->build();
-
-                return $this->redirectResponse($redirectUrl);
-            } else {
-                $this->addErrorMessage('Invalid data provided.');
+                return $this->saveFormData($glossaryForm->getData(), $idCmsBlock);
             }
+
+            $this->addErrorMessage('Invalid data provided.');
         }
 
-        $availableLocales = $this->getFactory()
-            ->getLocaleFacade()
-            ->getLocaleCollection();
-
-        $cmsBlockTransfer = $this->getFactory()
-            ->getCmsBlockFacade()
-            ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
-
         return $this->viewResponse([
-            'placeholderTabs' => $placeholderTabs->createView(),
+            'placeholderTabs' => $this->getPlaceholderTabs($idCmsBlock),
             'glossaryForm' => $glossaryForm->createView(),
-            'availableLocales' => $availableLocales,
+            'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'cmsBlock' => $cmsBlockTransfer,
-            'idCmsBlock' => $cmsBlockTransfer->getIdCmsBlock(),
+            'idCmsBlock' => $idCmsBlock,
         ]);
+    }
+
+    /**
+     * @param int $idCmsBlock
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getGlossaryForm(int $idCmsBlock, Request $request): FormInterface
+    {
+        $glossaryFormDataProvider = $this->getFactory()
+            ->createCmsBlockGlossaryFormDataProvider();
+
+        return $this->getFactory()
+            ->getCmsBlockGlossaryForm($glossaryFormDataProvider, $idCmsBlock)
+            ->handleRequest($request);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     * @param int $idCmsBlock
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function saveFormData(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer, int $idCmsBlock): RedirectResponse
+    {
+        $cmsBlockGlossaryTransfer = $this->getFactory()
+            ->createCmsBlockGlossaryUpdater()
+            ->updateBeforeSave($cmsBlockGlossaryTransfer);
+
+        $this->getFactory()
+            ->getCmsBlockFacade()
+            ->saveGlossary($cmsBlockGlossaryTransfer);
+
+        $this->addSuccessMessage('Placeholder translations successfully updated.');
+
+        $redirectUrl = Url::generate(
+            '/cms-block-gui/edit-glossary/index',
+            [static::URL_PARAM_ID_CMS_BLOCK => $idCmsBlock]
+        )->build();
+
+        return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     */
+    protected function getPlaceholderTabs(int $idCmsBlock): TabsViewTransfer
+    {
+        $cmsBlockGlossaryTransfer = $this->getFactory()
+            ->getCmsBlockFacade()
+            ->findGlossary($idCmsBlock);
+
+        return $this->getFactory()->createCmsBlockPlaceholderTabs($cmsBlockGlossaryTransfer)->createView();
     }
 }

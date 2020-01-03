@@ -42,6 +42,7 @@ class TaxTotalCalculator implements CalculatorInterface
         foreach ($items as $itemTransfer) {
             $totalTaxAmount += $itemTransfer->getSumTaxAmountFullAggregation();
         }
+
         return $totalTaxAmount;
     }
 
@@ -56,6 +57,7 @@ class TaxTotalCalculator implements CalculatorInterface
         foreach ($expenses as $expenseTransfer) {
             $totalTaxAmount += $expenseTransfer->getSumTaxAmount();
         }
+
         return $totalTaxAmount;
     }
 }

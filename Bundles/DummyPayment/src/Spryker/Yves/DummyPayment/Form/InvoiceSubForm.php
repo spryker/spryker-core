@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DummyPaymentTransfer;
 use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InvoiceSubForm extends AbstractSubForm
 {
@@ -56,11 +55,11 @@ class InvoiceSubForm extends AbstractSubForm
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }

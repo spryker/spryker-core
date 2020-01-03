@@ -9,23 +9,13 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
+use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatterInterface;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface;
-use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
+use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface;
 
 class CmsBlockProductDataProvider
 {
-    public const PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME = 'name';
-
-    /**
-     * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface
-     */
-    protected $cmsBlockProductQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface
-     */
-    protected $productAbstractQueryContainer;
+    public const OPTION_PRODUCT_AUTOCOMPLETE_URL = '/cms-block-product-connector/product-autocomplete/';
 
     /**
      * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface
@@ -33,28 +23,41 @@ class CmsBlockProductDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductQueryContainer
-     * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface $productAbstractQueryContainer
+     * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface
+     */
+    protected $cmsBlockProductConnectorRepository;
+
+    /**
+     * @var \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatterInterface
+     */
+    protected $productLabelFormatter;
+
+    /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface $repository
+     * @param \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatterInterface $productLabelFormatter
      */
     public function __construct(
-        CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductQueryContainer,
-        CmsBlockProductConnectorToProductAbstractQueryContainerInterface $productAbstractQueryContainer,
-        CmsBlockProductConnectorToLocaleInterface $localeFacade
+        CmsBlockProductConnectorToLocaleInterface $localeFacade,
+        CmsBlockProductConnectorRepositoryInterface $repository,
+        ProductLabelFormatterInterface $productLabelFormatter
     ) {
-        $this->cmsBlockProductQueryContainer = $cmsBlockProductQueryContainer;
-        $this->productAbstractQueryContainer = $productAbstractQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->cmsBlockProductConnectorRepository = $repository;
+        $this->productLabelFormatter = $productLabelFormatter;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(CmsBlockTransfer $cmsBlockTransfer)
     {
         return [
             'data_class' => CmsBlockTransfer::class,
-            CmsBlockProductAbstractType::OPTION_PRODUCT_ABSTRACT_ARRAY => $this->getProductAbstractArray(),
+            CmsBlockProductAbstractType::OPTION_ASSIGNED_PRODUCT_ABSTRACTS => $this->getAssignedProductAbstracts($cmsBlockTransfer),
+            CmsBlockProductAbstractType::OPTION_PRODUCT_AUTOCOMPLETE_URL => static::OPTION_PRODUCT_AUTOCOMPLETE_URL,
         ];
     }
 
@@ -68,7 +71,7 @@ class CmsBlockProductDataProvider
         $idProductAbstracts = [];
 
         if ($cmsBlockTransfer->getIdCmsBlock()) {
-            $idProductAbstracts = $this->getAssignedProductAbstractArray($cmsBlockTransfer->getIdCmsBlock());
+            $idProductAbstracts = $this->cmsBlockProductConnectorRepository->getAssignedProductAbstractIds($cmsBlockTransfer->getIdCmsBlock());
         }
 
         $cmsBlockTransfer->setIdProductAbstracts($idProductAbstracts);
@@ -77,40 +80,46 @@ class CmsBlockProductDataProvider
     }
 
     /**
-     * @return array
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return int[]
      */
-    protected function getProductAbstractArray()
+    protected function getAssignedProductAbstracts(CmsBlockTransfer $cmsBlockTransfer): array
     {
+        $productAbstractOptions = [];
+
         $idLocale = $this->localeFacade
             ->getCurrentLocale()
             ->getIdLocale();
 
-        $productAbstracts = $this->productAbstractQueryContainer
-            ->queryProductAbstractWithName($idLocale)
-            ->find();
-
-        $productAbstractArray = [];
-
-        foreach ($productAbstracts as $spyProductAbstract) {
-            $label = $spyProductAbstract->getVirtualColumn(static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME) .
-                ' (SKU: ' . $spyProductAbstract->getSku() . ')';
-
-            $productAbstractArray[$label] = $spyProductAbstract->getIdProductAbstract();
+        if ($cmsBlockTransfer->getIdCmsBlock() === null) {
+            return $productAbstractOptions;
         }
+        $productAbstractTransfers = $this->cmsBlockProductConnectorRepository->getAssignedProductAbstracts(
+            $idLocale,
+            $cmsBlockTransfer->getIdCmsBlock()
+        );
 
-        return $productAbstractArray;
+        return $this->transformProductAbstractTransfersToSelectFieldData($productAbstractTransfers);
     }
 
     /**
-     * @param int $idCmsBlock
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
      *
-     * @return array
+     * @return int[]
      */
-    protected function getAssignedProductAbstractArray($idCmsBlock)
+    protected function transformProductAbstractTransfersToSelectFieldData(array $productAbstractTransfers): array
     {
-        return $this->cmsBlockProductQueryContainer
-            ->queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)
-            ->find()
-            ->getColumnValues('fkProductAbstract');
+        $selectFieldData = [];
+
+        foreach ($productAbstractTransfers as $productAbstractTransfer) {
+            $label = $this->productLabelFormatter->format(
+                $productAbstractTransfer->getName(),
+                $productAbstractTransfer->getSku()
+            );
+            $selectFieldData[$label] = $productAbstractTransfer->getIdProductAbstract();
+        }
+
+        return $selectFieldData;
     }
 }

@@ -28,7 +28,8 @@ class CartsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Cart not found."
+     *              "404": "Cart not found.",
+     *              "403": "Missing access token."
      *          }
      *     },
      *     "getCollection": {
@@ -48,10 +49,10 @@ class CartsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $idQuote = $restRequest->getResource()->getId();
+        $uuidQuote = $restRequest->getResource()->getId();
 
-        if ($idQuote !== null) {
-            return $this->getFactory()->createCartReader()->readByIdentifier($idQuote, $restRequest);
+        if ($uuidQuote !== null) {
+            return $this->getFactory()->createCartReader()->getCustomerQuoteByUuid($uuidQuote, $restRequest);
         }
 
         return $this->getFactory()->createCartReader()->readCurrentCustomerCarts($restRequest);
@@ -68,6 +69,7 @@ class CartsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "403": "Unauthorized cart action.",
      *              "422": "Customer already has a cart."
      *          }
      *     }
@@ -95,6 +97,7 @@ class CartsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",
+     *              "403": "Unauthorized cart action.",
      *              "404": "Cart not found.",
      *              "422": "Cart could not be deleted."
      *          }
@@ -108,5 +111,34 @@ class CartsResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()->createCartDeleter()->delete($restRequest);
+    }
+
+    /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates a cart."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Cart id is missing.",
+     *              "403": "Unauthorized cart action.",
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Can’t switch price mode when there are items in the cart."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function patchAction(RestRequestInterface $restRequest, RestCartsAttributesTransfer $restCartsAttributesTransfer): RestResponseInterface
+    {
+        return $this->getFactory()->createCartUpdater()->update($restRequest, $restCartsAttributesTransfer);
     }
 }

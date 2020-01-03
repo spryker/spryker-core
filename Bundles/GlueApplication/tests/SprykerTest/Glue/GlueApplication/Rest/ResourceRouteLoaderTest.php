@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -16,13 +16,14 @@ use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer;
+use SprykerTest\Glue\GlueApplication\Stub\TestResourceWithParentRoutePlugin;
+use SprykerTest\Glue\GlueApplication\Stub\TestVersionableResourceRoutePlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication
@@ -82,6 +83,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
+        /** @var \Spryker\Glue\GlueApplication\Rest\Request\Data\VersionInterface[] $route */
         $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertSame(2, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION]->getMajor());
@@ -113,6 +115,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
+        /** @var \Spryker\Glue\GlueApplication\Rest\Request\Data\VersionInterface[] $route */
         $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertSame(1, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION]->getMajor());
@@ -140,6 +143,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
+        $parents = [];
         $parents[][RequestConstantsInterface::ATTRIBUTE_TYPE] = 'parent-resource2';
         $parents[][RequestConstantsInterface::ATTRIBUTE_TYPE] = 'tests';
 
@@ -159,7 +163,6 @@ class ResourceRouteLoaderTest extends Unit
         array $plugins,
         VersionResolverInterface $versionResolverMock
     ): ResourceRouteLoaderInterface {
-
         return new ResourceRouteLoader($plugins, $versionResolverMock);
     }
 
@@ -177,10 +180,7 @@ class ResourceRouteLoaderTest extends Unit
      */
     protected function createResourceRoutePluginWithVersionMock(): ResourceRoutePluginInterface
     {
-        return $this->getMockBuilder([
-            ResourceRoutePluginInterface::class,
-            ResourceVersionableInterface::class,
-        ])->getMock();
+        return $this->getMockBuilder(TestVersionableResourceRoutePlugin::class)->getMock();
     }
 
     /**
@@ -188,10 +188,7 @@ class ResourceRouteLoaderTest extends Unit
      */
     protected function createResourceRoutePluginWithParent(): ResourceRoutePluginInterface
     {
-        return $this->getMockBuilder([
-            ResourceRoutePluginInterface::class,
-            ResourceWithParentPluginInterface::class,
-        ])->getMock();
+        return $this->createMock(TestResourceWithParentRoutePlugin::class);
     }
 
     /**
@@ -245,6 +242,7 @@ class ResourceRouteLoaderTest extends Unit
             ->willReturnCallback(
                 function (ResourceRouteCollectionInterface $resourceRouteCollection) {
                     $resourceRouteCollection->addGet('get', true, [1 => 1]);
+
                     return $resourceRouteCollection;
                 }
             );

@@ -20,7 +20,7 @@ class BulkWriter extends Writer implements BulkWriterInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
@@ -28,13 +28,17 @@ class BulkWriter extends Writer implements BulkWriterInterface
 
         $this->loadPriceProductTransfer($priceProductTransfer);
 
+        /** @var \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer $persistedPriceProductTransfer */
         $persistedPriceProductTransfer = $this->savePriceProductEntity($priceProductTransfer, new SpyPriceProduct());
 
         if ($priceProductTransfer->getIdProduct()) {
             $this->addRecordToTouch(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
         }
 
-        return $persistedPriceProductTransfer->getPriceProduct();
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+        $priceProductTransfer = $persistedPriceProductTransfer->getPriceProduct();
+
+        return $priceProductTransfer;
     }
 
     /**

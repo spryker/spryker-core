@@ -82,4 +82,11 @@ interface CompanyRoleStubInterface
      * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 }

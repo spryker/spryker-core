@@ -18,6 +18,9 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLo
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 use Spryker\Zed\Search\SearchConfig;
 
+/**
+ * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstaller` instead.
+ */
 class IndexInstaller implements SearchInstallerInterface
 {
     protected const SETTING_PATH_DELIMITER = '.';
@@ -127,6 +130,7 @@ class IndexInstaller implements SearchInstallerInterface
             $mapping = $this->createMappingByName($mappingData, $mappingName, $index);
             $mappings = array_merge($mappings, $mapping->toArray());
         }
+
         return $mappings;
     }
 
@@ -145,6 +149,7 @@ class IndexInstaller implements SearchInstallerInterface
         foreach ($mappingData as $key => $value) {
             $mapping->setParam($key, $value);
         }
+
         return $mapping;
     }
 
@@ -326,6 +331,7 @@ class IndexInstaller implements SearchInstallerInterface
     protected function getLastPathNumber(array $settingPathArray): int
     {
         end($settingPathArray);
+
         return key($settingPathArray);
     }
 }

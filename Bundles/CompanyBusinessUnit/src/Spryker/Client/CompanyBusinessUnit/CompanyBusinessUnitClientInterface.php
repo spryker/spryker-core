@@ -99,4 +99,20 @@ interface CompanyBusinessUnitClientInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
      */
     public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company business unit by uuid.
+     * - Makes zed request.
+     * - Requires uuid field to be set in CompanyBusinessUnitTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
 }

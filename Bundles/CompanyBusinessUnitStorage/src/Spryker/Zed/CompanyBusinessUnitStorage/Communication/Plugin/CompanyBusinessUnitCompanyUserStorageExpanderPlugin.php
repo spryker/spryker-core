@@ -13,14 +13,14 @@ use Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorage
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CompanyBusinessUnitStorage\Business\CompanyBusinessUnitStorageFacade getFacade()
+ * @method \Spryker\Zed\CompanyBusinessUnitStorage\Business\CompanyBusinessUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnitStorage\CompanyBusinessUnitStorageConfig getConfig()
  * @method \Spryker\Zed\CompanyBusinessUnitStorage\Communication\CompanyBusinessUnitStorageCommunicationFactory getFactory()
  */
 class CompanyBusinessUnitCompanyUserStorageExpanderPlugin extends AbstractPlugin implements CompanyUserStorageExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Expands CompanyUserStorageTransfer with company business unit id.
      *
      * @api

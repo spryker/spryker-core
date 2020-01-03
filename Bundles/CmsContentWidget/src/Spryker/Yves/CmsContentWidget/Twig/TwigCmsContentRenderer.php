@@ -7,8 +7,9 @@
 
 namespace Spryker\Yves\CmsContentWidget\Twig;
 
-use Exception;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Yves\CmsContentWidget\CmsContentWidgetConfig;
+use Throwable;
 use Twig\Environment;
 
 class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
@@ -21,11 +22,18 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
     protected $twigEnvironment;
 
     /**
-     * @param \Twig\Environment $twigEnvironment
+     * @var \Spryker\Yves\CmsContentWidget\CmsContentWidgetConfig
      */
-    public function __construct(Environment $twigEnvironment)
+    protected $cmsContentWidgetConfig;
+
+    /**
+     * @param \Twig\Environment $twigEnvironment
+     * @param \Spryker\Yves\CmsContentWidget\CmsContentWidgetConfig $cmsContentWidgetConfig
+     */
+    public function __construct(Environment $twigEnvironment, CmsContentWidgetConfig $cmsContentWidgetConfig)
     {
         $this->twigEnvironment = $twigEnvironment;
+        $this->cmsContentWidgetConfig = $cmsContentWidgetConfig;
     }
 
     /**
@@ -52,14 +60,21 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
      * @param array $context
      * @param string $content
      *
+     * @throws \Throwable
+     *
      * @return string
      */
     protected function renderTwigContent(array $context, $content)
     {
         try {
             return $this->twigEnvironment->createTemplate($content)->render($context);
-        } catch (Exception $exception) {
-            $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
+        } catch (Throwable $exception) {
+            if ($this->cmsContentWidgetConfig->isDebugModeEnabled()) {
+                throw $exception;
+            }
+
+            $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);
+
             return $content;
         }
     }

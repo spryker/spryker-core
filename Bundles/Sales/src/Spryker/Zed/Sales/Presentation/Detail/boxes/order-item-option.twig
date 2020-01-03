@@ -14,9 +14,9 @@
         <td>
 
             <div>
-                {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: productOption.sumPrice, priceToPay: productOption.sumPrice - productOption.sumDiscountAmountFullAggregation | default(0)} %} {% endembed %}
+                {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: productOption.sumPrice | default(productOption.unitPrice), priceToPay: productOption.sumPrice | default(productOption.unitPrice)} %} {% endembed %}
             </div>
-            <div class="tax-info">incl. {{ productOption.taxRate|default(0) }} % tax </div>
+            <div class="tax-info">{{ "incl. %tax_amount% % tax" | trans({'%tax_amount%': productOption.taxRate|default(0)}) }}</div>
         </td>
         <td colspan="4"></td>
     </tr>

@@ -23,7 +23,7 @@ use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin impl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,9 +45,9 @@ class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin impl
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductOptionsByProductAbstractIds($ids);
+        $query = $this->getQueryContainer()->queryProductAbstractOptionsByProductAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
@@ -55,7 +55,7 @@ class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin impl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin impl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

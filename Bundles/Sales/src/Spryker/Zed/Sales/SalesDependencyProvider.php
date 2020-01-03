@@ -40,6 +40,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
     public const ITEM_TRANSFORMER_STRATEGY_PLUGINS = 'ITEM_TRANSFORMER_STRATEGY_PLUGINS';
     public const UI_SALES_TABLE_PLUGINS = 'UI_SALES_TABLE_PLUGINS';
+    public const PLUGINS_ORDER_POST_SAVE = 'PLUGINS_ORDER_POST_SAVE';
+    public const PLUGINS_ITEM_PRE_TRANSFORMER = 'PLUGINS_ITEM_PRE_TRANSFORMER';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -52,8 +54,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addCountryFacade($container);
         $container = $this->addOmsFacade($container);
@@ -65,6 +68,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
+        $container = $this->addOrderPostSavePlugins($container);
+        $container = $this->addItemPreTransformerPlugins($container);
 
         return $container;
     }
@@ -74,8 +79,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addUserFacade($container);
         $container = $this->addDateTimeFormatter($container);
@@ -313,6 +319,34 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderPostSavePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ORDER_POST_SAVE] = function () {
+            return $this->getOrderPostSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addItemPreTransformerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ITEM_PRE_TRANSFORMER, function () {
+            return $this->getItemPreTransformerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -321,7 +355,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     protected function getOrderHydrationPlugins()
     {
@@ -350,5 +384,21 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSalesTablePlugins()
     {
          return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     */
+    protected function getOrderPostSavePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface[]
+     */
+    protected function getItemPreTransformerPlugins(): array
+    {
+        return [];
     }
 }

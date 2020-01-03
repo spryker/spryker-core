@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\Product\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -21,7 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +45,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +65,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -79,7 +83,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -97,7 +101,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -113,7 +117,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -129,7 +133,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -145,7 +149,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -163,7 +167,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -181,7 +185,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -199,7 +203,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -217,7 +221,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -233,7 +237,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -249,7 +253,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -265,7 +269,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -281,7 +285,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -297,7 +301,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -315,9 +319,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacade::getProductConcretesByConcreteSkus()` instead.
      *
      * @param string $productConcreteSku
      *
@@ -331,7 +337,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -347,7 +353,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -363,7 +369,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -379,7 +385,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -395,7 +401,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -411,7 +417,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -427,7 +433,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -443,7 +449,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -459,7 +465,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -475,7 +481,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -491,7 +497,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -507,7 +513,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -523,7 +529,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -539,7 +545,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -555,7 +561,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -571,7 +577,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -587,7 +593,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -603,7 +609,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -619,7 +625,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -635,7 +641,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -652,7 +658,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -669,7 +675,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -685,7 +691,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -701,7 +707,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -718,14 +724,14 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
@@ -735,7 +741,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -751,7 +757,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -767,7 +773,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -808,7 +814,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -825,7 +831,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -841,7 +847,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -857,7 +863,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -873,7 +879,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -891,7 +897,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -907,7 +913,24 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
+     */
+    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -923,7 +946,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -939,13 +962,29 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {
@@ -955,7 +994,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -971,7 +1010,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -988,7 +1027,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -1003,7 +1042,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -1015,5 +1054,63 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     {
         return $this->getRepository()
             ->getProductConcreteTransfersByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductConcretesByConcreteSkus($productConcreteSkus);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getProductConcretesByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getRawProductConcreteTransfersByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array
+    {
+        return $this->getRepository()->getProductUrls($productUrlCriteriaFilterTransfer);
     }
 }

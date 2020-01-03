@@ -15,6 +15,7 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary
@@ -26,6 +27,7 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 class GlossaryFacadeTest extends Unit
 {
     public const GLOSSARY_KEY = 'glossary_key';
+    protected const TRANSLATION = 'translation';
 
     /**
      * @var array
@@ -33,9 +35,14 @@ class GlossaryFacadeTest extends Unit
     private $locales = [];
 
     /**
+     * @var \SprykerTest\Zed\Glossary\GlossaryBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,7 +52,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return void
      */
-    private function getAvailableLocales()
+    private function getAvailableLocales(): void
     {
         $this->locales = $this->getLocaleFacade()->getAvailableLocales();
     }
@@ -53,7 +60,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Locale\Business\LocaleFacade
      */
-    private function getLocaleFacade()
+    private function getLocaleFacade(): LocaleFacade
     {
         return new LocaleFacade();
     }
@@ -61,7 +68,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Glossary\Business\GlossaryFacade
      */
-    private function getGlossaryFacade()
+    private function getGlossaryFacade(): GlossaryFacade
     {
         return new GlossaryFacade();
     }
@@ -71,7 +78,7 @@ class GlossaryFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    private function buildLocaleTransferObject(array $locales)
+    private function buildLocaleTransferObject(array $locales): LocaleTransfer
     {
         $locale = new LocaleTransfer();
         $locale->setIdLocale($locales[0]);
@@ -84,7 +91,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddTranslation()
+    public function testAddTranslation(): void
     {
         $glossaryFacade = $this->getGlossaryFacade();
 
@@ -105,7 +112,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateTranslation()
+    public function testUpdateTranslation(): void
     {
         $glossaryFacade = $this->getGlossaryFacade();
         $localesIds = array_keys($this->locales);
@@ -136,5 +143,66 @@ class GlossaryFacadeTest extends Unit
         $translatedKeyChanged = $glossaryFacade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
         $this->assertNotSame($translatedKey->getValue(), $translatedKeyChanged->getValue());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTranslationsCanBeFoundInBulk(): void
+    {
+        //Arrange
+        $glossaryFacade = $this->getGlossaryFacade();
+        $localeFacade = $this->getLocaleFacade();
+        $localeTransfers = $localeFacade->getLocaleCollection();
+        $seedData = ['glossaryKey' => static::GLOSSARY_KEY];
+        foreach ($localeTransfers as $localeTransfer) {
+            $seedData['locales'][$localeTransfer->getLocaleName()] = static::TRANSLATION;
+        }
+        $this->tester->haveTranslation($seedData);
+
+        //Act
+        $translations = $glossaryFacade->getTranslationsByGlossaryKeyAndLocales(static::GLOSSARY_KEY, $localeTransfers);
+
+        //Assert
+        $this->assertCount(count($localeTransfers), $translations);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTranslationsCanBeFoundInBuGlossaryKeysAndLocaleTransfers(): void
+    {
+        //Arrange
+        $glossaryFacade = $this->getGlossaryFacade();
+        $localeFacade = $this->getLocaleFacade();
+        $localeTransfers = $localeFacade->getLocaleCollection();
+        $seedData = ['glossaryKey' => static::GLOSSARY_KEY];
+        foreach ($localeTransfers as $localeTransfer) {
+            $seedData['locales'][$localeTransfer->getLocaleName()] = static::TRANSLATION;
+        }
+        $this->tester->haveTranslation($seedData);
+
+        //Act
+        $translations = $glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers([static::GLOSSARY_KEY], $localeTransfers);
+
+        //Assert
+        $this->assertCount(count($localeTransfers), $translations);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGlossaryKeyTransfersCanBeFoundByGlossaryKeysInBulk(): void
+    {
+        //Arrange
+        $glossaryFacade = $this->getGlossaryFacade();
+        $seedData = ['glossaryKey' => static::GLOSSARY_KEY];
+        $this->tester->haveTranslation($seedData);
+
+        //Act
+        $translations = $glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys([static::GLOSSARY_KEY]);
+
+        //Assert
+        $this->assertCount(1, $translations);
     }
 }

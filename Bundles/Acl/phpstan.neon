@@ -1,4 +1,3 @@
 parameters:
     ignoreErrors:
-    - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
-    - '#Argument of an invalid type .+RolesTransfer supplied for foreach, only iterables are supported.#'
+    - '#Negated boolean expression is always false.#'

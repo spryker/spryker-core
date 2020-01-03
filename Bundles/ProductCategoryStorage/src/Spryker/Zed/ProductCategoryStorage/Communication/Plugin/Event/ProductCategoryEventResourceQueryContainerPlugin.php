@@ -23,7 +23,7 @@ use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,9 +45,9 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductCategoryByIds($ids);
+        $query = $this->getQueryContainer()->queryProductCategoryByProductCategoryIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
@@ -55,7 +55,7 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

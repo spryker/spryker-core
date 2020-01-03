@@ -10,17 +10,23 @@ namespace Spryker\Shared\Twig\Plugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
-use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Component\HttpKernel\Fragment\HIncludeFragmentRenderer;
 use Twig\Environment;
 
+/**
+ * @deprecated Use `Spryker\Zed\Http\Communication\Plugin\Twig\HttpKernelTwigPlugin` instead.
+ * @deprecated Use `Spryker\Yves\Http\Plugin\Twig\HttpKernelTwigPlugin` instead.
+ *
+ * @deprecated Use `Spryker\Zed\Http\Communication\Plugin\Http\HIncludeRendererFragmentHandlerPlugin` instead.
+ * @deprecated Use `Spryker\Yves\Http\Plugin\Http\HIncludeRendererFragmentHandlerPlugin` instead.
+ */
 class HttpKernelTwigPlugin implements TwigPluginInterface
 {
     protected const SERVICE_FRAGMENT_HANDLER = 'fragment.handler';
     protected const SERVICE_FRAGMENT_RENDERER_HINCLUDE = 'fragment.renderer.hinclude';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +37,7 @@ class HttpKernelTwigPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        if (!class_exists(RoutingExtension::class) || $container->has(static::SERVICE_FRAGMENT_HANDLER) === false) {
+        if (!class_exists(HttpKernelExtension::class) || $container->has(static::SERVICE_FRAGMENT_HANDLER) === false) {
             return $twig;
         }
 

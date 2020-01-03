@@ -29,4 +29,6 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Zed\Permission\Helper\PermissionHelper
 

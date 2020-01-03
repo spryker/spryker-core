@@ -29,4 +29,11 @@ interface PriceProductToCurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getDefaultCurrencyForCurrentStore();
+
+    /**
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array;
 }

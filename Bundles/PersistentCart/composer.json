@@ -4,20 +4,23 @@
   "description": "PersistentCart module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/calculation-extension": "^1.1.0",
-    "spryker/cart": "^5.8.0",
-    "spryker/cart-extension": "^1.4.0 || ^2.0.0",
+    "spryker/cart": "^5.11.0 || ^7.3.0",
+    "spryker/cart-extension": "^1.9.0 || ^2.5.0 || ^4.1.0",
+    "spryker/carts-rest-api-extension": "^1.1.0",
     "spryker/customer": "^6.0.0 || ^7.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/persistent-cart-extension": "^1.0.0",
+    "spryker/persistent-cart-extension": "^1.1.0",
     "spryker/price-extension": "^1.0.0",
     "spryker/quote": "^2.8.0",
     "spryker/store": "^1.9.0",
     "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -33,6 +36,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

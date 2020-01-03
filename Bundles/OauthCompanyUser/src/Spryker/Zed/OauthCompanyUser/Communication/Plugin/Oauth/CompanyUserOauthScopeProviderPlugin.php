@@ -20,7 +20,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterfa
 class CompanyUserOauthScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,19 +34,11 @@ class CompanyUserOauthScopeProviderPlugin extends AbstractPlugin implements Oaut
             return false;
         }
 
-        if (!$oauthScopeRequestTransfer->getClientId()) {
-            return false;
-        }
-
-        if ($oauthScopeRequestTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

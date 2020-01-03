@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanyBusinessUnitStorage\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\CompanyBusinessUnitStorage\Persistence\CompanyBusinessUnitStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CompanyBusinessUnitStorage\Persistence\CompanyBusinessUnitStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CompanyBusinessUnitStorage\CompanyBusinessUnitStorageConfig getConfig()
  * @method \Spryker\Zed\CompanyBusinessUnitStorage\Business\CompanyBusinessUnitStorageFacadeInterface getFacade()
  */

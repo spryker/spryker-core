@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductList\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -21,9 +22,11 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductListFacade extends AbstractFacade implements ProductListFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use createProductList() or updateProductList() instead.
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
@@ -37,25 +40,73 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductListWriter()
+            ->createProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductListWriter()
+            ->updateProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
      */
     public function deleteProductList(ProductListTransfer $productListTransfer): void
     {
-        $this->getFactory()
+        $this->removeProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function removeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
             ->createProductListWriter()
             ->deleteProductList($productListTransfer);
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProductAbstract() instead.
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProductAbstract() instead.
      *
      * @param int $idProductAbstract
      *
@@ -67,7 +118,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,11 +134,43 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductAbstractListIdsByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductAbstractListIdsByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductListsIdsByProductIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductListsByProductIds($productIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
      *
      * @param int $idProductAbstract
      *
@@ -99,7 +182,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -115,7 +198,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -131,11 +214,11 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProduct() instead.
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProduct() instead.
      *
      * @param int $idProduct
      *
@@ -147,7 +230,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -163,11 +246,11 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProduct() instead.
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProduct() instead.
      *
      * @param int $idProduct
      *
@@ -179,7 +262,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -195,7 +278,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -211,7 +294,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -227,7 +310,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -243,7 +326,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -259,7 +342,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

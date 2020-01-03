@@ -75,7 +75,7 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int[] $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
@@ -99,7 +99,7 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int[] $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship

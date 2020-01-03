@@ -19,7 +19,7 @@ interface PermissionFinderInterface
      *
      * @param string $permissionKey
      *
-     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface|null
      */
     public function findPermissionPlugin($permissionKey);
 
@@ -32,4 +32,11 @@ interface PermissionFinderInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
+
+    /**
+     * @param string $identifier
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getPermissionsByIdentifier(string $identifier): PermissionCollectionTransfer;
 }

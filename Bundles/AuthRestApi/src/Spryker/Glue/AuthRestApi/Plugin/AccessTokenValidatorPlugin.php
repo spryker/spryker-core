@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -13,18 +14,19 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use \Spryker\Glue\AuthRestApi\Plugin\RestRequestAccessTokenValidatorPlugin instead
+ * @deprecated Use \Spryker\Glue\AuthRestApi\Plugin\AccessTokenRestRequestValidatorPlugin instead.
  *
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
 class AccessTokenValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */

@@ -23,7 +23,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,15 +47,15 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     {
         $query = $this->getQueryContainer()->queryUrls($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

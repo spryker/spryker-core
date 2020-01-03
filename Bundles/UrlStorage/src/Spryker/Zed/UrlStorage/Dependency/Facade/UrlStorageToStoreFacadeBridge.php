@@ -29,4 +29,14 @@ class UrlStorageToStoreFacadeBridge implements UrlStorageToStoreFacadeInterface
     {
         return $this->storeFacade->getCurrentStore();
     }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName($storeName)
+    {
+        return $this->storeFacade->getStoreByName($storeName);
+    }
 }

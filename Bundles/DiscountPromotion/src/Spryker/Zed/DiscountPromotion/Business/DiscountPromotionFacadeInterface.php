@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface DiscountPromotionFacadeInterface
 {
     /**
-     *
      * Specification:
      *  - Collects discountable items when promotion discount is used.
      *  - If item is not in quote then it adds it this quote::promotionItems, if its already there then it would return
@@ -53,6 +52,18 @@ interface DiscountPromotionFacadeInterface
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
     public function updatePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer);
+
+    /**
+     * Specification:
+     *  - Removes discount promotion from persistence by given discount id if exists.
+     *
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return void
+     */
+    public function removePromotionByIdDiscount(int $idDiscount): void;
 
     /**
      * Specification:

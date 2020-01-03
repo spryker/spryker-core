@@ -14,6 +14,9 @@ use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 
+/**
+ * @method \Spryker\Shared\Twig\TwigConfig getSharedConfig()
+ */
 class TwigConfig extends AbstractBundleConfig
 {
     /**
@@ -25,7 +28,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTemplatePaths()
     {
@@ -37,13 +40,13 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $paths
+     * @param string[] $paths
      *
-     * @return array
+     * @return string[]
      */
     protected function addProjectTemplatePaths(array $paths)
     {
-        $namespaces = $this->get(KernelConstants::PROJECT_NAMESPACES);
+        $namespaces = $this->getProjectNamespaces();
         $storeName = $this->getStoreName();
 
         foreach ($namespaces as $namespace) {
@@ -55,13 +58,13 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $paths
+     * @param string[] $paths
      *
-     * @return array
+     * @return string[]
      */
     protected function addCoreTemplatePaths(array $paths)
     {
-        $namespaces = $this->get(KernelConstants::CORE_NAMESPACES);
+        $namespaces = $this->getCoreNamespaces();
 
         foreach ($namespaces as $namespace) {
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
@@ -70,6 +73,22 @@ class TwigConfig extends AbstractBundleConfig
         $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Zed/%s/Presentation/';
 
         return $paths;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getProjectNamespaces(): array
+    {
+        return $this->getSharedConfig()->getProjectNamespaces();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCoreNamespaces(): array
+    {
+        return $this->getSharedConfig()->getCoreNamespaces();
     }
 
     /**
@@ -105,7 +124,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getZedDirectoryPathPatterns()
     {
@@ -115,20 +134,20 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @deprecated Please use `getZedDirectoryPathPatterns()` instead.
      *
-     * @return array
+     * @return string[]
      */
     public function getZedDirectoryPathPattern()
     {
         $directories = array_merge(
-            glob('vendor/*/*/src/*/Zed/*/Presentation'),
-            glob('src/*/Zed/*/Presentation')
+            glob('vendor/*/*/src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT),
+            glob('src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT)
         );
 
         return $directories;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getYvesDirectoryPathPatterns()
     {
@@ -138,14 +157,21 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @deprecated Please use `getYvesDirectoryPathPatterns()` instead.
      *
-     * @return array
+     * @return string[]
      */
     public function getYvesDirectoryPathPattern()
     {
-        $currentThemeName = $this->get(TwigConstants::YVES_THEME);
+        $themeName = $this->getSharedConfig()->getYvesThemeName();
+        $themeNameDefault = $this->getSharedConfig()->getYvesThemeNameDefault();
+
+        if ($themeName === '') {
+            $themeName = $themeNameDefault;
+        }
+
         $directories = array_merge(
-            glob('vendor/*/*/src/*/Yves/*/Theme/' . $currentThemeName),
-            glob('src/*/Yves/*/Theme/' . $currentThemeName)
+            glob('vendor/*/*/src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT),
+            glob('src/*/Yves/*/Theme/' . $themeNameDefault, GLOB_ONLYDIR | GLOB_NOSORT),
+            glob('src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT)
         );
 
         return $directories;

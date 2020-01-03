@@ -21,6 +21,18 @@ interface CmsPageSearchQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageVersionByIds(array $cmsPageIds);
 
     /**
+     * Specification:
+     * - Returns a a query for the table `spy_cms_page` filtered by cms page ids.
+     *
+     * @api
+     *
+     * @param array $cmsPageIds
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryCmsPageByIds(array $cmsPageIds);
+
+    /**
      * @api
      *
      * @param array $cmsPageIds

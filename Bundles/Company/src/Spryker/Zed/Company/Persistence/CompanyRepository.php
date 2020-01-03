@@ -19,9 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyRepository extends AbstractRepository implements CompanyRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param int $idCompany
      *
@@ -46,9 +44,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param int $idCompany
      *
@@ -88,9 +84,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */
@@ -105,5 +99,26 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
         $companyTypeCollection->setCompanies($spyCompanies);
 
         return $companyTypeCollection;
+    }
+
+    /**
+     * @param string $companyUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyByUuid(string $companyUuid): ?CompanyTransfer
+    {
+        $companyEntity = $this->getFactory()
+            ->createCompanyQuery()
+            ->filterByUuid($companyUuid)
+            ->findOne();
+
+        if (!$companyEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyMapper()
+            ->mapEntityToCompanyTransfer($companyEntity, new CompanyTransfer());
     }
 }

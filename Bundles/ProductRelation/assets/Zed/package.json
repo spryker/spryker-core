@@ -3,7 +3,7 @@
   "name": "spryker-zed-productrelations",
   "version": "1.0.0",
   "dependencies": {
-    "dot": "~1.0.3",
+    "dot": "~1.1.2",
     "fs": "~0.0.2",
     "jquery-extendext": "git+https://git@github.com/mistic100/jQuery.extendext.git#0.1.1",
     "jquery-query-builder": "git+https://git@github.com/spryker/jquery-query-builder.git",

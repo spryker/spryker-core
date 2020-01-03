@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
+use Generated\Shared\Transfer\DataSetItemTransfer;
+use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface;
+
 class DataSetWriterCollection implements DataSetWriterInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface[]
+     * @var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface[]
      */
     protected $dataSetWriters = [];
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface[] $dataSetWriter
+     * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface[] $dataSetWriter
      */
     public function __construct(array $dataSetWriter)
     {
@@ -30,7 +33,17 @@ class DataSetWriterCollection implements DataSetWriterInterface
     public function write(DataSetInterface $dataSet)
     {
         foreach ($this->dataSetWriters as $dataSetWriter) {
-            $dataSetWriter->write($dataSet);
+            /**
+             * This check was added because of BC and will be removed once the `\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface` is removed.
+             */
+            if ($dataSetWriter instanceof DataSetWriterPluginInterface) {
+                $dataSetWriter->write($dataSet);
+
+                continue;
+            }
+
+            $dataSetItemTransfer = $this->mapDataSetToDataSetItemTransfer($dataSet);
+            $dataSetWriter->write($dataSetItemTransfer);
         }
     }
 
@@ -42,5 +55,17 @@ class DataSetWriterCollection implements DataSetWriterInterface
         foreach ($this->dataSetWriters as $dataSetWriter) {
             $dataSetWriter->flush();
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Generated\Shared\Transfer\DataSetItemTransfer
+     */
+    protected function mapDataSetToDataSetItemTransfer(DataSetInterface $dataSet): DataSetItemTransfer
+    {
+        return (new DataSetItemTransfer())->setPayload(
+            $dataSet->getArrayCopy()
+        );
     }
 }

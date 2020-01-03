@@ -50,6 +50,7 @@ class ProductAttribute implements ProductAttributeInterface
     public function getMetaAttributesForProductAbstract($idProductAbstract)
     {
         $values = $this->getProductAbstractAttributes($idProductAbstract);
+
         return $this->productAttributeReader->getMetaAttributesByValues($values);
     }
 

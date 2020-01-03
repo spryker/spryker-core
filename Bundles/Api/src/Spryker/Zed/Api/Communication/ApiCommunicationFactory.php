@@ -50,7 +50,8 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     public function createTransformer(ApiRequestTransfer $apiRequestTransfer)
     {
         return new Transformer(
-            $this->createFormatter($apiRequestTransfer->getFormatType())
+            $this->createFormatter($apiRequestTransfer->getFormatType()),
+            $this->getConfig()
         );
     }
 
@@ -63,6 +64,10 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
+     *
      * @return \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
      */
     public function createControllerListener()

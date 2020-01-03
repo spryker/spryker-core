@@ -9,6 +9,9 @@ namespace Spryker\Shared\Session\Business\Handler\Exception;
 
 use Exception;
 
+/**
+ * @deprecated Use `Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException` instead.
+ */
 class LockCouldNotBeAcquiredException extends Exception
 {
 }

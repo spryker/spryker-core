@@ -16,7 +16,14 @@ interface ProductListEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer

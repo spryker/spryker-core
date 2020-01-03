@@ -39,7 +39,7 @@ interface TaxProductConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Set tax rate for each item
+     *  - Set tax rate for each item based on quote level (BC) or item level shipments.
      *
      * @api
      *
@@ -55,6 +55,8 @@ interface TaxProductConnectorFacadeInterface
      *  - If tax set is null - sets error message and isSuccess to false.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *

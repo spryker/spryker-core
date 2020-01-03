@@ -95,6 +95,16 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     }
 
     /**
+     * @param \SimpleXMLElement $simpleXmlElement
+     *
+     * @return bool
+     */
+    protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
+    {
+        return in_array('spryker:schema-01', $simpleXmlElement->getNamespaces(), true);
+    }
+
+    /**
      * @param \SimpleXMLElement $tableXmlElement
      *
      * @return bool
@@ -142,7 +152,12 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
      */
     protected function isIndexable(SimpleXMLElement $tableXmlElement): bool
     {
-        return ($tableXmlElement->xpath('behavior[@name="archivable"]') === false || count($tableXmlElement->xpath('behavior[@name="archivable"]')) === 0);
+        $hasNamespace = $this->hasNamespaceInSchema($tableXmlElement);
+        if ($hasNamespace) {
+            $tableXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        }
+
+        return ($tableXmlElement->xpath($hasNamespace ? 's:behavior[@name="archivable"]' : 'behavior[@name="archivable"]') === false || count($tableXmlElement->xpath($hasNamespace ? 's:behavior[@name="archivable"]' : 'behavior[@name="archivable"]')) === 0);
     }
 
     /**
@@ -153,7 +168,11 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     protected function getForeignKeyColumnNames(SimpleXMLElement $tableXmlElement): array
     {
         $foreignKeyColumnNames = [];
-        $foreignKeyReferencesXmlElement = $tableXmlElement->xpath('foreign-key/reference');
+        $hasNamespace = $this->hasNamespaceInSchema($tableXmlElement);
+        if ($hasNamespace) {
+            $tableXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        }
+        $foreignKeyReferencesXmlElement = $tableXmlElement->xpath($hasNamespace ? 's:foreign-key/s:reference' : 'foreign-key/reference');
 
         if ($foreignKeyReferencesXmlElement === false) {
             return $foreignKeyColumnNames;
@@ -174,7 +193,15 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     protected function getIndexedColumnNames(SimpleXMLElement $tableXmlElement): array
     {
         $indexedColumnNames = [];
-        $indexColumnXmlElements = $tableXmlElement->xpath('index/index-column | column[@primaryKey="true"]');
+        $hasNamespace = $this->hasNamespaceInSchema($tableXmlElement);
+        if ($hasNamespace) {
+            $tableXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        }
+        $indexColumnXmlElements = $tableXmlElement->xpath(
+            $hasNamespace
+            ? 's:index/s:index-column | s:column[@primaryKey="true"]'
+            : 'index/index-column | column[@primaryKey="true"]'
+        );
 
         if ($indexColumnXmlElements === false) {
             return $indexedColumnNames;
@@ -193,7 +220,12 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
      */
     protected function getTableXmlElements(SimpleXMLElement $xmlElement): array
     {
-        return $xmlElement->xpath('//table') ?: [];
+        $hasNamespace = $this->hasNamespaceInSchema($xmlElement);
+        if ($hasNamespace) {
+            $xmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        }
+
+        return $xmlElement->xpath($hasNamespace ? '//s:table' : '//table') ?: [];
     }
 
     /**
@@ -205,8 +237,13 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     protected function createForeignKeyFileTransfer(SimpleXMLElement $xmlElement, SplFileInfo $fileInfo): ForeignKeyFileTransfer
     {
         $foreignKeyFileTransfer = new ForeignKeyFileTransfer();
+        $hasNamespace = $this->hasNamespaceInSchema($xmlElement);
+        if ($hasNamespace) {
+            $xmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        }
 
-        $database = $xmlElement->xpath('//database')[0] ?: [];
+        /** @var array $database */
+        $database = $xmlElement->xpath($hasNamespace ?  '//s:database' : '//database')[0] ?: [];
 
         $foreignKeyFileTransfer->setNamespace((string)$database['namespace']);
         $foreignKeyFileTransfer->setPackage((string)$database['package']);

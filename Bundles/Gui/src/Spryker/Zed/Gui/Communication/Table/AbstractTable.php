@@ -17,6 +17,7 @@ use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -72,6 +73,11 @@ abstract class AbstractTable
     /**
      * @var string
      */
+    protected $baseUrl;
+
+    /**
+     * @var string
+     */
     protected $defaultUrl = 'table';
 
     /**
@@ -87,7 +93,7 @@ abstract class AbstractTable
     /**
      * @var string|null
      */
-    protected $tableIdentifier = null;
+    protected $tableIdentifier;
 
     /**
      * @var \Generated\Shared\Transfer\DataTablesTransfer
@@ -213,6 +219,7 @@ abstract class AbstractTable
     {
         $tableData = [];
 
+        /** @var array|null $headers */
         $headers = $this->config->getHeader();
         $safeColumns = $this->config->getRawColumns();
         $extraColumns = $this->config->getExtraColumns();
@@ -366,7 +373,7 @@ abstract class AbstractTable
      */
     private function getTwig()
     {
-        /** @var \Twig\Environment $twig */
+        /** @var \Twig\Environment|null $twig */
         $twig = (new Pimple())
             ->getApplication()['twig'];
 
@@ -453,11 +460,10 @@ abstract class AbstractTable
 
         $field = key($defaultSortField);
         $direction = $defaultSortField[$field];
-        $index = null;
 
         $availableFields = array_keys($config->getHeader());
         $index = array_search($field, $availableFields, true);
-        if ($index === null) {
+        if ($index === false) {
             return $sort;
         }
 
@@ -482,7 +488,7 @@ abstract class AbstractTable
                 continue;
             }
             $sorting[] = [
-                self::SORT_BY_COLUMN => $this->getParameter($sortingRules, self::SORT_BY_COLUMN, 0),
+                self::SORT_BY_COLUMN => $this->getParameter($sortingRules, self::SORT_BY_COLUMN, '0'),
                 self::SORT_BY_DIRECTION => $this->getParameter($sortingRules, self::SORT_BY_DIRECTION, 'asc'),
             ];
         }
@@ -534,6 +540,7 @@ abstract class AbstractTable
     public function setLimit($limit)
     {
         $this->limit = (int)$limit;
+
         return $this;
     }
 
@@ -561,6 +568,7 @@ abstract class AbstractTable
             'tableId' => $this->getTableIdentifier(),
             'class' => $this->tableClass,
             'url' => $this->defaultUrl,
+            'baseUrl' => $this->baseUrl,
             'header' => [],
         ];
 
@@ -573,7 +581,11 @@ abstract class AbstractTable
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
+                'processing' => $this->config->isProcessing(),
+                'serverSide' => $this->config->isServerSide(),
                 'stateSave' => $this->config->isStateSave(),
+                'paging' => $this->config->isPaging(),
+                'ordering' => $this->config->isOrdering(),
             ];
 
             $configArray = array_merge($configArray, $configTableArray);
@@ -654,35 +666,32 @@ abstract class AbstractTable
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0][self::SORT_BY_DIRECTION]);
         $searchTerm = $this->getSearchTerm();
+        $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';
 
-        $isFirst = true;
-
-        if (mb_strlen($searchTerm[self::PARAMETER_VALUE]) > 0) {
+        if (mb_strlen($searchValue) > 0) {
             $query->setIdentifierQuoting(true);
 
-            foreach ($config->getSearchable() as $value) {
-                if (!$isFirst) {
-                    $query->_or();
-                } else {
-                    $isFirst = false;
-                }
+            $conditions = [];
 
+            foreach ($config->getSearchable() as $value) {
                 $filter = '';
                 $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
-                // @todo fix this in CD-412
                 if ($driverName === 'pgsql') {
                     $filter = '::TEXT';
                 }
 
-                $conditionParameter = '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%';
+                $conditionParameter = '%' . mb_strtolower($searchValue) . '%';
                 $condition = sprintf(
                     'LOWER(%s%s) LIKE %s',
                     $value,
                     $filter,
                     Propel::getConnection()->quote($conditionParameter)
                 );
-                $query->where($condition);
+
+                $conditions[] = $condition;
             }
+
+            $query = $this->applyConditions($query, $config, $conditions);
 
             $this->filtered = $query->count();
         } else {
@@ -705,6 +714,29 @@ abstract class AbstractTable
         }
 
         return $data->toArray(null, false, TableMap::TYPE_COLNAME);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param string[] $conditions
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyConditions(ModelCriteria $query, TableConfiguration $config, array $conditions): ModelCriteria
+    {
+        $gluedCondition = implode(
+            sprintf(' %s ', Criteria::LOGICAL_OR),
+            $conditions
+        );
+
+        $gluedCondition = '(' . $gluedCondition . ')';
+
+        if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
+            return $query->having($gluedCondition);
+        }
+
+        return $query->where($gluedCondition);
     }
 
     /**

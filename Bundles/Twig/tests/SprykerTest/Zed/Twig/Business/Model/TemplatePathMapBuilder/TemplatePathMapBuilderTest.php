@@ -15,6 +15,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig
@@ -29,7 +30,7 @@ class TemplatePathMapBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testCanBeInstantiated()
+    public function testCanBeInstantiated(): void
     {
         $templateNameBuilder = $this->getTemplateNameBuilderMock();
         $directory = $this->getFixtureDirectory();
@@ -41,7 +42,7 @@ class TemplatePathMapBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildReturnsArray()
+    public function testBuildReturnsArray(): void
     {
         $templateNameBuilder = $this->getTemplateNameBuilderMock();
         $templateNameBuilder->expects($this->once())->method('buildTemplateName')->willReturn('@Bundle/Controller/index.twig');
@@ -66,7 +67,7 @@ class TemplatePathMapBuilderTest extends Unit
     /**
      * @return string
      */
-    protected function getFixtureDirectory()
+    protected function getFixtureDirectory(): string
     {
         return __DIR__ . '/Fixtures';
     }

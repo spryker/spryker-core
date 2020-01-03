@@ -14,11 +14,12 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Sales
@@ -32,10 +33,6 @@ class SalesFacadeTest extends Unit
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const DEFAULT_ITEM_STATE = 'test';
 
-    protected const ORDER_SEARCH_PARAMS = [
-        'orderReference' => '123',
-        'customerReference' => 'testing-customer',
-    ];
     protected const ORDER_WRONG_SEARCH_PARAMS = [
         'orderReference' => '123_wrong',
         'customerReference' => 'testing-customer-wrong',
@@ -49,7 +46,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
+    public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
@@ -82,7 +79,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrderByIdSalesOrderWhenGuestCustomerShouldNotCountOrders()
+    public function testGetOrderByIdSalesOrderWhenGuestCustomerShouldNotCountOrders(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
@@ -102,7 +99,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders()
+    public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders(): void
     {
         $salesOrderEntity = $this->tester->create();
 
@@ -120,46 +117,21 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerOrderShouldReturnGrandTotalWithDiscounts()
-    {
-        $this->markTestSkipped();
-
-        $salesOrderEntity = $this->tester->create();
-
-        $orderItemEntity = $salesOrderEntity->getItems()[0];
-
-        $orderItemDiscountEntity = new SpySalesDiscount();
-        $orderItemDiscountEntity->setAmount(50);
-        $orderItemDiscountEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
-        $orderItemDiscountEntity->setFkSalesOrderItem($orderItemEntity->getIdSalesOrderItem());
-        $orderItemDiscountEntity->setName('Discount order saver tester');
-        $orderItemDiscountEntity->setDisplayName('discount');
-        $orderItemDiscountEntity->setDescription('Description');
-        $orderItemDiscountEntity->save();
-
-        $salesFacade = $this->createSalesFacade();
-        $orderListTransfer = new OrderListTransfer();
-        $orderListTransfer = $salesFacade->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
-
-        $orderTransfer = $orderListTransfer->getOrders()[0];
-        $grandTotal = $orderTransfer->getTotals()->getGrandTotal();
-
-        $this->assertSame(1350, $grandTotal);
-    }
-
-    /**
-     * @return void
-     */
     public function testGetCustomerOrderByOrderReference(): void
     {
-        $orderEntity = $this->tester->create();
-
+        //Arrange
+        $orderEntity = $this->tester->haveSalesOrderEntity();
         $salesFacade = $this->createSalesFacade();
 
+        //Act
         $order = $salesFacade->getCustomerOrderByOrderReference(
-            $this->createOrderTransferWithParams(static::ORDER_SEARCH_PARAMS)
+            $this->createOrderTransferWithParams([
+                OrderTransfer::ORDER_REFERENCE => $orderEntity->getOrderReference(),
+                OrderTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
+            ])
         );
 
+        //Assert
         $this->assertNotNull($order);
         $this->assertSame($orderEntity->getIdSalesOrder(), $order->getIdSalesOrder());
     }
@@ -181,7 +153,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function createSalesFacade()
+    protected function createSalesFacade(): SalesFacadeInterface
     {
         return $this->tester->getLocator()->sales()->facade();
     }

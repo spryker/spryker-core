@@ -166,4 +166,14 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     {
         return $this->customerClient->setCustomer($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->customerClient->setCustomerRawData($customerTransfer);
+    }
 }

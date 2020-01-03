@@ -17,6 +17,9 @@ use Spryker\Yves\Kernel\Container;
 class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const MONITORING_SERVICE = 'monitoring service';
+    public const PLUGINS_SESSION_HANDLER = 'PLUGINS_SESSION_HANDLER';
+
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -26,6 +29,8 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addMonitoringService($container);
+        $container = $this->addSessionHandlerPlugins($container);
+        $container = $this->addSessionClient($container);
 
         return $container;
     }
@@ -44,6 +49,42 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
 
             return $sessionToMonitoringServiceBridge;
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SESSION_HANDLER, function (Container $container) {
+            return $this->getSessionHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[]
+     */
+    protected function getSessionHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
+            return $container->getLocator()->session()->client();
+        });
 
         return $container;
     }

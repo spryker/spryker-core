@@ -10,7 +10,6 @@ namespace Spryker\Zed\Oms\Dependency\Plugin\Condition;
 interface ConditionCollectionInterface
 {
     /**
-     *
      * Add new condition to list of conditions
      *
      * @api
@@ -23,7 +22,6 @@ interface ConditionCollectionInterface
     public function add($condition, $name);
 
     /**
-     *
      * Return condition from list of conditions
      *
      * @api

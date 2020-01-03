@@ -1,11 +1,13 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -104,7 +106,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         $id = $restRequest->getResource()->getId();
         $method = $restRequest->getMetadata()->getMethod();
 
-        return count($data) === 1 && ($id || $method === Request::METHOD_POST);
+        return count($data) === 1 && (($id && $id !== GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER) || $method === Request::METHOD_POST);
     }
 
     /**
@@ -124,6 +126,9 @@ class ResponseBuilder implements ResponseBuilderInterface
                 if ($resource->getId()) {
                     $link .= '/' . $resource->getId();
                 }
+
+                $link .= $this->buildQueryString($resource, $restRequest);
+
                 $resource->addLink(RestLinkInterface::LINK_SELF, $link);
             }
             $includeRelations = $currentResourceType === $resource->getType() || $this->responseRelationship->hasRelationship($resource->getType(), $restRequest);
@@ -201,17 +206,17 @@ class ResponseBuilder implements ResponseBuilderInterface
         $method = $restRequest->getMetadata()->getMethod();
         $idResource = $restRequest->getResource()->getId();
 
-        if ($method === Request::METHOD_GET && $idResource === null) {
+        if ($method === Request::METHOD_GET && ($idResource === null || $this->isCurrentUserCollectionResource($idResource))) {
             $linkParts = [];
             foreach ($restRequest->getParentResources() as $parentResource) {
                 $linkParts[] = $parentResource->getType();
                 $linkParts[] = $parentResource->getId();
             }
             $linkParts[] = $restRequest->getResource()->getType();
-            $queryString = $restRequest->getQueryString();
-            if (strlen($queryString)) {
-                $queryString = '?' . $queryString;
+            if ($this->isCurrentUserCollectionResource($idResource)) {
+                $linkParts[] = GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER;
             }
+            $queryString = $this->buildQueryString($restRequest->getResource(), $restRequest);
 
             return $this->formatLinks([
                 RestLinkInterface::LINK_SELF => implode('/', $linkParts) . $queryString,
@@ -219,6 +224,27 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function buildQueryString(RestResourceInterface $resource, RestRequestInterface $restRequest): string
+    {
+        if ($resource->getType() !== $restRequest->getResource()->getType()) {
+            return '';
+        }
+
+        $queryString = $restRequest->getQueryString();
+
+        if (mb_strlen($queryString)) {
+            $queryString = '?' . $queryString;
+        }
+
+        return $queryString;
     }
 
     /**
@@ -233,13 +259,31 @@ class ResponseBuilder implements ResponseBuilderInterface
             unset($data[RestResourceInterface::RESOURCE_RELATIONSHIPS]);
         }
 
-        if (count($restRequest->getInclude()) && array_key_exists(RestResourceInterface::RESOURCE_RELATIONSHIPS, $data)) {
+        if (!array_key_exists(RestResourceInterface::RESOURCE_RELATIONSHIPS, $data)) {
+            return $data;
+        }
+
+        if ($restRequest->getInclude()) {
             $data[RestResourceInterface::RESOURCE_RELATIONSHIPS] = array_intersect_key(
                 $data[RestResourceInterface::RESOURCE_RELATIONSHIPS],
                 $restRequest->getInclude()
             );
         }
 
+        if (!$data[RestResourceInterface::RESOURCE_RELATIONSHIPS]) {
+            unset($data[RestResourceInterface::RESOURCE_RELATIONSHIPS]);
+        }
+
         return $data;
+    }
+
+    /**
+     * @param string|null $idResource
+     *
+     * @return bool
+     */
+    protected function isCurrentUserCollectionResource(?string $idResource): bool
+    {
+        return $idResource === GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 }

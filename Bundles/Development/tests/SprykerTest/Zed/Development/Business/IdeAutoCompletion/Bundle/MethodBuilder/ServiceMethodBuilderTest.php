@@ -15,6 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -33,13 +34,13 @@ class ServiceMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMethodNameIsClient()
+    public function testMethodNameIsClient(): void
     {
         $methodBuilderMock = $this->getServiceMethodBuilderMock();
         $methodBuilderMock
             ->expects($this->any())
             ->method('findFileByName')
-            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/FooBundleServiceInterface.php', null, null));
+            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/FooBundleServiceInterface.php', 'foo', 'bar'));
 
         $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 
@@ -49,7 +50,7 @@ class ServiceMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupIsPerformedInClientApplication()
+    public function testFileLookupIsPerformedInClientApplication(): void
     {
         $methodBuilderMock = $this->getServiceMethodBuilderMock();
         $methodBuilderMock
@@ -92,7 +93,7 @@ class ServiceMethodBuilderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    protected function getBundleTransfer()
+    protected function getBundleTransfer(): IdeAutoCompletionBundleTransfer
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');

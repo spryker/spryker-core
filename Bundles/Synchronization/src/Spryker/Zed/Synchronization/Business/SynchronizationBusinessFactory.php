@@ -9,6 +9,7 @@ namespace Spryker\Zed\Synchronization\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver;
+use Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolverInterface;
 use Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter;
 use Spryker\Zed\Synchronization\Business\Export\RepositoryExporter;
 use Spryker\Zed\Synchronization\Business\Message\BulkQueueMessageProcessor;
@@ -74,9 +75,9 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver
+     * @return \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolverInterface
      */
-    public function createExporterPluginResolver()
+    public function createExporterPluginResolver(): ExporterPluginResolverInterface
     {
         return new ExporterPluginResolver(
             $this->getSynchronizationDataPlugins(),
@@ -132,7 +133,9 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createQueueMessageCreator()
     {
-        return new QueueMessageCreator();
+        return new QueueMessageCreator(
+            $this->getUtilEncodingService()
+        );
     }
 
     /**

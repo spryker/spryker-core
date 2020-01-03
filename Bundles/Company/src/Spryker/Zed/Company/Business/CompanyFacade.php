@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -76,7 +76,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,5 +99,21 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     public function findCompanyById(int $idCompany): ?CompanyTransfer
     {
         return $this->getRepository()->findCompanyById($idCompany);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        return $this->getFactory()->createCompanyReader()->findCompanyByUuid($companyTransfer);
     }
 }

@@ -52,7 +52,6 @@ class UserUpdateForm extends UserForm
 
         $builder->add(self::FIELD_STATUS, ChoiceType::class, [
             'choices' => array_flip($options[self::OPTION_STATUS_CHOICES]),
-            'choices_as_values' => true,
         ]);
     }
 

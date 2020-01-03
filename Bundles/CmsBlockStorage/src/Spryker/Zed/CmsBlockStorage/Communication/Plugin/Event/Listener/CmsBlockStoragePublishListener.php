@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
@@ -19,22 +18,19 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CmsBlockStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $eventTransfers
-     * @param string $eventName
-     *
-     * @return void
-     */
-    public function handleBulk(array $eventTransfers, $eventName)
+     /**
+      * {@inheritDoc}
+      *
+      * @api
+      *
+      * @param array $eventTransfers
+      * @param string $eventName
+      *
+      * @return void
+      */
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->preventTransaction();
-        $cmsBlockIds = $this->getFactory()->getEventBehaviourFacade()->getEventTransferIds($eventTransfers);
+        $cmsBlockIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         $this->getFacade()->publish($cmsBlockIds);
     }

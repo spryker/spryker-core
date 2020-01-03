@@ -161,6 +161,7 @@ class CmsGlossaryTable extends AbstractTable
             CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
             'placeholder' => $placeholder,
         ]);
+
         return '<a href="' . $url . '" class="btn btn-xs btn-white">Add Glossary</a>';
     }
 

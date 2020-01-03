@@ -104,22 +104,13 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      * @param int $idProductOptionGroup
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
-     *
      * @return bool
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive)
     {
         $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
 
-        if (!$productOptionGroupEntity) {
-            throw new ProductOptionGroupNotFoundException(
-                sprintf('Product option group with id "%d" not found', $idProductOptionGroup)
-            );
-        }
-
         $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
-
         $productOptionGroupEntity->setActive($isActive);
 
         return $productOptionGroupEntity->save() > 0;
@@ -128,13 +119,21 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     /**
      * @param int $idProductOptionGroup
      *
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function getOptionGroupById($idProductOptionGroup)
+    protected function getOptionGroupById($idProductOptionGroup): SpyProductOptionGroup
     {
         $productOptionGroupEntity = $this->productOptionQueryContainer
             ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
+
+        if (!$productOptionGroupEntity) {
+            throw new ProductOptionGroupNotFoundException(
+                sprintf('Product Option Group with id "%d" not found', $idProductOptionGroup)
+            );
+        }
 
         return $productOptionGroupEntity;
     }

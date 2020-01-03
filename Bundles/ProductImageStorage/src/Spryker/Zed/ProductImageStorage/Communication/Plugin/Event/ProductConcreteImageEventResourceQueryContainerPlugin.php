@@ -23,7 +23,7 @@ use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
     {
         $query = $this->getQueryContainer()->queryProductIdsByProductImageSetToProductImageIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
             $query->clearSelectColumns();
             $query->innerJoinSpyProductImageSet();
@@ -57,7 +57,7 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -35,7 +35,7 @@ class Transition implements TransitionInterface
     protected $target;
 
     /**
-     * @param mixed $happy
+     * @param bool $happy
      *
      * @return void
      */

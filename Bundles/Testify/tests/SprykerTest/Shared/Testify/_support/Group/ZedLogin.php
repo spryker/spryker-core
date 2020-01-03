@@ -13,6 +13,9 @@ use Codeception\GroupObject;
 
 class ZedLogin extends GroupObject
 {
+    /**
+     * @var string
+     */
     public static $group = 'ZedLogin';
 
     /**
@@ -20,7 +23,7 @@ class ZedLogin extends GroupObject
      *
      * @return void
      */
-    public function _before(TestEvent $e)
+    public function _before(TestEvent $e): void
     {
         $this->getZedModule()->amZed();
         $this->getZedModule()->amLoggedInUser();
@@ -29,7 +32,7 @@ class ZedLogin extends GroupObject
     /**
      * @return \Application\Module\Zed
      */
-    protected function getZedModule()
+    protected function getZedModule(): Zed
     {
         return $this->getModule('\\' . Zed::class);
     }

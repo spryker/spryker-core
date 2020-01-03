@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected static $functionName = 'spyCurrencySwitch';
 
     /**
@@ -105,6 +108,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
         if (!$currentCurrencyIsoCode) {
             return $this->getFactory()->getStore()->getCurrencyIsoCode();
         }
+
         return $currentCurrencyIsoCode;
     }
 }

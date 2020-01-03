@@ -21,7 +21,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusinessUnitClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +38,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +89,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -119,5 +119,23 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
         return $this->getFactory()
             ->createZedCompanyBusinessUnitStub()
             ->getCustomerCompanyBusinessUnitTree($customerTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->findCompanyBusinessUnitByUuid($companyBusinessUnitTransfer);
     }
 }

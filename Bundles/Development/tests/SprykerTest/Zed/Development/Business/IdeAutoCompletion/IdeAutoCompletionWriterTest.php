@@ -14,10 +14,13 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionCo
 use Spryker\Zed\Development\DevelopmentConfig;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use SprykerTest\Zed\Development\DevelopmentBusinessTester;
 use SprykerTest\Zed\Development\Helper\IdeAutoCompletion;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -36,11 +39,11 @@ class IdeAutoCompletionWriterTest extends Unit
     /**
      * @return void
      */
-    public function testWriterCreatesYvesAutoCompletionFiles()
+    public function testWriterCreatesYvesAutoCompletionFiles(): void
     {
         $tester = $this->createFunctionalTester();
 
-        $tester->execute(function () {
+        $tester->execute(function (): void {
             $this
                 ->getDevelopmentBusinessFactory()
                 ->createYvesIdeAutoCompletionWriter()
@@ -48,17 +51,20 @@ class IdeAutoCompletionWriterTest extends Unit
         });
 
         $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
-        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
+        $finder = new Finder();
+        $finder->in(IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
+
+        $this->assertTrue($finder->count() > 1);
     }
 
     /**
      * @return void
      */
-    public function testWriterCreatesZedAutoCompletionFiles()
+    public function testWriterCreatesZedAutoCompletionFiles(): void
     {
         $tester = $this->createFunctionalTester();
 
-        $tester->execute(function () {
+        $tester->execute(function (): void {
             $this
                 ->getDevelopmentBusinessFactory()
                 ->createZedIdeAutoCompletionWriter()
@@ -66,17 +72,21 @@ class IdeAutoCompletionWriterTest extends Unit
         });
 
         $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
-        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
+
+        $finder = new Finder();
+        $finder->in(IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
+
+        $this->assertTrue($finder->count() > 1);
     }
 
     /**
      * @return void
      */
-    public function testWriterCreatesClientAutoCompletionFiles()
+    public function testWriterCreatesClientAutoCompletionFiles(): void
     {
         $tester = $this->createFunctionalTester();
 
-        $tester->execute(function () {
+        $tester->execute(function (): void {
             $this
                 ->getDevelopmentBusinessFactory()
                 ->createClientIdeAutoCompletionWriter()
@@ -84,17 +94,21 @@ class IdeAutoCompletionWriterTest extends Unit
         });
 
         $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
-        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
+
+        $finder = new Finder();
+        $finder->in(IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
+
+        $this->assertTrue($finder->count() > 1);
     }
 
     /**
      * @return void
      */
-    public function testWriterCreatesServiceAutoCompletionFiles()
+    public function testWriterCreatesServiceAutoCompletionFiles(): void
     {
         $tester = $this->createFunctionalTester();
 
-        $tester->execute(function () {
+        $tester->execute(function (): void {
             $this
                 ->getDevelopmentBusinessFactory()
                 ->createServiceIdeAutoCompletionWriter()
@@ -102,13 +116,12 @@ class IdeAutoCompletionWriterTest extends Unit
         });
 
         $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Service/Ide/');
-        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Service/Ide/');
     }
 
     /**
      * @return \SprykerTest\Zed\Development\DevelopmentBusinessTester
      */
-    protected function createFunctionalTester()
+    protected function createFunctionalTester(): DevelopmentBusinessTester
     {
         return $this->tester;
     }
@@ -116,7 +129,7 @@ class IdeAutoCompletionWriterTest extends Unit
     /**
      * @return \Spryker\Zed\Development\Business\DevelopmentBusinessFactory
      */
-    protected function getDevelopmentBusinessFactory()
+    protected function getDevelopmentBusinessFactory(): DevelopmentBusinessFactory
     {
         $container = new Container();
         $dependencyProvider = new DevelopmentDependencyProvider();

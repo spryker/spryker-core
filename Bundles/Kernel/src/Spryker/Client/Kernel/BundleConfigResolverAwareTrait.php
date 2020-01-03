@@ -31,7 +31,7 @@ trait BundleConfigResolverAwareTrait
     /**
      * @return \Spryker\Client\Kernel\AbstractBundleConfig
      */
-    protected function getConfig()
+    public function getConfig()
     {
         if ($this->config === null) {
             $this->config = $this->resolveBundleConfig();

@@ -19,12 +19,11 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
  * @method \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface getRepository()
- *
  */
 class OauthFacade extends AbstractFacade implements OauthFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +37,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +51,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,9 +65,11 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
      *
@@ -80,7 +81,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +95,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -108,7 +109,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -119,5 +120,19 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     public function getScopesByIdentifiers(array $customerScopes): array
     {
         return $this->getFactory()->createOauthScopeReader()->getScopesByIdentifiers($customerScopes);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installOauthClient(): void
+    {
+        $this->getFactory()
+            ->createOauthClientInstaller()
+            ->install();
     }
 }

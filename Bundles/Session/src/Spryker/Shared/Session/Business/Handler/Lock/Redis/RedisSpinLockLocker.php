@@ -11,6 +11,9 @@ use Predis\Client;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface;
 use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
+/**
+ * @deprecated Use `Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker` instead.
+ */
 class RedisSpinLockLocker implements SessionLockerInterface
 {
     public const KEY_SUFFIX = ':lock';
@@ -89,10 +92,10 @@ class RedisSpinLockLocker implements SessionLockerInterface
      *
      * @return int
      */
-    protected function getTimeoutMilliseconds($timeoutMilliseconds)
+    protected function getTimeoutMilliseconds($timeoutMilliseconds): int
     {
-        if ((int)$timeoutMilliseconds) {
-            return (int)$timeoutMilliseconds;
+        if ($timeoutMilliseconds) {
+            return $timeoutMilliseconds;
         }
 
         return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_TIMEOUT_MILLISECONDS, 0.8);

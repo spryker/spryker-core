@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -75,8 +77,8 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Checks if items which being added to cart is available, for bundle it checks bundled items.
-     * - Even if same item added separately from bundle availability is checked together.
+     * - Checks if bundle product bundled items are available.
+     * - If bundled products are added separately, it gets checked together with bundled products.
      * - Sets error message if not available.
      *
      * @api
@@ -236,6 +238,19 @@ interface ProductBundleFacadeInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete);
+
+    /**
+     * Specification:
+     * - Gets bundle product collection by criteria filter.
+     * - Returns bundle product collection with all bundle products if Criteria Filter is empty.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer;
 
     /**
      * Specification:

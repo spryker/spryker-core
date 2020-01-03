@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Customer;
 
+use Spryker\Client\Customer\Exception\MissingAccessTokenAuthenticationHandlerPluginException;
+use Spryker\Client\CustomerExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -22,6 +24,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_CUSTOMER_SESSION_SET = 'PLUGINS_CUSTOMER_SESSION_SET';
     public const PLUGINS_DEFAULT_ADDRESS_CHANGE = 'PLUGINS_DEFAULT_ADDRESS_CHANGE';
     public const PLUGINS_CUSTOMER_SECURED_PATTERN_RULE = 'PLUGINS_CUSTOMER_SECURED_PATTERN_RULE';
+    public const PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER = 'PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -36,6 +39,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCustomerSessionGetPlugins($container);
         $container = $this->addCustomerSessionSetPlugins($container);
         $container = $this->addCustomerSecuredPatternRulePlugins($container);
+        $container = $this->addAccessTokenAuthenticationHandlerPlugin($container);
 
         return $container;
     }
@@ -154,5 +158,35 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addAccessTokenAuthenticationHandlerPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER] = function () {
+            return $this->getAccessTokenAuthenticationHandlerPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Client\Customer\Exception\MissingAccessTokenAuthenticationHandlerPluginException
+     *
+     * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface
+     */
+    protected function getAccessTokenAuthenticationHandlerPlugin(): AccessTokenAuthenticationHandlerPluginInterface
+    {
+        throw new MissingAccessTokenAuthenticationHandlerPluginException(
+            sprintf(
+                "Missing instance of %s! You need to configure an access token authentication handler plugin 
+                      in your own CustomerDependencyProvider::getAccessTokenAuthenticationHandlerPlugin() to allow retrieve customer by access token.",
+                AccessTokenAuthenticationHandlerPluginInterface::class
+            )
+        );
     }
 }

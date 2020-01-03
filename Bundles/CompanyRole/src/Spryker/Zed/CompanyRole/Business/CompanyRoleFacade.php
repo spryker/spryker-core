@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,7 +104,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -117,7 +117,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -132,7 +132,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -148,7 +148,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -164,7 +164,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -179,7 +179,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -195,7 +195,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -209,7 +209,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -225,7 +225,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -239,7 +239,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -253,7 +253,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -268,7 +268,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -280,5 +280,21 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     {
         return $this->getRepository()
             ->findCompanyRoleById($companyRoleTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        return $this->getFactory()->createCompanyRoleReader()->findCompanyRoleByUuid($companyRoleTransfer);
     }
 }

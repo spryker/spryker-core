@@ -54,7 +54,9 @@
             'idProductAbstract': idProductAbstract,
             'bundledProductTable' : bundledProductTable,
             'currentProduct' : currentProduct,
-            'priceDimension': priceDimension
+            'priceDimension': priceDimension,
+            'priceTypeTabs': priceTypeTabs | default(null),
+            'tablesByPriceType': tablesByPriceType | default([]),
         }) }}
 
     {{ form_end(form) }}
@@ -63,10 +65,10 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-productmanagement-main.css" />
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-productmanagement-main.css') }}" />
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-productmanagement-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-productmanagement-main.js') }}"></script>
 {% endblock %}

@@ -18,7 +18,7 @@
                 for company <b>"{{ companyUser.company.name }}"</b>,
                 business unit <b>"{{ companyUser.companyBusinessUnit.name }}"</b>
             </p>
-            <p>It will be deleted from everywhere</p>
+            <p>{{ 'The Company User and all related data will be deleted permanently.' | trans }}</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
                 <a href="{{ url(

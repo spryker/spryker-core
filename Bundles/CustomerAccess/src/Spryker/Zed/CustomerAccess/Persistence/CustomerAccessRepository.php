@@ -17,9 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CustomerAccessRepository extends AbstractRepository implements CustomerAccessRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param string $contentType
      *
@@ -42,9 +40,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
@@ -61,9 +57,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
@@ -80,9 +74,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */

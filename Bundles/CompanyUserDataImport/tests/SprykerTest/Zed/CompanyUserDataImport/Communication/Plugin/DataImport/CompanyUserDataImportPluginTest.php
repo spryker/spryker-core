@@ -18,6 +18,7 @@ use Spryker\Zed\CompanyUserDataImport\CompanyUserDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyUserDataImport
@@ -43,8 +44,9 @@ class CompanyUserDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->truncateCompanyUsers();
-        $this->tester->assertCompanyUserTableIsEmtpy();
+        // Arrange
+        $this->tester->truncateCompanyUsers(['ComUser--1', 'ComUser--2']);
+        $this->tester->assertCompanyUserTableDoesNotContainsRecords(['ComUser--1', 'ComUser--2']);
         $this->prepareTestData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -53,24 +55,25 @@ class CompanyUserDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
+        // Act
         $dataImportPlugin = new CompanyUserDataImportPlugin();
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
-
-        $this->tester->assertCompanyUserTableHasRecords();
+        $this->tester->assertCompanyUserTableContainRecords(['ComUser--1', 'ComUser--2']);
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     *
      * @return void
      */
     public function testImportWithInvalidDataThrowsException(): void
     {
-        $this->tester->truncateCompanyUsers();
-        $this->tester->assertCompanyUserTableIsEmtpy();
+        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
+        // Arrange
+        $this->tester->truncateCompanyUsers(['ComUser--1', 'ComUser--2']);
+        $this->tester->assertCompanyUserTableDoesNotContainsRecords(['ComUser--1', 'ComUser--2']);
         $this->prepareTestData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -80,13 +83,14 @@ class CompanyUserDataImportPluginTest extends Unit
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
+        // Act
         $dataImportPlugin = new CompanyUserDataImportPlugin();
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
-
-        $this->tester->assertCompanyUserTableHasRecords();
+        $this->tester->assertCompanyUserTableContainRecords(['ComUser--1', 'ComUser--2']);
     }
 
     /**
@@ -103,15 +107,15 @@ class CompanyUserDataImportPluginTest extends Unit
      */
     protected function prepareTestData(): void
     {
-        $this->tester->haveCustomer([
+        $this->tester->createCustomerPreservingCustomerReference([
             CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE_1,
         ]);
 
-        $this->tester->haveCustomer([
+        $this->tester->createCustomerPreservingCustomerReference([
             CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE_2,
         ]);
 
-        $companyTransfer = $this->tester->haveCompany([
+        $this->tester->haveCompany([
             CompanyTransfer::KEY => static::COMPANY_KEY,
         ]);
     }

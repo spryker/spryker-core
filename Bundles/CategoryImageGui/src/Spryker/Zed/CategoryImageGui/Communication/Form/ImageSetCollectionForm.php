@@ -22,6 +22,7 @@ class ImageSetCollectionForm extends AbstractType
 {
     public const OPTION_LOCALES = 'locales';
     public const OPTION_IS_RENDERED = 'is_rendered';
+    public const OPTION_REQUIRED = 'required';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -46,6 +47,7 @@ class ImageSetCollectionForm extends AbstractType
         ]);
         $resolver->setDefaults([
             static::OPTION_IS_RENDERED => true,
+            static::OPTION_REQUIRED => false,
         ]);
     }
 

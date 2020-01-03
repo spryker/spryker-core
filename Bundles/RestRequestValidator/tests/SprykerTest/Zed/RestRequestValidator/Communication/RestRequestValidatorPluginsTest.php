@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group RestRequestValidator
@@ -271,6 +272,7 @@ class RestRequestValidatorPluginsTest extends Unit
             $this->createMockStoreClient($storeName),
             $mockConfig
         );
+
         return $mockConfigReader;
     }
 

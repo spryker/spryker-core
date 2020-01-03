@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -43,7 +44,6 @@ class ResponseRelationship implements ResponseRelationshipInterface
         RestRequestInterface $restRequest,
         ?string $parentResourceId = null
     ): void {
-
         if (!$this->canLoadResource($resourceName, $restRequest, $parentResourceId)) {
             return;
         }
@@ -90,7 +90,6 @@ class ResponseRelationship implements ResponseRelationshipInterface
         RestRequestInterface $restRequest,
         array &$included
     ): void {
-
         /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources */
         foreach ($resourceRelationships as $resourceType => $resources) {
             if (!$this->hasRelationship($resourceType, $restRequest)) {
@@ -120,6 +119,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
         }
 
         $includes = $restRequest->getInclude();
+
         return ($includes && isset($includes[$resourceType])) || (!$includes && !$restRequest->getExcludeRelationship());
     }
 
@@ -157,6 +157,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
         ?string $parentResourceId = null
     ): bool {
         $resourceIndex = $resourceType . $parentResourceId;
+
         return !isset($this->alreadyLoadedResources[$resourceIndex]) && $restRequest->getExcludeRelationship() === false;
     }
 }

@@ -76,6 +76,7 @@ class ScopeRepository implements ScopeRepositoryInterface
     ) {
         $oauthScopeRequestTransfer = $this->mapOauthScopeRequestTransfer($scopes, $grantType, $clientEntity, $userIdentifier);
         $providedScopes = $this->getProvidedScopes($oauthScopeRequestTransfer);
+
         return $this->mapScopeEntities($providedScopes);
     }
 
@@ -93,7 +94,6 @@ class ScopeRepository implements ScopeRepositoryInterface
         ClientEntityInterface $clientEntity,
         ?string $userIdentifier = null
     ): OauthScopeRequestTransfer {
-
         $oauthScopeRequestTransfer = (new OauthScopeRequestTransfer())
             ->setGrantType($grantType)
             ->setClientId($clientEntity->getIdentifier())
@@ -125,9 +125,10 @@ class ScopeRepository implements ScopeRepositoryInterface
                 continue;
             }
 
-            $providedScopes = $scopeProviderPlugin->getScopes($oauthScopeRequestTransfer);
+            $providedScopes[] = $scopeProviderPlugin->getScopes($oauthScopeRequestTransfer);
         }
-        return $providedScopes;
+
+        return $providedScopes ? array_merge(...$providedScopes) : [];
     }
 
     /**
@@ -143,6 +144,7 @@ class ScopeRepository implements ScopeRepositoryInterface
             $scope->setIdentifier($oauthScopeTransfer->getIdentifier());
             $scopes[] = $scope;
         }
+
         return $scopes;
     }
 }

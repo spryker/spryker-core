@@ -172,7 +172,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
         return new BufferHandler(
             $this->createStreamHandler(),
             $this->getConfig()->getBufferLimit(),
-            Logger::ERROR,
+            $this->getConfig()->getLogLevel(),
             $this->getConfig()->getIsBubble(),
             $this->getConfig()->getIsFlushOnOverflow()
         );

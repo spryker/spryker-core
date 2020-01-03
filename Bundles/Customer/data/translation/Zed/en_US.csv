@@ -36,8 +36,8 @@ Salutation,Salutation
 Save,Save
 "Select one","Select one"
 "Send password token through email","Send password token through email"
-"Send password token through email","Send password token through email"
 View,View
 "View Customer","View Customer"
 "Zed Account Reference","Zed Account Reference"
 ZipCode,ZipCode
+"Customer with id `%s` does not exist","Customer with id `%s` doesn't exist"

@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CompanyByCompanyUserResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Adds company resource as relationship.
      *  - Requires CompanyUserTransfer be provided in resource payload.
      *
@@ -32,12 +32,12 @@ class CompanyByCompanyUserResourceRelationshipPlugin extends AbstractPlugin impl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCompanyResourceRelationshipExpander()
+            ->createCompanyByCompanyUserResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

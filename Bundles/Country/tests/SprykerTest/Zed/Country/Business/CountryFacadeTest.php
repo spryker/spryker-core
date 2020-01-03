@@ -8,7 +8,10 @@
 namespace SprykerTest\Zed\Country\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\CountryCollectionBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyRegion;
@@ -19,6 +22,7 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Country
@@ -31,6 +35,8 @@ class CountryFacadeTest extends Unit
 {
     public const ISO2_CODE = 'qx';
     public const ISO3_CODE = 'qxz';
+
+    protected const ISO2_COUNTRY_DE = 'DE';
 
     /**
      * @var \Spryker\Zed\Country\Business\CountryFacade
@@ -50,7 +56,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -59,9 +65,9 @@ class CountryFacadeTest extends Unit
     }
 
     /**
-     * @return \Psr\Log\LoggerInterface
+     * @return \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockLogger()
+    protected function getMockLogger(): LoggerInterface
     {
         return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
@@ -69,7 +75,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetIdByIso2CodeReturnsRightValue()
+    public function testGetIdByIso2CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);
@@ -82,7 +88,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountryByIso2CodeReturnsRightValue()
+    public function testGetCountryByIso2CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);
@@ -99,7 +105,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountryByIso3CodeReturnsRightValue()
+    public function testGetCountryByIso3CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);
@@ -116,7 +122,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountryByIso3CodeReturnsException()
+    public function testGetCountryByIso3CodeReturnsException(): void
     {
         $this->expectException(MissingCountryException::class);
         $this->countryFacade->getCountryByIso3Code(self::ISO3_CODE);
@@ -125,7 +131,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountryByIso2CodeReturnsException()
+    public function testGetCountryByIso2CodeReturnsException(): void
     {
         $this->expectException(MissingCountryException::class);
         $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
@@ -134,7 +140,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountriesByCountryIso2CodesReturnsRightValue()
+    public function testGetCountriesByCountryIso2CodesReturnsRightValue(): void
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);
@@ -153,5 +159,57 @@ class CountryFacadeTest extends Unit
         $countryTransfer = $this->countryFacade->findCountriesByIso2Codes($countryCollectionTransfer);
 
         $this->assertEquals('TS', $countryTransfer->getCountries()[0]->getRegions()[0]->getIso2Code());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountryFacadeWillValidateCountryCheckoutWithoutErrors(): void
+    {
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithIso2Codes();
+        $checkoutResponseTransfer = $this->countryFacade->validateCountryCheckoutData($checkoutDataTransfer);
+
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertEquals(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountryFacadeWillValidateCountryCheckoutWithErrors(): void
+    {
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithOutIso2Codes();
+        $checkoutResponseTransfer = $this->countryFacade->validateCountryCheckoutData($checkoutDataTransfer);
+
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertGreaterThan(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     */
+    protected function prepareCheckoutDataTransferWithIso2Codes(): CheckoutDataTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withBillingAddress(['billingAddress' => (new AddressTransfer())->setIso2Code(static::ISO2_COUNTRY_DE)])
+            ->withShippingAddress(['shippingAddress' => (new AddressTransfer())->setIso2Code(static::ISO2_COUNTRY_DE)])
+            ->build();
+
+        return $checkoutDataTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     */
+    protected function prepareCheckoutDataTransferWithOutIso2Codes(): CheckoutDataTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withBillingAddress(['billingAddress' => new AddressTransfer()])
+            ->withShippingAddress(['shippingAddress' => new AddressTransfer()])
+            ->build();
+
+        return $checkoutDataTransfer;
     }
 }

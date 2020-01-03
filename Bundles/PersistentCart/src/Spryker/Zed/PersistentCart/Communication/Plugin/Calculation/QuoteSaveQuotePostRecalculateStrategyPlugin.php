@@ -14,7 +14,7 @@ use Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePlugi
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacade getFacade()
+ * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacadeInterface getFacade()
  * @method \Spryker\Zed\PersistentCart\Communication\PersistentCartCommunicationFactory getFactory()
  * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
  */
@@ -26,7 +26,7 @@ class QuoteSaveQuotePostRecalculateStrategyPlugin extends AbstractPlugin impleme
     protected const STORAGE_STRATEGY_DATABASE = 'database';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Saves quote attributes described in QuoteUpdateRequestAttributesTransfer to database.
      *
      * @api
@@ -44,7 +44,7 @@ class QuoteSaveQuotePostRecalculateStrategyPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns false if quote does't have ID.
      * - Returns true if `DatabaseStorageStrategy` is enabled.
      * - Returns false if `DatabaseStorageStrategy` is disabled.

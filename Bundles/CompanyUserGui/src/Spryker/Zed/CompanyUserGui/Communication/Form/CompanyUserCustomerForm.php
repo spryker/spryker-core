@@ -125,7 +125,6 @@ class CompanyUserCustomerForm extends AbstractType
             'label' => 'Salutation',
             'placeholder' => 'Select one',
             'choices' => $choices,
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -174,7 +173,6 @@ class CompanyUserCustomerForm extends AbstractType
             'label' => 'Gender',
             'placeholder' => 'Select one',
             'choices' => $choices,
-            'choices_as_values' => true,
             'constraints' => [
                 new Required(),
             ],

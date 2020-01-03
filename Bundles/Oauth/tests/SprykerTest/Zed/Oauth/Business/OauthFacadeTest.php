@@ -24,6 +24,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterfac
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oauth
@@ -42,7 +43,7 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -312,6 +313,7 @@ class OauthFacadeTest extends Unit
             ->setClientSecret('abc123')
             ->setUsername('spencor.hopkin@spryker.com')
             ->setPassword('change123');
+
         return $oauthRequestTransfer;
     }
 }

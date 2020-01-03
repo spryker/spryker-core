@@ -7,12 +7,15 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface` instead.
+ */
 interface QueryBuilderInterface
 {
     /**
      * @param string $fieldName
-     * @param float|null $minValue
-     * @param float|null $maxValue
+     * @param string|null $minValue
+     * @param string|null $maxValue
      * @param string $greaterParam
      * @param string $lessParam
      *

@@ -70,7 +70,6 @@ class CustomerCompanyAttachForm extends AbstractType
             'label' => 'Company',
             'placeholder' => 'Company name',
             'choices' => $choices,
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
                 new GreaterThan([

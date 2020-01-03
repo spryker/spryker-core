@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductQuantity\Business\Model;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductQuantityReaderInterface
 {
     /**
@@ -27,4 +29,11 @@ interface ProductQuantityReaderInterface
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
     public function findProductQuantityTransfers(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array;
 }

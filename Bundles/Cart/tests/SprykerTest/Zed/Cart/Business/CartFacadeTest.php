@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cart
@@ -47,7 +48,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -66,9 +67,8 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddToCart()
+    public function testAddToCart(): void
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE2, but it does not exist');
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
@@ -86,7 +86,7 @@ class CartFacadeTest extends Unit
         $cartChange->setQuote($quoteTransfer);
         $cartChange->addItem($newItem);
 
-        $changedCart = $this->cartFacade->addToCart($cartChange);
+        $changedCart = $this->cartFacade->add($cartChange);
 
         $this->assertCount(2, $changedCart->getItems());
 
@@ -105,45 +105,8 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIncreaseCartQuantity()
+    public function testRemoveFromCart(): void
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE1, but it does not exist');
-        $quoteTransfer = new QuoteTransfer();
-        $cartItem = new ItemTransfer();
-        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $cartItem->setQuantity(3);
-        $cartItem->setUnitGrossPrice(1);
-
-        $quoteTransfer->addItem($cartItem);
-
-        $newItem = new ItemTransfer();
-        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $newItem->setQuantity(1);
-        $newItem->setUnitGrossPrice(1);
-
-        $cartChange = new CartChangeTransfer();
-        $cartChange->setQuote($quoteTransfer);
-        $cartChange->addItem($newItem);
-
-        $changedCart = $this->cartFacade->increaseQuantity($cartChange);
-        $cartItems = $changedCart->getItems();
-        $this->assertCount(2, $cartItems);
-
-        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
-        $changedItem = $cartItems[1];
-        $this->assertEquals(3, $changedItem->getQuantity());
-
-        $changedItem = $cartItems[2];
-        $this->assertEquals(1, $changedItem->getQuantity());
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemoveFromCart()
-    {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE2, but it does not exist');
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
         $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
@@ -163,40 +126,9 @@ class CartFacadeTest extends Unit
         $cartChange->setQuote($quoteTransfer);
         $cartChange->addItem($newItem);
 
-        $changedCart = $this->cartFacade->removeFromCart($cartChange);
+        $changedCart = $this->cartFacade->remove($cartChange);
 
         $this->assertCount(0, $changedCart->getItems());
-    }
-
-    /**
-     * @return void
-     */
-    public function testDecreaseCartItem()
-    {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE1, but it does not exist');
-        $quoteTransfer = new QuoteTransfer();
-        $cartItem = new ItemTransfer();
-        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $cartItem->setQuantity(3);
-        $cartItem->setUnitGrossPrice(1);
-
-        $quoteTransfer->addItem($cartItem);
-
-        $newItem = new ItemTransfer();
-        $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $newItem->setQuantity(1);
-        $newItem->setUnitGrossPrice(1);
-
-        $cartChange = new CartChangeTransfer();
-        $cartChange->setQuote($quoteTransfer);
-        $cartChange->addItem($newItem);
-
-        $changedCart = $this->cartFacade->decreaseQuantity($cartChange);
-        $cartItems = $changedCart->getItems();
-        $this->assertCount(1, $cartItems);
-        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
-        $changedItem = $cartItems[0];
-        $this->assertEquals(2, $changedItem->getQuantity());
     }
 
     /**
@@ -249,7 +181,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setTestData()
+    protected function setTestData(): void
     {
         $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();
         $defaultPriceType->setName(self::PRICE_TYPE_DEFAULT)->save();

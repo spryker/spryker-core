@@ -7,64 +7,45 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CartItemUpdater implements CartItemUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $cartClient;
+    protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $cartRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
-    protected $zedRequestClient;
+    protected $customerExpanderPlugins;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
-     */
-    protected $quoteClient;
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
-     */
-    protected $cartReader;
-
-    /**
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface $cartClient
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
-        CartsRestApiToCartClientInterface $cartClient,
-        RestResourceBuilderInterface $restResourceBuilder,
-        CartsRestApiToZedRequestClientInterface $zedRequestClient,
-        CartsRestApiToQuoteClientInterface $quoteClient,
-        CartReaderInterface $cartReader
+        CartsRestApiClientInterface $cartsRestApiClient,
+        CartRestResponseBuilderInterface $cartRestResponseBuilder,
+        array $customerExpanderPlugins
     ) {
-        $this->cartClient = $cartClient;
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->zedRequestClient = $zedRequestClient;
-        $this->quoteClient = $quoteClient;
-        $this->cartReader = $cartReader;
+        $this->cartsRestApiClient = $cartsRestApiClient;
+        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
+        $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
 
     /**
@@ -77,57 +58,18 @@ class CartItemUpdater implements CartItemUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $sku = '';
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $cartItemRequestTransfer = $this->createCartItemRequestTransfer($restRequest, $restCartItemsAttributesTransfer);
 
-        $idCart = $this->findCartIdentifier($restRequest);
-        $itemIdentifier = $restRequest->getResource()->getId();
-        if ($this->isRequestValid($idCart, $itemIdentifier)) {
-            return $this->createMissingRequiredParameterError();
-        }
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateItemQuantity($cartItemRequestTransfer);
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartNotFoundError();
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
-            return $this->createCartItemNotFoundError();
-        }
-
-        $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        $quoteTransfer = $this->cartClient->changeItemQuantity(
-            $sku,
-            $itemIdentifier,
-            $restCartItemsAttributesTransfer->getQuantity()
+        return $this->cartRestResponseBuilder->createCartRestResponse(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restRequest->getMetadata()->getLocale()
         );
-
-        $errors = $this->zedRequestClient->getLastResponseErrorMessages();
-        if (count($errors) > 0) {
-            return $this->returnWithError($errors, $restResponse);
-        }
-
-        return $this->cartReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function returnWithError(array $errors, RestResponseInterface $restResponse): RestResponseInterface
-    {
-        foreach ($errors as $messageTransfer) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail($messageTransfer->getValue());
-
-            $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        return $restResponse;
     }
 
     /**
@@ -146,52 +88,41 @@ class CartItemUpdater implements CartItemUpdaterInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartNotFoundError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartItemNotFoundError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createMissingRequiredParameterError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param string|null $idCart
-     * @param string|null $itemIdentifier
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function isRequestValid(?string $idCart, ?string $itemIdentifier): bool
+    protected function executeCustomerExpanderPlugins(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
     {
-        return ($idCart === null || $itemIdentifier === null);
+        foreach ($this->customerExpanderPlugins as $customerExpanderPlugin) {
+            $customerTransfer = $customerExpanderPlugin->expand($customerTransfer, $restRequest);
+        }
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    protected function createCartItemRequestTransfer(
+        RestRequestInterface $restRequest,
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+    ): CartItemRequestTransfer {
+        $uuidQuote = $this->findCartIdentifier($restRequest);
+        $itemIdentifier = $restRequest->getResource()->getId();
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
+
+        return (new CartItemRequestTransfer())
+            ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
+            ->setQuoteUuid($uuidQuote)
+            ->setSku($itemIdentifier)
+            ->setCustomer($customerTransfer);
     }
 }

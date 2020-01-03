@@ -19,6 +19,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const PLUGINS_POST_PRODUCT_DISCONTINUE = 'PLUGINS_POST_PRODUCT_DISCONTINUE';
     public const PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED = 'PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED';
+    public const PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK = 'PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +33,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addProductFacade($container);
         $container = $this->addPostProductDiscontinuePlugins($container);
         $container = $this->addPostDeleteProductDiscontinuedPlugins($container);
+        $container = $this->addProductDiscontinuedPreDeleteCheckPlugins($container);
 
         return $container;
     }
@@ -79,6 +81,20 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductDiscontinuedPreDeleteCheckPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK] = function () {
+            return $this->getProductDiscontinuedPreDeleteCheckPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
      */
     protected function getPostProductDiscontinuePlugins(): array
@@ -90,6 +106,14 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[]
      */
     protected function getPostDeleteProductDiscontinuedPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[]
+     */
+    protected function getProductDiscontinuedPreDeleteCheckPlugins(): array
     {
         return [];
     }

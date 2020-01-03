@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 
 interface ProductCartConnectorToProductInterface
 {
@@ -20,6 +21,8 @@ interface ProductCartConnectorToProductInterface
     public function getProductConcrete($concreteSku);
 
     /**
+     * @deprecated Use `Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface::getRawProductConcreteTransfersByConcreteSkus()` instead.
+     *
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -54,4 +57,18 @@ interface ProductCartConnectorToProductInterface
      * @return bool
      */
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
+
+    /**
+     * @param array $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
 }

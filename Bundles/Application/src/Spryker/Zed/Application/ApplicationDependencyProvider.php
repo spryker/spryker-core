@@ -11,8 +11,6 @@ use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
-use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\ErrorHandler\Plugin\ServiceProvider\WhoopsErrorHandlerServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
@@ -64,53 +62,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addInternalCallServiceProviders($container);
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
         $container = $this->addApplicationPlugins($container);
-        $container = $this->addEnvironment($container);
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Silex\ServiceProviderInterface[]
-     */
-    protected function getServiceProviders(Container $container)
-    {
-        $providers = [
-            new TwigGlobalVariablesServiceProvider(),
-            new RequestServiceProvider(),
-            new SslServiceProvider(),
-            new ServiceControllerServiceProvider(),
-            new RoutingServiceProvider(),
-            new MvcRoutingServiceProvider(),
-            new SilexRoutingServiceProvider(),
-            new ValidatorServiceProvider(),
-            new FormServiceProvider(),
-            new UrlGeneratorServiceProvider(),
-            new HttpFragmentServiceProvider(),
-            new HeaderServiceProvider(),
-            new TranslationServiceProvider(),
-            new SubRequestServiceProvider(),
-            new HeadersSecurityServiceProvider(),
-        ];
-
-        if (Environment::isDevelopment()) {
-            $providers[] = new WhoopsErrorHandlerServiceProvider();
-        }
-
-        return $providers;
-    }
-
-    /**
-     * @deprecated Use getServiceProviders() instead.
-     *
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Silex\ServiceProviderInterface[]
-     */
-    protected function getServiceProvider(Container $container)
-    {
-        return $this->getServiceProviders($container);
     }
 
     /**
@@ -144,6 +97,60 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getServiceProviders(Container $container)
+    {
+        trigger_error(
+            '\Spryker\Zed\Application\ApplicationDependencyProvider::getServiceProviders is deprecated, please copy all required ServiceProvider and remove the call to this method',
+            E_USER_DEPRECATED
+        );
+
+        $providers = [
+            new TwigGlobalVariablesServiceProvider(),
+            new RequestServiceProvider(),
+
+            new SslServiceProvider(),
+
+            new ServiceControllerServiceProvider(),
+            new RoutingServiceProvider(),
+            new MvcRoutingServiceProvider(),
+            new SilexRoutingServiceProvider(),
+
+            new ValidatorServiceProvider(),
+            new FormServiceProvider(),
+
+            // To be removed with next major
+            new UrlGeneratorServiceProvider(), // requests router from container
+
+            new HttpFragmentServiceProvider(),
+            new HeaderServiceProvider(),
+            new TranslationServiceProvider(),
+            new SubRequestServiceProvider(),
+        ];
+
+        if ($this->getConfig()->isPrettyErrorHandlerEnabled()) {
+            $providers[] = new WhoopsErrorHandlerServiceProvider();
+        }
+
+        return $providers;
+    }
+
+    /**
+     * @deprecated Use getServiceProviders() instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getServiceProvider(Container $container)
+    {
+        return $this->getServiceProviders($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function addApiServiceProviders(Container $container)
@@ -158,6 +165,18 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getApiServiceProviders(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function addInternalCallServiceProviders(Container $container)
@@ -170,6 +189,20 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getInternalCallServiceProviders(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -184,6 +217,18 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
+    {
+        return [];
+    }
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -195,58 +240,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addEnvironment(Container $container): Container
-    {
-        $container->set(static::ENVIRONMENT, function () {
-            return $this->getEnvironment();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Environment
-     */
-    protected function getEnvironment(): Environment
-    {
-        return Environment::getInstance();
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Silex\ServiceProviderInterface[]
-     */
-    protected function getApiServiceProviders(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Silex\ServiceProviderInterface[]
-     */
-    protected function getInternalCallServiceProviders(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Silex\ServiceProviderInterface[]
-     */
-    protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
-    {
-        return [];
     }
 
     /**

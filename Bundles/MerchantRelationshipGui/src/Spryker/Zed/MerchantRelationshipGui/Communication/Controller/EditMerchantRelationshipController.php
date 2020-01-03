@@ -37,6 +37,7 @@ class EditMerchantRelationshipController extends AbstractController
 
         if ($merchantRelationshipTransfer === null) {
             $this->addErrorMessage("Merchant Relationship with id %s doesn't exists.", ['%s' => $idMerchantRelationship]);
+
             return $this->redirectResponse(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
         }
 

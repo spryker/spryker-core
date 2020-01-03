@@ -75,10 +75,14 @@ interface TranslatorFacadeInterface extends TranslatorInterface
     public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string;
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
+     *
      * Specification:
      * - Sets the current locale to Translator.
-     *
-     * @api
      *
      * @param string $locale
      *
@@ -87,10 +91,14 @@ interface TranslatorFacadeInterface extends TranslatorInterface
     public function setLocale($locale): void;
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
+     *
      * Specification:
      * - Returns the current locale of Translator.
-     *
-     * @api
      *
      * @return string The locale
      */

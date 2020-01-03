@@ -7,19 +7,18 @@
 
 namespace Spryker\Zed\UrlStorage\Business\Storage;
 
-use ArrayObject;
 use Generated\Shared\Transfer\UrlStorageTransfer;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
 use Spryker\Zed\Url\Persistence\Propel\AbstractSpyUrl;
 use Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException;
 use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
-use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
+use Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface;
+use Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface;
 
 class UrlStorageWriter implements UrlStorageWriterInterface
 {
-    public const FK_URL = 'fkUrl';
-
     public const RESOURCE_TYPE = 'type';
     public const RESOURCE_VALUE = 'value';
 
@@ -29,14 +28,14 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected $utilSanitize;
 
     /**
-     * @var \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface
+     * @var \Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface
      */
-    protected $queryContainer;
+    protected $urlStorageRepository;
 
     /**
-     * @var bool
+     * @var \Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface
      */
-    protected $isSendingToQueue = true;
+    protected $urlStorageEntityManager;
 
     /**
      * @var \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface
@@ -44,47 +43,79 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected $storeFacade;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
      * @param \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface $utilSanitize
-     * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface $queryContainer
-     * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface $urlStorageRepository
+     * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface $urlStorageEntityManager
      * @param \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface $storeFacade
+     * @param bool $isSendingToQueue
      */
     public function __construct(
         UrlStorageToUtilSanitizeServiceInterface $utilSanitize,
-        UrlStorageQueryContainerInterface $queryContainer,
-        $isSendingToQueue,
-        UrlStorageToStoreFacadeInterface $storeFacade
+        UrlStorageRepositoryInterface $urlStorageRepository,
+        UrlStorageEntityManagerInterface $urlStorageEntityManager,
+        UrlStorageToStoreFacadeInterface $storeFacade,
+        bool $isSendingToQueue
     ) {
         $this->utilSanitize = $utilSanitize;
-        $this->queryContainer = $queryContainer;
-        $this->isSendingToQueue = $isSendingToQueue;
+        $this->urlStorageRepository = $urlStorageRepository;
+        $this->urlStorageEntityManager = $urlStorageEntityManager;
         $this->storeFacade = $storeFacade;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
-     * @param array $urlIds
+     * @param int[] $urlIds
      *
      * @return void
      */
     public function publish(array $urlIds)
     {
-        $urls = $this->findUrls($urlIds);
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        $locales = $storeTransfer->getAvailableLocaleIsoCodes();
-        $urlStorageTransfers = $this->mapUrlsToUrlStorageTransfers($urls, $locales);
-        $urlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
+        $localeNames = $this->getSharedPersistenceLocaleNames();
+        $urlEntityTransfers = $this->urlStorageRepository->findLocalizedUrlsByUrlIds($urlIds, $localeNames);
+        $urlStorageTransfers = $this->mapUrlsEntitiesToUrlStorageTransfers($urlEntityTransfers);
+        $urlStorageEntities = $this->urlStorageRepository->findUrlStorageByUrlIds(array_keys($urlStorageTransfers));
+
         $this->storeData($urlStorageTransfers, $urlStorageEntities);
     }
 
     /**
-     * @param array $urlIds
+     * @return string[]
+     */
+    protected function getSharedPersistenceLocaleNames(): array
+    {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $localeNames = $storeTransfer->getAvailableLocaleIsoCodes();
+        foreach ($storeTransfer->getStoresWithSharedPersistence() as $storeName) {
+            foreach ($this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes() as $localeName) {
+                $localeNames[] = $localeName;
+            }
+        }
+
+        return array_unique($localeNames);
+    }
+
+    /**
+     * @param int[] $urlIds
      *
      * @return void
      */
     public function unpublish(array $urlIds)
     {
-        $spyUrlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
-        foreach ($spyUrlStorageEntities as $spyUrlStorageEntity) {
+        $spyUrlStorageEntities = $this->urlStorageRepository->findUrlStorageByUrlIds($urlIds);
+        $indexedUrlStorageEntities = $this->indexUrlStorageEntitiesByUrl($spyUrlStorageEntities);
+        $spyUrlEntities = $this->urlStorageRepository->findUrlEntitiesByUrls(array_keys($indexedUrlStorageEntities));
+        $urlStorageEntitiesWithExistingUrls = $this->getStorageEntitiesWithExistingUrls($indexedUrlStorageEntities, $spyUrlEntities);
+        $indexedUrlStorageEntities = $this->filterOutStorageEntitiesWithExistingUrls($indexedUrlStorageEntities, $urlStorageEntitiesWithExistingUrls);
+
+        $this->deleteUrlStorageEntitiesWithExistingUrls($urlStorageEntitiesWithExistingUrls);
+        foreach ($indexedUrlStorageEntities as $spyUrlStorageEntity) {
             $spyUrlStorageEntity->delete();
         }
     }
@@ -121,7 +152,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
         $urlStorageEntity->setByName('fk_' . $resource[static::RESOURCE_TYPE], $resource[static::RESOURCE_VALUE]);
         $urlStorageEntity->setUrl($urlStorageTransfer->getUrl());
         $urlStorageEntity->setFkUrl($urlStorageTransfer->getIdUrl());
-        $urlStorageEntity->setData($urlStorageTransfer->modifiedToArray());
+        $urlStorageEntity->setData($this->utilSanitize->arrayFilterRecursive($urlStorageTransfer->modifiedToArray()));
         $urlStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $urlStorageEntity->save();
     }
@@ -157,34 +188,6 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param array $localeUrl
-     * @param array $urlResourceArguments
-     *
-     * @throws \Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException
-     *
-     * @return array
-     */
-    public function findResourceArgumentForLocaleUrls(array $localeUrl, array $urlResourceArguments)
-    {
-        $urlResourceArgumentType = $urlResourceArguments[static::RESOURCE_TYPE];
-        $resourcePrefix = AbstractSpyUrl::RESOURCE_PREFIX . $urlResourceArgumentType;
-
-        if (!isset($localeUrl[$resourcePrefix])) {
-            throw new MissingResourceException(
-                sprintf(
-                    'Encountered a URL entity that is missing a resource prefix: %s',
-                    $resourcePrefix
-                )
-            );
-        }
-
-        return [
-            static::RESOURCE_TYPE => $urlResourceArgumentType,
-            static::RESOURCE_VALUE => $localeUrl[$resourcePrefix],
-        ];
-    }
-
-    /**
      * @param string $columnName
      * @param string $value
      *
@@ -196,101 +199,114 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param array $urls
-     * @param array $locales
+     * @param \Orm\Zed\Url\Persistence\SpyUrl[][] $groupedUrlEntities
      *
      * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
      */
-    protected function mapUrlsToUrlStorageTransfers(array $urls, array $locales)
+    protected function mapUrlsEntitiesToUrlStorageTransfers(array $groupedUrlEntities)
     {
-        $localeUrls = $this->findLocaleUrls($urls);
-        $localesCount = count($locales);
-
         $urlStorageTransfers = [];
-        foreach ($urls as $url) {
-            $urlResource = $this->findResourceArguments($url);
-            $urlStorageTransfer = (new UrlStorageTransfer())->fromArray($url, true);
-            $urlStorageTransfer->setLocaleUrls(
-                $this->getLocaleUrlsForUrl($localeUrls[$urlResource[static::RESOURCE_TYPE]], $urlResource, $localesCount)
-            );
-
-            $urlStorageTransfers[] = $urlStorageTransfer;
+        foreach ($groupedUrlEntities as $resource => $urlEntities) {
+            foreach ($urlEntities as $urlEntity) {
+                $urlStorageTransfers[$urlEntity->getIdUrl()] = $this->createUrlStorageTransfer($urlEntity, $urlEntities);
+            }
         }
 
         return $urlStorageTransfers;
     }
 
     /**
-     * @param array $localeUrls
-     * @param array $urlResourceArguments
-     * @param int $localesCount
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\UrlStorageTransfer[]
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer
      */
-    protected function getLocaleUrlsForUrl(array $localeUrls, array $urlResourceArguments, int $localesCount)
+    protected function createUrlStorageTransfer(SpyUrl $urlEntity, array $urlEntities): UrlStorageTransfer
     {
-        $siblingUrls = new ArrayObject();
-        foreach ($localeUrls as $key => $localeUrl) {
-            $resourceArguments = $this->findResourceArgumentForLocaleUrls($localeUrl, $urlResourceArguments);
+        $urlStorageTransfer = (new UrlStorageTransfer())
+            ->fromArray($urlEntity->toArray(), true)
+            ->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
 
-            if ($urlResourceArguments[static::RESOURCE_VALUE] === $resourceArguments[static::RESOURCE_VALUE]) {
-                $siblingUrls[] = $localeUrl;
-                unset($localeUrls[$key]);
-            }
-
-            if (count($siblingUrls) === $localesCount) {
-                break;
-            }
+        foreach ($urlEntities as $otherUrlEntity) {
+            $urlStorageTransfer->addUrlStorage(
+                (new UrlStorageTransfer())
+                    ->fromArray($otherUrlEntity->toArray(), true)
+                    ->setLocaleName($otherUrlEntity->getSpyLocale()->getLocaleName())
+            );
         }
 
-        return $siblingUrls;
+        return $urlStorageTransfer;
     }
 
     /**
-     * @param array $urls
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntities
      *
-     * @return array
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
      */
-    protected function findLocaleUrls(array $urls)
+    protected function indexUrlStorageEntitiesByUrl(array $urlStorageEntities): array
     {
-        $localeUrls = [];
-        foreach ($urls as $url) {
-            $resourceArguments = $this->findResourceArguments($url);
-            if (isset($localeUrls[$resourceArguments[static::RESOURCE_TYPE]])) {
-                $localeUrls[$resourceArguments[static::RESOURCE_TYPE]][] = $resourceArguments[static::RESOURCE_VALUE];
-                continue;
+        $indexedUrlStorageEntities = [];
+        foreach ($urlStorageEntities as $urlStorageEntity) {
+            $indexedUrlStorageEntities[$urlStorageEntity->getUrl()] = $urlStorageEntity;
+        }
+
+        return $indexedUrlStorageEntities;
+    }
+
+    /**
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $indexedUrlStorageEntities
+     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
+     *
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     */
+    protected function getStorageEntitiesWithExistingUrls(array $indexedUrlStorageEntities, array $urlEntities): array
+    {
+        $urlStorageEntitiesWithExistingUrls = [];
+        foreach ($urlEntities as $urlEntity) {
+            $url = $urlEntity->getUrl();
+            if (isset($indexedUrlStorageEntities[$url])) {
+                $urlStorageEntitiesWithExistingUrls[] = $indexedUrlStorageEntities[$url];
             }
-
-            $localeUrls[$resourceArguments[static::RESOURCE_TYPE]] = [$resourceArguments[static::RESOURCE_VALUE]];
         }
 
-        foreach ($localeUrls as $resourceType => $resourceIds) {
-            $localeUrls[$resourceType] = $this->queryContainer
-                ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
-                ->find()
-                ->getData();
-        }
-
-        return $localeUrls;
+        return $urlStorageEntitiesWithExistingUrls;
     }
 
     /**
-     * @param array $urlIds
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $indexedUrlStorageEntities
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntitiesWithExistingUrls
      *
-     * @return array
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
      */
-    protected function findUrlStorageEntitiesByIds(array $urlIds)
+    protected function filterOutStorageEntitiesWithExistingUrls(array $indexedUrlStorageEntities, array $urlStorageEntitiesWithExistingUrls): array
     {
-        return $this->queryContainer->queryUrlStorageByIds($urlIds)->find()->toKeyIndex(static::FK_URL);
+        if (count($urlStorageEntitiesWithExistingUrls) === 0) {
+            return $indexedUrlStorageEntities;
+        }
+
+        foreach ($urlStorageEntitiesWithExistingUrls as $urlStorageEntitiesWithExistingUrl) {
+            unset($indexedUrlStorageEntities[$urlStorageEntitiesWithExistingUrl->getUrl()]);
+        }
+
+        return $indexedUrlStorageEntities;
     }
 
     /**
-     * @param array $urlIds
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntitiesWithExistingUrls
      *
-     * @return array
+     * @return void
      */
-    protected function findUrls(array $urlIds)
+    protected function deleteUrlStorageEntitiesWithExistingUrls(array $urlStorageEntitiesWithExistingUrls): void
     {
-        return $this->queryContainer->queryUrls($urlIds)->find()->getData();
+        if (count($urlStorageEntitiesWithExistingUrls) === 0) {
+            return;
+        }
+
+        $urlIds = [];
+        foreach ($urlStorageEntitiesWithExistingUrls as $urlStorageEntitiesWithExistingUrl) {
+            $urlIds[] = $urlStorageEntitiesWithExistingUrl->getIdUrlStorage();
+        }
+
+        $this->urlStorageEntityManager->deleteStorageUrlsByIds($urlIds);
     }
 }

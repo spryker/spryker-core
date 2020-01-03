@@ -15,12 +15,15 @@ use Elastica\Query\Range;
 use Elastica\Query\Term;
 use Elastica\Query\Terms;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\QueryBuilder` instead.
+ */
 class QueryBuilder implements QueryBuilderInterface
 {
     /**
      * @param string $fieldName
-     * @param float|null $minValue
-     * @param float|null $maxValue
+     * @param string|null $minValue
+     * @param string|null $maxValue
      * @param string $greaterParam
      * @param string $lessParam
      *

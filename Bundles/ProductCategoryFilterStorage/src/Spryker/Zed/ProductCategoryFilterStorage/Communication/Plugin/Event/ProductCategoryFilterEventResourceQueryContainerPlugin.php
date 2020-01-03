@@ -23,7 +23,7 @@ use Spryker\Zed\ProductCategoryFilter\Dependency\ProductCategoryFilterEvents;
 class ProductCategoryFilterEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductCategoryFilterEventResourceQueryContainerPlugin extends AbstractPlu
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,15 +47,15 @@ class ProductCategoryFilterEventResourceQueryContainerPlugin extends AbstractPlu
     {
         $query = $this->getQueryContainer()->queryProductCategoryByCategoryFilterIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ProductCategoryFilterEventResourceQueryContainerPlugin extends AbstractPlu
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

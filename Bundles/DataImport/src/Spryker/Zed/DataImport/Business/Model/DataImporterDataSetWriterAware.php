@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 class DataImporterDataSetWriterAware extends DataImporter implements DataImporterDataSetWriterAwareInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface|null
      */
     protected $dataSetWriter;
 
@@ -30,7 +30,7 @@ class DataImporterDataSetWriterAware extends DataImporter implements DataImporte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
@@ -46,12 +46,20 @@ class DataImporterDataSetWriterAware extends DataImporter implements DataImporte
 
         $start = microtime(true);
         $dataImporterReportTransfer = $this->importByDataImporterConfiguration($dataImporterConfigurationTransfer);
-        $this->dataSetWriter->flush();
+        $this->flushDataSetWriter();
         $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
 
         $this->afterImport();
 
         return $dataImporterReportTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function flushDataSetWriter(): void
+    {
+        $this->dataSetWriter->flush();
     }
 
     /**

@@ -15,6 +15,7 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSearch
@@ -28,7 +29,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testCreateProductSearchPreferences()
+    public function testCreateProductSearchPreferences(): void
     {
         $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
         $productSearchPreferencesTransfer
@@ -48,7 +49,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testUpdateProductSearchPreferences()
+    public function testUpdateProductSearchPreferences(): void
     {
         $productSearchAttributeMapEntity = $this->createProductSearchAttributeMapEntity('updateProductSearchPreferences');
 
@@ -71,7 +72,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testCleanProductSearchPreferences()
+    public function testCleanProductSearchPreferences(): void
     {
         $productSearchAttributeMapEntity = $this->createProductSearchAttributeMapEntity('cleanProductSearchPreferences');
 
@@ -91,7 +92,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testSuggestProductSearchAttributes()
+    public function testSuggestProductSearchAttributes(): void
     {
         // Arrange
         $key = 'suggestProductSearchAttributes';
@@ -108,7 +109,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
     /**
      * @return array
      */
-    public function touchProductAbstractByAsynchronousAttributesDataProvider()
+    public function touchProductAbstractByAsynchronousAttributesDataProvider(): array
     {
         return [
             'product abstract has attribute' => [
@@ -141,7 +142,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeMapEntity = $this->createProductSearchAttributeMapEntity('touchProductAbstractByAsynchronousAttributes');
@@ -174,7 +175,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeMapEntity = $this->createProductSearchAttributeMapEntity('touchProductAbstractByAsynchronousAttributes', true);
@@ -211,7 +212,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeMapEntity = $this->createProductSearchAttributeMapEntity('touchProductAbstractByAsynchronousAttributes');
@@ -232,7 +233,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap
      */
-    protected function createProductSearchAttributeMapEntity($attributeKey, $synced = false)
+    protected function createProductSearchAttributeMapEntity(string $attributeKey, bool $synced = false): SpyProductSearchAttributeMap
     {
         $productAttributeKeyEntity = $this->createProductAttributeKeyEntity($attributeKey);
 

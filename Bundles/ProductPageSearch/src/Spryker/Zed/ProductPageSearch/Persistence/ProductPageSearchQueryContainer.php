@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
@@ -17,8 +18,13 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -81,6 +87,117 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->addJoinCondition('SpyProductSearch', sprintf('spy_product_search.fk_locale = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
 
         return $query;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @module Product
+     *
+     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore(array $productAbstractIds, StoreTransfer $storeTransfer): SpyProductAbstractLocalizedAttributesQuery
+    {
+        $storeLocaleIsoCodes = array_map(function (string $localeIsoCode) {
+            return $localeIsoCode;
+        }, $storeTransfer->getAvailableLocaleIsoCodes());
+
+        $query = $this->getFactory()->getProductQueryContainer()
+            ->queryAllProductAbstractLocalizedAttributes()
+            ->joinWithSpyProductAbstract()
+            ->useSpyProductAbstractQuery()
+                ->joinWithSpyProductAbstractStore()
+                ->useSpyProductAbstractStoreQuery()
+                    ->joinWithSpyStore()
+                    ->useSpyStoreQuery()
+                        ->filterByIdStore($storeTransfer->getIdStore())
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->joinWithLocale()
+            ->useLocaleQuery()
+                ->filterByLocaleName_In($storeLocaleIsoCodes)
+            ->endUse()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->withColumn($this->getIdImageSetSubQuery(), static::COLUMN_ID_IMAGE_SET)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+
+        $query
+            ->join('SpyProductAbstract.SpyUrl')
+            ->addJoinCondition('SpyUrl', SpyUrlTableMap::COL_FK_LOCALE . ' = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
+            ->withColumn(SpyUrlTableMap::COL_URL, 'url');
+
+        return $query;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @module Product
+     * @module Locale
+     *
+     * @param int[] $abstractProductIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductConcretesByAbstractProductIdsAndLocaleIsoCodes(array $abstractProductIds, array $localeIsoCodes): SpyProductQuery
+    {
+        return $this->getFactory()
+            ->getProductQuery()
+            ->joinWithSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->useLocaleQuery()
+                    ->filterByLocaleName_In($localeIsoCodes)
+                ->endUse()
+            ->endUse()
+            ->filterByFkProductAbstract_In($abstractProductIds)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @module ProductSearch
+     *
+     * @param int[] $productConcreteIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
+     */
+    public function queryProductSearchByProductConcreteIdsAndLocaleIsoCodes(array $productConcreteIds, array $localeIsoCodes): SpyProductSearchQuery
+    {
+        return $this->getFactory()
+            ->getProductSearchQuery()
+            ->useSpyLocaleQuery()
+                ->filterByLocaleName_In($localeIsoCodes)
+            ->endUse()
+            ->filterByFkProduct_In($productConcreteIds)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractWithLocalizedAttributesByIds(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryAllProductAbstractLocalizedAttributes()
+            ->filterByFkProductAbstract_In($productAbstractIds);
     }
 
     /**
@@ -242,12 +359,17 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      */
     public function queryAllProductImageSetsByProductAbstractIds(array $productAbstractIds)
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery */
+        $productImageSetQuery = $this->getFactory()
             ->getProductImageQueryContainer()
             ->queryProductImageSet()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->joinWithSpyProductImageSetToProductImage()
             ->joinWith('SpyProductImageSetToProductImage.SpyProductImage');
+
+        $productImageSetQuery = $this->sortProductImageSetToProductImageQuery($productImageSetQuery);
+
+        return $productImageSetQuery;
     }
 
     /**
@@ -344,5 +466,44 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
         $params = [];
 
         return sprintf('(%s)', $idImageSetSubQuery->createSelectSql($params));
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetToProductImageQuery
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function sortProductImageSetToProductImageQuery(
+        SpyProductImageSetQuery $productImageSetToProductImageQuery
+    ): SpyProductImageSetQuery {
+        $productImageSetToProductImageQuery->useSpyProductImageSetToProductImageQuery()
+                ->orderBySortOrder()
+                ->orderByIdProductImageSetToProductImage()
+            ->endUse();
+
+        return $productImageSetToProductImageQuery;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryAllProductCategories(array $productAbstractIds): SpyProductCategoryQuery
+    {
+        $query = $this->getFactory()->getProductCategoryQueryContainer()
+            ->queryProductCategoryMappings()
+            ->joinWithSpyCategory()
+                ->useSpyCategoryQuery()
+                    ->joinWithNode()
+                ->endUse()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+
+        return $query;
     }
 }

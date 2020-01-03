@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -112,6 +112,7 @@ class ResponseFormatter implements ResponseFormatterInterface
 
             $response[RestResponseInterface::RESPONSE_ERRORS][] = $responseErrorTransfer->modifiedToArray();
         }
+
         return new Response(
             $encoder->encode($response),
             $responseStatus

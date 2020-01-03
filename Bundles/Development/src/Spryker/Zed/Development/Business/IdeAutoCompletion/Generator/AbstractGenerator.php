@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Generator;
 
+use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
 use Twig\Environment;
@@ -19,39 +20,49 @@ abstract class AbstractGenerator implements GeneratorInterface
     protected $twig;
 
     /**
+     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface
+     */
+    protected $fileWriter;
+
+    /**
      * @var array
      */
     protected $options;
 
     /**
      * @param \Twig\Environment $twig
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface $fileWriter
      * @param array $options
      */
-    public function __construct(Environment $twig, array $options)
+    public function __construct(Environment $twig, FileWriterInterface $fileWriter, array $options)
     {
         $this->twig = $twig;
+        $this->fileWriter = $fileWriter;
         $this->options = $options;
     }
 
     /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $moduleTransferCollection
      *
-     * @return string
+     * @return void
      */
-    public function generate(array $moduleTransferCollection)
+    public function generate(array $moduleTransferCollection): void
     {
         $templateVariables = [
             'bundleTransferCollection' => $moduleTransferCollection,
             'namespace' => $this->getNamespace(),
         ];
 
-        return $this->twig->render($this->getTemplateName(), $templateVariables);
+        $fileName = sprintf('%s.php', $this->getName());
+        $content = $this->twig->render($this->getTemplateName(), $templateVariables);
+
+        $this->fileWriter->writeFile($fileName, $content, $this->options);
     }
 
     /**
      * @return string
      */
-    protected function getTemplateName()
+    protected function getTemplateName(): string
     {
         return sprintf('%s.twig', $this->getName());
     }
@@ -59,7 +70,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     /**
      * @return string
      */
-    protected function getNamespace()
+    protected function getNamespace(): string
     {
         return str_replace(
             IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,

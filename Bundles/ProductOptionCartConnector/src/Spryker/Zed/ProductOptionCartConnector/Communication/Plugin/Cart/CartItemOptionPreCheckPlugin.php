@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartItemOptionPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if given product option exists.
      *
      * @api
@@ -36,7 +36,7 @@ class CartItemOptionPreCheckPlugin extends AbstractPlugin implements CartPreChec
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

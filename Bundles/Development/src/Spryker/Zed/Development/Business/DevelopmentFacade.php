@@ -25,6 +25,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $module
@@ -38,19 +40,38 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runTest($module, array $options = [])
+    public function runTest(?string $module, array $options = []): int
     {
-        $this->getFactory()->createCodeTester()->runTest($module, $options);
+        return $this->getFactory()->createCodeTester()->runTest($module, $options);
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string|null $module
+     * @param array $options
+     *
+     * @return int
+     */
+    public function runFixtures($module, array $options = []): int
+    {
+        return $this->getFactory()->createCodeTester()->runFixtures($module, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $module
@@ -64,7 +85,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @internal
      *
      * @param string $module
      * @param string $toModule
@@ -78,6 +103,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use Spryk tool instead.
@@ -93,6 +120,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @internal
@@ -108,9 +137,10 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
      * @internal
      *
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
@@ -124,9 +154,10 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
      * @internal
      *
      * @param string $moduleName
@@ -139,7 +170,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Please use `getModules()` instead.
      *
      * @return array
      */
@@ -149,6 +184,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use `getAllModules()` instead.
@@ -161,6 +198,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $module
@@ -173,6 +212,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -183,6 +224,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $moduleToView
@@ -197,6 +240,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|bool $moduleToView
@@ -209,6 +254,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param bool $showEngineModule
@@ -222,6 +269,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $moduleToView
@@ -234,6 +283,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -244,6 +295,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated This method is not used anymore.
@@ -256,6 +309,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -266,6 +321,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated This method is not used anymore.
@@ -278,6 +335,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
@@ -290,6 +349,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -300,6 +361,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -310,6 +373,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -320,6 +385,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -330,6 +397,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -340,7 +409,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -355,7 +424,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -363,10 +432,12 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function listAllModules()
     {
-        return $this->getFactory()->createArchitectureBundleFinder()->find();
+        return $this->getFactory()->createAllModuleFinder()->find();
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use `listAllModules` instead.
@@ -379,7 +450,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -391,7 +462,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -406,7 +477,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -421,7 +492,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -435,7 +506,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -449,7 +520,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -463,7 +534,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -473,11 +544,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        return $this->getFactory()->createProjectModuleFinder()->getProjectModules($moduleFilterTransfer);
+        return $this->getFactory()->getModuleFinderFacade()->getProjectModules($moduleFilterTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -487,11 +558,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        return $this->getFactory()->createModuleFinder()->getModules($moduleFilterTransfer);
+        return $this->getFactory()->getModuleFinderFacade()->getModules($moduleFilterTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -501,11 +572,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function getPackages(): array
     {
-        return $this->getFactory()->createPackageFinder()->getPackages();
+        return $this->getFactory()->getModuleFinderFacade()->getPackages();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -514,5 +585,19 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function getModuleOverview(): array
     {
         return $this->getFactory()->createModuleOverview()->getOverview();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $moduleName
+     *
+     * @return string|null
+     */
+    public function findComposerNameByModuleName(string $moduleName): ?string
+    {
+        return $this->getFactory()->createComposerNameFinder()->findComposerNameByModuleName($moduleName);
     }
 }

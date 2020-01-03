@@ -15,6 +15,8 @@ use Orm\Zed\Cms\Persistence\SpyCmsPage;
 interface PageManagerInterface
 {
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException

@@ -68,6 +68,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
@@ -84,6 +86,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
@@ -106,6 +110,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
@@ -127,6 +133,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
@@ -147,6 +155,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
@@ -167,6 +177,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param int $idTemplate
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
@@ -195,6 +207,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param int $idPage
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
@@ -213,6 +227,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
      * @return \Generated\Shared\Transfer\PageTransfer
@@ -243,6 +259,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -262,6 +280,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -330,6 +350,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param int $idLocale
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException
@@ -353,6 +375,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
@@ -371,6 +395,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
@@ -380,7 +406,7 @@ class PageManager implements PageManagerInterface
     {
         foreach ($cmsPageLocalizedAttributesTransfers as $localizedAttributesTransfer) {
             $cmsPageLocalizedAttributesEntity = $this->getLocalizedAttributesForPage($pageEntity, $localizedAttributesTransfer);
-            $cmsPageLocalizedAttributesEntity->fromArray(array_filter($localizedAttributesTransfer->modifiedToArray()));
+            $cmsPageLocalizedAttributesEntity->fromArray($localizedAttributesTransfer->modifiedToArray());
             $cmsPageLocalizedAttributesEntity->save();
 
             $localizedAttributesTransfer->fromArray($cmsPageLocalizedAttributesEntity->toArray(), true);

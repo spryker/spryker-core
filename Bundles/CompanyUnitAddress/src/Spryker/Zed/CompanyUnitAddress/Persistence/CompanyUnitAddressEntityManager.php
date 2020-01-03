@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -20,9 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CompanyUnitAddressEntityManager extends AbstractEntityManager implements CompanyUnitAddressEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
@@ -30,22 +27,28 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
      */
     public function saveCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
-        $entityTransfer = $this->getFactory()
-            ->createCompanyUniAddressMapper()
-            ->mapCompanyUnitAddressTransferToEntityTransfer(
-                $companyUnitAddressTransfer,
-                new SpyCompanyUnitAddressEntityTransfer()
-            );
-        $entityTransfer = $this->save($entityTransfer);
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($entityTransfer->getIdCompanyUnitAddress());
+        $companyUnitAddressEntity = $this->getFactory()->createCompanyUnitAddressQuery()
+            ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
+            ->findOneOrCreate();
 
-        return $companyUnitAddressTransfer;
+        $companyUnitAddressMapper = $this->getFactory()->createCompanyUnitAddressMapper();
+
+        $companyUnitAddressEntity = $companyUnitAddressMapper
+            ->mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
+                $companyUnitAddressTransfer,
+                $companyUnitAddressEntity
+            );
+
+        $companyUnitAddressEntity->save();
+
+        return $companyUnitAddressMapper->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
+            $companyUnitAddressEntity,
+            $companyUnitAddressTransfer
+        );
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param int $idCompanyUnitAddress
      *

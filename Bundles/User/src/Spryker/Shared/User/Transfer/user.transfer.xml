@@ -4,17 +4,33 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="User">
-        <property name="idUser" type="int" />
-        <property name="username" type="string" />
-        <property name="password" type="string" />
-        <property name="firstName" type="string" />
-        <property name="status" type="string" />
-        <property name="lastName" type="string" />
-        <property name="lastLogin" type="string" />
+        <property name="idUser" type="int"/>
+        <property name="username" type="string"/>
+        <property name="password" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="status" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="lastLogin" type="string"/>
     </transfer>
 
     <transfer name="Collection">
-        <property name="user" type="User[]" />
+        <property name="user" type="User[]" singular="user"/>
+    </transfer>
+
+    <transfer name="Groups">
+        <property name="groups" type="Group[]" singular="group"/>
+    </transfer>
+
+    <transfer name="Group">
+        <property name="idAclGroup" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+        <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
 
 </transfers>

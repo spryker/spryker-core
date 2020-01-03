@@ -8,13 +8,14 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\ProductConcretePageSearchEventResourceBulkRepositoryPlugin instead.
+ *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
@@ -23,10 +24,8 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  */
 class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
-    protected const COLUMN_ID_PRODUCT_CONCRETE = 'spy_product.id_product_concrete';
-
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,28 +37,21 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $productIds = []): array
     {
-        if (empty($productIds)) {
-            $productIds = $this->getAllProductIds();
-        }
-
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[] $productConcreteTransfers */
-        $productConcreteTransfers = $this->getFactory()->getProductFacade()->getProductConcreteTransfersByProductIds($productIds);
-
-        return $productConcreteTransfers;
+        return $this->getRepository()->getProductEntityTransfers($productIds);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +63,7 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -79,17 +71,6 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
      */
     public function getIdColumnName(): ?string
     {
-        return static::COLUMN_ID_PRODUCT_CONCRETE;
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getAllProductIds(): array
-    {
-        return SpyProductQuery::create()
-            ->select([SpyProductTableMap::COL_ID_PRODUCT])
-            ->find()
-            ->toArray();
+        return SpyProductTableMap::COL_ID_PRODUCT;
     }
 }

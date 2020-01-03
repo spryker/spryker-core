@@ -25,6 +25,11 @@ class ProductListHelper extends Module
     {
         $productListTransfer = (new ProductListBuilder($seed))->build();
 
-        return $this->getLocator()->productList()->facade()->saveProductList($productListTransfer);
+        $productListResponseTransfer = $this->getLocator()
+            ->productList()
+            ->facade()
+            ->createProductList($productListTransfer);
+
+        return $productListResponseTransfer->getProductList();
     }
 }

@@ -27,8 +27,10 @@ class CartItemsResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
      *              "400": "Cart id is missing.",
+     *              "403": "Unauthorized cart action.",
      *              "404": "Cart not found.",
      *              "422": "Errors appeared during item creation."
      *          }
@@ -53,6 +55,7 @@ class CartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *     "patch": {
+     *          "path": "/carts/{cartId}/items/{itemId}",
      *          "summary": [
      *              "Updates cart item quantity."
      *          ],
@@ -60,8 +63,10 @@ class CartItemsResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
      *              "400": "Cart id or item id is not specified.",
+     *              "403": "Unauthorized cart action.",
      *              "404": "Cart or item not found.",
      *              "422": "Errors appeared during item update."
      *          }
@@ -86,6 +91,7 @@ class CartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
+     *          "path": "/carts/{cartId}/items/{itemId}",
      *          "summary": [
      *              "Removes item from the cart."
      *          ],
@@ -95,6 +101,7 @@ class CartItemsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Cart id or item id is not specified.",
+     *              "403": "Unauthorized cart action.",
      *              "404": "Cart or cart item not found.",
      *              "422": "Cart item could not be deleted."
      *          }

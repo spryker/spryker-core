@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Content\Business\ContentWriter;
 
 use Generated\Shared\Transfer\ContentTransfer;
+use Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface;
 use Spryker\Zed\Content\Persistence\ContentEntityManagerInterface;
 
 class ContentWriter implements ContentWriterInterface
@@ -18,11 +19,20 @@ class ContentWriter implements ContentWriterInterface
     protected $contentEntityManager;
 
     /**
-     * @param \Spryker\Zed\Content\Persistence\ContentEntityManagerInterface $contentEntityManager
+     * @var \Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface
      */
-    public function __construct(ContentEntityManagerInterface $contentEntityManager)
-    {
+    protected $contentKeyProvider;
+
+    /**
+     * @param \Spryker\Zed\Content\Persistence\ContentEntityManagerInterface $contentEntityManager
+     * @param \Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface $contentKeyProvider
+     */
+    public function __construct(
+        ContentEntityManagerInterface $contentEntityManager,
+        ContentKeyProviderInterface $contentKeyProvider
+    ) {
         $this->contentEntityManager = $contentEntityManager;
+        $this->contentKeyProvider = $contentKeyProvider;
     }
 
     /**
@@ -37,6 +47,10 @@ class ContentWriter implements ContentWriterInterface
             ->requireContentTermKey()
             ->requireLocalizedContents();
 
+        if (!$contentTransfer->getKey()) {
+            $contentTransfer->setKey($this->contentKeyProvider->generateContentKey());
+        }
+
         return $this->contentEntityManager->saveContent($contentTransfer);
     }
 
@@ -48,6 +62,10 @@ class ContentWriter implements ContentWriterInterface
     public function update(ContentTransfer $contentTransfer): ContentTransfer
     {
         $contentTransfer->requireIdContent();
+
+        $contentTransfer->setKey(
+            $this->contentKeyProvider->getContentKeyByIdContent($contentTransfer->getIdContent())
+        );
 
         return $this->contentEntityManager->saveContent($contentTransfer);
     }

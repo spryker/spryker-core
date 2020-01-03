@@ -10,6 +10,9 @@ namespace Spryker\Shared\Session\Business\Handler;
 use SessionHandlerInterface;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
+/**
+ * @deprecated Use `Spryker\Shared\SessionFile\Handler\SessionHandlerFile` instead.
+ */
 class SessionHandlerFile implements SessionHandlerInterface
 {
     public const METRIC_SESSION_DELETE_TIME = 'File/Session_delete_time';

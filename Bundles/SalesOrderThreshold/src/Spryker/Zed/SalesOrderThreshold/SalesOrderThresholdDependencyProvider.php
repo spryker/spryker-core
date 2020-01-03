@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesOrderThreshold;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGlossaryFacadeBridge;
+use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToLocaleFacadeBridge;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMessengerFacadeBridge;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMoneyFacadeBridge;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToSalesFacadeBridge;
@@ -28,6 +29,7 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_TAX = 'FACADE_TAX';
     public const FACADE_SALES = 'FACADE_SALES';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY = 'PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY';
 
     /**
@@ -47,6 +49,7 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addTaxFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addSalesOrderThresholdStrategyPlugins($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -94,6 +97,8 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -131,6 +136,20 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
         $container[static::FACADE_TAX] = function (Container $container) {
             return new SalesOrderThresholdToTaxFacadeBridge($container->getLocator()->tax()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new SalesOrderThresholdToLocaleFacadeBridge($container->getLocator()->locale()->facade());
+        });
 
         return $container;
     }

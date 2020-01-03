@@ -10,8 +10,11 @@ namespace Spryker\Client\Customer;
 use Spryker\Client\Customer\CustomerAddress\CustomerAddress;
 use Spryker\Client\Customer\CustomerSecuredPattern\CustomerSecuredPattern;
 use Spryker\Client\Customer\CustomerSecuredPattern\CustomerSecuredPatternInterface;
+use Spryker\Client\Customer\Reader\CustomerAccessTokenReader;
+use Spryker\Client\Customer\Reader\CustomerAccessTokenReaderInterface;
 use Spryker\Client\Customer\Session\CustomerSession;
 use Spryker\Client\Customer\Zed\CustomerStub;
+use Spryker\Client\CustomerExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 /**
@@ -47,6 +50,16 @@ class CustomerFactory extends AbstractFactory
             $this->getSessionClient(),
             $this->getCustomerSessionGetPlugins(),
             $this->getCustomerSessionSetPlugin()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Customer\Reader\CustomerAccessTokenReaderInterface
+     */
+    public function createCustomerAccessTokenReader(): CustomerAccessTokenReaderInterface
+    {
+        return new CustomerAccessTokenReader(
+            $this->getAccessTokenAuthenticationHandlerPlugin()
         );
     }
 
@@ -96,5 +109,13 @@ class CustomerFactory extends AbstractFactory
     protected function getSessionClient()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface
+     */
+    public function getAccessTokenAuthenticationHandlerPlugin(): AccessTokenAuthenticationHandlerPluginInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER);
     }
 }

@@ -11,6 +11,7 @@ use Spryker\Yves\CartVariant\Mapper\CartItemsAvailabilityMapper;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group CartVariant
@@ -24,9 +25,9 @@ class AvailabilityMapperTest extends CartItemsMapperBaseTest
     /**
      * @return void
      */
-    public function testBuildMap()
+    public function testBuildMap(): void
     {
-        $subject = new CartItemsAvailabilityMapper($this->createAvailabilityClientBridge('availability.json'));
+        $subject = new CartItemsAvailabilityMapper($this->createAvailabilityStorageClientBridge('availability.json'));
         $result = $subject->buildMap($this->getItems());
 
         $this->assertArrayHasKey('170_28516206', $result);
@@ -42,7 +43,7 @@ class AvailabilityMapperTest extends CartItemsMapperBaseTest
      *
      * @return int
      */
-    protected function countSelectedAttributes(array $attributes)
+    protected function countSelectedAttributes(array $attributes): int
     {
         $total = 0;
 

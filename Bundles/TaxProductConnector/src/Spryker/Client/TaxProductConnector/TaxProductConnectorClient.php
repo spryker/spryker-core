@@ -17,9 +17,11 @@ use Spryker\Client\Kernel\AbstractClient;
 class TaxProductConnectorClient extends AbstractClient implements TaxProductConnectorClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *

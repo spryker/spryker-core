@@ -53,8 +53,6 @@ class EditCompanyRoleController extends AbstractController
                 ->update($companyRoleFormData);
 
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_ROLE_UPDATE);
-
-            return $this->redirectResponse(static::URL_REDIRECT_LIST_COMPANY_ROLE);
         }
 
         return $this->viewResponse([

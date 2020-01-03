@@ -11,9 +11,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\DataImportFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport
@@ -26,13 +28,14 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 class DataImportFacadeTest extends Unit
 {
     public const IMPORT_TYPE_FULL_IMPORT = 'full';
+    public const IMPORT_GROUP_FULL = 'FULL';
     public const IMPORT_TYPE_SPECIFIC_A = 'specific-importer-a';
     public const IMPORT_TYPE_SPECIFIC_B = 'specific-importer-b';
 
     /**
      * @return void
      */
-    public function testImportReturnsReport()
+    public function testImportReturnsReport(): void
     {
         $dataImportFacade = $this->getFacade();
         $dataImporterReportTransfer = $dataImportFacade->import();
@@ -43,7 +46,7 @@ class DataImportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testImportReturnsReportWithFullImportAndNumberOfImportedDataSets()
+    public function testImportReturnsReportWithFullImportAndNumberOfImportedDataSets(): void
     {
         $dataImportFacade = $this->getFacade();
         $dataImporterReportTransfer = $dataImportFacade->import();
@@ -55,7 +58,7 @@ class DataImportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testImportReturnsReportWithSpecifiedImportType()
+    public function testImportReturnsReportWithSpecifiedImportType(): void
     {
         $dataImportFacade = $this->getFacade();
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
@@ -68,7 +71,7 @@ class DataImportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testImportExecutesFullImport()
+    public function testImportExecutesFullImport(): void
     {
         $dataImportBusinessFactoryMock = $this->createDataImportBusinessFactoryMock();
         $dataImportFacade = $this->getFacade();
@@ -80,13 +83,14 @@ class DataImportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testImportExecutesSpecificDataImporter()
+    public function testImportExecutesSpecificDataImporter(): void
     {
         $dataImportBusinessFactoryMock = $this->createDataImportBusinessFactoryMock();
         $dataImportFacade = $this->getFacade();
         $dataImportFacade->setFactory($dataImportBusinessFactoryMock);
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImporterConfigurationTransfer->setImportType(static::IMPORT_TYPE_SPECIFIC_A);
+        $dataImporterConfigurationTransfer->setImportGroup(static::IMPORT_GROUP_FULL);
 
         $dataImportFacade->import($dataImporterConfigurationTransfer);
     }
@@ -94,7 +98,7 @@ class DataImportFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\DataImport\Business\DataImportFacade
      */
-    private function getFacade()
+    private function getFacade(): DataImportFacade
     {
         return $this->tester->getLocator()->dataImport()->facade();
     }
@@ -121,7 +125,7 @@ class DataImportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDumpImporterDumpsAListOfAppliedImporter()
+    public function testDumpImporterDumpsAListOfAppliedImporter(): void
     {
         $dumpedImporter = $this->getFacade()->listImporters();
         $this->assertIsArray($dumpedImporter);

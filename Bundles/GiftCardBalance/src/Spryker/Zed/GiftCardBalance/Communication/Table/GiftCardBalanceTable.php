@@ -162,6 +162,7 @@ class GiftCardBalanceTable extends AbstractTable
     protected function formatMoneyInt($value)
     {
         $moneyTransfer = $this->moneyFacade->fromInteger($value);
+
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
 }

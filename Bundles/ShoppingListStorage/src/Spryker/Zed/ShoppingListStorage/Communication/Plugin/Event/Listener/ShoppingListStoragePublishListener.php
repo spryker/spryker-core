@@ -15,7 +15,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingListStorage\Communication\ShoppingListStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepository getRepository()
+ * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
  */
 class ShoppingListStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
@@ -23,7 +23,7 @@ class ShoppingListStoragePublishListener extends AbstractPlugin implements Event
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Handles unpublish shipping list event.
      *
      * @api

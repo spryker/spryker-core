@@ -12,6 +12,7 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch
@@ -34,7 +35,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -47,7 +48,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    public function testFilter()
+    public function testFilter(): void
     {
         $ids = range(1, 200);
 
@@ -55,7 +56,7 @@ class IdFilterInsertTest extends Unit
             ->method('getIdCollection')
             ->willReturn($ids);
 
-        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterInsert->filter($ids, 'foo');
 
         $this->assertSame([], $result);
     }
@@ -63,7 +64,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    public function testFilterChunkedAllInDatabase()
+    public function testFilterChunkedAllInDatabase(): void
     {
         $countAboveChunkSize = 500;
 
@@ -77,14 +78,14 @@ class IdFilterInsertTest extends Unit
                 ->willReturn($itemIdChunk);
         }
 
-        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterInsert->filter($ids, 'foo');
         $this->assertSame([], $result);
     }
 
     /**
      * @return void
      */
-    public function testFilterChunkedNoneInDatabase()
+    public function testFilterChunkedNoneInDatabase(): void
     {
         $countAboveChunkSize = 500;
 
@@ -97,7 +98,7 @@ class IdFilterInsertTest extends Unit
                 ->willReturn([]);
         }
 
-        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterInsert->filter($ids, 'foo');
         $this->assertSame($ids, $result);
     }
 }

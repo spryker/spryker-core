@@ -138,9 +138,11 @@ class Discount implements DiscountInterface
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
             if ($discountTransfer->getVoucherCode()) {
                 $quoteTransfer->addVoucherDiscount($discountTransfer);
-            } else {
-                $quoteTransfer->addCartRuleDiscount($discountTransfer);
+
+                continue;
             }
+
+            $quoteTransfer->addCartRuleDiscount($discountTransfer);
         }
     }
 
@@ -227,9 +229,7 @@ class Discount implements DiscountInterface
             $voucherCodes[] = $voucherDiscountTransfer->getVoucherCode();
         }
 
-        $voucherCodes = array_merge($voucherCodes, $quoteTransfer->getUsedNotAppliedVoucherCodes());
-
-        return $voucherCodes;
+        return array_merge($voucherCodes, $quoteTransfer->getUsedNotAppliedVoucherCodes());
     }
 
     /**

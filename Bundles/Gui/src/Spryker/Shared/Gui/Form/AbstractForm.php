@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @deprecated Use `Spryker\Zed\Kernel\Communication\Form\AbstractType` for Zed and `Spryker\Yves\Kernel\Form\AbstractType` for Yves instead.
@@ -45,11 +45,11 @@ abstract class AbstractForm implements FormTypeInterface
     abstract protected function getDataClass();
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         if ($this->getDataClass() instanceof TransferInterface) {
             $resolver->setDefault('data_class', get_class($this->getDataClass()));

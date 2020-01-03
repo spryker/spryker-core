@@ -13,12 +13,11 @@ use Symfony\Component\Form\DataTransformerInterface;
 class ImageCollectionTransformer implements DataTransformerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CategoryImageTransfer[] $value The value in the original representation
      *
      * @return array|null The value in the transformed representation
-     *
      */
     public function transform($value)
     {
@@ -28,19 +27,18 @@ class ImageCollectionTransformer implements DataTransformerInterface
 
         $formImageCollection = [];
         foreach ($value as $categoryImageTransfer) {
-            $formImageCollection[$categoryImageTransfer->getSortOrder()] = $categoryImageTransfer;
+            $formImageCollection[] = $categoryImageTransfer;
         }
 
         return $formImageCollection;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $value The value in the transformed representation
      *
      * @return \ArrayObject|null The value in the original representation
-     *
      */
     public function reverseTransform($value)
     {
@@ -51,7 +49,6 @@ class ImageCollectionTransformer implements DataTransformerInterface
         $categoryImageTransferCollection = [];
         /** @var \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer */
         foreach ($value as $sortOrder => $categoryImageTransfer) {
-            $categoryImageTransfer->setSortOrder($sortOrder);
             $categoryImageTransferCollection[] = $categoryImageTransfer;
         }
 

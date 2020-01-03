@@ -14,12 +14,12 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiFactory getFactory()
+ * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,15 +30,16 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet(CartsRestApiConfig::ACTION_CARTS_GET)
-            ->addPost(CartsRestApiConfig::ACTION_CARTS_POST)
-            ->addDelete(CartsRestApiConfig::ACTION_CARTS_DELETE);
+            ->addGet('get')
+            ->addPost('post')
+            ->addDelete('delete')
+            ->addPatch('patch');
 
         return $resourceRouteCollection;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +51,7 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +63,7 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

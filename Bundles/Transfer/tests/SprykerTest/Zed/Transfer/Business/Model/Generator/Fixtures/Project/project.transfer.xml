@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<transfers>
-    <transfer name="NameOfTransfer">
-        <property name="name" type="string" />
-        <property name="selfReference" type="NameOfTransfer" />
-    </transfer>
-</transfers>

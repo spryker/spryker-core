@@ -1,3 +1,5 @@
 parameters:
     ignoreErrors:
-    - '#Method .+ProductQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
+        - '#Method .+ProductQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
+        - '#Parameter \#\d \$spyProductAbstractQuery of method .+ProductRepository::getPaginationModelFromQuery\(\) expects .+SpyProductAbstractQuery, Propel\\Runtime\\ActiveQuery\\Criteria given.#'
+        - '#Else branch is unreachable because ternary operator condition is always true.#'

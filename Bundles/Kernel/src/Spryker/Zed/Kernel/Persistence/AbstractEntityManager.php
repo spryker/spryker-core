@@ -29,7 +29,7 @@ abstract class AbstractEntityManager implements EntityManagerInterface
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container $container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
@@ -54,8 +54,6 @@ abstract class AbstractEntityManager implements EntityManagerInterface
     }
 
     /**
-     * @api
-     *
      * @param \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory $factory
      *
      * @return $this

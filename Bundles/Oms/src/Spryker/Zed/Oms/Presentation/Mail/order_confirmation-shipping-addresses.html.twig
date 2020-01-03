@@ -1,0 +1,15 @@
+ <table align="center" border="0.1" cellpadding="1" cellspacing="1">
+     <tbody>
+     <tr>
+         <td><strong>{{ 'mail.order.confirmation.shipment_details' | trans }}</strong></td>
+     </tr>
+     <tr>
+         <td>
+             {{ mail.order.shippingAddress.firstName }} {{ mail.order.shippingAddress.lastName }}<br />
+             {{ mail.order.shippingAddress.address1 }} {{ mail.order.shippingAddress.address2 }} {{ mail.order.shippingAddress.address3 }}<br />
+             {{ mail.order.shippingAddress.zipCode }} {{ mail.order.shippingAddress.city }}<br />
+             {{ mail.order.shippingAddress.region }}
+         </td>
+     </tr>
+     </tbody>
+ </table>

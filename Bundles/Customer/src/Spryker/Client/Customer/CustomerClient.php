@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CustomerClient extends AbstractClient implements CustomerClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -84,7 +84,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -100,7 +100,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -118,7 +118,41 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createSessionCustomerSession()
+            ->setCustomerRawData($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerRawData(): ?CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createSessionCustomerSession()
+            ->findCustomerRawData();
+
+        return $customerTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +168,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -155,7 +189,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -167,7 +201,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     {
         $customerTransfer = $this->getCustomerById($customerTransfer->getIdCustomer());
 
-        if ($customerTransfer && $customerTransfer->getIdCustomer()) {
+        if ($customerTransfer->getIdCustomer()) {
             return $customerTransfer;
         }
 
@@ -175,7 +209,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -193,7 +227,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -209,7 +243,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -225,7 +259,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -241,7 +275,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -263,7 +297,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -277,7 +311,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -291,7 +325,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -307,7 +341,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -323,7 +357,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -339,7 +373,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -355,7 +389,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -371,7 +405,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -387,7 +421,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -403,7 +437,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -419,7 +453,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -435,7 +469,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -451,7 +485,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -465,7 +499,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -481,7 +515,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -492,5 +526,21 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         return $this->getFactory()
             ->createCustomerSecuredPattern()
             ->getCustomerSecuredPattern();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerAccessTokenReader()
+            ->getCustomerByAccessToken($accessToken);
     }
 }

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Propel\Business\Model\Schema\Validator;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
+use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface;
 use Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidator;
@@ -17,6 +18,7 @@ use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -32,7 +34,7 @@ class PropelSchemaValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnsTransferWithoutErrorsWhenNoAttributeValueChangeIsDetected()
+    public function testValidateReturnsTransferWithoutErrorsWhenNoAttributeValueChangeIsDetected(): void
     {
         $groupedSchemaFinder = $this->getGroupedSchemaFinder($this->getSchemaFinderForValidCase());
         $propelSchemaValidator = new PropelSchemaValidator($groupedSchemaFinder, $this->getUtilTextService());
@@ -45,7 +47,7 @@ class PropelSchemaValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnsTransferWithErrorsWhenAttributeValueChangeIsDetected()
+    public function testValidateReturnsTransferWithErrorsWhenAttributeValueChangeIsDetected(): void
     {
         $groupedSchemaFinder = $this->getGroupedSchemaFinder($this->getSchemaFinderForInvalidCase());
         $propelSchemaValidator = new PropelSchemaValidator($groupedSchemaFinder, $this->getUtilTextService());
@@ -57,7 +59,7 @@ class PropelSchemaValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnsTransferWithoutErrorsWhenAttributeValueChangeIsDetectedButWhitelisted()
+    public function testValidateReturnsTransferWithoutErrorsWhenAttributeValueChangeIsDetectedButWhitelisted(): void
     {
         $groupedSchemaFinder = $this->getGroupedSchemaFinder($this->getSchemaFinderForInvalidCase());
         $propelSchemaValidator = new PropelSchemaValidator($groupedSchemaFinder, $this->getUtilTextService(), ['foo_bar.schema.xml' => ['type']]);
@@ -71,7 +73,7 @@ class PropelSchemaValidatorTest extends Unit
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface
      */
-    protected function getGroupedSchemaFinder(PropelSchemaFinderInterface $innerFinder)
+    protected function getGroupedSchemaFinder(PropelSchemaFinderInterface $innerFinder): PropelGroupedSchemaFinderInterface
     {
         return new PropelGroupedSchemaFinder($innerFinder);
     }
@@ -79,7 +81,7 @@ class PropelSchemaValidatorTest extends Unit
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
-    protected function getSchemaFinderForValidCase()
+    protected function getSchemaFinderForValidCase(): PropelSchemaFinderInterface
     {
         $schemaFinder = new PropelSchemaFinder([
             __DIR__ . '/Fixtures/Valid/*/',
@@ -91,7 +93,7 @@ class PropelSchemaValidatorTest extends Unit
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
-    protected function getSchemaFinderForInvalidCase()
+    protected function getSchemaFinderForInvalidCase(): PropelSchemaFinderInterface
     {
         $schemaFinder = new PropelSchemaFinder([
             __DIR__ . '/Fixtures/Invalid/*/',
@@ -103,7 +105,7 @@ class PropelSchemaValidatorTest extends Unit
     /**
      * @return \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge
      */
-    protected function getUtilTextService()
+    protected function getUtilTextService(): PropelToUtilTextServiceBridge
     {
         return new PropelToUtilTextServiceBridge(new UtilTextService());
     }

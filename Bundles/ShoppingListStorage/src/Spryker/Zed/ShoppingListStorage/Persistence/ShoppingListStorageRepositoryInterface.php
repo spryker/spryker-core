@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface ShoppingListStorageRepositoryInterface
@@ -38,4 +39,12 @@ interface ShoppingListStorageRepositoryInterface
      * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $shoppingListCustomerStorageEntityIds
+     *
+     * @return \Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer[]
+     */
+    public function findFilteredShoppingListCustomerStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): array;
 }

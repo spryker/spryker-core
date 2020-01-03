@@ -19,7 +19,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterfac
 class CustomerOauthUserProviderPlugin extends AbstractPlugin implements OauthUserProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,19 +33,11 @@ class CustomerOauthUserProviderPlugin extends AbstractPlugin implements OauthUse
             return false;
         }
 
-        if (!$oauthUserTransfer->getClientId()) {
-            return false;
-        }
-
-        if ($oauthUserTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -265,4 +265,32 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $mimeTypeCollectionTransfer;
     }
+
+    /**
+     * @param int[] $idFiles
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer[]
+     */
+    public function getFilesByIds(array $idFiles): array
+    {
+        $query = $this->getFactory()->createFileQuery();
+        $query->joinWithSpyFileInfo()
+            ->filterByIdFile_In($idFiles)
+            ->addDescendingOrderByColumn(SpyFileInfoTableMap::COL_VERSION);
+
+        $fileEntities = $query->find();
+
+        if (!$fileEntities->count()) {
+            return [];
+        }
+
+        $fileTransfers = [];
+        $fileManagerMapper = $this->getFactory()->createFileManagerMapper();
+
+        foreach ($fileEntities as $fileEntity) {
+            $fileTransfers[] = $fileManagerMapper->mapFileEntityToTransfer($fileEntity, new FileTransfer());
+        }
+
+        return $fileTransfers;
+    }
 }

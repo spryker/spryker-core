@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUser\Business;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -23,7 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +40,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +56,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +72,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +88,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -103,7 +104,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -119,7 +120,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -136,7 +137,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -150,7 +151,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -164,7 +165,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -179,7 +180,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -194,7 +195,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -210,7 +211,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -226,7 +227,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -242,7 +243,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -259,7 +260,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -273,7 +274,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -291,7 +292,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -307,7 +308,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -320,5 +321,21 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
         return $this->getFactory()
             ->createCompanyUser()
             ->findActiveCompanyUserIdsByCompanyIds($companyIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
     }
 }

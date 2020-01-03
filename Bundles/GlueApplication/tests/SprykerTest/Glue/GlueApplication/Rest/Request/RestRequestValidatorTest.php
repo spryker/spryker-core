@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication
@@ -98,7 +100,7 @@ class RestRequestValidatorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createRestRequestValidatorPluginMock(): MockObject
     {
@@ -113,7 +115,7 @@ class RestRequestValidatorTest extends Unit
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface
      */
-    protected function createRestRequestValidator(array $plugins = [], $restRequestValidatorPlugins = []): RestRequestValidatorInterface
+    protected function createRestRequestValidator(array $plugins = [], array $restRequestValidatorPlugins = []): RestRequestValidatorInterface
     {
         return new RestRequestValidator($plugins, $restRequestValidatorPlugins);
     }

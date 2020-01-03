@@ -21,9 +21,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyUnitAddressRepository extends AbstractRepository implements CompanyUnitAddressRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
@@ -45,14 +43,14 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $entityTransfer = $this->buildQueryFromCriteria($query)->find();
 
         return $this->getFactory()
-            ->createCompanyUniAddressMapper()
+            ->createCompanyUnitAddressMapper()
             ->mapEntityTransferToCompanyUnitAddressTransfer($entityTransfer[0], $companyUnitAddressTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
-     * @api
+     * @deprecated Use `getCompanyBusinessUnitAddressesByCriteriaFilter()` and `getCompanyBusinessUnitAddressToBusinessUnitRelations()` instead.
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
@@ -61,7 +59,6 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-
         $query = $this->getFactory()
             ->createCompanyUnitAddressQuery()
             ->innerJoinWithCountry()
@@ -87,7 +84,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $collectionTransfer = new CompanyUnitAddressCollectionTransfer();
         foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
             $unitAddressTransfer = $this->getFactory()
-                ->createCompanyUniAddressMapper()
+                ->createCompanyUnitAddressMapper()
                 ->mapEntityTransferToCompanyUnitAddressTransfer(
                     $companyUnitAddressEntityTransfer,
                     new CompanyUnitAddressTransfer()
@@ -99,6 +96,77 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 
         return $collectionTransfer;
+    }
+
+    /**
+     * @module Country
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyBusinessUnitAddressesByCriteriaFilter(
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUnitAddressCollectionTransfer {
+        $companyUnitAddressQuery = $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->innerJoinWithCountry();
+
+        if ($criteriaFilterTransfer->getIdCompany() !== null) {
+            $companyUnitAddressQuery->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+        }
+
+        if ($criteriaFilterTransfer->getIdCompanyBusinessUnit() !== null) {
+            $companyUnitAddressQuery->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery()
+                    ->filterByFkCompanyBusinessUnit($criteriaFilterTransfer->getIdCompanyBusinessUnit())
+                ->endUse();
+        }
+
+        $companyUnitAddressCollection = $this->buildQueryFromCriteria($companyUnitAddressQuery, $criteriaFilterTransfer->getFilter());
+        /** @var \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers */
+        $companyUnitAddressEntityTransfers = $this->getPaginatedCollection($companyUnitAddressCollection, $criteriaFilterTransfer->getPagination());
+
+        $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
+        foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
+            $companyUnitAddressTransfer = $this->getFactory()
+                ->createCompanyUnitAddressMapper()
+                ->mapEntityTransferToCompanyUnitAddressTransfer(
+                    $companyUnitAddressEntityTransfer,
+                    new CompanyUnitAddressTransfer()
+                );
+
+            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($companyUnitAddressTransfer);
+        }
+
+        $companyUnitAddressCollectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
+
+        return $companyUnitAddressCollectionTransfer;
+    }
+
+    /**
+     * @module CompanyBusinessUnit
+     *
+     * @param int[] $companyUnitAddressIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer[]
+     */
+    public function getCompanyBusinessUnitAddressToBusinessUnitRelations(
+        array $companyUnitAddressIds
+    ): array {
+        $companyUnitAddressToCompanyBusinessUnitQuery = $this->getFactory()
+            ->createCompanyUnitAddressToCompanyBusinessUnitQuery()
+            ->filterByFkCompanyUnitAddress_In(
+                $companyUnitAddressIds
+            )
+            ->leftJoinWithCompanyBusinessUnit();
+
+        $companyBusinessUnitEntity = $this->buildQueryFromCriteria($companyUnitAddressToCompanyBusinessUnitQuery)->find();
+
+        $indexedCompanyBusinessUnitTransfers = $this->getFactory()
+            ->createCompanyUnitAddressMapper()
+            ->mapEntitiesToCompanyBusinessUnitTransfers($companyBusinessUnitEntity);
+
+        return $indexedCompanyBusinessUnitTransfers;
     }
 
     /**
@@ -129,8 +197,40 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         }
 
         return $this->getFactory()
-            ->createCompanyUniAddressMapper()
+            ->createCompanyUnitAddressMapper()
             ->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer($companyUnitAddressEntity, new CompanyUnitAddressTransfer());
+    }
+
+    /**
+     * @module CompanyBusinessUnit
+     * @module Country
+     *
+     * @param string $companyBusinessUnitAddressUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyBusinessUnitAddressByUuid(string $companyBusinessUnitAddressUuid): ?CompanyUnitAddressTransfer
+    {
+        /** @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null $companyUnitAddressEntity */
+        $companyUnitAddressEntity = $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->filterByUuid($companyBusinessUnitAddressUuid)
+            ->leftJoinWithCountry()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinCompanyBusinessUnit()
+            ->endUse()
+            ->findOne();
+
+        if (!$companyUnitAddressEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUnitAddressMapper()
+            ->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
+                $companyUnitAddressEntity,
+                new CompanyUnitAddressTransfer()
+            );
     }
 
     /**

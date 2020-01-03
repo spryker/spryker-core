@@ -5,5 +5,11 @@
 
 'use strict';
 
-require('./modules/form-clear');
+if (!window.ContentGui) {
+    require('../sass/main.scss');
+    require('./modules/form-clear');
+    window.ContentGui = true;
+}
+
+
 

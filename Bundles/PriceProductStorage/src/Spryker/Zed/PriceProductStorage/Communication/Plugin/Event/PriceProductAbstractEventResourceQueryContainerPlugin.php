@@ -23,7 +23,7 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 class PriceProductAbstractEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class PriceProductAbstractEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,15 +47,15 @@ class PriceProductAbstractEventResourceQueryContainerPlugin extends AbstractPlug
     {
         $query = $this->getQueryContainer()->queryAllProductAbstractIdsByPriceProductIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class PriceProductAbstractEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductStorageClientInterface;
-use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Dependency\RestApiResource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReader;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReaderInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder\UpSellingProductRestResponseBuilder;
@@ -77,7 +77,7 @@ class UpSellingProductsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface
+     * @return \Spryker\Glue\UpSellingProductsRestApi\Dependency\RestApiResource\UpSellingProductsRestApiToProductsRestApiResourceInterface
      */
     public function getProductsRestApiResource(): UpSellingProductsRestApiToProductsRestApiResourceInterface
     {

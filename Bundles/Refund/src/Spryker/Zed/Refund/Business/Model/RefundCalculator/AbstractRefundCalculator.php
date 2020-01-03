@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Refund\Business\Model\RefundCalculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
 
 abstract class AbstractRefundCalculator implements RefundCalculatorInterface
 {
@@ -21,6 +22,23 @@ abstract class AbstractRefundCalculator implements RefundCalculatorInterface
     {
         foreach ($salesOrderItems as $salesOrderItem) {
             if ($salesOrderItem->getIdSalesOrderItem() === $itemTransfer->getIdSalesOrderItem()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isItemAdded(RefundTransfer $refundTransfer, ItemTransfer $itemTransfer): bool
+    {
+        foreach ($refundTransfer->getItems() as $item) {
+            if ($item->getIdSalesOrderItem() === $itemTransfer->getIdSalesOrderItem()) {
                 return true;
             }
         }

@@ -5,7 +5,9 @@ Active,Aktiv
 "Allow to search for this category:","Ermöglicht die Suche nach dieser Kategorie:"
 "Assign products","Produkte zuweisen"
 "Assign Products to this Category","Produkte dieser Kategorie zuweisen"
-"Category key:",Kategorie-Key:
+Category,Kategorien
+"Category key:",Kategorieschlüssel:
+"Category Key",Kategorieschlüssel
 "Category nodes successfully re-sorted.","Kategorieknoten erfolgreich umsortiert."
 "Category nodes successfully reordered.","Kategorieknoten erfolgreich neu geordnet."
 "Category status",Kategorie-Status
@@ -37,7 +39,8 @@ Searchable,Suchbar
 Translations,Übersetzungen
 View,Ansicht
 "View category","Kategorie anzeigen"
+Visible,Sichtbar
 "Visible in the category tree","Sichtbar im Kategorienbaum"
 "Visible in the category tree:","Sichtbar im Kategorienbaum:"
 yes,Ja
-"Yes, I am sure",
+"Yes, I am sure","Ja, ich bin sicher."

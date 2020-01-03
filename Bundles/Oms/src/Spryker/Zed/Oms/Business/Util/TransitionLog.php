@@ -248,7 +248,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getLogForOrder(SpySalesOrder $order)
     {
@@ -258,7 +258,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param string $queryString
      *
-     * @return array
+     * @return string[]
      */
     protected function getParamsFromQueryString($queryString)
     {

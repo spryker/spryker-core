@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
+use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 
 /**
@@ -28,6 +29,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->createAttributeMap(),
             $this->getQueryContainer(),
+            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -56,10 +58,18 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductBridge
+     * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
      */
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductStorageToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_STORE);
     }
 }

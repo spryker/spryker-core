@@ -17,4 +17,11 @@ interface OauthCompanyUserToCompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer;
+
+    /**
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array;
 }

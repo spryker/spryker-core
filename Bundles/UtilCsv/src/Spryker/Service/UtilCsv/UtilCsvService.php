@@ -18,13 +18,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class UtilCsvService extends AbstractService implements UtilCsvServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return array
+     * @return string[][]
      */
     public function readUploadedFile(UploadedFile $file): array
     {
@@ -34,7 +34,7 @@ class UtilCsvService extends AbstractService implements UtilCsvServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

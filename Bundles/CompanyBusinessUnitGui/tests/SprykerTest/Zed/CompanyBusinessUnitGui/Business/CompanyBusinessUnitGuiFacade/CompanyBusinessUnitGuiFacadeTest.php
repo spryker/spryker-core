@@ -8,11 +8,13 @@
 namespace SprykerTest\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyBusinessUnitGui
@@ -37,7 +39,10 @@ class CompanyBusinessUnitGuiFacadeTest extends Unit
     public function testFindCompanyBusinessUnitNameFindCompanyBusinessUnitNameByIdCompanyUser(): void
     {
         // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+
         $customerTransfer = $this->tester->haveCustomer();
         $companyUserTransfer = $this->tester->haveCompanyUser([
             CompanyUserTransfer::CUSTOMER => $customerTransfer,

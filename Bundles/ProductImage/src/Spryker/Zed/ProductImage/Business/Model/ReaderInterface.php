@@ -27,6 +27,13 @@ interface ReaderInterface
     public function getProductImagesSetCollectionByProductId($idProduct);
 
     /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array;
+
+    /**
      * @param int $idProductImageSet
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null

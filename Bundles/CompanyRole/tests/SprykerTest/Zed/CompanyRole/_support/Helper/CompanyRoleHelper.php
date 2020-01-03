@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\CompanyRoleBuilder;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface;
-use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyRoleHelper extends Module
@@ -51,13 +50,5 @@ class CompanyRoleHelper extends Module
     protected function getCompanyRoleFacade(): CompanyRoleFacadeInterface
     {
         return $this->getLocator()->companyRole()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface
-     */
-    protected function getCompanyUserFacade(): CompanyUserFacadeInterface
-    {
-        return $this->getLocator()->companyUser()->facade();
     }
 }

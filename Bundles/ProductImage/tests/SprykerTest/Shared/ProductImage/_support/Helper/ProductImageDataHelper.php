@@ -7,11 +7,14 @@
 
 namespace SprykerTest\Shared\ProductImage\Helper;
 
+use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Orm\Zed\ProductImage\Persistence\SpyProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -52,13 +55,15 @@ class ProductImageDataHelper extends Module
 
         $productImageSetSeed = [
             ProductImageSetTransfer::NAME => static::NAME,
-            ProductImageSetTransfer::PRODUCT_IMAGES => [$productImageTransfer],
             ProductImageSetTransfer::LOCALE => $this->getLocaleFacade()->getCurrentLocale(),
         ];
 
         $productImageSetTransfer = (new ProductImageSetBuilder())
             ->seed($productImageSetOverride + $productImageSetSeed)
             ->build();
+
+        $productImages = $productImageSetOverride[ProductImageSetTransfer::PRODUCT_IMAGES] ?? [$productImageTransfer];
+        $productImageSetTransfer->setProductImages(new ArrayObject($productImages));
 
         $productImageSetTransfer = $productImageFacade->saveProductImageSet($productImageSetTransfer);
 
@@ -67,11 +72,37 @@ class ProductImageDataHelper extends Module
             $productImageSetTransfer->getIdProductImageSet()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productImageSetTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productImageSetTransfer): void {
             $this->cleanupProductImageSet($productImageSetTransfer);
         });
 
         return $productImageSetTransfer;
+    }
+
+    /**
+     * @param int $idProductImageSet
+     * @param int $sortOrder
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage
+     */
+    public function createProductImageSetToProductImage(
+        int $idProductImageSet,
+        int $sortOrder
+    ): SpyProductImageSetToProductImage {
+        $productImage = new SpyProductImage();
+        $productImage
+            ->setExternalUrlLarge(static::URL_LARGE)
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->save();
+
+        $productImageSetToProductImage = new SpyProductImageSetToProductImage();
+        $productImageSetToProductImage
+            ->setFkProductImage($productImage->getIdProductImage())
+            ->setFkProductImageSet($idProductImageSet)
+            ->setSortOrder($sortOrder)
+            ->save();
+
+        return $productImageSetToProductImage;
     }
 
     /**

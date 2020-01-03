@@ -83,9 +83,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

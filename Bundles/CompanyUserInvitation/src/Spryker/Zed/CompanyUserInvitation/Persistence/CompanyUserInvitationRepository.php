@@ -40,7 +40,7 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
         $queryCompanyUserInvitation = $this->applyQueryFilters($queryCompanyUserInvitation, $companyUserInvitationCriteriaFilterTransfer);
 
         if ($companyUserInvitationCriteriaFilterTransfer->getFilter() !== null) {
-            $queryCompanyUserInvitation = $this->setQueryCriteria(
+            $queryCompanyUserInvitation = $this->buildQueryFromCriteria(
                 $queryCompanyUserInvitation,
                 $companyUserInvitationCriteriaFilterTransfer->getFilter()
             );
@@ -146,7 +146,6 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
         SpyCompanyUserInvitationQuery $queryCompanyUserInvitation,
         CompanyUserInvitationCriteriaFilterTransfer $companyUserInvitationCriteriaFilterTransfer
     ): SpyCompanyUserInvitationQuery {
-
         if ($companyUserInvitationCriteriaFilterTransfer->getFkCompany()) {
             $queryCompanyUserInvitation->useSpyCompanyUserQuery()->filterByFkCompany(
                 $companyUserInvitationCriteriaFilterTransfer->getFkCompany(),
@@ -172,26 +171,18 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function setQueryCriteria(ModelCriteria $query, FilterTransfer $filterTransfer): ModelCriteria
+    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
     {
-        if ($filterTransfer->getLimit()) {
-            $query->setLimit($filterTransfer->getLimit());
-        }
+        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
 
-        if ($filterTransfer->getOffset()) {
-            $query->setOffset($filterTransfer->getOffset());
-        }
+        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
-        if ($filterTransfer->getOrderBy() && $filterTransfer->getOrderDirection()) {
-            $query->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
-        }
-
-        return $query;
+        return $criteria;
     }
 
     /**

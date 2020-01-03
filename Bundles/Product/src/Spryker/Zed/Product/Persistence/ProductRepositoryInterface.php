@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 
 interface ProductRepositoryInterface
@@ -53,6 +57,13 @@ interface ProductRepositoryInterface
     public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int;
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -69,7 +80,7 @@ interface ProductRepositoryInterface
     /**
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 
@@ -93,4 +104,45 @@ interface ProductRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param string $search
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
+     */
+    public function getProductAbstractSuggestionCollectionBySkuOrLocalizedName(
+        string $search,
+        PaginationTransfer $paginationTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductAbstractSuggestionCollectionTransfer;
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
 }

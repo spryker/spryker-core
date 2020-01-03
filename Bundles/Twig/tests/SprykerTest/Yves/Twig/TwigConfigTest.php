@@ -12,6 +12,7 @@ use Spryker\Yves\Twig\TwigConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Twig
@@ -21,19 +22,96 @@ use Spryker\Yves\Twig\TwigConfig;
 class TwigConfigTest extends Unit
 {
     /**
+     * @var \SprykerTest\Yves\Twig\TwigYvesTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function testGetTemplatePathsShouldReturnAnArray()
+    public function testGetTemplatePathsShouldReturnOnlyDefaultTemplatePaths(): void
     {
-        $twigConfig = new TwigConfig();
+        $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
+        $twigConfig = $this->tester->getModuleConfig();
 
-        $this->assertIsArray($twigConfig->getTemplatePaths());
+        $templatePaths = $twigConfig->getTemplatePaths();
+
+        $this->tester->assertPathsInOrder(
+            $templatePaths,
+            [
+                $this->tester->getDefaultPathProjectWithStore(),
+                $this->tester->getDefaultPathProjectWithoutStore(),
+                $this->tester->getDefaultPathProjectSharedWithStore(),
+                $this->tester->getDefaultPathProjectSharedWithoutStore(),
+                $this->tester->getPathSprykerShop(),
+                $this->tester->getPathSprykerShopShared(),
+                $this->tester->getPathSpryker(),
+                $this->tester->getPathSprykerShared(),
+            ]
+        );
     }
 
     /**
      * @return void
      */
-    public function testGetCacheFilePathReturnsString()
+    public function testGetTemplatePathsShouldReturnOnlyDefaultTemplatePathsWhenThemeNameEqualsDefaultThemeName(): void
+    {
+        $this->tester->mockConfigMethod('getThemeName', 'default');
+        $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
+        $twigConfig = $this->tester->getModuleConfig();
+
+        $templatePaths = $twigConfig->getTemplatePaths();
+
+        $this->tester->assertPathsInOrder(
+            $templatePaths,
+            [
+                $this->tester->getDefaultPathProjectWithStore(),
+                $this->tester->getDefaultPathProjectWithoutStore(),
+                $this->tester->getDefaultPathProjectSharedWithStore(),
+                $this->tester->getDefaultPathProjectSharedWithoutStore(),
+                $this->tester->getPathSprykerShop(),
+                $this->tester->getPathSprykerShopShared(),
+                $this->tester->getPathSpryker(),
+                $this->tester->getPathSprykerShared(),
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetTemplatePathsShouldReturnCustomAndDefaultTemplatePaths(): void
+    {
+        $this->tester->mockConfigMethod('getThemeName', 'custom');
+        $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
+
+        $twigConfig = $this->tester->getModuleConfig();
+
+        $templatePaths = $twigConfig->getTemplatePaths();
+
+        $this->tester->assertPathsInOrder(
+            $templatePaths,
+            [
+                $this->tester->getCustomPathProjectWithStore(),
+                $this->tester->getCustomPathProjectWithoutStore(),
+                $this->tester->getCustomPathProjectSharedWithStore(),
+                $this->tester->getCustomPathProjectSharedWithoutStore(),
+                $this->tester->getDefaultPathProjectWithStore(),
+                $this->tester->getDefaultPathProjectWithoutStore(),
+                $this->tester->getDefaultPathProjectSharedWithStore(),
+                $this->tester->getDefaultPathProjectSharedWithoutStore(),
+                $this->tester->getPathSprykerShop(),
+                $this->tester->getPathSprykerShopShared(),
+                $this->tester->getPathSpryker(),
+                $this->tester->getPathSprykerShared(),
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCacheFilePathReturnsString(): void
     {
         $twigConfig = new TwigConfig();
         $this->assertIsString($twigConfig->getCacheFilePath());
@@ -42,9 +120,17 @@ class TwigConfigTest extends Unit
     /**
      * @return void
      */
-    public function testIsPathCacheEnabledReturnsBoolean()
+    public function testIsPathCacheEnabledReturnsBoolean(): void
     {
         $twigConfig = new TwigConfig();
         $this->assertIsBool($twigConfig->isPathCacheEnabled());
+    }
+
+    /**
+     * @return \Spryker\Yves\Twig\TwigConfig
+     */
+    public function getModuleConfig(): TwigConfig
+    {
+        return $this->tester->getModuleConfig();
     }
 }

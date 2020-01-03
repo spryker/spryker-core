@@ -22,7 +22,10 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
     protected const NAMESPACE_SPRYKER_ECO = 'SprykerEco';
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
+    protected const NAMESPACE_SPRYKER_MIDDLEWARE = 'SprykerMiddleware';
     protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
+
+    protected const GROUP_SPRYKER_TEST = 'SprykerTest';
 
     public const APPLICATION_NAMESPACES = [
         'Orm',
@@ -48,10 +51,13 @@ class DevelopmentConfig extends AbstractBundleConfig
         self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
         self::NAMESPACE_SPRYKER_ECO => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-eco/',
         self::NAMESPACE_SPRYKER_SDK => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-sdk/',
+        self::NAMESPACE_SPRYKER_MIDDLEWARE => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-middleware/',
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-merchant-portal/',
     ];
 
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
+
+    protected const TIMEOUT_DEFAULT = 4800;
 
     /**
      * @return int
@@ -260,6 +266,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Psr\\Container\\' => 'spryker/container',
             'Propel\\' => 'spryker/propel-orm',
             'Silex\\' => 'spryker/silex',
+            'Spryker\\DecimalObject\\' => 'spryker/decimal-object',
             'Pimple' => 'spryker/container',
             'Predis\\' => 'spryker/redis',
             'Guzzle\\' => 'spryker/guzzle',
@@ -275,6 +282,8 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
             'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
+            'JsonPath\\' => 'spryker/json-path',
+            'JsonSchema\\' => 'spryker/json-schema',
         ];
     }
 
@@ -437,6 +446,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getArchitectureSnifferRuleset()
     {
         $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+
         return $vendorDir . 'spryker/architecture-sniffer/src/ruleset.xml';
     }
 
@@ -550,10 +560,36 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `spryker/module-finder` instead.
+     *
      * @return string[]
      */
     public function getInternalPackageDirectories(): array
     {
         return static::INTERNAL_PACKAGE_DIRECTORIES;
+    }
+
+    /**
+     * Specification:
+     * - Returns group names to run only tests that have all of the groups.
+     * - Example: ['Customer', 'Communication'] inclusive parameter runs tests Communication suite in Customer module.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getDefaultInclusiveGroups(): array
+    {
+        return [
+            static::GROUP_SPRYKER_TEST,
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getProcessTimeout(): int
+    {
+        return static::TIMEOUT_DEFAULT;
     }
 }

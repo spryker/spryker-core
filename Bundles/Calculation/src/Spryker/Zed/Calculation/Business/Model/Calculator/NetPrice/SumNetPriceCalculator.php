@@ -24,8 +24,8 @@ class SumNetPriceCalculator implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->calculateItemGrossAmountForItems($calculableObjectTransfer->getItems());
-        $this->calculateSumGrossPriceForExpenses($calculableObjectTransfer->getExpenses());
+        $this->calculateItemNetAmountForItems($calculableObjectTransfer->getItems());
+        $this->calculateSumNetPriceForExpenses($calculableObjectTransfer->getExpenses());
     }
 
     /**
@@ -33,7 +33,7 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
+    protected function calculateSumNetPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
             if ($expenseTransfer->getIsOrdered() === true) {
@@ -85,7 +85,7 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateItemGrossAmountForItems(ArrayObject $items)
+    protected function calculateItemNetAmountForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
             $this->addCalculatedItemNetAmounts($itemTransfer);

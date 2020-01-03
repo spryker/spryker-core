@@ -23,8 +23,12 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
                     projectNamespaces: ['Pyz']
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
+                - \SprykerTest\Zed\Company\Helper\CompanyHelper
+                - \SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper
                 - \SprykerTest\Zed\CompanyUnitAddressLabel\Helper\CompanyUnitAddressLabelDataHelper
-
+                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                - \SprykerTest\Zed\Country\Helper\CountryDataHelper

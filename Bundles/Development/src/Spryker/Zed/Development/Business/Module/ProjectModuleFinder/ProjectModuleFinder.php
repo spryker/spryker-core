@@ -16,6 +16,9 @@ use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 class ProjectModuleFinder implements ProjectModuleFinderInterface
 {
     /**

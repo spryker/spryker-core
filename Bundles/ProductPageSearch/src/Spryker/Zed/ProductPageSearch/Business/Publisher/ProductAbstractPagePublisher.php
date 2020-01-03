@@ -15,6 +15,7 @@ use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
@@ -50,24 +51,32 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $productPageSearchWriter;
 
     /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
      * @param \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductPageSearchQueryContainerInterface $queryContainer,
         array $pageDataExpanderPlugins,
         array $productPageDataLoaderPlugins,
         ProductPageSearchMapperInterface $productPageSearchMapper,
-        ProductPageSearchWriterInterface $productPageSearchWriter
+        ProductPageSearchWriterInterface $productPageSearchWriter,
+        ProductPageSearchToStoreFacadeInterface $storeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;
         $this->productPageSearchMapper = $productPageSearchMapper;
         $this->productPageSearchWriter = $productPageSearchWriter;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -140,6 +149,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
+        $productCategories = $this->getProductCategoriesByProductAbstractIds($productAbstractIds);
+        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productCategories, $productAbstractLocalizedEntities);
+
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 
         if (!$productAbstractLocalizedEntities) {
@@ -402,7 +414,141 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        return $this->queryContainer->queryProductAbstractByIds($productAbstractIds)->find()->getData();
+        $allProductAbstractLocalizedEntities = [];
+        $localesByStore = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $productAbstractLocalizedEntities = $this
+                ->queryContainer
+                ->queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore($productAbstractIds, $storeTransfer)
+                ->find()
+                ->getData();
+
+            if (!isset($localesByStore[$storeTransfer->getName()])) {
+                $localesByStore[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
+            }
+            $productConcreteEntities = $this->getProductConcreteEntitiesWithProductSearchEntities($productAbstractIds, $localesByStore[$storeTransfer->getName()]);
+            $allProductAbstractLocalizedEntities[] = $this->hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities($productConcreteEntities, $productAbstractLocalizedEntities);
+        }
+
+        return array_merge(...$allProductAbstractLocalizedEntities);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return array[][]
+     */
+    protected function getProductConcreteEntitiesWithProductSearchEntities(array $productAbstractIds, array $localeIsoCodes): array
+    {
+        $productConcreteEntities = $this->getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes);
+        $productSearchEntities = $this->getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array_column($productConcreteEntities, 'id_product'), $localeIsoCodes);
+        $productConcreteEntities = $this->hydrateProductConcreteEntitiesWithProductSearchEntities($productSearchEntities, $productConcreteEntities);
+
+        return $productConcreteEntities;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return array
+     */
+    protected function getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes(array $productAbstractIds, array $localeIsoCodes): array
+    {
+        return $this->queryContainer
+            ->queryProductConcretesByAbstractProductIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return array
+     */
+    protected function getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array $productConcreteIds, array $localeIsoCodes): array
+    {
+        return $this->queryContainer
+            ->queryProductSearchByProductConcreteIdsAndLocaleIsoCodes($productConcreteIds, $localeIsoCodes)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param array $productSearchEntities
+     * @param array $productConcreteEntities
+     *
+     * @return array[][]
+     */
+    protected function hydrateProductConcreteEntitiesWithProductSearchEntities(array $productSearchEntities, array $productConcreteEntities): array
+    {
+        $productSearchByProductConcreteId = [];
+
+        foreach ($productSearchEntities as $productSearch) {
+            $productSearchByProductConcreteId[$productSearch['fk_product']][] = $productSearch;
+        }
+
+        foreach ($productConcreteEntities as $key => $productConcreteEntity) {
+            $productConcreteId = (int)$productConcreteEntity['id_product'];
+            $productConcreteEntities[$key]['SpyProductSearches'] = $productSearchByProductConcreteId[$productConcreteId];
+        }
+
+        return $productConcreteEntities;
+    }
+
+    /**
+     * @param array $productCategories
+     * @param array $productAbstractLocalizedEntities
+     *
+     * @return array[][]
+     */
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductCategories(array $productCategories, array $productAbstractLocalizedEntities)
+    {
+        $productCategoriesByProductAbstractId = [];
+
+        foreach ($productCategories as $productCategory) {
+            $productCategoriesByProductAbstractId[$productCategory['fk_product_abstract']][] = $productCategory;
+        }
+
+        foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
+            $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
+            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProductCategories'] = $productCategoriesByProductAbstractId[$productAbstractId];
+        }
+
+        return $productAbstractLocalizedEntities;
+    }
+
+    /**
+     * @param array $productConcreteData
+     * @param array $productAbstractLocalizedEntities
+     *
+     * @return array[][]
+     */
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities(array $productConcreteData, array $productAbstractLocalizedEntities): array
+    {
+        $productConcretesByProductAbstractId = [];
+        foreach ($productConcreteData as $productConcrete) {
+            $productConcretesByProductAbstractId[$productConcrete['fk_product_abstract']][] = $productConcrete;
+        }
+
+        foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
+            $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
+            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProducts'] = $productConcretesByProductAbstractId[$productAbstractId];
+        }
+
+        return $productAbstractLocalizedEntities;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function getProductCategoriesByProductAbstractIds(array $productAbstractIds)
+    {
+        return $this->queryContainer->queryAllProductCategories($productAbstractIds)->find()->getData();
     }
 
     /**
@@ -478,14 +624,14 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
                 $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
                 new SpyProductAbstractPageSearch();
 
+            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
+
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
                 static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY => $searchEntity,
                 static::LOCALE_NAME => $localeName,
                 static::STORE_NAME => $storeName,
             ];
-
-            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
         }
 
         return [$pairs, $mappedProductAbstractPageSearchEntities];

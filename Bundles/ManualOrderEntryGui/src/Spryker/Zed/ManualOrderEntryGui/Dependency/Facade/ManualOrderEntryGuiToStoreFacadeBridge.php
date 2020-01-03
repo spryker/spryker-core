@@ -23,7 +23,7 @@ class ManualOrderEntryGuiToStoreFacadeBridge implements ManualOrderEntryGuiToSto
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries()
     {

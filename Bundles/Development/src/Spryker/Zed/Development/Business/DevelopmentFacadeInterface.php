@@ -21,6 +21,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface DevelopmentFacadeInterface
 {
     /**
+     * Specification:
+     * - Runs vendor/bin/phpcs or vendor/bin/phpcbf as wrapper for easier use.
+     * - If no module is given, it will run over the whole repository.
+     *
      * @api
      *
      * @param string|null $module
@@ -31,16 +35,39 @@ interface DevelopmentFacadeInterface
     public function checkCodeStyle($module = null, array $options = []);
 
     /**
+     * Specification:
+     * - Runs `vendor/bin/codecept run` as wrapper for easier use.
+     * - If no (core) module is given, it will run on project level.
+     *
      * @api
      *
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runTest($module, array $options = []);
+    public function runTest(?string $module, array $options = []): int;
 
     /**
+     * Specification:
+     * - Runs `vendor/bin/codecept fixtures` as wrapper for easier use.
+     * - If no (core) module is given, it will run on project level.
+     * - If options contains "initialize", it will also run vendor/bin/codecept build.
+     *
+     * @api
+     *
+     * @param string|null $module
+     * @param array $options
+     *
+     * @return int
+     */
+    public function runFixtures(?string $module, array $options = []): int;
+
+    /**
+     * Specification:
+     * - Runs the vendor/bin/phpmd as wrapper for easier use.
+     * - If no (core) module is given, it will run on project level.
+     *
      * @api
      *
      * @param string|null $module
@@ -53,6 +80,8 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
+     * @internal
+     *
      * @param string $module
      * @param string $toModule
      * @param array $methods
@@ -63,6 +92,8 @@ interface DevelopmentFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use Spryk tool instead.
      *
      * @param string $module
      * @param array $options
@@ -180,7 +211,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @return bool
+     * @return array
      */
     public function getAdjacencyMatrixData();
 
@@ -414,4 +445,17 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
      */
     public function getModuleOverview(): array;
+
+    /**
+     * Specification:
+     * - Returns the composer name for a module if module is not ambiguous.
+     * - Returns null when the module name was found in more than one organization.
+     *
+     * @api
+     *
+     * @param string $moduleName
+     *
+     * @return string|null
+     */
+    public function findComposerNameByModuleName(string $moduleName): ?string;
 }

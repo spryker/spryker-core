@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductDiscontinuedStorageRepositoryInterface
 {
     /**
@@ -20,4 +22,12 @@ interface ProductDiscontinuedStorageRepositoryInterface
      * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
      */
     public function findAllProductDiscontinuedStorageEntities(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productDiscontinuedStorageEntityIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
+     */
+    public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntityIds = []): array;
 }

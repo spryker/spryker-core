@@ -20,6 +20,7 @@ class WishlistItemsResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
+     *          "path": "/wishlists/{wishlistId}/wishlist-items/{wishlistItemId}",
      *          "summary": [
      *              "Removes item from the wishlist."
      *          ],
@@ -41,7 +42,7 @@ class WishlistItemsResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistItemsWriter()
+            ->createWishlistItemDeleter()
             ->delete($restRequest);
     }
 
@@ -70,7 +71,7 @@ class WishlistItemsResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest, RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistItemsWriter()
+            ->createWishlistItemAdder()
             ->add($restWishlistItemsAttributesTransfer, $restRequest);
     }
 }

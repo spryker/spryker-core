@@ -51,4 +51,17 @@ class CompanyStub implements CompanyStubInterface
 
         return $companyTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer */
+        $companyResponseTransfer = $this->zedRequestClient->call('/company/gateway/find-company-by-uuid', $companyTransfer);
+
+        return $companyResponseTransfer;
+    }
 }

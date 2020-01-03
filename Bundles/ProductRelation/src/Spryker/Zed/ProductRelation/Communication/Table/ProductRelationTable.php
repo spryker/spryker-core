@@ -182,6 +182,7 @@ class ProductRelationTable extends AbstractTable
         foreach ($queryResults as $item) {
             $results[] = $this->mapResults($item);
         }
+
         return $results;
     }
 

@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface;
@@ -95,6 +94,22 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     }
 
     /**
+     * @return void
+     */
+    public function deleteOrphanPriceProductStoreEntities(): void
+    {
+        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities();
+
+        if (count($orphanPriceProductStoreEntities) === 0) {
+            return;
+        }
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
+            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
+        });
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -133,23 +148,11 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
-        return $priceProductTransfer;
-    }
-
-    /**
-     * @return void
-     */
-    public function deleteOrphanPriceProductStoreEntities(): void
-    {
-        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities();
-
-        if (count($orphanPriceProductStoreEntities) === 0) {
-            return;
+        if ($this->priceProductConfig->getIsDeleteOrphanStorePricesOnSaveEnabled()) {
+            $this->deleteOrphanPriceProductStoreEntities();
         }
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
-            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
-        });
+        return $priceProductTransfer;
     }
 
     /**
@@ -160,27 +163,69 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $priceProductTransfer
-            ->requireFkPriceType()
-            ->requireIdProduct();
+            ->requireFkPriceType();
 
+        $this->requireFieldsBaseOnProductType($priceProductTransfer);
+
+        if ($priceProductTransfer->getIdProduct() !== null) {
+            return $this->preparePriceProductForProductConcrete($priceProductTransfer);
+        }
+
+        return $this->preparePriceProductForProductAbstract($priceProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function preparePriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
         $idPriceProduct = $this->priceProductRepository
             ->findIdPriceProductForProductConcrete($priceProductTransfer);
 
-        if ($idPriceProduct !== null) {
-            $priceProductTransfer->setIdPriceProduct($idPriceProduct);
-
-            return $priceProductTransfer;
+        if ($idPriceProduct === null) {
+            $idPriceProduct = $this->priceProductEntityManager
+                ->savePriceProductForProductConcrete($priceProductTransfer);
         }
 
-        $priceProductEntity = (new SpyPriceProduct())
-            ->setFkPriceType($priceProductTransfer->getFkPriceType())
-            ->setFkProduct($priceProductTransfer->getIdProduct());
+        return $priceProductTransfer
+            ->setIdPriceProduct($idPriceProduct);
+    }
 
-        $priceProductEntity->save();
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function preparePriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $idPriceProduct = $this->priceProductRepository
+            ->findIdPriceProductForProductAbstract($priceProductTransfer);
 
-        $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+        if ($idPriceProduct === null) {
+            $idPriceProduct = $this->priceProductEntityManager
+                ->savePriceProductForProductAbstract($priceProductTransfer);
+        }
 
-        return $priceProductTransfer;
+        return $priceProductTransfer
+            ->setIdPriceProduct($idPriceProduct);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    protected function requireFieldsBaseOnProductType(PriceProductTransfer $priceProductTransfer): void
+    {
+        if ($priceProductTransfer->getIdProduct() === null) {
+            $priceProductTransfer->requireIdProductAbstract();
+        }
+
+        if ($priceProductTransfer->getIdProductAbstract() === null) {
+            $priceProductTransfer->requireIdProduct();
+        }
     }
 
     /**
@@ -242,7 +287,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected function doDeleteOrphanPriceProductStoreEntities(array $priceProductStoreEntityTransfers): void
     {
         foreach ($priceProductStoreEntityTransfers as $priceProductStoreEntityTransfer) {
-            $idPriceProductStore = $priceProductStoreEntityTransfer->getIdPriceProductStore();
+            $idPriceProductStore = (int)$priceProductStoreEntityTransfer->getIdPriceProductStore();
 
             $this->priceProductStoreWriterPluginExecutor->executePriceProductStorePreDeletePlugins($idPriceProductStore);
             $this->priceProductEntityManager->deletePriceProductStore($idPriceProductStore);
@@ -259,7 +304,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductTransfer $priceProductTransfer,
         MoneyValueTransfer $moneyValueTransfer
     ): SpyPriceProductStore {
-
         return $this->priceProductQueryContainer
             ->queryPriceProductStoreByProductCurrencyStore(
                 $priceProductTransfer->getIdPriceProduct(),

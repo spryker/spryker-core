@@ -12,6 +12,7 @@ use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchant
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductMerchantRelationship
@@ -28,9 +29,11 @@ class PriceProductMerchantRelationshipFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @deprecated will be removed without replacement.
+     *
      * @return void
      */
-    public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore()
+    public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore(): void
     {
         $idPriceProductStore = $this
             ->tester

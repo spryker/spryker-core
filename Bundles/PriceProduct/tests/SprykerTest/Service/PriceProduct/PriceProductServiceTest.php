@@ -191,6 +191,7 @@ class PriceProductServiceTest extends Unit
     protected function getMultiplePriceProductTransfers(): array
     {
         $chfCurrencyData = ['code' => 'CHF', 'name' => 'CHF', 'symbol' => 'CHF'];
+
         return [
             (new PriceProductBuilder(['priceTypeName' => 'DEFAULT']))
                 ->withMoneyValue((new MoneyValueBuilder())->withCurrency())
@@ -238,7 +239,7 @@ class PriceProductServiceTest extends Unit
     /**
      * @return array
      */
-    public function getPriceProductTransfersWithMoreConcreteData()
+    public function getPriceProductTransfersWithMoreConcreteData(): array
     {
         return [
             [$this->getMultiplePriceProductTransfers(), $this->getSinglePriceProductTransfers()],
@@ -250,7 +251,7 @@ class PriceProductServiceTest extends Unit
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function prefillTransferWithDataForPriceGrouping(array $priceProductTransfers)
+    protected function prefillTransferWithDataForPriceGrouping(array $priceProductTransfers): array
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer->setIsMergeable(true)

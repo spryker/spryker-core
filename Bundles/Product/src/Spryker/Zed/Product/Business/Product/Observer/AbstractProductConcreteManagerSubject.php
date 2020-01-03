@@ -168,12 +168,14 @@ abstract class AbstractProductConcreteManagerSubject
             $productConcreteTransfer = $observer->read($productConcreteTransfer);
         }
 
-        $this->triggerProductConcreteReadEvent($productConcreteTransfer);
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productConcreteTransfer);
 
         return $productConcreteTransfer;
     }
 
     /**
+     * @deprecated Will be removed, please trigger the event directly.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void

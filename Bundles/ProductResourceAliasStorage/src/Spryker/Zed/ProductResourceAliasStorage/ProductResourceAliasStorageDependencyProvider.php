@@ -34,6 +34,7 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractBundleDepend
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $this->addEventBehaviorFacade($container);
+
         return $container;
     }
 

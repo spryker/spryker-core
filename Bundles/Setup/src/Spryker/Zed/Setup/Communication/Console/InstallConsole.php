@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Will be removed without replacement. Use `vendor/bin/install` instead.
+ *
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  */

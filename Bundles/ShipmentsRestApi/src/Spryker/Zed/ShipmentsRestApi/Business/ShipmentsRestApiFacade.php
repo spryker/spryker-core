@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShipmentsRestApi\Business;
 
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -17,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShipmentsRestApiFacade extends AbstractFacade implements ShipmentsRestApiFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,5 +34,21 @@ class ShipmentsRestApiFacade extends AbstractFacade implements ShipmentsRestApiF
     ): QuoteTransfer {
         return $this->getFactory()->createShipmentQuoteMapper()
             ->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateShipmentMethodCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentMethodCheckoutDataValidator()
+            ->validateShipmentMethodCheckoutData($checkoutDataTransfer);
     }
 }

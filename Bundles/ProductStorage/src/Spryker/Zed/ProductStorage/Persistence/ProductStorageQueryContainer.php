@@ -11,6 +11,8 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -44,12 +46,30 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
-        $query
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery $query */
+        $query = $query
             ->join('SpyProductAbstract.SpyUrl')
             ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');
 
         return $query;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractByProductAbstractIds(array $productAbstractIds): SpyProductAbstractQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract_In($productAbstractIds);
     }
 
     /**
@@ -81,12 +101,30 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION, 'abstract_description')
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES, 'abstract_attributes');
 
-        $query
+        /** @var \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery $query */
+        $query = $query
             ->join('SpyProductAbstract.SpyUrl')
             ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');
 
         return $query;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductConcreteByProductIds(array $productIds): SpyProductQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->filterByIdProduct_In($productIds);
     }
 
     /**

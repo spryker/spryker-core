@@ -8,18 +8,20 @@
 namespace SprykerTest\Zed\ShipmentsRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShipmentsRestApi
@@ -39,6 +41,8 @@ class ShipmentsRestApiFacadeTest extends Unit
         'taxRate' => 19,
         'isActive' => true,
     ];
+
+    protected const SHIPMENT_METHOD_ID_INVALID = -1;
 
     /**
      * @var \SprykerTest\Zed\ShipmentsRestApi\ShipmentsRestApiBusinessTester
@@ -74,6 +78,34 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithShipment();
+        $quoteTransfer = $this->prepareQuoteTransfer();
+
+        $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
+
+        foreach ($actualQuote->getItems() as $itemTransfer) {
+            $this->assertNotNull($itemTransfer->getShipment());
+            $actualShipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
+            $this->assertEquals(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
+            $this->assertEquals(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
+            $this->assertEquals(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
+            $this->assertEquals(static::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
+            $this->assertEquals(static::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
+            $this->assertEquals(static::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
+            $this->assertEquals(static::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnNoShipmentProvided(): void
     {
         /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
@@ -86,6 +118,27 @@ class ShipmentsRestApiFacadeTest extends Unit
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->assertNull($actualQuote->getShipment());
+        $this->assertCount(0, $actualQuote->getExpenses());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnNoShipmentProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithoutShipment();
+        $quoteTransfer = $this->prepareQuoteTransfer();
+
+        $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        foreach ($actualQuote->getItems() as $itemTransfer) {
+            $this->assertNull($itemTransfer->getShipment());
+        }
+
         $this->assertCount(0, $actualQuote->getExpenses());
     }
 
@@ -108,9 +161,62 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return void
      */
-    protected function getMockShipmentsRestApiFactory(): MockObject
+    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentNotFoundWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactoryWithShipmentNotFound());
+
+        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithShipment();
+        $quoteTransfer = $this->prepareQuoteTransfer();
+
+        $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        foreach ($actualQuote->getItems() as $itemTransfer) {
+            $this->assertNull($itemTransfer->getShipment());
+        }
+
+        $this->assertCount(0, $actualQuote->getExpenses());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShipmentsRestApiFacadeWillValidateShipmentMethodCheckoutData(): void
+    {
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
+
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithShipmentMethodId();
+        $checkoutResponseTransfer = $shipmentRestApiFacade->validateShipmentMethodCheckoutData($checkoutDataTransfer);
+
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertEquals(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShipmentsRestApiFacadeWillValidateShipmentMethodCheckoutDataWithInvalidShipmentMethodId(): void
+    {
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactoryWithShipmentNotFound());
+
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithInvalidShipmentMethodId();
+        $checkoutResponseTransfer = $shipmentRestApiFacade->validateShipmentMethodCheckoutData($checkoutDataTransfer);
+
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertGreaterThan(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMockShipmentsRestApiFactory()
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
@@ -124,13 +230,16 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentFacade(): MockObject
+    protected function getMockShipmentFacade()
     {
         $mockCustomerFacade = $this->createPartialMock(
             ShipmentFacade::class,
-            ['findAvailableMethodById']
+            [
+                'findAvailableMethodById',
+                'findMethodById',
+            ]
         );
 
         $mockCustomerFacade->method('findAvailableMethodById')
@@ -138,13 +247,18 @@ class ShipmentsRestApiFacadeTest extends Unit
                 (new ShipmentMethodBuilder(static::SHIPMENT_METHOD))->withPrice()->build()
             );
 
+        $mockCustomerFacade->method('findMethodById')
+            ->willReturn(
+                (new ShipmentMethodBuilder(static::SHIPMENT_METHOD))->build()
+            );
+
         return $mockCustomerFacade;
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentsRestApiFactoryWithShipmentNotFound(): MockObject
+    protected function getMockShipmentsRestApiFactoryWithShipmentNotFound()
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
@@ -158,16 +272,22 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentFacadeWithShipmentNotFound(): MockObject
+    protected function getMockShipmentFacadeWithShipmentNotFound()
     {
         $mockCustomerFacade = $this->createPartialMock(
             ShipmentFacade::class,
-            ['findAvailableMethodById']
+            [
+                'findAvailableMethodById',
+                'findMethodById',
+            ]
         );
 
         $mockCustomerFacade->method('findAvailableMethodById')
+            ->willReturn(null);
+
+        $mockCustomerFacade->method('findMethodById')
             ->willReturn(null);
 
         return $mockCustomerFacade;
@@ -195,6 +315,32 @@ class ShipmentsRestApiFacadeTest extends Unit
             ->build();
 
         return $restCheckoutRequestAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     */
+    protected function prepareCheckoutDataTransferWithShipmentMethodId(): CheckoutDataTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']])
+            ->build();
+
+        return $checkoutDataTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     */
+    protected function prepareCheckoutDataTransferWithInvalidShipmentMethodId(): CheckoutDataTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD_ID_INVALID])
+            ->build();
+
+        return $checkoutDataTransfer;
     }
 
     /**

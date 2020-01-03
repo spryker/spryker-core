@@ -38,6 +38,7 @@ class DiscountTotalCalculator implements CalculatorInterface
         foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
             $totalDiscountAmount += $expenseTransfer->getSumDiscountAmountAggregation();
         }
+
         return $totalDiscountAmount;
     }
 
@@ -52,6 +53,7 @@ class DiscountTotalCalculator implements CalculatorInterface
         foreach ($items as $itemTransfer) {
             $totalDiscountAmount += $itemTransfer->getSumDiscountAmountFullAggregation();
         }
+
         return $totalDiscountAmount;
     }
 }

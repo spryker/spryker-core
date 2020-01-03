@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- *
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
  */
 class EditController extends AbstractController
@@ -74,6 +73,7 @@ class EditController extends AbstractController
 
         if (!$isSubmitPersist) {
             $this->addSuccessMessage(static::MESSAGE_OFFER_RELOAD_SUCCESS);
+
             return;
         }
 

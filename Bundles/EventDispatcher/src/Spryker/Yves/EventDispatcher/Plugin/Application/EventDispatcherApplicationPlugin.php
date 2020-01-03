@@ -10,8 +10,10 @@ namespace Spryker\Yves\EventDispatcher\Plugin\Application;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
+use Spryker\Shared\EventDispatcher\TraceableEventDispatcher;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
+use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as SymfonyTraceableEventDispatcher;
 
 /**
  * @method \Spryker\Yves\EventDispatcher\EventDispatcherFactory getFactory()
@@ -20,8 +22,10 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
 {
     public const SERVICE_DISPATCHER = 'dispatcher';
 
+    protected const SERVICE_STOPWATCH = 'stopwatch';
+
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Extends EventDispatcher with EventDispatcherExtensionPlugins.
      *
      * @api
@@ -58,6 +62,10 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
     {
         $container->extend(static::SERVICE_DISPATCHER, function (SymfonyEventDispatcherInterface $existingEventDispatcher, ContainerInterface $container) {
             $eventDispatcher = $this->getFactory()->createEventDispatcher();
+
+            if ($existingEventDispatcher instanceof SymfonyTraceableEventDispatcher && $container->has(static::SERVICE_STOPWATCH)) {
+                $eventDispatcher = new TraceableEventDispatcher($eventDispatcher, $container->get(static::SERVICE_STOPWATCH));
+            }
 
             $eventDispatcher = $this->copyExistingListeners($eventDispatcher, $existingEventDispatcher);
 

@@ -19,6 +19,7 @@ use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group RestRequestValidator
@@ -245,7 +246,7 @@ class RestRequestValidatorFacadeTest extends Unit
      */
     protected function getExpectedResult(StoreTransfer $store): array
     {
-        return $expected = (new RestRequestValidatorToYamlAdapter())->parseFile(
+        return (new RestRequestValidatorToYamlAdapter())->parseFile(
             $this->getFixtureDirectory('Merged') . $store->getName() . DIRECTORY_SEPARATOR . 'result.validation.yaml'
         );
     }
@@ -257,7 +258,7 @@ class RestRequestValidatorFacadeTest extends Unit
      */
     protected function getActualResult(StoreTransfer $store): array
     {
-        return $expected = (new RestRequestValidatorToYamlAdapter())->parseFile(
+        return (new RestRequestValidatorToYamlAdapter())->parseFile(
             $this->getFixtureDirectory('Result') . $store->getName() . DIRECTORY_SEPARATOR . 'validation.cache'
         );
     }
@@ -277,6 +278,7 @@ class RestRequestValidatorFacadeTest extends Unit
                 unlink($dir . DIRECTORY_SEPARATOR . $file);
             }
         }
+
         return rmdir($dir);
     }
 }

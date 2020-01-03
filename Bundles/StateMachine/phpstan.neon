@@ -1,4 +1,4 @@
 parameters:
     ignoreErrors:
-    - '#Call to an undefined method .+SpyStateMachineEventTimeoutQuery::filterByName\(\).#'
     - '#Method .+StateMachineQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
+    - '#If condition is always true.#'

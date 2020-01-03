@@ -121,6 +121,28 @@ interface CustomerClientInterface
 
     /**
      * Specification:
+     * - Stores provided customer information in session without executing plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * Specification:
+     * - Returns customer information from session without executing plugins.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerRawData(): ?CustomerTransfer;
+
+    /**
+     * Specification:
      * - Checks if customer exists in persistent storage by provided email and plain text password.
      * - Stores found customer information in session.
      *
@@ -382,4 +404,16 @@ interface CustomerClientInterface
      * @return string
      */
     public function getCustomerSecuredPattern(): string;
+
+    /**
+     * Specification:
+     * - Retrieves customer by access token using AccessTokenAuthenticationHandlerPluginInterface.
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
 }

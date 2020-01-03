@@ -53,8 +53,10 @@ class SubTotalDecisionRule implements DecisionRuleInterface
             return false;
         }
 
-        $this->moneyValueConverter->convertDecimalToCent($clauseTransfer);
+        $clonedClauseTransfer = clone $clauseTransfer;
 
-        return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getSubtotal());
+        $this->moneyValueConverter->convertDecimalToCent($clonedClauseTransfer);
+
+        return $this->comparators->compare($clonedClauseTransfer, $quoteTransfer->getTotals()->getSubtotal());
     }
 }

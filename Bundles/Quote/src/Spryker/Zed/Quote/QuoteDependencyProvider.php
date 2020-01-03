@@ -25,7 +25,10 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_QUOTE_DELETE_BEFORE = 'PLUGINS_QUOTE_DELETE_BEFORE';
     public const PLUGINS_QUOTE_DELETE_AFTER = 'PLUGINS_QUOTE_DELETE_AFTER';
+    public const PLUGINS_QUOTE_VALIDATOR = 'PLUGINS_QUOTE_VALIDATOR';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
+    public const PLUGINS_QUOTE_EXPAND_BEFORE_CREATE = 'PLUGINS_QUOTE_EXPAND_BEFORE_CREATE';
+    public const PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER = 'PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,7 +46,10 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteUpdateBeforePlugins($container);
         $container = $this->addQuoteDeleteBeforePlugins($container);
         $container = $this->addQuoteDeleteAfterPlugins($container);
+        $container = $this->addQuoteValidatorPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
+        $container = $this->addQuoteExpandBeforeCreatePlugins($container);
+        $container = $this->addQuoteFieldsAllowedForSavingProviderPlugins($container);
 
         return $container;
     }
@@ -149,6 +155,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addQuoteExpandBeforeCreatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE] = function (Container $container): array {
+            return $this->getQuoteExpandBeforeCreatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addQuoteUpdateBeforePlugins(Container $container): Container
     {
         $container[self::PLUGINS_QUOTE_UPDATE_BEFORE] = function (Container $container) {
@@ -187,6 +207,34 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteValidatorPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_VALIDATOR] = function (Container $container) {
+            return $this->getQuoteValidatorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteFieldsAllowedForSavingProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER, function () {
+            return $this->getQuoteFieldsAllowedForSavingProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteCreateAfterPlugins(): array
@@ -219,6 +267,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[]
+     */
+    protected function getQuoteExpandBeforeCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteUpdateBeforePlugins(): array
@@ -238,6 +294,22 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface[]
      */
     protected function getQuoteDeleteAfterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
+     */
+    protected function getQuoteValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
+     */
+    protected function getQuoteFieldsAllowedForSavingProviderPlugins(): array
     {
         return [];
     }

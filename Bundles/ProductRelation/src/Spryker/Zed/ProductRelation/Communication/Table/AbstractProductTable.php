@@ -39,6 +39,7 @@ abstract class AbstractProductTable extends AbstractTable
                 return true;
             }
         }
+
         return false;
     }
 }

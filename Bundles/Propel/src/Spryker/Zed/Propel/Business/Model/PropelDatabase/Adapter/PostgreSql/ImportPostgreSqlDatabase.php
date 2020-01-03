@@ -11,10 +11,24 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
 
 class ImportPostgreSqlDatabase implements ImportDatabaseInterface
 {
+    /**
+     * @var \Spryker\Zed\Propel\PropelConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig $config
+     */
+    public function __construct(PropelConfig $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param string $backupPath
      *
@@ -83,7 +97,8 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     {
         $this->exportPostgresPassword();
 
-        $process = new Process($command);
+        $process = $this->getProcess($command);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -93,6 +108,20 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function getProcess(string $command): Process
+    {
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command);
+        }
+
+        return new Process($command);
     }
 
     /**

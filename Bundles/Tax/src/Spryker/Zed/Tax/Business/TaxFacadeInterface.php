@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Tax\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
@@ -295,7 +296,6 @@ interface TaxFacadeInterface
     public function resetAccruedTaxCalculatorRoundingErrorDelta();
 
     /**
-     *
      * Specification:
      * - Calculate tax amount after cancellation
      *
@@ -308,7 +308,6 @@ interface TaxFacadeInterface
     public function calculateTaxAmount(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculate tax amount after cancellation
      *

@@ -7,6 +7,6 @@
 
 namespace Spryker\Shared\Kernel;
 
-abstract class AbstractSharedConfig
+abstract class AbstractSharedConfig extends AbstractBundleConfig
 {
 }

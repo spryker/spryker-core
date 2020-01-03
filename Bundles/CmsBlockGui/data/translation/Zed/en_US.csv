@@ -1,6 +1,6 @@
+Approved,Approved
 "Back to CMS","Back to CMS"
 "Back to list","Back to list"
-"Block Id","Block Id"
 "Block Id","Block Id"
 Blocks,Blocks
 "Categories: bottom","Categories: bottom"
@@ -9,7 +9,6 @@ Blocks,Blocks
 "Category list","Category list"
 "CMS Block","CMS Block"
 "CMS Block was created successfully.","CMS Block was created successfully."
-"CMS Block was deactivated successfully.","CMS Block was deactivated successfully."
 "CMS Block was deactivated successfully.","CMS Block was deactivated successfully."
 "CMS Block was updated successfully.","CMS Block was updated successfully."
 Content,Content
@@ -31,7 +30,6 @@ no,No
 "Product list","Product list"
 Sales,Sales
 Save,Save
-"Selected template doesn't exist anymore","Selected template doesn't exist anymore"
 "Selected template doesn't exist anymore","Selected template doesn't exist anymore"
 "Selected template doesn't exist anymore.","Selected template doesn't exist anymore."
 "Store relation","Store relation"

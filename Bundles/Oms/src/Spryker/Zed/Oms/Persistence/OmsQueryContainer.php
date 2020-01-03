@@ -136,6 +136,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()` instead.
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -171,6 +173,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
 
     /**
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()` instead.
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
@@ -472,10 +476,11 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param int $lastExportedVersion
      * @param int $maxVisibleVersion
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery
      */
     public function queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion)
     {
+        /** @var \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery $query */
         $query = $this->getFactory()
             ->createOmsProductReservationQuery()
             ->addJoin(

@@ -149,7 +149,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @api
      *
-     * @param string $term
+     * @param string|null $term
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -175,7 +175,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @api
      *
-     * @param string $term
+     * @param string|null $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

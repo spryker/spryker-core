@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationReaderInterface;
 use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface;
 
+/**
+ * @deprecated Use `Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\Reader\SalesOrderThresholdReader` instead.
+ */
 class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
 {
     /**

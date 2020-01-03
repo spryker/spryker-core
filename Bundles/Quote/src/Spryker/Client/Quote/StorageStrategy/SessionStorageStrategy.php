@@ -8,6 +8,7 @@
 namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
@@ -31,18 +32,26 @@ class SessionStorageStrategy implements StorageStrategyInterface
     protected $quoteEditStatusValidator;
 
     /**
+     * @var \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface
+     */
+    protected $quoteLocker;
+
+    /**
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
+     * @param \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface $quoteLocker
      */
     public function __construct(
         QuoteSessionInterface $quoteSession,
         QuoteLockStatusValidatorInterface $quoteLockStatusValidator,
-        QuoteEditStatusValidatorInterface $quoteEditStatusValidator
+        QuoteEditStatusValidatorInterface $quoteEditStatusValidator,
+        QuoteLockerInterface $quoteLocker
     ) {
         $this->quoteSession = $quoteSession;
         $this->quoteLockStatusValidator = $quoteLockStatusValidator;
         $this->quoteEditStatusValidator = $quoteEditStatusValidator;
+        $this->quoteLocker = $quoteLocker;
     }
 
     /**
@@ -105,5 +114,15 @@ class SessionStorageStrategy implements StorageStrategyInterface
     public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteEditStatusValidator->isQuoteEditable($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->quoteLocker->lock($quoteTransfer);
     }
 }

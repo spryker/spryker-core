@@ -31,6 +31,7 @@ class CategoryMapper implements CategoryMapperInterface
                 );
             $rootCategories->append($categoriesResourceTransfer);
         }
+
         return (new RestCategoryTreesTransfer())->setCategoryNodesStorage($rootCategories);
     }
 

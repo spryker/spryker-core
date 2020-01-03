@@ -65,7 +65,7 @@ class TransferDefinitionFinder implements FinderInterface
 
         $finder->in($existingSourceDirectories)->name($this->fileNamePattern)->depth('< 1');
 
-        return iterator_to_array($finder);
+        return iterator_to_array($finder->getIterator());
     }
 
     /**
@@ -74,7 +74,7 @@ class TransferDefinitionFinder implements FinderInterface
     protected function getExistingSourceDirectories()
     {
         return array_filter($this->sourceDirectories, function ($directory) {
-            return (bool)glob($directory, GLOB_ONLYDIR);
+            return (bool)glob($directory, GLOB_ONLYDIR | GLOB_NOSORT);
         });
     }
 }

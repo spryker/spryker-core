@@ -312,7 +312,7 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
         }
 
         $inRoles = [];
-        foreach ($roles as $role) {
+        foreach ($roles->getRoles() as $role) {
             $inRoles[] = $role->getIdAclRole();
         }
 

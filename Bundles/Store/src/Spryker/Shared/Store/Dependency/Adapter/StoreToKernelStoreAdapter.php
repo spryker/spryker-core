@@ -119,7 +119,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries()
     {

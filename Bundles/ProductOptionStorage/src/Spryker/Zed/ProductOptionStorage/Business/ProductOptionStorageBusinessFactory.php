@@ -8,7 +8,10 @@
 namespace Spryker\Zed\ProductOptionStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageReader;
+use Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageReaderInterface;
 use Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageWriter;
+use Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageWriterInterface;
 use Spryker\Zed\ProductOptionStorage\ProductOptionStorageDependencyProvider;
 
 /**
@@ -20,13 +23,24 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageWriterInterface
      */
-    public function createProductOptionStorageWriter()
+    public function createProductOptionStorageWriter(): ProductOptionStorageWriterInterface
     {
         return new ProductOptionStorageWriter(
+            $this->createProductOptionStorageReader(),
             $this->getProductOptionFacade(),
             $this->getStoreFacade(),
             $this->getQueryContainer(),
             $this->getConfig()->isSendingToQueue()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageReaderInterface
+     */
+    public function createProductOptionStorageReader(): ProductOptionStorageReaderInterface
+    {
+        return new ProductOptionStorageReader(
+            $this->getProductOptionFacade()
         );
     }
 

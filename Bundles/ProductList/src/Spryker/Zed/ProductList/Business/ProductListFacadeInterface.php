@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductList\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -23,6 +24,7 @@ interface ProductListFacadeInterface
      * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
      * - Updates relations to categories.
      * - Updates relations to concrete products.
+     * - Executes ProductListPreSaveInterface plugin stack before save.
      *
      * @api
      *
@@ -34,6 +36,43 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
+     * - Requires ProductListTransfer::title.
+     * - Creates a Product List entity.
+     * - Creates relations to categories.
+     * - Creates relations to concrete products.
+     * - Executes ProductListPreCreatePluginInterface plugin stack before save.
+     * - Returns MessageTransfers in messages property to notify about changes that have been made to Product List.
+     * - Returns true isSuccess property if saving was successful.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires ProductListTransfer::idProductList.
+     * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
+     * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
+     * - Updates relations to categories.
+     * - Updates relations to concrete products.
+     * - Executes ProductListPreUpdatePluginInterface plugin stack before save.
+     * - Returns MessageTransfers in messages property to notify about changes that have been made to Product List.
+     * - Returns true isSuccess property if saving was successful.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+
+    /**
+     * Specification:
      * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
      * - Deletes Product List.
      * - Deletes relations to categories.
@@ -41,11 +80,31 @@ interface ProductListFacadeInterface
      *
      * @api
      *
+     * @deprecated Use ProductListFacadeInterface::removeProductList() instead.
+     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return void
      */
     public function deleteProductList(ProductListTransfer $productListTransfer): void;
+
+    /**
+     * Specification:
+     * - Finds a Product List by ProductListTransfer::idProductList.
+     * - Executes ProductListDeletePreCheckPluginInterface plugin stack before delete.
+     * - Deletes relations to categories.
+     * - Deletes relations to concrete products.
+     * - Deletes Product List.
+     * - ProductListResponseTransfer::isSuccessful is true if product list was deleted.
+     * - ProductListResponseTransfer::messages contains error messages if deletion was not performed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function removeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:
@@ -60,6 +119,32 @@ interface ProductListFacadeInterface
      * @return int[]
      */
     public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     * - Retrieves product lists for product abstract ids and its categories.
+     * - Returns product list where keys are product abstract IDs, values are arrays with product list ids by type.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductAbstractListIdsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves product lists for product ids and its abstract products.
+     * - Returns product list where keys are product concrete IDs, values are arrays with product list ids by type.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductListsIdsByProductIds(array $productIds): array;
 
     /**
      * Specification:

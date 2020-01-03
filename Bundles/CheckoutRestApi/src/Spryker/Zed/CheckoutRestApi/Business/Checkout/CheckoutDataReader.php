@@ -8,19 +8,18 @@
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
-use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutDataReader implements CheckoutDataReaderInterface
 {
@@ -87,9 +86,15 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
+        $storeTransfer = $quoteTransfer->requireStore()
+            ->getStore()
+                ->requireName();
+
+        $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
+
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
-            ->setPaymentProviders($this->getPaymentProviders())
+            ->setPaymentProviders($this->paymentFacade->getAvailablePaymentProvidersForStore($storeTransfer->getName()))
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
 
@@ -105,15 +110,16 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     protected function getShipmentMethodsTransfer(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
     {
-        return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
-    }
+        $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
 
-    /**
-     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
-     */
-    protected function getPaymentProviders(): PaymentProviderCollectionTransfer
-    {
-        return $this->paymentFacade->getAvailablePaymentProviders();
+        if ($shipmentMethodsCollectionTransfer->getShipmentMethods()->count() === 0) {
+            return new ShipmentMethodsTransfer();
+        }
+
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
+
+        return $shipmentMethodsTransfer;
     }
 
     /**
@@ -135,9 +141,25 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
-                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function addItemLevelShipmentTransfer(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment()) {
+                continue;
+            }
+
+            $itemTransfer->setShipment($quoteTransfer->getShipment() ?? new ShipmentTransfer());
+        }
+
+        return $quoteTransfer;
     }
 }

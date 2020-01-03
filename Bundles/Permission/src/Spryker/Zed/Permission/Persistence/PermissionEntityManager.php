@@ -49,6 +49,7 @@ class PermissionEntityManager extends AbstractEntityManager implements Permissio
         $permissionEntity->save();
 
         $permissionTransfer->setIdPermission($permissionEntity->getIdPermission());
+
         return $permissionTransfer;
     }
 }

@@ -44,7 +44,7 @@ interface DiscountCalculatorPluginInterface
      *
      * @param int $value
      *
-     * @return int
+     * @return float
      */
     public function transformFromPersistence($value);
 

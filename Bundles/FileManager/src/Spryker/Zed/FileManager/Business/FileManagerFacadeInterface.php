@@ -226,4 +226,17 @@ interface FileManagerFacadeInterface
      * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
      */
     public function findAllowedMimeTypes();
+
+    /**
+     * Specification:
+     * - Finds files by their ids.
+     * - Returns files with localized attributes.
+     *
+     * @api
+     *
+     * @param int[] $idFiles
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer[]
+     */
+    public function getFilesByIds(array $idFiles): array;
 }

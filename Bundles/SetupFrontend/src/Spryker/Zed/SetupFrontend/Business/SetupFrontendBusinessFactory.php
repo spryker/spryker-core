@@ -11,7 +11,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\Builder;
 use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\Cleaner;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstaller;
+use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallMultiPathFinder;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallPathFinder;
+use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface;
+use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathPatternValidator;
+use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathPatternValidatorInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\ProjectInstaller;
 use Spryker\Zed\SetupFrontend\Business\Model\PackageManager\NodeInstaller;
 
@@ -58,17 +62,30 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     public function createYvesDependencyInstaller()
     {
         return new DependencyInstaller(
-            $this->createYvesInstallerPathFinder(),
+            $this->createInstallMultiPathFinderForYves(),
             $this->getConfig()->getYvesInstallCommand()
         );
     }
 
     /**
+     * @deprecated Use createInstallMultiPathFinderForYves() instead
+     *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
     protected function createYvesInstallerPathFinder()
     {
         return new InstallPathFinder($this->getConfig()->getYvesInstallerDirectoryPattern());
+    }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
+     */
+    public function createInstallMultiPathFinderForYves(): PathFinderInterface
+    {
+        return new InstallMultiPathFinder(
+            $this->getConfig()->getYvesInstallMultiPathDirectoryPatterns(),
+            $this->createPathPatternValidator()
+        );
     }
 
     /**
@@ -93,12 +110,14 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     public function createZedDependencyInstaller()
     {
         return new DependencyInstaller(
-            $this->createZedInstallerPathFinder(),
-            $this->getConfig()->getYvesInstallCommand()
+            $this->createInstallMultiPathFinderForZed(),
+            $this->getConfig()->getZedInstallCommand()
         );
     }
 
     /**
+     * @deprecated Use createInstallMultiPathFinderForZed() instead
+     *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
     protected function createZedInstallerPathFinder()
@@ -107,10 +126,29 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
+     */
+    public function createInstallMultiPathFinderForZed(): PathFinderInterface
+    {
+        return new InstallMultiPathFinder(
+            $this->getConfig()->getZedInstallMultiPathDirectoryPatterns(),
+            $this->createPathPatternValidator()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface
      */
     public function createZedBuilder()
     {
         return new Builder($this->getConfig()->getZedBuildCommand());
+    }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathPatternValidatorInterface
+     */
+    public function createPathPatternValidator(): PathPatternValidatorInterface
+    {
+        return new PathPatternValidator();
     }
 }

@@ -25,6 +25,7 @@ class SalesController extends AbstractController
     public function listAction(Request $request)
     {
         $orderTransfer = $request->request->get('orderTransfer');
+
         return [
             'payments' => $orderTransfer->getPayments(),
             'order' => $orderTransfer,

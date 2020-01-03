@@ -19,6 +19,7 @@ use Spryker\Zed\Search\SearchConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search
@@ -33,7 +34,7 @@ class IndexInstallerTest extends Unit
     /**
      * @return void
      */
-    public function testIndexInstallerCreatesIndexesIfTheyNotExist()
+    public function testIndexInstallerCreatesIndexesIfTheyNotExist(): void
     {
         $indexDefinitions = [
             $this->createIndexDefinition('foo'),
@@ -66,7 +67,7 @@ class IndexInstallerTest extends Unit
      *
      * @return void
      */
-    public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist()
+    public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist(): void
     {
         $indexMock = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
@@ -187,7 +188,7 @@ class IndexInstallerTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer
      */
-    protected function createIndexDefinition($name, array $settings = [], array $mappings = [])
+    protected function createIndexDefinition(string $name, array $settings = [], array $mappings = []): ElasticsearchIndexDefinitionTransfer
     {
         $indexDefinition = new ElasticsearchIndexDefinitionTransfer();
         $indexDefinition

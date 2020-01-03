@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization\ProductConcreteProductListSynchronizationDataBulkPlugin instead.
+ *
  * @method \Spryker\Zed\ProductListStorage\ProductListStorageConfig getConfig()
  * @method \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductListStorage\Business\ProductListStorageFacadeInterface getFacade()
@@ -101,7 +103,7 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
      */
     protected function findSpyProductConcreteProductListStorageEntities(array $ids = []): array
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()->findAllProductConcreteProductListStorageEntities();
         }
 

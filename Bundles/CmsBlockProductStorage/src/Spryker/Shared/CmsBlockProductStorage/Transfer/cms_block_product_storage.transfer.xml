@@ -5,6 +5,21 @@
 
     <transfer name="CmsBlockProduct">
         <property name="idProductAbstract" type="int"/>
-        <property name="blockNames" type="array"/>
+        <property name="blockNames" type="array" singular="blockNames"/>
+        <property name="blockKeys" type="array" singular="blockKeys"/>
+    </transfer>
+
+    <transfer name="CmsBlock">
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="CmsBlockRequest">
+        <property name="product" type="int"/>
     </transfer>
 </transfers>

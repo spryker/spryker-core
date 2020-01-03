@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote
@@ -32,7 +33,7 @@ class UpdateQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuotePersistChangesToDatabase()
+    public function testUpdateQuotePersistChangesToDatabase(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -50,11 +51,13 @@ class UpdateQuoteTest extends Unit
         $quoteTransfer->setItems($itemCollection);
 
         // Act
-        $persistQuoteResponseTransfer = $this->tester->getFacade()->updateQuote($quoteTransfer);
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $persistQuoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
 
         // Assert
         $this->assertTrue($persistQuoteResponseTransfer->getIsSuccessful(), 'Persist quote response transfer should have ben successful.');
-        $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
+        $findQuoteResponseTransfer = $quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
         $this->assertTrue($findQuoteResponseTransfer->getIsSuccessful(), 'Find quote response transfer should have ben successful.');
         $this->assertEquals($itemCollection, $findQuoteResponseTransfer->getQuoteTransfer()->getItems(), 'Quote response should have expected data from database.');
     }

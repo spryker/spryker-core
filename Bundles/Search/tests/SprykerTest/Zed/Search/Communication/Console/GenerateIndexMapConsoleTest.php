@@ -14,6 +14,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search
@@ -27,13 +28,8 @@ class GenerateIndexMapConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testCommandIsExecutable()
+    public function testCommandIsExecutable(): void
     {
-        $this->markTestSkipped(
-            'When running in context of whole suite this error comes up "posix_isatty(): could not use stream of type \'MEMORY\'"' . PHP_EOL
-            . 'When it runs as standalone this error does not exists...'
-        );
-
         $application = new Application();
         $application->add(new GenerateIndexMapConsole());
 

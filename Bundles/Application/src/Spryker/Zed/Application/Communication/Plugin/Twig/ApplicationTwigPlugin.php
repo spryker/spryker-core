@@ -20,17 +20,21 @@ use Twig\Environment;
 class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     * - Adds application global variables.
+     * - Extends Twig with application global functions.
      *
      * @api
      *
      * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Twig\Environment
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
         $twig = $this->addTwigGlobalVariables($twig);
+        $twig = $this->addApplicationTwigFunctions($twig);
 
         return $twig;
     }
@@ -42,7 +46,7 @@ class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
      */
     protected function addTwigGlobalVariables(Environment $twig): Environment
     {
-        $environment = $this->getFactory()->getEnvironment()->getEnvironment();
+        $environment = $this->getFactory()->getConfig()->getTwigEnvironmentName();
 
         $vars = [
             'environment' => $environment,
@@ -52,6 +56,18 @@ class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
         foreach ($vars as $name => $value) {
             $twig->addGlobal($name, $value);
         }
+
+        return $twig;
+    }
+
+    /**
+     * @param \Twig\Environment $twig
+     *
+     * @return \Twig\Environment
+     */
+    protected function addApplicationTwigFunctions(Environment $twig): Environment
+    {
+        $twig->addFunction($this->getFactory()->createYvesUrlFunction());
 
         return $twig;
     }

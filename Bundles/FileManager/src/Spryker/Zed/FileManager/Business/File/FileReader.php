@@ -86,6 +86,28 @@ class FileReader implements FileReaderInterface
     }
 
     /**
+     * @param int[] $idFiles
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer[]
+     */
+    public function getFilesByIds(array $idFiles): array
+    {
+        $fileTransfers = $this->repository->getFilesByIds($idFiles);
+
+        if (!$fileTransfers) {
+            return [];
+        }
+
+        $fileManagerDataTransfers = [];
+
+        foreach ($fileTransfers as $fileTransfer) {
+            $fileManagerDataTransfers[] = $this->createResponseTransfer($fileTransfer);
+        }
+
+        return $fileManagerDataTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      * @param int|null $idFileInfo
      *

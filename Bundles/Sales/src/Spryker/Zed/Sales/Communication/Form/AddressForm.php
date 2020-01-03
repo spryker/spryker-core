@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -78,11 +77,11 @@ class AddressForm extends AbstractType
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }
@@ -126,7 +125,6 @@ class AddressForm extends AbstractType
             'label' => 'Salutation',
             'placeholder' => '-select-',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -210,7 +208,6 @@ class AddressForm extends AbstractType
             'label' => 'Country',
             'placeholder' => '-select-',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],

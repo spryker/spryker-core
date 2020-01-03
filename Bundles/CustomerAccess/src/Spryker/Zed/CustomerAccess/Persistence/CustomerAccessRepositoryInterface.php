@@ -19,8 +19,6 @@ interface CustomerAccessRepositoryInterface
      * Specification:
      * - Returns customer access based on content type or null
      *
-     * @api
-     *
      * @param string $contentType
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
@@ -31,8 +29,6 @@ interface CustomerAccessRepositoryInterface
      * Specification:
      * - Returns list of content type accesses that granted for unauthenticated customer
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getUnrestrictedContentTypes(): CustomerAccessTransfer;
@@ -41,8 +37,6 @@ interface CustomerAccessRepositoryInterface
      * Specification:
      * - Returns list of accesses for content that unauthenticated customer can have
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getAllContentTypes(): CustomerAccessTransfer;
@@ -50,8 +44,6 @@ interface CustomerAccessRepositoryInterface
     /**
      * Specification:
      * - Returns list of accesses for content that unauthenticated customer can not have
-     *
-     * @api
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */

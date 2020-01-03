@@ -85,16 +85,19 @@ class MoneyCollectionType extends AbstractCollectionType
             $event->setData(
                 $moneyCollectionInitialDataProvider->getInitialData()
             );
+
             return;
         }
 
+        /** @var \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $data */
+        $data = $event->getData();
         $event->setData(
-            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($event->getData())
+            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)
         );
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -118,7 +121,9 @@ class MoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @return string
      */
     public function getBlockPrefix()
     {
@@ -135,6 +140,7 @@ class MoneyCollectionType extends AbstractCollectionType
         if ($options['entry_type'] === TextType::class) {
             $options['entry_type'] = MoneyType::class;
         }
+
         return $options;
     }
 }

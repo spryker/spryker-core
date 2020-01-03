@@ -25,7 +25,7 @@ class OfferToCustomerClientBridge implements OfferToCustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

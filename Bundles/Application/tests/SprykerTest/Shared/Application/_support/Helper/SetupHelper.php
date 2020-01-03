@@ -12,6 +12,9 @@ use Codeception\TestInterface;
 use Exception;
 use Symfony\Component\Process\Process;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class SetupHelper extends Module
 {
     public const SPRYKER_DEPLOY = 'vendor/bin/install -r testing -q';
@@ -31,7 +34,7 @@ class SetupHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         parent::_before($test);
 
@@ -47,7 +50,7 @@ class SetupHelper extends Module
     /**
      * @return bool
      */
-    protected function hasSprykerSetup()
+    protected function hasSprykerSetup(): bool
     {
         if ($this->hasSetupTool === null) {
             $this->hasSetupTool = file_exists(APPLICATION_ROOT_DIR . '/vendor/bin/install');
@@ -79,7 +82,7 @@ class SetupHelper extends Module
      *
      * @return void
      */
-    protected function run($argument)
+    protected function run(string $argument): void
     {
         $command = $this->buildCommandToExecute($argument);
         $process = new Process($command, APPLICATION_ROOT_DIR);
@@ -94,14 +97,14 @@ class SetupHelper extends Module
     /**
      * @param string $argument
      *
-     * @return string
+     * @return array
      */
-    protected function buildCommandToExecute($argument)
+    protected function buildCommandToExecute(string $argument): array
     {
         if ($this->hasSprykerSetup()) {
-            return sprintf(static::SPRYKER_DEPLOY . ' %s', $argument);
+            return [sprintf(static::SPRYKER_DEPLOY . ' %s', $argument)];
         }
 
-        return sprintf(static::TEST_ENV_SCRIPT . ' %s', $argument);
+        return [sprintf(static::TEST_ENV_SCRIPT . ' %s', $argument)];
     }
 }

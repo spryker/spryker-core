@@ -26,6 +26,20 @@ label.required {
   }
 }
 
+.title-action {
+    padding-top: 20px;
+}
+
+.page-heading {
+    padding-bottom: 0;
+}
+
+.page-breadcrumbs {
+    margin: 0 -25px;
+    padding: 0 25px;
+    overflow: hidden;
+}
+
 /* Login .. */
 body.login {
     .login-spryker-logo {
@@ -133,6 +147,14 @@ body.login {
 
 .table.nowrap, .nowrap {
   white-space: nowrap;
+}
+
+.note-editor {
+    .note-editable {
+        p + div {
+            margin-bottom: 10px;
+        }
+    }
 }
 
 .note-editor *,

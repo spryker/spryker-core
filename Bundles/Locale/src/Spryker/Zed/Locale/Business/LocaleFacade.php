@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Locale\Business\LocaleBusinessFactory getFactory()
+ * @method \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface getRepository()
  */
 class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 {
@@ -186,9 +187,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns an associative array of [locale_name => LocaleTransfer] pairs.
-     * - The locales returned are read from the store configuration and their data is read from database.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -202,7 +201,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -215,5 +214,17 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
         $this->getFactory()->getStore()->setCurrentLocale($localeTransfer->getLocaleName());
 
         return $localeTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSupportedLocaleCodes(): array
+    {
+        return $this->getFactory()->createLocaleManager()->getSupportedLocaleCodes();
     }
 }

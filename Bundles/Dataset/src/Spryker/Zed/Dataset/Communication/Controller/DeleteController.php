@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Dataset\Business\DatasetFacade getFacade()
+ * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
  * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
  */

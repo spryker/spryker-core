@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddressFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -93,12 +93,13 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-
-        return $this->getRepository()->getCompanyUnitAddressCollection($criteriaFilterTransfer);
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -115,7 +116,7 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -128,5 +129,23 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
         return $this->getFactory()
             ->createCompanyBusinessUnitAddressReader()
             ->findCompanyUnitAddressById($idCompanyUnitAddress);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
     }
 }

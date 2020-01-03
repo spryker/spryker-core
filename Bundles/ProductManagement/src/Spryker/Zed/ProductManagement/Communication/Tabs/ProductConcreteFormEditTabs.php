@@ -28,6 +28,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
      */
     public function __construct(array $productConcreteFormEditTabsExpanderPlugins = [])
     {
+        parent::__construct();
         $this->productConcreteFormEditTabsExpanderPlugins = $productConcreteFormEditTabsExpanderPlugins;
     }
 

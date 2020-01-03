@@ -13,6 +13,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */

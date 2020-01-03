@@ -74,7 +74,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -89,6 +89,16 @@ class SalesToOmsBridge implements SalesToOmsInterface
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
     {
         return $this->omsFacade->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
+    {
+        return $this->omsFacade->getGroupedDistinctManualEventsByIdSalesOrder($idSalesOrder);
     }
 
     /**

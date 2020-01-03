@@ -64,7 +64,6 @@ class ShipmentType extends AbstractType
             'property_path' => QuoteTransfer::SHIPMENT . '.' . ShipmentTransfer::METHOD . '.' . ShipmentMethodTransfer::ID_SHIPMENT_METHOD,
             'label' => 'Selecting a shipment method',
             'choices' => array_flip($shipmentMethods),
-            'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
         ]);

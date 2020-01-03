@@ -24,8 +24,10 @@ suites:
                    - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                    - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                    - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                   - \SprykerTest\Zed\Company\Helper\CompanyHelper
                    - \SprykerTest\Zed\MerchantRelationshipProductListDataImport\Helper\MerchantRelationshipProductListDataImportHelper
                    - \SprykerTest\Zed\ProductListDataImport\Helper\ProductListDataImportHelper
                    - \SprykerTest\Zed\MerchantRelationship\Helper\MerchantRelationshipHelper
                    - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                    - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                   - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

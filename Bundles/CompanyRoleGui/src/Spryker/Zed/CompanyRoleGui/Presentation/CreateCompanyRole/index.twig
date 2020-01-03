@@ -3,7 +3,7 @@
 {% set widget_title = 'Create role' | trans %}
 
 {% block action %}
-    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+    {{ backActionButton('/company-role-gui/list-company-role', 'Back to Roles' | trans) }}
 {% endblock %}
 
 {% block content %}

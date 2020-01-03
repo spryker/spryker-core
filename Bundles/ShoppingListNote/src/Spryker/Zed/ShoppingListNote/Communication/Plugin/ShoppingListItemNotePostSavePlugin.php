@@ -12,13 +12,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface;
 
 /**
- * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
  */
 class ShoppingListItemNotePostSavePlugin extends AbstractPlugin implements ShoppingListItemPostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Creates, updates or deletes note for shopping list item.
      *
      * @api

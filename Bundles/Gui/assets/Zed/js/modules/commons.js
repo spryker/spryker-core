@@ -42,4 +42,3 @@ require('../../../Inspinia/inspinia');
 // spryker customization
 require('../../sass/main.scss');
 require('./legacy/fixHeight');
-require('./init');

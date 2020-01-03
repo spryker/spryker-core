@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Calculation\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
@@ -61,11 +62,13 @@ interface CalculationFacadeInterface
     public function removeTotals(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed in the next major version.
+     *
      * Specification:
      *  - Checks if the calculated totals in the quote are still valid/consistent.
      *  - If not valid then adds an error code and message to the response
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -75,7 +78,6 @@ interface CalculationFacadeInterface
     public function validateCheckoutGrandTotal(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculates item prices, based on store tax mode (gross/net)
      *  - Calculates item sum (gross/net) price
@@ -270,7 +272,6 @@ interface CalculationFacadeInterface
     public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculate total tax amount for order, take into account canceled amount
      *
@@ -308,7 +309,6 @@ interface CalculationFacadeInterface
     public function removeCanceledAmount(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculates order total before taxes, net total.
      *

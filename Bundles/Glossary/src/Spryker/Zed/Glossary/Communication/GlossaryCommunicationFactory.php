@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface getRepository()
  */
 class GlossaryCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -242,6 +242,7 @@ class AbstractProductFormDataProvider
     protected function getProductImagesForAbstractProduct($idProductAbstract)
     {
         $imageSetTransferCollection = $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
+
         return $this->getProductImageSetCollection($imageSetTransferCollection);
     }
 
@@ -253,6 +254,7 @@ class AbstractProductFormDataProvider
     protected function getProductImagesForConcreteProduct($idProduct)
     {
         $imageSetTransferCollection = $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
+
         return $this->getProductImageSetCollection($imageSetTransferCollection);
     }
 
@@ -600,7 +602,9 @@ class AbstractProductFormDataProvider
 
         $productValues = $this->getProductAttributesFormValues($productAttributes);
 
-        return array_merge($productValues, $result);
+        $result = $result + $productValues;
+
+        return $result;
     }
 
     /**
@@ -630,7 +634,7 @@ class AbstractProductFormDataProvider
             $id = null;
             $inputType = self::DEFAULT_INPUT_TYPE;
             $allowInput = false;
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? '';
             $shouldBeTextArea = mb_strlen($value) > 255;
             $isSuper = false;
 
@@ -653,7 +657,7 @@ class AbstractProductFormDataProvider
             $values[$type] = [
                 self::FORM_FIELD_ID => $id,
                 self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => isset($value),
+                self::FORM_FIELD_NAME => (bool)$value,
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
                 self::FORM_FIELD_SUPER => $isSuper,
@@ -759,6 +763,7 @@ class AbstractProductFormDataProvider
         }
 
         $transfer = $this->attributeTransferCollection->get($keyToLocalize);
+
         return $transfer->getKey();
     }
 
@@ -771,7 +776,7 @@ class AbstractProductFormDataProvider
     {
         $url = $baseUrl;
 
-        if (preg_match("#^\/(?!/).*$#", $url) === 1) {
+        if (preg_match("#^/(?!/)[\w/-]*\.[A-Za-z]{3,4}$#", $url) === 1) {
             $url = $this->imageUrlPrefix . $url;
         }
 
@@ -813,7 +818,6 @@ class AbstractProductFormDataProvider
         ProductAbstractTransfer $productAbstractTransfer,
         array $formData
     ): ArrayObject {
-
         if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
             return $productTransfer->getPrices();
         }

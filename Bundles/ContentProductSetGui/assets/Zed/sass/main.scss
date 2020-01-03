@@ -1,0 +1,22 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+.id-product-set-fields .form-group {
+  position: relative;
+  padding-right: 25px;
+
+}
+.id-product-set-fields .remove-product-set-id {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  color: #108548;
+}
+td {
+  img {
+    max-width: 75px;
+    max-height: 75px;
+  }
+}

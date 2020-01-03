@@ -20,8 +20,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductListCategoryRelationFormType extends AbstractType
 {
+    public const OPTION_CATEGORY_IDS = ProductListCategoryRelationTransfer::CATEGORY_IDS;
+
     public const FIELD_ID_PRODUCT_LIST = ProductListCategoryRelationTransfer::ID_PRODUCT_LIST;
     public const FIELD_CATEGORY_IDS = ProductListCategoryRelationTransfer::CATEGORY_IDS;
+
     public const BLOCK_PREFIX = 'productListCategoryRelation';
 
     /**
@@ -87,7 +90,6 @@ class ProductListCategoryRelationFormType extends AbstractType
         $builder->add(static::FIELD_CATEGORY_IDS, Select2ComboBoxType::class, [
             'label' => 'Categories',
             'choices' => array_flip($options[ProductListAggregateFormType::OPTION_CATEGORY_IDS]),
-            'choices_as_values' => true,
             'multiple' => true,
             'required' => false,
         ]);

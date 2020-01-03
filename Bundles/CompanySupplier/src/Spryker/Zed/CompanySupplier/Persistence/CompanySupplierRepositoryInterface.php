@@ -17,8 +17,6 @@ interface CompanySupplierRepositoryInterface
      * Specification:
      * - Retrieves collection of company types
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
      */
     public function getCompanyTypes(): CompanyTypeCollectionTransfer;
@@ -27,8 +25,6 @@ interface CompanySupplierRepositoryInterface
      * Specification:
      * - Get all companies with 'supplier' type
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
      */
     public function getAllSuppliers(): CompanySupplierCollectionTransfer;
@@ -36,8 +32,6 @@ interface CompanySupplierRepositoryInterface
     /**
      * Specification:
      * - Get supplier companies for the concrete product
-     *
-     * @api
      *
      * @param int $idProduct
      *
@@ -48,8 +42,6 @@ interface CompanySupplierRepositoryInterface
     /**
      * Specification:
      * - Gets company type by id
-     *
-     * @api
      *
      * @param int $idCompanyType
      *

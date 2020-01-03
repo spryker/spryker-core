@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
+use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionUnconditionalQueryCriteriaPluginInterface;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
@@ -19,10 +20,10 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCrite
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
  */
-class DefaultPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface
+class DefaultPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface, PriceDimensionUnconditionalQueryCriteriaPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +38,19 @@ class DefaultPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDim
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getRepository()->buildUnconditionalDefaultPriceDimensionQueryCriteria();
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *

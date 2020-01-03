@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Not used any more.
+ */
 class ProductOptionItemSorter implements ProductOptionItemSorterInterface
 {
     /**
@@ -26,11 +29,13 @@ class ProductOptionItemSorter implements ProductOptionItemSorterInterface
         $itemsWithoutOptions = [];
 
         foreach ($items as $itemTransfer) {
-            if ($itemTransfer->getProductOptions() && count($itemTransfer->getProductOptions())) {
-                $itemsWithOptions[] = $itemTransfer;
-            } else {
+            if (!$itemTransfer->getProductOptions()->count()) {
                 $itemsWithoutOptions[] = $itemTransfer;
+
+                continue;
             }
+
+            $itemsWithOptions[] = $itemTransfer;
         }
 
         $itemsWithOptions = $this->sortItemsBySku($itemsWithOptions);
@@ -39,6 +44,7 @@ class ProductOptionItemSorter implements ProductOptionItemSorterInterface
         $items = $this->mergeItems($itemsWithoutOptions, $itemsWithOptions);
 
         $orderTransfer->setItems(new ArrayObject($items));
+
         return $orderTransfer;
     }
 

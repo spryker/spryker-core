@@ -15,6 +15,7 @@ use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment
@@ -28,7 +29,7 @@ class DummyPaymentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRefundShouldDelegateToRefundModel()
+    public function testRefundShouldDelegateToRefundModel(): void
     {
         $dummyPaymentFactoryMock = $this->getFactoryMock();
         $dummyPaymentFacade = new DummyPaymentFacade();

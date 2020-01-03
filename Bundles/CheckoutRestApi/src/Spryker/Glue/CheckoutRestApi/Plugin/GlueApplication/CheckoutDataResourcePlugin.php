@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for checkout-data resource.
      *
      * @api
@@ -27,13 +27,14 @@ class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost(CheckoutRestApiConfig::ACTION_CHECKOUT_DATA_POST, false);
+        $resourceRouteCollection->addPost(CheckoutRestApiConfig::ACTION_CHECKOUT_DATA_POST, false)
+            ->addGet(CheckoutRestApiConfig::ACTION_CHECKOUT_DATA_GET, false);
 
         return $resourceRouteCollection;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +46,7 @@ class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoute
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +58,7 @@ class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoute
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -37,6 +37,7 @@ class CanceledTotalCalculator implements CalculatorInterface
         foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
             $canceledTotal += $itemTransfer->getCanceledAmount();
         }
+
         return $canceledTotal;
     }
 
@@ -51,6 +52,7 @@ class CanceledTotalCalculator implements CalculatorInterface
         foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
             $canceledTotal += $expenseTransfer->getCanceledAmount();
         }
+
         return $canceledTotal;
     }
 }

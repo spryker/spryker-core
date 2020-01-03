@@ -63,6 +63,7 @@ class EditPageController extends AbstractController
 
             if ($isUpdated) {
                 $redirectUrl = $this->createEditPageUrl($idCmsPage);
+
                 return $this->redirectResponse($redirectUrl);
             }
         }
@@ -80,6 +81,7 @@ class EditPageController extends AbstractController
             ->findCmsPageById($idCmsPage);
 
         $pageTabs = $this->getFactory()->createPageTabs();
+
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
@@ -87,7 +89,24 @@ class EditPageController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
+            'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
         ];
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return bool
+     */
+    protected function isPageTemplateWithPlaceholders(int $idCmsPage): bool
+    {
+        $cmsGlossaryTransfer = $this->getFactory()->getCmsFacade()->findPageGlossaryAttributes($idCmsPage);
+
+        if (!$cmsGlossaryTransfer) {
+            return false;
+        }
+
+        return $cmsGlossaryTransfer->getGlossaryAttributes()->count() > 0;
     }
 
     /**
@@ -113,6 +132,7 @@ class EditPageController extends AbstractController
         }
 
         $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+
         return false;
     }
 
@@ -134,9 +154,9 @@ class EditPageController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_PAGE_ACTIVATION_SUCCESS);
         } catch (CannotActivatePageException $exception) {
              $this->addErrorMessage($exception->getMessage());
-        } finally {
-            return $this->redirectResponse($redirectUrl);
         }
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**

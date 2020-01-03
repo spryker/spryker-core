@@ -105,7 +105,7 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
      */
     protected function isBlacklisted(PaymentMethodTransfer $paymentMethodTransfer)
     {
-        $giftCardMethodBlacklist = $this->giftCardConfig->getGiftCardMethodBlacklist();
+        $giftCardMethodBlacklist = $this->giftCardConfig->getGiftCardPaymentMethodBlacklist();
         foreach ($giftCardMethodBlacklist as $giftCardMethod) {
             if ($paymentMethodTransfer->getMethodName() === $giftCardMethod) {
                 return true;

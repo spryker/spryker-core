@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\Exception\EncodedDataNotValidException;
-use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
 
 class ProductPageSearchMapper implements ProductPageSearchMapperInterface
@@ -23,9 +23,9 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     protected $productPageAttributes;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
+     * @var \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper
      */
-    protected $searchFacade;
+    protected $productAbstractSearchDataMapper;
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface
@@ -34,13 +34,16 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
 
     /**
      * @param \Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface $productPageAttributes
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface $searchFacade
+     * @param \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper $productAbstractSearchDataMapper
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
      */
-    public function __construct(ProductPageAttributeInterface $productPageAttributes, ProductPageSearchToSearchInterface $searchFacade, ProductPageSearchToUtilEncodingInterface $utilEncoding)
-    {
+    public function __construct(
+        ProductPageAttributeInterface $productPageAttributes,
+        AbstractProductSearchDataMapper $productAbstractSearchDataMapper,
+        ProductPageSearchToUtilEncodingInterface $utilEncoding
+    ) {
         $this->productPageAttributes = $productPageAttributes;
-        $this->searchFacade = $searchFacade;
+        $this->productAbstractSearchDataMapper = $productAbstractSearchDataMapper;
         $this->utilEncoding = $utilEncoding;
     }
 
@@ -102,12 +105,10 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      */
     public function mapToSearchData(ProductPageSearchTransfer $productPageSearchTransfer)
     {
-        return $this->searchFacade
-            ->transformPageMapToDocumentByMapperName(
-                $productPageSearchTransfer->toArray(),
-                (new LocaleTransfer())->setLocaleName($productPageSearchTransfer->getLocale()),
-                ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME
-            );
+        return $this->productAbstractSearchDataMapper->mapProductDataToSearchData(
+            $productPageSearchTransfer->toArray(),
+            (new LocaleTransfer())->setLocaleName($productPageSearchTransfer->getLocale())
+        );
     }
 
     /**
@@ -133,7 +134,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return array
      */
-    protected function getConcreteProductData(array $concreteProducts, $idLocale)
+    protected function getConcreteProductData(array $concreteProducts, int $idLocale)
     {
         $concreteNames = [];
         $concreteSkus = [];
@@ -142,6 +143,10 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $concreteDescriptions = [];
 
         foreach ($concreteProducts as $concreteProduct) {
+            if ($this->isSearchable($concreteProduct, $idLocale) === false) {
+                continue;
+            }
+
             $concreteSkus[] = $concreteProduct['sku'];
             $concreteAttributes[] = $concreteProduct['attributes'];
             $this->setConcreteLocalizedProductData(
@@ -163,6 +168,27 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     }
 
     /**
+     * @param array $concreteProduct
+     * @param int $idLocale
+     *
+     * @return bool
+     */
+    protected function isSearchable(array $concreteProduct, int $idLocale): bool
+    {
+        if (isset($concreteProduct['SpyProductSearches']) === false) {
+            return false;
+        }
+
+        foreach ($concreteProduct['SpyProductSearches'] as $spyProductSearch) {
+            if ($spyProductSearch['fk_locale'] === $idLocale && $spyProductSearch['is_searchable'] === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param array $concreteProductLocalizedAttributes
      * @param int $idLocale
      * @param array $concreteNames
@@ -171,7 +197,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return void
      */
-    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
+    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, int $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
     {
         $concreteNames = [];
         foreach ($concreteProductLocalizedAttributes as $concreteProductLocalizedAttribute) {

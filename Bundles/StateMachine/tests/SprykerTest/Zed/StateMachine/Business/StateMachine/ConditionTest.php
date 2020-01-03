@@ -15,6 +15,7 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine
@@ -28,7 +29,7 @@ class ConditionTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testCheckConditionForTransitionShouldReturnTargetStateOfGivenTransition()
+    public function testCheckConditionForTransitionShouldReturnTargetStateOfGivenTransition(): void
     {
         $stateMachineHandlerResolverMock = $this->createStateMachineResolverMock(true);
 
@@ -66,7 +67,7 @@ class ConditionTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testCheckConditionForTransitionWhenConditionReturnsFalseShouldReturnSourceState()
+    public function testCheckConditionForTransitionWhenConditionReturnsFalseShouldReturnSourceState(): void
     {
         $stateMachineHandlerResolverMock = $this->createStateMachineResolverMock(false);
 
@@ -109,7 +110,7 @@ class ConditionTest extends StateMachineMocks
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
      */
-    protected function createStateMachineResolverMock($conditionCheckResult)
+    protected function createStateMachineResolverMock(bool $conditionCheckResult)
     {
         $conditionPluginMock = $this->createConditionPluginMock();
         $conditionPluginMock->expects($this->once())

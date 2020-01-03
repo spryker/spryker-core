@@ -19,12 +19,4 @@ interface CmsBlockConstants
      * @api
      */
     public const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
-
-    /**
-     * Specification
-     * - Defines the name of constant of default Yves template theme
-     *
-     * @api
-     */
-    public const YVES_THEME = 'YVES_THEME';
 }

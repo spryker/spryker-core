@@ -49,7 +49,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param string $categoryNodeData
+     * @param array $categoryNodeData
      *
      * @return string|null
      */

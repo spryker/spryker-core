@@ -341,7 +341,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[][]
+     * @return string[][]
      */
     public function getManualEventsBySource()
     {
@@ -391,7 +391,7 @@ class Process implements ProcessInterface
      */
     public function hasFile()
     {
-        return isset($this->file);
+        return $this->file !== null;
     }
 
     /**

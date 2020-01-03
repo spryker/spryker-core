@@ -63,7 +63,7 @@ class ProductSetTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_PRODUCT_SET => 'ID',
             static::COL_NAME => 'Name',
-            static::COL_PRODUCT_COUNT => '# of Products',
+            static::COL_PRODUCT_COUNT => 'Number of Products',
             static::COL_WEIGHT => 'Weight',
             static::COL_IS_ACTIVE => 'Status',
             static::COL_ACTIONS => 'Actions',

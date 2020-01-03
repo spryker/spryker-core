@@ -15,11 +15,12 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterfac
 /**
  * @method \Spryker\Zed\OauthCompanyUser\Business\OauthCompanyUserFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig getConfig()
+ * @method \Spryker\Zed\OauthCompanyUser\Communication\OauthCompanyUserCommunicationFactory getFactory()
  */
 class CompanyUserOauthUserProviderPlugin extends AbstractPlugin implements OauthUserProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,19 +34,11 @@ class CompanyUserOauthUserProviderPlugin extends AbstractPlugin implements Oauth
             return false;
         }
 
-        if (!$oauthUserTransfer->getClientId()) {
-            return false;
-        }
-
-        if ($oauthUserTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

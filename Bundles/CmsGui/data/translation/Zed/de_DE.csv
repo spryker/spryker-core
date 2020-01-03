@@ -3,7 +3,7 @@ Activate,Aktivieren
 by,durch
 "Cms page with id %s doesn't exist","CMS Seite mit der ID %s existiert nicht"
 Compare,Vergleich
-"Content Management",Content-Management
+"Content Management",Inhaltsverwaltung
 "Create CMS Page","CMS-Seite erstellen"
 "Create new CMS Page","CMS Seite erstellen"
 "Create page","Seite erstellen"
@@ -35,7 +35,7 @@ on,bzgl.
 "Overview of CMS Pages","Übersicht der CMS-Seiten"
 Page,Seite
 "Page was updated successfully","Seite wurde erfolgreich aktualisiert"
-Pages,Seiten
+"Page with version %d successfully published.","Seite mit Version %d erfolgreich veröffentlicht."
 Pages,Seiten
 "Placeholder translations successfully updated","Platzhalter-Übersetzungen erfolgreich aktualisiert."
 Publish,Veröffentlichen
@@ -55,4 +55,3 @@ View,Ansicht
 "You are editing a <br>draft </b> page. To make your changes visible in Yves, publish the page. Publishing the page will create a new version for this page","Sie bearbeiten eine <b>Entwurf</b>-Seite. Um Ihre Änderungen im Storefront sichtbar zu machen, veröffentlichen Sie die Seite. Durch die Veröffentlichung wird eine neue Version dieser Seite erstellt."
 "You are viewing a published page. It was published","Sie betrachten eine veröffentlichte Seite. Sie wurde veröffentlicht"
 "You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version","Sie können die Seite oder die Platzhalter bearbeiten, um den aktuellen Entwurf zu verändern. Sie können den aktuellen Entwurf veröffentlichen, um eine neue Version zu erstellen"
-"Page with version %d successfully published.", "Seite mit Version %d erfolgreich veröffentlicht."

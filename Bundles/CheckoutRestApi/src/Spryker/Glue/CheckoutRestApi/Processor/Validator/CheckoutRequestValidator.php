@@ -105,6 +105,7 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
                 $restErrorCollectionTransfer->addRestError($resErrorMessageTransfer);
             }
         }
+
         return $restErrorCollectionTransfer;
     }
 }

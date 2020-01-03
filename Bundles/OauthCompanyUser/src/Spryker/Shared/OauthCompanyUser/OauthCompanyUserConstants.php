@@ -12,19 +12,4 @@ namespace Spryker\Shared\OauthCompanyUser;
  */
 interface OauthCompanyUserConstants
 {
-    /**
-     * Specification:
-     *  - The identifier of OAUTH client to use when requesting for access tokens.
-     *
-     * @api
-     */
-    public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_COMPANY_USER:OAUTH_CLIENT_IDENTIFIER';
-
-    /**
-     * Specification:
-     *  - The secret of OAUTH client to use when requesting for access tokens.
-     *
-     * @api
-     */
-    public const OAUTH_CLIENT_SECRET = 'OAUTH_COMPANY_USER:OAUTH_CLIENT_SECRET';
 }

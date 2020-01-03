@@ -9,6 +9,9 @@ namespace Spryker\Zed\Development\Business\Module\ModuleFinder;
 
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 interface ModuleFinderInterface
 {
     /**

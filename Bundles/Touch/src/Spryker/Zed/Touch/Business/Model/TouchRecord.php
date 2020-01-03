@@ -81,11 +81,11 @@ class TouchRecord implements TouchRecordInterface
                 $this->insertTouchRecord($itemType, $itemEvent, $idItem);
             }
         } else {
-            $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry(
+            $touchEntity = $this->findOrCreateTouchEntity(
                 $itemType,
                 $idItem,
                 $itemEvent
-            )->findOneOrCreate();
+            );
 
             $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
         }
@@ -93,6 +93,36 @@ class TouchRecord implements TouchRecordInterface
         $this->connection->commit();
 
         return true;
+    }
+
+    /**
+     * @param string $itemType
+     * @param int $idItem
+     * @param string $itemEvent
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch
+     */
+    protected function findOrCreateTouchEntity(string $itemType, int $idItem, string $itemEvent): SpyTouch
+    {
+        $touchEntityCollection = $this->touchQueryContainer->queryUpdateTouchEntry(
+            $itemType,
+            $idItem
+        )->find();
+
+        if ($touchEntityCollection->count() === 1) {
+            return $touchEntityCollection->getFirst();
+        }
+
+        foreach ($touchEntityCollection as $touch) {
+            if ($touch->getItemEvent() === $itemEvent) {
+                return $touch;
+            }
+        }
+
+        return (new SpyTouch())
+            ->setItemType($itemType)
+            ->setItemId($idItem)
+            ->setItemEvent($itemEvent);
     }
 
     /**

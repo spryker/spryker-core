@@ -304,7 +304,7 @@ class GlossaryController extends AbstractController
      */
     protected function handleAjaxRequest(array $forms, int $idForm, LocaleTransfer $localeTransfer): JsonResponse
     {
-        if ($forms[$idForm]->isValid()) {
+        if ($forms[$idForm]->isSubmitted() && $forms[$idForm]->isValid()) {
             $data = $forms[$idForm]->getData();
             $this->saveGlossaryKeyPageMapping($data, $localeTransfer);
 

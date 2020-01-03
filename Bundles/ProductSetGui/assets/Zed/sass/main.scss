@@ -118,3 +118,7 @@ td {
     width: 10%
   }
 }
+
+.image-collection:last-child .image-collection-delimiter {
+  display: none;
+}

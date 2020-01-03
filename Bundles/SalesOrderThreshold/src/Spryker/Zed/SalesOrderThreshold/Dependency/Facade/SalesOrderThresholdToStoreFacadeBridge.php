@@ -9,6 +9,9 @@ namespace Spryker\Zed\SalesOrderThreshold\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class SalesOrderThresholdToStoreFacadeBridge implements SalesOrderThresholdToStoreFacadeInterface
 {
     /**

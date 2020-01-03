@@ -8,15 +8,19 @@
 namespace Spryker\Zed\Currency\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyBusinessFactory getFactory()
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface getRepository()
  */
 class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +34,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +46,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -58,7 +62,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +78,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +92,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +106,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -113,5 +117,66 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
         return $this->getFactory()
             ->createCurrencyReader()
             ->getDefaultCurrencyForCurrentStore();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateCurrencyInQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    {
+        return $this->getFactory()->createQuoteValidator()->validate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer
+    {
+        return $this->getRepository()
+            ->findCurrencyByIsoCode($isoCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array
+    {
+        return $this->getFactory()
+            ->createCurrencyBulkReader()
+            ->getCurrencyTransfersByIsoCodes($isoCodes);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getStoreWithCurrenciesByIdStore(int $idStore): StoreWithCurrencyTransfer
+    {
+        return $this->getFactory()
+            ->createCurrencyReader()
+            ->getStoreWithCurrenciesByIdStore($idStore);
     }
 }

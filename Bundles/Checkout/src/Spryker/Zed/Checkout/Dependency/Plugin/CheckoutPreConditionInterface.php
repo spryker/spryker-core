@@ -7,24 +7,11 @@
 
 namespace Spryker\Zed\Checkout\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface as ExtensionCheckoutPreConditionPluginInterface;
 
-interface CheckoutPreConditionInterface
+/**
+ * @deprecated Use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionInterface instead.
+ */
+interface CheckoutPreConditionInterface extends ExtensionCheckoutPreConditionPluginInterface
 {
-    /**
-     * Specification:
-     * - Checks a condition before the order is saved. If the condition fails, an error is added to the response transfer and 'false' is returned.
-     * - Check could be passed (returns 'true') along with errors added to the checkout response.
-     * - Quote transfer should not be changed
-     * - Don't use this plugin to write to a DB
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return bool
-     */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 }

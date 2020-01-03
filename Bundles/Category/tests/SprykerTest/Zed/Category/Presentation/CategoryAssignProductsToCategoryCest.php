@@ -12,6 +12,7 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category
@@ -26,11 +27,11 @@ class CategoryAssignProductsToCategoryCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CategoryPresentationTester $i)
+    public function breadcrumbIsVisible(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::getAssignProductsButtonSelector());
         $i->click(CategoryListPage::getAssignProductsButtonSelector());
-        $i->seeBreadcrumbNavigation('Dashboard / Category / Assign Products to Category');
+        $i->seeBreadcrumbNavigation('Category / Assign Products to Category');
     }
 }

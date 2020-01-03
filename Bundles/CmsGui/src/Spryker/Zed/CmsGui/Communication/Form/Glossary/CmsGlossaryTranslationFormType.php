@@ -85,11 +85,15 @@ class CmsGlossaryTranslationFormType extends AbstractType
             'label' => 'Content',
             'attr' => [
                 'class' => 'html-editor',
+                'data-editor-config' => 'cms',
             ],
             'required' => false,
             'constraints' => [
                 $this->getFactory()->createTwigContentConstraint(),
             ],
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
+            'allowed_html_tags' => ['iframe'],
         ]);
 
         return $this;

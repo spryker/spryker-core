@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilder;
 
-use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderInterface;
+use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\NamespacedTemplateNameBuilderInterface;
 
-class TemplateNameBuilderYves implements TemplateNameBuilderInterface
+class TemplateNameBuilderYves implements NamespacedTemplateNameBuilderInterface
 {
     /**
      * @param string $filePath
@@ -20,10 +20,27 @@ class TemplateNameBuilderYves implements TemplateNameBuilderInterface
     {
         $pathsParts = explode(DIRECTORY_SEPARATOR, $filePath);
         $applicationPosition = array_search('Yves', $pathsParts);
-        $bundle = $pathsParts[$applicationPosition + 1];
+        $module = $pathsParts[$applicationPosition + 1];
         $themePosition = array_search('Theme', $pathsParts);
         $template = array_slice($pathsParts, $themePosition + 2);
 
-        return sprintf('@%s/%s', $bundle, implode('/', $template));
+        return sprintf('@%s/%s', $module, implode('/', $template));
+    }
+
+    /**
+     * @param string $filePath
+     *
+     * @return string
+     */
+    public function buildNamespacedTemplateName(string $filePath): string
+    {
+        $pathsParts = explode(DIRECTORY_SEPARATOR, $filePath);
+        $applicationPosition = array_search('Yves', $pathsParts);
+        $organization = $pathsParts[$applicationPosition - 1];
+        $module = $pathsParts[$applicationPosition + 1];
+        $themePosition = array_search('Theme', $pathsParts);
+        $template = array_slice($pathsParts, $themePosition + 2);
+
+        return sprintf('@%s:%s/%s', $organization, $module, implode('/', $template));
     }
 }

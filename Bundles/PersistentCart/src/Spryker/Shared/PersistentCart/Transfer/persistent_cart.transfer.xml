@@ -8,6 +8,7 @@
         <property name="idQuote" type="int"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteSyncRequest">
@@ -19,6 +20,7 @@
         <property name="customer" type="Customer"/>
         <property name="idQuote" type="int"/>
         <property name="item" type="Item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteMergeRequest">
@@ -41,6 +43,7 @@
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="customerReference" type="string"/>
+        <property name="idCustomer" type="int"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -50,12 +53,16 @@
     <transfer name="Quote">
         <property name="store" type="Store"/>
         <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+        <property name="customerReference" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
         <property name="customer" type="Customer"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
     <transfer name="Store">
@@ -68,11 +75,25 @@
 
     <transfer name="QuoteCriteriaFilter">
         <property name="idStore" type="int"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteCollection">
+        <property name="quotes" type="Quote[]" singular="quote"/>
+    </transfer>
+
+    <transfer name="Currency">
     </transfer>
 
 </transfers>

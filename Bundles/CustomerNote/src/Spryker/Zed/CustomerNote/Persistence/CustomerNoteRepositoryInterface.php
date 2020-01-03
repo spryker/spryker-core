@@ -15,8 +15,6 @@ interface CustomerNoteRepositoryInterface
      * Specification:
      * - Fetches customer notes by id customer
      *
-     * @api
-     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer

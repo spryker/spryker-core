@@ -14,13 +14,16 @@ use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrlValidator;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBridge;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlBridge;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface;
 use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsGui
@@ -35,7 +38,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenSameUrlEditedShouldNotRegisterError()
+    public function testValidateWhenSameUrlEditedShouldNotRegisterError(): void
     {
         $uniqueUrlConstraint = $this->createUniqueUrlConstraint();
         $cmsPageTransfer = $this->createCmsPageTransfer();
@@ -60,7 +63,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenRedirectUrlUsedShouldNotRegisterError()
+    public function testValidateWhenRedirectUrlUsedShouldNotRegisterError(): void
     {
         $uniqueUrlConstraint = $this->createUniqueUrlConstraint();
         $cmsPageTransfer = $this->createCmsPageTransfer();
@@ -92,7 +95,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenExistingUrlUsedShouldRegisterError()
+    public function testValidateWhenExistingUrlUsedShouldRegisterError(): void
     {
         $uniqueUrlConstraint = $this->createUniqueUrlConstraint();
         $cmsPageTransfer = $this->createCmsPageTransfer();
@@ -108,7 +111,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
         $executionContextMock = $this->createExecutionContextMock();
 
         $executionContextMock
-            ->expects($this->never())
+            ->expects($this->once())
             ->method('buildViolation');
 
         $cmsPageAttributeTransfer->setIdCmsPage(123);
@@ -146,7 +149,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
      */
-    protected function createCmsFacade()
+    protected function createCmsFacade(): CmsGuiToCmsInterface
     {
         return new CmsGuiToCmsBridge(new CmsFacade());
     }
@@ -154,7 +157,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface
      */
-    protected function createUrlFacade()
+    protected function createUrlFacade(): CmsGuiToUrlInterface
     {
         return new CmsGuiToUrlBridge(new UrlFacade());
     }
@@ -162,19 +165,20 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl
      */
-    protected function createUniqueUrlConstraint()
+    protected function createUniqueUrlConstraint(): UniqueUrl
     {
         $uniqueUrlConstraint = new UniqueUrl([
             UniqueUrl::OPTION_CMS_FACADE => $this->createCmsFacade(),
             UniqueUrl::OPTION_URL_FACADE => $this->createUrlFacade(),
         ]);
+
         return $uniqueUrlConstraint;
     }
 
     /**
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    protected function createCmsAttributeTransfer()
+    protected function createCmsAttributeTransfer(): CmsPageAttributesTransfer
     {
         $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
         $cmsPageAttributeTransfer->setUrl('test-' . rand() . '-validator-' . rand());
@@ -189,7 +193,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    protected function createCmsPageTransfer()
+    protected function createCmsPageTransfer(): CmsPageTransfer
     {
         $cmsPageTransfer = new CmsPageTransfer();
         $cmsPageTransfer->setFkTemplate(1);
@@ -212,7 +216,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
         ExecutionContextInterface $executionContextMock,
         CmsPageAttributesTransfer $cmsPageAttributeTransfer,
         UniqueUrl $uniqueUrlConstraint
-    ) {
+    ): void {
         $uniqueUrlValidator = new UniqueUrlValidator();
         $uniqueUrlValidator->initialize($executionContextMock);
         $uniqueUrlValidator->validate($cmsPageAttributeTransfer, $uniqueUrlConstraint);

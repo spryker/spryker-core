@@ -13,6 +13,8 @@ namespace Spryker\Shared\AuthRestApi;
 interface AuthRestApiConstants
 {
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * Specification:
      *  - The identifier of OAUTH client to use when requesting for access tokens.
      *
@@ -23,6 +25,8 @@ interface AuthRestApiConstants
     public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_CLIENT_IDENTIFIER';
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * Specification:
      *  - The secret of OAUTH client to use when requesting for access tokens.
      *

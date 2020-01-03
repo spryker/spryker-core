@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\Communication\Exception\CmsGlossaryNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
+use Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
 class CmsGlossaryFormTypeDataProvider
@@ -31,11 +32,18 @@ class CmsGlossaryFormTypeDataProvider
     protected $cmsFacade;
 
     /**
-     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     * @var \Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface
      */
-    public function __construct(CmsGuiToCmsInterface $cmsFacade)
+    protected $cmsGlossaryUpdater;
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     * @param \Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface $cmsGlossaryUpdater
+     */
+    public function __construct(CmsGuiToCmsInterface $cmsFacade, CmsGlossaryUpdaterInterface $cmsGlossaryUpdater)
     {
         $this->cmsFacade = $cmsFacade;
+        $this->cmsGlossaryUpdater = $cmsGlossaryUpdater;
     }
 
     /**
@@ -68,6 +76,8 @@ class CmsGlossaryFormTypeDataProvider
                 )
             );
         }
+
+        $cmsGlossaryTransfer = $this->cmsGlossaryUpdater->updateAfterFind($cmsGlossaryTransfer);
 
         return $cmsGlossaryTransfer;
     }

@@ -21,7 +21,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,14 +56,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
     public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-
-        if (!empty($ids)) {
-            $contentStorageTransfers = $this->getRepository()->findContentStorageByContentIds($ids);
-        } else {
-            $contentStorageTransfers = $this->getRepository()->findAllContentStorage();
-        }
-
-        foreach ($contentStorageTransfers as $contentStorageTransfer) {
+        foreach ($this->findContentStorage($ids) as $contentStorageTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             $synchronizationDataTransfer->setData($contentStorageTransfer->getData());
             $synchronizationDataTransfer->setKey($contentStorageTransfer->getKey());
@@ -75,7 +68,21 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     */
+    protected function findContentStorage(array $ids = []): array
+    {
+        if ($ids === []) {
+            return $this->getRepository()->findAllContentStorage();
+        }
+
+        return $this->getRepository()->findContentStorageByContentIds($ids);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +94,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,7 +106,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

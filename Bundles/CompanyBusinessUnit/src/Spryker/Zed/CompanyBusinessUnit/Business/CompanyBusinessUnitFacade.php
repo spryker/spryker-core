@@ -26,7 +26,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusinessUnitFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -77,7 +77,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -111,7 +111,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,12 +122,13 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createCompanyBusinessUnitReader()
             ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -142,7 +143,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -159,7 +160,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -175,7 +176,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +191,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +207,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -217,5 +218,23 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer
     {
         return $this->getRepository()->findCompanyBusinessUnitById($idCompanyBusinessUnit);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitReader()
+            ->findCompanyBusinessUnitByUuid($companyBusinessUnitTransfer);
     }
 }

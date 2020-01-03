@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 class ModuleMatcher implements ModuleMatcherInterface
 {
     /**

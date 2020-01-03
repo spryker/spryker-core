@@ -12,6 +12,7 @@ use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
+use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use SprykerTest\Shared\Twig\Stub\CacheStub;
 use Twig\Error\LoaderError;
@@ -19,6 +20,7 @@ use Twig\Loader\LoaderInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig
@@ -28,14 +30,16 @@ use Twig\Loader\LoaderInterface;
 class TwigFilesystemLoaderTest extends Unit
 {
     public const PATH_TO_ZED_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Zed/Bundle/Presentation';
+    public const PATH_TO_ZED_CORE = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Zed/%s/Presentation';
     public const CONTENT_CACHED_FILE = 'cached file' . PHP_EOL;
     public const CONTENT_PROJECT_ZED_FILE = 'project zed file' . PHP_EOL;
+    public const CONTENT_CORE_ZED_FILE = 'core zed non split file' . PHP_EOL;
     public const TEMPLATE_NAME = '@Bundle/Controller/index.twig';
 
     /**
      * @return void
      */
-    public function testCanBeConstructedWithTemplatePathsArray()
+    public function testCanBeConstructedWithTemplatePathsArray(): void
     {
         $templatePaths = [];
         $filesystemLoader = new TwigFilesystemLoader($templatePaths, $this->getCacheStub(), $this->getTemplateNameExtractor());
@@ -46,7 +50,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceReturnsFileFromCache()
+    public function testGetSourceReturnsFileFromCache(): void
     {
         $cache = $this->getCacheStub();
         $cache->set('@CachedBundle/Controller/index.twig', __DIR__ . '/Fixtures/cache/cached.twig');
@@ -58,7 +62,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceThrowsExceptionWhenPathInCacheMarkedAsInvalid()
+    public function testGetSourceThrowsExceptionWhenPathInCacheMarkedAsInvalid(): void
     {
         $cache = $this->getCacheStub();
         $cache->set('@Invalid/Controller/index.twig', false);
@@ -71,42 +75,47 @@ class TwigFilesystemLoaderTest extends Unit
     }
 
     /**
+     * @return string[][]
+     */
+    public function templateNameContentProvider(): array
+    {
+        return [
+            ['@Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['/Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['@ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['/ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['@CoreNamespace:Bundle/Controller/index.twig', static::CONTENT_CORE_ZED_FILE],
+            ['/CoreNamespace:Bundle/Controller/index.twig', static::CONTENT_CORE_ZED_FILE],
+            ['CoreNamespace:Bundle/Controller/index.twig', static::CONTENT_CORE_ZED_FILE],
+        ];
+    }
+
+    /**
+     * @dataProvider templateNameContentProvider
+     *
+     * @param string $templateName
+     * @param string $expectedContent
+     *
      * @return void
      */
-    public function testWhenNameStartsWithAtLoadReturnsFileContent()
+    public function testLoadReturnsFileContent(string $templateName, string $expectedContent): void
     {
-        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
-        $content = $filesystemLoader->getSource(static::TEMPLATE_NAME);
+        $filesystemLoader = $this->getFilesystemLoader([
+            static::PATH_TO_ZED_PROJECT,
+            static::PATH_TO_ZED_CORE,
+        ]);
 
-        $this->assertSame(static::CONTENT_PROJECT_ZED_FILE, $content);
+        $content = $filesystemLoader->getSource($templateName);
+
+        $this->assertSame($expectedContent, $content);
     }
 
     /**
      * @return void
      */
-    public function testWhenNameStartsWithSlashLoadReturnsFileContent()
-    {
-        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
-        $content = $filesystemLoader->getSource('/Bundle/Controller/index.twig');
-
-        $this->assertSame(static::CONTENT_PROJECT_ZED_FILE, $content);
-    }
-
-    /**
-     * @return void
-     */
-    public function testWhenNameStartsWithBundleNameLoadReturnsFileContent()
-    {
-        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
-        $content = $filesystemLoader->getSource('Bundle/Controller/index.twig');
-
-        $this->assertSame(static::CONTENT_PROJECT_ZED_FILE, $content);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetSourceThrowsExceptionWhenFileNotExists()
+    public function testGetSourceThrowsExceptionWhenFileNotExists(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
 
@@ -119,7 +128,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceThrowsExceptionWhenNameDoesNotContainControllerAndTemplateNameInfo()
+    public function testGetSourceThrowsExceptionWhenNameDoesNotContainControllerAndTemplateNameInfo(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
 
@@ -132,7 +141,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testIsFreshReturnsTrueWhenFileIsFresh()
+    public function testIsFreshReturnsTrueWhenFileIsFresh(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
         $time = filemtime(static::PATH_TO_ZED_PROJECT . '/Controller/index.twig') + 10;
@@ -143,7 +152,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testIsFreshReturnsFalseWhenFileIsNotFresh()
+    public function testIsFreshReturnsFalseWhenFileIsNotFresh(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
         $time = filemtime(static::PATH_TO_ZED_PROJECT . '/Controller/index.twig') - 10;
@@ -154,7 +163,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetCacheKeyReturnsPathToTemplate()
+    public function testGetCacheKeyReturnsPathToTemplate(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
         $cacheKey = $filesystemLoader->getCacheKey(static::TEMPLATE_NAME);
@@ -165,7 +174,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return \Spryker\Shared\Twig\Cache\CacheInterface
      */
-    protected function getCacheStub()
+    protected function getCacheStub(): CacheInterface
     {
         return new CacheStub();
     }
@@ -173,7 +182,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface
      */
-    protected function getTemplateNameExtractor()
+    protected function getTemplateNameExtractor(): TemplateNameExtractorInterface
     {
         $twigToUtilTextBridge = new TwigToUtilTextServiceBridge(new UtilTextService());
         $templateNameExtractor = new TemplateNameExtractor($twigToUtilTextBridge);
@@ -182,17 +191,17 @@ class TwigFilesystemLoaderTest extends Unit
     }
 
     /**
-     * @param string $path
+     * @param string|array $path
      * @param \Spryker\Shared\Twig\Cache\CacheInterface|null $cache
      *
      * @return \Spryker\Shared\Twig\TwigFilesystemLoader
      */
-    protected function getFilesystemLoader($path, ?CacheInterface $cache = null)
+    protected function getFilesystemLoader($path, ?CacheInterface $cache = null): TwigFilesystemLoader
     {
         if (!$cache) {
             $cache = $this->getCacheStub();
         }
 
-        return new TwigFilesystemLoader([$path], $cache, $this->getTemplateNameExtractor());
+        return new TwigFilesystemLoader((array)$path, $cache, $this->getTemplateNameExtractor());
     }
 }

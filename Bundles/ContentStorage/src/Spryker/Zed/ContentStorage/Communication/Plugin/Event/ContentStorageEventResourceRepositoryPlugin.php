@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,25 +34,21 @@ class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getRepository()->findContentByIds($ids)->getArrayCopy();
-        }
-
-        return $this->getRepository()->findAllContent()->getArrayCopy();
+        return $this->getRepository()->findContentByContentIds($ids);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,11 +56,11 @@ class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin impleme
      */
     public function getEventName(): string
     {
-        return ContentEvents::ENTITY_SPY_CONTENT_PUBLISH;
+        return ContentEvents::CONTENT_PUBLISH;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

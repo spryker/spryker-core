@@ -10,6 +10,9 @@ namespace Spryker\Client\Availability\Zed;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToZedRequestClientInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class AvailabilityStub implements AvailabilityStubInterface
 {
     /**
@@ -26,6 +29,8 @@ class AvailabilityStub implements AvailabilityStubInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer

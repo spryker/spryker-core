@@ -65,6 +65,8 @@ interface OauthFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
      *
      * @return \Generated\Shared\Transfer\OauthClientTransfer
@@ -106,4 +108,14 @@ interface OauthFacadeInterface
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
     public function getScopesByIdentifiers(array $customerScopes): array;
+
+    /**
+     * Specification:
+     * - Installs oauth client data.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installOauthClient(): void;
 }

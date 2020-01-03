@@ -56,6 +56,23 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $cmsPageIds
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryCmsPageByIds(array $cmsPageIds)
+    {
+        return $this->getFactory()
+            ->getCmsQueryContainer()
+            ->queryPages()
+            ->filterByIdCmsPage_In($cmsPageIds);
+    }
+
+    /**
      * @api
      *
      * @param array $cmsPageIds

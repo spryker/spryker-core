@@ -21,14 +21,15 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle
@@ -53,7 +54,7 @@ class ProductBundleCartExpanderTest extends Unit
     /**
      * @return void
      */
-    public function testExpandBundleItemsShouldExtractBundledItemsAndDistributeBundlePrice()
+    public function testExpandBundleItemsShouldExtractBundledItemsAndDistributeBundlePrice(): void
     {
         $productExpanderMock = $this->setupProductExpander();
 
@@ -97,16 +98,16 @@ class ProductBundleCartExpanderTest extends Unit
 
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface|null $priceProductFacadeMock
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface|null $productFacadeMock
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface|null $localeFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface|null $productFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface|null $localeFacadeMock
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander
      */
     protected function createProductExpanderMock(
         ?ProductBundleToPriceProductFacadeInterface $priceProductFacadeMock = null,
-        ?ProductBundleToProductInterface $productFacadeMock = null,
-        ?ProductBundleToLocaleInterface $localeFacadeMock = null,
+        ?ProductBundleToProductFacadeInterface $productFacadeMock = null,
+        ?ProductBundleToLocaleFacadeInterface $localeFacadeMock = null,
         ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null
     ) {
 
@@ -120,10 +121,6 @@ class ProductBundleCartExpanderTest extends Unit
 
         if ($productFacadeMock === null) {
             $productFacadeMock = $this->createProductFacadeMock();
-        }
-
-        if ($localeFacadeMock === null) {
-            $localeFacadeMock = $this->createLocaleFacadeMock();
         }
 
         if ($localeFacadeMock === null) {
@@ -171,7 +168,7 @@ class ProductBundleCartExpanderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransfer()
+    protected function createCartChangeTransfer(): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -210,8 +207,7 @@ class ProductBundleCartExpanderTest extends Unit
     protected function setupFindBundledItemsByIdProductConcrete(
         array $fixtures,
         MockObject $productExpanderMock
-    ) {
-
+    ): void {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);
         $productBundleEntity->setQuantity($fixtures['bundledProductQuantity']);
@@ -246,26 +242,26 @@ class ProductBundleCartExpanderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface
      */
     protected function createProductFacadeMock()
     {
-        return $this->getMockBuilder(ProductBundleToProductInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToProductFacadeInterface::class)->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface
      */
     protected function createLocaleFacadeMock()
     {
-        return $this->getMockBuilder(ProductBundleToLocaleInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToLocaleFacadeInterface::class)->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface
      */
     protected function createPriceFacadeMock()
     {
-        return $this->getMockBuilder(ProductBundleToPriceInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToPriceFacadeInterface::class)->getMock();
     }
 }

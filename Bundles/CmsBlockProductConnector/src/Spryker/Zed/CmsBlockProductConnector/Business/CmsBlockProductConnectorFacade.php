@@ -19,11 +19,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface getRepository()
  */
 class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockProductConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +40,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +56,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +73,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +89,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

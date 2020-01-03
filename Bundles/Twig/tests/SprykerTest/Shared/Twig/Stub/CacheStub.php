@@ -21,7 +21,7 @@ class CacheStub implements CacheInterface
      *
      * @return bool
      */
-    public function has($key)
+    public function has($key): bool
     {
         return isset($this->cache[$key]);
     }
@@ -42,7 +42,7 @@ class CacheStub implements CacheInterface
 
     /**
      * @param string $key
-     * @param string $value
+     * @param string|bool $value
      *
      * @return $this
      */
@@ -58,7 +58,7 @@ class CacheStub implements CacheInterface
      *
      * @return bool
      */
-    public function isValid($key)
+    public function isValid($key): bool
     {
         if (!$this->has($key)) {
             return false;

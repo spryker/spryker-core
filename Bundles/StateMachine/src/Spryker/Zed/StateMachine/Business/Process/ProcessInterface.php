@@ -149,7 +149,7 @@ interface ProcessInterface
     public function getManuallyExecutableEvents();
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getManuallyExecutableEventsBySource();
 

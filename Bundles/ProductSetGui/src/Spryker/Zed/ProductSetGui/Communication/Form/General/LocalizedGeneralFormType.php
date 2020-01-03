@@ -198,7 +198,7 @@ class LocalizedGeneralFormType extends AbstractType
         }
 
         $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
+        $urlTransfer->setUrl(explode('?', $url)[0]);
 
         if ($this->getFactory()->getUrlFacade()->hasUrlCaseInsensitive($urlTransfer)) {
             $context

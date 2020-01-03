@@ -105,4 +105,12 @@ interface PriceProductAbstractReaderInterface
      * @return int|null
      */
     public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int;
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    public function getProductAbstractPricesByConcreteSkusAndCriteria(array $concreteSkus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

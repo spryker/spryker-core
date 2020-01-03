@@ -9,6 +9,7 @@ namespace Spryker\Zed\SharedCart\Business\Model;
 
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 
 interface QuotePermissionGroupReaderInterface
 {
@@ -18,4 +19,11 @@ interface QuotePermissionGroupReaderInterface
      * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
      */
     public function getQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): QuotePermissionGroupResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
+     */
+    public function findQuotePermissionGroupById(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer;
 }

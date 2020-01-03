@@ -16,9 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class OfferEntityManager extends AbstractEntityManager implements OfferEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *

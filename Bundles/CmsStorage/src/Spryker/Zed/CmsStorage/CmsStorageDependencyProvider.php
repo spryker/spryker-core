@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CmsStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsBridge;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToStoreFacadeBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToCmsQueryContainerBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToLocaleQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -25,7 +25,7 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
     public const FACADE_CMS = 'FACADE_CMS';
-    public const STORE = 'store';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -56,9 +56,7 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getContentWidgetDataExpander();
         };
 
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
-        };
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -77,6 +75,20 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
             return new CmsStorageToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CmsStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
 
         return $container;
     }

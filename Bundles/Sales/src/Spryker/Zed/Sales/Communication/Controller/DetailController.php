@@ -22,6 +22,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
+    protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    public const ROUTE_REDIRECT = '/sales/detail';
+
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     */
+    protected const SERVICE_SUB_REQUEST = 'sub_request';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -40,22 +48,43 @@ class DetailController extends AbstractController
         }
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
-        $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+        $eventsGroupedByShipment = $this->getFactory()->getOmsFacade()->getGroupedDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
         $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
+        $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
         $blockResponseData = $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
             return $blockResponseData;
         }
 
+        $groupedOrderItems = $this->getFacade()
+            ->getUniqueOrderItems($orderTransfer->getItems());
+
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'events' => $events,
+            'eventsGroupedByShipment' => $eventsGroupedByShipment,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
+            'groupedOrderItems' => $groupedOrderItems,
+            'changeStatusRedirectUrl' => $this->createRedirectLink($idSalesOrder),
         ], $blockResponseData);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string
+     */
+    protected function createRedirectLink(int $idSalesOrder): string
+    {
+        $redirectUrlParams = [
+            static::PARAM_ID_SALES_ORDER => $idSalesOrder,
+        ];
+
+        return Url::generate(static::ROUTE_REDIRECT, $redirectUrlParams);
     }
 
     /**
@@ -130,6 +159,6 @@ class DetailController extends AbstractController
      */
     protected function getSubRequestHandler()
     {
-        return $this->getApplication()['sub_request'];
+        return $this->getApplication()->get(static::SERVICE_SUB_REQUEST);
     }
 }

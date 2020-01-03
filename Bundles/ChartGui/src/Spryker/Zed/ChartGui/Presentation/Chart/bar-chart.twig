@@ -1,0 +1,17 @@
+{% set chartType = 'bar' %}
+    {% set chartData = [] %}
+    {% for trace in data.traces %}
+        {% set chartData = chartData | merge([{
+                'name': trace.name,
+                'type': chartType,
+                'x': trace.labels,
+                'y': trace.values
+        }]) %}
+    {% endfor %}
+
+{% include '@ChartGui/Chart/_partials/plotly-chart.twig' with {
+    chartType: chartType,
+    layout: layout,
+    data: data,
+    chartData: chartData
+} %}

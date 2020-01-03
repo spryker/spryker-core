@@ -41,7 +41,7 @@ interface SalesToOmsInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
@@ -51,6 +51,13 @@ interface SalesToOmsInterface
      * @return array
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
      * @return array

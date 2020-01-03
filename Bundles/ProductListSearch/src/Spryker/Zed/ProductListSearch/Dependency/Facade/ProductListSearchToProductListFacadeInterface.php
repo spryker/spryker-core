@@ -50,4 +50,11 @@ interface ProductListSearchToProductListFacadeInterface
      * @return int[]
      */
     public function getProductWhitelistIdsByIdProduct(int $idProduct): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductAbstractListIdsByProductAbstractIds(array $productAbstractIds): array;
 }

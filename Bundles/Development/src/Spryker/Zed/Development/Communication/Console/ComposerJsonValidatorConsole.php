@@ -14,6 +14,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @internal
+ *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class ComposerJsonValidatorConsole extends AbstractCoreModuleAwareConsole

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -16,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductStorageClient extends AbstractClient implements ProductStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +36,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +55,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +72,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +90,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +107,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +123,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +141,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -158,7 +159,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -176,7 +177,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -192,7 +193,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -208,7 +209,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -226,7 +227,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -244,7 +245,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -258,5 +259,135 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createProductConcreteStorageReader()
             ->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapProductStorageDataToProductConcreteTransfer(array $productStorageData): ProductConcreteTransfer
+    {
+        return $this->getFactory()
+            ->createProductStorageToProductConcreteTransferDataMapper()
+            ->mapProductStorageDataToProductConcreteTransfer($productStorageData);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractViewTransferFinder()
+            ->getProductViewTransfers($productAbstractIds, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteViewTransferFinder()
+            ->getProductViewTransfers($productConcreteIds, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->findBulkProductAbstractStorageDataByMapping($mappingType, $identifiers, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageDataByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getBulkProductConcreteStorageDataByMapping($mappingType, $identifiers, $localeName);
+    }
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific product abstract ids from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getBulkProductAbstractIdsByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->getBulkProductAbstractIdsByMapping($mappingType, $identifiers, $localeName);
     }
 }

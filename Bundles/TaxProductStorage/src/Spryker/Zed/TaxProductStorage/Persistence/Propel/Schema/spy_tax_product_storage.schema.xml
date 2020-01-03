@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\TaxProductStorage\Persistence"
+          package="src.Orm.Zed.TaxProductStorage.Persistence">
+
+    <table name="spy_tax_product_storage" identifierQuoting="true">
+        <column name="id_tax_product_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_product_abstract" type="INTEGER" required="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false"/>
+
+        <id-method-parameter value="id_tax_product_storage_pk_seq"/>
+
+        <index name="spy_tax_product_storage-fk_product_abstract">
+            <index-column name="fk_product_abstract"/>
+        </index>
+
+        <behavior name="synchronization">
+            <parameter name="resource" value="product_abstract_tax_set"/>
+            <parameter name="key_suffix_column" value="sku"/>
+            <parameter name="queue_group" value="sync.storage.product_abstract_tax_set"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
+</database>

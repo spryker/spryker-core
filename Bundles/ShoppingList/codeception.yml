@@ -1,6 +1,7 @@
 namespace: SprykerTest
 
 include:
+    - tests/SprykerTest/Client/ShoppingList
     - tests/SprykerTest/Zed/ShoppingList
 
 paths:

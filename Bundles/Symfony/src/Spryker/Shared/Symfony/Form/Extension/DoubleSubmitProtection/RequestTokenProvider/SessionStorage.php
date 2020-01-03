@@ -9,6 +9,9 @@ namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTo
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+/**
+ * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\SessionStorage` instead.
+ */
 class SessionStorage implements StorageInterface
 {
     public const SESSION_KEY_PREFIX = 'req_';
@@ -34,7 +37,7 @@ class SessionStorage implements StorageInterface
     /**
      * @param string $formName
      *
-     * @return mixed
+     * @return string
      */
     public function getToken($formName)
     {
@@ -55,10 +58,12 @@ class SessionStorage implements StorageInterface
      * @param string $formName
      * @param string $token
      *
-     * @return void
+     * @return string
      */
     public function setToken($formName, $token)
     {
         $this->session->set($this->keyPrefix . $formName, $token);
+
+        return $token;
     }
 }

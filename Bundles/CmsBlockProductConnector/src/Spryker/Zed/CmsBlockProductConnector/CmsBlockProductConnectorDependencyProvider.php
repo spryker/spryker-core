@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlockProductConnector;
 
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToCollectorBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleBridge;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToProductFacadeBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -22,6 +23,7 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     public const FACADE_LOCALE = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_LOCALE';
     public const FACADE_TOUCH = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_TOUCH';
     public const FACADE_COLLECTOR = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_COLLECTOR';
+    public const FACADE_PRODUCT = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_PRODUCT';
 
     public const QUERY_CONTAINER_PRODUCT_ABSTRACT = 'CMS_BLOCK_PRODUCT_CONNECTOR:QUERY_CONTAINER_PRODUCT_ABSTRACT';
     public const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_PRODUCT_CONNECTOR:QUERY_CONTAINER_TOUCH';
@@ -38,6 +40,7 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addProductAbstractQueryContainer($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addProductFacade($container);
 
         return $container;
     }
@@ -63,10 +66,37 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addProductAbstractQueryContainer($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new CmsBlockProductConnectorToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new CmsBlockProductConnectorToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
         return $container;

@@ -151,10 +151,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProductAbstract)
                 ->findOneOrCreate();
 
-            if ($mapping === null) {
-                continue;
-            }
-
             $mapping->setFkCategory($idCategory);
             $mapping->setFkProductAbstract($idProductAbstract);
             $mapping->save();

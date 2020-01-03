@@ -79,7 +79,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    public function insertDbRecords()
+    public function insertDbRecords(): void
     {
         $this->resetDb();
 
@@ -92,7 +92,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    public function resetDb()
+    public function resetDb(): void
     {
         SpyFileQuery::create()->deleteAll();
         SpyMimeTypeQuery::create()->deleteAll();
@@ -104,7 +104,7 @@ class FileManagerBusinessTester extends Actor
      *
      * @return string
      */
-    public function getDocumentFullFileName($fileName)
+    public function getDocumentFullFileName(string $fileName): string
     {
         $rootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY . static::PATH_DOCUMENT;
         if (!is_dir($rootDirectory)) {
@@ -117,7 +117,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    public function clearFiles()
+    public function clearFiles(): void
     {
         exec('rm -rf ' . $this->getDocumentFullFileName('*'));
     }
@@ -125,7 +125,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdFile()
+    public function getIdFile(): int
     {
         return $this->idFile;
     }
@@ -133,7 +133,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdFirstFileInfo()
+    public function getIdFirstFileInfo(): int
     {
         return $this->idFirstFileInfo;
     }
@@ -141,7 +141,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdSecondFileInfo()
+    public function getIdSecondFileInfo(): int
     {
         return $this->idSecondFileInfo;
     }
@@ -149,7 +149,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdMimeType()
+    public function getIdMimeType(): int
     {
         return $this->idMimeType;
     }
@@ -157,7 +157,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdFirstFileDirectory()
+    public function getIdFirstFileDirectory(): int
     {
         return $this->idFirstFileDirectory;
     }
@@ -165,7 +165,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdSecondFileDirectory()
+    public function getIdSecondFileDirectory(): int
     {
         return $this->idSecondFileDirectory;
     }
@@ -173,15 +173,46 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdSubFileDirectory()
+    public function getIdSubFileDirectory(): int
     {
         return $this->idSubFileDirectory;
     }
 
     /**
+     * @return int[]
+     */
+    public function insertFilesCollection(): array
+    {
+        $idFiles = [];
+        for ($i = 1; $i < 10; $i++) {
+            file_put_contents($this->getDocumentFullFileName($i . '_v1.txt'), 'file content');
+
+            $file = new SpyFile();
+            $file->setFileName($i . '.txt');
+            $file->save();
+
+            $idFiles[] = $file->getIdFile();
+
+            $fileInfo = new SpyFileInfo();
+            $fileInfo->setFile($file);
+            $fileInfo->setSize(10);
+            $fileInfo->setType('text');
+            $fileInfo->setVersion(1);
+            $fileInfo->setVersionName('v. 1');
+            $fileInfo->setStorageFileName($i . '_v1.txt');
+            $fileInfo->setExtension('txt');
+            $fileInfo->setCreatedAt('2017-06-06 00:00:00');
+            $fileInfo->setUpdatedAt('2017-06-06 00:00:00');
+            $fileInfo->save();
+        }
+
+        return $idFiles;
+    }
+
+    /**
      * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
-    protected function insertFile()
+    protected function insertFile(): SpyFile
     {
         $file = new SpyFile();
         $file->setFileName('customer.txt');
@@ -196,7 +227,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    protected function insertMimeType()
+    protected function insertMimeType(): void
     {
         $mimeType = new SpyMimeType();
         $mimeType->setName('text/plain');
@@ -212,7 +243,7 @@ class FileManagerBusinessTester extends Actor
      *
      * @return void
      */
-    protected function insertFileInfos(SpyFile $file)
+    protected function insertFileInfos(SpyFile $file): void
     {
         $fileInfo = new SpyFileInfo();
         $fileInfo->setFile($file);
@@ -246,7 +277,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    protected function insertFileDirectories()
+    protected function insertFileDirectories(): void
     {
         $fileDirectory = new SpyFileDirectory();
         $fileDirectory->setName('first_directory');

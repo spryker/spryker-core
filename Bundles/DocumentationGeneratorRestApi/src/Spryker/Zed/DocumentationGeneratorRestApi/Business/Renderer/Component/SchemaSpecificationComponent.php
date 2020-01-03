@@ -40,6 +40,14 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
             return [];
         }
 
+        if (count($this->schemaComponentTransfer->getProperties()) === 0) {
+            //empty object is needed for generation of valid OpenAPI scheme
+            return [
+                $this->schemaComponentTransfer->getName() => (object)[],
+            ];
+        }
+
+        $schemaData = [];
         $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
         if ($this->schemaComponentTransfer->getRequired()) {
             $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::REQUIRED] = $this->schemaComponentTransfer->getRequired();

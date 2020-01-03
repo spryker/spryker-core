@@ -14,11 +14,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 
 class PreCheckMocks extends Unit
 {
@@ -36,17 +34,17 @@ class PreCheckMocks extends Unit
     ];
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
     protected function createAvailabilityFacadeMock()
     {
-        return $this->getMockBuilder(ProductBundleToAvailabilityInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToAvailabilityFacadeInterface::class)->getMock();
     }
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createTestQuoteTransfer()
+    protected function createTestQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -62,24 +60,17 @@ class PreCheckMocks extends Unit
         $itemTransfer->setSku($this->fixtures['bundle-sku']);
 
         $quoteTransfer->addBundleItem($itemTransfer);
+
         return $quoteTransfer;
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
-     */
-    protected function createAvailabilityQueryContainerMock()
-    {
-        return $this->getMockBuilder(ProductBundleToAvailabilityQueryContainerInterface::class)->getMock();
-    }
-
-    /**
      * @param array $fixtures
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck|\PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityCheckMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityCheckMock
      *
      * @return void
      */
-    protected function setupFindBundledProducts(array $fixtures, BasePreCheck $productBundleAvailabilityCheckMock)
+    protected function setupFindBundledProducts(array $fixtures, MockObject $productBundleAvailabilityCheckMock): void
     {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);
@@ -88,18 +79,23 @@ class PreCheckMocks extends Unit
         $productEntity = new SpyProduct();
         $productEntity->setIdProduct($fixtures['fkBundledProduct']);
         $productEntity->setSku($fixtures['bundledProductSku']);
+        $productEntity->setIsActive(true);
 
         $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
 
-        $productBundleEntity->setFkBundledProduct($fixtures['fkBundledProduct']);
+        $productConcreteEntity = new SpyProduct();
+        $productConcreteEntity->setIdProduct($fixtures['fkBundledProduct']);
+        $productConcreteEntity->setSku($fixtures['bundledProductSku']);
+        $productConcreteEntity->setIsActive(true);
 
-        $bundledProducts = new ObjectCollection();
-        $bundledProducts->append($productBundleEntity);
+        $productBundleEntity->setSpyProductRelatedByFkProduct($productConcreteEntity);
+
+        $productBundleEntity->setFkBundledProduct($fixtures['fkBundledProduct']);
 
         $productBundleAvailabilityCheckMock->expects($this->once())
             ->method('findBundledProducts')
             ->with($this->fixtures['bundle-sku'])
-            ->willReturn($bundledProducts);
+            ->willReturn([$productBundleEntity]);
     }
 
     /**

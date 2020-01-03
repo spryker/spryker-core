@@ -13,7 +13,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface CategoryMapperInterface
 {
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntities
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntities
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer

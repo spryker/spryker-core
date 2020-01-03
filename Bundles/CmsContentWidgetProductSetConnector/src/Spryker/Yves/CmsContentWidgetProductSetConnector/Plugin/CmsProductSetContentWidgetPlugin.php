@@ -140,6 +140,7 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
 
             $productSets[] = $productSet;
         }
+
         return [
             'productSetList' => $productSets,
         ];

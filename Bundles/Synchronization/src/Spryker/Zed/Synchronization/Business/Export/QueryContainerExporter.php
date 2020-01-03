@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Synchronization\Business\Export;
 
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
+use Iterator;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataQueryContainerPluginIterator;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -73,21 +75,20 @@ class QueryContainerExporter implements ExporterInterface
      */
     protected function exportData(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin): void
     {
-        $query = $plugin->queryData($ids);
-        $count = $query->count();
-        $loops = $count / $this->chunkSize;
-        $offset = 0;
-
-        for ($i = 0; $i < $loops; $i++) {
-            $synchronizationEntities = $plugin->queryData($ids)
-                ->offset($offset)
-                ->limit($this->chunkSize)
-                ->find()
-                ->getData();
-
+        foreach ($this->createSynchronizationDataQueryContainerPluginIterator($ids, $plugin) as $synchronizationEntities) {
             $this->syncData($plugin, $synchronizationEntities);
-            $offset += $this->chunkSize;
         }
+    }
+
+    /**
+     * @param int[] $ids
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
+     *
+     * @return \Iterator
+     */
+    protected function createSynchronizationDataQueryContainerPluginIterator(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin): Iterator
+    {
+        return new SynchronizationDataQueryContainerPluginIterator($plugin, $this->chunkSize, $ids);
     }
 
     /**
@@ -107,7 +108,7 @@ class QueryContainerExporter implements ExporterInterface
                 ->setResource($plugin->getResourceName())
                 ->setParams($plugin->getParams());
 
-            $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $store, $plugin->getSynchronizationQueuePoolName());
+            $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $plugin, $store);
         }
 
         $this->queueClient->sendMessages($plugin->getQueueName(), $queueSendTransfers);

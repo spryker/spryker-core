@@ -95,7 +95,7 @@ class EditController extends AddController
             ->getFactory()
             ->createVariantTable($idProductAbstract, $type);
 
-        return $this->viewResponse([
+        $viewData = [
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -108,7 +108,13 @@ class EditController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
-        ]);
+        ];
+
+        $viewData = $this->getFactory()
+            ->createAbstractProductEditViewExpanderPluginExecutor()
+            ->expandEditAbstractProductViewData($viewData);
+
+        return $this->viewResponse($viewData);
     }
 
     /**
@@ -135,6 +141,8 @@ class EditController extends AddController
 
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
+
+        $productTransfer = $this->getFactory()->createProductStockHelper()->trimStockQuantities($productTransfer);
 
         $type = ProductManagementConfig::PRODUCT_TYPE_REGULAR;
         if ($productTransfer->getProductBundle() !== null) {
@@ -189,7 +197,7 @@ class EditController extends AddController
             }
         }
 
-        return $this->viewResponse([
+        $viewData = [
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productTransfer->toArray(),
@@ -201,7 +209,13 @@ class EditController extends AddController
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
             'type' => $type,
-        ]);
+        ];
+
+        $viewData = $this->getFactory()
+            ->createProductConcreteEditViewExpanderPluginExecutor()
+            ->expandEditVariantViewData($viewData);
+
+        return $this->viewResponse($viewData);
     }
 
     /**

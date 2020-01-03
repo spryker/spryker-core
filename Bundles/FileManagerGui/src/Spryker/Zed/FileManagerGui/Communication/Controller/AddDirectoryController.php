@@ -26,7 +26,7 @@ class AddDirectoryController extends AbstractController
     {
         $form = $this->getFactory()->getFileDirectoryForm()->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() === true && $form->isValid() === true) {
             try {
                 $this->getFactory()->getFileManagerFacade()->saveDirectory($form->getData());
 

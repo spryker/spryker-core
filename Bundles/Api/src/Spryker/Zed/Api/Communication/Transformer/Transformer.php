@@ -10,7 +10,6 @@ namespace Spryker\Zed\Api\Communication\Transformer;
 use Generated\Shared\Transfer\ApiOptionsTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
-use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Communication\Formatter\FormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,11 +22,18 @@ class Transformer implements TransformerInterface
     protected $formatter;
 
     /**
-     * @param \Spryker\Zed\Api\Communication\Formatter\FormatterInterface $formatter
+     * @var \Spryker\Zed\Api\ApiConfig
      */
-    public function __construct(FormatterInterface $formatter)
+    protected $apiConfig;
+
+    /**
+     * @param \Spryker\Zed\Api\Communication\Formatter\FormatterInterface $formatter
+     * @param \Spryker\Zed\Api\ApiConfig $apiConfig
+     */
+    public function __construct(FormatterInterface $formatter, ApiConfig $apiConfig)
     {
         $this->formatter = $formatter;
+        $this->apiConfig = $apiConfig;
     }
 
     /**
@@ -68,7 +74,7 @@ class Transformer implements TransformerInterface
         $content = [];
         $content['code'] = $apiResponseTransfer->getCode();
         $content['message'] = $apiResponseTransfer->getMessage();
-        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_VALIDATION_ERRORS) {
+        if ((int)$apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_VALIDATION_ERRORS) {
             $content['errors'] = $apiResponseTransfer->getValidationErrors();
         }
 
@@ -86,7 +92,7 @@ class Transformer implements TransformerInterface
             $content['meta'] = $meta->getData();
         }
 
-        if (Environment::isDevelopment()) {
+        if ($this->apiConfig->isApiDebugEnabled()) {
             $content['_stackTrace'] = $apiResponseTransfer->getStackTrace();
             $content['_request'] = $apiRequestTransfer->toArray();
         }
@@ -104,6 +110,6 @@ class Transformer implements TransformerInterface
      */
     protected function isContentless(ApiResponseTransfer $apiResponseTransfer)
     {
-        return $apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getType() === ApiOptionsTransfer::class;
+        return (int)$apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getType() === ApiOptionsTransfer::class;
     }
 }
