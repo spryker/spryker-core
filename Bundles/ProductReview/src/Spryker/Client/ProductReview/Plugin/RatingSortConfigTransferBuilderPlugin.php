@@ -19,6 +19,10 @@ class RatingSortConfigTransferBuilderPlugin extends AbstractPlugin implements So
     public const UNMAPPED_TYPE = 'integer';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SortConfigTransfer
      */
     public function build()
