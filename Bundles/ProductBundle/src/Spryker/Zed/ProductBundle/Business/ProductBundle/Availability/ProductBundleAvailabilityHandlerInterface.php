@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductBundleAvailabilityHandlerInterface
@@ -25,13 +24,6 @@ interface ProductBundleAvailabilityHandlerInterface
      * @return void
      */
     public function updateBundleAvailability($bundleProductSku);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    public function updateBundleActivity(ProductConcreteTransfer $productConcreteTransfer): void;
 
     /**
      * @param string $bundleProductSku

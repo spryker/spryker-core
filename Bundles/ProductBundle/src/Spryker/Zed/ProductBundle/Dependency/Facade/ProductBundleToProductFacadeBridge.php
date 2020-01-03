@@ -48,6 +48,16 @@ class ProductBundleToProductFacadeBridge implements ProductBundleToProductFacade
     }
 
     /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteById($idProduct)
+    {
+        return $this->productFacade->findProductConcreteById($idProduct);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

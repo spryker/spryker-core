@@ -171,7 +171,7 @@ class EditController extends AddController
 
                 $productConcreteTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
-                    ->buildProductConcreteTransfer($productAbstractTransfer, $form, $productTransfer);
+                    ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
 
                 $productConcreteTransfer = $this->getFactory()
                     ->getProductBundleFacade()

@@ -42,8 +42,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      */
     public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability(): void
     {
-        $bundledId = 1;
-        $bundledSku = 'sku-2';
+        $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
         $bundledItemAvailability = new Decimal(15);
@@ -63,8 +62,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleEntity = new SpyProductBundle();
         $productEntity = new SpyProduct();
 
-        $productEntity->setIdProduct($bundledId)
-            ->setSku($bundledSku);
+        $productEntity->setSku($bundleSku);
         $productBundleEntity->setSpyProductRelatedByFkProduct($productEntity);
         $bundledProducts[] = $productBundleEntity;
 
@@ -76,7 +74,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
 
         $availabilityFacadeMock->expects($this->once())
             ->method('saveProductAvailabilityForStore')
-            ->with($bundledSku, $expectedBundleAvailability);
+            ->with($bundleSku, $expectedBundleAvailability);
 
         $productBundleAvailabilityHandlerMock->updateAffectedBundlesAvailability('sku-1');
     }
@@ -103,7 +101,6 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             );
 
         $bundleProductEntity = new SpyProductBundle();
-        $bundleProductEntity->setFkProduct(1);
 
         $productBundleAvailabilityHandlerMock->method('findBundleProductEntityBySku')->willReturn($bundleProductEntity);
 
@@ -188,11 +185,9 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setQuantity($bundleQuantity);
         $productEntity = new SpyProduct();
-        $productEntity->setIdProduct(1);
 
         $productEntity->setSku($bundledItemSku);
         $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
-        $productBundleEntity->setFkProduct(1);
         $bundleItems[] = $productBundleEntity;
 
         $productBundleAvailabilityHandlerMock->method('getBundleItemsByIdProduct')

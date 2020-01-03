@@ -37,6 +37,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouperInte
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrate;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatus;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
@@ -192,9 +194,18 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleAvailabilityHandler(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getStockFacade(),
-            $this->getProductFacade()
+            $this->getStockFacade()
+        );
+    }
 
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusInterface
+     */
+    public function createProductBundleStatus(): ProductBundleStatusInterface
+    {
+        return new ProductBundleStatus(
+            $this->getRepository(),
+            $this->getProductFacade()
         );
     }
 
