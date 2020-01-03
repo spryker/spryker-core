@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 interface ProductPageSearchFacadeInterface
 {
@@ -130,4 +134,54 @@ interface ProductPageSearchFacadeInterface
     public function expandProductConcretePageSearchTransferWithProductImages(
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
     ): ProductConcretePageSearchTransfer;
+
+    /**
+     * Specification:
+     * - Expands PageMapTransfer with category map data.
+     * - Expands PageMapTransfer with full text search data.
+     * - Expands PageMapTransfer with sorting data.
+     * - Returns expanded PageMapTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function expandProductPageMapWithCategoryData(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer;
+
+    /**
+     * Specification:
+     * - Returns abstract product ids for the given price product store ids.
+     * - Returns empty array when price produce ids is empty.
+     *
+     * @api
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
+
+    /**
+     * Specification:
+     * - Expands ProductPageLoadTransfer with price data and returns the modified object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductPageLoadTransferWithPriceData(
+        ProductPageLoadTransfer $productPageLoadTransfer
+    ): ProductPageLoadTransfer;
 }
