@@ -49,5 +49,5 @@ interface SortConfigInterface
      *
      * @return string|null
      */
-    public function getUnmappedType($sortParamName): ?string;
+    public function getUnmappedType(string $sortParamName): ?string;
 }

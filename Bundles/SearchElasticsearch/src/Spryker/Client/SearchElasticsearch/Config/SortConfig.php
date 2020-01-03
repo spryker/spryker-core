@@ -105,11 +105,11 @@ class SortConfig implements SortConfigInterface
      *
      * @return string|null
      */
-    public function getUnmappedType($sortParamName): ?string
+    public function getUnmappedType(string $sortParamName): ?string
     {
         $sortConfigTransfer = $this->get($sortParamName);
 
-        if (!$sortConfigTransfer || !method_exists($sortConfigTransfer, 'getUnmappedType')) {
+        if (!$sortConfigTransfer) {
             return null;
         }
 

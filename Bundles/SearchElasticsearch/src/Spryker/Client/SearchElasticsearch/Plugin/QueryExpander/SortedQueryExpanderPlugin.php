@@ -17,6 +17,8 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    protected const KEY_UNMAPPED_TYPE = 'unmapped_type';
+
     /**
      * {@inheritDoc}
      *
@@ -59,7 +61,7 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
         ];
 
         if ($sortConfig->getUnmappedType($sortParamName)) {
-            $sortRules[$nestedSortField]['unmapped_type'] = $sortConfig->getUnmappedType($sortParamName);
+            $sortRules[$nestedSortField][static::KEY_UNMAPPED_TYPE] = $sortConfig->getUnmappedType($sortParamName);
         }
 
         $query->addSort($sortRules);
