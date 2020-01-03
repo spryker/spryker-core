@@ -168,7 +168,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     {
         $glossaryKeys = [];
         foreach ($productAttributeEntityCollection as $productAttributeEntity) {
-            $glossaryKeys[] = $this->buildGlossaryKeyFromAttributeKey(
+            $glossaryKeys[] = $this->glossaryKeyBuilder->buildGlossaryKey(
                 $productAttributeEntity->getSpyProductAttributeKey()->getKey()
             );
         }
@@ -238,8 +238,8 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
         foreach ($availableLocales as $localeTransfer) {
-            $glossaryKey = $this->buildGlossaryKeyFromAttributeKey($attributeTransfer->getKey());
-            $keyTranslation = $translationsByLocaleNameAndGlossaryKey[$glossaryKey][$localeTransfer->getLocaleName()] ?? $this->getAttributeKeyTranslation($glossaryKey, $localeTransfer);
+            $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($attributeTransfer->getKey());
+            $keyTranslation = $translationsByLocaleNameAndGlossaryKey[$glossaryKey][$localeTransfer->getLocaleName()] ?? $this->findTranslationByGlossaryKeyAndLocaleTransfer($glossaryKey, $localeTransfer);
 
             $localizedAttributeKeyTransfer = new LocalizedProductManagementAttributeKeyTransfer();
             $localizedAttributeKeyTransfer
@@ -253,22 +253,12 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param string $attributeKey
-     *
-     * @return string
-     */
-    protected function buildGlossaryKeyFromAttributeKey(string $attributeKey): string
-    {
-        return $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
-    }
-
-    /**
      * @param string $glossaryKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string|null
      */
-    protected function getAttributeKeyTranslation(string $glossaryKey, LocaleTransfer $localeTransfer)
+    protected function findTranslationByGlossaryKeyAndLocaleTransfer(string $glossaryKey, LocaleTransfer $localeTransfer): ?string
     {
         if ($this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
             return $this->glossaryFacade
