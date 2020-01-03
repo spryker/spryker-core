@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -219,6 +220,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         $this->getFactory()
             ->createProductBundleAvailabilityHandler()
             ->updateBundleAvailability($productBundleSku);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function updateBundleActivity(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $this->getFactory()
+            ->createProductBundleAvailabilityHandler()
+            ->updateBundleActivity($productConcreteTransfer);
     }
 
     /**

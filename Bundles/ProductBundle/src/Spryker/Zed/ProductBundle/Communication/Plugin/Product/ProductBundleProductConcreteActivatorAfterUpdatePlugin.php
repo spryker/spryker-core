@@ -28,8 +28,7 @@ class ProductBundleProductConcreteActivatorAfterUpdatePlugin extends AbstractPlu
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer)
     {
-        // @todo CHeck this solution
-        $this->getFacade()->updateAffectedBundlesAvailability($productConcreteTransfer->getSku());
+        $this->getFacade()->updateBundleActivity($productConcreteTransfer);
 
         return $productConcreteTransfer;
     }

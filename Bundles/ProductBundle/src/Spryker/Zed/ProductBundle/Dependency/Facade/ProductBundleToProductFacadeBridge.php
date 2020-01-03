@@ -57,4 +57,14 @@ class ProductBundleToProductFacadeBridge implements ProductBundleToProductFacade
     {
         return $this->productFacade->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return int
+     */
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->productFacade->saveProductConcrete($productConcreteTransfer);
+    }
 }

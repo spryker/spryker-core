@@ -192,7 +192,9 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleAvailabilityHandler(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getStockFacade()
+            $this->getStockFacade(),
+            $this->getProductFacade()
+
         );
     }
 

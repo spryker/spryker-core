@@ -38,4 +38,11 @@ interface ProductBundleToProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return int
+     */
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
 }
