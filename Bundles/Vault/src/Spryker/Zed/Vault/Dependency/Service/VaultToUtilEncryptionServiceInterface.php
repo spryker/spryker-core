@@ -21,7 +21,7 @@ interface VaultToUtilEncryptionServiceInterface
      *
      * @return string
      */
-    public function generateOpenSslEncryptInitVectorFromByteString(?string $encryptionMethod = null): string;
+    public function generateByteStringOpenSslEncryptInitVector(?string $encryptionMethod = null): string;
 
     /**
      * @param string $cipherText

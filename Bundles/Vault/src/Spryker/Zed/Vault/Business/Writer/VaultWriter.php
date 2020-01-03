@@ -95,7 +95,7 @@ class VaultWriter implements VaultWriterInterface
     protected function generateOpenSslEncryptInitVector(): string
     {
         if ($this->vaultConfig->useByteStringForEncryptionInitializationVector()) {
-            return $this->utilEncryptionService->generateOpenSslEncryptInitVectorFromByteString();
+            return $this->utilEncryptionService->generateByteStringOpenSslEncryptInitVector();
         }
 
         return $this->utilEncryptionService->generateOpenSslEncryptInitVector();

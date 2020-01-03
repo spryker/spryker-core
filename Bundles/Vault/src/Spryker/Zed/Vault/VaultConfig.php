@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class VaultConfig extends AbstractBundleConfig
 {
-    protected const USE_BYTE_STRING_FOR_ENCRYPTION_INITIALIZATION_VECTOR = true;
+    protected const USE_BYTE_STRING_FOR_ENCRYPTION_INITIALIZATION_VECTOR = false;
 
     /**
      * @return string
@@ -25,6 +25,12 @@ class VaultConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - If true, initial vector will be converted to binary format for Vault operations.
+     * - If false, hexadecimal value will be used.
+     *
+     * @api
+     *
      * @return bool
      */
     public function useByteStringForEncryptionInitializationVector(): bool
