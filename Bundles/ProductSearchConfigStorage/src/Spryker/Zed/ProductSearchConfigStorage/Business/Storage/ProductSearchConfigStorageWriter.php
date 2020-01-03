@@ -31,6 +31,8 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     protected $productSearchConfig;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;

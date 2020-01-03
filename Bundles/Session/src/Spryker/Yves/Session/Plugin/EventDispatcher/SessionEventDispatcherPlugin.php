@@ -138,7 +138,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
     {
         $cookieLifetime = $params['lifetime'] === 0 ? 0 : time() + $params['lifetime'];
 
-        return new Cookie(
+        $cookie = Cookie::create(
             $sessionName,
             $sessionId,
             $cookieLifetime,
@@ -147,6 +147,8 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
             $params['secure'],
             $params['httponly']
         );
+
+        return $cookie;
     }
 
     /**

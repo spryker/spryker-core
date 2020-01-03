@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\AvailabilityStorage;
 
+use Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpander;
+use Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpanderInterface;
 use Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -18,6 +20,25 @@ class AvailabilityStorageFactory extends AbstractFactory
     public function createAvailabilityStorageReader()
     {
         return new AvailabilityStorageReader($this->getStorage(), $this->getSynchronizationService());
+    }
+
+    /**
+     * @return \Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpanderInterface
+     */
+    public function createProductViewAvailabilityExpander(): ProductViewAvailabilityExpanderInterface
+    {
+        return new ProductViewAvailabilityExpander(
+            $this->createAvailabilityStorageReader(),
+            $this->getAvailabilityStorageStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[]
+     */
+    public function getAvailabilityStorageStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::PLUGINS_AVAILABILITY_STORAGE_STRATEGY);
     }
 
     /**

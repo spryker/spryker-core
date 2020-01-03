@@ -3,8 +3,8 @@
           namespace="Orm\Zed\Merchant\Persistence"
           package="src.Orm.Zed.Merchant.Persistence">
 
-    <table name="spy_merchant" phpName="SpyMerchant" identifierQuoting="true">
-        <column name="id_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+    <table name="spy_merchant" identifierQuoting="true">
+        <column name="id_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
 
         <behavior name="timestampable"/>

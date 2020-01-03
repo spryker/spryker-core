@@ -132,7 +132,7 @@ class SellableTest extends Unit
                 ->willReturn($this->createStoreTransfer());
         }
 
-        return new Sellable($availabilityRepositoryMock, $availabilityHandlerMock, $storeFacade);
+        return new Sellable($availabilityRepositoryMock, $availabilityHandlerMock, $storeFacade, []);
     }
 
     /**

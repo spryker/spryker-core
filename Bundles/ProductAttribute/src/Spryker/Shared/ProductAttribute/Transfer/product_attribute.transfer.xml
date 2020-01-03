@@ -36,7 +36,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
         <property name="attributes" type="array" singular="attribute"/>
-        <property name="localizedAttributes" type="array" singular="localizedAttribute"/>
+        <property name="localizedAttributes" type="array" singular="concreteLocalizedAttribute"/>
         <property name="abstractLocalizedAttributes" type="array" singular="localizedAttribute"/>
     </transfer>
 

@@ -1,4 +1,6 @@
 # ProductCategory Module
+[![Build Status](https://travis-ci.org/spryker/product-category.svg)](https://travis-ci.org/spryker/product-category)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ProductCategory is a connector module to manage product category assignment.
 
