@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\GiftCardBalance\Persistence" package="src.Orm.Zed.GiftCardBalance.Persistence">
 
-    <table name="spy_gift_card_balance_log" phpName="SpyGiftCardBalanceLog">
+    <table name="spy_gift_card_balance_log">
         <column name="id_gift_card_balance_log" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_gift_card" type="INTEGER" required="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>

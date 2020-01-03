@@ -1,6 +1,6 @@
 # SearchExtension Module
 [![Build Status](https://travis-ci.org/spryker/search-extension.svg)](https://travis-ci.org/spryker/search-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/search-extension/badge.svg)](https://coveralls.io/github/spryker/search-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Extension module for the Search module.
 
