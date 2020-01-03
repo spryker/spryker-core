@@ -17,11 +17,11 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  */
-class ProductPageDataMerchantExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
+class ProductMerchantNamePageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands the provided ProductAbstractPageSearch transfer object's data by reference.
+     * - Expands the provided ProductAbstractPageSearch transfer object's data by merchant names.
      *
      * @api
      *

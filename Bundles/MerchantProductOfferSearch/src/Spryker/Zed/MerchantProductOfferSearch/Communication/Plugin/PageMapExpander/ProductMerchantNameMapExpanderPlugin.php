@@ -17,7 +17,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
-class ProductPageMapMerchantExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
+class ProductMerchantNameMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
     protected const KEY_MERCHANT_NAME = 'merchant_name';

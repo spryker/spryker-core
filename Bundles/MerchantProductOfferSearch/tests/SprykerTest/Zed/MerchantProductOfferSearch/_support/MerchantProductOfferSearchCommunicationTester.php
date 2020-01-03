@@ -18,9 +18,9 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\ProductPageDataMerchantExpanderPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\ProductPageDataLoaderMerchantPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\ProductPageMapMerchantExpanderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\ProductMerchantNamePageDataExpanderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\ProductMerchantNamePageDataLoaderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\ProductMerchantNameMapExpanderPlugin;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
@@ -131,21 +131,21 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER,
             [
-                new ProductPageMapMerchantExpanderPlugin(),
+                new ProductMerchantNameMapExpanderPlugin(),
             ]
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER,
             [
-                new ProductPageDataLoaderMerchantPlugin(),
+                new ProductMerchantNamePageDataLoaderPlugin(),
             ]
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER,
             [
-                MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA => new ProductPageDataMerchantExpanderPlugin(),
+                MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA => new ProductMerchantNamePageDataExpanderPlugin(),
             ]
         );
     }

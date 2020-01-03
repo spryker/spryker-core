@@ -61,13 +61,11 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductTableMap::COL_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductOfferTableMap::COL_FK_MERCHANT, SpyMerchantTableMap::COL_ID_MERCHANT, Criteria::INNER_JOIN);
 
-        $data = $productAbstractPropelQuery
+        return $productAbstractPropelQuery
             ->where(SpyMerchantTableMap::COL_ID_MERCHANT . ' IN (' . implode(',', $merchantIds) . ')')
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
-
-        return array_values($data);
     }
 
     /**
@@ -84,13 +82,11 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductOfferTableMap::COL_FK_MERCHANT, SpyMerchantTableMap::COL_ID_MERCHANT, Criteria::INNER_JOIN)
             ->addJoin(SpyMerchantTableMap::COL_ID_MERCHANT, SpyMerchantProfileTableMap::COL_FK_MERCHANT, Criteria::INNER_JOIN);
 
-        $data = $productAbstractPropelQuery
+        return $productAbstractPropelQuery
             ->where(SpyMerchantProfileTableMap::COL_ID_MERCHANT_PROFILE . ' IN (' . implode(',', $merchantProfileIds) . ')')
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
-
-        return array_values($data);
     }
 
     /**
@@ -105,12 +101,10 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU, Criteria::INNER_JOIN);
 
-        $data = $productAbstractPropelQuery
+        return $productAbstractPropelQuery
             ->where(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER . ' IN (' . implode(',', $productOfferIds) . ')')
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
-
-        return array_values($data);
     }
 }

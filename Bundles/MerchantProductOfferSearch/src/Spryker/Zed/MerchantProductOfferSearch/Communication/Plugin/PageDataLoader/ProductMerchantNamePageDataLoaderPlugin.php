@@ -17,10 +17,11 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
-class ProductPageDataLoaderMerchantPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
+class ProductMerchantNamePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Expands ProductPageLoadTransfer object with merchant names.
      *
      * @api
      *
