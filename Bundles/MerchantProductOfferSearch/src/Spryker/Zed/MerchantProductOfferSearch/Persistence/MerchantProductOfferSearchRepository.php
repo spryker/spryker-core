@@ -20,15 +20,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductOfferSearchRepository extends AbstractRepository implements MerchantProductOfferSearchRepositoryInterface
 {
-    protected const KEY_ID = 'id';
-    protected const KEY_NAME = 'name';
+    public const KEY_ABSTRACT_PRODUCT_ID = 'id';
+    public const KEY_MERCHANT_NAME = 'name';
 
     /**
      * @param int[] $productAbstractIds
      *
      * @return array
      */
-    public function getProductAbstractIdMerchantNamesMapByProductAbstractIds(array $productAbstractIds): array
+    public function getMerchantProductAbstractDataByProductAbstractIds(array $productAbstractIds): array
     {
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
         $productOfferPropelQuery->useSpyMerchantQuery()
@@ -39,20 +39,13 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, Criteria::INNER_JOIN);
 
-        $data = $productOfferPropelQuery
-            ->select([static::KEY_ID, static::KEY_NAME])
+        return $productOfferPropelQuery
+            ->select([static::KEY_ABSTRACT_PRODUCT_ID, static::KEY_MERCHANT_NAME])
             ->where(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' IN (' . implode(',', $productAbstractIds) . ')')
-            ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_NAME)
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ID)
+            ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_MERCHANT_NAME)
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
             ->find()
             ->getData();
-
-        $productAbstractIdMerchantNamesMap = [];
-        foreach ($data as $row) {
-            $productAbstractIdMerchantNamesMap[$row[static::KEY_ID]][] = $row[static::KEY_NAME];
-        }
-
-        return $productAbstractIdMerchantNamesMap;
     }
 
     /**

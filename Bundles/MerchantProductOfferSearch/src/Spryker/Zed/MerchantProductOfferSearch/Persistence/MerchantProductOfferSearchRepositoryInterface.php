@@ -14,7 +14,7 @@ interface MerchantProductOfferSearchRepositoryInterface
      *
      * @return array
      */
-    public function getProductAbstractIdMerchantNamesMapByProductAbstractIds(array $productAbstractIds): array;
+    public function getMerchantProductAbstractDataByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int[] $merchantIds
