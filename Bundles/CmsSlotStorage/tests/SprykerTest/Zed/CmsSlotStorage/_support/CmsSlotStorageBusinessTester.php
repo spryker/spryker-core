@@ -36,7 +36,7 @@ class CmsSlotStorageBusinessTester extends Actor
      * @param string $key
      * @param array $data
      *
-     * @return void
+     * @return \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage
      */
     public function haveCmsSlotStorageInDb(string $key, array $data = []): SpyCmsSlotStorage
     {
