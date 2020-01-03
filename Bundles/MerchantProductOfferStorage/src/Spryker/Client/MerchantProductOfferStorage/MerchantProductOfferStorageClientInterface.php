@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface MerchantProductOfferStorageClientInterface
@@ -39,4 +40,17 @@ interface MerchantProductOfferStorageClientInterface
      * @return string|null
      */
     public function findProductConcreteDefaultProductOffer(ProductViewTransfer $productViewTransfer): ?string;
+
+    /**
+     * Specification:
+     * - Finds a product offer within Storage by reference.
+     * - Returns null if product offer was not found.
+     *
+     * @api
+     *
+     * @param string $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
+     */
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
 }
