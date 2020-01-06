@@ -243,6 +243,12 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 /* .. Tabs */
 
+.table-hover {
+    tbody tr:hover {
+        cursor: pointer;
+    }
+}
+
 .is-hidden .show-less,
 .is-shown .show-more {
     display: none;
