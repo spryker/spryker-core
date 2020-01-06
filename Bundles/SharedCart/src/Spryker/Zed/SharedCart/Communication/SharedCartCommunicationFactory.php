@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SharedCart\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface;
-use Spryker\Zed\SharedCart\SharedCartDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
@@ -19,11 +17,4 @@ use Spryker\Zed\SharedCart\SharedCartDependencyProvider;
  */
 class SharedCartCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface
-     */
-    public function getMessengerFacade(): SharedCartToMessengerFacadeInterface
-    {
-        return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_MESSENGER);
-    }
 }
