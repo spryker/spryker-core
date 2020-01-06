@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SharedCart\Business;
 
-use Spryker\SharedCart\src\Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessenger;
-use Spryker\SharedCart\src\Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SharedCart\Business\Activator\QuoteActivator;
 use Spryker\Zed\SharedCart\Business\Activator\QuoteActivatorInterface;
@@ -16,6 +14,8 @@ use Spryker\Zed\SharedCart\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\SharedCart\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstaller;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstallerInterface;
+use Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessenger;
+use Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessengerInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriter;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuotePermissionGroupReader;
@@ -243,7 +243,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\SharedCart\src\Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessengerInterface
+     * @return \Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessengerInterface
      */
     public function createSharedCartMessenger(): SharedCartMessengerInterface
     {
