@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductBundleGroupTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculationInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 
 class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrateInterface
@@ -26,15 +27,23 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     protected $productBundlePriceCalculation;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface
+     */
+    protected $productOptionExpander;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface $salesQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculationInterface $productBundlePriceCalculation
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface $productOptionExpander
      */
     public function __construct(
         ProductBundleToSalesQueryContainerInterface $salesQueryContainer,
-        ProductBundlePriceCalculationInterface $productBundlePriceCalculation
+        ProductBundlePriceCalculationInterface $productBundlePriceCalculation,
+        ProductOptionExpanderInterface $productOptionExpander
     ) {
         $this->salesQueryContainer = $salesQueryContainer;
         $this->productBundlePriceCalculation = $productBundlePriceCalculation;
+        $this->productOptionExpander = $productOptionExpander;
     }
 
     /**
@@ -46,6 +55,8 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     {
         $bundledProducts = $this->getBundledProducts($orderTransfer);
         $orderTransfer->setBundleItems(new ArrayObject($bundledProducts));
+
+        $orderTransfer = $this->productOptionExpander->expandBundleItemsWithProductOptions($orderTransfer);
 
         $itemGroups = $this->getItemGroups($orderTransfer);
         $orderTransfer->setItemGroups(new ArrayObject($itemGroups));
@@ -121,7 +132,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
             $productGroup = new ProductBundleGroupTransfer();
             $rowCount = 0;
             foreach ($items as $itemTransfer) {
-                if ((int)$itemTransfer->getRelatedBundleItemIdentifier() === $bundleId) {
+                if ($itemTransfer->getRelatedBundleItemIdentifier() === $bundleGroupItem->getBundleItemIdentifier()) {
                     $associatedItems[] = $itemTransfer;
                     $rowCount += count($itemTransfer->getProductOptions()) + 1;
                 }

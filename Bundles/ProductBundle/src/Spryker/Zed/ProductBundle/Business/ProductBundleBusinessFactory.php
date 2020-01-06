@@ -24,6 +24,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFi
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceChecker;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
@@ -227,8 +229,17 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundlesSalesOrderHydrate(
             $this->getSalesQueryContainer(),
-            $this->createProductBundlePriceCalculator()
+            $this->createProductBundlePriceCalculator(),
+            $this->createProductOptionExpander()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface
+     */
+    public function createProductOptionExpander(): ProductOptionExpanderInterface
+    {
+        return new ProductOptionExpander();
     }
 
     /**
