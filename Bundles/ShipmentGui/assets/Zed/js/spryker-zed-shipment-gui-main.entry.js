@@ -6,7 +6,6 @@
 'use strict';
 
 var init = require('./modules/main');
-require('../scss/main.scss');
 
 $(document).ready(function() {
     init(
