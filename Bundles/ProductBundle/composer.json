@@ -29,7 +29,6 @@
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/currency": "*",
-    "spryker/event": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
@@ -38,7 +37,6 @@
     "spryker/calculation": "If you want to use Calculation plugins.",
     "spryker/cart": "If you want to use Cart plugins.",
     "spryker/checkout": "If you want to use Checkout plugins.",
-    "spryker/event": "If you want to use Event plugins",
     "spryker/oms": "If you want to use Oms plugins.",
     "spryker/sales-aggregator": "If you want to use SalesAggregator plugins."
   },

@@ -38,12 +38,5 @@ interface ProductBundleRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function getBundleItemsByIdProduct(int $idProductConcrete): array;
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
-     */
-    public function getBundledProductByIdProduct(int $idProduct): array;
+    public function getBundledProductsByIdProduct(int $idProductConcrete): array;
 }
