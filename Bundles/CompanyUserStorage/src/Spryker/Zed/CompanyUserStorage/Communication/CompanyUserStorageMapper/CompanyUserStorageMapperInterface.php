@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryImageStorage\Communication\CategoryImageStorageMapper;
+namespace Spryker\Zed\CompanyUserStorage\Communication\CompanyUserStorageMapper;
 
-interface CategoryImageStorageMapperInterface
+interface CompanyUserStorageMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CategoryImageStorageTransfer[] $categoryImageStorageTransfers
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapCategoryImageStorageTransfersCollectionToSynchronizationDataTransferCollection(array $categoryImageStorageTransfers): array;
+    public function mapCompanyUserStorageTransfersCollectionToSynchronizationDataTransferCollection(array $categoryImageStorageTransfers): array;
 }

@@ -104,7 +104,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
 
         $categoryImageStorageEntities = $this->buildQueryFromCriteria($categoryImageStorageQuery, $filterTransfer)->find();
 
-        return $this->mapCategoryImageStorageEntityCollectionToSynchronizationDataTransferCollection($categoryImageStorageEntities);
+        return $this->mapCategoryImageStorageEntityCollectionToCategoryImageStorageTransferCollection($categoryImageStorageEntities);
     }
 
     /**
@@ -128,9 +128,10 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
      *
      * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer[]
      */
-    protected function mapCategoryImageStorageEntityCollectionToSynchronizationDataTransferCollection(array $categoryImageStorageEntities): array
+    protected function mapCategoryImageStorageEntityCollectionToCategoryImageStorageTransferCollection(array $categoryImageStorageEntities): array
     {
-        $categoryImageStorageMapper = $this->getFactory()->createCategoryImageStorageMapper();
+        $categoryImageStorageMapper = $this->getFactory()
+            ->createCategoryImageStorageMapper();
         $categoryImageStorageTransfers = [];
 
         foreach ($categoryImageStorageEntities as $categoryImageStorageEntity) {

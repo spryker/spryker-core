@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUserStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserStorageTransfer;
+use Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer;
 use Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage;
 
 interface CompanyUserStorageMapperInterface
@@ -22,4 +23,15 @@ interface CompanyUserStorageMapperInterface
         CompanyUserStorageTransfer $companyUserStorageTransfer,
         SpyCompanyUserStorage $spyCompanyUserEntityTransfer
     ): SpyCompanyUserStorage;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer $companyUserStorageEntityTransferTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
+     */
+    public function mapCompanyUserStorageEntityToTransfer(
+        SpyCompanyUserStorageEntityTransfer $companyUserStorageEntityTransferTransfer,
+        CompanyUserStorageTransfer $companyUserStorageTransfer
+    ): CompanyUserStorageTransfer;
 }

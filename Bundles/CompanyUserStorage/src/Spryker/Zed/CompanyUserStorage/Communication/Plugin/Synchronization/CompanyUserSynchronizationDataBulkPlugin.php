@@ -58,21 +58,15 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
+        /**
+         * @todo Refactor to one facade call. See the `CmsSlotBlockSynchronizationDataBulkPlugin`.
+         */
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $companyUserStorageEntities = $this->getFacade()->getCompanyUserStorageCollectionByFilterAndCompanyUserIds($filterTransfer, $ids);
-// @todo: REfactor this like `CategoryImageSynchronizationDataBulkPlugin`
-        foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $companyUserStorageTransfers = $this->getFacade()->getCompanyUserStorageCollectionByFilterAndCompanyUserIds($filterTransfer, $ids);
 
-            /** @var string $data */
-            $data = $companyUserStorageEntity->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($companyUserStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getFactory()
+            ->createCompanyUserStorageMapper()
+            ->mapCompanyUserStorageTransfersCollectionToSynchronizationDataTransferCollection($companyUserStorageTransfers);
     }
 
     /**

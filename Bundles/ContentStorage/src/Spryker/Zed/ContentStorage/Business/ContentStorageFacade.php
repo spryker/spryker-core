@@ -38,10 +38,11 @@ class ContentStorageFacade extends AbstractFacade implements ContentStorageFacad
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
     public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->getContentCollectionByFilter($filterTransfer);
+        return $this->getRepository()
+            ->getContentCollectionByFilter($filterTransfer);
     }
 }

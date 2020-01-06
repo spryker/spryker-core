@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 interface CategoryImageStorageMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransferTransfer
      * @param \Generated\Shared\Transfer\CategoryImageStorageTransfer $categoryImageStorageTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer
      */
     public function mapCategoryImageStorageEntityToTransfer(
-        SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer,
+        SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransferTransfer,
         CategoryImageStorageTransfer $categoryImageStorageTransfer
     ): CategoryImageStorageTransfer;
 }

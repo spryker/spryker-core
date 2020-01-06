@@ -6,10 +6,14 @@
     <transfer name="ProductAlternativeStorage">
         <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
         <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="ProductReplacementStorage">
         <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="ProductView">

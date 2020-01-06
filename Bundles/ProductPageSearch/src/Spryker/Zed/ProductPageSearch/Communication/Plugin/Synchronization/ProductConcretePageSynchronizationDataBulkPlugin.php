@@ -59,10 +59,13 @@ class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin im
      */
     public function getData(int $offset, int $limit, array $productConcreteIds = []): array
     {
+        /**
+         * @todo Refactor to one facade call. See the `CmsSlotBlockSynchronizationDataBulkPlugin`.
+         */
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
         $productConcretePageSearchTransfers = $this->getFacade()->getProductConcretePageSearchCollectionByFilterAndProductIds($filterTransfer, $productConcreteIds);
-// @todo: REfactor this like `CategoryImageSynchronizationDataBulkPlugin`
+
         $synchronizationDataTransfers = [];
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

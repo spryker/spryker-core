@@ -94,13 +94,16 @@ class ProductAlternativeSynchronizationDataBulkPlugin extends AbstractPlugin imp
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
+        /**
+         * @todo Refactor to one facade call. See the `CmsSlotBlockSynchronizationDataBulkPlugin`.
+         */
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-
-        $productAlternativeStorageEntities = $this->getFacade()->getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds($filterTransfer, $ids);
+        $productAlternativeStorageTransfers = $this->getFacade()
+            ->getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds($filterTransfer, $ids);
 
         return $this->getFactory()
             ->createProductAlternativeStorageMapper()
-            ->mapProductAlternativeStorageEntityTransfersToSynchronizationDataTransfers($productAlternativeStorageEntities);
+            ->mapProductAlternativeStorageTransfersToSynchronizationDataTransfers($productAlternativeStorageTransfers);
     }
 
     /**

@@ -36,20 +36,21 @@ class ContentStorageEventResourceBulkRepositoryPlugin extends AbstractPlugin imp
 
     /**
      * {@inheritDoc}
-     * - Returns ContentStorageTransfer collection.
+     * - Returns ContentTransfer collection.
      *
      * @api
      *
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(int $offset, int $limit): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->getContentCollectionByFilter($filterTransfer);
+        return $this->getFacade()
+            ->getContentCollectionByFilter($filterTransfer);
     }
 
     /**

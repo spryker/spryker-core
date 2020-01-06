@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Persistence;
 
-use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -93,35 +92,36 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
     public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->getContentQuery();
 
-        $contentStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        $contentStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
 
-        return $this->mapContentStorageEntityCollectionToContentStorageTransferCollection($contentStorageEntities);
+        return $this->mapContentStorageEntityCollectionToContentStorageTransferCollection($contentStorageEntityTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyContentEntityTransfer[] $contentStorageEntities
+     * @param \Generated\Shared\Transfer\SpyContentEntityTransfer[] $contentEntityTransfers
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
-    protected function mapContentStorageEntityCollectionToContentStorageTransferCollection(array $contentStorageEntities): array
+    protected function mapContentStorageEntityCollectionToContentStorageTransferCollection(array $contentEntityTransfers): array
     {
-        $contentStorageMapper = $this->getFactory()->createContentStorageMapper();
-        $contentStorageTransfers = [];
+        $contentStorageMapper = $this->getFactory()
+            ->createContentStorageMapper();
+        $contentTransfers = [];
 
-        foreach ($contentStorageEntities as $contentStorageEntity) {
-            $contentStorageTransfers[] = $contentStorageMapper->mapContentStorageEntityToTransfer(
-                $contentStorageEntity,
-                new ContentStorageTransfer()
+        foreach ($contentEntityTransfers as $contentEntityTransfer) {
+            $contentTransfers[] = $contentStorageMapper->mapContentEntityTransferToContentTransfer(
+                $contentEntityTransfer,
+                new ContentTransfer()
             );
         }
 
-        return $contentStorageTransfers;
+        return $contentTransfers;
     }
 }

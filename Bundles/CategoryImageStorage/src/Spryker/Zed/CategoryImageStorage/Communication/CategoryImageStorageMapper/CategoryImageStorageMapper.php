@@ -17,13 +17,13 @@ class CategoryImageStorageMapper implements CategoryImageStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapCategoryImageStorageTransferCollectionToSynchronizationDataTransferCollection(array $categoryImageStorageTransfers): array
+    public function mapCategoryImageStorageTransfersCollectionToSynchronizationDataTransferCollection(array $categoryImageStorageTransfers): array
     {
         $synchronizationDataTransfers = [];
 
-        foreach ($categoryImageStorageTransfers as $categoryImageStorageEntity) {
+        foreach ($categoryImageStorageTransfers as $categoryImageStorageTransfer) {
             $synchronizationDataTransfers[] = $this->mapCategoryImageStorageTransferToSynchronizationDataTransfer(
-                $categoryImageStorageEntity,
+                $categoryImageStorageTransfer,
                 new SynchronizationDataTransfer()
             );
         }

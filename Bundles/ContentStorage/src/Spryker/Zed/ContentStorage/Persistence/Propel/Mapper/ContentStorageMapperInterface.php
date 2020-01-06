@@ -9,6 +9,7 @@ namespace Spryker\Zed\ContentStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
+use Generated\Shared\Transfer\SpyContentEntityTransfer;
 use Orm\Zed\Content\Persistence\SpyContent;
 use Orm\Zed\ContentStorage\Persistence\SpyContentStorage;
 
@@ -21,6 +22,14 @@ interface ContentStorageMapperInterface
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function mapContentEntityToTransfer(SpyContent $contentEntity, ContentTransfer $contentTransfer): ContentTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyContentEntityTransfer $contentEntityTransfer
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer
+     */
+    public function mapContentEntityTransferToContentTransfer(SpyContentEntityTransfer $contentEntityTransfer, ContentTransfer $contentTransfer): ContentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer

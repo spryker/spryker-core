@@ -13,15 +13,15 @@ use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 class CategoryImageStorageMapper implements CategoryImageStorageMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntity
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
      * @param \Generated\Shared\Transfer\CategoryImageStorageTransfer $categoryImageStorageTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer
      */
-    public function mapCategoryImageStorageEntityToTransfer(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntity, CategoryImageStorageTransfer $categoryImageStorageTransfer): CategoryImageStorageTransfer
-    {
-        $categoryImageStorageTransfer->fromArray($categoryImageStorageEntity->toArray(), true);
-
-        return $categoryImageStorageTransfer;
+    public function mapCategoryImageStorageEntityToTransfer(
+        SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer,
+        CategoryImageStorageTransfer $categoryImageStorageTransfer
+    ): CategoryImageStorageTransfer {
+        return $categoryImageStorageTransfer->fromArray($categoryImageStorageEntityTransfer->toArray(), true);
     }
 }

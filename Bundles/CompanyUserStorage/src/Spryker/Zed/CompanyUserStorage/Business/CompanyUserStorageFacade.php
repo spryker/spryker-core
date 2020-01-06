@@ -73,10 +73,11 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
      */
     public function getCompanyUserStorageCollectionByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array
     {
-        return $this->getRepository()->getCompanyUserStorageCollectionByFilterAndCompanyUserIds($filterTransfer, $companyUserIds);
+        return $this->getRepository()
+            ->getCompanyUserStorageCollectionByFilterAndCompanyUserIds($filterTransfer, $companyUserIds);
     }
 }

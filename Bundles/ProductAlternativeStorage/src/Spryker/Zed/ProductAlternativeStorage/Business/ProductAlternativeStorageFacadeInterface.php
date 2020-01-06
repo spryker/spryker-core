@@ -48,14 +48,14 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Returns SpyProductAlternativeStorage collection by filter and product alternative storage ids.
+     *  - Returns ProductAlternativeStorageTransfer collection by filter and product alternative storage ids.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[]
      */
     public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
@@ -64,14 +64,14 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns ProductReplacementForStorage collection by filter and product replacement for storage ids.
+     * - Returns ProductReplacementStorageTransfer collection by filter and product replacement for storage ids.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productReplacementForStorageIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer[]
      */
     public function getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,

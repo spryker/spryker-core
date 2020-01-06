@@ -17,9 +17,9 @@ interface ProductReplacementForStorageMapperInterface
     public function mapProductReplacementForStorageEntitiesToSynchronizationDataTransfers(array $productReplacementForStorageEntities): array;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[] $productReplacementForStorageEntityTransfers
+     * @param \Generated\Shared\Transfer\ProductReplacementStorageTransfer[] $productReplacementStorageTransfers
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapProductReplacementForStorageEntityTransfersToSynchronizationDataTransfers(array $productReplacementForStorageEntityTransfers): array;
+    public function mapProductReplacementForStorageEntityTransfersToSynchronizationDataTransfers(array $productReplacementStorageTransfers): array;
 }

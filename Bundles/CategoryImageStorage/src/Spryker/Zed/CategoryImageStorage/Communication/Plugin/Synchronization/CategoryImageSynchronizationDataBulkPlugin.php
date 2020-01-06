@@ -58,13 +58,16 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
+        /**
+         * @todo Refactor to one facade call. See the `CmsSlotBlockSynchronizationDataBulkPlugin`.
+         */
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-
-        $categoryImageStorageTransfers = $this->getFacade()->getCategoryImageStorageCollectionByFilterAndCategoryIds($filterTransfer, $ids);
+        $categoryImageStorageTransfers = $this->getFacade()
+            ->getCategoryImageStorageCollectionByFilterAndCategoryIds($filterTransfer, $ids);
 
         return $this->getFactory()
             ->createCategoryImageStorageMapper()
-            ->mapCategoryImageStorageTransferCollectionToSynchronizationDataTransferCollection($categoryImageStorageTransfers);
+            ->mapCategoryImageStorageTransfersCollectionToSynchronizationDataTransferCollection($categoryImageStorageTransfers);
     }
 
     /**

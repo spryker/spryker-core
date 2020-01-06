@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Persistence;
 
+use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -57,7 +58,7 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
      */
     public function getCompanyUserStorageCollectionByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array
     {
@@ -65,6 +66,29 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
             ->createCompanyUserStorageQuery()
             ->filterByFkCompanyUser_In($companyUserIds);
 
-        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        $companyUserStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+
+        return $this->mapCategoryImageStorageEntityCollectionToCategoryImageStorageTransferCollection($companyUserStorageEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[] $companyUserStorageEntities
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
+     */
+    protected function mapCategoryImageStorageEntityCollectionToCategoryImageStorageTransferCollection(array $companyUserStorageEntities): array
+    {
+        $companyUserStorageMapper = $this->getFactory()
+            ->createCompanyUserStorageMapper();
+        $companyUserStorageTransfers = [];
+
+        foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
+            $companyUserStorageTransfers[] = $companyUserStorageMapper->mapCompanyUserStorageEntityToTransfer(
+                $companyUserStorageEntity,
+                new CompanyUserStorageTransfer()
+            );
+        }
+
+        return $companyUserStorageTransfers;
     }
 }

@@ -71,7 +71,7 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[]
      */
     public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
@@ -89,7 +89,7 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productReplacementForStorageIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer[]
      */
     public function getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,
