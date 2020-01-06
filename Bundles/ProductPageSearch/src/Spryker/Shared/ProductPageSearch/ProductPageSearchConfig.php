@@ -30,4 +30,12 @@ class ProductPageSearchConfig extends AbstractSharedConfig
     public const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
     public const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
     public const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
+
+    /**
+     * Specification:
+     *  - Default Price Dimension name.
+     *
+     * @uses \Spryker\Shared\PriceProductStorage\PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT
+     */
+    public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 }

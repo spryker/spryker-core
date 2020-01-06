@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Storage\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
+
 interface StorageFacadeInterface
 {
     /**
@@ -71,4 +73,15 @@ interface StorageFacadeInterface
      * @return bool
      */
     public function import($source);
+
+    /**
+     * Specification:
+     * - Executes health check for the storage.
+     * - Checks that connection has been established.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeKeyValueStoreHealthCheck(): HealthCheckServiceResponseTransfer;
 }

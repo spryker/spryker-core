@@ -8,6 +8,7 @@
     "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
+    "spryker/health-check-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/monitoring": "^1.0.0 || ^2.0.0",
     "spryker/redis": "^2.0.0",
@@ -17,6 +18,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
@@ -40,6 +42,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "4.0.x-dev"

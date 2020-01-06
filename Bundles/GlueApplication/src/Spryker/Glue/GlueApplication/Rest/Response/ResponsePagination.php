@@ -130,7 +130,7 @@ class ResponsePagination implements ResponsePaginationInterface
     {
         $nextOffset = $offset + $limit;
         if ($nextOffset > $totalPages * $limit) {
-            $nextOffset = (int)(($totalPages / $limit) * $limit);
+            $nextOffset = (int)($totalPages * $limit);
         }
 
         return $nextOffset;

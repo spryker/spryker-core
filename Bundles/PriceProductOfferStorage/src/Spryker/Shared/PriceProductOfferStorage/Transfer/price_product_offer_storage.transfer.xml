@@ -16,8 +16,12 @@
         <property name="type" type="string"/>
     </transfer>
 
-    <transfer name="PriceProductFilter">
+    <transfer name="ProductOffer">
         <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="productOffer" type="ProductOffer"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">

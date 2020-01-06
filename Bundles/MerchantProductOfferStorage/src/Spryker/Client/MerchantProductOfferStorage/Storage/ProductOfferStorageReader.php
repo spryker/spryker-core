@@ -90,14 +90,31 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                 if ($key === '_timestamp') {
                     continue;
                 }
-                $merchantProductOfferKey = $this->generateKey($concreteProductOffer, MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME);
-                $concreteProductOfferData = $this->storageClient->get($merchantProductOfferKey);
-                $productOfferStorageTransfer = $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer($concreteProductOfferData, (new ProductOfferStorageTransfer()));
-                $productOfferStorageCollection->addProductOfferStorage($productOfferStorageTransfer);
+
+                $productOfferStorageCollection->addProductOfferStorage(
+                    $this->findProductOfferStorageByReference($concreteProductOffer)
+                );
             }
         }
 
         return $productOfferStorageCollection;
+    }
+
+    /**
+     * @param string $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
+     */
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer
+    {
+        $merchantProductOfferKey = $this->generateKey($productOfferReference, MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME);
+        $concreteProductOfferData = $this->storageClient->get($merchantProductOfferKey);
+
+        if (!$concreteProductOfferData) {
+            return null;
+        }
+
+        return $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer($concreteProductOfferData, (new ProductOfferStorageTransfer()));
     }
 
     /**

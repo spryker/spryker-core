@@ -19,7 +19,7 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
     /**
-     * @uses \Spryker\Zed\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
      */
     public const STATUS_APPROVED = 'approved';
 

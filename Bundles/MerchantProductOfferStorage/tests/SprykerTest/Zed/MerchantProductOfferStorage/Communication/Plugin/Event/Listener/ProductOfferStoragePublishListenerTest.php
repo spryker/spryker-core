@@ -33,7 +33,7 @@ use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\
 class ProductOfferStoragePublishListenerTest extends Unit
 {
     /**
-     * @uses \Spryker\Zed\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
      */
     protected const STATUS_DECLINED = 'declined';
 
