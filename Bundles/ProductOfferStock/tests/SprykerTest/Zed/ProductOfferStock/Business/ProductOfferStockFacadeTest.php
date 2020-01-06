@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Nette\Utils\Random;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
@@ -31,7 +32,6 @@ class ProductOfferStockFacadeTest extends Unit
 {
     use DataCleanupHelperTrait;
 
-    protected const PRODUCT_OFFER_REFERENCE_VALUE = 'offer-1';
     protected const STOCK_NAME_VALUE = 'stock-name-1';
 
     /**
@@ -67,7 +67,6 @@ class ProductOfferStockFacadeTest extends Unit
     public function testIsProductOfferNeverOutOfStock(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->haveMerchant();
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
         ]);
@@ -75,19 +74,17 @@ class ProductOfferStockFacadeTest extends Unit
             StockTransfer::NAME => static::STOCK_NAME_VALUE,
             'storeRelation' => ['idStores' => [$storeTransfer->getIdStore()]],
         ]);
-        $productOffer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_VALUE,
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
-        ]);
-        $this->tester->haveProductOfferStock([
-            ProductOfferStockTransfer::FK_PRODUCT_OFFER => $productOffer->getIdProductOffer(),
+
+        $productOfferStock = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::FK_STOCK => $stockTransfer->getIdStock(),
             ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => true,
         ]);
 
+        $this->tester->haveStockStoreRelation($productOfferStock->getStock(), $storeTransfer);
+
         // Act
         $productOfferStockRequestTransfer = new ProductOfferStockRequestTransfer();
-        $productOfferStockRequestTransfer->setProductOfferReference($productOffer->getProductOfferReference());
+        $productOfferStockRequestTransfer->setProductOfferReference($productOfferStock->getProductOffer()->getProductOfferReference());
         $productOfferStockRequestTransfer->setStore((new StoreTransfer())->setIdStore($stockTransfer->getStoreRelation()->getIdStores()[0]));
 
         $response = $this->tester->getFacade()->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer);

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
@@ -48,24 +51,32 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface
+     */
+    protected $productOfferAvailabilityChecker;
+
+    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface $productOfferStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface $productOfferAvailabilityChecker
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
         ProductOfferStorageDeleterInterface $productOfferStorageDeleter,
-        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
+        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade,
+        ProductOfferAvailabilityCheckerInterface $productOfferAvailabilityChecker
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productOfferFacade = $productOfferFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
         $this->productOfferStorageDeleter = $productOfferStorageDeleter;
         $this->storeFacade = $storeFacade;
+        $this->productOfferAvailabilityChecker = $productOfferAvailabilityChecker;
     }
 
     /**
@@ -102,6 +113,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         }
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
+            $productOfferTransfer->setStores($this->getAvailableStoresForProductOffer($productOfferTransfer));
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
             foreach ($productOfferTransfer->getStores() as $storeTransfer) {
                 unset($productOfferReferencesToRemove[$storeTransfer->getName()][$flippedProductOfferReferences[$productOfferTransfer->getProductOfferReference()]]);
@@ -114,6 +126,23 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
                 $storeName
             );
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \ArrayObject
+     */
+    protected function getAvailableStoresForProductOffer(ProductOfferTransfer $productOfferTransfer): ArrayObject
+    {
+        $storesToSave = new ArrayObject();
+        foreach ($productOfferTransfer->getStores() as $storeTransfer) {
+            if ($this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer, $storeTransfer)) {
+                $storesToSave->append($storeTransfer);
+            }
+        }
+
+        return $storesToSave;
     }
 
     /**
