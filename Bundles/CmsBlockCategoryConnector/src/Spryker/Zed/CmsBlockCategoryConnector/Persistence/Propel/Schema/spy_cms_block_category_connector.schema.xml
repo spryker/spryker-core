@@ -3,7 +3,7 @@
           namespace="Orm\Zed\CmsBlockCategoryConnector\Persistence"
           package="src.Orm.Zed.CmsBlockCategoryConnector.Persistence"
 >
-    <table name="spy_cms_block_category_connector" phpName="SpyCmsBlockCategoryConnector">
+    <table name="spy_cms_block_category_connector">
         <column name="id_cms_block_category_connector" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_block" type="INTEGER" required="true"/>
         <column name="fk_category" type="INTEGER" required="true"/>

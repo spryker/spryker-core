@@ -28,6 +28,7 @@
         <property name="faxNumber" type="string"/>
         <property name="addressCollection" type="MerchantProfileAddressStorage[]" singular="address"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfileAddressStorage">
