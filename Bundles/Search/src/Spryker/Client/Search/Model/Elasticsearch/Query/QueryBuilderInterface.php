@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface` instead.
+ */
 interface QueryBuilderInterface
 {
     /**

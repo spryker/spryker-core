@@ -26,8 +26,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/manual-order-entry-gui": "*",
-    "spryker/testify": "*"
+    "spryker/manual-order-entry-gui": "*"
   },
   "suggest": {
     "spryker/calculation": "Recalculates prices for offer",
@@ -40,6 +39,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

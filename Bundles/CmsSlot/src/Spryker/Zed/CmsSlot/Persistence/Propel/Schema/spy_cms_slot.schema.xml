@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CmsSlot\Persistence" package="src.Orm.Zed.CmsSlot.Persistence">
 
-    <table name="spy_cms_slot_template" idMethod="native" allowPkInsert="true" phpName="SpyCmsSlotTemplate" identifierQuoting="true">
+    <table name="spy_cms_slot_template" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_slot_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="path" required="true" type="LONGVARCHAR" description="Identifier for existing entities. It should never be changed."/>
         <column name="path_hash" required="true" type="VARCHAR" size="32"/>
@@ -15,7 +15,7 @@
         </unique>
     </table>
 
-    <table name="spy_cms_slot" idMethod="native" allowPkInsert="true" phpName="SpyCmsSlot" identifierQuoting="true">
+    <table name="spy_cms_slot" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_slot" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
         <column name="content_provider_type" required="true" type="VARCHAR" size="64"/>

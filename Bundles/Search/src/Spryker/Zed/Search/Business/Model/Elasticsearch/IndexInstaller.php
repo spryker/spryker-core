@@ -18,6 +18,9 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLo
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 use Spryker\Zed\Search\SearchConfig;
 
+/**
+ * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstaller` instead.
+ */
 class IndexInstaller implements SearchInstallerInterface
 {
     protected const SETTING_PATH_DELIMITER = '.';

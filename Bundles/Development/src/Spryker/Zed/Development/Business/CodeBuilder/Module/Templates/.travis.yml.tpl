@@ -2,11 +2,10 @@ language: php
 
 php:
     - 7.2
-    - 7.3
+    - 7.4
 
 cache:
     directories:
-        - vendor
         - $HOME/.composer/cache
 
 env:
