@@ -47,7 +47,7 @@ class ProductOfferValidityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckProductOfferValidityDateRange(): void
+    public function testUpdateProductOfferStatusByValidityDate(): void
     {
         // Arrange
         $merchant = $this->tester->haveMerchant();
@@ -75,7 +75,7 @@ class ProductOfferValidityFacadeTest extends Unit
         ]);
 
         // Act
-        $this->tester->getFacade()->checkProductOfferValidityDateRange();
+        $this->tester->getFacade()->updateProductOfferStatusByValidityDate();
 
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setIdProductOffer($productOfferValid->getIdProductOffer());

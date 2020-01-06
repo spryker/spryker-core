@@ -14,10 +14,10 @@ interface ProductOfferValidityRepositoryInterface
     /**
      * @return \Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer
      */
-    public function getProductOfferValiditiesBecomingActive(): ProductOfferValidityCollectionTransfer;
+    public function getActivatableProductOffers(): ProductOfferValidityCollectionTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer
      */
-    public function getProductOfferValiditiesBecomingInActive(): ProductOfferValidityCollectionTransfer;
+    public function getDeactivatableProductOffers(): ProductOfferValidityCollectionTransfer;
 }

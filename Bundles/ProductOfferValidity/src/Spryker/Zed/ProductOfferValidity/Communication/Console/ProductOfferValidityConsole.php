@@ -36,7 +36,7 @@ class ProductOfferValidityConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getFacade()->checkProductOfferValidityDateRange();
+        $this->getFacade()->updateProductOfferStatusByValidityDate();
 
         return static::CODE_SUCCESS;
     }

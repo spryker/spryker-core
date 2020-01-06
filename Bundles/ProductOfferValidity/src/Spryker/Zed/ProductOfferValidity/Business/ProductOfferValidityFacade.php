@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductOfferValidity\Business\ProductOfferValidityBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityEntityManagerInterface getEntityManager()
  */
 class ProductOfferValidityFacade extends AbstractFacade implements ProductOfferValidityFacadeInterface
 {
@@ -23,7 +22,7 @@ class ProductOfferValidityFacade extends AbstractFacade implements ProductOfferV
      *
      * @return void
      */
-    public function checkProductOfferValidityDateRange(): void
+    public function updateProductOfferStatusByValidityDate(): void
     {
         $this->getFactory()
             ->createProductOfferSwitcher()

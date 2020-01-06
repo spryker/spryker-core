@@ -19,5 +19,5 @@ interface ProductOfferValidityFacadeInterface
      *
      * @return void
      */
-    public function checkProductOfferValidityDateRange(): void;
+    public function updateProductOfferStatusByValidityDate(): void;
 }

@@ -53,7 +53,7 @@ class ProductOfferSwitcher implements ProductOfferSwitcherInterface
      */
     protected function activateProductOffers(): void
     {
-        $productOfferValidityCollectionTransfer = $this->productOfferValidityRepository->getProductOfferValiditiesBecomingActive();
+        $productOfferValidityCollectionTransfer = $this->productOfferValidityRepository->getActivatableProductOffers();
         foreach ($productOfferValidityCollectionTransfer->getProductOfferValidities() as $productOfferValidityTransfer) {
             $this->productOfferFacade->activateProductOfferById($productOfferValidityTransfer->getIdProductOffer());
         }
@@ -64,7 +64,7 @@ class ProductOfferSwitcher implements ProductOfferSwitcherInterface
      */
     protected function deactivateProductOffers(): void
     {
-        $productOfferValidityCollectionTransfer = $this->productOfferValidityRepository->getProductOfferValiditiesBecomingInActive();
+        $productOfferValidityCollectionTransfer = $this->productOfferValidityRepository->getDeactivatableProductOffers();
         foreach ($productOfferValidityCollectionTransfer->getProductOfferValidities() as $productOfferValidityTransfer) {
             $this->productOfferFacade->deactivateProductOfferById($productOfferValidityTransfer->getIdProductOffer());
         }

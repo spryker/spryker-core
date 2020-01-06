@@ -19,7 +19,7 @@ class ProductOfferValidityRepository extends AbstractRepository implements Produ
     /**
      * @return \Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer
      */
-    public function getProductOfferValiditiesBecomingActive(): ProductOfferValidityCollectionTransfer
+    public function getActivatableProductOffers(): ProductOfferValidityCollectionTransfer
     {
         $productOfferValidityEntities = $this->getFactory()
             ->createProductOfferValidityPropelQuery()
@@ -38,7 +38,7 @@ class ProductOfferValidityRepository extends AbstractRepository implements Produ
     /**
      * @return \Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer
      */
-    public function getProductOfferValiditiesBecomingInActive(): ProductOfferValidityCollectionTransfer
+    public function getDeactivatableProductOffers(): ProductOfferValidityCollectionTransfer
     {
         $productOfferValidityEntities = $this->getFactory()
             ->createProductOfferValidityPropelQuery()
