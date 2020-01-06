@@ -13,13 +13,13 @@ use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductOfferAvailability\Dependency\ProductOfferAvailabilityEvents;
+use Spryker\Zed\ProductOffer\Dependency\ProductOfferEvents;
 
 /**
  * @method \Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\ProductOfferAvailabilityStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductOfferAvailabilityStorage\Business\ProductOfferAvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOfferAvailabilityStorage\Communication\ProductOfferAvailabilityStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\c\ProductOfferAvailabilityStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig getConfig()
  */
 class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
@@ -76,7 +76,7 @@ class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends Abstract
      */
     public function getEventName(): string
     {
-        return ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH;
+        return ProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH;
     }
 
     /**

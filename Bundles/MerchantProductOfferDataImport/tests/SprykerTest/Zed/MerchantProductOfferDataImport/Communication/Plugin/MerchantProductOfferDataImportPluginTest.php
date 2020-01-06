@@ -28,7 +28,7 @@ use Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportCon
 class MerchantProductOfferDataImportPluginTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\MerchantProductOfferDataImport\Helper\MerchantProductOfferDataImportHelper
+     * @var \SprykerTest\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportCommunicationTester
      */
     protected $tester;
 
@@ -39,7 +39,7 @@ class MerchantProductOfferDataImportPluginTest extends Unit
     {
         // Arrange
         $this->tester->truncateProductOffers();
-        $this->tester->assertDatabaseTableIsEmpty();
+        $this->tester->assertProductOfferDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_product_offer.csv');
@@ -54,7 +54,7 @@ class MerchantProductOfferDataImportPluginTest extends Unit
 
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->tester->assertDatabaseTableContainsData();
+        $this->tester->assertProductOfferDatabaseTableContainsData();
     }
 
     /**

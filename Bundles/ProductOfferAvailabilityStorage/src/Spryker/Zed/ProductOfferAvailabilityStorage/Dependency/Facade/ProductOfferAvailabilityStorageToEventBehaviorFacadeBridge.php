@@ -31,4 +31,15 @@ class ProductOfferAvailabilityStorageToEventBehaviorFacadeBridge implements Prod
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param string $columnName
+     *
+     * @return array
+     */
+    public function getEventTransfersOriginalValues(array $eventTransfers, string $columnName): array
+    {
+        return $this->eventBehaviorFacade->getEventTransfersOriginalValues($eventTransfers, $columnName);
+    }
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\AvailabilityStorage\src\Spryker\Client\AvailabilityStorage\Expander;
+namespace Spryker\Client\AvailabilityStorage\Expander;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReaderInterface;
@@ -18,20 +18,20 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
     protected $availabilityStorageReader;
 
     /**
-     * @var \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\PostProductViewAvailabilityStorageExpandPluginInterface[]
+     * @var \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[]
      */
-    protected $postProductViewAvailabilityStorageExpandPlugins;
+    protected $availabilityStorageStrategyPlugins;
 
     /**
      * @param \Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReaderInterface $availabilityStorageReader
-     * @param \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\PostProductViewAvailabilityStorageExpandPluginInterface[] $postProductViewAvailabilityStorageExpandPlugins
+     * @param \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[] $availabilityStorageStrategyPlugins
      */
     public function __construct(
         AvailabilityStorageReaderInterface $availabilityStorageReader,
-        array $postProductViewAvailabilityStorageExpandPlugins
+        array $availabilityStorageStrategyPlugins
     ) {
         $this->availabilityStorageReader = $availabilityStorageReader;
-        $this->postProductViewAvailabilityStorageExpandPlugins = $postProductViewAvailabilityStorageExpandPlugins;
+        $this->availabilityStorageStrategyPlugins = $availabilityStorageStrategyPlugins;
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
             $productViewTransfer->setAvailable($concreteProductAvailableItems[$productViewTransfer->getSku()]);
         }
 
-        $this->executePostProductViewAvailabilityStorageExpandPlugins($productViewTransfer);
+        $productViewTransfer = $this->executeAvailabilityStorageStrategyPlugins($productViewTransfer);
 
         return $productViewTransfer;
     }
@@ -66,10 +66,14 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function executePostProductViewAvailabilityStorageExpandPlugins(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    protected function executeAvailabilityStorageStrategyPlugins(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
-        foreach ($this->postProductViewAvailabilityStorageExpandPlugins as $postProductViewAvailabilityStorageExpandPlugin) {
-            $productViewTransfer = $postProductViewAvailabilityStorageExpandPlugin->postExpand($productViewTransfer);
+        foreach ($this->availabilityStorageStrategyPlugins as $availabilityStorageStrategyPlugin) {
+            if ($availabilityStorageStrategyPlugin->isApplicable($productViewTransfer)) {
+                $productViewTransfer->setAvailable(
+                    $availabilityStorageStrategyPlugin->isProductAvailable($productViewTransfer)
+                );
+            }
         }
 
         return $productViewTransfer;

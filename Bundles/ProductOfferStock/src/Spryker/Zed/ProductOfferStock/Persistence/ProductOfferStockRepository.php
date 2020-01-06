@@ -31,9 +31,20 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
         $productOfferStockRequestTransfer->requireProductOfferReference()
             ->requireStore()
             ->getStore()
-            ->requireIdStore();
+                ->requireName();
 
-        $quantity = $this->applyFilters($this->getFactory()->getProductOfferStockPropelQuery(), $productOfferStockRequestTransfer)
+        $quantity = $this->getFactory()
+            ->getProductOfferStockPropelQuery()
+            ->useSpyProductOfferQuery()
+                ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
+            ->endUse()
+            ->useStockQuery()
+                ->useStockStoreQuery()
+                    ->useStoreQuery()
+                        ->filterByName($productOfferStockRequestTransfer->getStore()->getName())
+                    ->endUse()
+                ->endUse()
+            ->endUse()
             ->withColumn('SUM(' . SpyProductOfferStockTableMap::COL_QUANTITY . ')', static::COLUMN_ALIAS_QUANTITY)
             ->select([static::COLUMN_ALIAS_QUANTITY])
             ->findOne();

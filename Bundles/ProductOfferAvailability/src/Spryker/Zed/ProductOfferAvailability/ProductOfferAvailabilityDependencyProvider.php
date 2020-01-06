@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToOmsFacadeBridge;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductOfferAvailability\ProductOfferAvailabilityConfig getConfig()
+ */
 class ProductOfferAvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_OMS = 'FACADE_OMS';

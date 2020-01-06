@@ -14,7 +14,7 @@ interface ProductOfferAvailabilityFacadeInterface
 {
     /**
      * Specification:
-     * - Returns true if product offer is available in requested quantity.
+     * - Returns true if input quantity is larger than reserved quantity for this request.
      *
      * @api
      *
@@ -26,7 +26,10 @@ interface ProductOfferAvailabilityFacadeInterface
 
     /**
      * Specification:
-     * - Finds availability for product offer.
+     * - Calculates product offer availability by product offer stock and concrete product reserved amount.
+     * - Expects ProductOfferAvailabilityFacadeInterface.sku to be provided.
+     * - Expects ProductOfferAvailabilityFacadeInterface.productOfferReference to be provided.
+     * - Expects ProductOfferAvailabilityFacadeInterface.store to be provided.
      *
      * @api
      *

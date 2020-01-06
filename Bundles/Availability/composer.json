@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/availability-extension": "^1.0.0",
     "spryker/decimal-object": "^1.0.0",
     "spryker/event": "^2.3.0",
     "spryker/kernel": "^3.30.0",
@@ -43,9 +44,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "5.0.x-dev"
+      "dev-master": "9.0.x-dev"
     }
   },
   "config": {

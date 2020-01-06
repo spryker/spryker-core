@@ -76,7 +76,7 @@ class PriceManager implements PriceManagerInterface
         $priceProductTransfers = $this->getIndexedPriceProductTransfersByPriceProductFilterTransfers($priceProductFilterTransfers);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductTransfer = $this->getPriceProductTransferByItemTransfer($priceProductTransfers, $itemTransfer);
+            $priceProductTransfer = $this->getPriceProductTransferBySku($priceProductTransfers, $itemTransfer->getSku());
             $itemTransfer = $this->setOriginUnitPrices($itemTransfer, $priceProductTransfer, $priceMode);
 
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
@@ -103,31 +103,29 @@ class PriceManager implements PriceManagerInterface
     {
         $priceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
 
-        return $this->indexPriceProductTransfersByIdentifier($priceProductTransfers);
+        return $this->indexPriceProductTransfersBySku($priceProductTransfers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $sku
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function getPriceProductTransferByItemTransfer(array $priceProductTransfers, ItemTransfer $itemTransfer): PriceProductTransfer
+    protected function getPriceProductTransferBySku(array $priceProductTransfers, string $sku): PriceProductTransfer
     {
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            if ($this->priceProductFacade->isProductPrice($priceProductTransfer, $itemTransfer)) {
-                return $priceProductTransfer;
-            }
+        if (!isset($priceProductTransfers[$sku])) {
+            throw new PriceMissingException(
+                sprintf(
+                    static::ERROR_MESSAGE_CART_ITEM_CAN_NOT_BE_PRICED,
+                    $sku
+                )
+            );
         }
 
-        throw new PriceMissingException(
-            sprintf(
-                static::ERROR_MESSAGE_CART_ITEM_CAN_NOT_BE_PRICED,
-                $itemTransfer->getSku()
-            )
-        );
+        return $priceProductTransfers[$sku];
     }
 
     /**
@@ -135,11 +133,11 @@ class PriceManager implements PriceManagerInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function indexPriceProductTransfersByIdentifier(array $priceProductTransfers): array
+    protected function indexPriceProductTransfersBySku(array $priceProductTransfers): array
     {
         $indexedPriceProductTransfers = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $indexedPriceProductTransfers[$priceProductTransfer->getItemIdentifier() ?: $priceProductTransfer->getSkuProduct()] = $priceProductTransfer;
+            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()] = $priceProductTransfer;
         }
 
         return $indexedPriceProductTransfers;

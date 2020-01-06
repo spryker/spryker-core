@@ -55,7 +55,7 @@ class Operation implements OperationInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins = [];
 
@@ -99,7 +99,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[] $preCheckPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
@@ -197,7 +197,7 @@ class Operation implements OperationInterface
 
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
-        $cartChangeTransfer->setItems($this->setDefaultItemIdentifiers($cartChangeTransfer->getItems()));
+
         $cartChangeTransfer = $this->normalizeCartChangeTransfer($cartChangeTransfer);
         $this->addInfoMessages(
             $this->getNotificationMessages($cartChangeTransfer)
@@ -286,7 +286,6 @@ class Operation implements OperationInterface
             return $quoteTransfer;
         }
 
-        $quoteTransfer->setItems($this->setDefaultItemIdentifiers($quoteTransfer->getItems()));
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
 
         $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
@@ -314,20 +313,6 @@ class Operation implements OperationInterface
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function setDefaultItemIdentifiers(ArrayObject $itemTransfers): ArrayObject
-    {
-        foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->setItemIdentifier($itemTransfer->getSku());
-        }
-
-        return $itemTransfers;
     }
 
     /**

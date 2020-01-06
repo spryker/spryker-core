@@ -9,7 +9,7 @@ namespace Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Synchroniza
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\ConfigurableBundleStorage\Persistence\Map\SpyConfigurableBundleTemplateStorageTableMap;
+use Orm\Zed\ConfigurableBundleStorage\Persistence\Map\SpyConfigurableBundleTemplateImageStorageTableMap;
 use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -121,7 +121,7 @@ class ConfigurableBundleTemplateImageSynchronizationDataBulkPlugin extends Abstr
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
-            ->setOrderBy(SpyConfigurableBundleTemplateStorageTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_STORAGE)
+            ->setOrderBy(SpyConfigurableBundleTemplateImageStorageTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Creator;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
@@ -34,18 +35,26 @@ class ConfigurableBundleTemplateCreator implements ConfigurableBundleTemplateCre
     protected $configurableBundleNameGenerator;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface
+     */
+    protected $eventTriggerer;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
      * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface $configurableBundleTranslationWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
+     * @param \Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface $eventTriggerer
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
         ConfigurableBundleTranslationWriterInterface $configurableBundleTranslationWriter,
-        ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
+        ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator,
+        EventTriggererInterface $eventTriggerer
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
         $this->configurableBundleTranslationWriter = $configurableBundleTranslationWriter;
         $this->configurableBundleNameGenerator = $configurableBundleNameGenerator;
+        $this->eventTriggerer = $eventTriggerer;
     }
 
     /**
@@ -75,6 +84,8 @@ class ConfigurableBundleTemplateCreator implements ConfigurableBundleTemplateCre
 
         $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
         $this->configurableBundleTranslationWriter->saveTemplateTranslations($configurableBundleTemplateTransfer);
+
+        $this->eventTriggerer->triggerConfigurableBundleTemplatePublishEvent($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)

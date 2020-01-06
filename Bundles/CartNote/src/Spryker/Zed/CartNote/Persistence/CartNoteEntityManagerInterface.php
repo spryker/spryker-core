@@ -15,5 +15,5 @@ interface CartNoteEntityManagerInterface
      *
      * @return void
      */
-    public function updateOrderNote($idSalesOrder, $note);
+    public function updateOrderNote(int $idSalesOrder, string $note): void;
 }

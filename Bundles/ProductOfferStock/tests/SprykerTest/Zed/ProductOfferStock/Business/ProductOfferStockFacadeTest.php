@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
@@ -93,5 +94,59 @@ class ProductOfferStockFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($response);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferStockReturnsAvailableStockAmount(): void
+    {
+        // Arrange
+        $stockQuantity = 5;
+        $expectedResult = $stockQuantity;
+
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
+
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferStockTransfer->getProductOffer()->getProductOfferReference())
+            ->setStore($storeTransfer);
+
+        // Act
+        $productOfferStock = $this->tester->getFacade()
+            ->getProductOfferStock($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertSame($expectedResult, $productOfferStock->toInt());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferStockReturnsNothingIfProductOfferNotExists(): void
+    {
+        // Arrange
+        $notExistingProductOfferReference = 'not-existing-product-offer-reference';
+
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($notExistingProductOfferReference)
+            ->setStore($storeTransfer);
+
+        // Act
+        $productOfferStock = $this->tester->getFacade()
+            ->getProductOfferStock($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertSame(0, $productOfferStock->toInt());
     }
 }

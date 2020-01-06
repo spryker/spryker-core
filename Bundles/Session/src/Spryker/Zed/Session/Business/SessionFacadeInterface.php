@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Session\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
+
 interface SessionFacadeInterface
 {
     /**
@@ -26,4 +28,14 @@ interface SessionFacadeInterface
      * @return void
      */
     public function removeZedSessionLockFor($sessionId);
+
+    /**
+     * Specification:
+     * - Executes health check for the session service.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeSessionHealthCheck(): HealthCheckServiceResponseTransfer;
 }

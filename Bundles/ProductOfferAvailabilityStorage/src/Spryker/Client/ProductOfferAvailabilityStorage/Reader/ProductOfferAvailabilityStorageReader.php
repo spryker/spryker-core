@@ -43,7 +43,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer|null
      */
-    public function findAvailabilityByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
+    public function findByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
     {
         $productOfferAvailabilityStorageTransferData = $this->storageClient->get(
             $this->generateKey($productOfferReference, $storeName)
@@ -53,18 +53,23 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
             return null;
         }
 
-        return $this->mapToProductOfferAvailabilityStorage($productOfferAvailabilityStorageTransferData);
+        return $this->mapToProductOfferAvailabilityStorageDataToTransfer(
+            $productOfferAvailabilityStorageTransferData,
+            new ProductOfferAvailabilityStorageTransfer()
+        );
     }
 
     /**
      * @param array $productOfferAvailabilityStorageTransferData
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer
      */
-    protected function mapToProductOfferAvailabilityStorage(array $productOfferAvailabilityStorageTransferData): ProductOfferAvailabilityStorageTransfer
-    {
-        return (new ProductOfferAvailabilityStorageTransfer())
-            ->fromArray($productOfferAvailabilityStorageTransferData, true);
+    protected function mapToProductOfferAvailabilityStorageDataToTransfer(
+        array $productOfferAvailabilityStorageTransferData,
+        ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
+    ): ProductOfferAvailabilityStorageTransfer {
+        return $productOfferAvailabilityStorageTransfer->fromArray($productOfferAvailabilityStorageTransferData, true);
     }
 
     /**

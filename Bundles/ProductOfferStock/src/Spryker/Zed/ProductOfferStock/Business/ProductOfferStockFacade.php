@@ -42,7 +42,7 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal
+    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal
     {
         return $this->getRepository()
             ->getProductOfferStockForRequest($productOfferStockRequestTransfer);

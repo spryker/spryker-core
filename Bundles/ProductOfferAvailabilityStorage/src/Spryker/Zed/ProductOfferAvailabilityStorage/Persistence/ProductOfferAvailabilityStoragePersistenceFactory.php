@@ -11,6 +11,7 @@ use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabil
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\Propel\Mapper\ProductOfferAvailabilityStorageMapper;
+use Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\Propel\Mapper\ProductOfferAvailabilityStorageMapperInterface;
 use Spryker\Zed\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageDependencyProvider;
 
 /**
@@ -29,9 +30,9 @@ class ProductOfferAvailabilityStoragePersistenceFactory extends AbstractPersiste
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\Propel\Mapper\ProductOfferAvailabilityStorageMapper
+     * @return \Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\Propel\Mapper\ProductOfferAvailabilityStorageMapperInterface
      */
-    public function createProductOfferAvailabilityStorageMapper(): ProductOfferAvailabilityStorageMapper
+    public function createProductOfferAvailabilityStorageMapper(): ProductOfferAvailabilityStorageMapperInterface
     {
         return new ProductOfferAvailabilityStorageMapper();
     }

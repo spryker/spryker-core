@@ -25,10 +25,10 @@ class ProductOfferAvailabilityStorageClient extends AbstractClient implements Pr
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer|null
      */
-    public function findAvailabilityByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
+    public function findByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
     {
         return $this->getFactory()
             ->createProductOfferAvailabilityStorageReader()
-            ->findAvailabilityByProductOfferReference($productOfferReference, $storeName);
+            ->findByProductOfferReference($productOfferReference, $storeName);
     }
 }

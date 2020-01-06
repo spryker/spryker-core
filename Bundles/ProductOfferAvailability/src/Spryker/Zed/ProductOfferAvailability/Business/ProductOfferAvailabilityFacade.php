@@ -25,9 +25,8 @@ class ProductOfferAvailabilityFacade extends AbstractFacade implements ProductOf
      *
      * @return bool
      */
-    public function isProductSellableForRequest(
-        ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-    ): bool {
+    public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
+    {
         return $this->getFactory()
             ->createProductOfferAvailabilityProvider()
             ->isProductSellableForRequest($productOfferAvailabilityRequestTransfer);

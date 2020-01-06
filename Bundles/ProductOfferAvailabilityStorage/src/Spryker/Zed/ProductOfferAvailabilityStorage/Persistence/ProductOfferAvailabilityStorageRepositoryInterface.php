@@ -13,7 +13,7 @@ use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabil
 interface ProductOfferAvailabilityStorageRepositoryInterface
 {
     /**
-     * @param int[] $productOfferStockIds
+     * @param string[] $productOfferStockIds
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
      */

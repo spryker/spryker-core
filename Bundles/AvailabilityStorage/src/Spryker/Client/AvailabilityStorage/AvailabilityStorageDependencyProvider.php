@@ -21,7 +21,7 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
 
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
-    public const PLUGINS_POST_PRODUCT_VIEW_AVAILABILITY_EXPAND = 'PLUGINS_POST_PRODUCT_VIEW_AVAILABILITY_EXPAND';
+    public const PLUGINS_AVAILABILITY_STORAGE_STRATEGY = 'PLUGINS_AVAILABILITY_STORAGE_STRATEGY';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -33,7 +33,7 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
 
-        $container = $this->addPostProductViewAvailabilityStorageExpandPlugins($container);
+        $container = $this->addAvailabilityStorageStrategyPlugins($container);
 
         return $container;
     }
@@ -71,19 +71,19 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPostProductViewAvailabilityStorageExpandPlugins(Container $container): Container
+    protected function addAvailabilityStorageStrategyPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_POST_PRODUCT_VIEW_AVAILABILITY_EXPAND, function (Container $container) {
-            return $this->getPostProductViewAvailabilityStorageExpandPlugins();
+        $container->set(static::PLUGINS_AVAILABILITY_STORAGE_STRATEGY, function (Container $container) {
+            return $this->getAvailabilityStorageStrategyPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\PostProductViewAvailabilityStorageExpandPluginInterface[]
+     * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[]
      */
-    public function getPostProductViewAvailabilityStorageExpandPlugins(): array
+    public function getAvailabilityStorageStrategyPlugins(): array
     {
         return [];
     }

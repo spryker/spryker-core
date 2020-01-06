@@ -50,8 +50,6 @@ use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\Business\Model\WriterInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemoverInterface;
-use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductMatcher;
-use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductMatcherInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
@@ -218,17 +216,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductService(),
             $this->createPriceProductExpander(),
             $this->createPriceProductReaderPluginExecutor(),
-            $this->getPriceProductProviderPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductMatcherInterface
-     */
-    public function createPriceProductMatcher(): PriceProductMatcherInterface
-    {
-        return new PriceProductMatcher(
-            $this->getPriceProductMatcherStrategyPlugins()
+            $this->getPriceProductExternalProviderPlugins()
         );
     }
 
@@ -463,19 +451,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductProviderPluginInterface[]
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
      */
-    public function getPriceProductProviderPlugins(): array
+    public function getPriceProductExternalProviderPlugins(): array
     {
-        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_PROVIDER);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductMatcherStrategyPluginInterface[]
-     */
-    public function getPriceProductMatcherStrategyPlugins(): array
-    {
-        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_MATCHER_STRATEGY);
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER);
     }
 
     /**

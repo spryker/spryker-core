@@ -14,7 +14,6 @@ interface PriceProductOfferFacadeInterface
     /**
      * Specification:
      * - Returns list of product offer prices.
-     * - Expects PriceProductCriteriaTransfer.ProductOffer.productOfferReference to be provided.
      *
      * @api
      *
@@ -23,5 +22,5 @@ interface PriceProductOfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductConcreteTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+    public function getPriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

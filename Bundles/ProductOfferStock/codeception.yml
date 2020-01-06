@@ -1,10 +1,9 @@
 namespace: SprykerTest
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductOfferStock
-    -
+    - tests/SprykerTest/Shared/ProductOfferStock
+
 paths:
     tests: tests
     log: tests/_output

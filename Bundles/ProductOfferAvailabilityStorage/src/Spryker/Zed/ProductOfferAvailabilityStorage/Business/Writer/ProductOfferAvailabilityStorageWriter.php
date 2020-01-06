@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferAvailabilityStorage\Business\Writer;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage;
@@ -69,7 +71,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByOmsProductReservationKeyEvents(array $eventTransfers): void
+    public function writeCollectionByOmsProductReservationIdEvents(array $eventTransfers): void
     {
         $omsProductReservationIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
@@ -84,7 +86,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByProductOfferStockKeyEvents(array $eventTransfers): void
+    public function writeCollectionByProductOfferStockIdEvents(array $eventTransfers): void
     {
         $productOfferStockIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
@@ -99,7 +101,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageCollectionByProductOfferKeyEvents(array $eventTransfers): void
+    public function writeCollectionByProductOfferIdEvents(array $eventTransfers): void
     {
         $productOfferIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
@@ -117,44 +119,60 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
     public function writeProductOfferAvailabilityStorageForRequests(array $productOfferAvailabilityRequestTransfers): void
     {
         foreach ($productOfferAvailabilityRequestTransfers as $productOfferAvailabilityRequestTransfer) {
-            $productOfferAvailabilityStorageTransfer = $this->productOfferAvailabilityFacade->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
-
-            $key = $this->generateKey(
-                $productOfferAvailabilityRequestTransfer->getProductOfferReference(),
-                $productOfferAvailabilityRequestTransfer->getStore()->getName()
-            );
-
+            $productOfferAvailabilityTransfer = $this->productOfferAvailabilityFacade->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
             $productOfferAvailabilityStorageEntity = $this->productOfferAvailabilityStorageRepository->findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(
                 $productOfferAvailabilityRequestTransfer->getProductOfferReference(),
                 $productOfferAvailabilityRequestTransfer->getStore()->getName()
             );
 
-            ($productOfferAvailabilityStorageEntity ?: new SpyProductOfferAvailabilityStorage())
+            if (!$productOfferAvailabilityTransfer && $productOfferAvailabilityStorageEntity) {
+                $productOfferAvailabilityStorageEntity->delete();
+
+                return;
+            }
+
+            if (!$productOfferAvailabilityStorageEntity) {
+                $productOfferAvailabilityStorageEntity = new SpyProductOfferAvailabilityStorage();
+            }
+
+            $productOfferAvailabilityStorageEntity
                 ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
-                ->setKey($key)
+                ->setKey($this->generateKey($productOfferAvailabilityRequestTransfer))
                 ->setIsSendingToQueue($this->isSendingToQueue)
                 ->setStore(
                     $productOfferAvailabilityRequestTransfer->getStore()->getName()
                 )
                 ->setData(
-                    (new ProductOfferAvailabilityStorageTransfer())
-                        ->setAvailability($productOfferAvailabilityStorageTransfer ? $productOfferAvailabilityStorageTransfer->getAvailability() : 0)->toArray()
+                    $this->mapProductConcreteAvailabilityTransferToProductOfferAvailabilityStorageTransfer($productOfferAvailabilityTransfer, new ProductOfferAvailabilityStorageTransfer())
+                        ->toArray()
                 )
                 ->save();
         }
     }
 
     /**
-     * @param string $productOfferReference
-     * @param string $storeName
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer
+     */
+    protected function mapProductConcreteAvailabilityTransferToProductOfferAvailabilityStorageTransfer(
+        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer,
+        ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
+    ): ProductOfferAvailabilityStorageTransfer {
+         return $productOfferAvailabilityStorageTransfer->setAvailability($productConcreteAvailabilityTransfer->getAvailability());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
      *
      * @return string
      */
-    protected function generateKey(string $productOfferReference, string $storeName): string
+    protected function generateKey(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($productOfferReference)
-            ->setStore($storeName);
+            ->setReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore()->getName());
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductOfferAvailabilityStorageConfig::PRODUCT_OFFER_AVAILABILITY_RESOURCE_NAME)

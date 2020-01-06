@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer;
@@ -73,14 +74,15 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
 
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     * @param string|null $currencyCode
      *
      * @return int|null
      */
-    public function getCurrentGrossPrice(SpyProductOptionValue $productOptionValueEntity)
+    public function getCurrentGrossPrice(SpyProductOptionValue $productOptionValueEntity, ?string $currencyCode = null)
     {
         $priceMap = $this->getCurrencyFilteredPriceMap(
             $productOptionValueEntity->getProductOptionValuePrices(),
-            $this->getCurrentIdCurrency()
+            $this->getCurrency($currencyCode)->getIdCurrency()
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
@@ -97,14 +99,15 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
 
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     * @param string|null $currencyCode
      *
      * @return int|null
      */
-    public function getCurrentNetPrice(SpyProductOptionValue $productOptionValueEntity)
+    public function getCurrentNetPrice(SpyProductOptionValue $productOptionValueEntity, ?string $currencyCode = null)
     {
         $priceMap = $this->getCurrencyFilteredPriceMap(
             $productOptionValueEntity->getProductOptionValuePrices(),
-            $this->getCurrentIdCurrency()
+            $this->getCurrency($currencyCode)->getIdCurrency()
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
@@ -140,13 +143,13 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     }
 
     /**
-     * @return int
+     * @param string|null $currencyCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrentIdCurrency()
+    protected function getCurrency(?string $currencyCode = null): CurrencyTransfer
     {
-        $currency = $this->currencyFacade->getCurrent();
-
-        return $this->currencyFacade->fromIsoCode($currency->getCode())->getIdCurrency();
+        return $this->currencyFacade->fromIsoCode($currencyCode ?? $this->currencyFacade->getCurrent()->getCode());
     }
 
     /**

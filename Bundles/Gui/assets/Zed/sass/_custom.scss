@@ -31,8 +31,13 @@ label.required {
 }
 
 .page-heading {
-    overflow: hidden;
     padding-bottom: 0;
+}
+
+.page-breadcrumbs {
+    margin: 0 -25px;
+    padding: 0 25px;
+    overflow: hidden;
 }
 
 /* Login .. */
@@ -234,3 +239,8 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 /* .. Tabs */
 
+.table-hover {
+    tbody tr:hover {
+        cursor: pointer;
+    }
+}

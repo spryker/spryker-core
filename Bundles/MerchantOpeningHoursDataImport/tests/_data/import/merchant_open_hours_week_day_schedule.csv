@@ -1,0 +1,8 @@
+merchant_key,week_day_key,time_from,time_to
+merchant-profile-data-import-test-key,MONDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,TUESDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,WEDNESDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,THURSDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,FRIDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,SATURDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,SUNDAY,,

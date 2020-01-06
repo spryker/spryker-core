@@ -56,9 +56,9 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 continue;
             }
 
-            $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenItemIdentifier(
+            $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
                 $itemsInCart,
-                $itemTransfer->getItemIdentifier()
+                $itemTransfer->getSku()
             );
 
             $currentItemQuantity += $itemTransfer->getQuantity();
@@ -89,16 +89,15 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param string $itemIdentifier
+     * @param string $sku
      *
      * @return int
      */
-    protected function calculateCurrentCartQuantityForGivenItemIdentifier(ArrayObject $items, string $itemIdentifier)
+    protected function calculateCurrentCartQuantityForGivenSku(ArrayObject $items, $sku)
     {
         $quantity = 0;
-
         foreach ($items as $itemTransfer) {
-            if ($itemTransfer->getItemIdentifier() !== $itemIdentifier) {
+            if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
             $quantity += $itemTransfer->getQuantity();
@@ -159,13 +158,14 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function findProductConcreteAvailability(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer, $productConcreteAvailabilityTransfer): Decimal
+    protected function findProductConcreteAvailability(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer, ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer): Decimal
     {
         $productConcreteAvailabilityTransfer = $this->availabilityFacade
-            ->findOrCreateProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer, $productConcreteAvailabilityTransfer);
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer, $productAvailabilityCriteriaTransfer);
 
         if ($productConcreteAvailabilityTransfer !== null) {
             return $productConcreteAvailabilityTransfer->getAvailability();

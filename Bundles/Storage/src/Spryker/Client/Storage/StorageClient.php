@@ -313,7 +313,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected function loadKeysFromCache()
     {
         self::$cachedKeys = [];
-        $cacheKey = self::generateCacheKey();
+        $cacheKey = $this->buildCacheKey();
+
         if (!$cacheKey) {
             return;
         }
@@ -417,7 +418,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function persistCacheForRequest(Request $request, $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE)
     {
-        $cacheKey = static::generateCacheKey($request);
+        $cacheKey = $this->buildCacheKey($request);
 
         if ($cacheKey && is_array(self::$cachedKeys)) {
             $this->updateCache($storageCacheStrategyName, $cacheKey);
@@ -460,103 +461,27 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * This method exists for BC reasons only and should be removed with next major release.
+     *
+     * @deprecated Use `Spryker\Client\Storage\StorageClient::buildCacheKey()` instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return string
      */
-    protected static function generateCacheKey(?Request $request = null)
+    protected static function generateCacheKey(?Request $request = null): string
     {
-        if ($request) {
-            $requestUri = $request->getRequestUri();
-            $serverName = $request->server->get('SERVER_NAME');
-            $getParameters = $request->query->all();
-        } else {
-            $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
-            $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
-            $getParameters = $_GET;
-        }
-
-        if ($requestUri === null || $serverName === null) {
-            return '';
-        }
-
-        $urlSegments = strtok($requestUri, '?');
-
-        $getParametersKey = static::generateGetParametersKey($getParameters);
-        $cacheKey = static::assembleCacheKey($urlSegments, $getParametersKey);
-
-        return $cacheKey;
+        return (new static())->getFactory()->createCacheKeyGenerator()->generateCacheKey($request);
     }
 
     /**
-     * @param array $getParameters
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return string
      */
-    protected static function generateGetParametersKey(array $getParameters): string
+    protected function buildCacheKey(?Request $request = null): string
     {
-        $allowedGetParametersConfig = static::getAllowedGetParametersConfig();
-        if (count($allowedGetParametersConfig) === 0) {
-            return '';
-        }
-
-        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersConfig));
-        if (count($allowedGetParameters) === 0) {
-            return '';
-        }
-
-        ksort($allowedGetParameters);
-
-        return '?' . http_build_query($allowedGetParameters);
-    }
-
-    /**
-     * @param string $urlSegments
-     * @param string $getParametersKey
-     *
-     * @return string
-     */
-    protected static function assembleCacheKey($urlSegments, $getParametersKey): string
-    {
-        $cacheKey = strtolower(
-            static::getStoreName() . self::KEY_NAME_SEPARATOR .
-            static::getCurrentLocale() . self::KEY_NAME_SEPARATOR .
-            self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
-            $urlSegments . $getParametersKey
-        );
-
-        return $cacheKey;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected static function getAllowedGetParametersConfig(): array
-    {
-        return (new static())->getFactory()
-            ->getStorageClientConfig()
-            ->getAllowedGetParametersList();
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getStoreName(): string
-    {
-        return (new static())->getFactory()
-            ->getStoreClient()
-            ->getCurrentStore()
-            ->getName();
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getCurrentLocale(): string
-    {
-        return (new static())->getFactory()
-            ->getLocaleClient()
-            ->getCurrentLocale();
+        return $this->getFactory()->createCacheKeyGenerator()->generateCacheKey($request);
     }
 
     /**

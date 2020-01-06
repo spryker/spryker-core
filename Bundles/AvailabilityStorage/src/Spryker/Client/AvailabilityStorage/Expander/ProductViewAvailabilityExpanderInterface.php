@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\AvailabilityStorage\src\Spryker\Client\AvailabilityStorage\Expander;
+namespace Spryker\Client\AvailabilityStorage\Expander;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 

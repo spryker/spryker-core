@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\Map\SpyProductOfferAvailabilityStorageTableMap;
 use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
@@ -66,12 +67,7 @@ class ProductOfferAvailabilitySynchronizationDataBulkPlugin extends AbstractPlug
             ->getFilteredProductOfferAvailabilityStorageEntityTransfers($filterTransfer, $ids);
 
         foreach ($productOfferAvailabilityStorageEntityTransfers as $productOfferAvailabilityStorageEntityTransfer) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productOfferAvailabilityStorageEntityTransfer->getData());
-            $synchronizationDataTransfer->setKey($productOfferAvailabilityStorageEntityTransfer->getKey());
-            $synchronizationDataTransfer->setStore($productOfferAvailabilityStorageEntityTransfer->getStore());
-
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($productOfferAvailabilityStorageEntityTransfer);
         }
 
         return $synchronizationDataTransfers;
@@ -125,5 +121,20 @@ class ProductOfferAvailabilitySynchronizationDataBulkPlugin extends AbstractPlug
             ->setOrderBy(SpyProductOfferAvailabilityStorageTableMap::COL_ID_PRODUCT_OFFER_AVAILABILITY_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer $productOfferAvailabilityStorageEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    protected function createSynchronizationDataTransfer(SpyProductOfferAvailabilityStorageEntityTransfer $productOfferAvailabilityStorageEntityTransfer): SynchronizationDataTransfer
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer->setData($productOfferAvailabilityStorageEntityTransfer->getData());
+        $synchronizationDataTransfer->setKey($productOfferAvailabilityStorageEntityTransfer->getKey());
+        $synchronizationDataTransfer->setStore($productOfferAvailabilityStorageEntityTransfer->getStore());
+
+        return $synchronizationDataTransfer;
     }
 }

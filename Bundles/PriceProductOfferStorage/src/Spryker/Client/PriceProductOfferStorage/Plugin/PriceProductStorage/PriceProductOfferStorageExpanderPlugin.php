@@ -33,10 +33,10 @@ class PriceProductOfferStorageExpanderPlugin extends AbstractPlugin implements P
     public function expand(ProductViewTransfer $productViewTransfer, PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductFilterTransfer
     {
         if ($productViewTransfer->getProductOfferReference()) {
-            $priceProductFilterTransfer->setProductOffer(
-                (new ProductOfferTransfer())
-                    ->setProductOfferReference($productViewTransfer->getProductOfferReference())
-            );
+            $productOfferTransfer = (new ProductOfferTransfer())
+                ->setProductOfferReference($productViewTransfer->getProductOfferReference());
+
+            $priceProductFilterTransfer->setProductOffer($productOfferTransfer);
         }
 
         return $priceProductFilterTransfer;

@@ -15,7 +15,7 @@ use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabil
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\Propel\Mapper\ProductOfferAvailabilityStorageMapper;
+use Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\Propel\Mapper\ProductOfferAvailabilityStorageMapperInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -24,7 +24,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductOfferAvailabilityStorageRepository extends AbstractRepository implements ProductOfferAvailabilityStorageRepositoryInterface
 {
     /**
-     * @param int[] $productOfferStockIds
+     * @param string[] $productOfferStockIds
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
      */
@@ -156,15 +156,15 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     protected function addProductOfferAvailabilityRequestSelectColumns(ModelCriteria $query): ModelCriteria
     {
         return $query
-            ->withColumn(SpyStoreTableMap::COL_ID_STORE, ProductOfferAvailabilityStorageMapper::COL_ALIAS_ID_STORE)
-            ->withColumn(SpyStoreTableMap::COL_NAME, ProductOfferAvailabilityStorageMapper::COL_ALIAS_STORE_NAME)
-            ->withColumn(SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE, ProductOfferAvailabilityStorageMapper::COL_ALIAS_PRODUCT_OFFER_REFERENCE)
-            ->withColumn(SpyProductOfferTableMap::COL_CONCRETE_SKU, ProductOfferAvailabilityStorageMapper::COL_ALIAS_SKU)
+            ->withColumn(SpyStoreTableMap::COL_ID_STORE, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_ID_STORE)
+            ->withColumn(SpyStoreTableMap::COL_NAME, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_STORE_NAME)
+            ->withColumn(SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_PRODUCT_OFFER_REFERENCE)
+            ->withColumn(SpyProductOfferTableMap::COL_CONCRETE_SKU, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_SKU)
             ->select([
-                SpyStoreTableMap::COL_NAME => ProductOfferAvailabilityStorageMapper::COL_ALIAS_STORE_NAME,
-                SpyStoreTableMap::COL_ID_STORE => ProductOfferAvailabilityStorageMapper::COL_ALIAS_ID_STORE,
-                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => ProductOfferAvailabilityStorageMapper::COL_ALIAS_PRODUCT_OFFER_REFERENCE,
-                SpyProductOfferTableMap::COL_CONCRETE_SKU => ProductOfferAvailabilityStorageMapper::COL_ALIAS_SKU,
+                SpyStoreTableMap::COL_NAME => ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_STORE_NAME,
+                SpyStoreTableMap::COL_ID_STORE => ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_ID_STORE,
+                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_PRODUCT_OFFER_REFERENCE,
+                SpyProductOfferTableMap::COL_CONCRETE_SKU => ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_SKU,
             ]);
     }
 }

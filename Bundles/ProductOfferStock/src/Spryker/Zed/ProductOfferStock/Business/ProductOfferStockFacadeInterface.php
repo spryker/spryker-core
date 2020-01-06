@@ -26,7 +26,9 @@ interface ProductOfferStockFacadeInterface
 
     /**
      * Specification:
-     * - Returns product offer stock for provided request criteria.
+     * - Retrieves product offer stock from database for provided store.
+     * - Expects ProductOfferStockRequestTransfer.store to be provided.
+     * - Expects ProductOfferStockRequestTransfer.productOfferReference to be provided.
      *
      * @api
      *
@@ -34,5 +36,5 @@ interface ProductOfferStockFacadeInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
+    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
 }
