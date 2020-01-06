@@ -299,6 +299,8 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `SalesFacadeInterface::getUniqueItemsFromOrder() instead`.
+     *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]

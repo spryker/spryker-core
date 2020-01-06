@@ -353,6 +353,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `SalesFacade::getUniqueItemsFromOrder() instead`.
+     *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]

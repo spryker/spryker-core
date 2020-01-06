@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
     /**
+     * @deprecated Use `SalesOrderItemGrouper::getUniqueItemsFromOrder() instead`.
+     *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -54,7 +56,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
      */
     protected function getUniqueItems(OrderTransfer $orderTransfer): array
     {
-        $calculatedOrderItems = [];
+        $uniqueItemTransfers = [];
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getRelatedBundleItemIdentifier()) {
@@ -63,15 +65,15 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 
             $key = $itemTransfer->requireGroupKey()->getGroupKey();
 
-            if (!isset($calculatedOrderItems[$key])) {
-                $calculatedOrderItems[$key] = clone $itemTransfer;
+            if (!isset($uniqueItemTransfers[$key])) {
+                $uniqueItemTransfers[$key] = clone $itemTransfer;
                 continue;
             }
 
-            $calculatedOrderItems[$key] = $this->setQuantityAndPriceOfUniqueOrderItem($calculatedOrderItems[$key], $itemTransfer);
+            $uniqueItemTransfers[$key] = $this->setQuantityAndPriceOfUniqueOrderItem($uniqueItemTransfers[$key], $itemTransfer);
         }
 
-        return $calculatedOrderItems;
+        return $uniqueItemTransfers;
     }
 
     /**
@@ -81,20 +83,20 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
      */
     protected function getUniqueBundleItems(OrderTransfer $orderTransfer): array
     {
-        $calculatedOrderBundleItems = [];
+        $uniqueItemTransfers = [];
 
         foreach ($orderTransfer->getBundleItems() as $itemTransfer) {
             $bundleItemIdentifier = $itemTransfer->requireBundleItemIdentifier()->getBundleItemIdentifier();
 
             if (!isset($calculatedOrderItems[$bundleItemIdentifier])) {
-                $calculatedOrderBundleItems[$bundleItemIdentifier] = clone $itemTransfer;
+                $uniqueItemTransfers[$bundleItemIdentifier] = clone $itemTransfer;
                 continue;
             }
 
-            $calculatedOrderBundleItems[$bundleItemIdentifier] = $this->setQuantityAndPriceOfUniqueOrderItem($calculatedOrderBundleItems[$bundleItemIdentifier], $itemTransfer);
+            $uniqueItemTransfers[$bundleItemIdentifier] = $this->setQuantityAndPriceOfUniqueOrderItem($uniqueItemTransfers[$bundleItemIdentifier], $itemTransfer);
         }
 
-        return array_values($calculatedOrderBundleItems);
+        return array_values($uniqueItemTransfers);
     }
 
     /**

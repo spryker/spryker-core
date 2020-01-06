@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface SalesOrderItemGrouperInterface
 {
     /**
+     * @deprecated Use `SalesOrderItemGrouperInterface::getUniqueItemsFromOrder() instead`.
+     *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
