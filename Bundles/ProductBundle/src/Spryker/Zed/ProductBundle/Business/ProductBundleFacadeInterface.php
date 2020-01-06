@@ -268,6 +268,7 @@ interface ProductBundleFacadeInterface
     /**
      * Specification:
      *  - Hydrates OrderTransfer with product bundle data.
+     *  - Copies unique product options from related bundle items to bundle.
      *
      * @api
      *
