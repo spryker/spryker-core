@@ -510,7 +510,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundleStatusWithInactiveProductConcrete(): void
+    public function testUpdateBundleStatusWithActiveProductConcrete(): void
     {
         // Arrange
         $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
@@ -518,6 +518,23 @@ class ProductBundleFacadeTest extends Unit
         // Act
         $this->getProductBundleFacade()->updateBundleStatus($productConcreteTransfer);
 
+        // Assert
+        $this->assertTrue($productConcreteTransfer->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateBundleStatusWithInactiveProductConcrete(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, false);
+
+        // Act
+        $this->getProductBundleFacade()->updateBundleStatus($productConcreteTransfer);
+
+        // Assert
+        $this->assertFalse($productConcreteTransfer->getIsActive());
     }
 
     /**
