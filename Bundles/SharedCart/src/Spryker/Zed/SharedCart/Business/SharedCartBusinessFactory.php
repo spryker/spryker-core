@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Business;
 
+use Spryker\SharedCart\src\Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessenger;
+use Spryker\SharedCart\src\Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SharedCart\Business\Activator\QuoteActivator;
 use Spryker\Zed\SharedCart\Business\Activator\QuoteActivatorInterface;
@@ -36,6 +38,7 @@ use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserW
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShareInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface as SharedCartToStoreFacadeInterface;
@@ -237,5 +240,24 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->createQuoteShareDetailsReader()
         );
+    }
+
+    /**
+     * @return \Spryker\SharedCart\src\Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessengerInterface
+     */
+    public function createSharedCartMessenger(): SharedCartMessengerInterface
+    {
+        return new SharedCartMessenger(
+            $this->getRepository(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): SharedCartToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_MESSENGER);
     }
 }

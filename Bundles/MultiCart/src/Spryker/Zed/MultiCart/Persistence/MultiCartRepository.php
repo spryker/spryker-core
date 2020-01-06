@@ -89,14 +89,16 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
 
     /**
      * @param int $idQuote
+     * @param string $customerReference
      *
      * @return bool
      */
-    public function isQuoteDefault(int $idQuote): bool
+    public function isQuoteDefault(int $idQuote, string $customerReference): bool
     {
         return $this->getFactory()
             ->createQuoteQuery()
             ->filterByIdQuote($idQuote)
+            ->filterByCustomerReference($customerReference)
             ->filterByIsDefault(true)
             ->exists();
     }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SharedCart\Communication\Plugin\Quote;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
@@ -18,14 +17,12 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
-class SharedQuoteMarkedAsDefaultQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class AddDefaultSharedQuoteChangedMessageQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
-    protected const GLOSSARY_KEY_SHARED_CART_SET_DEFAULT_SUCCESS = 'shared_cart.cart.set_default.success';
-    protected const GLOSSARY_KEY_PARAMETER_QUOTE = '%quote%';
-
     /**
      * {@inheritDoc}
      * - Adds info message if shared quote was marked as default.
+     * - Should be executed before `DeactivateSharedQuotesBeforeQuoteSavePlugin`.
      *
      * @api
      *
@@ -35,24 +32,7 @@ class SharedQuoteMarkedAsDefaultQuoteUpdateBeforePlugin extends AbstractPlugin i
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getCustomer()->getCustomerReference() === $quoteTransfer->getCustomerReference()) {
-            return $quoteTransfer;
-        }
-
-        $isSharedQuoteDefault = $this->getFacade()->isSharedQuoteDefault(
-            $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
-        );
-
-        if ($isSharedQuoteDefault) {
-            return $quoteTransfer;
-        }
-
-        $messageTransfer = (new MessageTransfer())
-            ->setValue(static::GLOSSARY_KEY_SHARED_CART_SET_DEFAULT_SUCCESS)
-            ->setParameters([static::GLOSSARY_KEY_PARAMETER_QUOTE => $quoteTransfer->getName()]);
-
-        $this->getFactory()->getMessengerFacade()->addInfoMessage($messageTransfer);
+        $this->getFacade()->addDefaultSharedQuoteChangedMessage($quoteTransfer);
 
         return $quoteTransfer;
     }

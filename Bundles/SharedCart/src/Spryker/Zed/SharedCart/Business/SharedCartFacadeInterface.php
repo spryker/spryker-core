@@ -315,4 +315,16 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
     public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Adds info message if shared quote was marked as default.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function addDefaultSharedQuoteChangedMessage(QuoteTransfer $quoteTransfer): void;
 }

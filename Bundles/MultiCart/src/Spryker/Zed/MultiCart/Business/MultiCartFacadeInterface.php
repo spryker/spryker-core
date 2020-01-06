@@ -94,13 +94,13 @@ interface MultiCartFacadeInterface
 
     /**
      * Specification:
-     * - Check if a quote with specified ID is marked as default.
+     * - Adds info message if quote was marked as default.
      *
      * @api
      *
-     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function isQuoteDefault(int $idQuote): bool;
+    public function addDefaultQuoteChangedMessage(QuoteTransfer $quoteTransfer): void;
 }

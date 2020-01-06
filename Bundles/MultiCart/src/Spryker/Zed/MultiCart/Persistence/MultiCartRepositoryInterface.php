@@ -34,8 +34,9 @@ interface MultiCartRepositoryInterface
 
     /**
      * @param int $idQuote
+     * @param string $customerReference
      *
      * @return bool
      */
-    public function isQuoteDefault(int $idQuote): bool;
+    public function isQuoteDefault(int $idQuote, string $customerReference): bool;
 }

@@ -112,12 +112,12 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
      *
      * @api
      *
-     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function isQuoteDefault(int $idQuote): bool
+    public function addDefaultQuoteChangedMessage(QuoteTransfer $quoteTransfer): void
     {
-        return $this->getRepository()->isQuoteDefault($idQuote);
+        $this->getFactory()->createMultiCartMessenger()->addDefaultQuoteChangedMessage($quoteTransfer);
     }
 }

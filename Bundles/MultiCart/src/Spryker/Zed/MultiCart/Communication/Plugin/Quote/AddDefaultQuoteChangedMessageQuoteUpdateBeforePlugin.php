@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MultiCart\Communication\Plugin\Quote;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
@@ -18,14 +17,12 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
  * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
  * @method \Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface getRepository()
  */
-class QuoteMarkedAsDefaultQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class AddDefaultQuoteChangedMessageQuoteUpdateBeforePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
-    protected const GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
-    protected const GLOSSARY_KEY_PARAMETER_QUOTE = '%quote%';
-
     /**
      * {@inheritDoc}
-     * - Adds info message quote was marked as default.
+     * - Adds info message if quote was marked as default.
+     * - Should be executed before `DeactivateQuotesBeforeQuoteSavePlugin`.
      *
      * @api
      *
@@ -35,19 +32,7 @@ class QuoteMarkedAsDefaultQuoteUpdateBeforePlugin extends AbstractPlugin impleme
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getCustomer()->getCustomerReference() !== $quoteTransfer->getCustomerReference()) {
-            return $quoteTransfer;
-        }
-
-        if ($this->getFacade()->isQuoteDefault($quoteTransfer->getIdQuote())) {
-            return $quoteTransfer;
-        }
-
-        $messageTransfer = (new MessageTransfer())
-            ->setValue(static::GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS)
-            ->setParameters([static::GLOSSARY_KEY_PARAMETER_QUOTE => $quoteTransfer->getName()]);
-
-        $this->getFactory()->getMessengerFacade()->addInfoMessage($messageTransfer);
+        $this->getFacade()->addDefaultQuoteChangedMessage($quoteTransfer);
 
         return $quoteTransfer;
     }

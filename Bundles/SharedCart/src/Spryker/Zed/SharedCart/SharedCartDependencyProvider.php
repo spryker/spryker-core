@@ -38,6 +38,7 @@ class SharedCartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteFacade($container);
         $container = $this->addPermissionFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addMessengerFacade($container);
 
         return $container;
     }
