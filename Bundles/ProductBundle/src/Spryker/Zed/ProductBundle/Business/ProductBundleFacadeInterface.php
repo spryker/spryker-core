@@ -188,6 +188,9 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
+     * - Updates status of product bundle.
+     * - Sets `isActive` to false if at least one bundled product is inactive.
+     * - Sets `isActive` to true if all bundled products are active.
      *
      * @api
      *

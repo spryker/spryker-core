@@ -20,6 +20,11 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 class ProductBundleProductConcreteActivatorAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
     /**
+     * {@inheritDoc}
+     * - Updates status of product bundle.
+     * - Sets `isActive` to false if at least one bundled product is inactive.
+     * - Sets `isActive` to true if all bundled products are active.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
