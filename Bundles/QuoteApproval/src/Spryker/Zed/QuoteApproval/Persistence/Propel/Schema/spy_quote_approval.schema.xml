@@ -5,7 +5,7 @@
           package="src.Orm.Zed.QuoteApproval.Persistence"
 >
 
-    <table name="spy_quote_approval" idMethod="native" allowPkInsert="true" phpName="SpyQuoteApproval">
+    <table name="spy_quote_approval" idMethod="native" allowPkInsert="true">
         <column name="id_quote_approval" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_quote" required="true" type="INTEGER"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>

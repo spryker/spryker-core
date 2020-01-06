@@ -100,6 +100,13 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="OmsProductReservation">
+        <property name="idOmsProductReservation" type="int"/>
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="sku" type="string"/>
+        <property name="fkStore" type="int"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>

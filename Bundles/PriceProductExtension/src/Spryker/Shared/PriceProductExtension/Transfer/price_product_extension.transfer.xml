@@ -18,4 +18,7 @@
     <transfer name="PriceProduct">
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
 </transfers>

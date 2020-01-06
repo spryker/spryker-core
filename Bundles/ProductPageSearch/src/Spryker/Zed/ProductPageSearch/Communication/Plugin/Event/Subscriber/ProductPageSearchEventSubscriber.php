@@ -15,12 +15,12 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\PriceProductDefaultProductPagePublishListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategoryNodeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategorySearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetProductImageSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageLocalizedAttributesSearchListener;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceProductStoreSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceTypeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractListener;
@@ -94,9 +94,9 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductPagePriceDeleteSearchListener($eventCollection);
         $this->addProductPagePriceTypeUpdateSearchListener($eventCollection);
         $this->addProductPagePriceTypeDeleteSearchListener($eventCollection);
-        $this->addProductPagePriceProductStoreCreateSearchListener($eventCollection);
-        $this->addProductPagePriceProductStoreUpdateSearchListener($eventCollection);
-        $this->addProductPagePriceProductStoreDeleteSearchListener($eventCollection);
+        $this->addProductPagePriceProductDefaultCreateSearchListener($eventCollection);
+        $this->addProductPagePriceProductDefaultUpdateSearchListener($eventCollection);
+        $this->addProductPagePriceProductDefaultDeleteSearchListener($eventCollection);
     }
 
     /**
@@ -348,9 +348,9 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      *
      * @return void
      */
-    protected function addProductPagePriceProductStoreCreateSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductPagePriceProductDefaultCreateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE, new ProductPagePriceProductStoreSearchListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_CREATE, new PriceProductDefaultProductPagePublishListener());
     }
 
     /**
@@ -358,9 +358,9 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      *
      * @return void
      */
-    protected function addProductPagePriceProductStoreUpdateSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductPagePriceProductDefaultUpdateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new ProductPagePriceProductStoreSearchListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_UPDATE, new PriceProductDefaultProductPagePublishListener());
     }
 
     /**
@@ -368,9 +368,9 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      *
      * @return void
      */
-    protected function addProductPagePriceProductStoreDeleteSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductPagePriceProductDefaultDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new ProductPagePriceProductStoreSearchListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_DELETE, new PriceProductDefaultProductPagePublishListener());
     }
 
     /**

@@ -11,8 +11,12 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\PriceProductOfferBuilder;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer;
+use SprykerTest\Shared\Currency\Helper\CurrencyDataHelper;
+use SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper;
+use SprykerTest\Shared\Store\Helper\StoreDataHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper;
 
 class PriceProductOfferHelper extends Module
 {
@@ -30,11 +34,12 @@ class PriceProductOfferHelper extends Module
         $priceProductOfferTransfer = (new PriceProductOfferBuilder($seedData))->build();
         $priceProductOfferTransfer->setIdPriceProductOffer(null);
 
+        $priceProductOfferTransfer = $this->setPriceProductOfferDependencies($priceProductOfferTransfer);
+
         $priceProductOfferEntity = new SpyPriceProductOffer();
         $priceProductOfferEntity->fromArray($priceProductOfferTransfer->toArray());
         $priceProductOfferEntity->save();
 
-        $priceProductOfferTransfer = new PriceProductOfferTransfer();
         $priceProductOfferTransfer->fromArray($priceProductOfferEntity->toArray());
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductOfferEntity): void {
@@ -42,5 +47,77 @@ class PriceProductOfferHelper extends Module
         });
 
         return $priceProductOfferTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferTransfer
+     */
+    protected function setPriceProductOfferDependencies(PriceProductOfferTransfer $priceProductOfferTransfer): PriceProductOfferTransfer
+    {
+        if (!$priceProductOfferTransfer->getFkStore()) {
+            $priceProductOfferTransfer->setFkStore($this->getStoreDataHelper()->haveStore()->getIdStore());
+        }
+
+        if (!$priceProductOfferTransfer->getFkProductOffer()) {
+            $productOfferTransfer = $this->getProductOfferHelper()->haveProductOffer();
+            $priceProductOfferTransfer->setProductOffer($productOfferTransfer);
+            $priceProductOfferTransfer->setFkProductOffer($productOfferTransfer->getIdProductOffer());
+        }
+
+        if (!$priceProductOfferTransfer->getFkCurrency()) {
+            $priceProductOfferTransfer->setFkCurrency($this->getCurrencyDataHelper()->haveCurrency());
+        }
+
+        if (!$priceProductOfferTransfer->getFkPriceType()) {
+            $priceProductOfferTransfer->setFkPriceType($this->getPriceProductDataHelper()->havePriceType()->getIdPriceType());
+        }
+
+        return $priceProductOfferTransfer;
+    }
+
+    /**
+     * @return \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
+     */
+    protected function getProductOfferHelper(): ProductOfferHelper
+    {
+        /** @var \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper $productOfferHelper */
+        $productOfferHelper = $this->getModule('\\' . ProductOfferHelper::class);
+
+        return $productOfferHelper;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
+     */
+    protected function getCurrencyDataHelper(): CurrencyDataHelper
+    {
+        /** @var \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper $currencyDataHelper */
+        $currencyDataHelper = $this->getModule('\\' . CurrencyDataHelper::class);
+
+        return $currencyDataHelper;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\Store\Helper\StoreDataHelper
+     */
+    protected function getStoreDataHelper(): StoreDataHelper
+    {
+        /** @var \SprykerTest\Shared\Store\Helper\StoreDataHelper $storeDataHelper */
+        $storeDataHelper = $this->getModule('\\' . StoreDataHelper::class);
+
+        return $storeDataHelper;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+     */
+    protected function getPriceProductDataHelper(): PriceProductDataHelper
+    {
+        /** @var \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper $priceProductDataHelper */
+        $priceProductDataHelper = $this->getModule('\\' . PriceProductDataHelper::class);
+
+        return $priceProductDataHelper;
     }
 }

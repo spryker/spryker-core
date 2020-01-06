@@ -626,6 +626,7 @@
     "spryker/util-network": "*",
     "spryker/util-price": "*",
     "spryker/util-sanitize": "*",
+    "spryker/util-sanitize-xss": "*",
     "spryker/util-text": "*",
     "spryker/util-uuid-generator": "*",
     "spryker/util-validate": "*",
@@ -641,6 +642,10 @@
     "spryker/wishlists-rest-api": "*",
     "spryker/zed-navigation": "*",
     "spryker/zed-request": "*",
-    "spryker/zend": "*"
+    "spryker/zend": "*",
+    "spryker/availability-extension": "*",
+    "spryker/availability-storage-extension": "*",
+    "spryker/product-offer-availability": "*",
+    "spryker-shop/cart-page-extension": "*"
   }
 }
