@@ -29,6 +29,8 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    public const PLUGINS_AVAILABILITY_STRATEGY = 'PLUGINS_AVAILABILITY_STRATEGY';
+
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
@@ -44,6 +46,8 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addEventFacade($container);
         $container = $this->addProductFacade($container);
+
+        $container = $this->addAvailabilityStrategyPlugins($container);
 
         return $container;
     }
@@ -144,6 +148,28 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_AVAILABILITY_STRATEGY, function () {
+            return $this->getAvailabilityStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[]
+     */
+    protected function getAvailabilityStrategyPlugins(): array
+    {
+        return [];
     }
 
     /**

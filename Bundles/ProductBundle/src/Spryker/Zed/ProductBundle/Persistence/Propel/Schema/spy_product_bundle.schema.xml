@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductBundle\Persistence" package="src.Orm.Zed.ProductBundle.Persistence">
 
-    <table name="spy_product_bundle" idMethod="native" allowPkInsert="true" phpName="SpyProductBundle">
+    <table name="spy_product_bundle" idMethod="native" allowPkInsert="true">
         <column name="id_product_bundle" type="INTEGER" primaryKey="true" autoIncrement="true"/>
 
         <column name="fk_bundled_product" type="INTEGER" required="true" description="Representation of the single item in this bundle"/>
@@ -25,7 +25,7 @@
         <id-method-parameter value="spy_product_bundle_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_item_bundle" phpName="SpySalesOrderItemBundle">
+    <table name="spy_sales_order_item_bundle">
         <column name="id_sales_order_item_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>

@@ -8,6 +8,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="abstractSku" type="string"/>
         <property name="name" type="string"/>
+        <property name="url" type="string"/>
         <property name="taxRate" type="float"/>
         <property name="sku" type="string"/>
         <property name="productConcrete" type="ProductConcrete"/>
@@ -42,6 +43,17 @@
     </transfer>
 
     <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductUrlCriteriaFilter">
+        <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="url" type="string"/>
+        <property name="fkResourceProductAbstract" type="int"/>
     </transfer>
 
 </transfers>
