@@ -51,12 +51,4 @@ class PersistentCartToZedRequestClientBridge implements PersistentCartToZedReque
     {
         $this->zedRequestClient->addResponseMessagesToMessenger();
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    public function getResponsesErrorMessages(): array
-    {
-        return $this->zedRequestClient->getResponsesErrorMessages();
-    }
 }
