@@ -89,7 +89,7 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
             $productOfferAvailabilityRequestTransfer->getStore()
         );
 
-        $stock = $this->productOfferStockFacade->calculateProductOfferStockForRequest(
+        $stock = $this->productOfferStockFacade->getProductOfferStock(
             $this->createProductOfferStockRequestTransferFromProductOfferAvailabilityRequestTransfer($productOfferAvailabilityRequestTransfer)
         );
 

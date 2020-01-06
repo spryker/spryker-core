@@ -10,7 +10,8 @@ namespace Spryker\Zed\ProductOfferAvailability\Dependency\Facade;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Spryker\DecimalObject\Decimal;
 
-class ProductOfferAvailabilityToProductOfferStockFacadeBridge implements ProductOfferAvailabilityToProductOfferStockFacadeInterface
+class
+ProductOfferAvailabilityToProductOfferStockFacadeBridge implements ProductOfferAvailabilityToProductOfferStockFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductOfferStock\Business\ProductOfferStockFacadeInterface

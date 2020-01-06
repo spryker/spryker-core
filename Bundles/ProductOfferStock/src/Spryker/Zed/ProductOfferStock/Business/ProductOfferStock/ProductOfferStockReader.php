@@ -29,8 +29,6 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferStockNotFoundException
-     *
      * @return bool
      */
     public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool
@@ -43,12 +41,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
         $productOfferTransfer = $this->productOfferStockRepository->findOne($productOfferStockRequestTransfer);
 
         if (!$productOfferTransfer) {
-            throw new ProductOfferStockNotFoundException(
-                sprintf(
-                    'Product offer stock with product offer reference "%s" not found!',
-                    $productOfferStockRequestTransfer->getProductOfferReference()
-                )
-            );
+            return false;
         }
 
         return $productOfferTransfer->getIsNeverOutOfStock();
