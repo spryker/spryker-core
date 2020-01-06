@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory getFactory()
@@ -161,5 +165,61 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         return $this->getFactory()
             ->createProductConcretePageSearchExpander()
             ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function expandProductPageMapWithCategoryData(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
+        return $this->getFactory()
+            ->createProductPageMapCategoryExpander()
+            ->expandProductPageMapWithCategoryData(
+                $pageMapTransfer,
+                $pageMapBuilder,
+                $productData,
+                $localeTransfer
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array
+    {
+        return $this->getRepository()->getProductAbstractIdsByPriceProductStoreIds($priceProductStoreIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductPageLoadTransferWithPriceData(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
+    {
+        return $this->getFactory()->createPriceProductPageExpander()->expandProductPageLoadTransferWithPricesData($productPageLoadTransfer);
     }
 }

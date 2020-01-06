@@ -7,6 +7,22 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business;
 
+use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Spryker\DecimalObject\Decimal;
+
 interface ProductOfferStockFacadeInterface
 {
+    /**
+     * Specification:
+     * - Retrieves product offer stock from database for provided store.
+     * - Expects ProductOfferStockRequestTransfer.store to be provided.
+     * - Expects ProductOfferStockRequestTransfer.productOfferReference to be provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
 }

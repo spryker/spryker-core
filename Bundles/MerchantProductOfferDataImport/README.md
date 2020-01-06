@@ -1,6 +1,6 @@
 # MerchantProductOfferDataImport Module
 [![Build Status](https://travis-ci.org/spryker/merchant-product-offer-data-import.svg)](https://travis-ci.org/spryker/merchant-product-offer-data-import)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/merchant-product-offer-data-import/badge.svg)](https://coveralls.io/github/spryker/merchant-product-offer-data-import)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Module for importing Merchant offers from .csv file.
 
