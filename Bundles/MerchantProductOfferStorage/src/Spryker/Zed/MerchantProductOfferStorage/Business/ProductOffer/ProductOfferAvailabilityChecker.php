@@ -39,15 +39,13 @@ class ProductOfferAvailabilityChecker implements ProductOfferAvailabilityChecker
      */
     public function isProductOfferAvailable(ProductOfferTransfer $productOfferTransfer, StoreTransfer $storeTransfer): bool
     {
-        $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())->setStore($storeTransfer)
-            ->setProductOffer($productOfferTransfer)
-            ->setSku($productOfferTransfer->getConcreteSku())
-            ->setQuantity(new Decimal(static::MIN_AVAILABLE_QUANTITY_FOR_AVAILABILITY));
+        $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         return $this->availabilityFacade->isProductSellableForStore(
-            $productAvailabilityCriteriaTransfer->getSku(),
-            $productAvailabilityCriteriaTransfer->getQuantity(),
-            $productAvailabilityCriteriaTransfer->getStore(),
+            $productOfferTransfer->getConcreteSku(),
+            new Decimal(static::MIN_AVAILABLE_QUANTITY_FOR_AVAILABILITY),
+            $storeTransfer,
             $productAvailabilityCriteriaTransfer
         );
     }

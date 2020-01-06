@@ -15,8 +15,7 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/store": "*",
-    "spryker/testify": "*",
-    "spryker/merchant": "*"
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

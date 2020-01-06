@@ -9,11 +9,8 @@ namespace Spryker\Zed\ProductOfferStock\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\ProductOfferStock\Persistence\Map\SpyProductOfferStockTableMap;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
-use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 

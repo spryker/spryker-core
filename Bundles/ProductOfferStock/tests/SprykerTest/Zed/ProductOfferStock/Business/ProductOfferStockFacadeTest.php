@@ -10,11 +10,9 @@ namespace SprykerTest\Zed\ProductOfferStock\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Nette\Utils\Random;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
@@ -31,8 +29,6 @@ use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 class ProductOfferStockFacadeTest extends Unit
 {
     use DataCleanupHelperTrait;
-
-    protected const STOCK_NAME_VALUE = 'stock-name-1';
 
     /**
      * @var \SprykerTest\Zed\ProductOfferStock\ProductOfferStockBusinessTester
@@ -67,12 +63,10 @@ class ProductOfferStockFacadeTest extends Unit
     public function testIsProductOfferNeverOutOfStock(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([
-            StoreTransfer::NAME => 'DE',
-        ]);
+        $storeTransfer = $this->tester->haveStore();
+
         $stockTransfer = $this->tester->haveStock([
-            StockTransfer::NAME => static::STOCK_NAME_VALUE,
-            'storeRelation' => ['idStores' => [$storeTransfer->getIdStore()]],
+            StockTransfer::STORE_RELATION => ['idStores' => [$storeTransfer->getIdStore()]],
         ]);
 
         $productOfferStock = $this->tester->haveProductOfferStock([
