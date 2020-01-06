@@ -132,6 +132,24 @@ interface CartFacadeInterface
 
     /**
      * Specification:
+     * - Does nothing if quote is locked.
+     * - Uses CartFacade::validateQuote() before reloading.
+     * - Reloads all items in quote as new - it recreates all items transfer, reads new prices, options, bundles.
+     * - Runs cart pre check plugins.
+     * - Recalculates quote.
+     * - Returns QuoteResponse with updated quote if quote is not locked.
+     * - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function reloadItemsInQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Check changes and add notes to messenger (-> Messenger)
      *  - Returns with unchanged QuoteTransfer and `isSuccessful=true` when cart is locked.
