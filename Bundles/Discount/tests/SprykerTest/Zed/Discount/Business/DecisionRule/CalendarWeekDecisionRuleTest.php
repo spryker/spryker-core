@@ -57,7 +57,7 @@ class CalendarWeekDecisionRuleTest extends BaseRuleTester
     protected function createCalendarWeekDecisionRule(
         ComparatorOperatorsInterface $comparatorMock,
         DateTime $currentDateTime
-    ) {
+    ): CalendarWeekDecisionRule {
         /** @var \Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule|\PHPUnit\Framework\MockObject\MockObject $calendarWeekDecisionRule */
         $calendarWeekDecisionRule = $this->getMockBuilder(CalendarWeekDecisionRule::class)
             ->setMethods(['getCurrentDateTime'])
