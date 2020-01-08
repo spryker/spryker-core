@@ -31,7 +31,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
     public const DEFAULT_LEVEL = 'defaultLevel';
     public const MEMORY_LIMIT = '512M';
     public const CODE_SUCCESS = 0;
-    public const CODE_ERROR = 0;
 
     public const OPTION_DRY_RUN = 'dry-run';
     public const OPTION_VERBOSE = 'verbose';

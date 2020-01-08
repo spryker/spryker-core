@@ -32,7 +32,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
 
-        $productOfferEntities = $productOfferQuery->find();
+        $productOfferEntities = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
 
         foreach ($productOfferEntities as $productOfferEntity) {
             $productOfferTransfer = $this->getFactory()
@@ -88,10 +88,6 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         if ($productOfferCriteriaFilter->getProductOfferReferences()) {
             $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilter->getProductOfferReferences());
-        }
-
-        if ($productOfferCriteriaFilter->getPagination()) {
-            $productOfferQuery = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
         }
 
         return $productOfferQuery;

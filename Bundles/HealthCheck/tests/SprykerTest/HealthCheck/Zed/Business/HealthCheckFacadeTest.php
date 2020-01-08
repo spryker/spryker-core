@@ -238,7 +238,7 @@ class HealthCheckFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface
      */
-    protected function getHealthCheckPluginMock(string $serviceName, bool $serviceStatus)
+    protected function getHealthCheckPluginMock(string $serviceName, bool $serviceStatus): HealthCheckPluginInterface
     {
         $healthCheckPluginMock = $this->getMockBuilder(HealthCheckPluginInterface::class)
             ->disableOriginalConstructor()

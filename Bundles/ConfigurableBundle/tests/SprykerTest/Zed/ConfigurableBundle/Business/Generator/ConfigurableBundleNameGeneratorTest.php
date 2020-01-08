@@ -78,7 +78,7 @@ class ConfigurableBundleNameGeneratorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceBridge
      */
-    protected function createConfigurableBundleToUtilTextServiceBridgeMock()
+    protected function createConfigurableBundleToUtilTextServiceBridgeMock(): ConfigurableBundleToUtilTextServiceBridge
     {
         return $this->getMockBuilder(ConfigurableBundleToUtilTextServiceBridge::class)
             ->setConstructorArgs([$this->tester->getLocator()->utilText()->service()])
