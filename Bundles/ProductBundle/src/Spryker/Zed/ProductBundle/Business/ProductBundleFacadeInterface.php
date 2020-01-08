@@ -196,9 +196,9 @@ interface ProductBundleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): void;
+    public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
      * Specification:

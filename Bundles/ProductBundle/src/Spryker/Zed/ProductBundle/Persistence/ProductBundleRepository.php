@@ -83,11 +83,12 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function getBundledProductsByIdProduct(int $idProductConcrete): array
+    public function getBundledProductsByIdBundledProduct(int $idProductConcrete): array
     {
         $productBundleEntities = $this->getFactory()
             ->createProductBundleQuery()
             ->filterByFkBundledProduct($idProductConcrete)
+            ->joinWithSpyProductRelatedByFkBundledProduct()
             ->find()
             ->getData();
 

@@ -163,19 +163,19 @@ class ProductBundleReaderTest extends Unit
      */
     protected function setupFindBundledProducts(array $fixtures, MockObject $productBundleReaderMock): void
     {
-        $ProductForBundleTransfer = (new ProductForBundleBuilder([
+        $productForBundleTransfer = (new ProductForBundleBuilder([
             ProductForBundleTransfer::QUANTITY => $fixtures['bundledProductQuantity'],
             ProductForBundleTransfer::SKU => $fixtures['bundledProductSku'],
             ProductForBundleTransfer::ID_PRODUCT_CONCRETE => $fixtures['fkBundledProduct'],
             ProductForBundleTransfer::ID_PRODUCT_BUNDLE => $fixtures['idProductBundle'],
         ]))->build();
 
-        $ProductForBundleTransferCollection = new ArrayObject();
-        $ProductForBundleTransferCollection->append($ProductForBundleTransfer);
+        $productForBundleTransferCollection = new ArrayObject();
+        $productForBundleTransferCollection->append($productForBundleTransfer);
 
         $productBundleReaderMock->expects($this->once())
             ->method('findBundledProductsByIdProductConcrete')
             ->with($fixtures['idProductConcrete'])
-            ->willReturn($ProductForBundleTransferCollection);
+            ->willReturn($productForBundleTransferCollection);
     }
 }

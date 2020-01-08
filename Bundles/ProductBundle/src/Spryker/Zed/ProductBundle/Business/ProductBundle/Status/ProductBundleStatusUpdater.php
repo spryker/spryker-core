@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
-class ProductBundleStatus implements ProductBundleStatusInterface
+class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
@@ -38,15 +38,15 @@ class ProductBundleStatus implements ProductBundleStatusInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): void
+    public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $productForBundleTransfers = $this->productBundleRepository
-            ->getBundledProductsByIdProduct($productConcreteTransfer->getIdProductConcrete());
+            ->getBundledProductsByIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
 
         if (!$productForBundleTransfers) {
-            return;
+            return $productConcreteTransfer;
         }
 
         foreach ($productForBundleTransfers as $productForBundleTransfer) {
@@ -55,22 +55,24 @@ class ProductBundleStatus implements ProductBundleStatusInterface
 
             $this->updateBundleProductIsActive($bundledProducts);
         }
+
+        return $productConcreteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $bundledProducts
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
      *
      * @return void
      */
-    protected function updateBundleProductIsActive(array $bundledProducts): void
+    protected function updateBundleProductIsActive(array $productForBundleTransfers): void
     {
         $isActive = true;
-        foreach ($bundledProducts as $bundledProduct) {
-            if (!$bundledProduct->getIsActive()) {
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            if (!$productForBundleTransfer->getIsActive()) {
                 $isActive = false;
             }
 
-            $productConcreteTransfer = $this->productFacade->findProductConcreteById($bundledProduct->getIdProductBundle());
+            $productConcreteTransfer = $this->productFacade->findProductConcreteById($productForBundleTransfer->getIdProductBundle());
             if ($productConcreteTransfer->getIsActive() !== $isActive) {
                 $this->productFacade->saveProductConcrete($productConcreteTransfer->setIsActive($isActive));
             }

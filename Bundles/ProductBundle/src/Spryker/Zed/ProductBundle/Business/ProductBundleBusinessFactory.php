@@ -37,8 +37,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouperInte
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrate;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatus;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdater;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdaterInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
@@ -199,11 +199,11 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdaterInterface
      */
-    public function createProductBundleStatus(): ProductBundleStatusInterface
+    public function createProductBundleStatusUpdater(): ProductBundleStatusUpdaterInterface
     {
-        return new ProductBundleStatus(
+        return new ProductBundleStatusUpdater(
             $this->getRepository(),
             $this->getProductFacade()
         );
