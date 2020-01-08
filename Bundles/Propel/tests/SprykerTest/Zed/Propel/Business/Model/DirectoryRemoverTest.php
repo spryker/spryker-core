@@ -57,7 +57,7 @@ class DirectoryRemoverTest extends Unit
     /**
      * @return void
      */
-    public function testAfterExecutionGeneratedDirectoryMustBeRemoved()
+    public function testAfterExecutionGeneratedDirectoryMustBeRemoved(): void
     {
         $directoryRemover = new DirectoryRemover($this->fixtureDirectory);
         $directoryRemover->execute();

@@ -82,7 +82,7 @@ class CustomerConfig extends AbstractBundleConfig
      *    'sales' => '/sales/customer/customer-orders',
      * ]
      *
-     * @return array
+     * @return string[]
      */
     public function getCustomerDetailExternalBlocksUrls()
     {

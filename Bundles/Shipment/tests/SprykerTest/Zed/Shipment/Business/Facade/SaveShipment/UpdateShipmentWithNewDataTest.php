@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Shipment\tests\SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
+namespace SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
 
 use Codeception\TestCase\Test;
 use DateTime;
@@ -22,8 +22,6 @@ use Spryker\Shared\Price\PriceConfig;
 /**
  * Auto-generated group annotations
  *
- * @group Shipment
- * @group tests
  * @group SprykerTest
  * @group Zed
  * @group Shipment

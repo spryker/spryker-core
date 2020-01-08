@@ -4,7 +4,8 @@
   "description": "DataImport module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
+    "spryker/config": "^3.0.0",
     "spryker/data-import-extension": "^1.1.0",
     "spryker/error-handler": "^2.1.0",
     "spryker/event": "^2.3.0",
@@ -38,6 +39,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

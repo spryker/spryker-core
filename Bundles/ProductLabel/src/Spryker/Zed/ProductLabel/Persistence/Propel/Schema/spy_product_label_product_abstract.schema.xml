@@ -5,7 +5,7 @@
         package="src.Orm.Zed.ProductLabel.Persistence"
         xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
 >
-    <table name="spy_product_label_product_abstract" identifierQuoting="true" phpName="SpyProductLabelProductAbstract">
+    <table name="spy_product_label_product_abstract" identifierQuoting="true">
         <column
                 name="id_product_label_product_abstract"
                 type="INTEGER"

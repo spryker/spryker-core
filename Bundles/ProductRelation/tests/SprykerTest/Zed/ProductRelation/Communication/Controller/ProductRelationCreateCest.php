@@ -28,9 +28,9 @@ class ProductRelationCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductRelationCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductRelationCommunicationTester $i): void
     {
         $i->amOnPage(ProductRelationCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / Create new Product Relation');
+        $i->seeBreadcrumbNavigation('Products / Product Relations / Create new Product Relation');
     }
 }

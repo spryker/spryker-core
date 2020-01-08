@@ -31,7 +31,7 @@ class PasswordResetTest extends Unit
     /**
      * @return void
      */
-    public function testRequestToken()
+    public function testRequestToken(): void
     {
         $authQueryContainer = new AuthQueryContainer();
         $userFacade = $this->createFacadeUser();
@@ -70,7 +70,7 @@ class PasswordResetTest extends Unit
      *
      * @return \Spryker\Zed\Auth\Business\Model\PasswordReset|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createPasswordReset($authQueryContainer, $userFacade, $authConfig)
+    protected function createPasswordReset(AuthQueryContainer $authQueryContainer, AuthToUserBridge $userFacade, AuthConfig $authConfig)
     {
         $passwordReset = $this->getMockBuilder(PasswordReset::class)->setMethods(['persistResetPassword'])->setConstructorArgs([$authQueryContainer, $userFacade, $authConfig])->getMock();
 

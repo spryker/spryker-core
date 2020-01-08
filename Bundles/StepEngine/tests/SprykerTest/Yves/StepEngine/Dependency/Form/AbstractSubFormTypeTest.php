@@ -30,7 +30,7 @@ class AbstractSubFormTypeTest extends Unit
     /**
      * @return void
      */
-    public function testBuildViewVarsContainExpectedPathToTemplate()
+    public function testBuildViewVarsContainExpectedPathToTemplate(): void
     {
         $abstractSubFormTypeMock = $this->getAbstractSubFormTypeMock();
 

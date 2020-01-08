@@ -66,7 +66,7 @@ class GiftCardConfig extends AbstractBundleConfig
     /**
      * Provides a list of payment method names that are disabled to use when the quote contains gift card item(s) to purchase.
      *
-     * @return array
+     * @return string[]
      */
     public function getGiftCardPaymentMethodBlacklist(): array
     {
@@ -76,7 +76,7 @@ class GiftCardConfig extends AbstractBundleConfig
     /**
      * Provides a list of shipment method names that should be available in case there are only gift card items in the quote.
      *
-     * @return array
+     * @return string[]
      */
     public function getGiftCardOnlyShipmentMethods(): array
     {

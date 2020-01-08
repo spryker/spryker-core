@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -19,8 +20,8 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
     public function mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): RestAbstractProductAvailabilityAttributesTransfer
     {
         $restProductsAbstractAvailabilityAttributesTransfer = (new RestAbstractProductAvailabilityAttributesTransfer())
-            ->fromArray($availabilityEntityTransfer->toArray(), true);
-        $restProductsAbstractAvailabilityAttributesTransfer->setAvailability($this->isAbstractProductAvailable($availabilityEntityTransfer));
+            ->fromArray($availabilityEntityTransfer->toArray(), true)
+            ->setAvailability($this->isAbstractProductAvailable($availabilityEntityTransfer));
 
         return $restProductsAbstractAvailabilityAttributesTransfer;
     }
@@ -32,7 +33,7 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
      */
     protected function isAbstractProductAvailable(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): bool
     {
-        if ($availabilityEntityTransfer->getQuantity() > 0) {
+        if ($availabilityEntityTransfer->getQuantity()->greaterThan(0)) {
             return true;
         }
 

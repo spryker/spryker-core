@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsPageSearch;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToEventBehaviorFacadeBridge;
-use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToCmsQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToLocaleQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingBridge;
@@ -27,7 +26,6 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const FACADE_CMS = 'FACADE_CMS';
-    public const FACADE_SEARCH = 'FACADE_SEARCH';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const STORE = 'store';
@@ -63,10 +61,6 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
-        };
-
-        $container[self::FACADE_SEARCH] = function (Container $container) {
-            return new CmsPageSearchToSearchBridge($container->getLocator()->search()->facade());
         };
 
         return $container;

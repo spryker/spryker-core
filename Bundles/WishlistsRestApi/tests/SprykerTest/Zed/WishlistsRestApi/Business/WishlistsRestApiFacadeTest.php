@@ -41,9 +41,9 @@ class WishlistsRestApiFacadeTest extends Test
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
-        parent::_setUp();
+        parent::setUp();
 
         $this->customer = $this->tester->haveCustomer();
     }

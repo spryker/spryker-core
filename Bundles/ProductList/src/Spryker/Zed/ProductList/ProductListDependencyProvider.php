@@ -25,6 +25,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_PRODUCT_LIST_PRE_CREATE = 'PLUGINS_PRODUCT_LIST_PRE_CREATE';
     public const PLUGINS_PRODUCT_LIST_PRE_UPDATE = 'PLUGINS_PRODUCT_LIST_PRE_UPDATE';
+    public const PLUGINS_PRODUCT_LIST_DELETE_PRE_CHECK = 'PLUGINS_PRODUCT_LIST_DELETE_PRE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -50,6 +51,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMessengerFacade($container);
         $container = $this->addProductListPreCreatePlugins($container);
         $container = $this->addProductListPreUpdatePlugins($container);
+        $container = $this->addProductListDeletePreCheckPlugins($container);
         $container = $this->addProductFacade($container);
 
         return $container;
@@ -126,6 +128,20 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductListDeletePreCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_LIST_DELETE_PRE_CHECK, function (Container $container) {
+            return $this->getProductListDeletePreCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[]
      */
     protected function getProductListPreCreatePlugins(): array
@@ -137,6 +153,14 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[]
      */
     protected function getProductListPreUpdatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface[]
+     */
+    protected function getProductListDeletePreCheckPlugins(): array
     {
         return [];
     }

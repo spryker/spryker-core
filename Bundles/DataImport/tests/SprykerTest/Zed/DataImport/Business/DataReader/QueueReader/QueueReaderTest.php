@@ -79,7 +79,7 @@ class QueueReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderCanBeUsedAsIteratorAndReturnsArrayObject()
+    public function testDataReaderCanBeUsedAsIteratorAndReturnsArrayObject(): void
     {
         $queueReader = $this->getQueueReader();
         foreach ($queueReader as $dataSet) {
@@ -90,7 +90,7 @@ class QueueReaderTest extends Unit
     /**
      * @return void
      */
-    public function testKeyReturnsCurrentDataSetPosition()
+    public function testKeyReturnsCurrentDataSetPosition(): void
     {
         $csvReader = $this->getQueueReader();
         $this->assertIsInt($csvReader->key());

@@ -22,7 +22,7 @@ use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReader;
-use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface;
+use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
 /**
@@ -66,7 +66,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getProductFacade(),
             $this->createProductReader(),
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeXssService()
         );
     }
 
@@ -211,10 +211,10 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface
      */
-    protected function getUtilSanitizeService(): ProductAttributeToUtilSanitizeServiceInterface
+    public function getUtilSanitizeXssService(): ProductAttributeToUtilSanitizeXssServiceInterface
     {
-        return $this->getProvidedDependency(ProductAttributeDependencyProvider::SERVICE_UTIL_SANITIZE);
+        return $this->getProvidedDependency(ProductAttributeDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
     }
 }

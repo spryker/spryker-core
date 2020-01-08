@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 
 /**
@@ -23,6 +24,8 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGenerato
  */
 class RestApiDocumentationPathGeneratorTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const METHOD_PATCH = 'patch';
     protected const TEST_PATH_WITH_ID = '/test-path/{test-resource-id}';
     protected const TEST_PATH = '/test-path';

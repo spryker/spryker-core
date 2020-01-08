@@ -35,7 +35,7 @@ class SslServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testNoRedirectWhenSslNotEnabled()
+    public function testNoRedirectWhenSslNotEnabled(): void
     {
         $application = $this->tester->getApplicationForSslTest(static::EXPECTED_CONTENT, false);
 
@@ -50,7 +50,7 @@ class SslServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testNoRedirectWhenHttpsIsOn()
+    public function testNoRedirectWhenHttpsIsOn(): void
     {
         $application = $this->tester->getApplicationForSslTest(static::EXPECTED_CONTENT);
 
@@ -66,7 +66,7 @@ class SslServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testNoRedirectWhenRequestIsFromTrustedProxyAndForwardedProtoIsHttps()
+    public function testNoRedirectWhenRequestIsFromTrustedProxyAndForwardedProtoIsHttps(): void
     {
         $this->tester->setConfig(ApplicationConstants::YVES_TRUSTED_PROXIES, ['127.0.0.1']);
 
@@ -85,7 +85,7 @@ class SslServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRedirectToHttpsWithoutTrustedProxySettings()
+    public function testRedirectToHttpsWithoutTrustedProxySettings(): void
     {
         $application = $this->tester->getApplicationForSslTest();
 
@@ -98,7 +98,7 @@ class SslServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRedirectToHttpsWithTrustedProxySettingsAndForwardedProtoIsHttp()
+    public function testRedirectToHttpsWithTrustedProxySettingsAndForwardedProtoIsHttp(): void
     {
         $this->tester->setConfig(ApplicationConstants::YVES_TRUSTED_PROXIES, ['127.0.0.1']);
 

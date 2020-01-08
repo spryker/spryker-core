@@ -28,7 +28,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTemplatePaths()
     {
@@ -40,9 +40,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $paths
+     * @param string[] $paths
      *
-     * @return array
+     * @return string[]
      */
     protected function addProjectTemplatePaths(array $paths)
     {
@@ -58,9 +58,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $paths
+     * @param string[] $paths
      *
-     * @return array
+     * @return string[]
      */
     protected function addCoreTemplatePaths(array $paths)
     {
@@ -76,7 +76,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getProjectNamespaces(): array
     {
@@ -84,7 +84,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCoreNamespaces(): array
     {
@@ -124,7 +124,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getZedDirectoryPathPatterns()
     {
@@ -134,7 +134,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @deprecated Please use `getZedDirectoryPathPatterns()` instead.
      *
-     * @return array
+     * @return string[]
      */
     public function getZedDirectoryPathPattern()
     {
@@ -147,7 +147,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getYvesDirectoryPathPatterns()
     {
@@ -157,7 +157,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @deprecated Please use `getYvesDirectoryPathPatterns()` instead.
      *
-     * @return array
+     * @return string[]
      */
     public function getYvesDirectoryPathPattern()
     {
