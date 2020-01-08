@@ -20,4 +20,7 @@
     <transfer name="ProductOffer">
     </transfer>
 
+    <transfer name="ProductOfferResponse">
+    </transfer>
+
 </transfers>
