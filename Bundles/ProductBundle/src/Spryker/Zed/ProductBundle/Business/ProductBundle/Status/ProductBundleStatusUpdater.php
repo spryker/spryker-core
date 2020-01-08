@@ -55,16 +55,8 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
             return $productConcreteTransfer;
         }
 
-        foreach ($productBundleTransfers as $productBundle) {
-            $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-                ->setIdProductConcrete($productBundle->getIdProductConcreteBundle());
-
-            $productBundleCollectionTransfer = $this->productBundleRepository
-                ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
-
-            foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
-                $this->updateBundleProductIsActive($productBundleTransfer->getBundledProducts());
-            }
+        foreach ($productBundleTransfers as $productBundleTransfer) {
+            $this->updateBundleProductIsActive($productBundleTransfer->getBundledProducts());
         }
 
         return $productConcreteTransfer;
