@@ -7,21 +7,23 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\CategoryImageStorageTransfer;
 use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 
 class CategoryImageStorageMapper implements CategoryImageStorageMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
-     * @param \Generated\Shared\Transfer\CategoryImageStorageTransfer $categoryImageStorageTransfer
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    public function mapCategoryImageStorageEntityToTransfer(
+    public function mapCategoryImageStorageEntityTransferToSynchronizationDataTransfer(
         SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer,
-        CategoryImageStorageTransfer $categoryImageStorageTransfer
-    ): CategoryImageStorageTransfer {
-        return $categoryImageStorageTransfer->fromArray($categoryImageStorageEntityTransfer->toArray(), true);
+        SynchronizationDataTransfer $synchronizationDataTransfer
+    ): SynchronizationDataTransfer {
+        return $synchronizationDataTransfer
+            ->setData($categoryImageStorageEntityTransfer->getData())
+            ->setKey($categoryImageStorageEntityTransfer->getKey());
     }
 }

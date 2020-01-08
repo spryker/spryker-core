@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
-use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductReplacementStorageTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
@@ -215,9 +214,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds()
-     *
      * @deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
+     *
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
@@ -232,7 +231,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds()
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
      * @param int[] $productAlternativeStorageIds
      *
@@ -261,7 +260,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @deprecated Use `ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilter()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds()
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
      * @param int[] $productReplacementForStorageIds
      *
@@ -280,73 +279,81 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array
+    public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array
     {
         $query = $this->getFactory()
-            ->createProductAlternativeStoragePropelQuery()
-            ->filterByIdProductAlternativeStorage_In($productAlternativeStorageIds);
-        $productAlternativeStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+            ->createProductAlternativeStoragePropelQuery();
 
-        return $this->mapProductAlternativeStorageEntityCollectionToProductAlternativeStorageTransferCollection($productAlternativeStorageEntities);
+        if ($productAlternativeStorageIds !== []) {
+            $query->filterByIdProductAlternativeStorage_In($productAlternativeStorageIds);
+        }
+
+        $productAlternativeStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+
+        return $this->mapProductAlternativeStorageEntityTransferCollectionToProductAlternativeStorageTransferCollection($productAlternativeStorageEntityTransfers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productReplacementForStorageIds
      *
-     * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array
+    public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array
     {
         $query = $this->getFactory()
-            ->createProductReplacementForStoragePropelQuery()
-            ->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds);
-        $productReplacementStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+            ->createProductReplacementForStoragePropelQuery();
 
-        return $this->mapProductReplacementForStorageEntityCollectionToProductReplacementForStorageTransferCollection($productReplacementStorageEntities);
+        if ($productReplacementForStorageIds !== []) {
+            $query->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds);
+        }
+
+        $productReplacementStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+
+        return $this->mapProductReplacementForStorageEntityTransferCollectionToProductReplacementForStorageTransferCollection($productReplacementStorageEntityTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[] $productAlternativeStorageEntities
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[] $productAlternativeStorageEntityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    protected function mapProductAlternativeStorageEntityCollectionToProductAlternativeStorageTransferCollection(array $productAlternativeStorageEntities): array
+    protected function mapProductAlternativeStorageEntityTransferCollectionToProductAlternativeStorageTransferCollection(array $productAlternativeStorageEntityTransfers): array
     {
         $productAlternativeStorageMapper = $this->getFactory()
             ->createProductAlternativeStorageMapper();
-        $productAlternativeStorageTransfers = [];
+        $synchronizationDataTransfers = [];
 
-        foreach ($productAlternativeStorageEntities as $productAlternativeStorageEntityTransfer) {
-            $productAlternativeStorageTransfers[] = $productAlternativeStorageMapper->mapProductAlternativeStorageEntityToTransfer(
+        foreach ($productAlternativeStorageEntityTransfers as $productAlternativeStorageEntityTransfer) {
+            $synchronizationDataTransfers[] = $productAlternativeStorageMapper->mapProductAlternativeStorageEntityTransferToSynchronizationDataTransfer(
                 $productAlternativeStorageEntityTransfer,
-                new ProductAlternativeStorageTransfer()
+                new SynchronizationDataTransfer()
             );
         }
 
-        return $productAlternativeStorageTransfers;
+        return $synchronizationDataTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[] $productReplacementStorageEntities
+     * @param \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer[] $productReplacementForStorageEntityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    protected function mapProductReplacementForStorageEntityCollectionToProductReplacementForStorageTransferCollection(array $productReplacementStorageEntities): array
+    protected function mapProductReplacementForStorageEntityTransferCollectionToProductReplacementForStorageTransferCollection(array $productReplacementForStorageEntityTransfers): array
     {
         $productReplacementStorageMapper = $this->getFactory()
             ->createProductReplacementStorageMapper();
-        $productReplacementStorageTransfers = [];
+        $synchronizationDataTransfers = [];
 
-        foreach ($productReplacementStorageEntities as $productReplacementStorageEntityTransfer) {
-            $productReplacementStorageTransfers[] = $productReplacementStorageMapper->mapProductReplacementStorageEntityToTransfer(
-                $productReplacementStorageEntityTransfer,
-                new ProductReplacementStorageTransfer()
+        foreach ($productReplacementForStorageEntityTransfers as $productReplacementForStorageEntityTransfer) {
+            $synchronizationDataTransfers[] = $productReplacementStorageMapper->mapProductReplacementForStorageEntityTransferToSynchronizationDataTransfer(
+                $productReplacementForStorageEntityTransfer,
+                new SynchronizationDataTransfer()
             );
         }
 
-        return $productReplacementStorageTransfers;
+        return $synchronizationDataTransfers;
     }
 }

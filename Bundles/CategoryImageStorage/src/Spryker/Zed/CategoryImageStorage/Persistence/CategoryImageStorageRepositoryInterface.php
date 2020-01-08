@@ -46,7 +46,7 @@ interface CategoryImageStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $categoryIds
      *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getCategoryImageStorageCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array;
+    public function getSynchronizationDataTransferCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array;
 }

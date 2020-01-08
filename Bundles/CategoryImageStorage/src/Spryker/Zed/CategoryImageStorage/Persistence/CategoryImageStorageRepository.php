@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
-use Generated\Shared\Transfer\CategoryImageStorageTransfer;
-use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
@@ -94,17 +91,21 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $categoryIds
      *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getCategoryImageStorageCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array
+    public function getSynchronizationDataTransferCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array
     {
-        $categoryImageStorageQuery = $this->getFactory()
-            ->createSpyCategoryImageStorageQuery()
-            ->filterByFkCategory_In($categoryIds);
+        $query = $this->getFactory()
+            ->createSpyCategoryImageStorageQuery();
 
-        $categoryImageStorageEntities = $this->buildQueryFromCriteria($categoryImageStorageQuery, $filterTransfer)->find();
+        if ($categoryIds !== []) {
+            $query->filterByFkCategory_In($categoryIds);
+        }
 
-        return $this->mapCategoryImageStorageEntityCollectionToCategoryImageStorageTransferCollection($categoryImageStorageEntities);
+        $categoryImageStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->find();
+
+        return $this->mapCategoryImageStorageEntityTransferCollectionToSynchronizationDataTransferCollection($categoryImageStorageEntityTransfers);
     }
 
     /**
@@ -124,23 +125,23 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[] $categoryImageStorageEntities
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[] $categoryImageStorageEntityTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    protected function mapCategoryImageStorageEntityCollectionToCategoryImageStorageTransferCollection(array $categoryImageStorageEntities): array
+    protected function mapCategoryImageStorageEntityTransferCollectionToSynchronizationDataTransferCollection(array $categoryImageStorageEntityTransfers): array
     {
         $categoryImageStorageMapper = $this->getFactory()
             ->createCategoryImageStorageMapper();
-        $categoryImageStorageTransfers = [];
+        $synchronizationDataTransfers = [];
 
-        foreach ($categoryImageStorageEntities as $categoryImageStorageEntity) {
-            $categoryImageStorageTransfers[] = $categoryImageStorageMapper->mapCategoryImageStorageEntityToTransfer(
-                $categoryImageStorageEntity,
-                new CategoryImageStorageTransfer()
+        foreach ($categoryImageStorageEntityTransfers as $categoryImageStorageEntityTransfer) {
+            $synchronizationDataTransfers[] = $categoryImageStorageMapper->mapCategoryImageStorageEntityTransferToSynchronizationDataTransfer(
+                $categoryImageStorageEntityTransfer,
+                new SynchronizationDataTransfer()
             );
         }
 
-        return $categoryImageStorageTransfers;
+        return $synchronizationDataTransfers;
     }
 }

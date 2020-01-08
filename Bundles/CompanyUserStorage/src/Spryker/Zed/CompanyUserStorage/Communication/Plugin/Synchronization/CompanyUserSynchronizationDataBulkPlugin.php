@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyUserStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -58,15 +57,11 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        /**
-         * @todo Refactor to one facade call. See the `CmsSlotBlockSynchronizationDataBulkPlugin`.
-         */
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $companyUserStorageTransfers = $this->getFacade()->getCompanyUserStorageCollectionByFilterAndCompanyUserIds($filterTransfer, $ids);
-
-        return $this->getFactory()
-            ->createCompanyUserStorageMapper()
-            ->mapCompanyUserStorageTransfersCollectionToSynchronizationDataTransferCollection($companyUserStorageTransfers);
+        return $this->getFacade()
+            ->getSynchronizationDataTransferCollectionByFilterAndCompanyUserIds(
+                $this->createFilterTransfer($offset, $limit),
+                $ids
+            );
     }
 
     /**

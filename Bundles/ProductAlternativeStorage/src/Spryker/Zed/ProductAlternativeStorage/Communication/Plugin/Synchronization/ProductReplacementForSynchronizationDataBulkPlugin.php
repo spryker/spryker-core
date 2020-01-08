@@ -77,11 +77,14 @@ class ProductReplacementForSynchronizationDataBulkPlugin extends AbstractPlugin 
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getProductReplacementForSynchronizationPoolName();
+        return $this->getFactory()
+            ->getConfig()
+            ->getProductReplacementForSynchronizationPoolName();
     }
 
     /**
      * {@inheritDoc}
+     * - Returns SynchronizationDataTransfer collection.
      *
      * @api
      *
@@ -93,16 +96,11 @@ class ProductReplacementForSynchronizationDataBulkPlugin extends AbstractPlugin 
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        /**
-         * @todo Refactor to one facade call. See the `CmsSlotBlockSynchronizationDataBulkPlugin`.
-         */
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $productReplacementForStorageEntities = $this->getFacade()
-            ->getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds($filterTransfer, $ids);
-
-        return $this->getFactory()
-            ->createProductReplacementForStorageMapper()
-            ->mapProductReplacementForStorageEntityTransfersToSynchronizationDataTransfers($productReplacementForStorageEntities);
+        return $this->getFacade()
+            ->getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
+                $this->createFilterTransfer($offset, $limit),
+                $ids
+            );
     }
 
     /**

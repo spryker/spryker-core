@@ -29,7 +29,7 @@ class CategoryImagePublishStorageListener extends AbstractPlugin implements Even
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName)
+    public function handleBulk(array $transfers, string $eventName): void
     {
         $this->preventTransaction();
 

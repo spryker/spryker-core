@@ -14,7 +14,7 @@ interface ContentStorageToEventBehaviorInterface
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers);
+    public function getEventTransferIds(array $eventTransfers): array;
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
@@ -22,5 +22,5 @@ interface ContentStorageToEventBehaviorInterface
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array;
 }

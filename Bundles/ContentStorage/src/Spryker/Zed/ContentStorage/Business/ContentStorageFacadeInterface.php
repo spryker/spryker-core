@@ -35,5 +35,5 @@ interface ContentStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
-    public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array;
+    public function getContentTransferByFilter(FilterTransfer $filterTransfer): array;
 }

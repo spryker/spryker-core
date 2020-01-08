@@ -46,7 +46,6 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritDoc}
-     * - Returns SynchronizationDataTransfer collection.
      *
      * @api
      *
@@ -58,16 +57,11 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        /**
-         * @todo Refactor to one facade call. See the `CmsSlotBlockSynchronizationDataBulkPlugin`.
-         */
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $categoryImageStorageTransfers = $this->getFacade()
-            ->getCategoryImageStorageCollectionByFilterAndCategoryIds($filterTransfer, $ids);
-
-        return $this->getFactory()
-            ->createCategoryImageStorageMapper()
-            ->mapCategoryImageStorageTransfersCollectionToSynchronizationDataTransferCollection($categoryImageStorageTransfers);
+        return $this->getFacade()
+            ->getSynchronizationDataTransferCollectionByFilterAndCategoryIds(
+                $this->createFilterTransfer($offset, $limit),
+                $ids
+            );
     }
 
     /**
@@ -103,7 +97,9 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getCategoryImageSynchronizationPoolName();
+        return $this->getFactory()
+            ->getConfig()
+            ->getCategoryImageSynchronizationPoolName();
     }
 
     /**

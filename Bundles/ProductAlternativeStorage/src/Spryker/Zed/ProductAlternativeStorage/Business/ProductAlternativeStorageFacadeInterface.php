@@ -48,14 +48,15 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Returns ProductAlternativeStorageTransfer collection by filter and product alternative storage ids.
+     * - Queries product alternative storage entities for the given productAlternativeStorageIds filtered by provided FilterTransfer.
+     * - Returns a collection of synchronization data transfers mapped from received storage entities.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
@@ -64,16 +65,17 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns ProductReplacementStorageTransfer collection by filter and product replacement for storage ids.
+     * - Queries product replacement for storage entities for the given productReplacementForStorageIds filtered by provided FilterTransfer.
+     * - Returns a collection of synchronization data transfers mapped from received storage entities.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productReplacementForStorageIds
      *
-     * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds(
+    public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,
         array $productReplacementForStorageIds
     ): array;

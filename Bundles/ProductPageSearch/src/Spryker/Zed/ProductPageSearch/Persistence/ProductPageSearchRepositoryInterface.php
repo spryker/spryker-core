@@ -12,10 +12,6 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPageSearchRepositoryInterface
 {
     /**
-     * @deprecated Use `ProductPageSearchRepositoryInterface::getProductConcretePageSearchCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface::getProductConcretePageSearchCollectionByFilterAndProductIds()
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -30,7 +26,7 @@ interface ProductPageSearchRepositoryInterface
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
 
     /**
-     * @deprecated Use `ProductPageSearchRepositoryInterface::getProductCollectionByFilter()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface::getProductCollectionByFilter()
      *
@@ -51,16 +47,9 @@ interface ProductPageSearchRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
-     */
-    public function getProductCollectionByFilter(FilterTransfer $filterTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductConcretePageSearchCollectionByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array;
+    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array;
 }

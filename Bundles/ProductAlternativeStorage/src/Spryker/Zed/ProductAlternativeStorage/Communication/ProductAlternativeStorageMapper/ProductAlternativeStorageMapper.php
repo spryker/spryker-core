@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternative
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ProductAlternativeStorageMapper implements ProductAlternativeStorageMapperInterface
 {
     /**
@@ -27,24 +30,6 @@ class ProductAlternativeStorageMapper implements ProductAlternativeStorageMapper
             $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($productAlternativeStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[] $productAlternativeStorageTransfers
-     *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
-     */
-    public function mapProductAlternativeStorageTransfersToSynchronizationDataTransfers(array $productAlternativeStorageTransfers): array
-    {
-        $synchronizationDataTransfers = [];
-
-        foreach ($productAlternativeStorageTransfers as $productAlternativeStorageTransfer) {
-            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
-                ->setData($productAlternativeStorageTransfer->getData())
-                ->setKey($productAlternativeStorageTransfer->getKey());
         }
 
         return $synchronizationDataTransfers;

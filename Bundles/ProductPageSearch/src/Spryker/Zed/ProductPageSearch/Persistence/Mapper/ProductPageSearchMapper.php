@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\SpyProductConcretePageSearchEntityTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
 
 class ProductPageSearchMapper implements ProductPageSearchMapperInterface
@@ -43,5 +45,21 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         );
 
         return $productConcretePageSearchEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductConcretePageSearchEntityTransfer $productConcretePageSearchEntityTransfer
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    public function mapProductConcretePageSearchEntityTransferToSynchronizationDataTransfer(
+        SpyProductConcretePageSearchEntityTransfer $productConcretePageSearchEntityTransfer,
+        SynchronizationDataTransfer $synchronizationDataTransfer
+    ): SynchronizationDataTransfer {
+        return $synchronizationDataTransfer
+            ->setData($productConcretePageSearchEntityTransfer->getData())
+            ->setKey($productConcretePageSearchEntityTransfer->getKey())
+            ->setStore($productConcretePageSearchEntityTransfer->getStore());
     }
 }

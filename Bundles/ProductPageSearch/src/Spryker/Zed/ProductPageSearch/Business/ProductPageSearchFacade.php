@@ -232,12 +232,11 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductConcretePageSearchCollectionByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array
+    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array
     {
-        return $this->getFactory()
-            ->createProductConcretePageSearchReader()
-            ->getProductConcretePageSearchCollectionByFilterAndProductIds($filterTransfer, $productIds);
+        return $this->getRepository()
+            ->getSynchronizationDataTransfersByFilterAndProductIds($filterTransfer, $productIds);
     }
 }

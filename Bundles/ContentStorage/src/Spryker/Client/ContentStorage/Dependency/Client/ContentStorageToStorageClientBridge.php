@@ -27,7 +27,7 @@ class ContentStorageToStorageClientBridge implements ContentStorageToStorageClie
      *
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         return $this->storageClient->get($key);
     }

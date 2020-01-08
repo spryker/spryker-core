@@ -38,14 +38,15 @@ interface CategoryImageStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns CategoryImageStorageTransfer collection by filter and category ids.
+     * - Queries category image storage entities for the given categoryIds filtered by provided FilterTransfer.
+     * - Returns a collection of synchronization data transfers mapped from received storage entities.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $categoryIds
      *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getCategoryImageStorageCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array;
+    public function getSynchronizationDataTransferCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array;
 }

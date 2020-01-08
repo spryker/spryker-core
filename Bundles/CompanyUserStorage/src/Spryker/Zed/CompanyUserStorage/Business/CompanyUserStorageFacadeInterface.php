@@ -53,7 +53,8 @@ interface CompanyUserStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns CompanyUserStorageTransfer collection by filter and company user ids.
+     * - Queries company user storage entities for the given companyUserIds filtered by provided FilterTransfer.
+     * - Returns a collection of synchronization data transfers mapped from received storage entities.
      *
      * @api
      *
@@ -62,5 +63,5 @@ interface CompanyUserStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
      */
-    public function getCompanyUserStorageCollectionByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array;
+    public function getSynchronizationDataTransferCollectionByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array;
 }

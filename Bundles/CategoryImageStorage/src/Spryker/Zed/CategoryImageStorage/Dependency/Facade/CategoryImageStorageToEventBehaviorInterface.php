@@ -14,7 +14,7 @@ interface CategoryImageStorageToEventBehaviorInterface
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers);
+    public function getEventTransferIds(array $eventTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -22,5 +22,5 @@ interface CategoryImageStorageToEventBehaviorInterface
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array;
 }

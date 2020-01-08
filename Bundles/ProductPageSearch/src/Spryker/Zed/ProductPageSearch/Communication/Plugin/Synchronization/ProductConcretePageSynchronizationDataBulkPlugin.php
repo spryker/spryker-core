@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -59,23 +58,11 @@ class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin im
      */
     public function getData(int $offset, int $limit, array $productConcreteIds = []): array
     {
-        /**
-         * @todo Refactor to one facade call. See the `CmsSlotBlockSynchronizationDataBulkPlugin`.
-         */
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-
-        $productConcretePageSearchTransfers = $this->getFacade()->getProductConcretePageSearchCollectionByFilterAndProductIds($filterTransfer, $productConcreteIds);
-
-        $synchronizationDataTransfers = [];
-        foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productConcretePageSearchTransfer->getData());
-            $synchronizationDataTransfer->setKey($productConcretePageSearchTransfer->getKey());
-            $synchronizationDataTransfer->setStore($productConcretePageSearchTransfer->getStore());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getFacade()
+            ->getSynchronizationDataTransfersByFilterAndProductIds(
+                $this->createFilterTransfer($offset, $limit),
+                $productConcreteIds
+            );
     }
 
     /**
@@ -111,7 +98,9 @@ class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin im
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getProductPageSynchronizationPoolName();
+        return $this->getFactory()
+            ->getConfig()
+            ->getProductPageSynchronizationPoolName();
     }
 
     /**

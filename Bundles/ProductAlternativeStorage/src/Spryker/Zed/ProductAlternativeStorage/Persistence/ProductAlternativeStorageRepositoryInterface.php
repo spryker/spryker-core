@@ -99,18 +99,18 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds()
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findAllProductAlternativeStorageEntities(): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds()
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
      * @param int[] $productAlternativeStorageIds
      *
@@ -119,18 +119,18 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()` instead.
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds()
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findAllProductReplacementForStorageEntities(): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()` instead.
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()` instead.
      *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds()
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
      * @param int[] $productReplacementForStorageIds
      *
@@ -142,15 +142,15 @@ interface ProductAlternativeStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array;
+    public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productReplacementForStorageIds
      *
-     * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductReplacementForStorageCollectionByFilterAndProductReplacementForStorageIds(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array;
+    public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array;
 }

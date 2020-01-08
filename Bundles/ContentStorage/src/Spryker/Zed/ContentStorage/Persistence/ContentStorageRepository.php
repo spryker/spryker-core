@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentStorage\Persistence;
 
+use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -24,12 +25,19 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      */
     public function findContentStorageByContentIds(array $contentIds): array
     {
+        $contentStorageTransfers = [];
         $contentStorageEntities = $this->getFactory()
             ->createContentStorageQuery()
             ->filterByFkContent($contentIds, Criteria::IN)
             ->find();
 
-        return $this->mapContentStorageEntityCollectionToContentStorageTransferCollection($contentStorageEntities);
+        foreach ($contentStorageEntities as $contentStorageEntity) {
+            $contentStorageTransfers[] = $this->getFactory()
+                ->createContentStorageMapper()
+                ->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer());
+        }
+
+        return $contentStorageTransfers;
     }
 
     /**
@@ -60,17 +68,22 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      */
     public function findAllContentStorage(): array
     {
+        $contentStorageTransfers = [];
         $contentStorageEntities = $this->getFactory()
             ->createContentStorageQuery()
             ->find();
 
-        return $this->mapContentStorageEntityCollectionToContentStorageTransferCollection($contentStorageEntities);
+        foreach ($contentStorageEntities as $contentStorageEntity) {
+            $contentStorageTransfers[] = $this->getFactory()
+                ->createContentStorageMapper()
+                ->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer());
+        }
+
+        return $contentStorageTransfers;
     }
 
     /**
-     * @deprecated Use `ContentStorageRepository::getContentCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepository::getContentCollectionByFilter()
+     * @deprecated Will be removed without replacement.
      *
      * @param array $contentIds
      *
@@ -94,14 +107,15 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
-    public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array
+    public function getContentTransfersByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->getContentQuery();
 
-        $contentStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        $contentStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->find();
 
-        return $this->mapContentStorageEntityCollectionToContentStorageTransferCollection($contentStorageEntityTransfers);
+        return $this->mapContentStorageEntityTransferCollectionToContentStorageTransferCollection($contentStorageEntityTransfers);
     }
 
     /**
@@ -109,7 +123,7 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
-    protected function mapContentStorageEntityCollectionToContentStorageTransferCollection(array $contentEntityTransfers): array
+    protected function mapContentStorageEntityTransferCollectionToContentStorageTransferCollection(array $contentEntityTransfers): array
     {
         $contentStorageMapper = $this->getFactory()
             ->createContentStorageMapper();

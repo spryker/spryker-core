@@ -7,16 +7,19 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 
 interface ProductAlternativeStorageMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer
-     * @param \Generated\Shared\Transfer\ProductAlternativeStorageTransfer $productAlternativeStorageTransfer
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    public function mapProductAlternativeStorageEntityToTransfer(SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer, ProductAlternativeStorageTransfer $productAlternativeStorageTransfer): ProductAlternativeStorageTransfer;
+    public function mapProductAlternativeStorageEntityTransferToSynchronizationDataTransfer(
+        SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer,
+        SynchronizationDataTransfer $synchronizationDataTransfer
+    ): SynchronizationDataTransfer;
 }

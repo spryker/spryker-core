@@ -188,16 +188,17 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification:
-     * - Provides ProductConcretePage collection by filter and product ids.
+     * - Queries product concrete page search entities for the given productIds filtered by provided FilterTransfer.
+     * - Returns a collection of synchronization data transfers mapped from received storage entities.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductConcretePageSearchCollectionByFilterAndProductIds(
+    public function getSynchronizationDataTransfersByFilterAndProductIds(
         FilterTransfer $filterTransfer,
         array $productIds
     ): array;

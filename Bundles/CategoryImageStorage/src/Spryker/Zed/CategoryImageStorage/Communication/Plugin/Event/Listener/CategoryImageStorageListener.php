@@ -29,7 +29,7 @@ class CategoryImageStorageListener extends AbstractPlugin implements EventBulkHa
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, string $eventName): void
     {
         $this->preventTransaction();
 

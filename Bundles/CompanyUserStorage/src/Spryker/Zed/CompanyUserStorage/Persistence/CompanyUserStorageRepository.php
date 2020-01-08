@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Persistence;
 
-use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -21,10 +21,6 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
      * @param array $companyUserIds
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
-     *@deprecated Use `CompanyUserStorageRepository::getCompanyUserStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepository::getCompanyUserStorageCollectionByFilterAndCompanyUserIds()
-     *
      */
     public function findCompanyUserStorageEntities(array $companyUserIds): array
     {
@@ -40,11 +36,11 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @deprecated Use `CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()` instead.
+     *
+     * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()
+     *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
-     *@see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepository::getCompanyUserStorageCollectionByFilterAndCompanyUserIds()
-     *
-     * @deprecated Use `CompanyUserStorageRepository::getCompanyUserStorageCollectionByFilter()` instead.
-     *
      */
     public function findAllCompanyUserStorageEntities(): array
     {
@@ -58,37 +54,41 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getCompanyUserStorageCollectionByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array
+    public function getSynchronizationDataTransfersByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array
     {
         $query = $this->getFactory()
-            ->createCompanyUserStorageQuery()
-            ->filterByFkCompanyUser_In($companyUserIds);
+            ->createCompanyUserStorageQuery();
 
-        $companyUserStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        if ($companyUserIds !== []) {
+            $query->filterByFkCompanyUser_In($companyUserIds);
+        }
 
-        return $this->mapCategoryImageStorageEntityCollectionToCategoryImageStorageTransferCollection($companyUserStorageEntities);
+        $companyUserStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->find();
+
+        return $this->mapCategoryImageStorageEntityTransferCollectionToSynchronizationDataTransferCollection($companyUserStorageEntityTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[] $companyUserStorageEntities
+     * @param \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[] $companyUserStorageEntityTransfers
      *
-     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    protected function mapCategoryImageStorageEntityCollectionToCategoryImageStorageTransferCollection(array $companyUserStorageEntities): array
+    protected function mapCategoryImageStorageEntityTransferCollectionToSynchronizationDataTransferCollection(array $companyUserStorageEntityTransfers): array
     {
         $companyUserStorageMapper = $this->getFactory()
             ->createCompanyUserStorageMapper();
-        $companyUserStorageTransfers = [];
+        $synchronizationDataTransfers = [];
 
-        foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
-            $companyUserStorageTransfers[] = $companyUserStorageMapper->mapCompanyUserStorageEntityToTransfer(
-                $companyUserStorageEntity,
-                new CompanyUserStorageTransfer()
+        foreach ($companyUserStorageEntityTransfers as $companyUserStorageEntityTransfer) {
+            $synchronizationDataTransfers[] = $companyUserStorageMapper->mapCompanyUserStorageEntityTransferToSynchronizationDataTransfer(
+                $companyUserStorageEntityTransfer,
+                new SynchronizationDataTransfer()
             );
         }
 
-        return $companyUserStorageTransfers;
+        return $synchronizationDataTransfers;
     }
 }

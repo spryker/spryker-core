@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageMapper;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ProductAlternativeStorageMapperInterface
 {
     /**
@@ -15,11 +18,4 @@ interface ProductAlternativeStorageMapperInterface
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function mapProductAlternativeStorageEntitiesToSynchronizationDataTransfers(array $productAlternativeStorageEntities): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[] $productAlternativeStorageTransfers
-     *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
-     */
-    public function mapProductAlternativeStorageTransfersToSynchronizationDataTransfers(array $productAlternativeStorageTransfers): array;
 }
