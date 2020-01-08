@@ -64,7 +64,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return int
      */
-    public function runFixtures($module, array $options = []): int
+    public function runFixtures(?string $module, array $options = []): int
     {
         return $this->getFactory()->createCodeTester()->runFixtures($module, $options);
     }
