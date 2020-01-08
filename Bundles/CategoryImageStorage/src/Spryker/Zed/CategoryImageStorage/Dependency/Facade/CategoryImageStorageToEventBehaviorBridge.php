@@ -38,7 +38,7 @@ class CategoryImageStorageToEventBehaviorBridge implements CategoryImageStorageT
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }

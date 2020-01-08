@@ -61,7 +61,7 @@ interface CompanyUserStorageFacadeInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function getSynchronizationDataTransferCollectionByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds): array;
 }
