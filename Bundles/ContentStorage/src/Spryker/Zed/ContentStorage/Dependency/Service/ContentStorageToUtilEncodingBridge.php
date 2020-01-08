@@ -29,7 +29,7 @@ class ContentStorageToUtilEncodingBridge implements ContentStorageToUtilEncoding
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null)
+    public function encodeJson(array $value, ?int $options = null, ?int $depth = null): ?string
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
@@ -42,7 +42,7 @@ class ContentStorageToUtilEncodingBridge implements ContentStorageToUtilEncoding
      *
      * @return mixed|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
