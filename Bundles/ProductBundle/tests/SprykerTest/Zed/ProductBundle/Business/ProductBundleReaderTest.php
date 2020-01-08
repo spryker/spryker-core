@@ -134,7 +134,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
-    protected function createProductBundleRepositoryMock()
+    protected function createProductBundleRepositoryMock(): MockObject
     {
         return $this->getMockBuilder(ProductBundleRepositoryInterface::class)->getMock();
     }
