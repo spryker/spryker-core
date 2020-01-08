@@ -44,8 +44,7 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     public function findProductAbstractPrices(
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array
-    {
+    ): array {
         return $this->priceProductFacade->findProductAbstractPrices($idProductAbstract, $priceProductCriteriaTransfer);
     }
 
@@ -68,8 +67,7 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     public function findProductAbstractPricesWithoutPriceExtraction(
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array
-    {
+    ): array {
         return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
     }
 

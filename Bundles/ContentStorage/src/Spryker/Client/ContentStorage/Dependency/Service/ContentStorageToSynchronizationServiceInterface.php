@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ContentStorage\Dependency\Service;
 
-use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-
 interface ContentStorageToSynchronizationServiceInterface
 {
     /**
