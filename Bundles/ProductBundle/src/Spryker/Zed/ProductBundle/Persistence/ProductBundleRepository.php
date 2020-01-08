@@ -46,7 +46,8 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
     {
         $productBundleQuery = $this->getFactory()
-            ->createProductBundleQuery();
+            ->createProductBundleQuery()
+            ->joinWithSpyProductRelatedByFkBundledProduct();
 
         $productBundleQuery = $this->setProductBundleQueryFilters($productBundleQuery, $productBundleCriteriaFilterTransfer);
         $productBundleEntities = $productBundleQuery->find();
@@ -67,11 +68,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
         ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
     ): SpyProductBundleQuery {
         if ($productBundleCriteriaFilterTransfer->getIdProductConcrete()) {
-            $productBundleQuery
-                ->filterByFkProduct($productBundleCriteriaFilterTransfer->getIdProductConcrete())
-                ->joinWithSpyProductRelatedByFkBundledProduct();
-
-            return $productBundleQuery;
+            $productBundleQuery->filterByFkProduct($productBundleCriteriaFilterTransfer->getIdProductConcrete());
         }
 
         if ($productBundleCriteriaFilterTransfer->getIdBundledProduct()) {
