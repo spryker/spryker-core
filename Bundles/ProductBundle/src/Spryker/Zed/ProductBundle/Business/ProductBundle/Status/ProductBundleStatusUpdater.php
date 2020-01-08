@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Status;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
@@ -54,22 +55,27 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
             return $productConcreteTransfer;
         }
 
-        foreach ($productBundleTransfers as $productBundleTransfer) {
-            $productForBundleTransfers = $this->productBundleRepository
-                ->getBundledProductsByIdProductConcrete($productBundleTransfer->getIdProductConcreteBundle());
+        foreach ($productBundleTransfers as $productBundle) {
+            $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+                ->setIdProductConcrete($productBundle->getIdProductConcreteBundle());
 
-            $this->updateBundleProductIsActive($productForBundleTransfers);
+            $productBundleCollectionTransfer = $this->productBundleRepository
+                ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
+
+            foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
+                $this->updateBundleProductIsActive($productBundleTransfer->getBundledProducts());
+            }
         }
 
         return $productConcreteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
      *
      * @return void
      */
-    protected function updateBundleProductIsActive(array $productForBundleTransfers): void
+    protected function updateBundleProductIsActive(ArrayObject $productForBundleTransfers): void
     {
         $isActive = true;
         foreach ($productForBundleTransfers as $productForBundleTransfer) {

@@ -20,13 +20,6 @@ interface ProductBundleRepositoryInterface
     public function findBundledProductsBySku(string $sku): array;
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
-     */
-    public function getBundledProductsByIdProductConcrete(int $idProductConcrete): array;
-
-    /**
      * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
