@@ -43,7 +43,7 @@ class AbstractSubFormTypeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType
      */
-    private function getAbstractSubFormTypeMock()
+    private function getAbstractSubFormTypeMock(): AbstractSubFormType
     {
         $abstractSubFormTypeMock = $this->getMockForAbstractClass(AbstractSubFormType::class, [], '', true, true, true, ['getTemplatePath']);
         $abstractSubFormTypeMock->method('getTemplatePath')->willReturn(self::TEMPLATE_PATH);
@@ -54,7 +54,7 @@ class AbstractSubFormTypeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\FormInterface
      */
-    private function getFormMock()
+    private function getFormMock(): FormInterface
     {
         return $this->getMockBuilder(FormInterface::class)->getMock();
     }

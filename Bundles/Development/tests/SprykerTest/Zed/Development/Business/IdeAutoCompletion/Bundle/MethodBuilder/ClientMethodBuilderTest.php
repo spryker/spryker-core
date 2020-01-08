@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -64,7 +65,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
      */
-    protected function getClientMethodBuilderMock()
+    protected function getClientMethodBuilderMock(): ClientMethodBuilder
     {
         $methodBuilderMock = $this
             ->getMockBuilder(ClientMethodBuilder::class)
@@ -83,7 +84,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
      */
-    protected function getNamespaceExtractorMock()
+    protected function getNamespaceExtractorMock(): NamespaceExtractorInterface
     {
         return $this
             ->getMockBuilder(NamespaceExtractor::class)

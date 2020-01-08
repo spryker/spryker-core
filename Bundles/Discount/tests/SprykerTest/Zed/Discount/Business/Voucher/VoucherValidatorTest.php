@@ -176,7 +176,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
-    protected function createDiscountQueryContainerMock()
+    protected function createDiscountQueryContainerMock(): DiscountQueryContainerInterface
     {
         return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
@@ -184,7 +184,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
-    protected function createMessengerFacadeMock()
+    protected function createMessengerFacadeMock(): DiscountToMessengerInterface
     {
         return $this->getMockBuilder(DiscountToMessengerInterface::class)->getMock();
     }
@@ -192,7 +192,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
-    protected function createDiscountVoucherEntityMock()
+    protected function createDiscountVoucherEntityMock(): SpyDiscountVoucher
     {
         return $this->getMockBuilder(SpyDiscountVoucher::class)->getMock();
     }
@@ -200,7 +200,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
-    protected function createDiscountVoucherQueryMock()
+    protected function createDiscountVoucherQueryMock(): SpyDiscountVoucherQuery
     {
         return $this->getMockBuilder(SpyDiscountVoucherQuery::class)->getMock();
     }
@@ -210,7 +210,7 @@ class VoucherValidatorTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
-    protected function configureDiscountQueryContainerMock(SpyDiscountVoucher $discountVoucherEntity)
+    protected function configureDiscountQueryContainerMock(SpyDiscountVoucher $discountVoucherEntity): DiscountQueryContainerInterface
     {
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
 
