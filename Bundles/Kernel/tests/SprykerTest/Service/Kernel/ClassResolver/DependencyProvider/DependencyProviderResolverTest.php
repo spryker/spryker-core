@@ -9,6 +9,7 @@ namespace SprykerTest\Service\Kernel\ClassResolver\DependencyProvider;
 
 use Spryker\Service\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Service\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use SprykerTest\Service\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
@@ -49,7 +50,7 @@ class DependencyProviderResolverTest extends AbstractResolverTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): AbstractClassResolver
     {
         $resolverMock = $this->getMockBuilder(DependencyProviderResolver::class)->setMethods($methods)->getMock();
 
