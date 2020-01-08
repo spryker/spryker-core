@@ -14,14 +14,14 @@ interface ProductOfferWriterInterface
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function activateProductOfferById(int $idProductOffer): ?ProductOfferResponseTransfer;
+    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer;
 
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferResponseTransfer;
+    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer;
 }

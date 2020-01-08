@@ -42,7 +42,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
     public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
     {
@@ -63,7 +63,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
     public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
     {
@@ -82,7 +82,6 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     }
 
     /**
-     *
      * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
     protected function createProductOfferResponseTransfer(): ProductOfferResponseTransfer
