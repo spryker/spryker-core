@@ -74,7 +74,7 @@ class SearchElasticsearchClientTest extends Unit
     protected function createQueryPluginMock(?Query $query = null): QueryInterface
     {
         /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryPlugin */
-        $queryPlugin = $this->createMock([QueryInterface::class, SearchContextAwareQueryInterface::class]);
+        $queryPlugin = $this->createMock(QueryInterface::class);
 
         if ($query) {
             $queryPlugin->method('getSearchQuery')->willReturn($query);
