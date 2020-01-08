@@ -29,7 +29,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
                 ->useSpyProductImageQuery()
                 ->endUse()
             ->filterByFkProductImageSet($idProductImageSet)
-            ->orderBySortOrder(Criteria::DESC);
+            ->orderBySortOrder(Criteria::ASC);
     }
 
     /**
