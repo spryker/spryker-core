@@ -21,7 +21,7 @@ interface ProductOfferEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function updateProductOffer(ProductOfferTransfer $productOfferTransfer): ?ProductOfferTransfer;
+    public function updateProductOffer(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 }

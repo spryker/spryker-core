@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferValidity\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 
 class ProductOfferValidityToProductOfferFacadeBridge implements ProductOfferValidityToProductOfferFacadeInterface
 {
@@ -27,9 +27,9 @@ class ProductOfferValidityToProductOfferFacadeBridge implements ProductOfferVali
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
+    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
     {
         return $this->productOfferFacade->activateProductOfferById($idProductOffer);
     }
@@ -37,9 +37,9 @@ class ProductOfferValidityToProductOfferFacadeBridge implements ProductOfferVali
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
+    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
     {
         return $this->productOfferFacade->deactivateProductOfferById($idProductOffer);
     }

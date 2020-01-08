@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOffer\Business;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -68,9 +69,9 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
+    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
     {
         return $this->getFactory()
             ->createProductOfferWriter()
@@ -84,9 +85,9 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
+    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
     {
         return $this->getFactory()
             ->createProductOfferWriter()

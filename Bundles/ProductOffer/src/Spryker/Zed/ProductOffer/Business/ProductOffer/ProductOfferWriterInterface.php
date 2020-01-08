@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\ProductOffer\Business\ProductOffer;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 
 interface ProductOfferWriterInterface
 {
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer|null
      */
-    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
+    public function activateProductOfferById(int $idProductOffer): ?ProductOfferResponseTransfer;
 
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer|null
      */
-    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
+    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferResponseTransfer;
 }

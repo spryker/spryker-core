@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOffer\Business;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferFacadeInterface
@@ -55,28 +56,26 @@ interface ProductOfferFacadeInterface
     /**
      * Specification:
      * - Activates product offer by id.
-     * - Returns updated ProductOfferTransfer.
-     * - Returns null if product offer was not found.
+     * - Returns ProductOfferResponseTransfer.
      *
      * @api
      *
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
+    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer;
 
     /**
      * Specification:
      * - Deactivates product offer by id.
-     * - Returns updated ProductOfferTransfer.
-     * - Returns null if product offer was not found.
+     * - Returns ProductOfferResponseTransfer.
      *
      * @api
      *
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
+    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer;
 }

@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\ProductOffer\Business\ProductOffer;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferErrorTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ProductOfferWriter implements ProductOfferWriterInterface
 {
+    protected const ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND = 'Product offer is not found.';
+
     /**
      * @var \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface
      */
@@ -38,28 +42,65 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer|null
      */
-    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
+    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
     {
-        $productOfferTransfer = new ProductOfferTransfer();
-        $productOfferTransfer->setIdProductOffer($idProductOffer);
-        $productOfferTransfer->setIsActive(true);
+        $productOfferResponseTransfer = $this->createProductOfferResponseTransfer();
+        $productOfferTransfer = $this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer));
 
-        return $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
+        if (!$productOfferTransfer) {
+            return $this->addProductOfferError($productOfferResponseTransfer, static::ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND);
+        }
+
+        $productOfferTransfer->setIsActive(true);
+        $productOfferTransfer = $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
+
+        return $productOfferResponseTransfer->setIsSuccess(true)
+            ->setProductOffer($productOfferTransfer);
     }
 
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer|null
      */
-    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
+    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
     {
-        $productOfferTransfer = new ProductOfferTransfer();
-        $productOfferTransfer->setIdProductOffer($idProductOffer);
-        $productOfferTransfer->setIsActive(false);
+        $productOfferResponseTransfer = $this->createProductOfferResponseTransfer();
+        $productOfferTransfer = $this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer));
 
-        return $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
+        if (!$productOfferTransfer) {
+            return $this->addProductOfferError($productOfferResponseTransfer, static::ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND);
+        }
+
+        $productOfferTransfer->setIsActive(false);
+        $productOfferTransfer = $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
+
+        return $productOfferResponseTransfer->setIsSuccess(true)
+            ->setProductOffer($productOfferTransfer);
+    }
+
+    /**
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    protected function createProductOfferResponseTransfer(): ProductOfferResponseTransfer
+    {
+        return (new ProductOfferResponseTransfer())
+            ->setIsSuccess(false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer $productOfferResponseTransfer
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    protected function addProductOfferError(ProductOfferResponseTransfer $productOfferResponseTransfer, string $message): ProductOfferResponseTransfer
+    {
+        $productOfferResponseTransfer->addError((new ProductOfferErrorTransfer())->setMessage($message));
+
+        return $productOfferResponseTransfer;
     }
 }

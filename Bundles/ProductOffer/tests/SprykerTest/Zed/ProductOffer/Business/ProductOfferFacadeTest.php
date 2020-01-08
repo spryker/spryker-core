@@ -91,12 +91,13 @@ class ProductOfferFacadeTest extends Unit
         ]);
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->activateProductOfferById(
+        $productOfferResponseTransfer = $this->tester->getFacade()->activateProductOfferById(
             $productOfferTransfer->getIdProductOffer()
         );
 
         // Assert
-        $this->assertTrue($productOfferTransfer->getIsActive());
+        $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
+        $this->assertTrue($productOfferResponseTransfer->getProductOffer()->getIsActive());
     }
 
     /**
@@ -112,11 +113,12 @@ class ProductOfferFacadeTest extends Unit
         ]);
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->deactivateProductOfferById(
+        $productOfferResponseTransfer = $this->tester->getFacade()->deactivateProductOfferById(
             $productOfferTransfer->getIdProductOffer()
         );
 
         // Assert
-        $this->assertFalse($productOfferTransfer->getIsActive());
+        $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
+        $this->assertFalse($productOfferResponseTransfer->getProductOffer()->getIsActive());
     }
 }
