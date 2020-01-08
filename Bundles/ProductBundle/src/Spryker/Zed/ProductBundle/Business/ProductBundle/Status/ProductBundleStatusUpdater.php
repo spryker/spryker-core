@@ -55,10 +55,10 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
         }
 
         foreach ($productBundleTransfers as $productBundleTransfer) {
-            $bundledProducts = $this->productBundleRepository
+            $productForBundleTransfers = $this->productBundleRepository
                 ->getBundledProductsByIdProductConcrete($productBundleTransfer->getIdProductConcreteBundle());
 
-            $this->updateBundleProductIsActive($bundledProducts);
+            $this->updateBundleProductIsActive($productForBundleTransfers);
         }
 
         return $productConcreteTransfer;
