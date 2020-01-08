@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Status;
 
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
@@ -42,16 +43,20 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
      */
     public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        $productForBundleTransfers = $this->productBundleRepository
-            ->getBundledProductsByIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
 
-        if (!$productForBundleTransfers) {
+        $productBundleCollectionTransfer = $this->productBundleRepository
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
+
+        $productBundleTransfers = $productBundleCollectionTransfer->getProductBundles();
+        if (!$productBundleTransfers->count()) {
             return $productConcreteTransfer;
         }
 
-        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+        foreach ($productBundleTransfers as $productBundleTransfer) {
             $bundledProducts = $this->productBundleRepository
-                ->getBundledProductsByIdProductConcrete($productForBundleTransfer->getIdProductBundle());
+                ->getBundledProductsByIdProductConcrete($productBundleTransfer->getIdProductConcreteBundle());
 
             $this->updateBundleProductIsActive($bundledProducts);
         }

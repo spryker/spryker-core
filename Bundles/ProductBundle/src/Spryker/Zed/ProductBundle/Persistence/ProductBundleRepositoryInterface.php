@@ -32,11 +32,4 @@ interface ProductBundleRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
     public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer;
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
-     */
-    public function getBundledProductsByIdBundledProduct(int $idProductConcrete): array;
 }
