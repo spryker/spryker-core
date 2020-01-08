@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferStock\Business\ProductOfferStock;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
-use Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferStockNotFoundException;
 use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface;
 
 class ProductOfferStockReader implements ProductOfferStockReaderInterface
