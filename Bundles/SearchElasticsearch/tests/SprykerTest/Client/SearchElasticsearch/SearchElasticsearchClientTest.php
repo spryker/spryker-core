@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
