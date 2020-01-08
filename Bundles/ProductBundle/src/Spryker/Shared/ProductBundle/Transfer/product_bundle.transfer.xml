@@ -124,7 +124,6 @@
 
     <transfer name="ProductBundleCriteriaFilter">
         <property name="idBundledProduct" type="int"/>
-        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="ItemMetadata">

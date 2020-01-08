@@ -8,20 +8,20 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
-    protected $productBundleRepository;
+    protected $productBundleQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
@@ -34,16 +34,16 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        ProductBundleRepositoryInterface $productBundleRepository,
+        ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
         ProductBundleToStoreFacadeInterface $storeFacade
     ) {
-        $this->productBundleRepository = $productBundleRepository;
+        $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
     }
@@ -55,20 +55,21 @@ class ProductBundleReader implements ProductBundleReaderInterface
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete)
     {
-        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->setIdProductConcrete($idProductConcrete);
+        $bundledProducts = $this->findBundledProducts($idProductConcrete);
 
-        $productBundleCollectionTransfer = $this->productBundleRepository
-            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
+        $bundledProductsTransferCollection = new ArrayObject();
+        foreach ($bundledProducts as $bundledProductEntity) {
+            $productForBundleTransfer = new ProductForBundleTransfer();
+            $productForBundleTransfer->setIdProductConcrete($bundledProductEntity->getFkBundledProduct());
 
-        $productForBundleTransfers = new ArrayObject();
-        foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
-            foreach ($productBundleTransfer->getBundledProducts() as $productForBundleTransfer) {
-                $productForBundleTransfers->append($productForBundleTransfer);
-            }
+            $sku = $bundledProductEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
+            $productForBundleTransfer->setSku($sku);
+
+            $productForBundleTransfer->fromArray($bundledProductEntity->toArray(), true);
+            $bundledProductsTransferCollection->append($productForBundleTransfer);
         }
 
-        return $productForBundleTransfers;
+        return $bundledProductsTransferCollection;
     }
 
     /**
@@ -84,7 +85,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
             $productConcreteTransfer->getIdProductConcrete()
         );
 
-        if (count($bundledProducts) === 0) {
+        if (count($bundledProducts) == 0) {
             return $productConcreteTransfer;
         }
 
@@ -100,6 +101,18 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findBundledProducts($idProductConcrete)
+    {
+        return $this->productBundleQueryContainer
+            ->queryBundleWithRelatedBundledProduct($idProductConcrete)
+            ->find();
     }
 
     /**
