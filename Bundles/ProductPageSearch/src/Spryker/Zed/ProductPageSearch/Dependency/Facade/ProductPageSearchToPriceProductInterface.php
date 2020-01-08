@@ -21,14 +21,10 @@ interface ProductPageSearchToPriceProductInterface
 
     /**
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices(
-        int $idProductAbstract,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array;
+    public function findProductAbstractPrices($idProductAbstract);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
@@ -39,21 +35,17 @@ interface ProductPageSearchToPriceProductInterface
 
     /**
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtraction(
-        int $idProductAbstract,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array;
+    public function findProductAbstractPricesWithoutPriceExtraction($idProductAbstract);
 
     /**
-     * @param array $idProductAbstract
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $idProductAbstract): array;
+    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $productAbstractIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
