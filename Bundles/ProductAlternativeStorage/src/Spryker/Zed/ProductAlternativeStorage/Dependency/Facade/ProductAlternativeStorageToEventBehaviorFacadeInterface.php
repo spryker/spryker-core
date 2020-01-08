@@ -20,7 +20,7 @@ interface ProductAlternativeStorageToEventBehaviorFacadeInterface
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $foreignKeyColumnName
      *
-     * @return int[]
+     * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName);
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
 }

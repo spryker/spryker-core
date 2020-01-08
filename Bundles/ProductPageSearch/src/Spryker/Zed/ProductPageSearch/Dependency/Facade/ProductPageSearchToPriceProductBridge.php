@@ -37,12 +37,16 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
 
     /**
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices($idProductAbstract)
+    public function findProductAbstractPrices(
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array
     {
-        return $this->priceProductFacade->findProductAbstractPrices($idProductAbstract);
+        return $this->priceProductFacade->findProductAbstractPrices($idProductAbstract, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -57,22 +61,26 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
 
     /**
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtraction($idProductAbstract)
+    public function findProductAbstractPricesWithoutPriceExtraction(
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array
     {
-        return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract);
+        return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $productAbstractIds): array
+    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $idProductAbstract): array
     {
-        return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn($productAbstractIds);
+        return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn($idProductAbstract);
     }
 
     /**

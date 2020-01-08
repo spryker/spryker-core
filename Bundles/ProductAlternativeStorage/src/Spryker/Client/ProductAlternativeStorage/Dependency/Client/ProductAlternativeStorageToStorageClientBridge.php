@@ -25,9 +25,9 @@ class ProductAlternativeStorageToStorageClientBridge implements ProductAlternati
     /**
      * @param string $key
      *
-     * @return array
+     * @return mixed
      */
-    public function get(string $key)
+    public function get($key)
     {
         return $this->storageClient->get($key);
     }

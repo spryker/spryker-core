@@ -22,5 +22,5 @@ interface CategoryImageStorageToEventBehaviorInterface
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array;
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
 }

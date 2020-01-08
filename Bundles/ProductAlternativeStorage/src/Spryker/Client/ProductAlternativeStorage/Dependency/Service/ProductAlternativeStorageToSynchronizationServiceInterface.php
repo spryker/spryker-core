@@ -14,5 +14,5 @@ interface ProductAlternativeStorageToSynchronizationServiceInterface
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder(string $resourceName);
+    public function getStorageKeyBuilder($resourceName);
 }
