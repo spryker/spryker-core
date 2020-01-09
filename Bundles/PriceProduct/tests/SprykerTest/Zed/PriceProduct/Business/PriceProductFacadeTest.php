@@ -670,7 +670,7 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     * @return \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
     protected function getPriceProductFacade()
     {

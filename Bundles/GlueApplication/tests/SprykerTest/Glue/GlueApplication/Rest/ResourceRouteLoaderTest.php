@@ -9,7 +9,6 @@ namespace SprykerTest\Glue\GlueApplication\Rest;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestVersionTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoader;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
@@ -215,11 +214,11 @@ class ResourceRouteLoaderTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $resourceRoutePluginMock
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface|\PHPUnit\Framework\MockObject\MockObject $resourceRoutePluginMock
      *
      * @return void
      */
-    protected function configureBaseRouteMock(MockObject $resourceRoutePluginMock): void
+    protected function configureBaseRouteMock(ResourceRoutePluginInterface $resourceRoutePluginMock): void
     {
         $resourceRoutePluginMock
             ->method('getResourceType')
