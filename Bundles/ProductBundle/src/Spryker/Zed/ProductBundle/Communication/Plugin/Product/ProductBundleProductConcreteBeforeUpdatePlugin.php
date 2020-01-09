@@ -30,7 +30,7 @@ class ProductBundleProductConcreteBeforeUpdatePlugin extends AbstractPlugin impl
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function update(ProductConcreteTransfer $productConcreteTransfer)
+    public function update(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFacade()->updateBundleStatus($productConcreteTransfer);
     }
