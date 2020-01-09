@@ -16,7 +16,7 @@ class RatingSortConfigTransferBuilderPlugin extends AbstractPlugin implements So
 {
     public const NAME = 'rating';
     public const PARAMETER_NAME = 'rating';
-    public const UNMAPPED_TYPE = 'integer';
+    protected const UNMAPPED_TYPE = 'integer';
 
     /**
      * {@inheritDoc}
