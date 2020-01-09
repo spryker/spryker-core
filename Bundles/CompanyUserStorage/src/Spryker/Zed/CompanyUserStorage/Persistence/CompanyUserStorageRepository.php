@@ -71,6 +71,6 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
 
         return $this->getFactory()
             ->createCompanyUserStorageMapper()
-            ->mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers($companyUserStorageEntities);
+            ->mapCompanyUserStorageEntityCollectionToSynchronizationDataTransfers($companyUserStorageEntities);
     }
 }

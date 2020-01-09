@@ -45,7 +45,7 @@ interface ContentStorageRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
     public function getContentTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

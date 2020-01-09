@@ -102,13 +102,13 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             $query->filterByFkCategory_In($categoryIds);
         }
 
-        $categoryImageStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)
+        $categoryImageStorageEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
             ->setFormatter(ObjectFormatter::class)
             ->find();
 
         return $this->getFactory()
             ->createCategoryImageStorageMapper()
-            ->mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers($categoryImageStorageEntityTransfers);
+            ->mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers($categoryImageStorageEntityCollection);
     }
 
     /**

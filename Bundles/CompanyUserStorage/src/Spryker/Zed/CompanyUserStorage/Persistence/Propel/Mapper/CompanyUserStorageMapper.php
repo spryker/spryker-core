@@ -35,7 +35,7 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $companyUserStorageEntityCollection): array
+    public function mapCompanyUserStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $companyUserStorageEntityCollection): array
     {
         $synchronizationDataTransfers = [];
 

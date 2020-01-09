@@ -322,12 +322,12 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             $query->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds);
         }
 
-        $productReplacementStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)
+        $productReplacementStorageEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
             ->setFormatter(ObjectFormatter::class)
             ->find();
 
         return $this->getFactory()
             ->createProductReplacementStorageMapper()
-            ->mapProductReplacementForStorageEntityCollectionToSynchronizationDataTransfers($productReplacementStorageEntityTransfers);
+            ->mapProductReplacementForStorageEntityCollectionToSynchronizationDataTransfers($productReplacementStorageEntityCollection);
     }
 }

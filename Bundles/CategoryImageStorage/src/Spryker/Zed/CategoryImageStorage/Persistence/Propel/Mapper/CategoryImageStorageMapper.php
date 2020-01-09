@@ -22,9 +22,9 @@ class CategoryImageStorageMapper
     {
         $synchronizationDataTransfers = [];
 
-        foreach ($categoryImageStorageEntityCollection as $categoryImageStorageEntityTransfer) {
-            $synchronizationDataTransfers[] = $this->mapCategoryImageStorageEntityTransferToSynchronizationDataTransfer(
-                $categoryImageStorageEntityTransfer,
+        foreach ($categoryImageStorageEntityCollection as $categoryImageStorageEntity) {
+            $synchronizationDataTransfers[] = $this->mapCategoryImageStorageEntityToSynchronizationDataTransfer(
+                $categoryImageStorageEntity,
                 new SynchronizationDataTransfer()
             );
         }
@@ -38,7 +38,7 @@ class CategoryImageStorageMapper
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    public function mapCategoryImageStorageEntityTransferToSynchronizationDataTransfer(
+    public function mapCategoryImageStorageEntityToSynchronizationDataTransfer(
         SpyCategoryImageStorage $categoryImageStorageEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {

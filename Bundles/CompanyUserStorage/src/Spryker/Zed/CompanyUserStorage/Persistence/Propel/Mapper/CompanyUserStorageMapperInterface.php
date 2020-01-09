@@ -30,7 +30,7 @@ interface CompanyUserStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $companyUserStorageEntityCollection): array;
+    public function mapCompanyUserStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $companyUserStorageEntityCollection): array;
 
     /**
      * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage $companyUserStorageEntity
