@@ -48,5 +48,5 @@ interface CategoryImageStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getSynchronizationDataTransferCollectionByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds): array;
+    public function getSynchronizationDataTransfersByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds = []): array;
 }

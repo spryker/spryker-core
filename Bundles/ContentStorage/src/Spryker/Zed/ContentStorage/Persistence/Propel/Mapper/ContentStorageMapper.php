@@ -13,8 +13,9 @@ use Generated\Shared\Transfer\LocalizedContentTransfer;
 use Generated\Shared\Transfer\SpyContentEntityTransfer;
 use Orm\Zed\Content\Persistence\SpyContent;
 use Orm\Zed\ContentStorage\Persistence\SpyContentStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 
-class ContentStorageMapper implements ContentStorageMapperInterface
+class ContentStorageMapper
 {
     /**
      * @param \Orm\Zed\Content\Persistence\SpyContent $contentEntity
@@ -40,12 +41,31 @@ class ContentStorageMapper implements ContentStorageMapperInterface
     }
 
     /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $contentEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function mapContentStorageEntityTransferCollectionToContentStorageTransferCollection(ObjectCollection $contentEntityCollection): array
+    {
+        $contentTransfers = [];
+
+        foreach ($contentEntityCollection as $contentEntity) {
+            $contentTransfers[] = $this->mapContentEntityToContentTransfer(
+                $contentEntity,
+                new ContentTransfer()
+            );
+        }
+
+        return $contentTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SpyContentEntityTransfer $contentEntityTransfer
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
-    public function mapContentEntityTransferToContentTransfer(SpyContentEntityTransfer $contentEntityTransfer, ContentTransfer $contentTransfer): ContentTransfer
+    public function mapContentEntityToContentTransfer(SpyContentEntityTransfer $contentEntityTransfer, ContentTransfer $contentTransfer): ContentTransfer
     {
         return $contentTransfer->fromArray($contentEntityTransfer->toArray(), true);
     }

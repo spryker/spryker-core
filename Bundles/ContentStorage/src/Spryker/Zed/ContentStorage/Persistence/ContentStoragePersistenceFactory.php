@@ -11,7 +11,6 @@ use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Orm\Zed\ContentStorage\Persistence\SpyContentStorageQuery;
 use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;
 use Spryker\Zed\ContentStorage\Persistence\Propel\Mapper\ContentStorageMapper;
-use Spryker\Zed\ContentStorage\Persistence\Propel\Mapper\ContentStorageMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -30,9 +29,9 @@ class ContentStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentStorage\Persistence\Propel\Mapper\ContentStorageMapperInterface
+     * @return \Spryker\Zed\ContentStorage\Persistence\Propel\Mapper\ContentStorageMapper
      */
-    public function createContentStorageMapper(): ContentStorageMapperInterface
+    public function createContentStorageMapper(): ContentStorageMapper
     {
         return new ContentStorageMapper();
     }

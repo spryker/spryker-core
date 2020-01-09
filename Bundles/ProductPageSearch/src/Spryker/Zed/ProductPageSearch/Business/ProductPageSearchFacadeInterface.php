@@ -200,6 +200,6 @@ interface ProductPageSearchFacadeInterface
      */
     public function getSynchronizationDataTransfersByFilterAndProductIds(
         FilterTransfer $filterTransfer,
-        array $productIds
+        array $productIds = []
     ): array;
 }

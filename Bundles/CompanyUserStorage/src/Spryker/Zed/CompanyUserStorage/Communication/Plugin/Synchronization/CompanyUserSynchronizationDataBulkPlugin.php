@@ -58,7 +58,7 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         return $this->getFacade()
-            ->getSynchronizationDataTransferCollectionByFilterAndCompanyUserIds(
+            ->getSynchronizationDataTransfersByFilterAndCompanyUserIds(
                 $this->createFilterTransfer($offset, $limit),
                 $ids
             );

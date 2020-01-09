@@ -8,11 +8,12 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
-use Generated\Shared\Transfer\SpyProductConcretePageSearchEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
+use Propel\Runtime\Collection\ObjectCollection;
 
-class ProductPageSearchMapper implements ProductPageSearchMapperInterface
+class ProductPageSearchMapper
 {
     /**
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch $productConcretePageSearchEntity
@@ -48,18 +49,38 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductConcretePageSearchEntityTransfer $productConcretePageSearchEntityTransfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $productConcretePageSearchEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function mapProductConcretePageSearchEntityCollectionToSynchronizationDataTransfers(
+        ObjectCollection $productConcretePageSearchEntityCollection
+    ): array {
+        $synchronizationDataTransfers = [];
+
+        foreach ($productConcretePageSearchEntityCollection as $productConcretePageSearchEntity) {
+            $synchronizationDataTransfers[] = $this->mapProductConcretePageSearchEntityToSynchronizationDataTransfer(
+                $productConcretePageSearchEntity,
+                new SynchronizationDataTransfer()
+            );
+        }
+
+        return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productConcretePageSearchEntity
      * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    public function mapProductConcretePageSearchEntityTransferToSynchronizationDataTransfer(
-        SpyProductConcretePageSearchEntityTransfer $productConcretePageSearchEntityTransfer,
+    public function mapProductConcretePageSearchEntityToSynchronizationDataTransfer(
+        SpyProductAbstractPageSearch $productConcretePageSearchEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {
         return $synchronizationDataTransfer
-            ->setData($productConcretePageSearchEntityTransfer->getData())
-            ->setKey($productConcretePageSearchEntityTransfer->getKey())
-            ->setStore($productConcretePageSearchEntityTransfer->getStore());
+            ->setData($productConcretePageSearchEntity->getData())
+            ->setKey($productConcretePageSearchEntity->getKey())
+            ->setStore($productConcretePageSearchEntity->getStore());
     }
 }

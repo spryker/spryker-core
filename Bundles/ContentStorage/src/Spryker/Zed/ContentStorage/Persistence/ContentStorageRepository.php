@@ -10,6 +10,7 @@ namespace Spryker\Zed\ContentStorage\Persistence;
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -83,6 +84,8 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     }
 
     /**
+     * @module Content
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param array $contentIds
@@ -112,30 +115,12 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
         $query = $this->getFactory()
             ->getContentQuery();
 
-        $contentStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)
+        $contentEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ObjectFormatter::class)
             ->find();
 
-        return $this->mapContentStorageEntityTransferCollectionToContentStorageTransferCollection($contentStorageEntityTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyContentEntityTransfer[] $contentEntityTransfers
-     *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
-     */
-    protected function mapContentStorageEntityTransferCollectionToContentStorageTransferCollection(array $contentEntityTransfers): array
-    {
-        $contentStorageMapper = $this->getFactory()
-            ->createContentStorageMapper();
-        $contentTransfers = [];
-
-        foreach ($contentEntityTransfers as $contentEntityTransfer) {
-            $contentTransfers[] = $contentStorageMapper->mapContentEntityTransferToContentTransfer(
-                $contentEntityTransfer,
-                new ContentTransfer()
-            );
-        }
-
-        return $contentTransfers;
+        return $this->getFactory()
+            ->createContentStorageMapper()
+            ->mapContentStorageEntityTransferCollectionToContentStorageTransferCollection($contentEntityCollection);
     }
 }

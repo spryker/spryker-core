@@ -234,7 +234,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array
+    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
     {
         return $this->getRepository()
             ->getSynchronizationDataTransfersByFilterAndProductIds($filterTransfer, $productIds);

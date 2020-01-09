@@ -58,7 +58,7 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         return $this->getFacade()
-            ->getSynchronizationDataTransferCollectionByFilterAndCategoryIds(
+            ->getSynchronizationDataTransfersByFilterAndCategoryIds(
                 $this->createFilterTransfer($offset, $limit),
                 $ids
             );

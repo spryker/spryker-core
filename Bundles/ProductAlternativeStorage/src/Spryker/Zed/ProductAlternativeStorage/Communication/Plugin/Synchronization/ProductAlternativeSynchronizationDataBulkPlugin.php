@@ -97,7 +97,7 @@ class ProductAlternativeSynchronizationDataBulkPlugin extends AbstractPlugin imp
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         return $this->getFacade()
-            ->getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(
+            ->getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
                 $this->createFilterTransfer($offset, $limit),
                 $ids
             );

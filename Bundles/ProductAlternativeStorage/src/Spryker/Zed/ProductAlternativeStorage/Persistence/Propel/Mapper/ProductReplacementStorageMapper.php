@@ -7,23 +7,43 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 
-class ProductReplacementStorageMapper implements ProductReplacementStorageMapperInterface
+class ProductReplacementStorageMapper
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductReplacementForStorageEntityTransfer $productReplacementStorageEntityTransfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $productReplacementForStorageEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function mapProductReplacementForStorageEntityCollectionToProductReplacementForStorageTransfers(ObjectCollection $productReplacementForStorageEntityCollection): array
+    {
+        $synchronizationDataTransfers = [];
+
+        foreach ($productReplacementForStorageEntityCollection as $productReplacementForStorageEntity) {
+            $synchronizationDataTransfers[] = $this->mapProductReplacementForStorageEntityToSynchronizationDataTransfer(
+                $productReplacementForStorageEntity,
+                new SynchronizationDataTransfer()
+            );
+        }
+
+        return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementForStorageEntity
      * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    public function mapProductReplacementForStorageEntityTransferToSynchronizationDataTransfer(
-        SpyProductReplacementForStorageEntityTransfer $productReplacementStorageEntityTransfer,
+    public function mapProductReplacementForStorageEntityToSynchronizationDataTransfer(
+        SpyProductReplacementForStorage $productReplacementForStorageEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {
         return $synchronizationDataTransfer
-            ->setData($productReplacementStorageEntityTransfer->getData())
-            ->setKey($productReplacementStorageEntityTransfer->getKey());
+            ->setData($productReplacementForStorageEntity->getData())
+            ->setKey($productReplacementForStorageEntity->getKey());
     }
 }

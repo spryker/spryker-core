@@ -58,9 +58,9 @@ interface ProductAlternativeStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(
+    public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
-        array $productAlternativeStorageIds
+        array $productAlternativeStorageIds = []
     ): array;
 
     /**
@@ -77,6 +77,6 @@ interface ProductAlternativeStorageFacadeInterface
      */
     public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,
-        array $productReplacementForStorageIds
+        array $productReplacementForStorageIds = []
     ): array;
 }

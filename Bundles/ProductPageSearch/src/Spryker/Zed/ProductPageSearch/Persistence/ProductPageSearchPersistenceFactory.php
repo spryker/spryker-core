@@ -15,7 +15,6 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapper;
-use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
@@ -51,9 +50,9 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface
+     * @return \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapper
      */
-    public function createProductPageSearchMapper(): ProductPageSearchMapperInterface
+    public function createProductPageSearchMapper(): ProductPageSearchMapper
     {
         return new ProductPageSearchMapper();
     }

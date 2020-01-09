@@ -9,13 +9,13 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -196,7 +196,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds): array
+    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
     {
         $query = $this->getFactory()
             ->createProductConcretePageSearchQuery();
@@ -205,30 +205,12 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             $query->filterByFkProduct_In($productIds);
         }
 
-        $productConcretePageSearchEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        $productConcretePageSearchEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ObjectFormatter::class)
+            ->find();
 
-        return $this->mapProductConcretePageSearchEntityTransferCollectionToSynchronizationDataTransferCollection($productConcretePageSearchEntityTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductConcretePageSearchEntityTransfer[] $productConcretePageSearchEntityTransfers
-     *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
-     */
-    protected function mapProductConcretePageSearchEntityTransferCollectionToSynchronizationDataTransferCollection(
-        array $productConcretePageSearchEntityTransfers
-    ): array {
-        $productPageSearchMapper = $this->getFactory()
-            ->createProductPageSearchMapper();
-        $synchronizationDataTransfers = [];
-
-        foreach ($productConcretePageSearchEntityTransfers as $productConcretePageSearchEntityTransfer) {
-            $synchronizationDataTransfers[] = $productPageSearchMapper->mapProductConcretePageSearchEntityTransferToSynchronizationDataTransfer(
-                $productConcretePageSearchEntityTransfer,
-                new SynchronizationDataTransfer()
-            );
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getFactory()
+            ->createProductPageSearchMapper()
+            ->mapProductConcretePageSearchEntityCollectionToSynchronizationDataTransfers($productConcretePageSearchEntityCollection);
     }
 }

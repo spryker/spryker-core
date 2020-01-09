@@ -7,23 +7,43 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 
-class CategoryImageStorageMapper implements CategoryImageStorageMapperInterface
+class CategoryImageStorageMapper
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $categoryImageStorageEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $categoryImageStorageEntityCollection): array
+    {
+        $synchronizationDataTransfers = [];
+
+        foreach ($categoryImageStorageEntityCollection as $categoryImageStorageEntityTransfer) {
+            $synchronizationDataTransfers[] = $this->mapCategoryImageStorageEntityTransferToSynchronizationDataTransfer(
+                $categoryImageStorageEntityTransfer,
+                new SynchronizationDataTransfer()
+            );
+        }
+
+        return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorage $categoryImageStorageEntity
      * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
     public function mapCategoryImageStorageEntityTransferToSynchronizationDataTransfer(
-        SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer,
+        SpyCategoryImageStorage $categoryImageStorageEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {
         return $synchronizationDataTransfer
-            ->setData($categoryImageStorageEntityTransfer->getData())
-            ->setKey($categoryImageStorageEntityTransfer->getKey());
+            ->setData($categoryImageStorageEntity->getData())
+            ->setKey($categoryImageStorageEntity->getKey());
     }
 }

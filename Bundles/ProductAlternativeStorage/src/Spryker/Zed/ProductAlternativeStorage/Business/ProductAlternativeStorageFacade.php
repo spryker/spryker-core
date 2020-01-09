@@ -73,9 +73,9 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductAlternativeStorageCollectionByFilterAndProductAlternativeStorageIds(
+    public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
-        array $productAlternativeStorageIds
+        array $productAlternativeStorageIds = []
     ): array {
         return $this->getRepository()
             ->getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds($filterTransfer, $productAlternativeStorageIds);
@@ -93,7 +93,7 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      */
     public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,
-        array $productReplacementForStorageIds
+        array $productReplacementForStorageIds = []
     ): array {
         return $this->getRepository()
             ->getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds($filterTransfer, $productReplacementForStorageIds);

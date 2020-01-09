@@ -14,9 +14,7 @@ use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorageQu
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper\ProductAlternativeStorageMapper;
-use Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper\ProductAlternativeStorageMapperInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper\ProductReplacementStorageMapper;
-use Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper\ProductReplacementStorageMapperInterface;
 use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageDependencyProvider;
 
 /**
@@ -67,17 +65,17 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper\ProductAlternativeStorageMapperInterface
+     * @return \Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper\ProductAlternativeStorageMapper
      */
-    public function createProductAlternativeStorageMapper(): ProductAlternativeStorageMapperInterface
+    public function createProductAlternativeStorageMapper(): ProductAlternativeStorageMapper
     {
         return new ProductAlternativeStorageMapper();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper\ProductReplacementStorageMapperInterface
+     * @return \Spryker\Zed\ProductAlternativeStorage\Persistence\Propel\Mapper\ProductReplacementStorageMapper
      */
-    public function createProductReplacementStorageMapper(): ProductReplacementStorageMapperInterface
+    public function createProductReplacementStorageMapper(): ProductReplacementStorageMapper
     {
         return new ProductReplacementStorageMapper();
     }
