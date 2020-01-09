@@ -268,7 +268,6 @@ interface ProductBundleFacadeInterface
     /**
      * Specification:
      *  - Hydrates OrderTransfer with product bundle data.
-     *  - Copies unique product options from related bundle items to bundle.
      *
      * @api
      *
@@ -370,4 +369,31 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     public function extractQuoteItems(QuoteTransfer $quoteTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands sales order bundle items by product options.
+     * - Copies unique product options from related bundle items to bundle.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderProductBundlesWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands provided array of ItemTransfers by product bundles.
+     * - Extracts items from array related to bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array;
 }

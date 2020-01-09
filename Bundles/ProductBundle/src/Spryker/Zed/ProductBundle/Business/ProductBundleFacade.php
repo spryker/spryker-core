@@ -450,4 +450,41 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     {
         return $this->getFactory()->createQuoteItemsGrouper()->extractQuoteItems($quoteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderProductBundlesWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        // TODO: Don't forget about TDD :)
+
+        return $this->getFactory()
+            ->createProductOptionExpander()
+            ->expandOrderProductBundlesWithProductOptions($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array
+    {
+        // TODO: Don't forget about TDD :)
+
+        return $this->getFactory()
+            ->createProductBundleExpander()
+            ->expandUniqueOrderItemsWithProductBundles($itemTransfers, $orderTransfer);
+    }
 }

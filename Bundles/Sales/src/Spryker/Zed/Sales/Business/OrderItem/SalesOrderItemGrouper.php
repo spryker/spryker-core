@@ -13,6 +13,19 @@ use Generated\Shared\Transfer\OrderTransfer;
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\UniqueOrderItemsExpanderPluginInterface[]
+     */
+    protected $uniqueOrderItemsExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\UniqueOrderItemsExpanderPluginInterface[] $uniqueOrderItemsExpanderPlugins
+     */
+    public function __construct(array $uniqueOrderItemsExpanderPlugins)
+    {
+        $this->uniqueOrderItemsExpanderPlugins = $uniqueOrderItemsExpanderPlugins;
+    }
+
+    /**
      * @deprecated Use `SalesOrderItemGrouper::getUniqueItemsFromOrder() instead`.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
@@ -43,10 +56,26 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
      */
     public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array
     {
-        $calculatedOrderItems = $this->getUniqueItems($orderTransfer);
-        $calculatedOrderBundleItems = $this->getUniqueBundleItems($orderTransfer);
+        $itemTransfers = $this->getUniqueItems($orderTransfer);
 
-        return array_merge($calculatedOrderItems, $calculatedOrderBundleItems);
+        $itemTransfers = $this->executeUniqueOrderItemsExpanderPlugins($itemTransfers, $orderTransfer);
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeUniqueOrderItemsExpanderPlugins(array $itemTransfers, OrderTransfer $orderTransfer): array
+    {
+        foreach ($this->uniqueOrderItemsExpanderPlugins as $uniqueOrderItemsExpanderPlugin) {
+            $itemTransfers = $uniqueOrderItemsExpanderPlugin->expand($itemTransfers, $orderTransfer);
+        }
+
+        return $itemTransfers;
     }
 
     /**
@@ -59,10 +88,6 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
         $uniqueItemTransfers = [];
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
-                continue;
-            }
-
             $key = $itemTransfer->requireGroupKey()->getGroupKey();
 
             if (!isset($uniqueItemTransfers[$key])) {
@@ -74,29 +99,6 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
         }
 
         return $uniqueItemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getUniqueBundleItems(OrderTransfer $orderTransfer): array
-    {
-        $uniqueItemTransfers = [];
-
-        foreach ($orderTransfer->getBundleItems() as $itemTransfer) {
-            $bundleItemIdentifier = $itemTransfer->requireBundleItemIdentifier()->getBundleItemIdentifier();
-
-            if (!isset($calculatedOrderItems[$bundleItemIdentifier])) {
-                $uniqueItemTransfers[$bundleItemIdentifier] = clone $itemTransfer;
-                continue;
-            }
-
-            $uniqueItemTransfers[$bundleItemIdentifier] = $this->setQuantityAndPriceOfUniqueOrderItem($uniqueItemTransfers[$bundleItemIdentifier], $itemTransfer);
-        }
-
-        return array_values($uniqueItemTransfers);
     }
 
     /**

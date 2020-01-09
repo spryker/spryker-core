@@ -19,7 +19,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandBundleItemsWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandOrderProductBundlesWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer
     {
         $expandedProductBundles = new ArrayObject();
 
