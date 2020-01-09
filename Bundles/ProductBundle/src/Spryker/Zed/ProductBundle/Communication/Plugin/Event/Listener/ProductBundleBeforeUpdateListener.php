@@ -24,7 +24,8 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
 {
     /**
      * {@inheritDoc}
-     * - Sets `isActive` to false if all bundled products weren't active, if the product is a product bundle.
+     * - Sets `isActive` to false if all bundled products weren't active.
+     * - Sets `isActive` to true otherwise.
      *
      * @api
      *
@@ -40,8 +41,6 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
         }
 
         $this->setIsActive($productConcreteTransfer);
-
-        $this->getFacade()->updateBundleStatus($productConcreteTransfer);
     }
 
     /**
