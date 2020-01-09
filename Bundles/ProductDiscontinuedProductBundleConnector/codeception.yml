@@ -1,5 +1,4 @@
 namespace: ProductDiscontinuedProductBundleConnector
-actor: Tester
 include:
     - tests/SprykerTest/Zed/ProductDiscontinuedProductBundleConnector
 paths:

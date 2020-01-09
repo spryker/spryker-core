@@ -1,6 +1,4 @@
 namespace: MerchantRelationshipProductListGui
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/MerchantRelationshipProductListGui
 

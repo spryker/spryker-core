@@ -1,7 +1,6 @@
 namespace: MerchantProfileDataImport
 include:
     - tests/SprykerTest/Zed/MerchantProfileDataImport
-actor: Tester
 paths:
     tests: tests
     log: tests/_output
