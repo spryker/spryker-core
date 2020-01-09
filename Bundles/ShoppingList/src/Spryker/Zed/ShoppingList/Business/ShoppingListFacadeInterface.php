@@ -80,11 +80,46 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
+     * - Adds item to shopping list.
+     * - Adds create shopping list success message if shopping list created.
+     * - Fails and adds error message when the product is not available or deactivated.
+     * - Fails and adds error message when quantity is lesser equal than zero or bigger than 2147483647.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Updates shopping list item.saveShoppingListItem
+     *  - Adds update shopping list success message if shopping list successfully updated.
+     *  - Fails and adds error message when quantity is lesser equal than zero or bigger than 2147483647.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer;
+
+    /**
+     * Specification:
      *  - Adds item to shopping list.
      *  - Adds create shopping list success message if shopping list created.
      *  - Fails and adds error message when quantity is lesser equal than zero.
      *
      * @api
+     *
+     * @deprecated Use ShoppingListFacadeInterface::addShoppingListItem instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -186,6 +221,8 @@ interface ShoppingListFacadeInterface
      *  - Update shopping list item.
      *
      * @api
+     *
+     * @deprecated Use ShoppingListFacadeInterface::updateShoppingListItemById instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -312,4 +349,21 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds shopping list by uuid.
+     * - Requires uuid field to be set in ShoppingListTransfer.
+     * - Requires idCompanyUser field to be set in ShoppingListTransfer.
+     * - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 }

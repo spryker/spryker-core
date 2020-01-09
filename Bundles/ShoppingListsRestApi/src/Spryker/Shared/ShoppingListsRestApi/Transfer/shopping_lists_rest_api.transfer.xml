@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ShoppingList">
+        <property name="uuid" type="string" />
+    </transfer>
+
+    <transfer name="RestShoppingListRequest">
+        <property name="shoppingList" type="ShoppingList" />
+        <property name="companyUserUuid" type="string" />
+        <property name="customerReference" type="string" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
+    </transfer>
+
+    <transfer name="RestShoppingListCollectionResponse">
+        <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
+    </transfer>
+
+    <transfer name="RestShoppingListAttributes">
+        <property name="owner" type="string" />
+        <property name="name" type="string" restRequestParameter="required" />
+        <property name="numberOfItems" type="int" />
+        <property name="updatedAt" type="string" nullable="true" />
+        <property name="createdAt" type="string" />
+    </transfer>
+
+    <transfer name="ShoppingListItem">
+        <property name="uuid" type="string" />
+    </transfer>
+
+    <transfer name="RestShoppingListItemRequest">
+        <property name="shoppingListItem" type="ShoppingListItem" />
+        <property name="shoppingListUuid" type="string" />
+        <property name="companyUserUuid" type="string" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
+    </transfer>
+
+    <transfer name="RestShoppingListItemAttributes">
+        <property name="quantity" type="int" restRequestParameter="required" />
+        <property name="sku" type="string" restRequestParameter="required" />
+    </transfer>
+
+</transfers>

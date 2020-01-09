@@ -93,12 +93,34 @@ interface ShoppingListClientInterface
      *
      * @api
      *
+     * @deprecated Use ShoppingListClientInterface::addShoppingListItem instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Hydrates ShoppingListItem with provided optional params.
+     *  - Adds item to shopping list.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        array $params = []
+    ): ShoppingListItemResponseTransfer;
 
     /**
      * Specification:
@@ -233,11 +255,30 @@ interface ShoppingListClientInterface
      *
      * @api
      *
+     * @deprecated Use ShoppingListClientInterface::updateShoppingListItemById instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Updates shopping list item.
+     *  - Updates customer permissions.
+     *  - Get messages from Zed request and put them to session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer;
 
     /**
      * Specification:

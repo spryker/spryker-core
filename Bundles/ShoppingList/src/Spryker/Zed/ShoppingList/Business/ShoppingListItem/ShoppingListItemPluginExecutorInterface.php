@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 
 interface ShoppingListItemPluginExecutorInterface
 {
@@ -33,6 +34,17 @@ interface ShoppingListItemPluginExecutorInterface
     public function executeItemExpanderPlugins(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function executeAddShoppingListItemPreCheckPlugins(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer;
+
+    /**
+     * @deprecated Use ShoppingListItemPluginExecutorInterface::executeAddShoppingListItemPreCheckPlugins instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return bool
