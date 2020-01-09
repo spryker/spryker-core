@@ -55,7 +55,10 @@ interface ProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - Updates a product offer by product offer id.
+     * - Returns ProductOfferResponseTransfer.isSuccessful=false if $productOfferTransfer.idProductOffer is not given
+     * - Returns ProductOfferResponseTransfer.isSuccessful=false if no offer is found with $productOfferTransfer.idProductOffer
+     * - Persists product offer entity with modified fields from ProductOfferTransfer
+     * - Returns new product offer entity in ProductOfferResponseTransfer.productOffer and isSuccessful=true
      *
      * @api
      *
