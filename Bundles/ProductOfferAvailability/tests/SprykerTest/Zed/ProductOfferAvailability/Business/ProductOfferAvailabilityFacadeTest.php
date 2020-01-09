@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\ProductOfferAvailability\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
@@ -79,6 +81,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
         $storeTransfer = $this->tester->haveStore();
         $productOfferStockTransfer = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => false,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
                     StoreRelationTransfer::ID_STORES => [
@@ -115,6 +118,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
         $storeTransfer = $this->tester->haveStore();
         $productOfferStockTransfer = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => false,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
                     StoreRelationTransfer::ID_STORES => [

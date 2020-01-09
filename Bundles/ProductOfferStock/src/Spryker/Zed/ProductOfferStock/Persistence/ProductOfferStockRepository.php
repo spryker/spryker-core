@@ -31,7 +31,7 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
         $productOfferStockRequestTransfer->requireProductOfferReference()
             ->requireStore()
             ->getStore()
-                ->requireName();
+            ->requireName();
 
         $quantity = $this->getFactory()
             ->getProductOfferStockPropelQuery()
@@ -89,16 +89,16 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
         if ($productOfferStockRequestTransfer->getProductOfferReference() !== null) {
             $productOfferStockQuery
                 ->useSpyProductOfferQuery()
-                ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
+                    ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
                 ->endUse();
         }
 
         if ($productOfferStockRequestTransfer->getStore() && $productOfferStockRequestTransfer->getStore()->getIdStore()) {
             $productOfferStockQuery
                 ->useStockQuery()
-                ->useStockStoreQuery()
-                ->filterByFkStore($productOfferStockRequestTransfer->getStore()->getIdStore())
-                ->endUse()
+                    ->useStockStoreQuery()
+                        ->filterByFkStore($productOfferStockRequestTransfer->getStore()->getIdStore())
+                    ->endUse()
                 ->endUse();
         }
 
