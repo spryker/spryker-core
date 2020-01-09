@@ -93,7 +93,7 @@ class LockQuoteTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Quote\Business\QuoteFacadeInterface
+     * @return \Spryker\Zed\Quote\Business\QuoteFacadeInterface
      */
     protected function getFacade()
     {

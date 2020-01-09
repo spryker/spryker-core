@@ -33,7 +33,7 @@ abstract class AbstractResultFormatterPluginTest extends Unit
     /**
      * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSearchConfigMock()
+    protected function createSearchConfigMock(): SearchConfigInterface
     {
         $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
             ->disableOriginalConstructor()

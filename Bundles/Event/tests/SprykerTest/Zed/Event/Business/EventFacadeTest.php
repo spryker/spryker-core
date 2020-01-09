@@ -214,7 +214,7 @@ class EventFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Client\EventToQueueInterface
      */
-    protected function createQueueClientMock()
+    protected function createQueueClientMock(): EventToQueueInterface
     {
         return $this->getMockBuilder(EventToQueueInterface::class)
             ->getMock();
@@ -223,7 +223,7 @@ class EventFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface
      */
-    protected function createEventListenerMock()
+    protected function createEventListenerMock(): EventHandlerInterface
     {
         return $this->getMockBuilder(EventHandlerInterface::class)
             ->getMock();
@@ -232,7 +232,7 @@ class EventFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface
      */
-    protected function createEventBulkListenerMock()
+    protected function createEventBulkListenerMock(): EventBulkHandlerInterface
     {
         return $this->getMockBuilder(EventBulkHandlerInterface::class)
             ->getMock();
@@ -265,7 +265,7 @@ class EventFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    protected function createTransferObjectMock()
+    protected function createTransferObjectMock(): TransferInterface
     {
         return $this->getMockBuilder(TransferInterface::class)
            ->getMock();
@@ -274,7 +274,7 @@ class EventFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface
      */
-    protected function createEventSubscriberMock()
+    protected function createEventSubscriberMock(): EventSubscriberInterface
     {
         return $this->getMockBuilder(EventSubscriberInterface::class)
             ->getMock();
