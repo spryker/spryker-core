@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -49,7 +48,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productConcretePageSearchEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[] $productConcretePageSearchEntityCollection
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
@@ -69,13 +68,13 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productConcretePageSearchEntity
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch $productConcretePageSearchEntity
      * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
     public function mapProductConcretePageSearchEntityToSynchronizationDataTransfer(
-        SpyProductAbstractPageSearch $productConcretePageSearchEntity,
+        SpyProductConcretePageSearch $productConcretePageSearchEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {
         return $synchronizationDataTransfer
