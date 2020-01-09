@@ -28,9 +28,6 @@
         <column name="fk_product" type="INTEGER" required="true"/>
         <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->
         <column name="structured_data" type="LONGVARCHAR" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" required="true"/>
-        <column name="store" type="VARCHAR" required="true"/>
         <index name="spy_product_concrete_page_search-fk_product">
             <index-column name="fk_product"/>
         </index>
