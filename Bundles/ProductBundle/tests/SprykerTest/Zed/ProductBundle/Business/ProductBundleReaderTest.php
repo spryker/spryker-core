@@ -142,7 +142,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
-    protected function createAvailabilityFacadeMock()
+    protected function createAvailabilityFacadeMock(): MockObject
     {
         return $this->getMockBuilder(ProductBundleToAvailabilityFacadeInterface::class)->getMock();
     }
@@ -150,7 +150,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
-    protected function createStoreFacadeMock()
+    protected function createStoreFacadeMock(): MockObject
     {
         return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
     }
