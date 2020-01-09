@@ -28,6 +28,8 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
     /**
+     * Note: The controller of $event object is always a valid controller that exists in the router.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
