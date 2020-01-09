@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Status;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
@@ -26,15 +27,23 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
+     */
+    protected $productBundleReader;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface $productBundleReader
      */
     public function __construct(
         ProductBundleRepositoryInterface $productBundleRepository,
-        ProductBundleToProductFacadeInterface $productFacade
+        ProductBundleToProductFacadeInterface $productFacade,
+        ProductBundleReaderInterface $productBundleReader
     ) {
         $this->productBundleRepository = $productBundleRepository;
         $this->productFacade = $productFacade;
+        $this->productBundleReader = $productBundleReader;
     }
 
     /**
@@ -44,6 +53,10 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
      */
     public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
+        if ($productConcreteTransfer->getProductBundle() !== null) {
+            return $productConcreteTransfer->setIsActive($this->getProductConcreteStatus($productConcreteTransfer));
+        }
+
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
 
@@ -75,11 +88,42 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
                 $isActive = false;
             }
 
-            $productConcreteTransfer = $this->productFacade->findProductConcreteById($productForBundleTransfer->getIdProductBundle());
+            $this->saveProductConcrete($productForBundleTransfer->getIdProductBundle(), $isActive);
+        }
+    }
 
-            if ($productConcreteTransfer->getIsActive() !== $isActive) {
-                $this->productFacade->saveProductConcrete($productConcreteTransfer->setIsActive($isActive));
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return bool
+     */
+    protected function getProductConcreteStatus(ProductConcreteTransfer $productConcreteTransfer): bool
+    {
+        $productForBundleTransfer = $this->productBundleReader
+            ->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        foreach ($productForBundleTransfer as $bundledProductTransfer) {
+            if (!$bundledProductTransfer->getIsActive()) {
+                $productConcreteTransfer->setIsActive(false);
+
+                return false;
             }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param bool $isActive
+     *
+     * @return void
+     */
+    protected function saveProductConcrete(int $idProductConcrete, bool $isActive): void
+    {
+        $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProductConcrete);
+
+        if ($productConcreteTransfer->getIsActive() !== $isActive) {
+            $this->productFacade->saveProductConcrete($productConcreteTransfer->setIsActive($isActive));
         }
     }
 }
