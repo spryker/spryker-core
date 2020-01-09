@@ -12,15 +12,9 @@ use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
-     */
-    protected $productBundleRepository;
-
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface
      */
@@ -32,16 +26,13 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
     protected $productBundleReader;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface $productBundleReader
      */
     public function __construct(
-        ProductBundleRepositoryInterface $productBundleRepository,
         ProductBundleToProductFacadeInterface $productFacade,
         ProductBundleReaderInterface $productBundleReader
     ) {
-        $this->productBundleRepository = $productBundleRepository;
         $this->productFacade = $productFacade;
         $this->productBundleReader = $productBundleReader;
     }
@@ -60,7 +51,7 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
 
-        $productBundleCollectionTransfer = $this->productBundleRepository
+        $productBundleCollectionTransfer = $this->productBundleReader
             ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
 
         $productBundleTransfers = $productBundleCollectionTransfer->getProductBundles();

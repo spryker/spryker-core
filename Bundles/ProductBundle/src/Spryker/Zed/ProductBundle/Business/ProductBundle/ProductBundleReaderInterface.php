@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductBundleReaderInterface
@@ -24,4 +26,11 @@ interface ProductBundleReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer;
 }

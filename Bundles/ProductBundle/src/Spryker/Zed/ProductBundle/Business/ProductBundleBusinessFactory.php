@@ -71,7 +71,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleReader(
             $this->getQueryContainer(),
             $this->getAvailabilityFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
     }
 
@@ -204,7 +205,6 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleStatusUpdater(): ProductBundleStatusUpdaterInterface
     {
         return new ProductBundleStatusUpdater(
-            $this->getRepository(),
             $this->getProductFacade(),
             $this->createProductBundleReader()
         );

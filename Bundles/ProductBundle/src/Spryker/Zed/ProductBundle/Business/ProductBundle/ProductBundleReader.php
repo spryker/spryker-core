@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -15,6 +17,7 @@ use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
@@ -34,18 +37,26 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     */
+    protected $productBundleRepository;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleRepositoryInterface $productBundleRepository
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
+        $this->productBundleRepository = $productBundleRepository;
     }
 
     /**
@@ -102,6 +113,16 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
+    {
+        return $this->productBundleRepository->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
     }
 
     /**
