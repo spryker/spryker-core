@@ -11,63 +11,6 @@ interface MerchantProductOfferStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Queries all active product offer with the given concreteSkus.
-     * - Lists of product references for concrete sku.
-     * - Stores data as json encoded to storage table.
-     * - Removes all inactive product offer storage entities with the given concreteSkus.
-     * - Sends a copy of data to queue based on module config.
-     *
-     * @api
-     *
-     * @param string[] $productSkus
-     *
-     * @return void
-     */
-    public function publishProductConcreteProductOffersStorage(array $productSkus): void;
-
-    /**
-     * Specification:
-     * - Finds and deletes product concrete offer storage entities with the given concreteSkus.
-     * - Sends delete message to queue based on module config.
-     *
-     * @api
-     *
-     * @param string[] $productSkus
-     *
-     * @return void
-     */
-    public function unpublishProductConcreteProductOffersStorage(array $productSkus): void;
-
-    /**
-     * Specification:
-     * - Queries all active product offer with the given productOfferReferences.
-     * - Stores data as json encoded to storage table.
-     * - Removes all inactive product offer storage entities with the given productOfferReferences.
-     * - Sends a copy of data to queue based on module config.
-     *
-     * @api
-     *
-     * @param string[] $productOfferReferences
-     *
-     * @return void
-     */
-    public function publishProductOfferStorage(array $productOfferReferences): void;
-
-    /**
-     * Specification:
-     * - Finds and deletes product offer storage entities with the given productOfferReferences.
-     * - Sends delete message to queue based on module config.
-     *
-     * @api
-     *
-     * @param string[] $productOfferReferences
-     *
-     * @return void
-     */
-    public function unpublishProductOfferStorage(array $productOfferReferences): void;
-
-    /**
-     * Specification:
      * - Gets concreteSkus from eventTransfers.
      * - Queries all active product offer with the given concreteSkus.
      * - Lists of product references for concrete sku.

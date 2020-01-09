@@ -81,7 +81,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
-    public function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void
+    protected function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void
     {
         $productSkus = array_unique($productSkus);
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productSkus);

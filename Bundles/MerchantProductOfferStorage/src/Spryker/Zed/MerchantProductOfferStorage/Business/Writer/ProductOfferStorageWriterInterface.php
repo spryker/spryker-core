@@ -15,11 +15,4 @@ interface ProductOfferStorageWriterInterface
      * @return void
      */
     public function writeProductOfferStorageCollectionByProductOfferReferenceEvents(array $eventTransfers): void;
-
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return void
-     */
-    public function writeProductOfferStorageCollectionByProductOfferReferences(array $productOfferReferences): void;
 }
