@@ -57,7 +57,7 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
-    protected const TIMEOUT_DEFAULT = 4800;
+    protected const TIMEOUT_DEFAULT = 9000;
 
     /**
      * @return int
