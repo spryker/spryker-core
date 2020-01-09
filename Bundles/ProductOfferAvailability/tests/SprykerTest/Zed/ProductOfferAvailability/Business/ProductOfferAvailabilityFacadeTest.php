@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\ProductOfferAvailability\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
