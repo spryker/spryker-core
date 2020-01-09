@@ -10,13 +10,13 @@ namespace Spryker\Zed\ContentStorage\Dependency\Service;
 interface ContentStorageToUtilEncodingInterface
 {
     /**
-     * @param array $value
+     * @param mixed $value
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string|null
+     * @return string
      */
-    public function encodeJson(array $value, ?int $options = null, ?int $depth = null): ?string;
+    public function encodeJson($value, $options = null, $depth = null);
 
     /**
      * @param string $jsonValue
@@ -24,7 +24,7 @@ interface ContentStorageToUtilEncodingInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return array
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null);
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

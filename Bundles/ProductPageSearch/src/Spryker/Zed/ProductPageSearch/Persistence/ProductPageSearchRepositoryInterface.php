@@ -28,8 +28,6 @@ interface ProductPageSearchRepositoryInterface
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface::getProductCollectionByFilter()
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]

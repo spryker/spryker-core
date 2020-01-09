@@ -100,7 +100,6 @@ interface ProductAlternativeStorageRepositoryInterface
 
     /**
      * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()` instead.
-     *
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
@@ -109,7 +108,6 @@ interface ProductAlternativeStorageRepositoryInterface
 
     /**
      * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()` instead.
-     *
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
      * @param int[] $productAlternativeStorageIds
@@ -120,7 +118,6 @@ interface ProductAlternativeStorageRepositoryInterface
 
     /**
      * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()` instead.
-     *
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
@@ -129,7 +126,6 @@ interface ProductAlternativeStorageRepositoryInterface
 
     /**
      * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()` instead.
-     *
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
      * @param int[] $productReplacementForStorageIds

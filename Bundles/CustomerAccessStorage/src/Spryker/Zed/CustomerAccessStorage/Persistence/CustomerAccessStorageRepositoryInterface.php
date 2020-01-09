@@ -22,7 +22,6 @@ interface CustomerAccessStorageRepositoryInterface
 
     /**
      * @deprecated Use `CustomerAccessStorageRepositoryInterface::findFilteredCustomerAccessStorageEntities()` instead.
-     *
      * @see \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepositoryInterface::findFilteredCustomerAccessStorageEntities()
      *
      * @return array

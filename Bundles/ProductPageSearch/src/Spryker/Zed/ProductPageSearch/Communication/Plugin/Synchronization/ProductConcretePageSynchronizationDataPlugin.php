@@ -16,7 +16,6 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 
 /**
  * @deprecated Use `ProductConcretePageSynchronizationDataBulkPlugin` instead.
- *
  * @see \Spryker\Zed\ProductPageSearch\Communication\Plugin\Synchronization\ProductConcretePageSynchronizationDataBulkPlugin
  *
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()

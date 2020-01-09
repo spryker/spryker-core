@@ -152,8 +152,6 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @deprecated Will be removed without replacement.
      *
-     * @see \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository::getSynchronizationDataTransfersByFilterAndProductIds()
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]

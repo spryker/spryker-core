@@ -28,7 +28,7 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container): Container
+    public function provideCommunicationLayerDependencies(Container $container)
     {
         $this->addEventBehaviorFacade($container);
 
@@ -40,7 +40,7 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container): Container
+    public function providePersistenceLayerDependencies(Container $container)
     {
         $this->addCategoryImageSetQuery($container);
         $this->addCategoryImageSetToCategoryImageQuery($container);

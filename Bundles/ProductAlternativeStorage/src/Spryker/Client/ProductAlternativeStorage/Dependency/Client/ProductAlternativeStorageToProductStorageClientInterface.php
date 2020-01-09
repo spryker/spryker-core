@@ -17,7 +17,7 @@ interface ProductAlternativeStorageToProductStorageClientInterface
      *
      * @return array|null
      */
-    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
+    public function findProductAbstractStorageData($idProductAbstract, $localeName): ?array;
 
     /**
      * @param int $idProductAbstract

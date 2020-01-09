@@ -16,12 +16,12 @@ interface CategoryImageStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer): void;
+    public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer);
 
     /**
      * @param string $idCategoryImageStorageEntityTransfer
      *
      * @return void
      */
-    public function deleteCategoryImageStorage(string $idCategoryImageStorageEntityTransfer): void;
+    public function deleteCategoryImageStorage(string $idCategoryImageStorageEntityTransfer);
 }

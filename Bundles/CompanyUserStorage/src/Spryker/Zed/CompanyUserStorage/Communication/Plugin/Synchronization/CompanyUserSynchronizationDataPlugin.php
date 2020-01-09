@@ -14,7 +14,6 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 
 /**
  * @deprecated Use `CompanyUserSynchronizationDataBulkPlugin` instead.
- *
  * @see \Spryker\Zed\CompanyUserStorage\Communication\Plugin\Synchronization\CompanyUserSynchronizationDataBulkPlugin
  *
  * @method \Spryker\Zed\CompanyUserStorage\CompanyUserStorageConfig getConfig()

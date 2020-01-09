@@ -20,7 +20,6 @@ interface CompanyUserStorageRepositoryInterface
 
     /**
      * @deprecated Use `CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()` instead.
-     *
      * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]

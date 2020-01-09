@@ -214,9 +214,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
@@ -229,9 +228,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepository::getProductAlternativeStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductAlternativeStorageCollectionByFilter()` instead.
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
      * @param int[] $productAlternativeStorageIds
      *
@@ -247,6 +245,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()` instead.
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
+     *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findAllProductReplacementForStorageEntities(): array
@@ -258,9 +259,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepository::getProductReplacementForStorageCollectionByFilter()` instead.
-     *
-     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
+     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getProductReplacementForStorageCollectionByFilter()` instead.
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
      * @param int[] $productReplacementForStorageIds
      *

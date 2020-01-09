@@ -14,13 +14,13 @@ interface ContentStorageToEventBehaviorInterface
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers): array;
+    public function getEventTransferIds(array $eventTransfers);
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
      * @param string $foreignKeyColumnName
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array;
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
 }

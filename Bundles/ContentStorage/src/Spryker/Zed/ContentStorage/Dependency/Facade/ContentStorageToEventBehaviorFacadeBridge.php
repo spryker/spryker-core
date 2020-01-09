@@ -27,7 +27,7 @@ class ContentStorageToEventBehaviorFacadeBridge implements ContentStorageToEvent
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers): array
+    public function getEventTransferIds(array $eventTransfers)
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
@@ -38,7 +38,7 @@ class ContentStorageToEventBehaviorFacadeBridge implements ContentStorageToEvent
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }

@@ -20,7 +20,7 @@ class CategoryImageStorageEntityManager extends AbstractEntityManager implements
      *
      * @return void
      */
-    public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer): void
+    public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer)
     {
         $this->save($categoryImageStorageEntityTransfer);
     }
@@ -30,7 +30,7 @@ class CategoryImageStorageEntityManager extends AbstractEntityManager implements
      *
      * @return void
      */
-    public function deleteCategoryImageStorage(string $idCategoryImageStorageEntityTransfer): void
+    public function deleteCategoryImageStorage(string $idCategoryImageStorageEntityTransfer)
     {
         $categoryImageStorageEntity = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
