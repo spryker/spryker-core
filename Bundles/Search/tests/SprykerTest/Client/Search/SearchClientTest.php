@@ -471,7 +471,7 @@ class SearchClientTest extends Unit
     /**
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSearchContextExpanderPluginMock()
+    protected function createSearchContextExpanderPluginMock(): SearchContextExpanderPluginInterface
     {
         $searchContextExpanderPluginMock = $this->createMock(SearchContextExpanderPluginInterface::class);
         $searchContextExpanderPluginMock->method('expandSearchContext')

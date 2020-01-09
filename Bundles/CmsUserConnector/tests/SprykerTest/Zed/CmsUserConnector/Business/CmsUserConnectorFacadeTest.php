@@ -118,7 +118,7 @@ class CmsUserConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createUserMockBridgeForUpdating()
+    protected function createUserMockBridgeForUpdating(): CmsUserConnectorToUserBridge
     {
         $userBridgeMock = $this->mockUserBridge();
 
@@ -128,7 +128,7 @@ class CmsUserConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createUserMockBridgeForExpanding()
+    protected function createUserMockBridgeForExpanding(): CmsUserConnectorToUserBridge
     {
         $userBridgeMock = $this->mockUserBridge();
 
@@ -140,7 +140,7 @@ class CmsUserConnectorFacadeTest extends Unit
      *
      * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function mockUserMethodForUpdateUser($userBridgeMock)
+    protected function mockUserMethodForUpdateUser($userBridgeMock): CmsUserConnectorToUserBridge
     {
         $userBridgeMock->expects($this->once())
             ->method('hasCurrentUser')
@@ -158,7 +158,7 @@ class CmsUserConnectorFacadeTest extends Unit
      *
      * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function mockUserMethodForExpandUser($userBridgeMock)
+    protected function mockUserMethodForExpandUser($userBridgeMock): CmsUserConnectorToUserBridge
     {
         $userBridgeMock->expects($this->once())
             ->method('getUserById')
@@ -183,7 +183,7 @@ class CmsUserConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function mockUserBridge()
+    protected function mockUserBridge(): CmsUserConnectorToUserBridge
     {
         return $this->getMockBuilder(CmsUserConnectorToUserBridge::class)
             ->disableOriginalConstructor()

@@ -74,7 +74,7 @@ class SubFormPluginCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface
      */
-    private function getSubFormPlugin()
+    private function getSubFormPlugin(): SubFormPluginInterface
     {
         return $this->getMockBuilder(SubFormPluginInterface::class)->getMock();
     }

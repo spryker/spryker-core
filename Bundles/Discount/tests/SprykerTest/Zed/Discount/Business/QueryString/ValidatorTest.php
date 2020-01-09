@@ -171,7 +171,7 @@ class ValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
-    protected function createSpecificationBuilderMock()
+    protected function createSpecificationBuilderMock(): SpecificationBuilder
     {
         return $this->getMockBuilder(SpecificationBuilder::class)
             ->disableOriginalConstructor()
@@ -181,7 +181,7 @@ class ValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function createDecisionRuleSpecificationMock()
+    protected function createDecisionRuleSpecificationMock(): DecisionRuleSpecificationInterface
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
