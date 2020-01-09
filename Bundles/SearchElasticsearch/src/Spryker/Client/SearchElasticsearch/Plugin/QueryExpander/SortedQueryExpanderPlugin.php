@@ -60,8 +60,8 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
             ],
         ];
 
-        if ($sortConfig->getUnmappedType($sortParamName)) {
-            $sortRules[$nestedSortField][static::KEY_UNMAPPED_TYPE] = $sortConfig->getUnmappedType($sortParamName);
+        if ($sortConfigTransfer->getUnmappedType()) {
+            $sortRules[$nestedSortField][static::KEY_UNMAPPED_TYPE] = $sortConfigTransfer->getUnmappedType();
         }
 
         $query->addSort($sortRules);

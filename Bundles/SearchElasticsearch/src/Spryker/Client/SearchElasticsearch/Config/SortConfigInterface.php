@@ -43,11 +43,4 @@ interface SortConfigInterface
      * @return string|null
      */
     public function getSortDirection($sortParamName): ?string;
-
-    /**
-     * @param string $sortParamName
-     *
-     * @return string|null
-     */
-    public function getUnmappedType(string $sortParamName): ?string;
 }
