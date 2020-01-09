@@ -1,5 +1,4 @@
 namespace: CompanyRoleDataImport
-actor: Tester
 include:
     - tests/SprykerTest/Zed/CompanyRoleDataImport
 paths:

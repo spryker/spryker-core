@@ -1,6 +1,4 @@
 namespace: ShipmentCheckoutConnector
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ShipmentCheckoutConnector
 

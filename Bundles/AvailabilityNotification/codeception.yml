@@ -1,5 +1,4 @@
 namespace: AvailabilityNotification
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

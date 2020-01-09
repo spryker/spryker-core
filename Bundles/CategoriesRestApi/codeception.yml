@@ -1,5 +1,4 @@
 namespace: CategoriesRestApi
-actor: Tester
 include:
     - tests/SprykerTest/Glue/CategoriesRestApi
 paths:
