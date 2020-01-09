@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOffer\Business\ProductOffer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferErrorTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
@@ -40,41 +41,20 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     }
 
     /**
-     * @param int $idProductOffer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
     {
         $productOfferResponseTransfer = $this->createProductOfferResponseTransfer();
-        $productOfferTransfer = $this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer));
 
-        if (!$productOfferTransfer) {
+        if (!$productOfferTransfer->getIdProductOffer()
+            || !$this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer()))
+        ) {
             return $this->addProductOfferError($productOfferResponseTransfer, static::ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND);
         }
 
-        $productOfferTransfer->setIsActive(true);
-        $productOfferTransfer = $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
-
-        return $productOfferResponseTransfer->setIsSuccess(true)
-            ->setProductOffer($productOfferTransfer);
-    }
-
-    /**
-     * @param int $idProductOffer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
-     */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
-    {
-        $productOfferResponseTransfer = $this->createProductOfferResponseTransfer();
-        $productOfferTransfer = $this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer));
-
-        if (!$productOfferTransfer) {
-            return $this->addProductOfferError($productOfferResponseTransfer, static::ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND);
-        }
-
-        $productOfferTransfer->setIsActive(false);
         $productOfferTransfer = $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
 
         return $productOfferResponseTransfer->setIsSuccess(true)

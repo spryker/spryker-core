@@ -67,30 +67,14 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @api
      *
-     * @param int $idProductOffer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
     {
         return $this->getFactory()
             ->createProductOfferWriter()
-            ->activateProductOfferById($idProductOffer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductOffer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
-     */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer
-    {
-        return $this->getFactory()
-            ->createProductOfferWriter()
-            ->deactivateProductOfferById($idProductOffer);
+            ->update($productOfferTransfer);
     }
 }

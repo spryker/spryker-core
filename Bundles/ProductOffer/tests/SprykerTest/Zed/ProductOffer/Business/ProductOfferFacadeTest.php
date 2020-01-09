@@ -91,9 +91,8 @@ class ProductOfferFacadeTest extends Unit
         ]);
 
         // Act
-        $productOfferResponseTransfer = $this->tester->getFacade()->activateProductOfferById(
-            $productOfferTransfer->getIdProductOffer()
-        );
+        $productOfferTransfer->setIsActive(true);
+        $productOfferResponseTransfer = $this->tester->getFacade()->update($productOfferTransfer);
 
         // Assert
         $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
@@ -113,9 +112,8 @@ class ProductOfferFacadeTest extends Unit
         ]);
 
         // Act
-        $productOfferResponseTransfer = $this->tester->getFacade()->deactivateProductOfferById(
-            $productOfferTransfer->getIdProductOffer()
-        );
+        $productOfferTransfer->setIsActive(false);
+        $productOfferResponseTransfer = $this->tester->getFacade()->update($productOfferTransfer);
 
         // Assert
         $this->assertTrue($productOfferResponseTransfer->getIsSuccess());

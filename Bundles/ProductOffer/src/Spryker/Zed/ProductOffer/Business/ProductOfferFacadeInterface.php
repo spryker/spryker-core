@@ -55,27 +55,13 @@ interface ProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - Activates product offer by id.
-     * - Returns ProductOfferResponseTransfer.
+     * - Updates a product offer by product offer id.
      *
      * @api
      *
-     * @param int $idProductOffer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer;
-
-    /**
-     * Specification:
-     * - Deactivates product offer by id.
-     * - Returns ProductOfferResponseTransfer.
-     *
-     * @api
-     *
-     * @param int $idProductOffer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
-     */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer;
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
 }

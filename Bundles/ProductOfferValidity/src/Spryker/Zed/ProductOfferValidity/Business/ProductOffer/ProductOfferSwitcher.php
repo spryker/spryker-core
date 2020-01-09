@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferValidity\Business\ProductOffer;
 
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductOfferValidity\Dependency\Facade\ProductOfferValidityToProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityRepositoryInterface;
@@ -55,7 +56,10 @@ class ProductOfferSwitcher implements ProductOfferSwitcherInterface
     {
         $productOfferValidityCollectionTransfer = $this->productOfferValidityRepository->getActivatableProductOffers();
         foreach ($productOfferValidityCollectionTransfer->getProductOfferValidities() as $productOfferValidityTransfer) {
-            $this->productOfferFacade->activateProductOfferById($productOfferValidityTransfer->getIdProductOffer());
+            $productOfferTransfer = (new ProductOfferTransfer())
+                ->setIsActive(true)
+                ->setIdProductOffer($productOfferValidityTransfer->getIdProductOffer());
+            $this->productOfferFacade->update($productOfferTransfer);
         }
     }
 
@@ -66,7 +70,10 @@ class ProductOfferSwitcher implements ProductOfferSwitcherInterface
     {
         $productOfferValidityCollectionTransfer = $this->productOfferValidityRepository->getDeactivatableProductOffers();
         foreach ($productOfferValidityCollectionTransfer->getProductOfferValidities() as $productOfferValidityTransfer) {
-            $this->productOfferFacade->deactivateProductOfferById($productOfferValidityTransfer->getIdProductOffer());
+            $productOfferTransfer = (new ProductOfferTransfer())
+                ->setIsActive(false)
+                ->setIdProductOffer($productOfferValidityTransfer->getIdProductOffer());
+            $this->productOfferFacade->update($productOfferTransfer);
         }
     }
 }

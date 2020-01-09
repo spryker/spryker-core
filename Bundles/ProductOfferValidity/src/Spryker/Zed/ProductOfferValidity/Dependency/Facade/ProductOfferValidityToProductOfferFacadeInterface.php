@@ -8,20 +8,14 @@
 namespace Spryker\Zed\ProductOfferValidity\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferValidityToProductOfferFacadeInterface
 {
     /**
-     * @param int $idProductOffer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer;
-
-    /**
-     * @param int $idProductOffer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
-     */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferResponseTransfer;
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
 }

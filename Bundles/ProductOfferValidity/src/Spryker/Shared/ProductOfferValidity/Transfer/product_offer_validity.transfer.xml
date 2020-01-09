@@ -18,6 +18,7 @@
     </transfer>
 
     <transfer name="ProductOffer">
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferResponse">
