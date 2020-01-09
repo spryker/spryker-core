@@ -7,6 +7,9 @@
         <property name="uuid" type="string"/>
         <property name="companyUserId" type="int"/>
         <property name="customerReference" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
+        <property name="idShoppingList" type="int"/>
     </transfer>
 
     <transfer name="RestShoppingListCollectionResponse">
@@ -26,6 +29,7 @@
         <property name="uuid" type="string"/>
         <property name="idCompanyUser" type="int"/>
         <property name="customerReference" type="string"/>
+        <property name="fkShoppingList" type="int"/>
     </transfer>
 
     <transfer name="RestShoppingListItemRequest">
@@ -38,6 +42,42 @@
     <transfer name="RestShoppingListItemsAttributes">
         <property name="quantity" type="int" restRequestParameter="required"/>
         <property name="sku" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="uuidCompanyUser" type="string"/>
+        <property name="idCompany" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ShoppingListResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="array" singular="error"/>
+        <property name="shoppingList" type="ShoppingList"/>
+    </transfer>
+
+    <transfer name="ShoppingListItemResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="array" singular="error"/>
+        <property name="shoppingListItem" type="ShoppingListItem"/>
+    </transfer>
+
+    <transfer name="ShoppingListCollection">
+        <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList"/>
     </transfer>
 
 </transfers>
