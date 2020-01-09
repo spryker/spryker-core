@@ -302,7 +302,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
 
         return $this->getFactory()
             ->createProductAlternativeStorageMapper()
-            ->mapProductAlternativeStorageEntityCollectionToProductAlternativeStorageTransfers($productAlternativeStorageEntityCollection);
+            ->mapProductAlternativeStorageEntityCollectionToSynchronizationDataTransfers($productAlternativeStorageEntityCollection);
     }
 
     /**
@@ -328,6 +328,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
 
         return $this->getFactory()
             ->createProductReplacementStorageMapper()
-            ->mapProductReplacementForStorageEntityCollectionToProductReplacementForStorageTransfers($productReplacementStorageEntityTransfers);
+            ->mapProductReplacementForStorageEntityCollectionToSynchronizationDataTransfers($productReplacementStorageEntityTransfers);
     }
 }

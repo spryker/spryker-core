@@ -14,11 +14,11 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductAlternativeStorageMapper
 {
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $productAlternativeStorageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[] $productAlternativeStorageEntityCollection
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapProductAlternativeStorageEntityCollectionToProductAlternativeStorageTransfers(ObjectCollection $productAlternativeStorageEntityCollection): array
+    public function mapProductAlternativeStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $productAlternativeStorageEntityCollection): array
     {
         $synchronizationDataTransfers = [];
 

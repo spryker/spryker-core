@@ -10,12 +10,11 @@ namespace Spryker\Zed\ContentStorage\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
-use Generated\Shared\Transfer\SpyContentEntityTransfer;
 use Orm\Zed\Content\Persistence\SpyContent;
 use Orm\Zed\ContentStorage\Persistence\SpyContentStorage;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class ContentStorageMapper
+class ContentStorageMapper implements ContentStorageMapperInterface
 {
     /**
      * @param \Orm\Zed\Content\Persistence\SpyContent $contentEntity
@@ -41,11 +40,11 @@ class ContentStorageMapper
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $contentEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Content\Persistence\SpyContent[] $contentEntityCollection
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
-    public function mapContentStorageEntityTransferCollectionToContentStorageTransferCollection(ObjectCollection $contentEntityCollection): array
+    public function mapContentEntityCollectionToContentTransfers(ObjectCollection $contentEntityCollection): array
     {
         $contentTransfers = [];
 
@@ -60,14 +59,14 @@ class ContentStorageMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyContentEntityTransfer $contentEntityTransfer
+     * @param \Orm\Zed\Content\Persistence\SpyContent $contentEntity
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
-    public function mapContentEntityToContentTransfer(SpyContentEntityTransfer $contentEntityTransfer, ContentTransfer $contentTransfer): ContentTransfer
+    public function mapContentEntityToContentTransfer(SpyContent $contentEntity, ContentTransfer $contentTransfer): ContentTransfer
     {
-        return $contentTransfer->fromArray($contentEntityTransfer->toArray(), true);
+        return $contentTransfer->fromArray($contentEntity->toArray(), true);
     }
 
     /**

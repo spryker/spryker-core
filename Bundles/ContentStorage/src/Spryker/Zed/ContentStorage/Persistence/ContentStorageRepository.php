@@ -121,6 +121,6 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
 
         return $this->getFactory()
             ->createContentStorageMapper()
-            ->mapContentStorageEntityTransferCollectionToContentStorageTransferCollection($contentEntityCollection);
+            ->mapContentEntityCollectionToContentTransfers($contentEntityCollection);
     }
 }

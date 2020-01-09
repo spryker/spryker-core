@@ -14,7 +14,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class CategoryImageStorageMapper
 {
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $categoryImageStorageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorage[] $categoryImageStorageEntityCollection
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */

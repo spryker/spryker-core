@@ -13,7 +13,7 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class ProductPageSearchMapper implements ProductPageSearchMapperInterface
+interface ProductPageSearchMapperInterface
 {
     /**
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch $productConcretePageSearchEntity
@@ -24,12 +24,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     public function mapProductConcretePageSearchEntityToTransfer(
         SpyProductConcretePageSearch $productConcretePageSearchEntity,
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
-    ): ProductConcretePageSearchTransfer {
-        return $productConcretePageSearchTransfer->fromArray(
-            $productConcretePageSearchEntity->toArray(),
-            true
-        );
-    }
+    ): ProductConcretePageSearchTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
@@ -40,13 +35,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     public function mapProductConcretePageSearchTransferToEntity(
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
         SpyProductConcretePageSearch $productConcretePageSearchEntity
-    ): SpyProductConcretePageSearch {
-        $productConcretePageSearchEntity->fromArray(
-            $productConcretePageSearchTransfer->toArray()
-        );
-
-        return $productConcretePageSearchEntity;
-    }
+    ): SpyProductConcretePageSearch;
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productConcretePageSearchEntityCollection
@@ -55,18 +44,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      */
     public function mapProductConcretePageSearchEntityCollectionToSynchronizationDataTransfers(
         ObjectCollection $productConcretePageSearchEntityCollection
-    ): array {
-        $synchronizationDataTransfers = [];
-
-        foreach ($productConcretePageSearchEntityCollection as $productConcretePageSearchEntity) {
-            $synchronizationDataTransfers[] = $this->mapProductConcretePageSearchEntityToSynchronizationDataTransfer(
-                $productConcretePageSearchEntity,
-                new SynchronizationDataTransfer()
-            );
-        }
-
-        return $synchronizationDataTransfers;
-    }
+    ): array;
 
     /**
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productConcretePageSearchEntity
@@ -77,10 +55,5 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     public function mapProductConcretePageSearchEntityToSynchronizationDataTransfer(
         SpyProductAbstractPageSearch $productConcretePageSearchEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
-    ): SynchronizationDataTransfer {
-        return $synchronizationDataTransfer
-            ->setData($productConcretePageSearchEntity->getData())
-            ->setKey($productConcretePageSearchEntity->getKey())
-            ->setStore($productConcretePageSearchEntity->getStore());
-    }
+    ): SynchronizationDataTransfer;
 }

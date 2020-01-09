@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
+interface CompanyUserStorageMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
@@ -23,31 +23,14 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
     public function mapCompanyUserStorageTransferToCompanyUserStorageEntity(
         CompanyUserStorageTransfer $companyUserStorageTransfer,
         SpyCompanyUserStorage $spyCompanyUserEntityTransfer
-    ): SpyCompanyUserStorage {
-        $spyCompanyUserEntityTransfer->setFkCompanyUser($companyUserStorageTransfer->getIdCompanyUser());
-        $spyCompanyUserEntityTransfer->setData($companyUserStorageTransfer->toArray());
-
-        return $spyCompanyUserEntityTransfer;
-    }
+    ): SpyCompanyUserStorage;
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $companyUserStorageEntityCollection
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $companyUserStorageEntityCollection): array
-    {
-        $synchronizationDataTransfers = [];
-
-        foreach ($companyUserStorageEntityCollection as $companyUserStorageEntity) {
-            $synchronizationDataTransfers[] = $this->mapCompanyUserStorageEntityToSynchronizationDataTransfer(
-                $companyUserStorageEntity,
-                new SynchronizationDataTransfer()
-            );
-        }
-
-        return $synchronizationDataTransfers;
-    }
+    public function mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $companyUserStorageEntityCollection): array;
 
     /**
      * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage $companyUserStorageEntity
@@ -58,9 +41,5 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
     public function mapCompanyUserStorageEntityToSynchronizationDataTransfer(
         SpyCompanyUserStorage $companyUserStorageEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
-    ): SynchronizationDataTransfer {
-        return $synchronizationDataTransfer
-            ->setData($companyUserStorageEntity->getData())
-            ->setKey($companyUserStorageEntity->getKey());
-    }
+    ): SynchronizationDataTransfer;
 }
