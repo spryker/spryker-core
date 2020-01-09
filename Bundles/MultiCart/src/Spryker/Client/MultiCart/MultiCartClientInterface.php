@@ -41,7 +41,8 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Marks quote as default.
+     * - Makes zed request.
+     * - Marks quote as default for the current customer.
      *
      * @api
      *

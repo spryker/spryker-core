@@ -94,7 +94,8 @@ interface MultiCartFacadeInterface
 
     /**
      * Specification:
-     * - Adds info message if quote was marked as default.
+     * - Checks if quote is default for provided QuoteTransfer::$customer.
+     * - Adds info message if quote was not default.
      *
      * @api
      *

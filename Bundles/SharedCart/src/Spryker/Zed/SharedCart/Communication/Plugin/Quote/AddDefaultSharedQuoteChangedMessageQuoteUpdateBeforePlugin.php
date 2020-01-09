@@ -21,7 +21,9 @@ class AddDefaultSharedQuoteChangedMessageQuoteUpdateBeforePlugin extends Abstrac
 {
     /**
      * {@inheritDoc}
-     * - Adds info message if shared quote was marked as default.
+     * - Does nothing if QuoteTransfer::$customer is a quote owner.
+     * - Checks if quote is default for provided QuoteTransfer::$customer::$companyUser.
+     * - Adds info message if the quote was not default.
      * - Should be executed before `DeactivateSharedQuotesBeforeQuoteSavePlugin`.
      *
      * @api

@@ -21,7 +21,8 @@ class AddDefaultQuoteChangedMessageQuoteUpdateBeforePlugin extends AbstractPlugi
 {
     /**
      * {@inheritDoc}
-     * - Adds info message if quote was marked as default.
+     * - Checks if quote is default for provided QuoteTransfer::$customer.
+     * - Adds info message if quote was not default.
      * - Should be executed before `DeactivateQuotesBeforeQuoteSavePlugin`.
      *
      * @api
