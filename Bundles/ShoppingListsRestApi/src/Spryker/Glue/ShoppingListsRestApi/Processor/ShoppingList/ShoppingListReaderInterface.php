@@ -25,8 +25,5 @@ interface ShoppingListReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCustomerShoppingList(
-        string $uuidShoppingList,
-        RestRequestInterface $restRequest
-    ): RestResponseInterface;
+    public function getCustomerShoppingList(string $uuidShoppingList, RestRequestInterface $restRequest): RestResponseInterface;
 }

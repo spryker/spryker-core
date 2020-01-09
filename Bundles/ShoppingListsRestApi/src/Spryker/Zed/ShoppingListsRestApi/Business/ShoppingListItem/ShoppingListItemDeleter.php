@@ -52,14 +52,6 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
     public function deleteItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        $restShoppingListItemRequestTransfer
-            ->requireShoppingListItem()
-            ->requireShoppingListUuid()
-            ->requireCompanyUserUuid();
-        $restShoppingListItemRequestTransfer->getShoppingListItem()
-            ->requireUuid()
-            ->requireCustomerReference();
-
         $shoppingListItemResponseTransfer = $this->shoppingListItemReader->findShoppingListItem(
             $restShoppingListItemRequestTransfer
         );
@@ -68,7 +60,9 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
             return $shoppingListItemResponseTransfer;
         }
 
-        $shoppingListItemResponseTransfer = $this->shoppingListFacade->removeItemById($shoppingListItemResponseTransfer->getShoppingListItem());
+        $shoppingListItemResponseTransfer = $this->shoppingListFacade->removeItemById(
+            $shoppingListItemResponseTransfer->getShoppingListItem()
+        );
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToRestCodes(

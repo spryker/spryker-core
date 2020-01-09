@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\Builder;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 

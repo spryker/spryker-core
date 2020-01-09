@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper;
 
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
@@ -36,28 +35,6 @@ interface ShoppingListMapperInterface
         ShoppingListResponseTransfer $shoppingListResponseTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function mapCustomerResponseErrorsToShoppingListResponseErrors(
-        CustomerResponseTransfer $customerResponseTransfer,
-        ShoppingListResponseTransfer $shoppingListResponseTransfer
-    ): ShoppingListResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
-     * @param \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
-     */
-    public function mapCustomerResponseErrorsToRestShoppingListCollectionResponseErrors(
-        CustomerResponseTransfer $customerResponseTransfer,
-        RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
-    ): RestShoppingListCollectionResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer

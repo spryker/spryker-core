@@ -28,9 +28,7 @@ interface ShoppingListsRestApiToShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    public function getCustomerShoppingListCollection(
-        CustomerTransfer $customerTransfer
-    ): ShoppingListCollectionTransfer;
+    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
@@ -58,25 +56,19 @@ interface ShoppingListsRestApiToShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addShoppingListItem(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer;
+    public function addShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function removeItemById(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer;
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function updateShoppingListItemById(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer;
+    public function updateShoppingListItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 }

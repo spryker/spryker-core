@@ -38,10 +38,6 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
             'status' => Response::HTTP_BAD_REQUEST,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED,
         ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND => [
-            'status' => Response::HTTP_FORBIDDEN,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND,
-        ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND => [
             'status' => Response::HTTP_NOT_FOUND,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_NOT_FOUND,
@@ -65,14 +61,6 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND,
-        ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_AVAILABLE => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_PRODUCT_NOT_AVAILABLE,
-        ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_ACTIVE => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_PRODUCT_NOT_ACTIVE,
         ],
     ];
 }

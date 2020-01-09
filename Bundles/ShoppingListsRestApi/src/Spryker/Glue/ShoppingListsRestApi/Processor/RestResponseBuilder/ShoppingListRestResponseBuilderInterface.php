@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Builder\RestResponseBuilderInterface;
 
 interface ShoppingListRestResponseBuilderInterface extends RestResponseBuilderInterface
 {

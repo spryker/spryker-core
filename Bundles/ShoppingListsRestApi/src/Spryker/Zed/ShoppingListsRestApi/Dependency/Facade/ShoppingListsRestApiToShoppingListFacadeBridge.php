@@ -44,9 +44,8 @@ class ShoppingListsRestApiToShoppingListFacadeBridge implements ShoppingListsRes
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    public function getCustomerShoppingListCollection(
-        CustomerTransfer $customerTransfer
-    ): ShoppingListCollectionTransfer {
+    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
+    {
         return $this->shoppingListFacade->getCustomerShoppingListCollection($customerTransfer);
     }
 
@@ -85,9 +84,8 @@ class ShoppingListsRestApiToShoppingListFacadeBridge implements ShoppingListsRes
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addShoppingListItem(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer {
+    public function addShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    {
         return $this->shoppingListFacade->addShoppingListItem($shoppingListItemTransfer);
     }
 
@@ -96,9 +94,8 @@ class ShoppingListsRestApiToShoppingListFacadeBridge implements ShoppingListsRes
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function removeItemById(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer {
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    {
         return $this->shoppingListFacade->removeItemById($shoppingListItemTransfer);
     }
 
@@ -107,9 +104,8 @@ class ShoppingListsRestApiToShoppingListFacadeBridge implements ShoppingListsRes
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function updateShoppingListItemById(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer {
+    public function updateShoppingListItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    {
         return $this->shoppingListFacade->updateShoppingListItemById($shoppingListItemTransfer);
     }
 }

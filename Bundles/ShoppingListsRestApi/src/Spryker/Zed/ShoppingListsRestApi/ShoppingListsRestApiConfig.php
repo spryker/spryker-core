@@ -47,16 +47,6 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      */
     public const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND = 'customer.account.shopping_list_item.error.product_not_found';
 
-    /**
-     * @see \Spryker\Zed\Availability\Business\Model\Sellable::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_AVAILABLE
-     */
-    public const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_AVAILABLE = 'customer.account.shopping_list_item.error.product_not_available';
-
-    /**
-     * @see \Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusChecker::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE
-     */
-    public const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE = 'customer.account.shopping_list_item.error.product_not_active';
-
     public const RESPONSE_ERROR_MAP = [
         self::DUPLICATE_NAME_SHOPPING_LIST => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME,
         self::CANNOT_UPDATE_SHOPPING_LIST => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED,
@@ -65,7 +55,5 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
         self::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED,
         self::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_WRONG_QUANTITY,
         self::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND,
-        self::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_AVAILABLE => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_AVAILABLE,
-        self::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_ACTIVE,
     ];
 }

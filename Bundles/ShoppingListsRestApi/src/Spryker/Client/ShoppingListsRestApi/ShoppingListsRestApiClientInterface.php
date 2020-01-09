@@ -10,9 +10,9 @@ namespace Spryker\Client\ShoppingListsRestApi;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 
 interface ShoppingListsRestApiClientInterface
 {
@@ -28,25 +28,7 @@ interface ShoppingListsRestApiClientInterface
      *
      * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
      */
-    public function getCustomerShoppingListCollection(
-        CustomerTransfer $customerTransfer
-    ): RestShoppingListCollectionResponseTransfer;
-
-    /**
-     * Specification:
-     *  - Retrieves company user by uuid.
-     *  - Checks that company user belongs to current customer.
-     *  - Finds shopping list by the uuid and the customer reference.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function findShoppingListByUuid(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer;
+    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): RestShoppingListCollectionResponseTransfer;
 
     /**
      * Specification:
@@ -56,13 +38,11 @@ interface ShoppingListsRestApiClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function createShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer;
+    public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 
     /**
      * Specification:
@@ -72,13 +52,11 @@ interface ShoppingListsRestApiClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function updateShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer;
+    public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 
     /**
      * Specification:
@@ -89,13 +67,11 @@ interface ShoppingListsRestApiClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function deleteShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer;
+    public function deleteShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 
     /**
      * Specification:

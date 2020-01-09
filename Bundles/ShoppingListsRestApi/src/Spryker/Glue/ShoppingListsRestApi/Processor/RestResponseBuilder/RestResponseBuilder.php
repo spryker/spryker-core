@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\Builder;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -22,9 +22,8 @@ class RestResponseBuilder implements RestResponseBuilderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -46,19 +45,27 @@ class RestResponseBuilder implements RestResponseBuilderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         foreach ($errorCodes as $errorCode) {
-            $errorSignature = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
-                    'status' => ShoppingListsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
-                    'detail' => $errorCode,
-                ];
-
-            $restResponse->addError(
-                (new RestErrorMessageTransfer())
-                    ->setCode($errorCode)
-                    ->setDetail($errorSignature['detail'])
-                    ->setStatus($errorSignature['status'])
-            );
+            $restResponse->addError($this->createRestErrorMessageByErrorCode($errorCode));
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @param string $errorCode
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createRestErrorMessageByErrorCode(string $errorCode): RestErrorMessageTransfer
+    {
+        $errorSignature = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
+            'status' => ShoppingListsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
+            'detail' => $errorCode,
+        ];
+
+        return (new RestErrorMessageTransfer())
+            ->setCode($errorCode)
+            ->setStatus($errorSignature['status'])
+            ->setDetail($errorSignature['detail']);
     }
 }

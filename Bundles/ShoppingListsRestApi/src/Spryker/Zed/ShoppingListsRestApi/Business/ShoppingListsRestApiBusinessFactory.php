@@ -8,10 +8,6 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReader;
-use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface;
-use Spryker\Zed\ShoppingListsRestApi\Business\Customer\CustomerReader;
-use Spryker\Zed\ShoppingListsRestApi\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapper;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListCreator;
@@ -32,7 +28,6 @@ use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemR
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemUpdater;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemUpdaterInterface;
-use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiDependencyProvider;
 
@@ -48,8 +43,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListReader(
             $this->getShoppingListFacade(),
-            $this->createShoppingListMapper(),
-            $this->createCustomerReader()
+            $this->createShoppingListMapper()
         );
     }
 
@@ -60,8 +54,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListCreator(
             $this->getShoppingListFacade(),
-            $this->createShoppingListMapper(),
-            $this->createCustomerReader()
+            $this->createShoppingListMapper()
         );
     }
 
@@ -72,8 +65,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListUpdater(
             $this->getShoppingListFacade(),
-            $this->createShoppingListMapper(),
-            $this->createShoppingListReader()
+            $this->createShoppingListMapper()
         );
     }
 
@@ -84,8 +76,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListDeleter(
             $this->getShoppingListFacade(),
-            $this->createShoppingListMapper(),
-            $this->createShoppingListReader()
+            $this->createShoppingListMapper()
         );
     }
 
@@ -131,7 +122,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListItemReader(): ShoppingListItemReaderInterface
     {
         return new ShoppingListItemReader(
-            $this->createShoppingListReader(),
+            $this->getShoppingListFacade(),
             $this->createShoppingListItemMapper()
         );
     }
@@ -150,32 +141,6 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListMapper(): ShoppingListMapperInterface
     {
         return new ShoppingListMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingListsRestApi\Business\Customer\CustomerReaderInterface
-     */
-    public function createCustomerReader(): CustomerReaderInterface
-    {
-        return new CustomerReader(
-            $this->createCompanyUserReader()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface
-     */
-    public function createCompanyUserReader(): CompanyUserReaderInterface
-    {
-        return new CompanyUserReader($this->getCompanyUserFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToCompanyUserFacadeInterface
-     */
-    public function getCompanyUserFacade(): ShoppingListsRestApiToCompanyUserFacadeInterface
-    {
-        return $this->getProvidedDependency(ShoppingListsRestApiDependencyProvider::FACADE_COMPANY_USER);
     }
 
     /**

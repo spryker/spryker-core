@@ -5,42 +5,42 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Mapper;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 class ShoppingListItemMapper implements ShoppingListItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer
      */
-    public function mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
+    public function mapShoppingListItemTransferToRestShoppingListItemsAttributesTransfer(
         ShoppingListItemTransfer $shoppingListItemTransfer,
-        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
-    ): RestShoppingListItemAttributesTransfer {
-        return $restShoppingListItemAttributesTransfer->fromArray(
+        RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
+    ): RestShoppingListItemsAttributesTransfer {
+        return $restShoppingListItemsAttributesTransfer->fromArray(
             $shoppingListItemTransfer->toArray(),
             true
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
      */
-    public function mapRestShoppingListItemAttributesTransferToRestShoppingListItemRequestTransfer(
-        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer,
+    public function mapRestShoppingListItemsAttributesTransferToRestShoppingListItemRequestTransfer(
+        RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer,
         RestShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): RestShoppingListItemRequestTransfer {
         $shoppingListItemRequestTransfer->getShoppingListItem()->fromArray(
-            $restShoppingListItemAttributesTransfer->toArray(),
+            $restShoppingListItemsAttributesTransfer->modifiedToArray(),
             true
         );
 

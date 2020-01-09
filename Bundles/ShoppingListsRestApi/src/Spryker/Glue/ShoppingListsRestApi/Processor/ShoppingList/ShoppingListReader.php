@@ -7,51 +7,62 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Customer\Reader\CustomerRestRequestReaderInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilderInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToShoppingListClientInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\CustomerMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListRestResponseBuilderInterface;
+use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class ShoppingListReader implements ShoppingListReaderInterface
 {
+    /**
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\CustomerMapperInterface
+     */
+    protected $customerMapper;
+
     /**
      * @var \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface
      */
     protected $shoppingListsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToShoppingListClientInterface
+     */
+    protected $shoppingListClient;
+
+    /**
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface
      */
     protected $shoppingListRestRequestReader;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Customer\Reader\CustomerRestRequestReaderInterface
-     */
-    protected $customerRestRequestReader;
-
-    /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilderInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListRestResponseBuilderInterface
      */
     protected $shoppingListRestResponseBuilder;
 
     /**
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\CustomerMapperInterface $customerMapper
      * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListsRestApiClient
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface $shoppingListRestRequestReaderInterface
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Customer\Reader\CustomerRestRequestReaderInterface $customerRestRequestReader
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilderInterface $shoppingListRestResponseBuilderInterface
+     * @param \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToShoppingListClientInterface $shoppingListClient
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface $shoppingListRestRequestReader
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListRestResponseBuilderInterface $shoppingListRestResponseBuilder
      */
     public function __construct(
+        CustomerMapperInterface $customerMapper,
         ShoppingListsRestApiClientInterface $shoppingListsRestApiClient,
-        ShoppingListRestRequestReaderInterface $shoppingListRestRequestReaderInterface,
-        CustomerRestRequestReaderInterface $customerRestRequestReader,
-        ShoppingListRestResponseBuilderInterface $shoppingListRestResponseBuilderInterface
+        ShoppingListsRestApiToShoppingListClientInterface $shoppingListClient,
+        ShoppingListRestRequestReaderInterface $shoppingListRestRequestReader,
+        ShoppingListRestResponseBuilderInterface $shoppingListRestResponseBuilder
     ) {
+        $this->customerMapper = $customerMapper;
         $this->shoppingListsRestApiClient = $shoppingListsRestApiClient;
-        $this->shoppingListRestRequestReader = $shoppingListRestRequestReaderInterface;
-        $this->customerRestRequestReader = $customerRestRequestReader;
-        $this->shoppingListRestResponseBuilder = $shoppingListRestResponseBuilderInterface;
+        $this->shoppingListClient = $shoppingListClient;
+        $this->shoppingListRestRequestReader = $shoppingListRestRequestReader;
+        $this->shoppingListRestResponseBuilder = $shoppingListRestResponseBuilder;
     }
 
     /**
@@ -61,19 +72,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
      */
     public function getCustomerShoppingListCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $customerResponseTransfer = $this->customerRestRequestReader->readCustomerResponseTransferFromRequest($restRequest);
-
-        if ($customerResponseTransfer->getIsSuccess() === false) {
-            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $this->customerRestRequestReader->mapCustomerResponseErrorsToErrorsCodes(
-                    $customerResponseTransfer->getErrors()->getArrayCopy()
-                )
-            );
-        }
-
-        $restShoppingListCollectionResponseTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection(
-            $customerResponseTransfer->getCustomerTransfer()
+        $customerTransfer = $this->customerMapper->mapRestUserTransferToCustomerTransfer(
+            $restRequest->getRestUser(),
+            new CustomerTransfer()
         );
+        $restShoppingListCollectionResponseTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection($customerTransfer);
 
         if (count($restShoppingListCollectionResponseTransfer->getErrorCodes()) > 0) {
             return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
@@ -92,27 +95,18 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCustomerShoppingList(
-        string $uuidShoppingList,
-        RestRequestInterface $restRequest
-    ): RestResponseInterface {
-        $restShoppingListRequestTransfer = $this->shoppingListRestRequestReader->readRestShoppingListRequestTransferByUuid(
-            $uuidShoppingList,
+    public function getCustomerShoppingList(string $uuidShoppingList, RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $shoppingListTransfer = $this->shoppingListRestRequestReader->readShoppingListTransferFromRequest(
             $restRequest
         );
 
-        if (count($restShoppingListRequestTransfer->getErrorCodes()) > 0) {
-            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $restShoppingListRequestTransfer->getErrorCodes()
-            );
-        }
-
-        $shoppingListResponseTransfer = $this->shoppingListsRestApiClient->findShoppingListByUuid($restShoppingListRequestTransfer);
+        $shoppingListResponseTransfer = $this->shoppingListClient->findShoppingListByUuid($shoppingListTransfer);
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
-            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $shoppingListResponseTransfer->getErrors()
-            );
+            $errors = $shoppingListResponseTransfer->getErrors() ?: [ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND];
+
+            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($errors);
         }
 
         return $this->shoppingListRestResponseBuilder->buildShoppingListRestResponse(

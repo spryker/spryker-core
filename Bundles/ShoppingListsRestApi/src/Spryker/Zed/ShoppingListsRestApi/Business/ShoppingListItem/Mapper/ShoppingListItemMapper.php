@@ -8,31 +8,28 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class ShoppingListItemMapper implements ShoppingListItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListRequestTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function mapRestShoppingListItemRequestTransferToRestShoppingListRequestTransfer(
+    public function mapRestShoppingListItemRequestTransferToShoppingListTransfer(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer,
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): RestShoppingListRequestTransfer {
-        return $restShoppingListRequestTransfer
-            ->setCompanyUserUuid($restShoppingListItemRequestTransfer->getCompanyUserUuid())
-            ->setCustomerReference($restShoppingListItemRequestTransfer->getShoppingListItem()->getCustomerReference())
-            ->setShoppingList(
-                (new ShoppingListTransfer())
-                    ->setUuid($restShoppingListItemRequestTransfer->getShoppingListUuid())
-            );
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer {
+        return $shoppingListTransfer
+            ->setUuid($restShoppingListItemRequestTransfer->getShoppingListUuid())
+            ->setIdCompanyUser($restShoppingListItemRequestTransfer->getShoppingListItem()->getIdCompanyUser())
+            ->setCustomerReference($restShoppingListItemRequestTransfer->getShoppingListItem()->getCustomerReference());
     }
 
     /**
@@ -45,8 +42,13 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
         ShoppingListResponseTransfer $shoppingListResponseTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
+        if (count($shoppingListResponseTransfer->getErrors()) > 0) {
+            return $shoppingListItemResponseTransfer->setIsSuccess(false)
+                ->setErrors($shoppingListResponseTransfer->getErrors());
+        }
+
         return $shoppingListItemResponseTransfer->setIsSuccess(false)
-            ->setErrors($shoppingListResponseTransfer->getErrors());
+            ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND);
     }
 
     /**

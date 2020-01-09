@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList;
 
-use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 
@@ -26,51 +26,31 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
     protected $shoppingListMapper;
 
     /**
-     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface
-     */
-    protected $shoppingListReader;
-
-    /**
      * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface $shoppingListMapper
-     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface $shoppingListReader
      */
     public function __construct(
         ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade,
-        ShoppingListMapperInterface $shoppingListMapper,
-        ShoppingListReaderInterface $shoppingListReader
+        ShoppingListMapperInterface $shoppingListMapper
     ) {
         $this->shoppingListFacade = $shoppingListFacade;
         $this->shoppingListMapper = $shoppingListMapper;
-        $this->shoppingListReader = $shoppingListReader;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function updateShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer {
-        $restShoppingListRequestTransfer
-            ->requireShoppingList()
-            ->requireCustomerReference()
-            ->requireCompanyUserUuid();
-        $restShoppingListRequestTransfer->getShoppingList()
-            ->requireName()
-            ->requireUuid();
-
-        $shoppingListResponseTransferByUuid = $this->shoppingListReader->findShoppingListByUuid($restShoppingListRequestTransfer);
-
+    public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $shoppingListResponseTransferByUuid = $this->shoppingListFacade->findShoppingListByUuid($shoppingListTransfer);
         if ($shoppingListResponseTransferByUuid->getIsSuccess() === false) {
-            return $shoppingListResponseTransferByUuid;
+            return $shoppingListResponseTransferByUuid->setErrors([ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND]);
         }
-
         $shoppingListTransfer = $this->shoppingListMapper->mapShoppingListResponseTransferToShoppingListTransfer(
             $shoppingListResponseTransferByUuid,
-            (new ShoppingListTransfer())
-                ->setName($restShoppingListRequestTransfer->getShoppingList()->getName())
+            $shoppingListTransfer
         );
 
         $shoppingListResponseTransfer = $this->shoppingListFacade->updateShoppingList($shoppingListTransfer);

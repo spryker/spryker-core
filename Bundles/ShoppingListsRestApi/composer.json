@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-user": "^2.0.0",
     "spryker/glue-application": "^1.9.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
@@ -15,12 +14,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company-user": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/rest-request-validator": "If you want to use rest request validation.",
-    "spryker/company-users-rest-api": "If you want to use company user header validation.",
-    "spryker/products-rest-api": "If you want to include concrete products in response."
   },
   "autoload": {
     "psr-4": {

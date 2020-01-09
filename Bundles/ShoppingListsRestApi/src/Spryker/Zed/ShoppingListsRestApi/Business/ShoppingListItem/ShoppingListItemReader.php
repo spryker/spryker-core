@@ -9,19 +9,19 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
 use ArrayObject;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig;
-use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface;
+use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 
 class ShoppingListItemReader implements ShoppingListItemReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface
+     * @var \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface
      */
-    protected $shoppingListReader;
+    protected $shoppingListFacade;
 
     /**
      * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface
@@ -29,14 +29,14 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
     protected $shoppingListItemMapper;
 
     /**
-     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface $shoppingListReader
+     * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface $shoppingListItemMapper
      */
     public function __construct(
-        ShoppingListReaderInterface $shoppingListReader,
+        ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade,
         ShoppingListItemMapperInterface $shoppingListItemMapper
     ) {
-        $this->shoppingListReader = $shoppingListReader;
+        $this->shoppingListFacade = $shoppingListFacade;
         $this->shoppingListItemMapper = $shoppingListItemMapper;
     }
 
@@ -48,18 +48,10 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
     public function findShoppingListItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        $restShoppingListItemRequestTransfer
-            ->requireShoppingListItem()
-            ->requireShoppingListUuid()
-            ->requireCompanyUserUuid();
-        $restShoppingListItemRequestTransfer->getShoppingListItem()
-            ->requireUuid()
-            ->requireCustomerReference();
-
-        $shoppingListResponseTransfer = $this->shoppingListReader->findShoppingListByUuid(
-            $this->shoppingListItemMapper->mapRestShoppingListItemRequestTransferToRestShoppingListRequestTransfer(
+        $shoppingListResponseTransfer = $this->shoppingListFacade->findShoppingListByUuid(
+            $this->shoppingListItemMapper->mapRestShoppingListItemRequestTransferToShoppingListTransfer(
                 $restShoppingListItemRequestTransfer,
-                new RestShoppingListRequestTransfer()
+                new ShoppingListTransfer()
             )
         );
 
@@ -75,7 +67,7 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
             $restShoppingListItemRequestTransfer->getShoppingListItem()->getUuid()
         );
 
-        if ($shoppingListItemTransfer === null) {
+        if (!$shoppingListItemTransfer) {
             return (new ShoppingListItemResponseTransfer())->setIsSuccess(false)
                 ->addError(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_NOT_FOUND);
         }

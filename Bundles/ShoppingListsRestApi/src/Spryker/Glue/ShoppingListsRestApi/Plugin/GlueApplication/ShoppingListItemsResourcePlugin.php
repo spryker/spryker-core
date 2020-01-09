@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -70,7 +70,7 @@ class ShoppingListItemsResourcePlugin extends AbstractPlugin implements Resource
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestShoppingListItemAttributesTransfer::class;
+        return RestShoppingListItemsAttributesTransfer::class;
     }
 
     /**

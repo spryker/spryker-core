@@ -373,4 +373,22 @@ interface ShoppingListClientInterface
      * @return int
      */
     public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Finds shopping list by uuid.
+     * - Requires uuid field to be set in ShoppingListTransfer.
+     * - Requires idCompanyUser field to be set in ShoppingListTransfer.
+     * - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 }

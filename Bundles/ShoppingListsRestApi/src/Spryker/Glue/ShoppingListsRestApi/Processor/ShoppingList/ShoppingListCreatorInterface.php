@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList;
 
-use Generated\Shared\Transfer\RestShoppingListAttributesTransfer;
+use Generated\Shared\Transfer\RestShoppingListsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -15,12 +15,12 @@ interface ShoppingListCreatorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createShoppingList(
         RestRequestInterface $restRequest,
-        RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
+        RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
     ): RestResponseInterface;
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Controller;
 
-use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -41,22 +41,22 @@ class ShoppingListItemsResourceController extends AbstractController
      *              "404": "Shopping list not found.",
      *              "422": "Cannot add an item to shopping list"
      *          },
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListItemAttributesTransfer"
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListItemsAttributesTransfer"
      *     }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
         RestRequestInterface $restRequest,
-        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+        RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
             ->createShoppingListItemAdder()
-            ->addShoppingListItem($restRequest, $restShoppingListItemAttributesTransfer);
+            ->addShoppingListItem($restRequest, $restShoppingListItemsAttributesTransfer);
     }
 
     /**
@@ -83,22 +83,22 @@ class ShoppingListItemsResourceController extends AbstractController
      *              "404": "Shopping list or list item not found.",
      *              "422": "Cannot update the shopping list item"
      *          },
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListItemAttributesTransfer"
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListItemsAttributesTransfer"
      *     }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function patchAction(
         RestRequestInterface $restRequest,
-        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+        RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
             ->createShoppingListItemUpdater()
-            ->updateShoppingListItem($restRequest, $restShoppingListItemAttributesTransfer);
+            ->updateShoppingListItem($restRequest, $restShoppingListItemsAttributesTransfer);
     }
 
     /**

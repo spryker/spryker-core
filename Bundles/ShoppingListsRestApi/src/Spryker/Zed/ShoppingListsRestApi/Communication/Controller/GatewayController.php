@@ -10,9 +10,9 @@ namespace Spryker\Zed\ShoppingListsRestApi\Communication\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -32,47 +32,33 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function findShoppingListByUuidAction(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer {
-        return $this->getFacade()->findShoppingListByUuid($restShoppingListRequestTransfer);
+    public function createShoppingListAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFacade()->createShoppingList($shoppingListTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function createShoppingListAction(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer {
-        return $this->getFacade()->createShoppingList($restShoppingListRequestTransfer);
+    public function updateShoppingListAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFacade()->updateShoppingList($shoppingListTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function updateShoppingListAction(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer {
-        return $this->getFacade()->updateShoppingList($restShoppingListRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function deleteShoppingListAction(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer {
-        return $this->getFacade()->deleteShoppingList($restShoppingListRequestTransfer);
+    public function deleteShoppingListAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFacade()->deleteShoppingList($shoppingListTransfer);
     }
 
     /**

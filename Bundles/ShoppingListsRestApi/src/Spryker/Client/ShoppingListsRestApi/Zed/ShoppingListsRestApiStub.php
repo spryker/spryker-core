@@ -10,9 +10,9 @@ namespace Spryker\Client\ShoppingListsRestApi\Zed;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToZedRequestClientInterface;
 
 class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
@@ -50,76 +50,57 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::findShoppingListByUuidAction()
+     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::createShoppingList()
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function findShoppingListByUuid(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer {
-        /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
-        $shoppingListResponseTransfer = $this->zedRequestClient->call(
-            '/shopping-lists-rest-api/gateway/find-shopping-list-by-uuid',
-            $restShoppingListRequestTransfer
-        );
-
-        return $shoppingListResponseTransfer;
-    }
-
-    /**
-     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::createShoppingListAction()
-     *
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function createShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+        ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListResponseTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/create-shopping-list',
-            $restShoppingListRequestTransfer
+            $shoppingListTransfer
         );
 
         return $shoppingListResponseTransfer;
     }
 
     /**
-     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::updateShoppingListAction()
+     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::updateShoppingList()
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function updateShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+        ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListResponseTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/update-shopping-list',
-            $restShoppingListRequestTransfer
+            $shoppingListTransfer
         );
 
         return $shoppingListResponseTransfer;
     }
 
     /**
-     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::deleteShoppingListAction()
+     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::deleteShoppingList()
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function deleteShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+        ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListResponseTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/delete-shopping-list',
-            $restShoppingListRequestTransfer
+            $shoppingListTransfer
         );
 
         return $shoppingListResponseTransfer;

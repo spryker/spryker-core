@@ -5,58 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Reader;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 
 class ShoppingListItemRestRequestReader implements ShoppingListItemRestRequestReaderInterface
 {
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface
-     */
-    protected $shoppingListRestRequestReader;
-
-    /**
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface $shoppingListRestRequestReader
-     */
-    public function __construct(
-        ShoppingListRestRequestReaderInterface $shoppingListRestRequestReader
-    ) {
-        $this->shoppingListRestRequestReader = $shoppingListRestRequestReader;
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
      */
-    public function readRestShoppingListItemRequestTransferFromRequest(
-        RestRequestInterface $restRequest
-    ): RestShoppingListItemRequestTransfer {
+    public function readRestShoppingListItemRequestTransferFromRequest(RestRequestInterface $restRequest): RestShoppingListItemRequestTransfer
+    {
         $uuidShoppingList = $this->readUuidShoppingList($restRequest);
-        $restShoppingListRequestTransfer = $this->shoppingListRestRequestReader->readRestShoppingListRequestTransferByUuid(
-            $uuidShoppingList,
-            $restRequest
-        );
-
-        if (count($restShoppingListRequestTransfer->getErrorCodes()) > 0) {
-            return (new RestShoppingListItemRequestTransfer())->setErrorCodes(
-                $restShoppingListRequestTransfer->getErrorCodes()
-            );
-        }
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
 
         return (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid($restShoppingListRequestTransfer->getShoppingList()->getUuid())
-            ->setCompanyUserUuid($restShoppingListRequestTransfer->getCompanyUserUuid())
-            ->setShoppingListItem(
-                (new ShoppingListItemTransfer())
-                    ->setCustomerReference($restShoppingListRequestTransfer->getCustomerReference())
-            );
+            ->setShoppingListUuid($uuidShoppingList)
+            ->setShoppingListItem($shoppingListItemTransfer);
     }
 
     /**
@@ -64,9 +37,8 @@ class ShoppingListItemRestRequestReader implements ShoppingListItemRestRequestRe
      *
      * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
      */
-    public function readRestShoppingListItemRequestTransferByUuid(
-        RestRequestInterface $restRequest
-    ): RestShoppingListItemRequestTransfer {
+    public function readRestShoppingListItemRequestTransferByUuid(RestRequestInterface $restRequest): RestShoppingListItemRequestTransfer
+    {
         $uuidShoppingListItem = $restRequest->getResource()->getId();
         if (!$uuidShoppingListItem) {
             return (new RestShoppingListItemRequestTransfer())->addErrorCode(

@@ -10,9 +10,9 @@ namespace Spryker\Client\ShoppingListsRestApi\Zed;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 
 interface ShoppingListsRestApiStubInterface
 {
@@ -26,39 +26,30 @@ interface ShoppingListsRestApiStubInterface
     ): RestShoppingListCollectionResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function findShoppingListByUuid(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): ShoppingListResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function createShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+        ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function updateShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+        ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function deleteShoppingList(
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+        ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListResponseTransfer;
 
     /**

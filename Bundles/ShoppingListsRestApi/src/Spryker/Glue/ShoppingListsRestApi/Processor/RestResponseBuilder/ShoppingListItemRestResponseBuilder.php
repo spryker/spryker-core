@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Builder\RestResponseBuilder;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Mapper\ShoppingListItemMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements ShoppingListItemRestResponseBuilderInterface
@@ -23,13 +22,13 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
     protected const FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE = '%s/%s/%s/%s';
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Mapper\ShoppingListItemMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapperInterface
      */
     protected $shoppingListItemMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Mapper\ShoppingListItemMapperInterface $shoppingListItemMapper
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapperInterface $shoppingListItemMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
@@ -45,9 +44,8 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createShoppingListItemRestResourcesFromShoppingListTransfer(
-        ShoppingListTransfer $shoppingListTransfer
-    ): array {
+    public function createShoppingListItemRestResourcesFromShoppingListTransfer(ShoppingListTransfer $shoppingListTransfer): array
+    {
         $restResources = [];
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $restResources[] = $this->createShoppingListItemRestResource(
@@ -84,15 +82,15 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
         ShoppingListItemTransfer $shoppingListItemTransfer,
         string $idShoppingList
     ): RestResourceInterface {
-        $restShoppingListItemAttributesTransfer = $this->shoppingListItemMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
+        $restShoppingListItemsAttributesTransfer = $this->shoppingListItemMapper->mapShoppingListItemTransferToRestShoppingListItemsAttributesTransfer(
             $shoppingListItemTransfer,
-            new RestShoppingListItemAttributesTransfer()
+            new RestShoppingListItemsAttributesTransfer()
         );
 
         $shoppingListItemResource = $this->restResourceBuilder->createRestResource(
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
             $shoppingListItemTransfer->getUuid(),
-            $restShoppingListItemAttributesTransfer
+            $restShoppingListItemsAttributesTransfer
         );
 
         $shoppingListItemResource->addLink(
@@ -112,10 +110,8 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
      *
      * @return string
      */
-    protected function createSelfLinkForShoppingListItem(
-        string $idShoppingList,
-        string $idShoppingListItem
-    ): string {
+    protected function createSelfLinkForShoppingListItem(string $idShoppingList, string $idShoppingListItem): string
+    {
         return sprintf(
             static::FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE,
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS,

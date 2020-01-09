@@ -8,14 +8,21 @@
 namespace Spryker\Glue\ShoppingListsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Customer\Reader\CustomerRestRequestReader;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Customer\Reader\CustomerRestRequestReaderInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilder;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilderInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapper;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapperInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReader;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToShoppingListClientInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\CustomerMapper;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\CustomerMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapper;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapper;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListItemRestRequestReader;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListItemRestRequestReaderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReader;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilder;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListRestResponseBuilder;
+use Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListRestResponseBuilderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListCreator;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListCreatorInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListDeleter;
@@ -24,12 +31,6 @@ use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListReader;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListReaderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListUpdater;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListUpdaterInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilder;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilderInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Mapper\ShoppingListItemMapper;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Mapper\ShoppingListItemMapperInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Reader\ShoppingListItemRestRequestReader;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Reader\ShoppingListItemRestRequestReaderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemAdderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemDeleter;
@@ -47,9 +48,10 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListReader(): ShoppingListReaderInterface
     {
         return new ShoppingListReader(
+            $this->createCustomerMapper(),
             $this->getClient(),
+            $this->getShoppingListClient(),
             $this->createShoppingListRestRequestReader(),
-            $this->createCustomerRestRequestReader(),
             $this->createShoppingListRestResponseBuilder()
         );
     }
@@ -61,7 +63,6 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     {
         return new ShoppingListCreator(
             $this->getClient(),
-            $this->createShoppingListMapper(),
             $this->createShoppingListRestRequestReader(),
             $this->createShoppingListRestResponseBuilder()
         );
@@ -131,7 +132,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapperInterface
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface
      */
     public function createShoppingListMapper(): ShoppingListMapperInterface
     {
@@ -139,7 +140,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Mapper\ShoppingListItemMapperInterface
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapperInterface
      */
     public function createShoppingListItemMapper(): ShoppingListItemMapperInterface
     {
@@ -147,35 +148,33 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\Customer\Reader\CustomerRestRequestReaderInterface
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\CustomerMapperInterface
      */
-    public function createCustomerRestRequestReader(): CustomerRestRequestReaderInterface
+    public function createCustomerMapper(): CustomerMapperInterface
     {
-        return new CustomerRestRequestReader();
+        return new CustomerMapper();
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface
      */
     public function createShoppingListRestRequestReader(): ShoppingListRestRequestReaderInterface
     {
         return new ShoppingListRestRequestReader(
-            $this->createCustomerRestRequestReader()
+            $this->createShoppingListMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Reader\ShoppingListItemRestRequestReaderInterface
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListItemRestRequestReaderInterface
      */
     public function createShoppingListItemRestRequestReader(): ShoppingListItemRestRequestReaderInterface
     {
-        return new ShoppingListItemRestRequestReader(
-            $this->createShoppingListRestRequestReader()
-        );
+        return new ShoppingListItemRestRequestReader();
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilderInterface
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListRestResponseBuilderInterface
      */
     public function createShoppingListRestResponseBuilder(): ShoppingListRestResponseBuilderInterface
     {
@@ -187,7 +186,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilderInterface
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilderInterface
      */
     public function createShoppingListItemRestResponseBuilder(): ShoppingListItemRestResponseBuilderInterface
     {
@@ -195,5 +194,13 @@ class ShoppingListsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createShoppingListItemMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToShoppingListClientInterface
+     */
+    public function getShoppingListClient(): ShoppingListsRestApiToShoppingListClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListsRestApiDependencyProvider::CLIENT_SHOPPING_LIST);
     }
 }

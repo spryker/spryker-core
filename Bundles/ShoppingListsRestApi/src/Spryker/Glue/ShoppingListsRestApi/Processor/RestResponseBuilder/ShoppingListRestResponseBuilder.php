@@ -5,40 +5,38 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestShoppingListAttributesTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
+use Generated\Shared\Transfer\RestShoppingListsAttributesTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Builder\RestResponseBuilder;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapperInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class ShoppingListRestResponseBuilder extends RestResponseBuilder implements ShoppingListRestResponseBuilderInterface
 {
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Builder\RestResponseBuilderInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\RestResponseBuilderInterface
      */
     protected $restResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface
      */
     protected $shoppingListsResourceMapper;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilderInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilderInterface
      */
     protected $shoppingListItemRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapperInterface $shoppingListsResourceMapper
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface $shoppingListsResourceMapper
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
@@ -89,7 +87,7 @@ class ShoppingListRestResponseBuilder extends RestResponseBuilder implements Sho
     ): RestResourceInterface {
         $restShoppingListsAttributesTransfer = $this->shoppingListsResourceMapper->mapShoppingListTransferToRestShoppingListsAttributesTransfer(
             $shoppingListTransfer,
-            new RestShoppingListAttributesTransfer()
+            new RestShoppingListsAttributesTransfer()
         );
 
         $shoppingListResource = $this->restResourceBuilder->createRestResource(

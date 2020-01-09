@@ -444,4 +444,20 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
             ->createShoppingListSubtotalCalculator()
             ->calculateShoppingListSubtotal($shoppingListItemProductViews);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getZedStub()->findShoppingListByUuid($shoppingListTransfer);
+    }
 }

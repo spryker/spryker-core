@@ -410,4 +410,22 @@ class ShoppingListStub implements ShoppingListStubInterface
 
         return $shoppingListShareResponseTransfer;
     }
+
+    /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::findShoppingListByUuid()
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
+        $shoppingListResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/find-shopping-list-by-uuid',
+            $shoppingListTransfer
+        );
+
+        return $shoppingListResponseTransfer;
+    }
 }

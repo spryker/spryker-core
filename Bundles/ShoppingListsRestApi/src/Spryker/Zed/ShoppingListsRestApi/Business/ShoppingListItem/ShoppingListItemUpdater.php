@@ -52,15 +52,6 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
     public function updateShoppingListItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        $restShoppingListItemRequestTransfer
-            ->requireShoppingListItem()
-            ->requireShoppingListUuid()
-            ->requireCompanyUserUuid();
-        $restShoppingListItemRequestTransfer->getShoppingListItem()
-            ->requireUuid()
-            ->requireCustomerReference()
-            ->requireQuantity();
-
         $shoppingListItemResponseTransfer = $this->shoppingListItemReader->findShoppingListItem(
             $restShoppingListItemRequestTransfer
         );
@@ -69,10 +60,13 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
             return $shoppingListItemResponseTransfer;
         }
 
-        $quantity = $restShoppingListItemRequestTransfer->getShoppingListItem()->getQuantity();
-        $shoppingListItemResponseTransfer->getShoppingListItem()->setQuantity($quantity);
+        $shoppingListItemTransfer = $shoppingListItemResponseTransfer->getShoppingListItem()
+            ->fromArray(
+                $restShoppingListItemRequestTransfer->getShoppingListItem()->modifiedToArray(),
+                true
+            );
 
-        $shoppingListItemResponseTransfer = $this->shoppingListFacade->updateShoppingListItemById($shoppingListItemResponseTransfer->getShoppingListItem());
+        $shoppingListItemResponseTransfer = $this->shoppingListFacade->updateShoppingListItemById($shoppingListItemTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToRestCodes(

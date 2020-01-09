@@ -215,4 +215,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->dismissShoppingListSharing($shoppingListDismissRequest);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuidAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFacade()->findShoppingListByUuid($shoppingListTransfer);
+    }
 }

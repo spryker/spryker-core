@@ -8,22 +8,22 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 
 interface ShoppingListItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListRequestTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function mapRestShoppingListItemRequestTransferToRestShoppingListRequestTransfer(
+    public function mapRestShoppingListItemRequestTransferToShoppingListTransfer(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer,
-        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): RestShoppingListRequestTransfer;
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
