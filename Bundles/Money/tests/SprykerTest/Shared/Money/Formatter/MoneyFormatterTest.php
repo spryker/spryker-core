@@ -53,7 +53,7 @@ class MoneyFormatterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface
      */
-    protected function getMoneyFormatterCollectionMock()
+    protected function getMoneyFormatterCollectionMock(): MoneyFormatterCollectionInterface
     {
         $moneyFormatterCollectionMock = $this->getMockBuilder(MoneyFormatterCollectionInterface::class)->getMock();
         $moneyFormatterCollectionMock->method('getFormatter')->willReturn($this->getMoneyFormatterMock());
@@ -64,7 +64,7 @@ class MoneyFormatterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
-    protected function getMoneyFormatterMock()
+    protected function getMoneyFormatterMock(): MoneyFormatterInterface
     {
         $moneyFormatterMock = $this->getMockBuilder(MoneyFormatterInterface::class)->getMock();
         $moneyFormatterMock->method('format')->willReturnCallback([$this, 'format']);

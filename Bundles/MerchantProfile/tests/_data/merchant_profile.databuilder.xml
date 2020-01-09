@@ -32,7 +32,6 @@
     </transfer>
 
     <transfer name="MerchantProfileAddress">
-        <property name="key" dataBuilderRule="unique()->sentence"/>
         <property name="fkCountry" dataBuilderRule="=60"/>
         <property name="address1" dataBuilderRule="word"/>
         <property name="address2" dataBuilderRule="word"/>
