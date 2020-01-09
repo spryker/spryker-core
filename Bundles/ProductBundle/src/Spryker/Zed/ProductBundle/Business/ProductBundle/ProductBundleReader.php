@@ -64,6 +64,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
 
             $sku = $bundledProductEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
             $productForBundleTransfer->setSku($sku);
+            $productForBundleTransfer->setIsActive($bundledProductEntity->getSpyProductRelatedByFkBundledProduct()->getIsActive());
 
             $productForBundleTransfer->fromArray($bundledProductEntity->toArray(), true);
             $bundledProductsTransferCollection->append($productForBundleTransfer);

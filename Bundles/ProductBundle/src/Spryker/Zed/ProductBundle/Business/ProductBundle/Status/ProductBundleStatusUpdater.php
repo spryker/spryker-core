@@ -76,6 +76,7 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
             }
 
             $productConcreteTransfer = $this->productFacade->findProductConcreteById($productForBundleTransfer->getIdProductBundle());
+
             if ($productConcreteTransfer->getIsActive() !== $isActive) {
                 $this->productFacade->saveProductConcrete($productConcreteTransfer->setIsActive($isActive));
             }
