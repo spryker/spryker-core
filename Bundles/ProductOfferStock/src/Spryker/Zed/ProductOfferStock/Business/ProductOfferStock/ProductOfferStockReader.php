@@ -35,7 +35,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
         $productOfferStockRequestTransfer->requireProductOfferReference()
             ->requireStore()
             ->getStore()
-            ->requireIdStore();
+                ->requireIdStore();
 
         $productOfferTransfer = $this->productOfferStockRepository->findOne($productOfferStockRequestTransfer);
 

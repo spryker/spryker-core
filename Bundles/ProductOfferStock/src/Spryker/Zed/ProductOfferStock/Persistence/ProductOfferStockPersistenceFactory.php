@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductOfferStock\Persistence;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper\ProductOfferStockMapper;
-use Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper\ProductOfferStockMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductOfferStock\ProductOfferStockConfig getConfig()
@@ -19,9 +18,9 @@ use Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper\ProductOfferStockMap
 class ProductOfferStockPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper\ProductOfferStockMapperInterface
+     * @return \Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper\ProductOfferStockMapper
      */
-    public function createProductOfferStockMapper(): ProductOfferStockMapperInterface
+    public function createProductOfferStockMapper(): ProductOfferStockMapper
     {
         return new ProductOfferStockMapper();
     }

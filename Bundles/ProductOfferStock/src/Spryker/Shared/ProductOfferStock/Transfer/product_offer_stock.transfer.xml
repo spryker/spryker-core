@@ -10,11 +10,9 @@
 
     <transfer name="ProductOfferStock">
         <property name="idProductOfferStock" type="int"/>
-        <property name="fkProductOffer" type="int"/>
         <property name="quantity" type="decimal"/>
         <property name="productOffer" type="ProductOffer"/>
         <property name="stock" type="Stock"/>
-        <property name="fkStock" type="int"/>
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 

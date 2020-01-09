@@ -14,7 +14,7 @@ interface ProductOfferStockFacadeInterface
 {
     /**
      * Specification:
-     * - Returns is product offer is never out of stock by ProductOfferReference and Store in ProductOfferStockRequestTransfer
+     * - Checks if the product offer stock with the provided product offer reference and store id is never out of stock.
      *
      * @api
      *

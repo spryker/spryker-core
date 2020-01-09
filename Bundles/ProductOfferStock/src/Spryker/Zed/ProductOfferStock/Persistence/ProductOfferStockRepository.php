@@ -31,7 +31,7 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
         $productOfferStockRequestTransfer->requireProductOfferReference()
             ->requireStore()
             ->getStore()
-            ->requireName();
+                ->requireName();
 
         $quantity = $this->getFactory()
             ->getProductOfferStockPropelQuery()

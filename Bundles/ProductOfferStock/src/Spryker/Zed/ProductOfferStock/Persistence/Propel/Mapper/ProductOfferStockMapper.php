@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock;
 
-class ProductOfferStockMapper implements ProductOfferStockMapperInterface
+class ProductOfferStockMapper
 {
     /**
      * @param \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock $productOfferStockEntity
