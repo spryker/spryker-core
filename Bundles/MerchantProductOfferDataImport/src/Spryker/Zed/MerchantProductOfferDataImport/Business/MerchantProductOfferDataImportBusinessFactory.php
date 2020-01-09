@@ -92,7 +92,7 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
      */
     public function createMerchantProductOfferStoreWriterStep(): DataImportStepInterface
     {
-        return new MerchantProductOfferStoreWriterStep();
+        return new MerchantProductOfferStoreWriterStep($this->getEventFacade());
     }
 
     /**
