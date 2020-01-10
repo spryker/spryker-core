@@ -4,30 +4,30 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Store">
-        <property name="idStore" type="int" />
-        <property name="name" type="string" />
-        <property name="selectedCurrencyIsoCode" type="string" />
-        <property name="defaultCurrencyIsoCode" type="string" />
-        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" />
-        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode" />
-        <property name="queuePools" type="array" />
-        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" />
-        <property name="countries" type="array" singular="country" />
-        <property name="timezone" type="string" />
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="selectedCurrencyIsoCode" type="string"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="queuePools" type="array" singular="queuePools"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="countries" type="array" singular="country"/>
+        <property name="timezone" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
-        <property name="idEntity" type="int" />
-        <property name="idStores" type="int[]" />
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="store" type="Store" />
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="QuoteValidationResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="QuoteError[]"/>
+        <property name="errors" type="QuoteError[]" singular="errors"/>
     </transfer>
 
     <transfer name="QuoteError">

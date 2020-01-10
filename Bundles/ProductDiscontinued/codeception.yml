@@ -3,8 +3,6 @@ namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/ProductDiscontinued
 
-actor: Tester
-
 paths:
     tests: tests
     log: tests/_output

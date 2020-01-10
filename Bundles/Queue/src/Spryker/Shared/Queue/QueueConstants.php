@@ -14,7 +14,7 @@ interface QueueConstants
 {
     /**
      * Specification:
-     * - Server unique id e.g spryker-vagrant
+     * - Server unique id e.g spryker-vagrant.
      *
      * @api
      */
@@ -22,7 +22,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - Configuration of queue adapters and worker number as an array
+     * - Configuration of queue adapters and worker number as an array.
      *
      * @api
      */
@@ -30,7 +30,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - The Default configuration of queue adapters and worker number as an array
+     * - The Default configuration of queue adapters and worker number as an array.
      *
      * @api
      */
@@ -38,7 +38,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - Delay interval between each execution of worker in milliseconds
+     * - Delay interval between each execution of worker in milliseconds.
      *
      * @api
      */
@@ -46,7 +46,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - Delay interval between each execution of process in microsecond
+     * - Delay interval between each execution of process in microsecond.
      *
      * @api
      */
@@ -54,7 +54,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - Worker execution time in seconds
+     * - Worker execution time in seconds.
      *
      * @api
      */
@@ -62,7 +62,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - Absolute path to the log of all processes output which trigger by worker
+     * - Absolute path to the log of all processes output which trigger by worker.
      *
      * @api
      */
@@ -70,7 +70,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - This flag will use for activation or deactivation logs for queue workers
+     * - This flag will use for activation or deactivation logs for queue workers.
      *
      * @api
      */
@@ -78,7 +78,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - The Default consuming/receiving configuration
+     * - The Default consuming/receiving configuration.
      *
      * @api
      */
@@ -86,7 +86,7 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - This option will use to check if there is at least one message in queue
+     * - This option will use to check if there is at least one message in queue.
      *
      * @api
      */
@@ -94,9 +94,11 @@ interface QueueConstants
 
     /**
      * Specification:
-     * - This option lets the worker to run over a loop until there is no message in the queues
+     * - This option lets the worker to run over a loop until there is no message in the queues.
      *
      * @api
+     *
+     * @deprecated Use `vendor/bin/console queue:worker:start --stop-only-when-empty` instead.
      */
     public const QUEUE_WORKER_LOOP = 'QUEUE_WORKER_LOOP';
 }

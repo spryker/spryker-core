@@ -20,6 +20,10 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Throwable;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
+ * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
+ *
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
@@ -86,7 +90,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $responseTransfer
      * @param \Symfony\Component\HttpFoundation\Response $responseObject
      *
-     * @return \Symfony\Component\HttpFoundation\Response $responseObject
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function transformToResponse(ApiRequestTransfer $requestTransfer, ApiResponseTransfer $responseTransfer, Response $responseObject)
     {

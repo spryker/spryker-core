@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PriceProductScheduleRedirect">
+        <property name="idPriceProductScheduleList" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="redirectUrl" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="PriceProductScheduleError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="PriceProductSchedule">
+        <property name="priceProduct" type="PriceProduct"/>
+        <property name="idPriceProductSchedule" type="int"/>
+        <property name="activeFrom" type="string"/>
+        <property name="activeTo" type="string"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="skuProduct" type="string"/>
+        <property name="skuProductAbstract" type="string"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceTypeName" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+        <property name="errors" type="PriceProductScheduleListError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleList">
+        <property name="idPriceProductScheduleList" type="int"/>
+        <property name="name" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleCsvValidationResult">
+        <property name="isSuccess" type="bool"/>
+        <property name="error" type="string" singular="error"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduledListImportRequest">
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListImportResponse">
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+        <property name="errors" type="PriceProductScheduleListImportError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="timezone" type="string"/>
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="CsvFile">
+        <property name="fileName" type="string"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="header" type="array" singular="header"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="idPriceType" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreWithCurrency">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+        <property name="idCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="activeTabName" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListImportError">
+        <property name="priceProductScheduleImport" type="PriceProductScheduleImport"/>
+        <property name="message" type="string"/>
+        <property name="parameters" type="string[]" singular="parameters"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleImport">
+        <property name="metaData" type="PriceProductScheduleImportMetaData"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleImportMetaData">
+        <property name="identifier" type="string"/>
+    </transfer>
+</transfers>

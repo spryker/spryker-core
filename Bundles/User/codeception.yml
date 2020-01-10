@@ -1,6 +1,4 @@
 namespace: User
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/User
 

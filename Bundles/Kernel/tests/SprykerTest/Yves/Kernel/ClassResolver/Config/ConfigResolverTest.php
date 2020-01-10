@@ -7,12 +7,14 @@
 
 namespace SprykerTest\Yves\Kernel\ClassResolver\Config;
 
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver;
 use SprykerTest\Yves\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel
@@ -53,7 +55,7 @@ class ConfigResolverTest extends AbstractResolverTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): AbstractClassResolver
     {
         $resolverMock = $this->getMockBuilder(BundleConfigResolver::class)->setMethods($methods)->getMock();
 

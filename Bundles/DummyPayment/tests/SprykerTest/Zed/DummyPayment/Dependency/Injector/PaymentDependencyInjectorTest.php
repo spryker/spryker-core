@@ -11,10 +11,12 @@ use Codeception\Test\Unit;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\DummyPayment\Dependency\Injector\PaymentDependencyInjector;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment
@@ -28,7 +30,7 @@ class PaymentDependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectBusinessLayerDependenciesShouldAddPlugins()
+    public function testInjectBusinessLayerDependenciesShouldAddPlugins(): void
     {
         $container = new Container();
         $paymentDependencyProvider = new PaymentDependencyProvider();
@@ -49,7 +51,7 @@ class PaymentDependencyInjectorTest extends Unit
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection
      */
-    protected function getPluginCollectionFromContainer($container)
+    protected function getPluginCollectionFromContainer(Container $container): CheckoutPluginCollection
     {
         $pluginCollection = $container[PaymentDependencyProvider::CHECKOUT_PLUGINS];
 

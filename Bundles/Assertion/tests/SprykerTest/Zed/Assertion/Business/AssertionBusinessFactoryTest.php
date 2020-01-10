@@ -13,6 +13,7 @@ use Spryker\Zed\Assertion\Business\Model\Assertion;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Assertion
@@ -25,7 +26,7 @@ class AssertionBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateAssertion()
+    public function testCreateAssertion(): void
     {
         $factory = new AssertionBusinessFactory();
         $this->assertInstanceOf(Assertion::class, $factory->createAssertion());

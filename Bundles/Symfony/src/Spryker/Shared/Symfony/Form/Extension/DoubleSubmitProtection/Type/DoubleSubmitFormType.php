@@ -19,6 +19,9 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\Type\DoubleSubmitFormType` instead.
+ */
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
     public const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
@@ -48,7 +51,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     protected $translator;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $translationDomain;
 

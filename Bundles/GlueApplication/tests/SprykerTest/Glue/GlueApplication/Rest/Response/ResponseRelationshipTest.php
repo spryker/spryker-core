@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -17,6 +18,7 @@ use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication
@@ -42,7 +44,7 @@ class ResponseRelationshipTest extends Unit
         $relationshipPluginMock
             ->method('addResourceRelationships')
             ->willReturnCallback(
-                function (array $resources, RestRequestInterface $restRequest) use ($restResponseBuilder) {
+                function (array $resources, RestRequestInterface $restRequest) use ($restResponseBuilder): void {
                     foreach ($resources as $resource) {
                         $resource->addRelationship(
                             $restResponseBuilder->createRestResource('related', 1)

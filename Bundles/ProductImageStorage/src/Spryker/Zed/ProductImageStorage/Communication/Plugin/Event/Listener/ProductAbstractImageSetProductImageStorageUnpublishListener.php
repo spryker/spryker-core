@@ -22,7 +22,7 @@ class ProductAbstractImageSetProductImageStorageUnpublishListener extends Abstra
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

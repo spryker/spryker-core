@@ -18,6 +18,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ContentProductDataImport
@@ -38,7 +39,7 @@ class ContentProductDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         parent::_before();
         $this->tester->ensureDatabaseTableIsEmpty();
@@ -173,7 +174,7 @@ class ContentProductDataImportPluginTest extends Unit
     /**
      * @return \Spryker\Service\UtilEncoding\UtilEncodingService
      */
-    protected function createUtilEncodingService()
+    protected function createUtilEncodingService(): UtilEncodingService
     {
         return new UtilEncodingService();
     }

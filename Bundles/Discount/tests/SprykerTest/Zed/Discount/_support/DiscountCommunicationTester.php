@@ -13,6 +13,7 @@ use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugi
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -37,7 +38,7 @@ class DiscountCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function registerStoreRelationToggleFormTypePlugin()
+    public function registerStoreRelationToggleFormTypePlugin(): void
     {
         $this->setDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return new StoreRelationToggleFormTypePlugin();

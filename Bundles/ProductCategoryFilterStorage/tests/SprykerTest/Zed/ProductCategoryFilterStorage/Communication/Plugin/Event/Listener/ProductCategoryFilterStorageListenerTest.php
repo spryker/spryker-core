@@ -21,6 +21,7 @@ use SprykerTest\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageCon
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategoryFilterStorage
@@ -36,7 +37,7 @@ class ProductCategoryFilterStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductCategoryFilterPublishStorageListenerStoreData()
+    public function testProductCategoryFilterPublishStorageListenerStoreData(): void
     {
         $productCategoryFilterFacade = new ProductCategoryFilterFacade();
         $productCategory = $productCategoryFilterFacade->findProductCategoryFilterByCategoryId(1);
@@ -70,7 +71,7 @@ class ProductCategoryFilterStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductCategoryFilterStorage\Business\ProductCategoryFilterStorageFacade
      */
-    protected function getProductCategoryFilterStorageFacade()
+    protected function getProductCategoryFilterStorageFacade(): ProductCategoryFilterStorageFacade
     {
         $factory = new ProductCategoryFilterStorageBusinessFactory();
         $factory->setConfig(new ProductCategoryFilterStorageConfigMock());
@@ -86,7 +87,7 @@ class ProductCategoryFilterStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductCategoryFilterStorage($beforeCount)
+    protected function assertProductCategoryFilterStorage(int $beforeCount): void
     {
         $productCategoryFilterStorageCount = SpyProductCategoryFilterStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productCategoryFilterStorageCount);

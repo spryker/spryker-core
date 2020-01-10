@@ -8,30 +8,36 @@
 namespace Spryker\Zed\ProductListGui\Communication\Table;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class AvailableProductConcreteTable extends AbstractProductConcreteTable
 {
-    protected const DEFAULT_URL = 'availableProductConcreteTable';
+    protected const DEFAULT_URL = 'available-product-concrete-table';
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $spyProductQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function filterQuery(SpyProductQuery $spyProductQuery): SpyProductQuery
+    protected function filterQuery(SpyProductQuery $productQuery): SpyProductQuery
     {
         if ($this->getIdProductList()) {
-            $spyProductQuery
-                ->useSpyProductListProductConcreteQuery(null, Criteria::LEFT_JOIN)
-                    ->filterByFkProductList($this->getIdProductList(), Criteria::NOT_IN)
-                    ->_or()
+            $productQuery
+                ->useSpyProductListProductConcreteQuery(SpyProductListProductConcreteTableMap::TABLE_NAME, Criteria::LEFT_JOIN)
                     ->filterByFkProductList(null, Criteria::ISNULL)
                 ->endUse()
-                ->distinct();
+                ->addJoinCondition(
+                    SpyProductListProductConcreteTableMap::TABLE_NAME,
+                    sprintf(
+                        '%s = %d',
+                        SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
+                        $this->getIdProductList()
+                    )
+                );
         }
 
-        return $spyProductQuery;
+        return $productQuery;
     }
 }

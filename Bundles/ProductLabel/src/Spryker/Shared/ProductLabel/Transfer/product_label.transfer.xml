@@ -40,8 +40,17 @@
 
     <transfer name="ProductLabelProductAbstractRelations">
         <property name="idProductLabel" type="int"/>
-        <property name="idsProductAbstractToAssign" type="array"/>
-        <property name="idsProductAbstractToDeAssign" type="array"/>
+        <property name="idsProductAbstractToAssign" type="array" singular="idsProductAbstractToAssign"/>
+        <property name="idsProductAbstractToDeAssign" type="array" singular="idsProductAbstractToDeAssign"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isMultiValued" type="bool"/>
+        <property name="valueTransformer" type="string"/>
     </transfer>
 
 </transfers>

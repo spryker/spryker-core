@@ -14,10 +14,12 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -33,7 +35,7 @@ class ProductOptionGroupReaderTest extends MockProvider
     /**
      * @return void
      */
-    public function testGetProductOptionGroupByIdThrowsExceptionWhenOptionDoesNotExist()
+    public function testGetProductOptionGroupByIdThrowsExceptionWhenOptionDoesNotExist(): void
     {
         // Assign
         $queryContainerMock = $this->getQueryContainerMock();
@@ -62,7 +64,7 @@ class ProductOptionGroupReaderTest extends MockProvider
      *
      * @return void
      */
-    public function testGetProductOptionGroupByIdReturnsProductOptionGroupTransfer()
+    public function testGetProductOptionGroupByIdReturnsProductOptionGroupTransfer(): void
     {
         // Assign
         $localeFacadeMock = $this->createLocaleFacadeMock();
@@ -95,7 +97,7 @@ class ProductOptionGroupReaderTest extends MockProvider
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
-    protected function getQueryContainerMock(?SpyProductOptionGroup $productOptionGroupEntity = null)
+    protected function getQueryContainerMock(?SpyProductOptionGroup $productOptionGroupEntity = null): ProductOptionQueryContainerInterface
     {
         $groupCollection = $this->getMockBuilder(ObjectCollection::class)->getMock();
         $groupCollection->expects($this->any())->method('getFirst')->willReturn($productOptionGroupEntity);

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Payment\Persistence;
 
-use Generated\Shared\Transfer\SalesPaymentMethodTypeCollectionTransfer;
-use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,25 +19,102 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class PaymentRepository extends AbstractRepository implements PaymentRepositoryInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\SalesPaymentMethodTypeCollectionTransfer
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
      */
-    public function getSalesPaymentMethodTypesCollection(): SalesPaymentMethodTypeCollectionTransfer
+    public function findPaymentMethodById(int $idPaymentMethod): ?PaymentMethodTransfer
     {
-        $salesPaymentMethodTypeEntities = $this->getFactory()
-            ->createSalesPaymentMethodTypeQuery()
-            ->find();
+        $paymentMethodEntity = $this->getFactory()
+            ->createPaymentMethodQuery()
+            ->filterByIdPaymentMethod($idPaymentMethod)
+            ->findOne();
 
-        $salesPaymentMethodTypeCollectionTransfer = new SalesPaymentMethodTypeCollectionTransfer();
-
-        $paymentMapper = $this->getFactory()->createPaymentMapper();
-        foreach ($salesPaymentMethodTypeEntities as $salesPaymentMethodTypeEntity) {
-            $salesPaymentMethodTypeTransfer = $paymentMapper->mapSalesPaymentMethodTypeTransfer(
-                $salesPaymentMethodTypeEntity,
-                new SalesPaymentMethodTypeTransfer()
-            );
-            $salesPaymentMethodTypeCollectionTransfer->addSalesPaymentMethodType($salesPaymentMethodTypeTransfer);
+        if ($paymentMethodEntity === null) {
+            return null;
         }
 
-        return $salesPaymentMethodTypeCollectionTransfer;
+        return $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodEntityToPaymentMethodTransfer($paymentMethodEntity, new PaymentMethodTransfer());
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     */
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer
+    {
+        $paymentProviderCollectionTransfer = new PaymentProviderCollectionTransfer();
+        $paymentProviderEntities = $this->getFactory()
+            ->createPaymentProviderQuery()
+            ->joinWithSpyPaymentMethod()
+            ->useSpyPaymentMethodQuery()
+                ->joinWithSpyPaymentMethodStore()
+                ->filterByIsActive(true)
+                ->useSpyPaymentMethodStoreQuery()
+                    ->joinWithSpyStore()
+                    ->useSpyStoreQuery()
+                        ->filterByName($storeName)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->groupByIdPaymentProvider()
+            ->find();
+
+        if (!$paymentProviderEntities->getData()) {
+            return $paymentProviderCollectionTransfer;
+        }
+
+        return $this->getFactory()
+            ->createPaymentProviderMapper()->mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
+                $paymentProviderEntities,
+                $paymentProviderCollectionTransfer
+            );
+    }
+
+    /**
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdPaymentMethod(int $idPaymentMethod): StoreRelationTransfer
+    {
+        $shipmentMethodStoreEntities = $this->getFactory()
+            ->createPaymentMethodStoreQuery()
+            ->filterByFkPaymentMethod($idPaymentMethod)
+            ->leftJoinWithSpyStore()
+            ->find();
+
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idPaymentMethod);
+
+        return $this->getFactory()
+            ->createStoreRelationMapper()
+            ->mapPaymentMethodStoreEntitiesToStoreRelationTransfer($shipmentMethodStoreEntities, $storeRelationTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getPaymentMethods(): PaymentMethodsTransfer
+    {
+        $paymentMethodsTransfer = new PaymentMethodsTransfer();
+        $paymentMethodEntities = $this->getFactory()
+            ->createPaymentMethodQuery()
+            ->leftJoinWithSpyPaymentMethodStore()
+            ->groupByIdPaymentMethod()
+            ->find();
+
+        if (!$paymentMethodEntities->getData()) {
+            return $paymentMethodsTransfer;
+        }
+
+        return $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodEntityCollectionToPaymentMethodsTransfer(
+                $paymentMethodEntities,
+                $paymentMethodsTransfer
+            );
     }
 }

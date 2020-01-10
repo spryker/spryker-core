@@ -13,11 +13,13 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
+use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
 use Spryker\Zed\Money\Business\MoneyFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -32,7 +34,7 @@ class MoneyValueConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertDecimalToCentWhenIsNotInUsedShouldUpdateAllItems()
+    public function testConvertDecimalToCentWhenIsNotInUsedShouldUpdateAllItems(): void
     {
         $currencyConverterMock = $this->createMoneyValueConverter();
 
@@ -53,7 +55,7 @@ class MoneyValueConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertDecimalToCentWhenIsInUsedShouldUpdateAllItems()
+    public function testConvertDecimalToCentWhenIsInUsedShouldUpdateAllItems(): void
     {
         $currencyConverterMock = $this->createMoneyValueConverter();
 
@@ -74,7 +76,7 @@ class MoneyValueConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertDecimalToCentWhenSingleValueUsedShouldUpdateAllItems()
+    public function testConvertDecimalToCentWhenSingleValueUsedShouldUpdateAllItems(): void
     {
         $currencyConverterMock = $this->createMoneyValueConverter();
 
@@ -90,7 +92,7 @@ class MoneyValueConverterTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
      */
-    protected function createMoneyValueConverter()
+    protected function createMoneyValueConverter(): MoneyValueConverterInterface
     {
         $discountToMoneyBridge = new DiscountToMoneyBridge(new MoneyFacade());
 

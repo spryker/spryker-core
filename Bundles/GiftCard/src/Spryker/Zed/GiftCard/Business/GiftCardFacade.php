@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -23,7 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +42,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +59,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +75,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +91,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +108,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +124,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +142,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -158,7 +160,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -174,7 +176,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +192,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -207,7 +209,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -223,7 +225,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -239,14 +241,16 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods() instead.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
     {
@@ -256,7 +260,21 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function filterShipmentGroupMethods(ShipmentGroupTransfer $shipmentGroupTransfer): ArrayObject
+    {
+        return $this->getFactory()->createShipmentGroupMethodFilter()->filterShipmentMethods($shipmentGroupTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -272,7 +290,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -285,5 +303,88 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
         return $this->getFactory()
             ->createGiftCardReader()
             ->findGiftCardByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function sanitizeShipmentGroupCollection(iterable $shipmentGroupCollection): iterable
+    {
+        return $this->getFactory()
+            ->createShipmentGroupSanitizer()
+            ->sanitizeShipmentGroupCollection($shipmentGroupCollection);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createGiftCardCartCodeAdder()
+            ->addCartCode($quoteTransfer, $cartCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createGiftCardCartCodeRemover()
+            ->removeCartCode($quoteTransfer, $cartCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createGiftCardCartCodeClearer()
+            ->clearCartCodes($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
+    {
+        return $this->getFactory()
+            ->createGiftCardCartCodeOperationMessageFinder()
+            ->findOperationResponseMessage($quoteTransfer, $cartCode);
     }
 }

@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface;
 
+/**
+ * @deprecated Will be removed in the next major version.
+ */
 class QuoteOperationChecker implements QuoteOperationCheckerInterface
 {
     protected const MESSAGE_TYPE_ERROR = 'error';

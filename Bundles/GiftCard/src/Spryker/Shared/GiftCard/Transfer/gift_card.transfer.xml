@@ -13,47 +13,121 @@
         <property name="value" type="int"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="actualValue" type="int" description="The rest amount assigned to a gift card"/>
-        <property name="attributes" type="array"/>
+        <property name="attributes" type="array" singular="attributes"/>
         <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="giftCards" type="GiftCard[]" singular="giftCard" />
-        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode" />
-        <property name="payments" type="Payment[]" singular="payment" />
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Payment">
         <property name="giftCard" type="GiftCard"/>
-        <property name="isLimitedAmount" type="bool" />
-        <property name="availableAmount" type="int" />
+        <property name="isLimitedAmount" type="bool"/>
+        <property name="availableAmount" type="int"/>
+        <property name="amount" type="int"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="idSalesPayment" type="int"/>
+        <property name="paymentSelection" type="string"/>
+        <property name="paymentMethod" type="string"/>
     </transfer>
 
     <transfer name="CalculableObject">
-        <property name="giftCards" type="GiftCard[]" singular="giftCard" />
-        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode" />
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
         <property name="payments" type="Payment[]" singular="payment"/>
-        <property name="payment" type="Payment" />
+        <property name="payment" type="Payment"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="originalQuote" type="Quote"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="giftCardMetadata" type="GiftCardMetadata" />
+        <property name="giftCardMetadata" type="GiftCardMetadata"/>
+        <property name="abstractSku" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="GiftCardAbstractProductConfiguration">
-        <property name="idGiftCardAbstractProductConfiguration" type="int" />
-        <property name="codePattern" type="string" />
+        <property name="idGiftCardAbstractProductConfiguration" type="int"/>
+        <property name="codePattern" type="string"/>
     </transfer>
 
     <transfer name="GiftCardProductConfiguration">
-        <property name="idGiftCardProductConfiguration" type="int" />
-        <property name="value" type="int" />
+        <property name="idGiftCardProductConfiguration" type="int"/>
+        <property name="value" type="int"/>
     </transfer>
 
     <transfer name="GiftCardMetadata">
-        <property name="isGiftCard" type="bool" />
-        <property name="abstractConfiguration" type="GiftCardAbstractProductConfiguration" />
-        <property name="concreteConfiguration" type="GiftCardProductConfiguration" />
+        <property name="isGiftCard" type="bool"/>
+        <property name="abstractConfiguration" type="GiftCardAbstractProductConfiguration"/>
+        <property name="concreteConfiguration" type="GiftCardProductConfiguration"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="availableShipmentMethods" type="ShipmentMethods"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="ShipmentMethods">
+        <property name="methods" type="ShipmentMethod[]" singular="method"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CollectedDiscount">
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItems"/>
+    </transfer>
+
+    <transfer name="DiscountableItem">
+        <property name="originalItem" type="Item"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentSelection" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]"/>
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
 </transfers>

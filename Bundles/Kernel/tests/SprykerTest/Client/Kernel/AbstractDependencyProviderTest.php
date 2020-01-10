@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Kernel
@@ -24,7 +25,7 @@ class AbstractDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCallProvideServiceLayerDependenciesMustReturnContainer()
+    public function testCallProvideServiceLayerDependenciesMustReturnContainer(): void
     {
         $container = new Container();
 
@@ -37,7 +38,7 @@ class AbstractDependencyProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Kernel\AbstractDependencyProvider
      */
-    private function getAbstractDependencyProviderMock()
+    private function getAbstractDependencyProviderMock(): AbstractDependencyProvider
     {
         return $this->getMockForAbstractClass(AbstractDependencyProvider::class);
     }
@@ -45,7 +46,7 @@ class AbstractDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testProvideServiceLayerDependencies()
+    public function testProvideServiceLayerDependencies(): void
     {
         $container = new Container();
         $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
@@ -55,7 +56,7 @@ class AbstractDependencyProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Kernel\AbstractDependencyProvider
      */
-    private function getAbstractDependencyContainerMock()
+    private function getAbstractDependencyContainerMock(): AbstractDependencyProvider
     {
         $abstractDependencyContainerMock = $this->getMockForAbstractClass(AbstractDependencyProvider::class);
 

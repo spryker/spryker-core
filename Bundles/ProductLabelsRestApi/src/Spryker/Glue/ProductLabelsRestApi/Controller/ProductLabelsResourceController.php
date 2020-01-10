@@ -39,6 +39,6 @@ class ProductLabelsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createProductLabelReader()->findById($restRequest);
+        return $this->getFactory()->createProductLabelReader()->getProductLabelById($restRequest);
     }
 }

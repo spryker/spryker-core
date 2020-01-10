@@ -13,6 +13,7 @@ use Spryker\Client\Queue\QueueDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductQuantityStorage
@@ -36,7 +37,7 @@ class ProductQuantityStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,7 +53,7 @@ class ProductQuantityStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPublishProductQuantityDoesNotThrowException()
+    public function testPublishProductQuantityDoesNotThrowException(): void
     {
         // TODO: temporary disable until P&S is able to handle storage tests
 //        // Assign

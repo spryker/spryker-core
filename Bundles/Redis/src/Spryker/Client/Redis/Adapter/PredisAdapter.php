@@ -147,4 +147,31 @@ class PredisAdapter implements RedisAdapterInterface
     {
         return $this->client->keys($pattern);
     }
+
+    /**
+     * @param int $cursor
+     * @param array $options
+     *
+     * @return array [string, string[]]
+     */
+    public function scan(int $cursor, array $options): array
+    {
+        return $this->client->scan($cursor, $options);
+    }
+
+    /**
+     * @return int
+     */
+    public function dbSize(): int
+    {
+        return $this->client->dbsize();
+    }
+
+    /**
+     * @return void
+     */
+    public function flushDb(): void
+    {
+        $this->client->flushdb();
+    }
 }

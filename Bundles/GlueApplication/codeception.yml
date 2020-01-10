@@ -1,6 +1,4 @@
 namespace: GlueApplication
-actor: Tester
-
 include:
     - tests/SprykerTest/Glue/GlueApplication
 

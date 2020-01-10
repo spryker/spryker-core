@@ -68,9 +68,14 @@ class ApiRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     *
      * @return void
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
@@ -79,7 +84,7 @@ class ApiRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function match($pathinfo)
     {

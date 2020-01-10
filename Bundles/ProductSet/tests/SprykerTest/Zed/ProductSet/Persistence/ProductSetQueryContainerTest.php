@@ -14,6 +14,7 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSet
@@ -26,7 +27,7 @@ class ProductSetQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductSetDataReturnsCorrectQuery()
+    public function testQueryAllProductSetDataReturnsCorrectQuery(): void
     {
         $productSetQueryContainer = new ProductSetQueryContainer();
         $productSetQueryContainer->setFactory(new ProductSetPersistenceFactory());

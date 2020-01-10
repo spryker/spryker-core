@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DataImport\Communication\Console;
 
+use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -99,7 +100,11 @@ class DataImportConsole extends Console
      */
     protected function isAddedAsNamedDataImportCommand()
     {
-        return ($this->getName() !== null);
+        try {
+            return $this->getName() !== null;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -123,8 +128,10 @@ class DataImportConsole extends Console
         $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType($input)));
         $dataImportReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
 
-        if ($dataImportReportTransfer->getDataImporterReports()) {
-            $this->printDataImporterReports($dataImportReportTransfer->getDataImporterReports());
+        /** @var \Generated\Shared\Transfer\DataImporterReportTransfer[]|null $dataImporterReports */
+        $dataImporterReports = $dataImportReportTransfer->getDataImporterReports();
+        if ($dataImporterReports) {
+            $this->printDataImporterReports($dataImporterReports);
         }
 
         $this->info('<fg=green>---------------------------------</>');

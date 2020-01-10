@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategoryFilter
@@ -25,7 +26,7 @@ class ReadProductCategoryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testReadProductCategoryFiltersFetchesFromDatabase()
+    public function testReadProductCategoryFiltersFetchesFromDatabase(): void
     {
         // Arrange
         $productCategoryFilter = $this->tester->haveProductCategoryFilter();
@@ -41,7 +42,7 @@ class ReadProductCategoryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testGetAllProductCategoriesWithFiltersFromDatabase()
+    public function testGetAllProductCategoriesWithFiltersFromDatabase(): void
     {
         // Arrange
         $productCategoryFilter1 = $this->tester->haveProductCategoryFilter();

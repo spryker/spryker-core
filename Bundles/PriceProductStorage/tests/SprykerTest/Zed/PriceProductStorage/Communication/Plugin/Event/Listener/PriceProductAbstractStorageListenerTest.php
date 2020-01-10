@@ -30,6 +30,7 @@ use SprykerTest\Zed\PriceProductStorage\PriceProductStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductStorage
@@ -59,7 +60,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -287,7 +288,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacade
      */
-    protected function getPriceProductStorageFacade()
+    protected function getPriceProductStorageFacade(): PriceProductStorageFacade
     {
         $factory = new PriceProductStorageBusinessFactory();
         $factory->setConfig(new PriceProductStorageConfigMock());

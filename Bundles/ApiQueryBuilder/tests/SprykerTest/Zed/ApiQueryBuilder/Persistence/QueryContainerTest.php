@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ApiQueryBuilder\Persistence;
+namespace SprykerTest\Zed\ApiQueryBuilder\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiFilterTransfer;
@@ -22,8 +22,8 @@ use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
 
 /**
  * Auto-generated group annotations
- * @group Functional
- * @group Spryker
+ *
+ * @group SprykerTest
  * @group Zed
  * @group ApiQueryBuilder
  * @group Persistence
@@ -40,7 +40,7 @@ class QueryContainerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +50,7 @@ class QueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testBuildQueryFromRequest()
+    public function testBuildQueryFromRequest(): void
     {
         $apiFilter = new ApiFilterTransfer();
 
@@ -73,7 +73,7 @@ class QueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testToPropelQueryBuilderCriteria()
+    public function testToPropelQueryBuilderCriteria(): void
     {
         $apiFilter = new ApiFilterTransfer();
 
@@ -94,7 +94,7 @@ class QueryContainerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
      */
-    protected function getColumnSelectionTransfer()
+    protected function getColumnSelectionTransfer(): PropelQueryBuilderColumnSelectionTransfer
     {
         $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
 

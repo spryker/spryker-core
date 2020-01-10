@@ -8,8 +8,11 @@
 namespace SprykerTest\Shared\Sales\Helper;
 
 use Codeception\Module;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderAddressTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
@@ -22,14 +25,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 
 class SalesHelper extends Module
 {
     /**
      * @return int
      */
-    public function createOrder()
+    public function createOrder(): int
     {
         $salesOrderEntity = new SpySalesOrder();
 
@@ -48,7 +51,7 @@ class SalesHelper extends Module
     /**
      * @return void
      */
-    public function createOrderWithOneItem()
+    public function createOrderWithOneItem(): void
     {
         $i = $this;
         $idSalesOrder = $i->createOrder();
@@ -60,7 +63,7 @@ class SalesHelper extends Module
      *
      * @return int
      */
-    protected function addExpenses(SpySalesOrder $salesOrderEntity)
+    protected function addExpenses(SpySalesOrder $salesOrderEntity): int
     {
         return $this->addShipmentExpense($salesOrderEntity);
     }
@@ -70,7 +73,7 @@ class SalesHelper extends Module
      *
      * @return void
      */
-    protected function addOrderDetails(SpySalesOrder $salesOrderEntity)
+    protected function addOrderDetails(SpySalesOrder $salesOrderEntity): void
     {
         $salesOrderEntity->setOrderReference(random_int(0, 9999999));
         $salesOrderEntity->setPriceMode(0);
@@ -85,7 +88,7 @@ class SalesHelper extends Module
      *
      * @return void
      */
-    protected function addAddresses(SpySalesOrder $salesOrderEntity)
+    protected function addAddresses(SpySalesOrder $salesOrderEntity): void
     {
         $billingAddressEntity = $salesOrderEntity->getBillingAddress();
         if ($billingAddressEntity === null) {
@@ -102,7 +105,7 @@ class SalesHelper extends Module
     /**
      * @return \Orm\Zed\Country\Persistence\SpyCountry
      */
-    protected function getCountryEntity()
+    protected function getCountryEntity(): SpyCountry
     {
         $countryQuery = new SpyCountryQuery();
         $countryQuery->filterByIso2Code('DE');
@@ -123,7 +126,7 @@ class SalesHelper extends Module
      *
      * @return void
      */
-    protected function addShipment(SpySalesOrder $salesOrderEntity, $idSalesExpense)
+    protected function addShipment(SpySalesOrder $salesOrderEntity, int $idSalesExpense): void
     {
         $shipmentMethodQuery = new SpyShipmentMethodQuery();
         $shipmentMethodEntity = $shipmentMethodQuery->filterByName('Standard')->findOne();
@@ -144,7 +147,7 @@ class SalesHelper extends Module
      *
      * @return int
      */
-    public function createSalesOrderItemForOrder($idSalesOrder, array $salesOrderItem = [])
+    public function createSalesOrderItemForOrder(int $idSalesOrder, array $salesOrderItem = []): int
     {
         $salesOrderQuery = new SpySalesOrderQuery();
         $salesOrderEntity = $salesOrderQuery->findOneByIdSalesOrder($idSalesOrder);
@@ -161,7 +164,7 @@ class SalesHelper extends Module
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function createSalesOrderItem(array $salesOrderItem)
+    protected function createSalesOrderItem(array $salesOrderItem): SpySalesOrderItem
     {
         $salesOrderItemEntity = new SpySalesOrderItem();
         $salesOrderItemEntity->fromArray($salesOrderItem);
@@ -180,6 +183,9 @@ class SalesHelper extends Module
         if ($salesOrderItemEntity->getQuantity() === null) {
             $salesOrderItemEntity->setQuantity(1);
         }
+        if ($salesOrderItemEntity->getGroupKey() === null) {
+            $salesOrderItemEntity->setGroupKey('key');
+        }
 
         $omsOrderItemStateEntity = $this->getOrderItemState($salesOrderItem);
         $salesOrderItemEntity->setFkOmsOrderItemState($omsOrderItemStateEntity->getIdOmsOrderItemState());
@@ -196,7 +202,7 @@ class SalesHelper extends Module
      *
      * @return void
      */
-    public function createDiscountForSalesOrderItem($idSalesOrderItem, array $discount = [])
+    public function createDiscountForSalesOrderItem(int $idSalesOrderItem, array $discount = []): void
     {
         $salesOrderDiscountEntity = new SpySalesDiscount();
         $salesOrderDiscountEntity->fromArray($discount);
@@ -219,7 +225,7 @@ class SalesHelper extends Module
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
-    protected function getOrderItemState(array $salesOrderItem)
+    protected function getOrderItemState(array $salesOrderItem): SpyOmsOrderItemState
     {
         $expectedState = (!empty($salesOrderItem['state'])) ? $salesOrderItem['state'] : 'new';
         $omsOrderItemStateQuery = new SpyOmsOrderItemStateQuery();
@@ -234,7 +240,7 @@ class SalesHelper extends Module
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
-    protected function getOrderProcess(array $salesOrderItem)
+    protected function getOrderProcess(array $salesOrderItem): SpyOmsOrderProcess
     {
         $expectedProcess = (!empty($salesOrderItem['process'])) ? $salesOrderItem['process'] : 'Nopayment01';
         $omsOrderProcessQuery = new SpyOmsOrderProcessQuery();
@@ -247,7 +253,7 @@ class SalesHelper extends Module
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
-    protected function createBillingAddress()
+    protected function createBillingAddress(): SpySalesOrderAddress
     {
         $billingAddressEntity = new SpySalesOrderAddress();
 
@@ -271,12 +277,12 @@ class SalesHelper extends Module
      *
      * @return int
      */
-    protected function addShipmentExpense(SpySalesOrder $salesOrderEntity)
+    protected function addShipmentExpense(SpySalesOrder $salesOrderEntity): int
     {
         $shipmentExpense = new SpySalesExpense();
         $shipmentExpense->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $shipmentExpense->setName('default');
-        $shipmentExpense->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpense->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpense->setGrossPrice(100);
         $shipmentExpense->save();
 
@@ -288,7 +294,7 @@ class SalesHelper extends Module
      *
      * @return void
      */
-    protected function addOrderTotals(SpySalesOrder $salesOrderEntity)
+    protected function addOrderTotals(SpySalesOrder $salesOrderEntity): void
     {
         $salesOrderTotals = new SpySalesOrderTotals();
 

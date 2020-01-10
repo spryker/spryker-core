@@ -19,7 +19,8 @@ use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class ShoppingListSharer implements ShoppingListSharerInterface
 {
-    use PermissionAwareTrait, TransactionTrait;
+    use PermissionAwareTrait;
+    use TransactionTrait;
 
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
     protected const CANNOT_RESHARE_SHOPPING_LIST = 'customer.account.shopping_list.share.share_shopping_list_fail';

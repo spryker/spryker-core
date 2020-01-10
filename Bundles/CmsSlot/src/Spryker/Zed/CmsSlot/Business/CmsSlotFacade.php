@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlot\Business;
 
+use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
@@ -14,11 +15,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CmsSlot\Business\CmsSlotBusinessFactory getFactory()
+ * @method \Spryker\Zed\CmsSlot\Persistence\CmsSlotRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CmsSlot\Persistence\CmsSlotEntityManagerInterface getEntityManager()
  */
 class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +35,7 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,5 +46,79 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
     public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): ValidationResponseTransfer
     {
         return $this->getFactory()->createCmsSlotTemplateValidator()->validateCmsSlotTemplate($cmsSlotTemplateTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCmsSlot
+     *
+     * @return void
+     */
+    public function activateByIdCmsSlot(int $idCmsSlot): void
+    {
+        $this->getFactory()->createCmsSlotActivator()->activateByIdCmsSlot($idCmsSlot);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCmsSlot
+     *
+     * @return void
+     */
+    public function deactivateByIdCmsSlot(int $idCmsSlot): void
+    {
+        $this->getFactory()->createCmsSlotActivator()->deactivateByIdCmsSlot($idCmsSlot);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCmsSlot
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer
+     */
+    public function getCmsSlotById(int $idCmsSlot): CmsSlotTransfer
+    {
+        return $this->getFactory()
+            ->createCmsSlotReader()
+            ->getCmsSlotById($idCmsSlot);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCmsSlotTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function getCmsSlotTemplateById(int $idCmsSlotTemplate): CmsSlotTemplateTransfer
+    {
+        return $this->getFactory()
+            ->createCmsSlotTemplateReader()
+            ->getTemplateById($idCmsSlotTemplate);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function getCmsSlotsByCriteria(CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer): array
+    {
+        return $this->getRepository()->getCmsSlotsByCriteria($cmsSlotCriteriaTransfer);
     }
 }

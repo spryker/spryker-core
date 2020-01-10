@@ -114,7 +114,7 @@ interface DatasetFacadeInterface
     public function existsDatasetByName(DatasetTransfer $datasetTransfer): bool;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

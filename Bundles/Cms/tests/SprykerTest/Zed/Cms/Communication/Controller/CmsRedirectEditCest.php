@@ -12,6 +12,7 @@ use SprykerTest\Zed\Cms\PageObject\CmsRedirectListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms
@@ -27,12 +28,12 @@ class CmsRedirectEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsCommunicationTester $i): void
     {
         $i->haveUrlRedirect();
         $i->listDataTable(CmsRedirectListPage::URL . '/table');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects / Edit CMS Redirect');
+        $i->seeBreadcrumbNavigation('Content Management / Redirects / Edit CMS Redirect');
     }
 }

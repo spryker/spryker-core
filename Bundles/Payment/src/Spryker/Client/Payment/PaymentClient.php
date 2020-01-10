@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class PaymentClient extends AbstractClient implements PaymentClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

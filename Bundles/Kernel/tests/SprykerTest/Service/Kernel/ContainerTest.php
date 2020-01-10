@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Kernel
@@ -24,7 +25,7 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetLocatorShouldReturnInstanceOfLocator()
+    public function testGetLocatorShouldReturnInstanceOfLocator(): void
     {
         $container = new Container();
 

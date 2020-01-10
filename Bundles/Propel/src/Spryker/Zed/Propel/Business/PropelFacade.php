@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -16,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PropelFacade extends AbstractFacade implements PropelFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -28,7 +29,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,11 +41,11 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * @deprecated Use `createDatabase()` instead.
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `createDatabase()` instead.
      *
      * @return void
      */
@@ -54,7 +55,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +69,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +81,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -92,7 +93,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,7 +105,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -116,11 +117,11 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * @deprecated Please add the Commands directly to your ConsoleDependencyProvider.
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Please add the Commands directly to your ConsoleDependencyProvider.
      *
      * @return \Symfony\Component\Console\Command\Command[]
      */
@@ -130,7 +131,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -142,7 +143,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +155,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -166,7 +167,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -178,7 +179,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +191,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -204,7 +205,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -218,7 +219,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -230,7 +231,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -242,7 +243,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -254,5 +255,17 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
             ->createPropelDatabaseAdapterCollection()
             ->getAdapter()
             ->dropTables();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeDatabaseHealthCheck(): HealthCheckServiceResponseTransfer
+    {
+        return $this->getFactory()->createPropelHealthChecker()->executeHealthCheck();
     }
 }

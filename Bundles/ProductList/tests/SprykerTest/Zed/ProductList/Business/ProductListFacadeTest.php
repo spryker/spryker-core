@@ -203,7 +203,24 @@ class ProductListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteIdsByProductListIds()
+    public function testRemoveProductListDeletesProductList(): void
+    {
+        // Assign
+        $productListTransfer = $this->tester->haveProductList();
+
+        // Act
+        $productListResponseTransfer = $this->getFacade()->removeProductList($productListTransfer);
+        $productListTransfer = $this->getFacade()->getProductListById($productListTransfer);
+
+        // Assert
+        $this->assertTrue($productListResponseTransfer->getIsSuccessful());
+        $this->assertNull($productListTransfer->getIdProductList());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteIdsByProductListIds(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
@@ -222,7 +239,7 @@ class ProductListFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\ProductList\Business\ProductListFacadeInterface
+     * @return \Spryker\Zed\ProductList\Business\ProductListFacadeInterface
      */
     protected function getFacade()
     {

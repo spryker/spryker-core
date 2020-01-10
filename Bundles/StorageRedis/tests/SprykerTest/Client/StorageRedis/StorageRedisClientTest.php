@@ -12,6 +12,7 @@ use Spryker\Client\StorageRedis\StorageRedisClient;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group StorageRedis
@@ -67,7 +68,6 @@ class StorageRedisClientTest extends Unit
      */
     public function testCanSetValuesForMultipleKeys(): void
     {
-
         $this->storageRedisClient->setMulti($this->dummyMultiData);
         $this->assertEquals(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
         $this->assertEquals(static::ANOTHER_DUMMY_VALUE, $this->storageRedisClient->get(static::ANOTHER_DUMMY_KEY));

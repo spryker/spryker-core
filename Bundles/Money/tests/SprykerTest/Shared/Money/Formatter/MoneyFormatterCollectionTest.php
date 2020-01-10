@@ -15,6 +15,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money
@@ -29,7 +30,7 @@ class MoneyFormatterCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $moneyFormatterCollection = new MoneyFormatterCollection();
         $this->assertInstanceOf(MoneyFormatterCollectionInterface::class, $moneyFormatterCollection);
@@ -38,7 +39,7 @@ class MoneyFormatterCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddFormatterShouldReturnCollection()
+    public function testAddFormatterShouldReturnCollection(): void
     {
         $moneyFormatterCollection = new MoneyFormatterCollection();
         $moneyFormatterCollection = $moneyFormatterCollection->addFormatter($this->getFormatterMock(), self::FORMATTER);
@@ -48,7 +49,7 @@ class MoneyFormatterCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetFormatterShouldReturnAddedFormatter()
+    public function testGetFormatterShouldReturnAddedFormatter(): void
     {
         $moneyFormatterCollection = new MoneyFormatterCollection();
         $moneyFormatterMock = $this->getFormatterMock();
@@ -60,7 +61,7 @@ class MoneyFormatterCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetFormatterWhichIsNotAddedShouldThrowException()
+    public function testGetFormatterWhichIsNotAddedShouldThrowException(): void
     {
         $this->expectException(FormatterNotFoundException::class);
 
@@ -71,7 +72,7 @@ class MoneyFormatterCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
-    protected function getFormatterMock()
+    protected function getFormatterMock(): MoneyFormatterInterface
     {
         return $this->getMockBuilder(MoneyFormatterInterface::class)->getMock();
     }

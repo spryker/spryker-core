@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
@@ -79,6 +80,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $productAbstractStoreMap)
     {
+        /** @var \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery $productConcretePageSearchQuery */
         $productConcretePageSearchQuery = $this->getFactory()
             ->createProductConcretePageSearchQuery()
             ->addJoin(
@@ -117,23 +119,23 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         foreach ($productAbstractStoreMap as $abstractId => $stores) {
             foreach ($stores as $store) {
                 $productConcretePageSearchQuery->condition(
-                    $conditionIndex,
+                    (string)$conditionIndex,
                     SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?',
                     $abstractId,
                     PDO::PARAM_INT
                 );
                 $conditionIndex++;
                 $productConcretePageSearchQuery->condition(
-                    $conditionIndex,
+                    (string)$conditionIndex,
                     SpyProductConcretePageSearchTableMap::COL_STORE . ' = ?',
                     $store,
                     PDO::PARAM_STR
                 );
                 $conditionIndex++;
                 $productConcretePageSearchQuery->combine(
-                    [$conditionIndex - 2, $conditionIndex - 1],
+                    [(string)($conditionIndex - 2), (string)($conditionIndex - 1)],
                     Criteria::LOGICAL_AND,
-                    $conditionIndex
+                    (string)$conditionIndex
                 );
                 $storesAndProductsConditions[] = $conditionIndex;
                 $conditionIndex++;
@@ -159,5 +161,28 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         }
 
         return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @module PriceProduct
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array
+    {
+        if (!$priceProductStoreIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getPriceProductPropelQuery()
+            ->select(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->usePriceProductStoreQuery()
+                ->filterByIdPriceProductStore_In($priceProductStoreIds)
+            ->endUse()
+            ->find()
+            ->toArray();
     }
 }

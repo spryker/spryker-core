@@ -57,8 +57,13 @@ class CustomerCompanyAttachFormDataProvider
             ->setIdCustomer($idCustomer);
 
         $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
+        $companyUserTransfer = new CompanyUserTransfer();
 
-        return (new CompanyUserTransfer())
+        if ($customerTransfer === null) {
+            return $companyUserTransfer;
+        }
+
+        return $companyUserTransfer
             ->setCustomer($customerTransfer)
             ->setFkCustomer($customerTransfer->getIdCustomer());
     }

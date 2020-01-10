@@ -18,7 +18,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface;
 class DiscountPromotionCleanerPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostUpdatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Checks if given discount CollectorStrategyType is not set to "promotion"
      *    then removes Promotion from Discount.
      *
@@ -26,7 +26,7 @@ class DiscountPromotionCleanerPostUpdatePlugin extends BaseDiscountPromotionSave
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function postUpdate(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {

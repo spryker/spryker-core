@@ -1,6 +1,6 @@
 # ContentProductGui Module
 [![Build Status](https://travis-ci.org/spryker/content-product-gui.svg)](https://travis-ci.org/spryker/content-product-gui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/content-product-gui/badge.svg)](https://coveralls.io/github/spryker/content-product-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ContentProductGui provides plugins for basic operations for abstract product list
 

@@ -21,6 +21,7 @@ use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCartConnector
@@ -51,7 +52,7 @@ class ProductCartPluginTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -62,7 +63,7 @@ class ProductCartPluginTest extends Unit
     /**
      * @return void
      */
-    public function testPluginExpandsCartItemWithExpectedProductData()
+    public function testPluginExpandsCartItemWithExpectedProductData(): void
     {
         $localeName = Store::getInstance()->getCurrentLocale();
         $localeTransfer = $this->localeFacade->getLocale($localeName);

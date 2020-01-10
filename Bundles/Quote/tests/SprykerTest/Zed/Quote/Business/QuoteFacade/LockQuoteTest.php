@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote
@@ -92,7 +93,7 @@ class LockQuoteTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Quote\Business\QuoteFacadeInterface
+     * @return \Spryker\Zed\Quote\Business\QuoteFacadeInterface
      */
     protected function getFacade()
     {

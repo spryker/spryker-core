@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Cms\Business\Page;
 
+use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
 use Orm\Zed\Locale\Persistence\SpyLocale;
@@ -20,6 +21,7 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms
@@ -33,7 +35,7 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetCmsPageByIdShouldReturnMappedTransferObjectFromPersistence()
+    public function testGetCmsPageByIdShouldReturnMappedTransferObjectFromPersistence(): void
     {
         $cmsPageReaderMock = $this->createCmsPageReaderMock();
 
@@ -52,7 +54,7 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetCmsPageByIdWhenPageNotFoundShouldReturnNull()
+    public function testGetCmsPageByIdWhenPageNotFoundShouldReturnNull(): void
     {
         $cmsPageReaderMock = $this->createCmsPageReaderMock();
 
@@ -76,7 +78,7 @@ class CmsPageReaderTest extends CmsMocks
         ?CmsPageMapperInterface $cmsPageMapperMock = null,
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToLocaleInterface $localeFacadeMock = null
-    ) {
+    ): CmsPageReader {
         if ($cmsPageMapperMock === null) {
             $cmsPageMapperMock = $this->createCmsPageMapperMock();
         }
@@ -101,7 +103,7 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
      */
-    protected function createCmsUrlBuilderMock()
+    protected function createCmsUrlBuilderMock(): CmsPageUrlBuilderInterface
     {
         return $this->getMockBuilder(CmsPageUrlBuilderInterface::class)
             ->getMock();
@@ -110,7 +112,7 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function buildCmsPageEntity()
+    protected function buildCmsPageEntity(): SpyCmsPage
     {
         $cmsPageEntity = $this->createCmsPageEntityMock();
         $cmsPageEntity->setIdCmsPage(1);

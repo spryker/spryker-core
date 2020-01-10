@@ -16,6 +16,7 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Synchronization
@@ -56,9 +57,9 @@ class QueueMessageHelperTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface ;
      */
-    protected function createSynchronizationToUtilEncodingService()
+    protected function createSynchronizationToUtilEncodingService(): SynchronizationToUtilEncodingServiceInterface
     {
         $utilEncodingService = $this->getMockBuilder(SynchronizationToUtilEncodingServiceInterface::class)->getMock();
 

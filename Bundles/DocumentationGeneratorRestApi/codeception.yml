@@ -1,7 +1,5 @@
 namespace: DocumentationGeneratorRestApi
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/DocumentationGeneratorRestApi
 
