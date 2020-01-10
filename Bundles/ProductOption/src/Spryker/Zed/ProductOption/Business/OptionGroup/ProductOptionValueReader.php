@@ -86,7 +86,8 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
 
         return $this->hydrateProductOptionCollectionTransfer(
             new ProductOptionCollectionTransfer(),
-            $productOptionValueEntities->getArrayCopy()
+            $productOptionValueEntities->getArrayCopy(),
+            $productOptionCriteriaTransfer
         );
     }
 
@@ -105,16 +106,21 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
      * @param string|null $currencyCode
+     * @param string|null $priceMode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function hydrateProductOptionTransfer(SpyProductOptionValue $productOptionValueEntity, ?string $currencyCode = null)
-    {
+    protected function hydrateProductOptionTransfer(
+        SpyProductOptionValue $productOptionValueEntity,
+        ?string $currencyCode = null,
+        ?string $priceMode = null
+    ): ProductOptionTransfer {
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->fromArray($productOptionValueEntity->toArray(), true);
         $productOptionTransfer->setGroupName($productOptionValueEntity->getSpyProductOptionGroup()->getName());
         $productOptionTransfer->setUnitGrossPrice($this->productOptionValuePriceReader->getCurrentGrossPrice($productOptionValueEntity, $currencyCode));
         $productOptionTransfer->setUnitNetPrice($this->productOptionValuePriceReader->getCurrentNetPrice($productOptionValueEntity, $currencyCode));
+        $productOptionTransfer->setUnitPrice($this->productOptionValuePriceReader->getUnitPrice($productOptionTransfer, $priceMode));
 
         return $productOptionTransfer;
     }
@@ -122,16 +128,22 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCollectionTransfer $productOptionCollectionTransfer
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
     protected function hydrateProductOptionCollectionTransfer(
         ProductOptionCollectionTransfer $productOptionCollectionTransfer,
-        array $productOptionValueEntities
+        array $productOptionValueEntities,
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
     ): ProductOptionCollectionTransfer {
         foreach ($productOptionValueEntities as $productOptionValueEntity) {
             $productOptionCollectionTransfer->addProductOption(
-                $this->hydrateProductOptionTransfer($productOptionValueEntity)
+                $this->hydrateProductOptionTransfer(
+                    $productOptionValueEntity,
+                    $productOptionCriteriaTransfer->getCurrencyIsoCode(),
+                    $productOptionCriteriaTransfer->getPriceMode()
+                )
             );
         }
 
