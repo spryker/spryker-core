@@ -77,4 +77,24 @@ class ProductBundleToProductFacadeBridge implements ProductBundleToProductFacade
     {
         return $this->productFacade->saveProductConcrete($productConcreteTransfer);
     }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function activateProductConcrete($idProductConcrete)
+    {
+        $this->productFacade->activateProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function deactivateProductConcrete($idProductConcrete)
+    {
+        $this->productFacade->deactivateProductConcrete($idProductConcrete);
+    }
 }

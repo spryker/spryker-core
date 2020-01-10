@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Status;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 
@@ -44,43 +43,54 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
      */
     public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        if ($productConcreteTransfer->getProductBundle() !== null) {
-            return $productConcreteTransfer->setIsActive($this->getProductConcreteStatus($productConcreteTransfer));
-        }
-
-        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
-
-        $productBundleCollectionTransfer = $this->productBundleReader
-            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
-
-        $productBundleTransfers = $productBundleCollectionTransfer->getProductBundles();
-        if (!$productBundleTransfers->count()) {
+        if ($productConcreteTransfer->getProductBundle() === null) {
             return $productConcreteTransfer;
         }
 
-        foreach ($productBundleTransfers as $productBundleTransfer) {
-            $this->updateBundleProductIsActive($productBundleTransfer->getBundledProducts());
+        return $productConcreteTransfer->setIsActive($this->getProductConcreteStatus($productConcreteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function updateBundleStatusAfterBundledProductUpdate(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        $bundledProducts = $this->productBundleReader
+            ->getBundledProductByIdProduct($productConcreteTransfer->getIdProductConcrete());
+
+        if (!$bundledProducts) {
+            return $productConcreteTransfer;
+        }
+
+        foreach ($bundledProducts as $bundledProduct) {
+            $productForBundleTransfers = $this->productBundleReader
+                ->getBundleItemsByIdProduct($bundledProduct->getIdProductBundle());
+
+            foreach ($productForBundleTransfers as $productForBundleTransfer) {
+                $this->updateBundleProductIsActive($productForBundleTransfer);
+            }
         }
 
         return $productConcreteTransfer;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
      *
      * @return void
      */
-    protected function updateBundleProductIsActive(ArrayObject $productForBundleTransfers): void
+    protected function updateBundleProductIsActive(ProductForBundleTransfer $productForBundleTransfer): void
     {
-        $isActive = true;
-        foreach ($productForBundleTransfers as $productForBundleTransfer) {
-            if (!$productForBundleTransfer->getIsActive()) {
-                $isActive = false;
-            }
+        $idProductConcrete = $productForBundleTransfer->getIdProductBundle();
+        if (!$productForBundleTransfer->getIsActive()) {
+            $this->productFacade->deactivateProductConcrete($idProductConcrete);
 
-            $this->saveProductConcrete($productForBundleTransfer->getIdProductBundle(), $isActive);
+            return;
         }
+
+        $this->productFacade->activateProductConcrete($idProductConcrete);
     }
 
     /**
@@ -101,20 +111,5 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param int $idProductConcrete
-     * @param bool $isActive
-     *
-     * @return void
-     */
-    protected function saveProductConcrete(int $idProductConcrete, bool $isActive): void
-    {
-        $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProductConcrete);
-
-        if ($productConcreteTransfer->getIsActive() !== $isActive) {
-            $this->productFacade->saveProductConcrete($productConcreteTransfer->setIsActive($isActive));
-        }
     }
 }

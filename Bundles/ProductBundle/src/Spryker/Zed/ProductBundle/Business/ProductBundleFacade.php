@@ -230,6 +230,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
+    public function updateBundleStatusAfterBundledProductUpdate(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        return $this->getFactory()
+            ->createProductBundleStatusUpdater()
+            ->updateBundleStatusAfterBundledProductUpdate($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
     public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()

@@ -198,6 +198,20 @@ interface ProductBundleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
+    public function updateBundleStatusAfterBundledProductUpdate(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Updates status of product bundle.
+     * - Sets `isActive` to false if at least one bundled product is inactive.
+     * - Sets `isActive` to true if all bundled products are active.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
     public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**

@@ -17,4 +17,11 @@ interface ProductBundleStatusUpdaterInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function updateBundleStatusAfterBundledProductUpdate(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

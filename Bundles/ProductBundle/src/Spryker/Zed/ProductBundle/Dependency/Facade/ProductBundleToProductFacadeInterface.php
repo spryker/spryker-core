@@ -52,4 +52,18 @@ interface ProductBundleToProductFacadeInterface
      * @return int
      */
     public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function activateProductConcrete($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function deactivateProductConcrete($idProductConcrete);
 }

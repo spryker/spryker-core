@@ -21,8 +21,9 @@ class ProductBundleProductConcreteActivatorBeforeUpdatePlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
-     * - Sets `isActive` to false if all bundled products weren't active.
-     * - Sets `isActive` to true otherwise.
+     * - Updates status of product bundle.
+     * - Deactivates product bundle if at least one bundled product is inactive.
+     * - Activates product bundle to if all bundled products are active.
      *
      * @api
      *

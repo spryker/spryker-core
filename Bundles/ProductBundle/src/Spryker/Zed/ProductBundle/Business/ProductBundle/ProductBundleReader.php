@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
-use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -116,13 +114,23 @@ class ProductBundleReader implements ProductBundleReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
+    public function getBundleItemsByIdProduct(int $idProductConcrete): array
     {
-        return $this->productBundleRepository->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
+        return $this->productBundleRepository->getBundleItemsByIdProduct($idProductConcrete);
+    }
+
+    /* @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     */
+
+    public function getBundledProductByIdProduct(int $idProductConcrete): array
+    {
+        return $this->productBundleRepository->getBundledProductByIdProduct($idProductConcrete);
     }
 
     /**
