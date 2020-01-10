@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
@@ -50,32 +49,24 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface
-     */
-    protected $productOfferAvailabilityChecker;
-
-    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface $productOfferAvailabilityChecker
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
         ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter,
-        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade,
-        ProductOfferAvailabilityCheckerInterface $productOfferAvailabilityChecker
+        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productOfferFacade = $productOfferFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
         $this->productConcreteOffersStorageDeleter = $productConcreteOffersStorageDeleter;
         $this->storeFacade = $storeFacade;
-        $this->productOfferAvailabilityChecker = $productOfferAvailabilityChecker;
     }
 
     /**
@@ -95,21 +86,21 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param string[] $productSkus
+     * @param string[] $productConcreteSkus
      *
      * @return void
      */
-    protected function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void
+    protected function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productConcreteSkus): void
     {
-        $productSkus = array_unique($productSkus);
-        $flippedProductConcreteSkus = array_flip($productSkus);
+        $productConcreteSkus = array_unique($productConcreteSkus);
+        $flippedProductConcreteSkus = array_flip($productConcreteSkus);
 
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productSkus);
+        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productConcreteSkus);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productOfferCollectionTransfer);
 
-        $productConcreteSkusToRemove = $this->prepareProductConcreteSkusToRemoveList($productSkus);
+        $productConcreteSkusToRemove = $this->prepareProductConcreteSkusToRemoveList($productConcreteSkus);
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
             foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferReferenceList) {
@@ -139,15 +130,12 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
                 $productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()] = [];
             }
             foreach ($productOfferTransfer->getStores() as $storeTransfer) {
-                if (!$this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer, $storeTransfer)) {
-                    continue;
-                }
                 $productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()][$storeTransfer->getName()][] =
                     mb_strtolower($productOfferTransfer->getProductOfferReference());
             }
         }
 
-        return array_filter($productOfferReferencesGroupedByConcreteSku);
+        return $productOfferReferencesGroupedByConcreteSku;
     }
 
     /**
