@@ -1,7 +1,5 @@
 namespace: PriceProductOffer
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/PriceProductOffer
 

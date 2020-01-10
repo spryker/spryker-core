@@ -1,7 +1,5 @@
 namespace: MerchantSalesOrder
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/MerchantSalesOrder
 

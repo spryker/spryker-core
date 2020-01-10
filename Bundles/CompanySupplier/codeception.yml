@@ -1,6 +1,4 @@
 namespace: CompanySupplier
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CompanySupplier
 

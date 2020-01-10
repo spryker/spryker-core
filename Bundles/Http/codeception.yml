@@ -1,5 +1,4 @@
 namespace: Http
-actor: Tester
 include:
     - tests/SprykerTest/Zed/Http
 paths:
