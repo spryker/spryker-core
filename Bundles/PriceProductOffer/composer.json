@@ -9,7 +9,7 @@
     "spryker/kernel": "^3.33.0",
     "spryker/price-product": "^4.0.0",
     "spryker/price-product-extension": "^1.3.0",
-    "spryker/product-offer": "^0.2.0",
+    "spryker/product-offer": "^0.3.0",
     "spryker/store": "^1.12.0"
   },
   "require-dev": {
