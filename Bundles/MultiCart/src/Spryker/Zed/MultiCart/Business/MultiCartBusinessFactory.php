@@ -10,6 +10,8 @@ namespace Spryker\Zed\MultiCart\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MultiCart\Business\Activator\QuoteActivator;
 use Spryker\Zed\MultiCart\Business\Activator\QuoteActivatorInterface;
+use Spryker\Zed\MultiCart\Business\Messenger\MultiCartMessenger;
+use Spryker\Zed\MultiCart\Business\Messenger\MultiCartMessengerInterface;
 use Spryker\Zed\MultiCart\Business\Model\QuoteNameResolver;
 use Spryker\Zed\MultiCart\Business\Model\QuoteNameResolverInterface;
 use Spryker\Zed\MultiCart\Business\Quote\QuoteWriter;
@@ -78,6 +80,17 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteWriter(
             $this->getRepository(),
             $this->getEntityManager(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiCart\Business\Messenger\MultiCartMessengerInterface
+     */
+    public function createMultiCartMessenger(): MultiCartMessengerInterface
+    {
+        return new MultiCartMessenger(
+            $this->getRepository(),
             $this->getMessengerFacade()
         );
     }
