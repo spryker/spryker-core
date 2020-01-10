@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Vault\Business;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Vault\Persistence\SpyVaultDepositQuery;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured;
 use Spryker\Shared\Vault\VaultConfig as VaultSharedConfig;
 use Spryker\Shared\Vault\VaultConstants;
@@ -167,7 +166,7 @@ class VaultFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Vault\VaultConfig
      */
-    protected function createVaultConfigMock(bool $useByteStringForEncryptionInitializationVector, string $encryptionKey): MockObject
+    protected function createVaultConfigMock(bool $useByteStringForEncryptionInitializationVector, string $encryptionKey): VaultConfig
     {
         $vaultConfigMock = $this->getMockBuilder(VaultConfig::class)->getMock();
         $vaultConfigMock->method('useByteStringForEncryptionInitializationVector')
