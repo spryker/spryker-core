@@ -48,16 +48,6 @@ class ProductBundleToProductFacadeBridge implements ProductBundleToProductFacade
     }
 
     /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
-     */
-    public function findProductConcreteById($idProduct)
-    {
-        return $this->productFacade->findProductConcreteById($idProduct);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -66,16 +56,6 @@ class ProductBundleToProductFacadeBridge implements ProductBundleToProductFacade
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer)
     {
         return $this->productFacade->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return int
-     */
-    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $this->productFacade->saveProductConcrete($productConcreteTransfer);
     }
 
     /**

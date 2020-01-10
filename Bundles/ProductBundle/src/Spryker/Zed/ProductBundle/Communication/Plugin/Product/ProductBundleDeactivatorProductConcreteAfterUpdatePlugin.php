@@ -17,11 +17,11 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
-class ProductBundleProductConcreteActivatorAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
+class ProductBundleDeactivatorProductConcreteAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
     /**
      * {@inheritDoc}
-     * - Deactivates product bundles if they have at least one inactive bundled product.
+     * - Deactivates product bundles of product concrete in case it is inactive.
      *
      * @api
      *
@@ -31,6 +31,6 @@ class ProductBundleProductConcreteActivatorAfterUpdatePlugin extends AbstractPlu
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->getFacade()->deactivateProductBundlesByProductConcrete($productConcreteTransfer);
+        return $this->getFacade()->deactivateRelatedProductBundles($productConcreteTransfer);
     }
 }

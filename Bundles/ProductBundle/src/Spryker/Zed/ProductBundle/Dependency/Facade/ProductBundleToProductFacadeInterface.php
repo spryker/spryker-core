@@ -32,26 +32,12 @@ interface ProductBundleToProductFacadeInterface
     public function getProductConcrete($concreteSku);
 
     /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
-     */
-    public function findProductConcreteById($idProduct);
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return int
-     */
-    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param int $idProductConcrete

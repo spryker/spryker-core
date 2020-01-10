@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Status;
+namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Expander;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductBundleStatusUpdaterInterface
+interface ProductBundleStatusExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandProductBundleStatusByBundledProductStatuses(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

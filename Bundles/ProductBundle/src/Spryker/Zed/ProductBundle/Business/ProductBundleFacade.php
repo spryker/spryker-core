@@ -230,11 +230,11 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function deactivateProductBundlesByProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()
             ->createProductBundleStatusUpdater()
-            ->deactivateProductBundlesByProductConcrete($productConcreteTransfer);
+            ->deactivateRelatedProductBundles($productConcreteTransfer);
     }
 
     /**
@@ -246,11 +246,11 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteStatusWithBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductBundleStatusByBundledProductStatuses(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()
-            ->createProductBundleStatusUpdater()
-            ->expandProductConcreteStatusWithBundledProducts($productConcreteTransfer);
+            ->createProductBundleStatusExpander()
+            ->expandProductBundleStatusByBundledProductStatuses($productConcreteTransfer);
     }
 
     /**

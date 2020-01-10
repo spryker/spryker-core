@@ -188,7 +188,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Deactivates product bundles if they have at least one inactive bundled product.
+     * - Deactivates product bundles of product concrete in case it is inactive.
      *
      * @api
      *
@@ -196,13 +196,12 @@ interface ProductBundleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function deactivateProductBundlesByProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
      * Specification:
      * - Expands status of product concrete if it is bundle.
      * - Sets `ProductConcreteTransfer:isActive` to false if at least one bundled product is inactive.
-     * - Sets `ProductConcreteTransfer:isActive` to true if all bundled products are active.
      *
      * @api
      *
@@ -210,7 +209,7 @@ interface ProductBundleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteStatusWithBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandProductBundleStatusByBundledProductStatuses(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
      * Specification:

@@ -30,7 +30,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $availabilityFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository
      */
     protected $storeFacade;
 
@@ -111,26 +111,6 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
-     */
-    public function getBundleItemsByIdProduct(int $idProductConcrete): array
-    {
-        return $this->productBundleRepository->getBundleItemsByIdProduct($idProductConcrete);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
-     */
-    public function getBundledProductByIdProduct(int $idProductConcrete): array
-    {
-        return $this->productBundleRepository->getBundledProductByIdProduct($idProductConcrete);
     }
 
     /**

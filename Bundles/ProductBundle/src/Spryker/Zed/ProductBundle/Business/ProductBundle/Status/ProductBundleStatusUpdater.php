@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Status;
 
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
 {
@@ -19,20 +20,20 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
-    protected $productBundleReader;
+    protected $productBundleRepository;
 
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface $productBundleReader
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      */
     public function __construct(
         ProductBundleToProductFacadeInterface $productFacade,
-        ProductBundleReaderInterface $productBundleReader
+        ProductBundleRepositoryInterface $productBundleRepository
     ) {
         $this->productFacade = $productFacade;
-        $this->productBundleReader = $productBundleReader;
+        $this->productBundleRepository = $productBundleRepository;
     }
 
     /**
@@ -40,61 +41,25 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteStatusWithBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        if ($productConcreteTransfer->getProductBundle() === null) {
+        if ($productConcreteTransfer->getIsActive() === true) {
             return $productConcreteTransfer;
         }
 
-        $productForBundleTransfer = $this->productBundleReader
-            ->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
-        foreach ($productForBundleTransfer as $bundledProductTransfer) {
-            if (!$bundledProductTransfer->getIsActive()) {
-                return $productConcreteTransfer->setIsActive(false);
-            }
-        }
+        $productBundleCollectionTransfer = $this->productBundleRepository->getProductBundleCollectionByCriteriaFilter(
+            (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete())
+        );
 
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function deactivateProductBundlesByProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
-    {
-        $bundledProducts = $this->productBundleReader
-            ->getBundledProductByIdProduct($productConcreteTransfer->getIdProductConcrete());
-
-        if (!$bundledProducts) {
+        $productBundleTransfers = $productBundleCollectionTransfer->getProductBundles();
+        if (!$productBundleTransfers->count()) {
             return $productConcreteTransfer;
         }
 
-        foreach ($bundledProducts as $bundledProduct) {
-            $productForBundleTransfers = $this->productBundleReader
-                ->getBundleItemsByIdProduct($bundledProduct->getIdProductBundle());
-
-            $this->deactivateProductBundles($productForBundleTransfers);
+        foreach ($productBundleTransfers as $productBundleTransfer) {
+            $this->productFacade->deactivateProductConcrete($productBundleTransfer->getIdProductConcreteBundle());
         }
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
-     *
-     * @return void
-     */
-    protected function deactivateProductBundles(array $productForBundleTransfers): void
-    {
-        foreach ($productForBundleTransfers as $productForBundleTransfer) {
-            $idProductConcrete = $productForBundleTransfer->getIdProductBundle();
-            if (!$productForBundleTransfer->getIsActive()) {
-                $this->productFacade->deactivateProductConcrete($idProductConcrete);
-
-                return;
-            }
-        }
     }
 }

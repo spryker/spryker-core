@@ -24,18 +24,4 @@ interface ProductBundleReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
-     */
-    public function getBundleItemsByIdProduct(int $idProductConcrete): array;
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
-     */
-    public function getBundledProductByIdProduct(int $idProductConcrete): array;
 }
