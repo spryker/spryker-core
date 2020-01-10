@@ -1,6 +1,4 @@
 namespace: ProductRelation
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductRelation
 

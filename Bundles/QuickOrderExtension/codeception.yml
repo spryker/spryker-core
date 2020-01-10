@@ -1,5 +1,4 @@
 namespace: QuickOrderExtension
-actor: Tester
 paths:
     tests: tests
     log: tests/_output
