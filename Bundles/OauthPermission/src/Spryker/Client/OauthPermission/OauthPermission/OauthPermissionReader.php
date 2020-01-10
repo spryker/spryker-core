@@ -77,7 +77,7 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
         }
 
         $customerIdentifier = (new CustomerIdentifierTransfer())
-            ->fromArray($oauthUserIdDecoded);
+            ->fromArray($oauthUserIdDecoded, true);
 
         return $customerIdentifier->getPermissions();
     }
