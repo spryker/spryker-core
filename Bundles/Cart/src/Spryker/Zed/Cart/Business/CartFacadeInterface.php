@@ -133,7 +133,7 @@ interface CartFacadeInterface
     /**
      * Specification:
      * - Does nothing if quote is locked.
-     * - Uses CartFacade::validateQuote() before reloading.
+     * - Validates quote before reloading.
      * - Reloads all items in quote as new - it recreates all items transfer, reads new prices, options, bundles.
      * - Runs cart pre check plugins.
      * - Recalculates quote.
