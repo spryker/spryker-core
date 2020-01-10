@@ -29,7 +29,7 @@ class QuoteRequestToCalculationFacadeBridge implements QuoteRequestToCalculation
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer)
+    public function recalculateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }

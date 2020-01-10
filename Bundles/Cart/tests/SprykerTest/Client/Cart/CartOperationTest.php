@@ -429,7 +429,7 @@ class CartOperationTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\Operation\CartOperation
      */
-    protected function createCartOperationMock(QuoteTransfer $quoteTransfer, $cartStubMock)
+    protected function createCartOperationMock(QuoteTransfer $quoteTransfer, $cartStubMock): CartOperation
     {
         return $this->getMockBuilder(CartOperation::class)
             ->setConstructorArgs([
@@ -447,7 +447,7 @@ class CartOperationTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\Dependency\Client\CartToQuoteBridge
      */
-    protected function createQuoteClientMock(QuoteTransfer $quoteTransfer)
+    protected function createQuoteClientMock(QuoteTransfer $quoteTransfer): CartToQuoteBridge
     {
         $quoteClientMock = $this->getMockBuilder(CartToQuoteBridge::class)
             ->setMethods([
@@ -473,7 +473,7 @@ class CartOperationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\Zed\CartStub
      */
-    protected function createCartStubMock()
+    protected function createCartStubMock(): CartStub
     {
         $cartStubMock = $this->getMockBuilder(CartStub::class)
             ->setMethods([
@@ -489,7 +489,7 @@ class CartOperationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander
      */
-    protected function createCartChangeRequestExpanderMock()
+    protected function createCartChangeRequestExpanderMock(): CartChangeRequestExpander
     {
         $cartChangeRequestExpanderMock = $this
             ->getMockBuilder(CartChangeRequestExpander::class)
@@ -518,7 +518,7 @@ class CartOperationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\Plugin\SimpleProductQuoteItemFinderPlugin
      */
-    protected function createSimpleProductQuoteItemFinderPluginMock()
+    protected function createSimpleProductQuoteItemFinderPluginMock(): SimpleProductQuoteItemFinderPlugin
     {
         return $this
             ->getMockBuilder(SimpleProductQuoteItemFinderPlugin::class)

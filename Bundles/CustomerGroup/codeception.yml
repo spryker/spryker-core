@@ -1,6 +1,4 @@
 namespace: CustomerGroup
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CustomerGroup
 

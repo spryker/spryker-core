@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository;
@@ -89,9 +88,9 @@ class ProductBundleCartActiveCheckTest extends Unit
     /**
      * @param string $sku
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createProductBundleRepositoryMock(string $sku): MockObject
+    protected function createProductBundleRepositoryMock(string $sku): ProductBundleRepository
     {
         $productBundleRepositoryMock = $this->getMockBuilder(ProductBundleRepository::class)
             ->disableOriginalConstructor()

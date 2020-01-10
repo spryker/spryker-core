@@ -46,7 +46,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\AbstractBundleConfig
      */
-    private function getAbstractBundleConfigMock()
+    private function getAbstractBundleConfigMock(): AbstractBundleConfig
     {
         return $this->getMockForAbstractClass(AbstractBundleConfig::class);
     }

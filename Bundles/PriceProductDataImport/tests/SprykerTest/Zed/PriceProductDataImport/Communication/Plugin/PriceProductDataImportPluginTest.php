@@ -76,7 +76,7 @@ class PriceProductDataImportPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProductDataImport\Business\PriceProductDataImportFacadeInterface
+     * @return \Spryker\Zed\PriceProductDataImport\Business\PriceProductDataImportFacadeInterface
      */
     protected function getPriceProductDataImportFacade(): PriceProductDataImportFacadeInterface
     {
@@ -84,9 +84,9 @@ class PriceProductDataImportPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory
+     * @return \Spryker\Zed\PriceProductDataImport\Business\PriceProductDataImportBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createPriceProductDataImportBusinessFactoryMock()
+    protected function createPriceProductDataImportBusinessFactoryMock(): PriceProductDataImportBusinessFactory
     {
         $priceProductDataImportBusinessFactoryMock = $this->getMockBuilder(PriceProductDataImportBusinessFactory::class)->getMock();
         $priceProductDataImportBusinessFactoryMock->method('createPriceProductDataImport')->willReturn($this->createPriceProductDataImport());

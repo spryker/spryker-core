@@ -15,10 +15,10 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManager;
@@ -131,6 +131,7 @@ class RemovePriceProductScheduleListTest extends Unit
             ],
         ]);
 
+        /** @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplier|\PHPUnit\Framework\MockObject\MockObject $applierMock */
         $applierMock = $this->getMockBuilder(AbstractProductPriceProductScheduleApplier::class)
             ->disableOriginalConstructor()
             ->setMethods(['applyScheduledPrices'])
@@ -589,7 +590,7 @@ class RemovePriceProductScheduleListTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName)
+    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
             ->setMethods(['getFallbackPriceTypeList'])
@@ -602,11 +603,11 @@ class RemovePriceProductScheduleListTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $applierMock
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplier|\PHPUnit\Framework\MockObject\MockObject $applierMock
      *
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
      */
-    protected function getFacadeMockForAbstractPrices(MockObject $applierMock)
+    protected function getFacadeMockForAbstractPrices(AbstractProductPriceProductScheduleApplier $applierMock): PriceProductScheduleFacadeInterface
     {
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleBusinessFactory = $this->getFactoryMock($applierMock, 'createAbstractProductPriceProductScheduleApplier');
@@ -616,11 +617,11 @@ class RemovePriceProductScheduleListTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $applierMock
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplier|\PHPUnit\Framework\MockObject\MockObject $applierMock
      *
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
      */
-    protected function getFacadeMockForConcretePrices(MockObject $applierMock)
+    protected function getFacadeMockForConcretePrices(ConcreteProductPriceProductScheduleApplier $applierMock): PriceProductScheduleFacadeInterface
     {
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleBusinessFactory = $this->getFactoryMock($applierMock, 'createConcreteProductPriceProductScheduleApplier');
@@ -630,12 +631,12 @@ class RemovePriceProductScheduleListTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $applierMock
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplier|\Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplier|\PHPUnit\Framework\MockObject\MockObject $applierMock
      * @param string $mockFactoryMethod
      *
      * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getFactoryMock(MockObject $applierMock, string $mockFactoryMethod): MockObject
+    protected function getFactoryMock($applierMock, string $mockFactoryMethod): PriceProductScheduleBusinessFactory
     {
         $priceProductScheduleBusinessFactory = $this->getMockBuilder(PriceProductScheduleBusinessFactory::class)
             ->setMethods([

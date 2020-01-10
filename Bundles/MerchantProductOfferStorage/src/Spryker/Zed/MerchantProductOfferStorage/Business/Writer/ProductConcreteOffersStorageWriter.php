@@ -90,7 +90,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
-    public function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productConcreteSkus): void
+    protected function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productConcreteSkus): void
     {
         $productConcreteSkus = array_unique($productConcreteSkus);
         $flippedProductConcreteSkus = array_flip($productConcreteSkus);

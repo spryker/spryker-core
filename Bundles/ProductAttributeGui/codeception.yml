@@ -1,6 +1,4 @@
 namespace: ProductAttributeGui
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductAttributeGui
 

@@ -1,6 +1,4 @@
 namespace: CustomerNote
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CustomerNote
 

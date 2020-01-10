@@ -115,6 +115,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByProductOfferReference($productOfferCriteriaFilter->getProductOfferReference());
         }
 
+        if ($productOfferCriteriaFilter->getIdProductOffer()) {
+            $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer());
+        }
+
         if ($productOfferCriteriaFilter->getConcreteSkus()) {
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilter->getConcreteSkus());
         }
@@ -136,8 +140,8 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 Criteria::INNER_JOIN
-            )
-            ->where(SpyProductTableMap::COL_IS_ACTIVE, true);
+            );
+            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, true);
         }
 
         return $productOfferQuery;

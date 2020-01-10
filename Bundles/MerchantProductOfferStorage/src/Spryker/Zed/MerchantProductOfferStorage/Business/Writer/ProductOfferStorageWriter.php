@@ -89,7 +89,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      *
      * @return void
      */
-    public function writeProductOfferStorageCollectionByProductOfferReferences(array $productOfferReferences): void
+    protected function writeProductOfferStorageCollectionByProductOfferReferences(array $productOfferReferences): void
     {
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);

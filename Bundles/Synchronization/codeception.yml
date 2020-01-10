@@ -1,6 +1,4 @@
 namespace: Synchronization
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/Synchronization
 
