@@ -596,4 +596,20 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getRepository()
             ->isPriceProductByProductIdentifierAndPriceTypeExists($priceProductTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductConcreteReader()
+            ->expandProductConcreteWithPrices($productConcreteTransfer);
+    }
 }
