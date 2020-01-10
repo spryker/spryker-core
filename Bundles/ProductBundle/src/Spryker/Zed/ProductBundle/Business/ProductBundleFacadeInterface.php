@@ -188,7 +188,6 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Updates product bundles statuses of product concrete bundled products.
      * - Deactivates product bundles if they have at least one inactive bundled product.
      *
      * @api
