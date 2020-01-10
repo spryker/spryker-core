@@ -27,7 +27,8 @@ interface ContentStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns ContentTransfer collection by filter.
+     * - Returns an array of ContentTransfer.
+     * - Uses FilterTransfer for pagination.
      *
      * @api
      *

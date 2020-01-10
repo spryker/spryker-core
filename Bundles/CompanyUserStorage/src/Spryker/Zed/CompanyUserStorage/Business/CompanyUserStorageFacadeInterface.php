@@ -53,8 +53,8 @@ interface CompanyUserStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries company user storage entities for the given companyUserIds filtered by provided FilterTransfer.
-     * - Returns a collection of synchronization data transfers mapped from received storage entities.
+     * - Returns an array of SynchronizationDataTransfer filtered by provided companyUserIds.
+     * - Uses FilterTransfer for pagination.
      *
      * @api
      *

@@ -38,8 +38,8 @@ interface CategoryImageStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries category image storage entities for the given categoryIds filtered by provided FilterTransfer.
-     * - Returns a collection of synchronization data transfers mapped from received storage entities.
+     * - Returns an array of SynchronizationDataTransfer filtered by provided categoryIds.
+     * - Uses FilterTransfer for pagination.
      *
      * @api
      *

@@ -188,8 +188,8 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification:
-     * - Queries product concrete page search entities for the given productIds filtered by provided FilterTransfer.
-     * - Returns a collection of synchronization data transfers mapped from received storage entities.
+     * - Returns an array of SynchronizationDataTransfer filtered by provided productIds.
+     * - Uses FilterTransfer for pagination.
      *
      * @api
      *

@@ -48,8 +48,8 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries product alternative storage entities for the given productAlternativeStorageIds filtered by provided FilterTransfer.
-     * - Returns a collection of synchronization data transfers mapped from received storage entities.
+     * - Returns an array of SynchronizationDataTransfer filtered by provided productAlternativeStorageIds.
+     * - Uses FilterTransfer for pagination.
      *
      * @api
      *
@@ -65,8 +65,8 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries product replacement for storage entities for the given productReplacementForStorageIds filtered by provided FilterTransfer.
-     * - Returns a collection of synchronization data transfers mapped from received storage entities.
+     * - Returns an array of SynchronizationDataTransfer filtered by provided productReplacementForStorageIds.
+     * - Uses FilterTransfer for pagination
      *
      * @api
      *
