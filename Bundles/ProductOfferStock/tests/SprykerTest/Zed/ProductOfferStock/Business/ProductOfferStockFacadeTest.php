@@ -70,7 +70,7 @@ class ProductOfferStockFacadeTest extends Unit
         ]);
 
         $productOfferStock = $this->tester->haveProductOfferStock([
-            ProductOfferStockTransfer::FK_STOCK => $stockTransfer->getIdStock(),
+            ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
             ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => true,
         ]);
 

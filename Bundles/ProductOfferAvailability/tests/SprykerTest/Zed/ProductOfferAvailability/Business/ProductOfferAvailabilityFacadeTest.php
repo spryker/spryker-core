@@ -79,7 +79,6 @@ class ProductOfferAvailabilityFacadeTest extends Unit
         $storeTransfer = $this->tester->haveStore();
         $productOfferStockTransfer = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
-            ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => false,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
                     StoreRelationTransfer::ID_STORES => [
@@ -116,7 +115,6 @@ class ProductOfferAvailabilityFacadeTest extends Unit
         $storeTransfer = $this->tester->haveStore();
         $productOfferStockTransfer = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
-            ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => false,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
                     StoreRelationTransfer::ID_STORES => [
