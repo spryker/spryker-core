@@ -1,6 +1,4 @@
 namespace: CmsGui
-actor: Tester
-
 include:
  - tests/SprykerTest/Zed/CmsGui
 

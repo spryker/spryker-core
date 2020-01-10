@@ -1,5 +1,4 @@
 namespace: Merchant
-actor: Tester
 include:
     - tests/SprykerTest/Zed/Merchant
 paths:

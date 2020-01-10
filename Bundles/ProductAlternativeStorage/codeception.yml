@@ -1,7 +1,6 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/ProductAlternativeStorage
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

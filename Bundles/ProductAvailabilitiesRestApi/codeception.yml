@@ -3,7 +3,6 @@ namespace: ProductAvailabilitiesRestApi
 include:
     - tests/SprykerTest/Glue/ProductAvailabilitiesRestApi
 
-actor: Tester
 paths:
     tests: tests
     log: tests/_output
