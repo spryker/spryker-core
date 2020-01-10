@@ -21,9 +21,8 @@ class ProductBundleProductConcreteActivatorAfterUpdatePlugin extends AbstractPlu
 {
     /**
      * {@inheritDoc}
-     * - Updates status of product bundle.
-     * - Deactivates product bundle if at least one bundled product is inactive.
-     * - Activates product bundle to if all bundled products are active.
+     * - Updates product bundles statuses of product concrete bundled products.
+     * - Deactivates product bundles if they have at least one inactive bundled product.
      *
      * @api
      *
@@ -33,6 +32,6 @@ class ProductBundleProductConcreteActivatorAfterUpdatePlugin extends AbstractPlu
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->getFacade()->updateBundleStatusAfterBundledProductUpdate($productConcreteTransfer);
+        return $this->getFacade()->deactivateProductBundlesByProductConcrete($productConcreteTransfer);
     }
 }

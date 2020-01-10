@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Status;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 
@@ -41,7 +40,7 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function updateBundleStatus(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductConcreteStatusWithBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         if ($productConcreteTransfer->getProductBundle() === null) {
             return $productConcreteTransfer;
@@ -55,7 +54,7 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function updateBundleStatusAfterBundledProductUpdate(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function deactivateProductBundlesByProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $bundledProducts = $this->productBundleReader
             ->getBundledProductByIdProduct($productConcreteTransfer->getIdProductConcrete());
@@ -68,29 +67,27 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
             $productForBundleTransfers = $this->productBundleReader
                 ->getBundleItemsByIdProduct($bundledProduct->getIdProductBundle());
 
-            foreach ($productForBundleTransfers as $productForBundleTransfer) {
-                $this->updateBundleProductIsActive($productForBundleTransfer);
-            }
+            $this->deactivateProductBundles($productForBundleTransfers);
         }
 
         return $productConcreteTransfer;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
      *
      * @return void
      */
-    protected function updateBundleProductIsActive(ProductForBundleTransfer $productForBundleTransfer): void
+    protected function deactivateProductBundles(array $productForBundleTransfers): void
     {
-        $idProductConcrete = $productForBundleTransfer->getIdProductBundle();
-        if (!$productForBundleTransfer->getIsActive()) {
-            $this->productFacade->deactivateProductConcrete($idProductConcrete);
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            $idProductConcrete = $productForBundleTransfer->getIdProductBundle();
+            if (!$productForBundleTransfer->getIsActive()) {
+                $this->productFacade->deactivateProductConcrete($idProductConcrete);
 
-            return;
+                return;
+            }
         }
-
-        $this->productFacade->activateProductConcrete($idProductConcrete);
     }
 
     /**

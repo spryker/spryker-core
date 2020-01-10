@@ -510,28 +510,14 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundleStatusAfterBundledProductUpdateWithActiveProductConcrete(): void
+    public function testDeactivateProductBundlesByProductConcreteWithInactiveProductConcrete(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
+        $productConcreteTransfer = $this->tester->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, false);
 
         // Act
-        $productConcreteTransfer = $this->getProductBundleFacade()->updateBundleStatusAfterBundledProductUpdate($productConcreteTransfer);
-
-        // Assert
-        $this->assertTrue($productConcreteTransfer->getIsActive());
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateBundleStatusAfterBundledProductUpdateWithInactiveProductConcrete(): void
-    {
-        // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, false);
-
-        // Act
-        $productConcreteTransfer = $this->getProductBundleFacade()->updateBundleStatusAfterBundledProductUpdate($productConcreteTransfer);
+        $productConcreteTransfer = $this->getProductBundleFacade()
+            ->deactivateProductBundlesByProductConcrete($productConcreteTransfer);
 
         // Assert
         $this->assertFalse($productConcreteTransfer->getIsActive());
@@ -540,13 +526,14 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundleStatusWithActiveProductConcrete(): void
+    public function testExpandProductConcreteStatusWithBundledProductsWithActiveProductConcrete(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
+        $productConcreteTransfer = $this->tester->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
 
         // Act
-        $productConcreteTransfer = $this->getProductBundleFacade()->updateBundleStatus($productConcreteTransfer);
+        $productConcreteTransfer = $this->getProductBundleFacade()
+            ->expandProductConcreteStatusWithBundledProducts($productConcreteTransfer);
 
         // Assert
         $this->assertTrue($productConcreteTransfer->getIsActive());
@@ -555,13 +542,14 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundleStatusWithInactiveProductConcrete(): void
+    public function testExpandProductConcreteStatusWithBundledProductsWithInactiveProductConcrete(): void
     {
         // Arrange
         $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, false);
 
         // Act
-        $productConcreteTransfer = $this->getProductBundleFacade()->updateBundleStatus($productConcreteTransfer);
+        $productConcreteTransfer = $this->getProductBundleFacade()
+            ->expandProductConcreteStatusWithBundledProducts($productConcreteTransfer);
 
         // Assert
         $this->assertFalse($productConcreteTransfer->getIsActive());

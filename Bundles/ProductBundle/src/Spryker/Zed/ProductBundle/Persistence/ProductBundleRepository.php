@@ -79,11 +79,11 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities);
     }
 
-    /* @param int $idProductConcrete
+    /**
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-
     public function getBundledProductByIdProduct(int $idProductConcrete): array
     {
         $productBundleEntities = $this->getFactory()

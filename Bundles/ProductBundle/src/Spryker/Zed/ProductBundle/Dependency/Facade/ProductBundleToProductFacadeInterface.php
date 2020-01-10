@@ -58,12 +58,5 @@ interface ProductBundleToProductFacadeInterface
      *
      * @return void
      */
-    public function activateProductConcrete($idProductConcrete);
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
     public function deactivateProductConcrete($idProductConcrete);
 }

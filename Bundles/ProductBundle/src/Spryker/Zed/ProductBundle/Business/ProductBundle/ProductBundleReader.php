@@ -123,11 +123,11 @@ class ProductBundleReader implements ProductBundleReaderInterface
         return $this->productBundleRepository->getBundleItemsByIdProduct($idProductConcrete);
     }
 
-    /* @param int $idProductConcrete
+    /**
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-
     public function getBundledProductByIdProduct(int $idProductConcrete): array
     {
         return $this->productBundleRepository->getBundledProductByIdProduct($idProductConcrete);

@@ -32,7 +32,8 @@ interface ProductBundleReaderInterface
      */
     public function getBundleItemsByIdProduct(int $idProductConcrete): array;
 
-    /* @param int $idProductConcrete
+    /**
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
