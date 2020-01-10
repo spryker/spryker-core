@@ -1,5 +1,4 @@
 namespace: AuthRestApi
-actor: Tester
 include:
     - tests/SprykerTest/Zed/AuthRestApi
 paths:

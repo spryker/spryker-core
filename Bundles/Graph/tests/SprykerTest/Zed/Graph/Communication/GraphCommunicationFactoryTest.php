@@ -87,7 +87,7 @@ class GraphCommunicationFactoryTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Graph\GraphConfig
      */
-    protected function getConfigMock($return)
+    protected function getConfigMock($return): GraphConfig
     {
         $configMock = $this->getMockBuilder(GraphConfig::class)->setMethods(['getGraphAdapterName'])->getMock();
         $configMock->method('getGraphAdapterName')->willReturn($return);

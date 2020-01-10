@@ -118,7 +118,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return \Symfony\Component\Console\Logger\ConsoleLogger|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMessengerMock()
+    protected function getMessengerMock(): ConsoleLogger
     {
         return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
     }
@@ -126,7 +126,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Transfer\TransferConfig
      */
-    protected function getTransferConfigMock()
+    protected function getTransferConfigMock(): TransferConfig
     {
         return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
     }

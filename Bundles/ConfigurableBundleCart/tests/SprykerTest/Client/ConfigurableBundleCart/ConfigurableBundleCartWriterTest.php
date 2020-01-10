@@ -420,7 +420,7 @@ class ConfigurableBundleCartWriterTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ConfigurableBundleCart\Writer\CartWriter
      */
-    protected function createCartWriterMock($cartClientMock)
+    protected function createCartWriterMock($cartClientMock): CartWriter
     {
         return $this->getMockBuilder(CartWriter::class)
             ->setConstructorArgs([
@@ -435,7 +435,7 @@ class ConfigurableBundleCartWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientBridge
      */
-    protected function createCartClientMock()
+    protected function createCartClientMock(): ConfigurableBundleCartToCartClientBridge
     {
         return $this->getMockBuilder(ConfigurableBundleCartToCartClientBridge::class)
             ->setMethods([
@@ -449,7 +449,7 @@ class ConfigurableBundleCartWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdater
      */
-    protected function createQuoteItemUpdaterMock()
+    protected function createQuoteItemUpdaterMock(): QuoteItemUpdater
     {
         return $this->getMockBuilder(QuoteItemUpdater::class)
             ->setConstructorArgs([
@@ -462,7 +462,7 @@ class ConfigurableBundleCartWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReader
      */
-    protected function createQuoteItemReaderMock()
+    protected function createQuoteItemReaderMock(): QuoteItemReader
     {
         return $this->getMockBuilder(QuoteItemReader::class)
             ->disableOriginalConstructor()

@@ -4,7 +4,6 @@ include:
     - tests/SprykerTest/Yves/Router
     - tests/SprykerTest/Zed/Router
 
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

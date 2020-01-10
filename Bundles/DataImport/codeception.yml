@@ -1,6 +1,4 @@
 namespace: DataImport
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/DataImport
 

@@ -38,7 +38,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    private function getMessenger()
+    private function getMessenger(): LoggerInterface
     {
         return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }

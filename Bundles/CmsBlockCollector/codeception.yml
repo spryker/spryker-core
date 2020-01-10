@@ -1,6 +1,4 @@
 namespace: CmsBlockCollector
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CmsBlockCollector
 

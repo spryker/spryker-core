@@ -9,7 +9,8 @@
         <property name="idProductOffer" dataBuilderRule="="/>
         <property name="concreteSku" dataBuilderRule="unique()->sentence(5)"/>
         <property name="productOfferReference" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="isActive" dataBuilderRule="boolean(100)"/>
+        <property name="isActive" dataBuilderRule="=true"/>
+        <property name="approvalStatus" dataBuilderRule="=approved"/>
     </transfer>
 
 </transfers>
