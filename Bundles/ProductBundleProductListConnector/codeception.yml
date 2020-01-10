@@ -3,7 +3,6 @@ namespace: ProductBundleProductListConnector
 include:
     - tests/SprykerTest/Zed/ProductBundleProductListConnector
 
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

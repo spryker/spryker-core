@@ -85,7 +85,7 @@ class SalesMerchantConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\SalesMerchantConnector\Business\SalesMerchantConnectorFacadeInterface
+     * @return \Spryker\Zed\SalesMerchantConnector\Business\SalesMerchantConnectorFacadeInterface
      */
     protected function getFacade()
     {

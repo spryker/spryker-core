@@ -126,7 +126,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return \Spryker\Client\ProductReview\ProductReviewClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getProductReviewClientMock()
+    protected function getProductReviewClientMock(): ProductReviewClientInterface
     {
         $productReviewClientInterfaceMock = $this->getMockBuilder(ProductReviewClientInterface::class)->getMock();
 

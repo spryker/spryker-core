@@ -135,7 +135,7 @@ class PaymentPluginExecutorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface
      */
-    protected function createSalesSaverMock()
+    protected function createSalesSaverMock(): SalesPaymentSaverInterface
     {
         return $this->getMockBuilder(SalesPaymentSaverInterface::class)->getMock();
     }
@@ -143,7 +143,7 @@ class PaymentPluginExecutorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface
      */
-    protected function createPreCheckPluginMock()
+    protected function createPreCheckPluginMock(): CheckoutPreCheckPluginInterface
     {
         return $this->getMockBuilder(CheckoutPreCheckPluginInterface::class)->getMock();
     }
@@ -151,7 +151,7 @@ class PaymentPluginExecutorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface
      */
-    protected function createSavePluginMock()
+    protected function createSavePluginMock(): CheckoutSaveOrderPluginInterface
     {
         return $this->getMockBuilder(CheckoutSaveOrderPluginInterface::class)->getMock();
     }
@@ -159,7 +159,7 @@ class PaymentPluginExecutorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface
      */
-    protected function createPostSavePluginMock()
+    protected function createPostSavePluginMock(): CheckoutPostCheckPluginInterface
     {
         return $this->getMockBuilder(CheckoutPostCheckPluginInterface::class)->getMock();
     }

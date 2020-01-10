@@ -115,7 +115,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Client
      */
-    protected function getMockClient()
+    protected function getMockClient(): Client
     {
         $mockClient = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
@@ -129,7 +129,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index
      */
-    protected function getMockIndex()
+    protected function getMockIndex(): Index
     {
         $mockIndex = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
@@ -144,7 +144,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Type
      */
-    protected function getMockType()
+    protected function getMockType(): Type
     {
         $mockType = $this->getMockBuilder(Type::class)
             ->disableOriginalConstructor()
@@ -158,7 +158,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Response
      */
-    protected function getResponse()
+    protected function getResponse(): Response
     {
         $mockResponse = $this->getMockBuilder(Response::class)
             ->disableOriginalConstructor()

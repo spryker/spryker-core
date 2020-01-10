@@ -159,7 +159,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function getLoggerMock()
+    protected function getLoggerMock(): LoggerInterface
     {
         $loggerInterfaceMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
 
@@ -169,7 +169,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpKernel\HttpKernelInterface
      */
-    protected function getKernelMock()
+    protected function getKernelMock(): HttpKernelInterface
     {
         $httpKernelInterfaceMock = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
 
@@ -179,7 +179,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequestMock()
+    protected function getRequestMock(): Request
     {
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
 
@@ -189,7 +189,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\Response
      */
-    protected function responseMock()
+    protected function responseMock(): Response
     {
         $responseMock = $this->getMockBuilder(Response::class)->getMock();
 
@@ -199,7 +199,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectResponseMock()
+    protected function redirectResponseMock(): RedirectResponse
     {
         $redirectResponseMock = $this->getMockBuilder(RedirectResponse::class)->disableOriginalConstructor()->getMock();
 

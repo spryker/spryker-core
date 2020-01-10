@@ -1,6 +1,4 @@
 namespace: SprykerTest
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/MerchantRelationshipSalesOrderThreshold
 

@@ -1,5 +1,4 @@
 namespace: CustomersRestApi
-actor: Tester
 include:
     - tests/SprykerTest/Zed/CustomersRestApi
 paths:

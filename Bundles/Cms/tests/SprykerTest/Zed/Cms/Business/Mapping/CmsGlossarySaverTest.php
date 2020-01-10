@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerTest\Zed\Cms\Business\CmsMocks;
@@ -111,14 +112,13 @@ class CmsGlossarySaverTest extends CmsMocks
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface|null $glossaryFacadeMock
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface|null $cmsGlossaryKeyGeneratorMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
      */
     protected function createCmsGlossarySaverMock(
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToGlossaryFacadeInterface $glossaryFacadeMock = null,
         ?CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGeneratorMock = null
-    ) {
-
+    ): CmsGlossarySaverInterface {
         if ($glossaryFacadeMock === null) {
             $glossaryFacadeMock = $this->createGlossaryFacadeMock();
         }

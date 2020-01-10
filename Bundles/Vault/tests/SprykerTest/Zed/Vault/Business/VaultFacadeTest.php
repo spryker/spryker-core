@@ -183,7 +183,7 @@ class VaultFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Vault\VaultConfig
      */
-    protected function createVaultSharedConfigMock(?string $encryptionKey)
+    protected function createVaultSharedConfigMock(?string $encryptionKey): VaultSharedConfig
     {
         $vaultSharedConfigMock = $this->getMockBuilder(VaultSharedConfig::class)
             ->setMethods(['get'])

@@ -1,7 +1,6 @@
 namespace: ConfigurableBundleDataImport
 include:
     - tests/SprykerTest/Zed/ConfigurableBundleDataImport
-actor: Tester
 paths:
     tests: tests
     log: tests/_output
