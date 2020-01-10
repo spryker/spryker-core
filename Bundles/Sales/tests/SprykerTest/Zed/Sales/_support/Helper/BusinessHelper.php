@@ -17,7 +17,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
-use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -34,8 +33,6 @@ class BusinessHelper extends Module
     protected const ORDER_ITEM_GROSS_PRICE_1 = 500;
     protected const ORDER_ITEM_GROSS_PRICE_2 = 800;
     protected const ORDER_ITEM_TAX_RATE = 19;
-
-    protected const ORDER_ITEM_BUNDLE_IMAGE = 'https://images.icecat.biz/img/norm/medium/23120327-Sony.jpg';
 
     /**
      * @deprecated Use `BusinessHelper::haveSalesOrderEntity` instead.
@@ -116,16 +113,6 @@ class BusinessHelper extends Module
         $salesOrderItems = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getBundleItemIdentifier() !== null && $itemTransfer->getRelatedBundleItemIdentifier() === null) {
-                $this->createOrderItemBundle(
-                    $itemTransfer,
-                    static::ORDER_ITEM_GROSS_PRICE_1,
-                    static::ORDER_ITEM_BUNDLE_IMAGE
-                );
-
-                continue;
-            }
-
             $this->createOrderItem(
                 $omsStateEntity,
                 $salesOrderEntity,
@@ -210,28 +197,6 @@ class BusinessHelper extends Module
         $salesOrderItem->save();
 
         return $salesOrderItem;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $grossPrice
-     * @param string $image
-     *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle
-     */
-    protected function createOrderItemBundle(
-        ItemTransfer $itemTransfer,
-        int $grossPrice,
-        string $image
-    ): SpySalesOrderItemBundle {
-        $salesOrderItemBundle = new SpySalesOrderItemBundle();
-        $salesOrderItemBundle->setGrossPrice($grossPrice);
-        $salesOrderItemBundle->setSku($itemTransfer->getSku());
-        $salesOrderItemBundle->setName($itemTransfer->getName());
-        $salesOrderItemBundle->setImage($image);
-        $salesOrderItemBundle->save();
-
-        return $salesOrderItemBundle;
     }
 
     /**

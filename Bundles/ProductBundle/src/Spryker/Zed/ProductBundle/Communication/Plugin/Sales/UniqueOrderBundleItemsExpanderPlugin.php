@@ -21,8 +21,8 @@ class UniqueOrderBundleItemsExpanderPlugin extends AbstractPlugin implements Uni
 {
     /**
      * {@inheritDoc}
+     * - Removes items from array related to bundles.
      * - Expands provided array of ItemTransfers by product bundles.
-     * - Extracts items from array related to bundles.
      *
      * @api
      *

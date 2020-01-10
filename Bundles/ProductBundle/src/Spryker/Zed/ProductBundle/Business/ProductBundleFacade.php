@@ -462,8 +462,6 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      */
     public function expandOrderProductBundlesWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer
     {
-        // TODO: Don't forget about TDD :)
-
         return $this->getFactory()
             ->createProductOptionExpander()
             ->expandOrderProductBundlesWithProductOptions($orderTransfer);
@@ -481,8 +479,6 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      */
     public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
-        // TODO: Don't forget about TDD :)
-
         return $this->getFactory()
             ->createProductBundleExpander()
             ->expandUniqueOrderItemsWithProductBundles($itemTransfers, $orderTransfer);

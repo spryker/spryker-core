@@ -98,7 +98,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
             $uniqueItemTransfers[$key] = $this->setQuantityAndPriceOfUniqueOrderItem($uniqueItemTransfers[$key], $itemTransfer);
         }
 
-        return $uniqueItemTransfers;
+        return array_values($uniqueItemTransfers);
     }
 
     /**
