@@ -104,7 +104,6 @@ class ProductOfferStockDataImportPluginTest extends Unit
         $productOfferStockDataImportPlugin = new ProductOfferStockDataImportPlugin();
 
         // Assert
-        $this->assertSame(/ProductOfferStorageWriter.php
-ProductOfferStockDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_STOCK, $productOfferStockDataImportPlugin->getImportType());
+        $this->assertSame(ProductOfferStockDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_STOCK, $productOfferStockDataImportPlugin->getImportType());
     }
 }

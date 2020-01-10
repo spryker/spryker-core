@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductOfferAvailabilityStorage\Reader;
 
 use Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Client\ProductOfferAvailabilityStorageToStorageClientInterface;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferAvailabilityStorageToSynchronizationServiceInterface;
@@ -38,25 +40,34 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param string $productOfferReference
-     * @param string $storeName
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer|null
+     * @return bool
      */
-    public function findByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
+    public function isProductOfferAvailableForStore(ProductOfferTransfer $productOfferTransfer, StoreTransfer $storeTransfer): bool
     {
+        $productOfferTransfer->requireProductOfferReference();
+        $storeTransfer->requireName();
+
         $productOfferAvailabilityStorageTransferData = $this->storageClient->get(
-            $this->generateKey($productOfferReference, $storeName)
+            $this->generateKey($productOfferTransfer->getProductOfferReference(), $storeTransfer->getName())
         );
 
         if (!$productOfferAvailabilityStorageTransferData) {
-            return null;
+            return false;
         }
 
-        return $this->mapToProductOfferAvailabilityStorageDataToTransfer(
+        $productOfferAvailabilityStorageTransfer = $this->mapToProductOfferAvailabilityStorageDataToTransfer(
             $productOfferAvailabilityStorageTransferData,
             new ProductOfferAvailabilityStorageTransfer()
         );
+
+        if ($productOfferAvailabilityStorageTransfer->getIsNeverOutOfStock()) {
+            return true;
+        }
+
+        return $productOfferAvailabilityStorageTransfer->getAvailability()->isPositive();
     }
 
     /**

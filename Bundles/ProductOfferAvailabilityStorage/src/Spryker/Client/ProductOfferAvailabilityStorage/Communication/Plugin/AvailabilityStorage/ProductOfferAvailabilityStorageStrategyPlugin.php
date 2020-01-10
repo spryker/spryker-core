@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductOfferAvailabilityStorage\Communication\Plugin\AvailabilityStorage;
 
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -47,9 +48,9 @@ class ProductOfferAvailabilityStorageStrategyPlugin extends AbstractPlugin imple
             ->getStoreClient()
             ->getCurrentStore();
 
-        $availabilityStorageTransfer = $this->getClient()
-            ->findByProductOfferReference($productViewTransfer->getProductOfferReference(), $storeTransfer->getName());
+        $productOfferTransfer = (new ProductOfferTransfer())
+            ->setProductOfferReference($productViewTransfer->getProductOfferReference());
 
-        return $availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability()->isPositive() : false;
+        return $this->getClient()->isProductOfferAvailableForStore($productOfferTransfer, $storeTransfer);
     }
 }

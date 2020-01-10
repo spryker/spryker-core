@@ -18,6 +18,7 @@
 
     <transfer name="ProductOfferAvailabilityStorage">
         <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="ProductView">

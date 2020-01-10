@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductOfferAvailabilityStorage;
 
 use Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,15 +22,15 @@ class ProductOfferAvailabilityStorageClient extends AbstractClient implements Pr
      *
      * @api
      *
-     * @param string $productOfferReference
-     * @param string $storeName
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer|null
+     * @return bool
      */
-    public function findByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
+    public function isProductOfferAvailableForStore(ProductOfferTransfer $productOfferTransfer, StoreTransfer $storeTransfer): bool
     {
         return $this->getFactory()
             ->createProductOfferAvailabilityStorageReader()
-            ->findByProductOfferReference($productOfferReference, $storeName);
+            ->isProductOfferAvailableForStore($productOfferTransfer, $storeTransfer);
     }
 }
