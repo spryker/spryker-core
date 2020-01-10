@@ -322,7 +322,6 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Extracts unique items.
-     * - Considers bundle items from order.
      * - Returns a collection of items.
      *
      * @api

@@ -20,7 +20,7 @@ class ProductBundleExpander implements ProductBundleExpanderInterface
      */
     public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
-        $itemTransfers = $this->extractUniqueItemsRelatedToBundle($itemTransfers);
+        $itemTransfers = $this->extractItemsNotRelatedToBundle($itemTransfers);
 
         $bundleItems = $this->getUniqueBundleItems($orderTransfer);
 
@@ -32,7 +32,7 @@ class ProductBundleExpander implements ProductBundleExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function extractUniqueItemsRelatedToBundle(array $itemTransfers): array
+    protected function extractItemsNotRelatedToBundle(array $itemTransfers): array
     {
         $uniqueItemTransfers = [];
 

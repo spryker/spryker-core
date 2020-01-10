@@ -37,7 +37,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\ProductBundleGroupTransfer[] $indexedProductBundleGroupTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
      */
     protected function getGroupItemsForShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, array $indexedProductBundleGroupTransfers): array
     {

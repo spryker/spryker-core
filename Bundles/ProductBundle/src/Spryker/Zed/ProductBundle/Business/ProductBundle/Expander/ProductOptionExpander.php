@@ -24,11 +24,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
         $expandedProductBundles = new ArrayObject();
 
         foreach ($orderTransfer->getBundleItems() as $bundleItem) {
-            foreach ($orderTransfer->getItems() as $itemTransfer) {
-                if ($itemTransfer->getRelatedBundleItemIdentifier() === $bundleItem->getBundleItemIdentifier()) {
-                    $bundleItem = $this->expandBundleItemWithProductOptions($bundleItem, $itemTransfer);
-                }
-            }
+            $bundleItem = $this->getExpandedBundleItemWithProductOptions($orderTransfer, $bundleItem);
 
             $bundleItem = $bundleItem->setProductOptions(
                 new ArrayObject($this->sortBundleProductOptions($bundleItem->getProductOptions()->getArrayCopy()))
@@ -40,6 +36,23 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
         $orderTransfer->setBundleItems($expandedProductBundles);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItem
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function getExpandedBundleItemWithProductOptions(OrderTransfer $orderTransfer, ItemTransfer $bundleItem): ItemTransfer
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier() === $bundleItem->getBundleItemIdentifier()) {
+                $bundleItem = $this->expandBundleItemWithProductOptions($bundleItem, $itemTransfer);
+            }
+        }
+
+        return $bundleItem;
     }
 
     /**

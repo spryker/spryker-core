@@ -13,6 +13,7 @@ interface UniqueOrderItemsExpanderPluginInterface
 {
     /**
      * Specification:
+     * - This plugin stack gets executed to display a list of unique order items.
      * - Expands provided array of ItemTransfers.
      *
      * @api
