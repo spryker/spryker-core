@@ -10,6 +10,7 @@ namespace Zed\ProductOfferStockDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\ProductOfferStockDataImport\Communication\ProductOfferStockDataImportPlugin;
@@ -90,7 +91,7 @@ class ProductOfferStockDataImportPluginTest extends Unit
         $dataImporterReportTransfer = $productOfferStockDataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
-        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->tester->assertProductOfferStockDatabaseTablesContainsData();
     }
 
@@ -103,6 +104,7 @@ class ProductOfferStockDataImportPluginTest extends Unit
         $productOfferStockDataImportPlugin = new ProductOfferStockDataImportPlugin();
 
         // Assert
-        $this->assertSame(ProductOfferStockDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_STOCK, $productOfferStockDataImportPlugin->getImportType());
+        $this->assertSame(/ProductOfferStorageWriter.php
+ProductOfferStockDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_STOCK, $productOfferStockDataImportPlugin->getImportType());
     }
 }

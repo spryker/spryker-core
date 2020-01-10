@@ -181,7 +181,6 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
         $productOfferData[ProductOfferTransfer::CONCRETE_SKU] = $this->tester->haveProduct($productData)->getSku();
 
         $productOfferTransfer = $this->tester->haveProductOffer($productOfferData)->addStore($storeTransfer);
-        $this->tester->haveAvailabilityConcrete($productOfferData[ProductOfferTransfer::CONCRETE_SKU], $storeTransfer);
 
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
         $this->merchantProductOfferTransfer = $productOfferTransfer;

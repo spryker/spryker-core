@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProductOfferStorage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeBridge;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeBridge;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeBridge;
@@ -21,7 +20,6 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
-    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**
@@ -50,7 +48,6 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         $container = $this->addProductOfferFacade($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addAvailabilityFacade($container);
 
         return $container;
     }
@@ -97,22 +94,6 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new MerchantProductOfferStorageToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addAvailabilityFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
-            return new MerchantProductOfferStorageToAvailabilityFacadeBridge(
-                $container->getLocator()->availability()->facade()
             );
         });
 

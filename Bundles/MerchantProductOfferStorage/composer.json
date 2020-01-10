@@ -5,8 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/availability": "^9.0.0",
-    "spryker/decimal-object": "^1.0.0",
     "spryker/event-behavior": "^1.14.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-product-offer-storage-extension": "^0.1.0",

@@ -12,13 +12,10 @@ use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffe
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityChecker;
-use Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriterInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
@@ -40,8 +37,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductOfferFacade(),
             $this->getEntityManager(),
             $this->createProductConcreteProductOffersStorageDeleter(),
-            $this->getStoreFacade(),
-            $this->createProductOfferAvailabilityChecker()
+            $this->getStoreFacade()
         );
     }
 
@@ -55,8 +51,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductOfferFacade(),
             $this->getEntityManager(),
             $this->createProductOfferStorageDeleter(),
-            $this->getStoreFacade(),
-            $this->createProductOfferAvailabilityChecker()
+            $this->getStoreFacade()
         );
     }
 
@@ -83,14 +78,6 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface
-     */
-    public function createProductOfferAvailabilityChecker(): ProductOfferAvailabilityCheckerInterface
-    {
-        return new ProductOfferAvailabilityChecker($this->getAvailabilityFacade());
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface
      */
     public function getProductOfferFacade(): MerchantProductOfferStorageToProductOfferFacadeInterface
@@ -112,13 +99,5 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): MerchantProductOfferStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface
-     */
-    public function getAvailabilityFacade(): MerchantProductOfferStorageToAvailabilityFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_AVAILABILITY);
     }
 }
