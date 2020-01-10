@@ -188,7 +188,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Deactivates product bundles of product concrete in case it is inactive.
+     * - Deactivates product bundles related to product concrete in case it is inactive.
      *
      * @api
      *

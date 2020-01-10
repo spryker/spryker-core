@@ -17,7 +17,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
-class ProductBundleProductConcreteDectivatorBeforeUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
+class ProductBundleStatusExpanderProductConcreteBeforeUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
     /**
      * {@inheritDoc}
