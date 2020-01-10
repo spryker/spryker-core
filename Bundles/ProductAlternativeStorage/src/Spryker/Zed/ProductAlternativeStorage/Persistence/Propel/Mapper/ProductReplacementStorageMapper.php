@@ -42,8 +42,11 @@ class ProductReplacementStorageMapper
         SpyProductReplacementForStorage $productReplacementForStorageEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {
+        /** @var string $data */
+        $data = $productReplacementForStorageEntity->getData();
+
         return $synchronizationDataTransfer
-            ->setData($productReplacementForStorageEntity->getData())
+            ->setData($data)
             ->setKey($productReplacementForStorageEntity->getKey());
     }
 }

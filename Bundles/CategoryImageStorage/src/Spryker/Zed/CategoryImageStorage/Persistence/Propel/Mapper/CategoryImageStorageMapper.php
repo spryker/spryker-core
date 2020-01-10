@@ -42,8 +42,11 @@ class CategoryImageStorageMapper
         SpyCategoryImageStorage $categoryImageStorageEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {
+        /** @var string $data */
+        $data = $categoryImageStorageEntity->getData();
+
         return $synchronizationDataTransfer
-            ->setData($categoryImageStorageEntity->getData())
+            ->setData($data)
             ->setKey($categoryImageStorageEntity->getKey());
     }
 }

@@ -42,8 +42,11 @@ class ProductAlternativeStorageMapper
         SpyProductAlternativeStorage $productAlternativeStorageEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {
+        /** @var string $data */
+        $data = $productAlternativeStorageEntity->getData();
+
         return $synchronizationDataTransfer
-            ->setData($productAlternativeStorageEntity->getData())
+            ->setData($data)
             ->setKey($productAlternativeStorageEntity->getKey());
     }
 }
