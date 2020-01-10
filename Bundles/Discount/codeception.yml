@@ -1,6 +1,4 @@
 namespace: Discount
-actor: Tester
-
 include:
     - tests/SprykerTest/Shared/Discount
     - tests/SprykerTest/Zed/Discount

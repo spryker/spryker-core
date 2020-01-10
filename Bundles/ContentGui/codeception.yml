@@ -1,7 +1,5 @@
 namespace: ContentGui
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ContentGui
 

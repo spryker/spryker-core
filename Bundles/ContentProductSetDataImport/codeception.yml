@@ -1,6 +1,4 @@
 namespace: ContentProductSetDataImport
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ContentProductSetDataImport
 

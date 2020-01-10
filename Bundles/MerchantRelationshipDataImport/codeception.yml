@@ -1,5 +1,4 @@
 namespace: MerchantRelationshipDataImport
-actor: Tester
 include:
   - tests/SprykerTest/Zed/MerchantRelationshipDataImport
 paths:

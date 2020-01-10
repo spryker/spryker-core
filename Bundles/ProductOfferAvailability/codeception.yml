@@ -1,7 +1,5 @@
 namespace: ProductOfferAvailability
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductOfferAvailability
 

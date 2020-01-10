@@ -1,5 +1,4 @@
 namespace: ShipmentsRestApi
-actor: Tester
 include:
     - tests/SprykerTest/Zed/ShipmentsRestApi
 paths:

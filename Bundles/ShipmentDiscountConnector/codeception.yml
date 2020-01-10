@@ -1,7 +1,5 @@
 namespace: ShipmentDiscountConnector
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ShipmentDiscountConnector
 

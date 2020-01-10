@@ -1,6 +1,4 @@
 namespace: Offer
-actor: Tester
-
 include:
   - tests/SprykerTest/Zed/Offer
 

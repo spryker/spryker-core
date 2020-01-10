@@ -1,6 +1,4 @@
 namespace: BusinessOnBehalfDataImport
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/BusinessOnBehalfDataImport
 
