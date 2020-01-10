@@ -28,6 +28,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="concreteSku" type="string"/>
         <property name="merchantSku" type="string"/>
+        <property name="stores" type="Store[]" singular="store"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
@@ -38,6 +39,7 @@
         <property name="reference" type="string"/>
         <property name="data" type="string"/>
         <property name="key" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -45,6 +47,10 @@
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>
