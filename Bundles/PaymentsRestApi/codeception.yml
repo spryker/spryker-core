@@ -1,5 +1,4 @@
 namespace: PaymentsRestApi
-actor: Tester
 include:
     - tests/SprykerTest/Zed/PaymentsRestApi
 paths:

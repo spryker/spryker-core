@@ -1,6 +1,4 @@
 namespace: ProductLabelCollector
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductLabelCollector
 

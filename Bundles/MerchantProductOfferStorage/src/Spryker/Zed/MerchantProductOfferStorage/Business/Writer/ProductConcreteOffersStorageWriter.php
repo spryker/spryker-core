@@ -95,21 +95,21 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param string[] $productSkus
      *
      * @return void
      */
-    public function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productConcreteSkus): void
+    protected function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void
     {
-        $productConcreteSkus = array_unique($productConcreteSkus);
-        $flippedProductConcreteSkus = array_flip($productConcreteSkus);
+        $productSkus = array_unique($productSkus);
+        $flippedProductConcreteSkus = array_flip($productSkus);
 
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productConcreteSkus);
+        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productSkus);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productOfferCollectionTransfer);
 
-        $productConcreteSkusToRemove = $this->prepareProductConcreteSkusToRemoveList($productConcreteSkus);
+        $productConcreteSkusToRemove = $this->prepareProductConcreteSkusToRemoveList($productSkus);
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
             foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferReferenceList) {

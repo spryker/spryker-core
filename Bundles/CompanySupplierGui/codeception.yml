@@ -1,6 +1,4 @@
 namespace: CompanySupplierGui
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CompanySupplierGui
 
