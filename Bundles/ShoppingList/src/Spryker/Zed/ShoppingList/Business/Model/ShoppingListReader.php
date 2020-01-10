@@ -358,8 +358,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    protected function expandProducts(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer, ?ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer = null): ShoppingListItemCollectionTransfer
-    {
+    protected function expandProducts(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ?ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer = null
+    ): ShoppingListItemCollectionTransfer {
         $shoppingListItemsSkus = $this->getShoppingListItemsSkus($shoppingListItemCollectionTransfer);
 
         if (empty($shoppingListItemsSkus)) {
@@ -385,8 +387,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[]
      */
-    protected function expandShoppingListItemTransfers(ArrayObject $shoppingListItemTransfers, ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ArrayObject
-    {
+    protected function expandShoppingListItemTransfers(
+        ArrayObject $shoppingListItemTransfers,
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ArrayObject {
         foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
             $shoppingListItemTransfer->setCurrencyIsoCode(
                 $shoppingListOverviewRequestTransfer->getCurrencyIsoCode()

@@ -49,5 +49,5 @@ interface ProductOptionValuePriceReaderInterface
      *
      * @return int|null
      */
-    public function getUnitPrice(ProductOptionTransfer $productOptionTransfer, ?string $priceMode): ?int;
+    public function resolveUnitPrice(ProductOptionTransfer $productOptionTransfer, ?string $priceMode): ?int;
 }

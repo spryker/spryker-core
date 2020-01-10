@@ -212,7 +212,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      *
      * @return int|null
      */
-    public function getUnitPrice(ProductOptionTransfer $productOptionTransfer, ?string $priceMode): ?int
+    public function resolveUnitPrice(ProductOptionTransfer $productOptionTransfer, ?string $priceMode): ?int
     {
         if (!$priceMode) {
             $priceMode = $this->priceFacade->getDefaultPriceMode();
