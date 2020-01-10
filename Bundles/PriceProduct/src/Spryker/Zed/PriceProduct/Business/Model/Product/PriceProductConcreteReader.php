@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutorInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
@@ -252,6 +255,30 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
 
         return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        $priceProductCriteria = (new PriceProductCriteriaTransfer())->setPriceDimension(
+            (new PriceProductDimensionTransfer())
+                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+        );
+
+        $priceProductTransfers = $this->findProductConcretePricesById(
+            $productConcreteTransfer->getIdProductConcrete(),
+            $priceProductCriteria
+        );
+
+        if ($priceProductTransfers) {
+            $productConcreteTransfer->setPrices(new ArrayObject($priceProductTransfers));
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**

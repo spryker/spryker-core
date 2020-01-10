@@ -1088,6 +1088,55 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandProductConcreteWithPricesWillAddConcreteProductPricesWhenTheyAreDefinedForConcreteProduct(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductTransfer = $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getIdProductConcrete()
+        );
+
+        //Act
+        $productConcreteTransfer = $this->getPriceProductFacade()->expandProductConcreteWithPrices($productConcreteTransfer);
+
+        //Assert
+        $this->assertGreaterThan(0, $productConcreteTransfer->getPrices()->count());
+
+        $resultPriceProductTransfer = $productConcreteTransfer->getPrices()->offsetGet(0);
+        $this->assertEquals($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcreteWithPricesWillNotAddConcreteProductPricesWhenTheyAreDefinedOnlyForAbstractProduct(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+
+        //Act
+        $productConcreteTransfer = $this->getPriceProductFacade()->expandProductConcreteWithPrices($productConcreteTransfer);
+
+        //Assert
+        $this->assertEquals(0, $productConcreteTransfer->getPrices()->count());
+    }
+
+    /**
      * @param string $abstractSku
      * @param int $idAbstractProduct
      * @param string|null $currencyIsoCode
