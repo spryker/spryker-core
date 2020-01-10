@@ -107,7 +107,7 @@ class ProductBundleReaderTest extends Unit
         ?ProductBundleToAvailabilityFacadeInterface $productBundleToAvailabilityFacadeMock = null,
         ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null,
         ?ProductBundleRepositoryInterface $productBundleRepository = null
-    ): MockObject {
+    ): ProductBundleReader {
         if ($productBundleQueryContainerMock === null) {
             $productBundleQueryContainerMock = $this->createProductQueryContainerMock();
         }
@@ -141,7 +141,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
-    protected function createProductQueryContainerMock(): MockObject
+    protected function createProductQueryContainerMock(): ProductBundleQueryContainerInterface
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }
@@ -149,7 +149,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
-    protected function createAvailabilityFacadeMock(): MockObject
+    protected function createAvailabilityFacadeMock(): ProductBundleToAvailabilityFacadeInterface
     {
         return $this->getMockBuilder(ProductBundleToAvailabilityFacadeInterface::class)->getMock();
     }
@@ -157,7 +157,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
-    protected function createProductBundleRepositoryMock(): MockObject
+    protected function createProductBundleRepositoryMock(): ProductBundleRepositoryInterface
     {
         return $this->getMockBuilder(ProductBundleRepositoryInterface::class)->getMock();
     }
@@ -165,7 +165,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
-    protected function createStoreFacadeMock(): MockObject
+    protected function createStoreFacadeMock(): ProductBundleToStoreFacadeInterface
     {
         return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
     }
