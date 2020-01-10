@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
@@ -30,31 +29,23 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $availabilityFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
     protected $storeFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
-     */
-    protected $productBundleRepository;
 
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
-        ProductBundleToStoreFacadeInterface $storeFacade,
-        ProductBundleRepositoryInterface $productBundleRepository
+        ProductBundleToStoreFacadeInterface $storeFacade
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
-        $this->productBundleRepository = $productBundleRepository;
     }
 
     /**

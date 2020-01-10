@@ -56,10 +56,20 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
             return $productConcreteTransfer;
         }
 
+        $this->deactivateProductConcrete($productBundleTransfers->getArrayCopy());
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleTransfer[] $productBundleTransfers
+     *
+     * @return void
+     */
+    protected function deactivateProductConcrete(array $productBundleTransfers): void
+    {
         foreach ($productBundleTransfers as $productBundleTransfer) {
             $this->productFacade->deactivateProductConcrete($productBundleTransfer->getIdProductConcreteBundle());
         }
-
-        return $productConcreteTransfer;
     }
 }
