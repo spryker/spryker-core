@@ -264,14 +264,14 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        $priceProductCriteria = (new PriceProductCriteriaTransfer())->setPriceDimension(
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceDimension(
             (new PriceProductDimensionTransfer())
                 ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
         );
 
         $priceProductTransfers = $this->findProductConcretePricesById(
             $productConcreteTransfer->getIdProductConcrete(),
-            $priceProductCriteria
+            $priceProductCriteriaTransfer
         );
 
         if ($priceProductTransfers) {

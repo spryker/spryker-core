@@ -568,7 +568,7 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     * - Expands ProductConcreteTransfer with concrete product prices.
+     * - Expands ProductConcreteTransfer with concrete product prices for default dimension.
      * - Reads concrete product prices from database.
      * - Filters results by price type name when provided in criteria.
      * - Filters results by store when provided in criteria.

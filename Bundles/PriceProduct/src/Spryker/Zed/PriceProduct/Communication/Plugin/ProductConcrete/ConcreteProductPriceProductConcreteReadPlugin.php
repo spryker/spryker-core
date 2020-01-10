@@ -30,7 +30,7 @@ class ConcreteProductPriceProductConcreteReadPlugin extends AbstractPlugin imple
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function read(ProductConcreteTransfer $productConcreteTransfer)
+    public function read(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFacade()->expandProductConcreteWithPrices($productConcreteTransfer);
     }

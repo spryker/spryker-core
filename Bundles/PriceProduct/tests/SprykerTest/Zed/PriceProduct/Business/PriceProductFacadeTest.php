@@ -1106,7 +1106,7 @@ class PriceProductFacadeTest extends Unit
         $this->assertGreaterThan(0, $productConcreteTransfer->getPrices()->count());
 
         $resultPriceProductTransfer = $productConcreteTransfer->getPrices()->offsetGet(0);
-        $this->assertEquals($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
+        $this->assertSame($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
             $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
@@ -1133,7 +1133,7 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->getPriceProductFacade()->expandProductConcreteWithPrices($productConcreteTransfer);
 
         //Assert
-        $this->assertEquals(0, $productConcreteTransfer->getPrices()->count());
+        $this->assertSame(0, $productConcreteTransfer->getPrices()->count());
     }
 
     /**
