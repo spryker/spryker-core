@@ -21,11 +21,22 @@
         <property name="approvalStatus" type="string"/>
     </transfer>
 
+    <transfer name="ProductOfferResponse">
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="errors" type="ProductOfferError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferError">
+        <property name="message" type="string"/>
+    </transfer>
+
     <transfer name="ProductOfferCollection">
         <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
+        <property name="idProductOffer" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
