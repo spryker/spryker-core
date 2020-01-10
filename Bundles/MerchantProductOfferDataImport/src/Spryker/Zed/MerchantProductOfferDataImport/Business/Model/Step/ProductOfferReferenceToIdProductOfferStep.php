@@ -53,10 +53,11 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
      */
     protected function getIdProductOffer(string $productOfferReference): int
     {
+        $productOfferQuery = SpyProductOfferQuery::create();
+        $productOfferQuery->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER]);
+
         /** @var int $idProductOffer */
-        $idProductOffer = SpyProductOfferQuery::create()
-            ->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER])
-            ->findOneByProductOfferReference($productOfferReference);
+        $idProductOffer = $productOfferQuery->findOneByProductOfferReference($productOfferReference);
 
         if (!$idProductOffer) {
             throw new EntityNotFoundException(sprintf('Could not find ProductOffer by reference "%s"', $productOfferReference));
