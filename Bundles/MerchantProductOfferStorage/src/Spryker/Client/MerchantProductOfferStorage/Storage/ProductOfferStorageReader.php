@@ -91,9 +91,10 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                     continue;
                 }
 
-                $productOfferStorageCollection->addProductOfferStorage(
-                    $this->findProductOfferStorageByReference($concreteProductOffer)
-                );
+                $productOfferStorage = $this->findProductOfferStorageByReference($concreteProductOffer);
+                if ($productOfferStorage) {
+                    $productOfferStorageCollection->addProductOfferStorage($productOfferStorage);
+                }
             }
         }
 

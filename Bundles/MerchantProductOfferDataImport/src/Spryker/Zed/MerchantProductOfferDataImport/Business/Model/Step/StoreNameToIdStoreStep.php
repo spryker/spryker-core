@@ -46,9 +46,10 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
      */
     protected function addIdStoreToCache(string $storeName): void
     {
-        $idStore = SpyStoreQuery::create()
-            ->select(SpyStoreTableMap::COL_ID_STORE)
-            ->findOneByName($storeName);
+        $storeQuery = SpyStoreQuery::create();
+        $storeQuery->select(SpyStoreTableMap::COL_ID_STORE);
+
+        $idStore = $storeQuery->findOneByName($storeName);
 
         if (!$idStore) {
             throw new EntityNotFoundException(sprintf('Could not find store by name "%s"', $storeName));
