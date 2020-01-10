@@ -1,7 +1,5 @@
 namespace: MerchantProductOfferDataImport
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/MerchantProductOfferDataImport
 

@@ -1,6 +1,4 @@
 namespace: ShipmentDataImport
-actor: Tester
-
 include:
   - tests/SprykerTest/Zed/ShipmentDataImport
 

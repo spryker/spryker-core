@@ -234,7 +234,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ZedRequest\Business\Model\Repeater
      */
-    private function createRepeaterMock()
+    private function createRepeaterMock(): Repeater
     {
         return $this->getMockBuilder(Repeater::class)
             ->disableOriginalConstructor()
@@ -310,7 +310,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    private function getTransferMock()
+    private function getTransferMock(): TransferInterface
     {
         $transfer = $this->getMockBuilder(TransferInterface::class)->getMock();
 
