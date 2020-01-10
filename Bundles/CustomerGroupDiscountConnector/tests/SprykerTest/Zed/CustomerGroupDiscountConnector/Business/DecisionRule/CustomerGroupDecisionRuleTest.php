@@ -145,7 +145,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToDiscountFacadeInterface
      */
-    protected function createDiscountFacadeMock()
+    protected function createDiscountFacadeMock(): CustomerGroupDiscountConnectorToDiscountFacadeInterface
     {
         return $this->getMockBuilder(CustomerGroupDiscountConnectorToDiscountFacadeInterface::class)->getMock();
     }
@@ -153,7 +153,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface
      */
-    protected function createCustomerGroupFacadeMock()
+    protected function createCustomerGroupFacadeMock(): CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface
     {
         return $this->getMockBuilder(CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface::class)->getMock();
     }

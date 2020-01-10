@@ -1,6 +1,4 @@
 namespace: CompanyUnitAddressLabelDataImport
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CompanyUnitAddressLabelDataImport
 

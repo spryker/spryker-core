@@ -1,5 +1,4 @@
 namespace: MerchantDataImport
-actor: Tester
 include:
   - tests/SprykerTest/Zed/MerchantDataImport
 paths:

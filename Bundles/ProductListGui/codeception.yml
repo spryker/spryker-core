@@ -1,6 +1,4 @@
 namespace: ProductListGui
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductListGui
 

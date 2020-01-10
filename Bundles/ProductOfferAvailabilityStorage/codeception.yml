@@ -1,7 +1,5 @@
 namespace: ProductOfferAvailabilityStorage
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductOfferAvailabilityStorage
 

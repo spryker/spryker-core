@@ -86,7 +86,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider
      */
-    protected function getSessionServiceProviderMock()
+    protected function getSessionServiceProviderMock(): SessionServiceProvider
     {
         $sessionServiceProviderMockBuilder = $this->getMockBuilder(SessionServiceProvider::class);
         $sessionServiceProviderMockBuilder->setMethods(['isCliOrPhpDbg']);
@@ -100,7 +100,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClientInterface
      */
-    protected function getSessionClientMock()
+    protected function getSessionClientMock(): SessionClientInterface
     {
         $sessionClientMockBuilder = $this->getMockBuilder(SessionClient::class);
         $sessionClientMockBuilder->setMethods(['setContainer']);
@@ -217,7 +217,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \Spryker\Zed\Session\Communication\SessionCommunicationFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSessionCommunicationFactoryMock()
+    protected function createSessionCommunicationFactoryMock(): SessionCommunicationFactory
     {
         $sessionFactoryMock = $this->getMockBuilder(SessionCommunicationFactory::class)
             ->setMethods([
