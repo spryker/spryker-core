@@ -79,7 +79,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
             return true;
         }
 
-        return $productOfferAvailabilityStorageTransfer->getAvailability()->isPositive();
+        return $productOfferAvailabilityStorageTransfer->getAvailability() && $productOfferAvailabilityStorageTransfer->getAvailability()->isPositive();
     }
 
     /**
