@@ -88,7 +88,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
             if ($numberOfCollectedProducts > 1) {
                 return [
                     'products' => $products,
-                    'showNotAvailableProducts' => $this->getConfig()->getShowNotAvailableProducts(),
+                    'isUnavailableProductsDisplayed' => $this->getConfig()->getIsUnavailableProductsDisplayed(),
                 ];
             }
             if ($numberOfCollectedProducts === 1) {
@@ -151,7 +151,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
             }
 
             $productStorageTransfer = $this->mapProductStorageTransfer($productData);
-            if (!$productStorageTransfer->getAvailable() && !$this->getConfig()->getShowNotAvailableProducts()) {
+            if (!$productStorageTransfer->getAvailable() && !$this->getConfig()->getIsUnavailableProductsDisplayed()) {
                 continue;
             }
 

@@ -11,13 +11,13 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CmsContentWidgetProductConnectorConfig extends AbstractBundleConfig
 {
-    public const SHOW_NOT_AVAILABLE_PRODUCTS = false;
+    protected const IS_UNAVAILABLE_PRODUCTS_DISPLAYED = false;
 
     /**
      * @return bool
      */
-    public function getShowNotAvailableProducts(): bool
+    public function getIsUnavailableProductsDisplayed(): bool
     {
-        return static::SHOW_NOT_AVAILABLE_PRODUCTS;
+        return static::IS_UNAVAILABLE_PRODUCTS_DISPLAYED;
     }
 }
