@@ -46,7 +46,15 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
             return $productConcreteTransfer;
         }
 
-        return $productConcreteTransfer->setIsActive($this->getProductConcreteStatus($productConcreteTransfer));
+        $productForBundleTransfer = $this->productBundleReader
+            ->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        foreach ($productForBundleTransfer as $bundledProductTransfer) {
+            if (!$bundledProductTransfer->getIsActive()) {
+                return $productConcreteTransfer->setIsActive(false);
+            }
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -88,25 +96,5 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
                 return;
             }
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return bool
-     */
-    protected function getProductConcreteStatus(ProductConcreteTransfer $productConcreteTransfer): bool
-    {
-        $productForBundleTransfer = $this->productBundleReader
-            ->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
-        foreach ($productForBundleTransfer as $bundledProductTransfer) {
-            if (!$bundledProductTransfer->getIsActive()) {
-                $productConcreteTransfer->setIsActive(false);
-
-                return false;
-            }
-        }
-
-        return true;
     }
 }
