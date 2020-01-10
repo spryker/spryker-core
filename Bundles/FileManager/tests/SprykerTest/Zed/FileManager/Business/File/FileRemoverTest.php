@@ -31,7 +31,7 @@ class FileRemoverTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Business\FileContent\FileContentInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createFileContentMock()
+    protected function createFileContentMock(): FileContentInterface
     {
         return $this->getMockBuilder(FileContentInterface::class)->getMock();
     }
@@ -39,7 +39,7 @@ class FileRemoverTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createFileRepositoryMock()
+    protected function createFileRepositoryMock(): FileManagerRepositoryInterface
     {
         return $this->getMockBuilder(FileManagerRepositoryInterface::class)->getMock();
     }
@@ -47,7 +47,7 @@ class FileRemoverTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createFileManagerEntityManagerMock()
+    protected function createFileManagerEntityManagerMock(): FileManagerEntityManagerInterface
     {
         return $this->getMockBuilder(FileManagerEntityManagerInterface::class)->getMock();
     }

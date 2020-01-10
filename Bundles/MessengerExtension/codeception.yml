@@ -1,5 +1,4 @@
 namespace: MessengerExtension
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

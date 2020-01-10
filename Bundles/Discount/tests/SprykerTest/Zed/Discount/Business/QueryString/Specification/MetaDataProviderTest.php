@@ -197,7 +197,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
      */
-    protected function createDecisionRulePluginMock()
+    protected function createDecisionRulePluginMock(): DecisionRulePluginInterface
     {
         return $this->getMockBuilder(DecisionRulePluginInterface::class)->getMock();
     }
@@ -205,7 +205,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
-    protected function createComparatorOperatorsMock()
+    protected function createComparatorOperatorsMock(): ComparatorOperators
     {
         return $this->getMockBuilder(ComparatorOperators::class)
             ->disableOriginalConstructor()
@@ -215,7 +215,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
-    protected function createLogicalComparatorsMock()
+    protected function createLogicalComparatorsMock(): LogicalComparators
     {
         return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }

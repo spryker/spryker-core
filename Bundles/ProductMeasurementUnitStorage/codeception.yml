@@ -1,6 +1,4 @@
 namespace: ProductMeasurementUnitStorage
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductMeasurementUnitStorage
 

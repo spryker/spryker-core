@@ -99,7 +99,7 @@ class MetaProviderFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\DiscountBusinessFactory
      */
-    protected function createDiscountBusinessFactoryMock()
+    protected function createDiscountBusinessFactoryMock(): DiscountBusinessFactory
     {
         return $this->getMockBuilder(DiscountBusinessFactory::class)->getMock();
     }
@@ -107,7 +107,7 @@ class MetaProviderFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
-    protected function createComparatorOperatorsMock()
+    protected function createComparatorOperatorsMock(): ComparatorOperators
     {
         return $this->getMockBuilder(ComparatorOperators::class)
             ->disableOriginalConstructor()
@@ -117,7 +117,7 @@ class MetaProviderFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
-    protected function createLogicalComparatorsMock()
+    protected function createLogicalComparatorsMock(): LogicalComparators
     {
         return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }
