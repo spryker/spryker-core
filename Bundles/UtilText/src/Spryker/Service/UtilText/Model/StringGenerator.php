@@ -25,4 +25,14 @@ class StringGenerator implements StringGeneratorInterface
 
         return $token;
     }
+
+    /**
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateRandomByteString(int $length = 32): string
+    {
+        return random_bytes($length);
+    }
 }
