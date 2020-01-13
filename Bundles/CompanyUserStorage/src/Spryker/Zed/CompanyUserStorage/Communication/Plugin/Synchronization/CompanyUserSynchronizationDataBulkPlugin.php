@@ -7,21 +7,18 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use `CompanyUserSynchronizationDataBulkPlugin` instead.
- * @see \Spryker\Zed\CompanyUserStorage\Communication\Plugin\Synchronization\CompanyUserSynchronizationDataBulkPlugin
- *
  * @method \Spryker\Zed\CompanyUserStorage\CompanyUserStorageConfig getConfig()
  * @method \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanyUserStorage\Business\CompanyUserStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUserStorage\Communication\CompanyUserStorageCommunicationFactory getFactory()
  */
-class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -52,26 +49,19 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @api
      *
+     * @param int $offset
+     * @param int $limit
      * @param array $ids
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
-        $companyUserStorageEntities = $this->findCompanyUserStorageEntities($ids);
-
-        foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-
-            /** @var string $data */
-            $data = $companyUserStorageEntity->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($companyUserStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getFacade()
+            ->getSynchronizationDataTransfersByFilterAndCompanyUserIds(
+                $this->createFilterTransfer($offset, $limit),
+                $ids
+            );
     }
 
     /**
@@ -112,16 +102,15 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     }
 
     /**
-     * @param array $ids
+     * @param int $offset
+     * @param int $limit
      *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    protected function findCompanyUserStorageEntities(array $ids): array
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
-        if ($ids === []) {
-            return $this->getRepository()->findAllCompanyUserStorageEntities();
-        }
-
-        return $this->getRepository()->findCompanyUserStorageEntities($ids);
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }
