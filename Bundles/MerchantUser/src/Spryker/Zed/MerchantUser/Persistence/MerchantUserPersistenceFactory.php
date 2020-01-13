@@ -18,6 +18,9 @@ use Spryker\Zed\MerchantUser\Persistence\Propel\Mapper\MerchantUserMapper;
  */
 class MerchantUserPersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery
+     */
     public function createMerchantUserPropelQuery(): SpyMerchantUserQuery
     {
         return SpyMerchantUserQuery::create();

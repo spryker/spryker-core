@@ -47,8 +47,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     protected function applyFilters(
         SpyMerchantUserQuery $merchantUserQuery,
         MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
-    ): SpyMerchantUserQuery
-    {
+    ): SpyMerchantUserQuery {
         if ($merchantUserCriteriaFilterTransfer->getFkUser()) {
             $merchantUserQuery->filterByFkUser($merchantUserCriteriaFilterTransfer->getFkUser());
         }

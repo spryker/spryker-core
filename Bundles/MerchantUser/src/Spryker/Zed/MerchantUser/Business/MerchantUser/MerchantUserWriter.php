@@ -112,8 +112,6 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\UserAlreadyHasMerchantException
-     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function createUserByMerchant(MerchantTransfer $merchantTransfer): UserTransfer
@@ -141,8 +139,8 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer |null
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer |null
+     * @param \Generated\Shared\Transfer\UserTransfer|null $userTransfer |null
+     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer |null
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
