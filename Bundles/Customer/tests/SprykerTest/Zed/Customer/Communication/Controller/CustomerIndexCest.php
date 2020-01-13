@@ -28,10 +28,10 @@ class CustomerIndexCest
      *
      * @return void
      */
-    public function breadCrumbIsVisible(CustomerCommunicationTester $i)
+    public function breadCrumbIsVisible(CustomerCommunicationTester $i): void
     {
         $i->amOnPage(CustomerIndexPage::URL);
 
-        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customers');
+        $i->seeBreadcrumbNavigation('Customers / Customers');
     }
 }

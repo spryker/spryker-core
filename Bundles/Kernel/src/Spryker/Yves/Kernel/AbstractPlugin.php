@@ -99,6 +99,18 @@ abstract class AbstractPlugin
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\AbstractBundleConfig $config
+     *
+     * @return $this
+     */
+    public function setConfig(AbstractBundleConfig $config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Yves\Kernel\AbstractBundleConfig
      */
     protected function getConfig()

@@ -198,7 +198,7 @@ class UrlStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\UrlStorage\Business\UrlStorageFacade
      */
-    protected function getUrlStorageFacade()
+    protected function getUrlStorageFacade(): UrlStorageFacade
     {
         $factory = new UrlStorageBusinessFactory();
         $factory->setConfig(new UrlStorageConfigMock());

@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Mail\Business\Model\Provider;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;
+use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 /**
@@ -32,7 +33,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddProviderWithOneAcceptedTypeWillReturnFluentInterface()
+    public function testAddProviderWithOneAcceptedTypeWillReturnFluentInterface(): void
     {
         $mailProviderCollection = $this->getMailProviderCollection();
         $mailProviderMock = $this->getMailProviderMock();
@@ -43,7 +44,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddProviderWithMultipleAcceptedTypesWillReturnFluentInterface()
+    public function testAddProviderWithMultipleAcceptedTypesWillReturnFluentInterface(): void
     {
         $mailProviderCollection = $this->getMailProviderCollection();
         $mailProviderMock = $this->getMailProviderMock();
@@ -54,7 +55,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetProviderWillReturnProviderIfOneByTypeNameInCollection()
+    public function testGetProviderWillReturnProviderIfOneByTypeNameInCollection(): void
     {
         $mailProviderCollection = $this->getMailProviderCollectionWithTypeAProvider();
         $mailProviderPlugins = $mailProviderCollection->getProviderForMailType(static::TYPE_A);
@@ -65,7 +66,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetProviderWillReturnProviderWhichIsRegisteredForAllMailTypes()
+    public function testGetProviderWillReturnProviderWhichIsRegisteredForAllMailTypes(): void
     {
         $mailProviderCollection = $this->getMailProviderCollectionWithTypeAProvider();
         $mailProviderPlugins = $mailProviderCollection->getProviderForMailType(static::TYPE_A);
@@ -76,7 +77,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetProviderWillReturnEmptyArrayWhenNoProviderForGivenMailTypeInCollection()
+    public function testGetProviderWillReturnEmptyArrayWhenNoProviderForGivenMailTypeInCollection(): void
     {
         $mailProviderCollection = $this->getMailProviderCollectionWithTypeAProvider();
         $mailProviderPlugins = $mailProviderCollection->getProviderForMailType(static::TYPE_B);
@@ -87,7 +88,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection
      */
-    protected function getMailProviderCollection()
+    protected function getMailProviderCollection(): MailProviderCollection
     {
         $mailProviderCollection = new MailProviderCollection();
 
@@ -97,7 +98,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
      */
-    protected function getMailProviderCollectionWithTypeAProvider()
+    protected function getMailProviderCollectionWithTypeAProvider(): MailProviderCollectionGetInterface
     {
         $mailProviderMock = $this->getMailProviderMock();
         $mailProviderCollection = new MailProviderCollection();
@@ -109,7 +110,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
      */
-    protected function getMailProviderCollectionWithProviderForAllMailTypes()
+    protected function getMailProviderCollectionWithProviderForAllMailTypes(): MailProviderCollectionGetInterface
     {
         $mailProviderMock = $this->getMailProviderMock();
         $mailProviderCollection = new MailProviderCollection();
@@ -121,7 +122,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
      */
-    protected function getMailProviderMock()
+    protected function getMailProviderMock(): MailProviderPluginInterface
     {
         $mailProviderMock = $this->getMockBuilder(MailProviderPluginInterface::class)->getMock();
 
@@ -131,7 +132,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return array
      */
-    protected function getAcceptedTypes()
+    protected function getAcceptedTypes(): array
     {
         return [
             static::TYPE_A,
@@ -142,7 +143,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return string
      */
-    protected function getAcceptedType()
+    protected function getAcceptedType(): string
     {
         return static::TYPE_A;
     }

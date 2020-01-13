@@ -35,7 +35,7 @@ class TouchAwareStepTest extends Unit
     /**
      * @return void
      */
-    public function testAfterExecuteWillReturnIfNoTouchableApplied()
+    public function testAfterExecuteWillReturnIfNoTouchableApplied(): void
     {
         $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock(0));
 
@@ -50,7 +50,7 @@ class TouchAwareStepTest extends Unit
      *
      * @return void
      */
-    public function testAfterExecuteTriggersTouchForMainTouchableWhenBulkSizeNotSet($method, $itemEvent)
+    public function testAfterExecuteTriggersTouchForMainTouchableWhenBulkSizeNotSet(string $method, string $itemEvent): void
     {
         $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock(1, $method));
         $touchAwareStep->addMainTouchable(static::MAIN_TOUCHABLE_KEY, 1, $itemEvent);
@@ -61,7 +61,7 @@ class TouchAwareStepTest extends Unit
     /**
      * @return array
      */
-    public function noBulkSizeDataProvider()
+    public function noBulkSizeDataProvider(): array
     {
         return [
             ['bulkTouchSetActive', SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE],
@@ -73,7 +73,7 @@ class TouchAwareStepTest extends Unit
     /**
      * @return void
      */
-    public function testAfterExecuteTriggersTouchForMainTouchableWhenBulkSizeOne()
+    public function testAfterExecuteTriggersTouchForMainTouchableWhenBulkSizeOne(): void
     {
         $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock(), 1);
         $touchAwareStep->addMainTouchable(static::MAIN_TOUCHABLE_KEY, 1);
@@ -84,7 +84,7 @@ class TouchAwareStepTest extends Unit
     /**
      * @return void
      */
-    public function testAfterExecuteTriggersTouchWhenMainTouchableCountEqualsBulkSize()
+    public function testAfterExecuteTriggersTouchWhenMainTouchableCountEqualsBulkSize(): void
     {
         $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock(), 2);
         $touchAwareStep->addMainTouchable(static::MAIN_TOUCHABLE_KEY, 1);
@@ -96,7 +96,7 @@ class TouchAwareStepTest extends Unit
     /**
      * @return void
      */
-    public function testAfterExecuteTriggersTouchForSubTouchableWhenMainTouchableCountEqualsBulkSize()
+    public function testAfterExecuteTriggersTouchForSubTouchableWhenMainTouchableCountEqualsBulkSize(): void
     {
         $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock(2), 2);
         $touchAwareStep->addMainTouchable(static::MAIN_TOUCHABLE_KEY, 1);
@@ -113,7 +113,7 @@ class TouchAwareStepTest extends Unit
     /**
      * @return void
      */
-    public function testAfterExecuteTriggersTouchForEachSubTouchableWhenMainTouchableCountEqualsBulkSize()
+    public function testAfterExecuteTriggersTouchForEachSubTouchableWhenMainTouchableCountEqualsBulkSize(): void
     {
         $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock(3), 2);
         $touchAwareStep->addMainTouchable(static::MAIN_TOUCHABLE_KEY, 1);
@@ -133,7 +133,7 @@ class TouchAwareStepTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface
      */
-    private function getTouchFacadeMock($calledCount = 1, $method = 'bulkTouchSetActive')
+    private function getTouchFacadeMock(int $calledCount = 1, string $method = 'bulkTouchSetActive'): DataImportToTouchInterface
     {
         $mockBuilder = $this->getMockBuilder(DataImportToTouchInterface::class)
             ->setMethods(['bulkTouchSetActive', 'bulkTouchSetInactive', 'bulkTouchSetDeleted']);

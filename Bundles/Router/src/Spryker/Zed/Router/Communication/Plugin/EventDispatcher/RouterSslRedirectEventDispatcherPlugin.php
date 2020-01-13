@@ -98,6 +98,6 @@ class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements E
      */
     protected function isSslExcludedRouteName(Request $request): bool
     {
-        return in_array($request->getPathInfo(), $this->getConfig()->getSslExcludedRouteNames());
+        return in_array($request->getPathInfo(), $this->getConfig()->getSslExcludedRouteNames(), true);
     }
 }

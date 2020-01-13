@@ -30,7 +30,7 @@ class CmsPageActivatorTest extends CmsMocks
     /**
      * @return void
      */
-    public function testActivatePageShouldPersistActiveFlagAndTriggerTouch()
+    public function testActivatePageShouldPersistActiveFlagAndTriggerTouch(): void
     {
         $cmsPageEntityMock = $this->createCmsPageEntityMock();
         $cmsPageEntityMock->expects($this->once())
@@ -54,7 +54,7 @@ class CmsPageActivatorTest extends CmsMocks
     /**
      * @return void
      */
-    public function testDeActivatePageShouldPersistInActiveFlagAndTriggerTouch()
+    public function testDeActivatePageShouldPersistInActiveFlagAndTriggerTouch(): void
     {
         $cmsPageEntityMock = $this->createCmsPageEntityMock();
         $cmsPageEntityMock->expects($this->once())
@@ -85,8 +85,7 @@ class CmsPageActivatorTest extends CmsMocks
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToTouchFacadeInterface $touchFacadeMock = null,
         ?TemplateReaderInterface $templateReader = null
-    ) {
-
+    ): CmsPageActivator {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }

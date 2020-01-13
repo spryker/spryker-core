@@ -1,5 +1,4 @@
 namespace: CartsRestApi
-actor: Tester
 include:
     - tests/SprykerTest/Zed/CartsRestApi
 paths:

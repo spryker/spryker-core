@@ -30,7 +30,7 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetPageGlossaryAttributesShouldReadDataFromTemplateAndPersistenceToTransfer()
+    public function testGetPageGlossaryAttributesShouldReadDataFromTemplateAndPersistenceToTransfer(): void
     {
         $localeFacadeMock = $this->createLocaleMock();
 
@@ -75,7 +75,7 @@ class CmsGlossaryReaderTest extends CmsMocks
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToLocaleFacadeInterface $localeFacadeMock = null,
         ?TemplateReaderInterface $templateReader = null
-    ) {
+    ): CmsGlossaryReader {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }
@@ -102,7 +102,7 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @return array
      */
-    protected function createGlossaryMappingCollection()
+    protected function createGlossaryMappingCollection(): array
     {
         $glossaryMappingCollection = [];
         $glossaryMappingEntity = $this->createGlossaryMappingEntityMock();
@@ -137,7 +137,7 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @return array
      */
-    protected function getAvailableLocales()
+    protected function getAvailableLocales(): array
     {
         return [
             1 => 'en_US',

@@ -8,7 +8,9 @@
 namespace Spryker\Zed\MerchantRelationshipProductList\Business\ProductList;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListRepositoryInterface;
 
 class ProductListWriter implements ProductListWriterInterface
@@ -19,19 +21,27 @@ class ProductListWriter implements ProductListWriterInterface
     protected $merchantRelationshipProductListRepository;
 
     /**
+     * @var \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface
+     */
+    protected $merchantRelationshipProductListEntityManager;
+
+    /**
      * @var \Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface
      */
     protected $productListFacade;
 
     /**
      * @param \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListRepositoryInterface $merchantRelationshipProductListRepository
+     * @param \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface $merchantRelationshipProductListEntityManager
      * @param \Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface $productListFacade
      */
     public function __construct(
         MerchantRelationshipProductListRepositoryInterface $merchantRelationshipProductListRepository,
+        MerchantRelationshipProductListEntityManagerInterface $merchantRelationshipProductListEntityManager,
         MerchantRelationshipProductListToProductListFacadeInterface $productListFacade
     ) {
         $this->merchantRelationshipProductListRepository = $merchantRelationshipProductListRepository;
+        $this->merchantRelationshipProductListEntityManager = $merchantRelationshipProductListEntityManager;
         $this->productListFacade = $productListFacade;
     }
 
@@ -49,7 +59,72 @@ class ProductListWriter implements ProductListWriterInterface
             ->findProductListCollectionByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship());
 
         foreach ($productListCollectionTransfer->getProductLists() as $productListTransfer) {
-            $this->productListFacade->deleteProductList($productListTransfer);
+            $this->productListFacade->removeProductList($productListTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function updateProductListMerchantRelationshipAssignments(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        $productListCollectionTransfer = $this->merchantRelationshipProductListRepository
+            ->findProductListCollectionByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship());
+
+        $productListIds = $this->cleanUpProductLists(
+            $productListCollectionTransfer,
+            $merchantRelationshipTransfer->getProductListIds()
+        );
+
+        $this->merchantRelationshipProductListEntityManager->assignProductListsToMerchantRelationship(
+            $productListIds,
+            $merchantRelationshipTransfer->getIdMerchantRelationship()
+        );
+
+        return $merchantRelationshipTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function clearMerchantRelationshipFromProductLists(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): void {
+        $merchantRelationshipTransfer->requireIdMerchantRelationship();
+
+        $productListCollectionTransfer = $this->merchantRelationshipProductListRepository
+            ->findProductListCollectionByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship());
+
+        $this->cleanUpProductLists(
+            $productListCollectionTransfer,
+            $merchantRelationshipTransfer->getProductListIds()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
+     * @param array $productListIds
+     *
+     * @return int[]
+     */
+    protected function cleanUpProductLists(ProductListCollectionTransfer $productListCollectionTransfer, array $productListIds): array
+    {
+        foreach ($productListCollectionTransfer->getProductLists() as $productListTransfer) {
+            if (in_array($productListTransfer->getIdProductList(), $productListIds)) {
+                continue;
+            }
+
+            $this->merchantRelationshipProductListEntityManager->clearProductListMerchantRelationship(
+                $productListTransfer->getIdProductList()
+            );
+
+            unset($productListIds[$productListTransfer->getIdProductList()]);
+        }
+
+        return $productListIds;
     }
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Business\Model\User;
+use Spryker\Zed\User\Business\UserFacadeInterface;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
 
@@ -41,7 +42,7 @@ class UserTest extends Unit
     /**
      * @return \Spryker\Zed\User\Business\UserFacadeInterface
      */
-    protected function getUserFacade()
+    protected function getUserFacade(): UserFacadeInterface
     {
         return $this->tester->getLocator()->user()->facade();
     }
@@ -49,7 +50,7 @@ class UserTest extends Unit
     /**
      * @return array
      */
-    private function mockUserData()
+    private function mockUserData(): array
     {
         $data = [];
 
@@ -74,7 +75,7 @@ class UserTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    private function mockAddUser($data)
+    private function mockAddUser(array $data): UserTransfer
     {
         return $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
@@ -82,7 +83,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testAddUser()
+    public function testAddUser(): void
     {
         $data = $this->mockUserData();
 
@@ -99,7 +100,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testCreateUser()
+    public function testCreateUser(): void
     {
         $data = $this->getUserDataTransfer();
 
@@ -116,7 +117,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testAfterCallToRemoveUserGetUserByIdMustThrowAnException()
+    public function testAfterCallToRemoveUserGetUserByIdMustThrowAnException(): void
     {
         $data = $this->mockUserData();
         $user = $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
@@ -132,7 +133,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateUserWithSamePassword()
+    public function testUpdateUserWithSamePassword(): void
     {
         $data = $this->mockUserData();
         $data2 = $this->mockUserData();
@@ -160,7 +161,7 @@ class UserTest extends Unit
      *
      * @return void
      */
-    public function testUpdateUserWithSamePasswordHash()
+    public function testUpdateUserWithSamePasswordHash(): void
     {
         $data = $this->mockUserData();
         $user = $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
@@ -180,7 +181,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateUserWithNewPassword()
+    public function testUpdateUserWithNewPassword(): void
     {
         $data = $this->mockUserData();
         $data2 = $this->mockUserData();
@@ -207,7 +208,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateWithPasswordHashIgnored()
+    public function testUpdateWithPasswordHashIgnored(): void
     {
         $data = $this->mockUserData();
         $data2 = $this->mockUserData();
@@ -234,7 +235,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testGetUserByUsername()
+    public function testGetUserByUsername(): void
     {
         $data = $this->mockUserData();
         $mock = $this->mockAddUser($data);
@@ -252,7 +253,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testGetUserById()
+    public function testGetUserById(): void
     {
         $data = $this->mockUserData();
         $mock = $this->mockAddUser($data);
@@ -270,7 +271,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testIsValidPassword()
+    public function testIsValidPassword(): void
     {
         $data = $this->mockUserData();
         $user = $this->mockAddUser($data);
@@ -281,7 +282,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testUserTransferClonedBeforeStoringInSession()
+    public function testUserTransferClonedBeforeStoringInSession(): void
     {
         $sessionClient = $this->createSessionClient();
 
@@ -310,7 +311,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testUserTransferClonedAfterReadingFromSession()
+    public function testUserTransferClonedAfterReadingFromSession(): void
     {
         $sessionClient = $this->createSessionClient();
 
@@ -339,7 +340,7 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testHasCurrentUserReturnsFalseOnNull()
+    public function testHasCurrentUserReturnsFalseOnNull(): void
     {
         $sessionClient = $this->createSessionClient();
 
@@ -362,7 +363,7 @@ class UserTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function createUserTransfer($userName)
+    protected function createUserTransfer(string $userName): UserTransfer
     {
         $userTransfer = new UserTransfer();
         $userTransfer
@@ -379,7 +380,7 @@ class UserTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient
      */
-    protected function createSessionClient()
+    protected function createSessionClient(): SessionClient
     {
         $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'has'])->getMock();
 
@@ -389,7 +390,7 @@ class UserTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
-    protected function createQueryContainer()
+    protected function createQueryContainer(): UserQueryContainerInterface
     {
         $queryContainer = $this->getMockBuilder(UserQueryContainerInterface::class)->getMock();
 

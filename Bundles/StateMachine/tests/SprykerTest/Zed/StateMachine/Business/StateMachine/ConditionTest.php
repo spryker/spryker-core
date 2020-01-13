@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Process\State;
 use Spryker\Zed\StateMachine\Business\Process\Transition;
 use Spryker\Zed\StateMachine\Business\StateMachine\Condition;
+use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface;
 use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
 
 /**
@@ -29,7 +30,7 @@ class ConditionTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testCheckConditionForTransitionShouldReturnTargetStateOfGivenTransition()
+    public function testCheckConditionForTransitionShouldReturnTargetStateOfGivenTransition(): void
     {
         $stateMachineHandlerResolverMock = $this->createStateMachineResolverMock(true);
 
@@ -67,7 +68,7 @@ class ConditionTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testCheckConditionForTransitionWhenConditionReturnsFalseShouldReturnSourceState()
+    public function testCheckConditionForTransitionWhenConditionReturnsFalseShouldReturnSourceState(): void
     {
         $stateMachineHandlerResolverMock = $this->createStateMachineResolverMock(false);
 
@@ -110,7 +111,7 @@ class ConditionTest extends StateMachineMocks
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
      */
-    protected function createStateMachineResolverMock($conditionCheckResult)
+    protected function createStateMachineResolverMock(bool $conditionCheckResult): HandlerResolverInterface
     {
         $conditionPluginMock = $this->createConditionPluginMock();
         $conditionPluginMock->expects($this->once())

@@ -53,7 +53,7 @@ class ZedRequestCommunicationTester extends Actor
     /**
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface
      */
-    protected function getHttpKernelMock()
+    protected function getHttpKernelMock(): HttpKernelInterface
     {
         /** @var \Symfony\Component\HttpKernel\HttpKernelInterface $httpKernelMock */
         $httpKernelMock = Stub::makeEmpty(HttpKernelInterface::class);

@@ -17,6 +17,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
@@ -42,7 +43,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountMustSaveSalesItemsDiscount()
+    public function testSaveDiscountMustSaveSalesItemsDiscount(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount']);
         $discountSaver->expects($this->once())
@@ -70,7 +71,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountMustNotSaveSalesDiscountCodeIfUsedCodesCanNotBeFound()
+    public function testSaveDiscountMustNotSaveSalesDiscountCodeIfUsedCodesCanNotBeFound(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'saveUsedCodes']);
         $discountSaver->expects($this->once())
@@ -98,7 +99,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent()
+    public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
         $discountSaver->expects($this->once())
@@ -129,7 +130,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound()
+    public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
         $discountSaver->expects($this->once())
@@ -160,7 +161,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
-    public function getDiscountVoucherEntityByCode()
+    public function getDiscountVoucherEntityByCode(): SpyDiscountVoucher
     {
         $discountVoucherEntity = new SpyDiscountVoucher();
         $discountVoucherPoolEntity = new SpyDiscountVoucherPool();
@@ -174,7 +175,7 @@ class DiscountOrderSaverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
-    private function getDiscountQueryContainerMock(array $methods = [])
+    private function getDiscountQueryContainerMock(array $methods = []): DiscountQueryContainerInterface
     {
         $discountQueryContainerMock = $this->getMockBuilder('Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface')->setMethods($methods)->getMock();
 
@@ -184,7 +185,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Voucher\VoucherCode
      */
-    private function getVoucherCodeMock()
+    private function getVoucherCodeMock(): VoucherCode
     {
         $discountQueryContainerMock = $this->getMockBuilder(VoucherCode::class)
             ->disableOriginalConstructor()
@@ -199,7 +200,7 @@ class DiscountOrderSaverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver
      */
-    private function getDiscountOrderSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = [])
+    private function getDiscountOrderSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = []): DiscountOrderSaver
     {
         $discountSaverMock = $this->getMockBuilder(DiscountOrderSaver::class)->setMethods($discountSaverMethods)
             ->setConstructorArgs([$this->getDiscountQueryContainerMock($queryContainerMethods), $this->getVoucherCodeMock()])
@@ -211,7 +212,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getCurrentStore()
+    protected function getCurrentStore(): StoreTransfer
     {
         return (new StoreTransfer())
             ->setIdStore(1)

@@ -274,7 +274,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderExpander(
             $this->getCalculationFacade(),
             $this->createOrderItemTransformer(),
-            $this->getItemTransformerStrategyPlugins()
+            $this->getItemTransformerStrategyPlugins(),
+            $this->getItemPreTransformerPlugins()
         );
     }
 
@@ -327,7 +328,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
     {
-        return new SalesOrderItemGrouper();
+        return new SalesOrderItemGrouper(
+            $this->getUniqueOrderItemsExpanderPlugins()
+        );
     }
 
     /**
@@ -452,5 +455,21 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getCustomerFacade(): SalesToCustomerInterface
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface[]
+     */
+    public function getItemPreTransformerPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ITEM_PRE_TRANSFORMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\UniqueOrderItemsExpanderPluginInterface[]
+     */
+    public function getUniqueOrderItemsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER);
     }
 }

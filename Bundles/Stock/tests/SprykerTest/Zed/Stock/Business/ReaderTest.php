@@ -53,7 +53,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function testIsNeverOutOfStock()
+    public function testIsNeverOutOfStock(): void
     {
         $this->setTestData();
         $stockProductEntity = $this->stockQueryContainer->queryAllStockProducts()->findOne();
@@ -67,7 +67,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    protected function setTestData()
+    protected function setTestData(): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test')

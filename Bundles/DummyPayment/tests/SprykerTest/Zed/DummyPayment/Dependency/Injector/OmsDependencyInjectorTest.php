@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\DummyPayment\Dependency\Injector;
 use Codeception\Test\Unit;
 use Spryker\Zed\DummyPayment\Dependency\Injector\OmsDependencyInjector;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
@@ -28,7 +30,7 @@ class OmsDependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectBusinessLayerDependenciesShouldAddCommands()
+    public function testInjectBusinessLayerDependenciesShouldAddCommands(): void
     {
         $container = new Container();
         $omsDependencyProvider = new OmsDependencyProvider();
@@ -46,7 +48,7 @@ class OmsDependencyInjectorTest extends Unit
      *
      * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection
      */
-    protected function getCommandCollectionFromContainer($container)
+    protected function getCommandCollectionFromContainer(Container $container): CommandCollection
     {
         $commandCollection = $container[OmsDependencyProvider::COMMAND_PLUGINS];
 
@@ -56,7 +58,7 @@ class OmsDependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectBusinessLayerDependenciesShouldAddConditions()
+    public function testInjectBusinessLayerDependenciesShouldAddConditions(): void
     {
         $container = new Container();
         $omsDependencyProvider = new OmsDependencyProvider();
@@ -75,7 +77,7 @@ class OmsDependencyInjectorTest extends Unit
      *
      * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection
      */
-    protected function getConditionCollectionFromContainer($container)
+    protected function getConditionCollectionFromContainer(Container $container): ConditionCollection
     {
         $conditionCollection = $container[OmsDependencyProvider::CONDITION_PLUGINS];
 

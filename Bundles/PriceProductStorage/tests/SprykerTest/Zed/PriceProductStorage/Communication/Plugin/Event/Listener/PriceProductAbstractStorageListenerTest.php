@@ -288,7 +288,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacade
      */
-    protected function getPriceProductStorageFacade()
+    protected function getPriceProductStorageFacade(): PriceProductStorageFacade
     {
         $factory = new PriceProductStorageBusinessFactory();
         $factory->setConfig(new PriceProductStorageConfigMock());

@@ -15,7 +15,6 @@ use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeBridge;
@@ -215,9 +214,9 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentsRestApiFactory(): MockObject
+    protected function getMockShipmentsRestApiFactory(): ShipmentsRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
@@ -231,9 +230,9 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentFacade(): MockObject
+    protected function getMockShipmentFacade(): ShipmentFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             ShipmentFacade::class,
@@ -257,9 +256,9 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentsRestApiFactoryWithShipmentNotFound(): MockObject
+    protected function getMockShipmentsRestApiFactoryWithShipmentNotFound(): ShipmentsRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
@@ -273,9 +272,9 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentFacadeWithShipmentNotFound(): MockObject
+    protected function getMockShipmentFacadeWithShipmentNotFound(): ShipmentFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             ShipmentFacade::class,

@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Locale\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\LocaleBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class LocaleDataHelper extends Module
@@ -22,7 +24,7 @@ class LocaleDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function haveLocale(array $seedData = [])
+    public function haveLocale(array $seedData = []): LocaleTransfer
     {
         $localeTransfer = $this->generateLocaleTransfer($seedData);
 
@@ -36,7 +38,7 @@ class LocaleDataHelper extends Module
     /**
      * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
-    protected function getLocaleFacade()
+    protected function getLocaleFacade(): LocaleFacadeInterface
     {
         return $this->getLocator()->locale()->facade();
     }

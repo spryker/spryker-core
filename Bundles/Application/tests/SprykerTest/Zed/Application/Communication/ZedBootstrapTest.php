@@ -1,10 +1,11 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Application\Communication;
+namespace SprykerTest\Zed\Application\Communication;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Application\Communication\ZedBootstrap;
@@ -12,8 +13,7 @@ use Spryker\Zed\Application\Communication\ZedBootstrap;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Application
  * @group Communication
@@ -32,7 +32,7 @@ class ZedBootstrapTest extends Unit
     /**
      * @return void
      */
-    public function testDefaultServiceProvidersWillRegister()
+    public function testDefaultServiceProvidersWillRegister(): void
     {
         $zedBootstrapMock = $this->createZedBootstrapMock();
 
@@ -45,7 +45,7 @@ class ZedBootstrapTest extends Unit
     /**
      * @return void
      */
-    public function testInternalRequestServiceProvidersWillRegister()
+    public function testInternalRequestServiceProvidersWillRegister(): void
     {
         $_SERVER[self::HTTP_X_INTERNAL_REQUEST] = 1;
         $zedBootstrapMock = $this->createZedBootstrapMock();
@@ -58,7 +58,7 @@ class ZedBootstrapTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Application\Communication\ZedBootstrap
      */
-    protected function createZedBootstrapMock()
+    protected function createZedBootstrapMock(): ZedBootstrap
     {
         return $this->getMockBuilder(ZedBootstrap::class)->setMethods([
             self::SETUP_APPLICATION,

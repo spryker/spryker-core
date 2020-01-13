@@ -42,7 +42,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationConditionsArrayShouldConvertedToCollection()
+    public function testInstantiationConditionsArrayShouldConvertedToCollection(): void
     {
         $orderStateMachine = new OrderStateMachine(
             $this->getQueryContainerMock(),
@@ -66,7 +66,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithConditionCollection()
+    public function testInstantiationWithConditionCollection(): void
     {
         $conditionCollection = new ConditionCollection();
         $conditionCollection->add($this->getConditionMock(), self::CONDITION_NAME);
@@ -93,7 +93,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationCommandsArrayShouldConvertedToCollection()
+    public function testInstantiationCommandsArrayShouldConvertedToCollection(): void
     {
         $orderStateMachine = new OrderStateMachine(
             $this->getQueryContainerMock(),
@@ -117,7 +117,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithCommandCollection()
+    public function testInstantiationWithCommandCollection(): void
     {
         $commandCollection = new CommandCollection();
         $commandCollection->add($this->getCommandMock(), self::COMMAND_NAME);
@@ -144,7 +144,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
-    private function getQueryContainerMock()
+    private function getQueryContainerMock(): OmsQueryContainerInterface
     {
         return $this->getMockBuilder(OmsQueryContainerInterface::class)->getMock();
     }
@@ -152,7 +152,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
-    private function getBuilderMock()
+    private function getBuilderMock(): BuilderInterface
     {
         return $this->getMockBuilder(BuilderInterface::class)->getMock();
     }
@@ -160,7 +160,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\TransitionLogInterface
      */
-    private function getTransitionLogMock()
+    private function getTransitionLogMock(): TransitionLogInterface
     {
         return $this->getMockBuilder(TransitionLogInterface::class)->getMock();
     }
@@ -168,7 +168,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
      */
-    private function getTimeoutMock()
+    private function getTimeoutMock(): TimeoutInterface
     {
         return $this->getMockBuilder(TimeoutInterface::class)->getMock();
     }
@@ -176,7 +176,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
-    private function getConditionMock()
+    private function getConditionMock(): ConditionInterface
     {
         return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
@@ -184,7 +184,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
-    private function getCommandMock()
+    private function getCommandMock(): CommandInterface
     {
         return $this->getMockBuilder(CommandInterface::class)->getMock();
     }
@@ -192,7 +192,7 @@ class OrderStateMachineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\ReservationInterface
      */
-    private function getReservationMock()
+    private function getReservationMock(): ReservationInterface
     {
         return $this->getMockBuilder(ReservationInterface::class)
             ->getMock();

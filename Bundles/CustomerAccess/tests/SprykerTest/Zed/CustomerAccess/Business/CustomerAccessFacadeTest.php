@@ -107,7 +107,7 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetAllContentTypesReturnsAllTableRows()
+    public function testGetAllContentTypesReturnsAllTableRows(): void
     {
         // Arrange
         $contentType1 = 'test content 1';
@@ -141,7 +141,7 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateUnauthenticatedCustomerAccessUpdatesCorrectContentType()
+    public function testUpdateUnauthenticatedCustomerAccessUpdatesCorrectContentType(): void
     {
         // Arrange
         $customerAccessTransfer = $this->tester->haveCustomerAccess();
@@ -170,7 +170,7 @@ class CustomerAccessFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertCustomerAccessTransferContainsContentTypeAccess(CustomerAccessTransfer $customerAccessTransfer, ContentTypeAccessTransfer $contentTypeAccessTransfer)
+    protected function assertCustomerAccessTransferContainsContentTypeAccess(CustomerAccessTransfer $customerAccessTransfer, ContentTypeAccessTransfer $contentTypeAccessTransfer): void
     {
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $contentTypeAccessTransfer->getContentType()) {
@@ -198,7 +198,7 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CustomerAccess\CustomerAccessConfig
      */
-    protected function createCustomerAccessConfigMock()
+    protected function createCustomerAccessConfigMock(): CustomerAccessConfig
     {
         return $this->getMockBuilder(CustomerAccessConfig::class)->getMock();
     }

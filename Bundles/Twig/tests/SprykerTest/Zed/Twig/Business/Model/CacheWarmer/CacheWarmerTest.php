@@ -30,7 +30,7 @@ class CacheWarmerTest extends Unit
     /**
      * @return void
      */
-    public function testCanBeInstantiated()
+    public function testCanBeInstantiated(): void
     {
         $cacheWriterMock = $this->getCacheWriterMock();
         $cacheWarmer = new CacheWarmer($cacheWriterMock, $this->getTemplatePathMapBuilderMock());
@@ -41,7 +41,7 @@ class CacheWarmerTest extends Unit
     /**
      * @return void
      */
-    public function testWarmUpCallsTemplatePathMapBuilderAndCacheWriter()
+    public function testWarmUpCallsTemplatePathMapBuilderAndCacheWriter(): void
     {
         $cacheWriterMock = $this->getCacheWriterMock();
         $cacheWriterMock->expects($this->once())->method('write');
@@ -56,7 +56,7 @@ class CacheWarmerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Twig\Cache\CacheWriterInterface
      */
-    protected function getCacheWriterMock()
+    protected function getCacheWriterMock(): CacheWriterInterface
     {
         $mockBuilder = $this->getMockBuilder(CacheWriterInterface::class)
             ->setMethods(['write']);
@@ -67,7 +67,7 @@ class CacheWarmerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface
      */
-    protected function getTemplatePathMapBuilderMock()
+    protected function getTemplatePathMapBuilderMock(): TemplatePathMapBuilderInterface
     {
         $mockBuilder = $this->getMockBuilder(TemplatePathMapBuilderInterface::class)
             ->setMethods(['build']);

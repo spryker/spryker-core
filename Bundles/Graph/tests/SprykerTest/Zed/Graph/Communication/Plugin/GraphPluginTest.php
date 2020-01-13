@@ -36,7 +36,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetGraphMustThrowExceptionIfGraphWasNotInitialized()
+    public function testGetGraphMustThrowExceptionIfGraphWasNotInitialized(): void
     {
         $this->expectException(GraphNotInitializedException::class);
 
@@ -47,7 +47,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testInit()
+    public function testInit(): void
     {
         $graphMock = $this->getMockBuilder(GraphInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $graphMock->method('render')->willReturn('');
@@ -64,7 +64,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testAddNode()
+    public function testAddNode(): void
     {
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(self::NODE_A));
     }
@@ -72,7 +72,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testAddNodeWithAttributes()
+    public function testAddNodeWithAttributes(): void
     {
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(self::NODE_A, self::ATTRIBUTES));
     }
@@ -80,7 +80,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testAddNodeWithGroup()
+    public function testAddNodeWithGroup(): void
     {
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(self::NODE_A, [], self::GROUP_NAME));
     }
@@ -88,7 +88,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testAddEdge()
+    public function testAddEdge(): void
     {
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addEdge(self::NODE_A, self::NODE_B));
     }
@@ -96,7 +96,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testAddEdgeWithAttributes()
+    public function testAddEdgeWithAttributes(): void
     {
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addEdge(self::NODE_A, self::NODE_B, self::ATTRIBUTES));
     }
@@ -104,7 +104,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testAddCluster()
+    public function testAddCluster(): void
     {
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addCluster(self::CLUSTER_NAME));
     }
@@ -112,7 +112,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testAddClusterWithAttributes()
+    public function testAddClusterWithAttributes(): void
     {
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addCluster(self::CLUSTER_NAME, self::ATTRIBUTES));
     }
@@ -120,7 +120,7 @@ class GraphPluginTest extends Unit
     /**
      * @return void
      */
-    public function testRender()
+    public function testRender(): void
     {
         $this->assertIsString($this->getPluginMock()->render('svg'));
     }
@@ -128,7 +128,7 @@ class GraphPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
-    protected function getPluginMock()
+    protected function getPluginMock(): GraphPlugin
     {
         $graphMock = $this->getMockBuilder(GraphInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $graphMock->method('render')->willReturn('');

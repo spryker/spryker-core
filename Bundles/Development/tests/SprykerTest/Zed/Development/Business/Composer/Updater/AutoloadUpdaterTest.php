@@ -28,7 +28,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testWhenTestsFolderExistsDefaultAutoloadDevIsAddedToComposer()
+    public function testWhenTestsFolderExistsDefaultAutoloadDevIsAddedToComposer(): void
     {
         $updatedJson = $this->updateJsonForTests($this->getComposerJson());
         $this->assertSame($this->getComposerJson()['autoload-dev'], $updatedJson['autoload-dev']);
@@ -41,7 +41,7 @@ class AutoloadUpdaterTest extends Unit
      *
      * @return void
      */
-    public function testWhenDeprecatedDirExistsAutoloadDevAddedToComposer($autoloadKey)
+    public function testWhenDeprecatedDirExistsAutoloadDevAddedToComposer(string $autoloadKey): void
     {
         $updatedJson = $this->getJsonAfterUpdate(
             [
@@ -56,7 +56,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testWhenTestFolderDoesNotExistNothingAddedToComposer()
+    public function testWhenTestFolderDoesNotExistNothingAddedToComposer(): void
     {
         $splFileInfo = $this->getSplFile();
         $composerJson = $this->getComposerJson();
@@ -71,7 +71,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testWhenAutoloadDevNamespaceIsInvalidGetsRemoved()
+    public function testWhenAutoloadDevNamespaceIsInvalidGetsRemoved(): void
     {
         $composerJson = $this->getComposerJson();
         $composerJson['autoload-dev']['psr-4']['invalidNamespace'] = 'validDirectory/';
@@ -84,7 +84,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testWhenAutoloadPathIsInvalidGetsRemoved()
+    public function testWhenAutoloadPathIsInvalidGetsRemoved(): void
     {
         $composerJson = $this->getComposerJson();
         $composerJson['autoload']['psr-4']['validNamespace'] = 'invalidDirectory/';
@@ -97,7 +97,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testWhenSupportFolderExistsWithHelpersItGetsAddedToAutoload()
+    public function testWhenSupportFolderExistsWithHelpersItGetsAddedToAutoload(): void
     {
         $pathParts = [
             AutoloadUpdater::BASE_SRC_DIRECTORY,
@@ -125,7 +125,7 @@ class AutoloadUpdaterTest extends Unit
      *
      * @return array
      */
-    protected function updateJsonForTests(array $composerJson)
+    protected function updateJsonForTests(array $composerJson): array
     {
         $pathParts = [
             AutoloadUpdater::BASE_TESTS_DIRECTORY,
@@ -154,7 +154,7 @@ class AutoloadUpdaterTest extends Unit
      *
      * @return array
      */
-    protected function getJsonAfterUpdate(array $pathParts, array $composerJson, array $dirMapAdditions = [])
+    protected function getJsonAfterUpdate(array $pathParts, array $composerJson, array $dirMapAdditions = []): array
     {
         $splFileInfo = $this->getSplFile();
 
@@ -183,7 +183,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return array
      */
-    public function autoloadKeys()
+    public function autoloadKeys(): array
     {
         return [
             ['Acceptance'],
@@ -196,7 +196,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater
      */
-    protected function getAutoloadUpdaterMock()
+    protected function getAutoloadUpdaterMock(): AutoloadUpdater
     {
         $autoloadUpdaterMock = $this->getMockBuilder(AutoloadUpdater::class)
             ->setMethods(['pathExists', 'getPath'])
@@ -210,7 +210,7 @@ class AutoloadUpdaterTest extends Unit
      *
      * @return array
      */
-    protected function getComposerJson($autoloadKey = '')
+    protected function getComposerJson(string $autoloadKey = ''): array
     {
         $composerArray = [
             'autoload' => [
@@ -236,7 +236,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return \Symfony\Component\Finder\SplFileInfo
      */
-    protected function getSplFile()
+    protected function getSplFile(): SplFileInfo
     {
         return new SplFileInfo(__FILE__, __DIR__, __DIR__);
     }
