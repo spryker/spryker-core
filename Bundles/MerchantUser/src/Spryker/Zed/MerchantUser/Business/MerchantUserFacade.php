@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantUser\Business;
 
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,4 +18,21 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @throws \Spryker\Zed\MerchantUser\Business\Exception\UserAlreadyHasMerchantException
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    public function createMerchantUserByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantUserWriter()
+            ->createMerchantUserByMerchant($merchantTransfer);
+    }
 }

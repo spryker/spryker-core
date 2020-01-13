@@ -5,25 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantUser\Business;
+namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 
-interface MerchantUserFacadeInterface
+interface MerchantUserWriterInterface
 {
     /**
-     * Specification:
-     * - Creates a new merchant user entity.
-     * - Requires the following data set on the MerchantTransfer:
-     *   - idMerchant
-     *   - email
-     * - Persists the entity to DB.
-     * - Returns MerchantUserResponseTransfer.
-     * - Throws an exception if user is already connected to another merchant
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @throws \Spryker\Zed\MerchantUser\Business\Exception\UserAlreadyHasMerchantException
