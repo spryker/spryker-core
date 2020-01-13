@@ -1,6 +1,4 @@
 namespace: ProductQuantity
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductQuantity
     - tests/SprykerTest/Service/ProductQuantity

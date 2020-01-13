@@ -1,6 +1,4 @@
 namespace: Tax
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/Tax
 

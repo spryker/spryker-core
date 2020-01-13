@@ -1,6 +1,4 @@
 namespace: MerchantRelationshipProductListDataImport
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/MerchantRelationshipProductListDataImport
 

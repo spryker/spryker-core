@@ -132,7 +132,7 @@ class SellableTest extends Unit
                 ->willReturn($this->createStoreTransfer());
         }
 
-        return new Sellable($availabilityRepositoryMock, $availabilityHandlerMock, $storeFacade);
+        return new Sellable($availabilityRepositoryMock, $availabilityHandlerMock, $storeFacade, []);
     }
 
     /**
@@ -146,7 +146,7 @@ class SellableTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface
      */
-    protected function createAvailabilityHandlerMock()
+    protected function createAvailabilityHandlerMock(): AvailabilityHandlerInterface
     {
         return $this->getMockBuilder(AvailabilityHandlerInterface::class)->getMock();
     }
@@ -154,7 +154,7 @@ class SellableTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
      */
-    protected function createStoreFacade()
+    protected function createStoreFacade(): AvailabilityToStoreFacadeInterface
     {
         return $this->getMockBuilder(AvailabilityToStoreFacadeInterface::class)->getMock();
     }
@@ -162,7 +162,7 @@ class SellableTest extends Unit
     /**
      * @return \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createAvailabilityRepositoryMock()
+    protected function createAvailabilityRepositoryMock(): AvailabilityRepositoryInterface
     {
         return $this->getMockBuilder(AvailabilityRepositoryInterface::class)->getMock();
     }

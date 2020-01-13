@@ -316,7 +316,7 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createResourceShareActivatorStrategyPluginMock()
+    protected function createResourceShareActivatorStrategyPluginMock(): ResourceShareZedActivatorStrategyPluginInterface
     {
         return $this->createMock(ResourceShareZedActivatorStrategyPluginInterface::class);
     }

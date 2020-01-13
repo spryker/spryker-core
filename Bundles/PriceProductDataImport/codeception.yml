@@ -1,6 +1,4 @@
 namespace: PriceProductDataImport
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/PriceProductDataImport
 

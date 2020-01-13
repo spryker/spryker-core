@@ -1,5 +1,4 @@
 namespace: ContentFile
-actor: Tester
 include:
     - tests/SprykerTest/Zed/ContentFile
     - tests/SprykerTest/Client/ContentFile

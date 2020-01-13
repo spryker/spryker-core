@@ -1,6 +1,4 @@
 namespace: Customer
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/Customer
 

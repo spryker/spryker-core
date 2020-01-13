@@ -1,6 +1,4 @@
 namespace: BusinessOnBehalf
-actor: Tester
-
 include:
     - tests/SprykerTest/Client/BusinessOnBehalf
     - tests/SprykerTest/Zed/BusinessOnBehalf

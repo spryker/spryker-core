@@ -217,7 +217,7 @@ class CartCodeFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface
      */
-    protected function createCartCodePluginInterfaceMockWithOperationResponseMessage(string $messageType)
+    protected function createCartCodePluginInterfaceMockWithOperationResponseMessage(string $messageType): CartCodePluginInterface
     {
         $cartCodePluginInterfaceMock = $this
             ->getMockBuilder(CartCodePluginInterface::class)

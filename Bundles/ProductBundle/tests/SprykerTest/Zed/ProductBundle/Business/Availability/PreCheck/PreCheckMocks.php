@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 
@@ -36,7 +35,7 @@ class PreCheckMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
-    protected function createAvailabilityFacadeMock()
+    protected function createAvailabilityFacadeMock(): ProductBundleToAvailabilityFacadeInterface
     {
         return $this->getMockBuilder(ProductBundleToAvailabilityFacadeInterface::class)->getMock();
     }
@@ -66,11 +65,11 @@ class PreCheckMocks extends Unit
 
     /**
      * @param array $fixtures
-     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityCheckMock
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheckInterface|\PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityCheckMock
      *
      * @return void
      */
-    protected function setupFindBundledProducts(array $fixtures, MockObject $productBundleAvailabilityCheckMock): void
+    protected function setupFindBundledProducts(array $fixtures, $productBundleAvailabilityCheckMock): void
     {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);
@@ -101,17 +100,10 @@ class PreCheckMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
-    protected function createStoreFacadeMock()
+    protected function getStoreFacadeMock(): ProductBundleToStoreFacadeInterface
     {
-        return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
-    }
+        $storeFacadeMock = $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
-     */
-    protected function buildStoreFacadeMock()
-    {
-        $storeFacadeMock = $this->createStoreFacadeMock();
         $storeTransfer = (new StoreBuilder([
             StoreTransfer::ID_STORE => self::ID_STORE,
         ]))->build();
