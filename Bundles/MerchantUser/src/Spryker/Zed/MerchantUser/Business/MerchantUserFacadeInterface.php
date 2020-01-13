@@ -15,10 +15,8 @@ interface MerchantUserFacadeInterface
     /**
      * Specification:
      * - Creates a new merchant user entity.
-     * - Requires the following data set on the MerchantTransfer:
-     *   - idMerchant
-     *   - email
      * - Persists the entity to DB.
+     * - Creates/updates user according to merchant contact person data
      * - Returns MerchantUserResponseTransfer.
      * - Throws an exception if user is already connected to another merchant
      *

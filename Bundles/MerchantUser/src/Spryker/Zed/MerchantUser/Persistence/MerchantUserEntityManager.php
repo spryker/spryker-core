@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantUser\Persistence;
 
+use Generated\Shared\Transfer\MerchantUserTransfer;
+use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,4 +16,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class MerchantUserEntityManager extends AbstractEntityManager implements MerchantUserEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer
+    {
+        $merchantUserEntity = $this->getFactory()
+            ->createMerchantUserMapper()
+            ->mapMerchantUserTransferToMerchantUserEntity($merchantUserTransfer, new SpyMerchantUser());
+
+        $merchantUserEntity->save();
+
+        return $this->getFactory()
+            ->createMerchantUserMapper()
+            ->mapMerchantUserEntityToMerchantUserTransfer($merchantUserEntity, $merchantUserTransfer);
+    }
 }

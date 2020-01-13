@@ -26,7 +26,9 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function createMerchantUserWriter(): MerchantUserWriterInterface
     {
         return new MerchantUserWriter(
-            $this->getUserFacade()
+            $this->getUserFacade(),
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 

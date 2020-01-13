@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantUser\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserTransfer;
+
 class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterface
 {
     /**
@@ -33,8 +35,6 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     }
 
     /**
-     * @api
-     *
      * @param string $username
      *
      * @return bool
@@ -42,5 +42,35 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     public function hasUserByUsername($username)
     {
         return $this->userFacade->hasUserByUsername($username);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function createUser(UserTransfer $userTransfer): UserTransfer
+    {
+        return $this->userFacade->createUser($userTransfer);
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getUserById($idUser)
+    {
+        return $this->userFacade->getUserById($idUser);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $user
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function updateUser(UserTransfer $user)
+    {
+        return $this->userFacade->updateUser($user);
     }
 }

@@ -22,6 +22,12 @@
         <property name="fkUser" type="int"/>
     </transfer>
 
+    <transfer name="MerchantUserCriteriaFilter">
+        <property name="idMerchantUser" type="int"/>
+        <property name="fkMerchant" type="int"/>
+        <property name="fkUser" type="int"/>
+    </transfer>
+
     <transfer name="MerchantUserResponse">
         <property name="merchantUser" type="MerchantUser"/>
         <property name="isSuccess" type="bool"/>

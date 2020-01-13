@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MerchantUser\Persistence;
 
+use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserTransfer;
+use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,4 +17,46 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantUserRepository extends AbstractRepository implements MerchantUserRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
+     */
+    public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
+    {
+        $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
+        $merchantUserQuery = $this->applyFilters($merchantUserQuery, $merchantUserCriteriaFilterTransfer);
+
+        $merchantUserEntity = $merchantUserQuery->findOne();
+
+        if (!$merchantUserEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createMerchantUserMapper()
+            ->mapMerchantUserEntityToMerchantUserTransfer($merchantUserEntity, new MerchantUserTransfer());
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery
+     */
+    protected function applyFilters(
+        SpyMerchantUserQuery $merchantUserQuery,
+        MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+    ): SpyMerchantUserQuery
+    {
+        if ($merchantUserCriteriaFilterTransfer->getFkUser()) {
+            $merchantUserQuery->filterByFkUser($merchantUserCriteriaFilterTransfer->getFkUser());
+        }
+
+        if ($merchantUserCriteriaFilterTransfer->getFkMerchant()) {
+            $merchantUserQuery->filterByFkMerchant($merchantUserCriteriaFilterTransfer->getFkMerchant());
+        }
+
+        return $merchantUserQuery;
+    }
 }

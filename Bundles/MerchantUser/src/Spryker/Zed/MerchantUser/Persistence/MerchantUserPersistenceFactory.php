@@ -7,14 +7,27 @@
 
 namespace Spryker\Zed\MerchantUser\Persistence;
 
+use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\MerchantUser\Persistence\Propel\Mapper\MerchantUserMapper;
 
 /**
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
- * @method \Spryker\Zed\MerchantUser\Persistence\MerchantUserQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface getEntityManager()
  */
 class MerchantUserPersistenceFactory extends AbstractPersistenceFactory
 {
+    public function createMerchantUserPropelQuery(): SpyMerchantUserQuery
+    {
+        return SpyMerchantUserQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Persistence\Propel\Mapper\MerchantUserMapper
+     */
+    public function createMerchantUserMapper(): MerchantUserMapper
+    {
+        return new MerchantUserMapper();
+    }
 }

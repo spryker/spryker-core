@@ -7,6 +7,14 @@
 
 namespace Spryker\Zed\MerchantUser\Persistence;
 
+use Generated\Shared\Transfer\MerchantUserTransfer;
+
 interface MerchantUserEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer;
 }
