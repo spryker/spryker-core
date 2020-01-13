@@ -30,6 +30,7 @@ use Generated\Shared\Transfer\StoreTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  *

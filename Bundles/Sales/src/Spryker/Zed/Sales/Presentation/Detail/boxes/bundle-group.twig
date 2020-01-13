@@ -8,5 +8,10 @@
       {% embed '@Sales/Detail/boxes/order-item.twig' with {orderItem: orderItem, displayImage: false, displayTotals: false, group: false} %}{% endembed %}
     {% endif %}
   </tr>
-  {% embed '@Sales/Detail/boxes/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
+  {# Fallback product options display is kept for BC reasons. #}
+  {% if not (bundleItem.productOptions | length) %}
+    {% embed '@Sales/Detail/boxes/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
+  {% endif %}
 {% endfor %}
+
+{% embed '@Sales/Detail/boxes/order-item-option.twig' with {orderItem: bundleItem} %} {% endembed %}
