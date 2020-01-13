@@ -1,6 +1,4 @@
 namespace: CompanySupplierDataImport
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CompanySupplierDataImport
 

@@ -17,12 +17,15 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageMapper;
+use Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReader;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
+use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateReader;
+use Spryker\Zed\Cms\Business\Template\TemplateReaderInterface;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
@@ -38,7 +41,7 @@ abstract class CmsMocks extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
-    protected function createCmsQueryContainerMock(?ConnectionInterface $propelConnectionMock = null)
+    protected function createCmsQueryContainerMock(?ConnectionInterface $propelConnectionMock = null): CmsQueryContainerInterface
     {
         $cmsQueryContainerMock = $this->getMockBuilder(CmsQueryContainerInterface::class)
             ->getMock();
@@ -56,7 +59,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
-    protected function createPropelConnectionMock()
+    protected function createPropelConnectionMock(): ConnectionInterface
     {
         return $this->getMockBuilder(ConnectionInterface::class)->getMock();
     }
@@ -64,7 +67,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
-    protected function createTouchFacadeMock()
+    protected function createTouchFacadeMock(): CmsToTouchFacadeInterface
     {
         return $this->getMockBuilder(CmsToTouchFacadeInterface::class)
             ->getMock();
@@ -73,7 +76,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Cms\Persistence\SpyCmsPage
      */
-    protected function createCmsPageEntityMock()
+    protected function createCmsPageEntityMock(): SpyCmsPage
     {
         return $this->getMockBuilder(SpyCmsPage::class)
             ->setMethods(['save', 'getVirtualColumn'])
@@ -83,7 +86,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
-    protected function createCmsPageLocalizedAttributesEntityMock()
+    protected function createCmsPageLocalizedAttributesEntityMock(): SpyCmsPageLocalizedAttributes
     {
         return $this->getMockBuilder(SpyCmsPageLocalizedAttributes::class)
             ->setMethods(['save'])
@@ -93,7 +96,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface
      */
-    protected function createUrlFacadeMock()
+    protected function createUrlFacadeMock(): CmsToUrlFacadeInterface
     {
         return $this->getMockBuilder(CmsToUrlFacadeInterface::class)
             ->getMock();
@@ -102,7 +105,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
      */
-    protected function createCmsPageUrlBuilderMock()
+    protected function createCmsPageUrlBuilderMock(): CmsPageUrlBuilderInterface
     {
         return $this->getMockBuilder(CmsPageUrlBuilderInterface::class)
             ->getMock();
@@ -111,7 +114,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
      */
-    protected function createCmsGlossarySaverMock()
+    protected function createCmsGlossarySaverMock(): CmsGlossarySaverInterface
     {
         return $this->getMockBuilder(CmsGlossarySaverInterface::class)
             ->getMock();
@@ -120,7 +123,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
      */
-    protected function createTemplateManagerMock()
+    protected function createTemplateManagerMock(): TemplateManagerInterface
     {
         return $this->getMockBuilder(TemplateManager::class)
             ->disableOriginalConstructor()
@@ -131,7 +134,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\CmsConfig
      */
-    protected function createCmsConfigMock()
+    protected function createCmsConfigMock(): CmsConfig
     {
         return $this->getMockBuilder(CmsConfig::class)
             ->getMock();
@@ -140,7 +143,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
-    protected function createLocaleMock()
+    protected function createLocaleMock(): CmsToLocaleFacadeInterface
     {
         return $this->getMockBuilder(CmsToLocaleFacadeInterface::class)
             ->getMock();
@@ -149,7 +152,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
      */
-    protected function createGlossaryMappingEntityMock()
+    protected function createGlossaryMappingEntityMock(): SpyCmsGlossaryKeyMapping
     {
         return $this->getMockBuilder(SpyCmsGlossaryKeyMapping::class)
             ->setMethods(['save'])
@@ -159,7 +162,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Glossary\Persistence\SpyGlossaryKey
      */
-    protected function createGlossaryKeyEntityMock()
+    protected function createGlossaryKeyEntityMock(): SpyGlossaryKey
     {
         return $this->getMockBuilder(SpyGlossaryKey::class)
             ->setMethods(['save'])
@@ -169,7 +172,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
      */
-    protected function createGlossaryTranslationEntityMock()
+    protected function createGlossaryTranslationEntityMock(): SpyGlossaryTranslation
     {
         return $this->getMockBuilder(SpyGlossaryTranslation::class)
             ->setMethods(['save'])
@@ -179,7 +182,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
-    protected function createGlossaryFacadeMock()
+    protected function createGlossaryFacadeMock(): CmsToGlossaryFacadeInterface
     {
         return $this->getMockBuilder(CmsToGlossaryFacadeInterface::class)
             ->getMock();
@@ -188,7 +191,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface
      */
-    protected function createCmsGlossaryKeyGeneratorMock()
+    protected function createCmsGlossaryKeyGeneratorMock(): CmsGlossaryKeyGeneratorInterface
     {
         return $this->getMockBuilder(CmsGlossaryKeyGeneratorInterface::class)
             ->getMock();
@@ -197,7 +200,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface
      */
-    protected function createCmsPageStoreRelationWriterMock()
+    protected function createCmsPageStoreRelationWriterMock(): CmsPageStoreRelationWriterInterface
     {
         return $this->getMockBuilder(CmsPageStoreRelationWriterInterface::class)
             ->getMock();
@@ -206,7 +209,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Persistence\CmsRepositoryInterface
      */
-    protected function createCmsRepositoryMock()
+    protected function createCmsRepositoryMock(): CmsRepositoryInterface
     {
         return $this->getMockBuilder(CmsRepositoryInterface::class)
             ->getMock();
@@ -218,7 +221,7 @@ abstract class CmsMocks extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface
      */
-    protected function createCmsPageStoreRelationReaderMock(?CmsQueryContainerInterface $cmsQueryContainerMock = null, ?CmsRepositoryInterface $cmsRepositoryMock = null)
+    protected function createCmsPageStoreRelationReaderMock(?CmsQueryContainerInterface $cmsQueryContainerMock = null, ?CmsRepositoryInterface $cmsRepositoryMock = null): CmsPageStoreRelationReaderInterface
     {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
@@ -239,7 +242,7 @@ abstract class CmsMocks extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface
      */
-    protected function createCmsPageMapperMock(?CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null, ?CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReaderMock = null)
+    protected function createCmsPageMapperMock(?CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null, ?CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReaderMock = null): CmsPageMapperInterface
     {
         if ($cmsPageUrlBuilderMock === null) {
             $cmsPageUrlBuilderMock = $this->createCmsPageUrlBuilderMock();
@@ -258,7 +261,7 @@ abstract class CmsMocks extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Template\TemplateReaderInterface
      */
-    protected function createTemplateReaderMock()
+    protected function createTemplateReaderMock(): TemplateReaderInterface
     {
         return $this->getMockBuilder(TemplateReader::class)
             ->disableOriginalConstructor()

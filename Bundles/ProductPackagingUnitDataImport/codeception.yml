@@ -1,5 +1,4 @@
 namespace: ProductPackagingUnitDataImport
-actor: Tester
 include:
     - tests/SprykerTest/Zed/ProductPackagingUnitDataImport
 paths:

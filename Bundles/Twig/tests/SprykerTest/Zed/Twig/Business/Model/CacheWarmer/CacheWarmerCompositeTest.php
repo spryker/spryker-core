@@ -62,7 +62,7 @@ class CacheWarmerCompositeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\Model\CacheWarmerInterface
      */
-    private function getCacheWarmerMock()
+    private function getCacheWarmerMock(): CacheWarmerInterface
     {
         $mockBuilder = $this->getMockBuilder(CacheWarmerInterface::class)
             ->setMethods(['warmUp']);

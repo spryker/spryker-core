@@ -230,7 +230,13 @@ class ProductUrlManager implements ProductUrlManagerInterface
     {
         $urlEntity = $this->productQueryContainer
             ->queryUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
-            ->findOneOrCreate();
+            ->findOne();
+
+        if (!$urlEntity) {
+            return (new UrlTransfer())
+                ->setFkResourceProductAbstract($idProductAbstract)
+                ->setFkLocale($idLocale);
+        }
 
         $urlTransfer = (new UrlTransfer())
             ->fromArray($urlEntity->toArray(), true);

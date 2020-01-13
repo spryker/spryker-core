@@ -1,6 +1,4 @@
 namespace: Glossary
-actor: Tester
-
 include:
     - tests/SprykerTest/Shared/Glossary
     - tests/SprykerTest/Zed/Glossary

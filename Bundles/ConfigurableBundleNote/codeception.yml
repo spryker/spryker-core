@@ -3,7 +3,6 @@ namespace: ConfigurableBundleNote
 include:
   - tests/SprykerTest/Zed/ConfigurableBundleNote
 
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

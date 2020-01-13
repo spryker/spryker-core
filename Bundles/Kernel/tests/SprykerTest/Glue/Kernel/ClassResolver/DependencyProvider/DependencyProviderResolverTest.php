@@ -9,6 +9,7 @@ namespace SprykerTest\Glue\Kernel\ClassResolver\DependencyProvider;
 
 use Spryker\Glue\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Glue\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use SprykerTest\Glue\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
@@ -49,7 +50,7 @@ class DependencyProviderResolverTest extends AbstractResolverTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): AbstractClassResolver
     {
         $resolverMock = $this->getMockBuilder(DependencyProviderResolver::class)->setMethods($methods)->getMock();
 

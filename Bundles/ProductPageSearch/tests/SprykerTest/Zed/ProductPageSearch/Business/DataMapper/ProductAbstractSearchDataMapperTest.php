@@ -90,7 +90,7 @@ class ProductAbstractSearchDataMapperTest extends Unit
     /**
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createProductAbstractPageMapExpanderPluginMock()
+    protected function createProductAbstractPageMapExpanderPluginMock(): ProductAbstractMapExpanderPluginInterface
     {
         $pluginMock = $this->createMock(ProductAbstractMapExpanderPluginInterface::class);
         $pluginMock->method('expandProductMap')->willReturnArgument(0);

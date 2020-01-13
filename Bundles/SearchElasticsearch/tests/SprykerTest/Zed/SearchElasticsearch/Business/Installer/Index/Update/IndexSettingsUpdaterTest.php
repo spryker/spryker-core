@@ -213,7 +213,7 @@ class IndexSettingsUpdaterTest extends Unit
     /**
      * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexSettingsUpdater|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createIndexSettingsUpdater()
+    protected function createIndexSettingsUpdater(): IndexSettingsUpdater
     {
         return $this->getMockBuilder(IndexSettingsUpdater::class)
             ->setConstructorArgs([

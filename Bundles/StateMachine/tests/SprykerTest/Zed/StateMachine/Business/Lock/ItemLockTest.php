@@ -113,7 +113,7 @@ class ItemLockTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLock
      */
-    protected function createStateMachineItemLockEntityMock()
+    protected function createStateMachineItemLockEntityMock(): SpyStateMachineLock
     {
         $stateMachineLockEntityMock = $this->getMockBuilder(SpyStateMachineLock::class)->getMock();
 
@@ -123,7 +123,7 @@ class ItemLockTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    protected function createStateMachineQueryMock()
+    protected function createStateMachineQueryMock(): SpyStateMachineLockQuery
     {
         return $this->getMockBuilder(SpyStateMachineLockQuery::class)->getMock();
     }

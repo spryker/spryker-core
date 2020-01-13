@@ -140,7 +140,7 @@ class CodeStyleSnifferTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
-    protected function getCodeStyleSnifferMock(string $expectedPathToRunCommandWith, array $options)
+    protected function getCodeStyleSnifferMock(string $expectedPathToRunCommandWith, array $options): CodeStyleSniffer
     {
         $developmentConfig = $this->tester->createDevelopmentConfig();
         $codingStandard = $developmentConfig->getCodingStandard();
