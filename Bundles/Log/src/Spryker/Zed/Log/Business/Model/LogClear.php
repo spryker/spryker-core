@@ -46,6 +46,35 @@ class LogClear implements LogClearInterface
     /**
      * @param string $logFileDirectory
      *
+     * @return void
+     */
+    protected function removeLogFiles(string $logFileDirectory): void
+    {
+        $this->filesystem->remove(
+            $this->getLogFilePathsFromDirectory($logFileDirectory)
+        );
+    }
+
+    /**
+     * @param string $logFileDirectory
+     *
+     * @return void
+     */
+    protected function removeLogDirectory(string $logFileDirectory)
+    {
+        if (!$this->filesystem->exists($logFileDirectory)) {
+            return;
+        }
+
+        try {
+            $this->filesystem->remove($logFileDirectory);
+        } catch (IOException $e) {
+        }
+    }
+
+    /**
+     * @param string $logFileDirectory
+     *
      * @return string[]
      */
     protected function getLogFilePathsFromDirectory(string $logFileDirectory): array
@@ -63,30 +92,5 @@ class LogClear implements LogClearInterface
             scandir($logFileDirectory),
             $excludeDirPathValues
         );
-    }
-
-    /**
-     * @param string $logFileDirectory
-     *
-     * @return void
-     */
-    protected function removeLogFiles(string $logFileDirectory): void
-    {
-        $this->filesystem->remove(
-            $this->getLogFilePathsFromDirectory($logFileDirectory)
-        );
-    }
-
-    /**
-     * @param string $logFileDirectory
-     *
-     * @return void
-     */
-    protected function removeLogDirectory(string $logFileDirectory)
-    {
-        try {
-            $this->filesystem->remove($logFileDirectory);
-        } catch (IOException $e) {
-        }
     }
 }
