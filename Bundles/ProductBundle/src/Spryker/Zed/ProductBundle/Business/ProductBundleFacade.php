@@ -242,22 +242,6 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function expandProductBundleStatusByBundledProductStatuses(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
-    {
-        return $this->getFactory()
-            ->createProductBundleExpander()
-            ->expandProductBundleStatusByBundledProductStatuses($productConcreteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @deprecated Use saveOrderBundleItems() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

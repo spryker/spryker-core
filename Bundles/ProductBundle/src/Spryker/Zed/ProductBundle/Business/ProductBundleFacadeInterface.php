@@ -200,19 +200,6 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Expands status of product concrete if it is bundle.
-     * - Sets `ProductConcreteTransfer:isActive` to false if at least one bundled product is inactive.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function expandProductBundleStatusByBundledProductStatuses(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
-
-    /**
-     * Specification:
      * - Persists bundled product to sales database tables, from QuoteTransfer.
      *
      * @api
