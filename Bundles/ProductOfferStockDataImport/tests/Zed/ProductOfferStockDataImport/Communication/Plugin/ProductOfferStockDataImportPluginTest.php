@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use Spryker\Zed\ProductOfferStockDataImport\Communication\ProductOfferStockDataImportPlugin;
+use Spryker\Zed\ProductOfferStockDataImport\Communication\Plugin\ProductOfferStockDataImportPlugin;
 use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
 
 /**
