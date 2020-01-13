@@ -226,6 +226,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        return $this->getFactory()
+            ->createProductBundleStatusUpdater()
+            ->deactivateRelatedProductBundles($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @deprecated Use saveOrderBundleItems() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

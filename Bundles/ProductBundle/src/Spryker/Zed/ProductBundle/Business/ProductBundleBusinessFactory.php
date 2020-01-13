@@ -37,6 +37,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouperInte
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrate;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdater;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdaterInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
@@ -193,6 +195,17 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getStockFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdaterInterface
+     */
+    public function createProductBundleStatusUpdater(): ProductBundleStatusUpdaterInterface
+    {
+        return new ProductBundleStatusUpdater(
+            $this->getProductFacade(),
+            $this->getRepository()
         );
     }
 

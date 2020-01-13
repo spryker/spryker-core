@@ -188,6 +188,18 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
+     * - Deactivates product bundles related to product concrete in case it is inactive.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
      * - Persists bundled product to sales database tables, from QuoteTransfer.
      *
      * @api
