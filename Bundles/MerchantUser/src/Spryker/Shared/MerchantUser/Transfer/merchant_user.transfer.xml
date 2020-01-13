@@ -33,4 +33,10 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+        <property name="password" type="string"/>
+        <property name="firstName" type="string"/>
+    </transfer>
+
 </transfers>
