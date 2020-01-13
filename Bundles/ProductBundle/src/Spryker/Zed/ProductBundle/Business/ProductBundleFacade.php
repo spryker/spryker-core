@@ -249,7 +249,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     public function expandProductBundleStatusByBundledProductStatuses(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()
-            ->createProductBundleStatusExpander()
+            ->createProductBundleExpander()
             ->expandProductBundleStatusByBundledProductStatuses($productConcreteTransfer);
     }
 

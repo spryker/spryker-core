@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Expander;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductBundleStatusExpanderInterface
+interface ProductBundleExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

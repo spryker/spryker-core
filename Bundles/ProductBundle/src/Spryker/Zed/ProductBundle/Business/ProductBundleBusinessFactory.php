@@ -24,8 +24,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFi
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceChecker;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleStatusExpander;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleStatusExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
@@ -212,11 +212,11 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleStatusExpanderInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpanderInterface
      */
-    public function createProductBundleStatusExpander(): ProductBundleStatusExpanderInterface
+    public function createProductBundleExpander(): ProductBundleExpanderInterface
     {
-        return new ProductBundleStatusExpander($this->createProductBundleReader());
+        return new ProductBundleExpander($this->createProductBundleReader());
     }
 
     /**

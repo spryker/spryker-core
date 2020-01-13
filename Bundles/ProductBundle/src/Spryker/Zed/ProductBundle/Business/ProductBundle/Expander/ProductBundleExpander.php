@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Expander;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 
-class ProductBundleStatusExpander implements ProductBundleStatusExpanderInterface
+class ProductBundleExpander implements ProductBundleExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
