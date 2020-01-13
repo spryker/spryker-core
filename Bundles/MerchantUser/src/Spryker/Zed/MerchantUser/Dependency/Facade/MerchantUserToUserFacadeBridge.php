@@ -27,7 +27,7 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getUserByUsername(string $username)
+    public function getUserByUsername($username)
     {
         return $this->userFacade->getUserByUsername($username);
     }
@@ -39,7 +39,7 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
      *
      * @return bool
      */
-    public function hasUserByUsername(string $username)
+    public function hasUserByUsername($username)
     {
         return $this->userFacade->hasUserByUsername($username);
     }
