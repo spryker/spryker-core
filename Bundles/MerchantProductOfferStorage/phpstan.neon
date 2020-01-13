@@ -1,2 +1,3 @@
 parameters:
     ignoreErrors:
+    - '#Parameter \#1 .+ expects array<.+EventEntityTransfer>, array<.+TransferInterface> given.#'

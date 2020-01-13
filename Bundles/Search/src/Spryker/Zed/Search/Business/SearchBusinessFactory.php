@@ -20,6 +20,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefiniti
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\HealthCheckInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\SearchHealthCheck;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
@@ -327,5 +329,15 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function getGuzzleClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\HealthCheckInterface
+     */
+    public function createSearchHealthChecker(): HealthCheckInterface
+    {
+        return new SearchHealthCheck(
+            $this->getSearchClient()
+        );
     }
 }

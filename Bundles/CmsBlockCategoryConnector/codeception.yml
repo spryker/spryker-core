@@ -1,6 +1,4 @@
 namespace: CmsBlockCategoryConnector
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CmsBlockCategoryConnector
 

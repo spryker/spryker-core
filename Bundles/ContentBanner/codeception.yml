@@ -1,5 +1,4 @@
 namespace: ContentBanner
-actor: Tester
 include:
     - tests/SprykerTest/Zed/ContentBanner
 paths:

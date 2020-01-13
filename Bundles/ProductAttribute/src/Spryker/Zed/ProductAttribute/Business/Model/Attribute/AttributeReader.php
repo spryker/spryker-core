@@ -155,6 +155,7 @@ class AttributeReader implements AttributeReaderInterface
         $collection = $this->productAttributeQueryContainer
             ->queryProductAttributeCollection()
             ->joinWithSpyProductManagementAttributeValue()
+            ->joinWithSpyProductAttributeKey()
             ->useSpyProductManagementAttributeValueQuery()
                 ->leftJoinWithSpyProductManagementAttributeValueTranslation()
             ->endUse()

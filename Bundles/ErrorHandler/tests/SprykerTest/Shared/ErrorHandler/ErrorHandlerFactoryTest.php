@@ -142,7 +142,7 @@ class ErrorHandlerFactoryTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorHandlerFactory
      */
-    protected function getErrorHandlerFactoryMock(string $application, array $methods)
+    protected function getErrorHandlerFactoryMock(string $application, array $methods): ErrorHandlerFactory
     {
         return $this->getMockBuilder(ErrorHandlerFactory::class)
             ->setMethods($methods)

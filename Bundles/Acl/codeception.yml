@@ -1,6 +1,4 @@
 namespace: Acl
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/Acl
 

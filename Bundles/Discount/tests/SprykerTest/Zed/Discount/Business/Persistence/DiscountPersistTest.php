@@ -238,8 +238,7 @@ class DiscountPersistTest extends Unit
     protected function createDiscountPersist(
         ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
         ?VoucherEngineInterface $voucherEngineMock = null
-    ) {
-
+    ): DiscountPersist {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
@@ -271,7 +270,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
-    protected function createDiscountQueryContainerMock()
+    protected function createDiscountQueryContainerMock(): DiscountQueryContainerInterface
     {
         return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
@@ -279,7 +278,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter
      */
-    protected function createDiscountStoreRelationWriterMock()
+    protected function createDiscountStoreRelationWriterMock(): DiscountStoreRelationWriter
     {
         return $this->getMockBuilder(DiscountStoreRelationWriter::class)
             ->disableOriginalConstructor()
@@ -289,7 +288,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    protected function createDiscountQueryMock()
+    protected function createDiscountQueryMock(): SpyDiscountQuery
     {
         return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['findOneByIdDiscount'])->getMock();
     }
@@ -297,7 +296,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
      */
-    protected function createVoucherEngineMock()
+    protected function createVoucherEngineMock(): VoucherEngineInterface
     {
         return $this->getMockBuilder(VoucherEngineInterface::class)->getMock();
     }
@@ -305,7 +304,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscount
      */
-    protected function createDiscountEntityMock()
+    protected function createDiscountEntityMock(): SpyDiscount
     {
         $discountEntity = $this->getMockBuilder(SpyDiscount::class)->getMock();
         $discountEntity->expects($this->once())
@@ -318,7 +317,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
-    protected function createVoucherPoolEntity()
+    protected function createVoucherPoolEntity(): SpyDiscountVoucherPool
     {
         $discountVoucherPoolEntity = $this->getMockBuilder(SpyDiscountVoucherPool::class)->getMock();
         $discountVoucherPoolEntity

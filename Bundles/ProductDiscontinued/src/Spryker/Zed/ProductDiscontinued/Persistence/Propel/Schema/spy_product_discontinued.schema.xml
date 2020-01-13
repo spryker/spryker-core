@@ -3,7 +3,7 @@
           namespace="Orm\Zed\ProductDiscontinued\Persistence"
           package="src.Orm.Zed.ProductDiscontinued.Persistence">
 
-    <table name="spy_product_discontinued" idMethod="native" allowPkInsert="true" phpName="SpyProductDiscontinued">
+    <table name="spy_product_discontinued" idMethod="native" allowPkInsert="true">
         <column name="id_product_discontinued" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="active_until" type="DATE" required="true"/>
@@ -19,7 +19,7 @@
         </foreign-key>
     </table>
 
-    <table name="spy_product_discontinued_note" idMethod="native" allowPkInsert="true" phpName="SpyProductDiscontinuedNote">
+    <table name="spy_product_discontinued_note" idMethod="native" allowPkInsert="true">
         <column name="id_product_discontinued_note" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_discontinued" type="INTEGER" required="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
