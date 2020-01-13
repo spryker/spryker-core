@@ -45,6 +45,14 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
      */
     public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
     {
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
+
+        if ($this->productOfferStockFacade->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer)) {
+            return true;
+        }
+
         return $productOfferAvailabilityRequestTransfer->getQuantity()
             ->lessThanOrEquals(
                 $this->calculateAvailabilityForRequest($productOfferAvailabilityRequestTransfer)
