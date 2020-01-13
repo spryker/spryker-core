@@ -15,6 +15,7 @@ use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
 
 /**
  * @method \Spryker\Zed\ProductOfferStockDataImport\Business\ProductOfferStockDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig getConfig()
  */
 class ProductOfferStockDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
