@@ -59,9 +59,9 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     public function findProductConcreteAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ?ProductConcreteAvailabilityTransfer
     {
         $availability = $this->calculateAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
-        $productOfferStockRequestTransfer = $this->createProductOfferStockRequestTransferFromProductOfferAvailabilityRequestTransfer(
-            $productOfferAvailabilityRequestTransfer
-        );
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
 
         return (new ProductConcreteAvailabilityTransfer())
             ->setAvailability($availability)
@@ -82,7 +82,9 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
         );
 
         $stock = $this->productOfferStockFacade->getProductOfferStock(
-            $this->createProductOfferStockRequestTransferFromProductOfferAvailabilityRequestTransfer($productOfferAvailabilityRequestTransfer)
+            (new ProductOfferStockRequestTransfer())
+                ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+                ->setStore($productOfferAvailabilityRequestTransfer->getStore())
         );
 
         if ($stock->isZero()) {
@@ -90,18 +92,5 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
         }
 
         return $stock->subtract($reservedProductQuantity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockRequestTransfer
-     */
-    protected function createProductOfferStockRequestTransferFromProductOfferAvailabilityRequestTransfer(
-        ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-    ): ProductOfferStockRequestTransfer {
-        return (new ProductOfferStockRequestTransfer())
-            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
-            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
     }
 }

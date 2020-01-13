@@ -7,9 +7,8 @@
 
 namespace Spryker\Client\ProductOfferAvailabilityStorage\Reader;
 
+use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Client\ProductOfferAvailabilityStorageToStorageClientInterface;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferAvailabilityStorageToSynchronizationServiceInterface;
@@ -62,14 +61,18 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
      *
      * @return bool
      */
-    public function isProductOfferAvailableForStore(ProductOfferTransfer $productOfferTransfer, StoreTransfer $storeTransfer): bool
+    public function isProductOfferAvailable(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
     {
-        $productOfferAvailabilityStorageTransfer = $this->findByProductOfferReference($productOfferTransfer->getProductOfferReference(), $storeTransfer->getName());
+        $productOfferAvailabilityRequestTransfer->requireStore();
+
+        $productOfferAvailabilityStorageTransfer = $this->findByProductOfferReference(
+            $productOfferAvailabilityRequestTransfer->getProductOfferReference(),
+            $productOfferAvailabilityRequestTransfer->getStore()->getName()
+        );
 
         if (!$productOfferAvailabilityStorageTransfer) {
             return false;

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
@@ -66,20 +65,18 @@ class ProductOfferStockFacadeTest extends Unit
         $storeTransfer = $this->tester->haveStore();
 
         $stockTransfer = $this->tester->haveStock([
-            StockTransfer::STORE_RELATION => ['idStores' => [$storeTransfer->getIdStore()]],
+            StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
         ]);
 
-        $productOfferStock = $this->tester->haveProductOfferStock([
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
             ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => true,
         ]);
 
-        $this->tester->haveStockStoreRelation($productOfferStock->getStock(), $storeTransfer);
-
         // Act
         $productOfferStockRequestTransfer = new ProductOfferStockRequestTransfer();
-        $productOfferStockRequestTransfer->setProductOfferReference($productOfferStock->getProductOffer()->getProductOfferReference());
-        $productOfferStockRequestTransfer->setStore((new StoreTransfer())->setIdStore($stockTransfer->getStoreRelation()->getIdStores()[0]));
+        $productOfferStockRequestTransfer->setProductOfferReference($productOfferStockTransfer->getProductOffer()->getProductOfferReference());
+        $productOfferStockRequestTransfer->setStore($storeTransfer);
 
         $response = $this->tester->getFacade()->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer);
 
