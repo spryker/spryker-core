@@ -37,6 +37,10 @@ class SalesController extends AbstractController
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
 
+        $itemGroups = $this->getFactory()
+            ->createProductBundleGrouper()
+            ->groupBundleItemsByShipmentGroupHash($shipmentGroupsCollection, $orderTransfer);
+
         return $this->viewResponse([
             'events' => $request->attributes->get('events', []),
             'eventsGroupedByShipment' => $request->attributes->get('eventsGroupedByShipment', []),
@@ -44,6 +48,7 @@ class SalesController extends AbstractController
             'order' => $orderTransfer,
             'groupedOrderItemsByShipment' => $shipmentGroupsCollection,
             'changeStatusRedirectUrl' => $request->attributes->get('changeStatusRedirectUrl'),
+            'itemGroups' => $itemGroups,
         ]);
     }
 

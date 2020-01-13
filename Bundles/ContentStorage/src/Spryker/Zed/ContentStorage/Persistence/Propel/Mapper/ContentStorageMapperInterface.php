@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Orm\Zed\Content\Persistence\SpyContent;
 use Orm\Zed\ContentStorage\Persistence\SpyContentStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface ContentStorageMapperInterface
 {
@@ -21,6 +22,21 @@ interface ContentStorageMapperInterface
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function mapContentEntityToTransfer(SpyContent $contentEntity, ContentTransfer $contentTransfer): ContentTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Content\Persistence\SpyContent[] $contentEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function mapContentEntityCollectionToContentTransfers(ObjectCollection $contentEntityCollection): array;
+
+    /**
+     * @param \Orm\Zed\Content\Persistence\SpyContent $contentEntity
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer
+     */
+    public function mapContentEntityToContentTransfer(SpyContent $contentEntity, ContentTransfer $contentTransfer): ContentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
