@@ -60,5 +60,5 @@
     <transfer name="ProductOffer">
         <property name="productOfferReference" type="string"/>
     </transfer>
-    ProductOfferStockFacadeTest.
+
 </transfers>
