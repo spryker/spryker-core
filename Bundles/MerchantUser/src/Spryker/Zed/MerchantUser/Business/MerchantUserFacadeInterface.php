@@ -18,13 +18,10 @@ interface MerchantUserFacadeInterface
      * - Persists the entity to DB.
      * - Creates/updates user according to merchant contact person data
      * - Returns MerchantUserResponseTransfer.
-     * - Throws an exception if user is already connected to another merchant
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\UserAlreadyHasMerchantException
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */

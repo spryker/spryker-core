@@ -8,8 +8,10 @@
 namespace Spryker\Zed\MerchantUser\Communication\Plugin\Merchant;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface;
+use Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotCreatedException;
 
 /**
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
@@ -27,7 +29,7 @@ class MerchantUserMerchantPostSavePlugin extends AbstractPlugin implements Merch
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\UserAlreadyHasMerchantException
+     * @throws \Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotCreatedException
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
@@ -35,10 +37,27 @@ class MerchantUserMerchantPostSavePlugin extends AbstractPlugin implements Merch
     {
         $merchantUserResponseTransfer = $this->getFacade()->createMerchantUserByMerchant($merchantTransfer);
 
-        if ($merchantUserResponseTransfer->getIsSuccess()) {
-            $merchantTransfer->setMerchantUser($merchantUserResponseTransfer->getMerchantUser());
+        if (!$merchantUserResponseTransfer->getIsSuccess()) {
+            throw new MerchantUserNotCreatedException($this->getErrorMessage($merchantUserResponseTransfer));
         }
 
+        $merchantTransfer->setMerchantUser($merchantUserResponseTransfer->getMerchantUser());
+
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserResponseTransfer
+     *
+     * @return string
+     */
+    protected function getErrorMessage(MerchantUserResponseTransfer $merchantUserResponseTransfer): string
+    {
+        $errors = [];
+        foreach ($merchantUserResponseTransfer->getErrors() as $merchantUserErrorTransfer) {
+            $errors[] = $merchantUserErrorTransfer->getMessage();
+        }
+
+        return implode(', ', $errors);
     }
 }

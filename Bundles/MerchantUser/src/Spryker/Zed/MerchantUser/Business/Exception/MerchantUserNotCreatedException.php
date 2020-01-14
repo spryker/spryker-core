@@ -9,6 +9,6 @@ namespace Spryker\Zed\MerchantUser\Business\Exception;
 
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotCreatedException;
 
-class UserAlreadyHasMerchantException extends MerchantNotCreatedException
+class MerchantUserNotCreatedException extends MerchantNotCreatedException
 {
 }

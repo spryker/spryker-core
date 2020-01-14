@@ -9,12 +9,12 @@ namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserErrorTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Service\UtilText\UtilTextService;
-use Spryker\Zed\MerchantUser\Business\Exception\UserAlreadyHasMerchantException;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
@@ -56,12 +56,13 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\UserAlreadyHasMerchantException
-     *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
     public function createMerchantUserByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
+        $merchantTransfer->requireEmail()
+            ->requireMerchantProfile();
+
         $merchantUserResponseTransfer = $this->createMerchantUserResponseTransfer();
 
         $merchantUserTransferByMerchant = $this->findMerchantUser(null, $merchantTransfer);
@@ -90,10 +91,10 @@ class MerchantUserWriter implements MerchantUserWriterInterface
         }
 
         if ($merchantUserTransferByUser->getFkMerchant() !== $merchantTransfer->getIdMerchant()) {
-            throw new UserAlreadyHasMerchantException(sprintf(
-                'A user with email %s already connected with another merchant',
-                $merchantTransfer->getEmail()
-            ));
+            return $this->addErrorMessage(
+                $merchantUserResponseTransfer,
+                sprintf('A user with email %s is already connected with another merchant', $merchantTransfer->getEmail())
+            );
         }
 
         return $merchantUserResponseTransfer->setIsSuccess(true)
@@ -107,6 +108,17 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     {
         return (new MerchantUserResponseTransfer())
             ->setIsSuccess(false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserResponseTransfer
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    protected function addErrorMessage(MerchantUserResponseTransfer $merchantUserResponseTransfer, string $message): MerchantUserResponseTransfer
+    {
+        return $merchantUserResponseTransfer->addError((new MerchantUserErrorTransfer())->setMessage($message));
     }
 
     /**
