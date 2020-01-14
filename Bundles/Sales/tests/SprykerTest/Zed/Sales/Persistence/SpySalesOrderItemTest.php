@@ -55,7 +55,7 @@ class SpySalesOrderItemTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function createMockedSalesOrderItemEntity()
+    protected function createMockedSalesOrderItemEntity(): SpySalesOrderItem
     {
         $salesOrderItemEntityMock = $this->getMockBuilder(SpySalesOrderItem::class)
             ->setMethods([
@@ -73,7 +73,7 @@ class SpySalesOrderItemTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory
      */
-    protected function createMockedOmsOrderItemSateHistoryEntity()
+    protected function createMockedOmsOrderItemSateHistoryEntity(): SpyOmsOrderItemStateHistory
     {
         $mockedOmsOrderItemStateHistory = $this->getMockBuilder(SpyOmsOrderItemStateHistory::class)
             ->setMethods(['save'])

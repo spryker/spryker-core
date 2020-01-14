@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\SearchElasticsearch\Config\FacetConfig;
 use Spryker\Client\SearchElasticsearch\Config\PaginationConfig;
-use Spryker\Client\SearchElasticsearch\Config\SearchConfig;
 use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig as ClientSearchElasticsearchConfig;
@@ -64,9 +63,9 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     /**
      * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSearchConfigMock()
+    protected function createSearchConfigMock(): SearchConfigInterface
     {
-        $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
+        $searchConfigMock = $this->getMockBuilder(SearchConfigInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['getFacetConfig', 'getSortConfig', 'getPaginationConfig'])
             ->getMock();
@@ -87,11 +86,11 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     }
 
     /**
-     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfig
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Search\SearchFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory
      */
-    protected function createSearchFactoryMockedWithSearchConfig(SearchConfigInterface $searchConfig)
+    protected function createSearchFactoryMockedWithSearchConfig(SearchConfigInterface $searchConfig): SearchElasticsearchFactory
     {
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchElasticsearchFactoryMock */
         $searchElasticsearchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
@@ -119,9 +118,9 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
      *
      * @return \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSearchElasticsearchFactoryMock(array $methodsToMock = [])
+    protected function createSearchElasticsearchFactoryMock(array $methodsToMock = []): SearchElasticsearchFactory
     {
-        array_push($methodsToMock, 'getConfig');
+        $methodsToMock[] = 'getConfig';
 
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)

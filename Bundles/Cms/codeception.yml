@@ -1,6 +1,4 @@
 namespace: Cms
-actor: Tester
-
 include:
  - tests/SprykerTest/Zed/Cms
 

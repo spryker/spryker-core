@@ -1,6 +1,4 @@
 namespace: ManualOrderEntry
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ManualOrderEntry
 

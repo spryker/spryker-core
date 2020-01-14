@@ -1,6 +1,4 @@
 namespace: DiscountPromotion
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/DiscountPromotion
 

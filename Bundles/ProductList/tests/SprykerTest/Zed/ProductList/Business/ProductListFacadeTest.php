@@ -239,7 +239,7 @@ class ProductListFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\ProductList\Business\ProductListFacadeInterface
+     * @return \Spryker\Zed\ProductList\Business\ProductListFacadeInterface
      */
     protected function getFacade()
     {

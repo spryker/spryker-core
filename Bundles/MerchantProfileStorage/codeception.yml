@@ -1,7 +1,6 @@
 namespace: MerchantProfileStorage
 include:
     - tests/SprykerTest/Zed/MerchantProfileStorage
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

@@ -4,8 +4,6 @@ include:
     - tests/SprykerTest/Client/PersistentCartShare
     - tests/SprykerTest/Zed/PersistentCartShare
 
-actor: Tester
-
 paths:
     tests: tests
     log: tests/_output

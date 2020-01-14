@@ -89,7 +89,6 @@
 
     <transfer name="MerchantProfileAddress">
         <property name="idMerchantProfileAddress" type="int"/>
-        <property name="key" type="string"/>
         <property name="fkCountry" type="int"/>
         <property name="countryName" type="string"/>
         <property name="address1" type="string"/>

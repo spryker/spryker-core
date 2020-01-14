@@ -73,7 +73,7 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
             ->createProductImageSetToProductImageQuery()
             ->joinWithSpyProductImage()
             ->filterByFkProductImageSet_In($productSetIds)
-            ->orderBySortOrder(Criteria::DESC)
+            ->orderBySortOrder(Criteria::ASC)
             ->find();
 
         if ($productImageSetToProductImageEntities->count() === 0) {

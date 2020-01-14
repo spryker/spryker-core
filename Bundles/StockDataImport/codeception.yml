@@ -1,6 +1,4 @@
 namespace: StockDataImport
-actor: Tester
-
 include:
   - tests/SprykerTest/Zed/StockDataImport
 

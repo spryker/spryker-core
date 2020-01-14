@@ -203,7 +203,7 @@ class DiscountConfiguratorHydrateTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
-    protected function createDiscountQueryContainerMock()
+    protected function createDiscountQueryContainerMock(): DiscountQueryContainerInterface
     {
         return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
@@ -211,7 +211,7 @@ class DiscountConfiguratorHydrateTest extends Unit
     /**
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createDiscountQueryMock()
+    protected function createDiscountQueryMock(): SpyDiscountQuery
     {
         return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['find', 'getFirst'])->getMock();
     }
@@ -219,7 +219,7 @@ class DiscountConfiguratorHydrateTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
      */
-    protected function createEntityMapperMock()
+    protected function createEntityMapperMock(): DiscountEntityMapperInterface
     {
         return $this->getMockBuilder(DiscountEntityMapperInterface::class)->getMock();
     }
