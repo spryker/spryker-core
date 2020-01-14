@@ -93,7 +93,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
      */
     protected function filterSorts(array $sorts): array
     {

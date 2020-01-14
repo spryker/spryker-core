@@ -45,20 +45,4 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     {
         return static::PAYMENT_METHOD_PRIORITY;
     }
-
-    /**
-     * @example
-     * [
-     *  'PaymentProvider1' => [
-     *   'credit card' => 'paymentProvider1CreditCard',
-     *   'invoice' => 'paymentProvider1Invoice',
-     *  ],
-     * ]
-     *
-     * @return array
-     */
-    public function getPaymentProviderMethodToPaymentSelectionMapping(): array
-    {
-        return [];
-    }
 }

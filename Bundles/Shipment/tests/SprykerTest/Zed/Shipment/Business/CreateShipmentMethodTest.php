@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Shipment\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ShipmentCarrierBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -53,17 +52,11 @@ class CreateShipmentMethodTest extends Unit
             ],
         ])->build();
 
-        $shipmentCarrierTransfer = (new ShipmentCarrierBuilder())->build();
-        $shipmentCarrierTransfer->setIdShipmentCarrier(
-            $this->tester->getLocator()->shipment()->facade()->createCarrier($shipmentCarrierTransfer)
-        );
-
         $shipmentMethodTransfer = (new ShipmentMethodBuilder())->seed([
             ShipmentMethodTransfer::SHIPMENT_METHOD_KEY => 'test1',
             ShipmentMethodTransfer::NAME => 'test1',
             ShipmentMethodTransfer::CARRIER_NAME => 'test2',
             ShipmentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
-            ShipmentMethodTransfer::FK_SHIPMENT_CARRIER => $shipmentCarrierTransfer->getIdShipmentCarrier(),
         ])->build();
 
         // Act

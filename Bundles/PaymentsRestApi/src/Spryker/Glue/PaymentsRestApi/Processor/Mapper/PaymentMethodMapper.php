@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
@@ -16,7 +15,6 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodTransfer;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
-use Spryker\Glue\PaymentsRestApi\Processor\Exception\PaymentMethodNotConfiguredException;
 
 class PaymentMethodMapper implements PaymentMethodMapperInterface
 {
@@ -189,52 +187,14 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
     ): RestPaymentMethodsAttributesTransfer {
         $paymentMethodName = $paymentMethodTransfer->getName();
         $paymentMethodKey = $paymentMethodTransfer->getMethodName();
-        $paymentProviderName = $paymentMethodTransfer->getPaymentProvider()->getPaymentProviderKey();
+        $paymentProviderKey = $paymentMethodTransfer->getPaymentProvider()->getPaymentProviderKey();
 
         return (new RestPaymentMethodsAttributesTransfer())
             ->setPaymentMethodName($paymentMethodName)
-            ->setPaymentProviderName($paymentProviderName)
+            ->setPaymentProviderName($paymentProviderKey)
             ->setPriority($this->config->getPaymentMethodPriority()[$paymentMethodKey] ?? null)
             ->setRequiredRequestData(
-                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderName, $paymentMethodKey)
+                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey)
             );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethods
-     *
-     * @return array
-     */
-    protected function getAvailablePaymentMethodsList(PaymentMethodsTransfer $availablePaymentMethods): array
-    {
-        $availablePaymentMethodsList = [];
-        foreach ($availablePaymentMethods->getMethods() as $paymentMethodTransfer) {
-            $availablePaymentMethodsList[] = $paymentMethodTransfer->getMethodName();
-        }
-
-        return $availablePaymentMethodsList;
-    }
-
-    /**
-     * @param string $paymentProviderName
-     * @param string $paymentMethodName
-     *
-     * @throws \Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException
-     *
-     * @return string
-     */
-    protected function getPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): string
-    {
-        $paymentProviderMethodToPaymentSelectionMapping = $this->config->getPaymentProviderMethodToPaymentSelectionMapping();
-
-        if (!isset($paymentProviderMethodToPaymentSelectionMapping[$paymentProviderName][$paymentMethodName])) {
-            throw new PaymentMethodNotConfiguredException(sprintf(
-                'Payment method "%s" for payment provider "%s" is not configured in PaymentsRestApiConfig::getPaymentProviderMethodToPaymentSelectionMapping()',
-                $paymentMethodName,
-                $paymentProviderName
-            ));
-        }
-
-        return $paymentProviderMethodToPaymentSelectionMapping[$paymentProviderName][$paymentMethodName];
     }
 }

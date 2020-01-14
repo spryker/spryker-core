@@ -62,24 +62,18 @@ class ShipmentMethodDataHelper extends Module
         array $priceList = self::DEFAULT_PRICE_LIST,
         array $idStoreList = []
     ): ShipmentMethodTransfer {
-        if (empty($idStoreList)) {
-            $idStoreList = [$this->getIdStoreByName(APPLICATION_STORE)];
-        }
-
         $shipmentMethodTransfer = (new ShipmentMethodBuilder($overrideShipmentMethod))->build();
         $shipmentMethodTransfer = $this->assertCarrier($shipmentMethodTransfer, $overrideCarrier);
 
         $moneyValueTransferCollection = new ArrayObject();
         foreach ($priceList as $storeName => $currencies) {
             foreach ($currencies as $currencyIsoCode => $moneyValueOverride) {
-                /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyTransfer */
-                $moneyTransfer = (new MoneyValueBuilder($moneyValueOverride))
-                    ->build();
-                $moneyTransfer
-                    ->setFkCurrency($this->getIdCurrencyByIsoCode($currencyIsoCode))
-                    ->setFkStore($this->getIdStoreByName($storeName));
-
-                $moneyValueTransferCollection->append($moneyTransfer);
+                $moneyValueTransferCollection->append(
+                    (new MoneyValueBuilder($moneyValueOverride))
+                        ->build()
+                        ->setFkCurrency($this->getIdCurrencyByIsoCode($currencyIsoCode))
+                        ->setFkStore($this->getIdStoreByName($storeName))
+                );
             }
         }
         $shipmentMethodTransfer->setPrices($moneyValueTransferCollection);
@@ -170,6 +164,14 @@ class ShipmentMethodDataHelper extends Module
     }
 
     /**
+     * @return \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper|\Codeception\Module
+     */
+    protected function getShipmentCarrierDataHelper()
+    {
+        return $this->getModule(static::NAMESPACE_ROOT . ShipmentCarrierDataHelper::class);
+    }
+
+    /**
      * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected function getStoreFacade(): StoreFacadeInterface
@@ -183,13 +185,5 @@ class ShipmentMethodDataHelper extends Module
     protected function getShipmentFacade(): ShipmentFacadeInterface
     {
         return $this->getLocator()->shipment()->facade();
-    }
-
-    /**
-     * @return \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper|\Codeception\Module
-     */
-    protected function getShipmentCarrierDataHelper()
-    {
-        return $this->getModule(static::NAMESPACE_ROOT . ShipmentCarrierDataHelper::class);
     }
 }

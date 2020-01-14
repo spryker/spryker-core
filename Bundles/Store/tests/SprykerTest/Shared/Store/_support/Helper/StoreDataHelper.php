@@ -9,21 +9,12 @@ namespace SprykerTest\Shared\Store\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\StoreBuilder;
-use Generated\Shared\Transfer\StoreTransfer;
-use InvalidArgumentException;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
-use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StoreDataHelper extends Module
 {
     use DataCleanupHelperTrait;
-    use LocatorHelperTrait;
-
-    /**
-     * @var array
-     */
-    protected $storeNameMap = [];
 
     /**
      * @param array $storeOverride
@@ -32,7 +23,6 @@ class StoreDataHelper extends Module
      */
     public function haveStore(array $storeOverride = [])
     {
-        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
         $storeTransfer = (new StoreBuilder($storeOverride))->build();
         $storeEntity = SpyStoreQuery::create()
             ->filterByName($storeTransfer->getName())
@@ -42,35 +32,5 @@ class StoreDataHelper extends Module
         $storeTransfer->fromArray($storeEntity->toArray());
 
         return $storeTransfer;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function grabStoreByName(string $name): StoreTransfer
-    {
-        if (!$this->storeNameMap) {
-            foreach ($this->getLocator()->store()->facade()->getAllStores() as $storeTransfer) {
-                $this->storeNameMap[$storeTransfer->getName()] = $storeTransfer;
-            }
-        }
-
-        if (empty($this->storeNameMap[$name])) {
-            throw new InvalidArgumentException(sprintf('Store "%s" does not exist', $name));
-        }
-
-        return $this->storeNameMap[$name];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function grabDefaultStore(): StoreTransfer
-    {
-        return $this->grabStoreByName(APPLICATION_STORE);
     }
 }

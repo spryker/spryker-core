@@ -94,5 +94,6 @@
         <property name="defaultGrossPrice" type="int"/>
         <property name="defaultNetPrice" type="int"/>
         <property name="price" type="int"/>
+        <property name="id" type="int"/>
     </transfer>
 </transfers>

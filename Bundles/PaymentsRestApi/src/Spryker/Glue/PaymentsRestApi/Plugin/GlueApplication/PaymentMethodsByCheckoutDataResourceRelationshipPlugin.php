@@ -15,7 +15,7 @@ use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 /**
  * @method \Spryker\Glue\PaymentsRestApi\PaymentsRestApiFactory getFactory()
  */
-class PaymentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class PaymentMethodsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
