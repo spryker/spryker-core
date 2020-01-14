@@ -114,7 +114,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface
      */
-    protected function getRendererMock()
+    protected function getRendererMock(): RendererInterface
     {
         $rendererMock = $this->getMockBuilder(RendererInterface::class)->getMock();
 
@@ -163,7 +163,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface
      */
-    protected function getMailerMock()
+    protected function getMailerMock(): MailToMailerInterface
     {
         $mailerMock = $this->getMockBuilder(MailToMailerInterface::class)
             ->setMethods(['setSubject', 'setFrom', 'addTo', 'setHtmlContent', 'setTextContent', 'send'])

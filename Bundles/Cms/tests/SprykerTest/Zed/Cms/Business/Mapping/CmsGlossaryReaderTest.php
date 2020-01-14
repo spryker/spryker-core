@@ -75,7 +75,7 @@ class CmsGlossaryReaderTest extends CmsMocks
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToLocaleFacadeInterface $localeFacadeMock = null,
         ?TemplateReaderInterface $templateReader = null
-    ) {
+    ): CmsGlossaryReader {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }

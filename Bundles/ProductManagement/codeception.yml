@@ -1,6 +1,4 @@
 namespace: ProductManagement
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductManagement
 

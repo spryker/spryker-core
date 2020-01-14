@@ -1,6 +1,4 @@
 namespace: CmsBlock
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CmsBlock
 

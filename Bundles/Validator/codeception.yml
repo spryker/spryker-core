@@ -3,7 +3,6 @@ include:
     - tests/SprykerTest/Yves/Validator
     - tests/SprykerTest/Zed/Validator
 
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

@@ -1,7 +1,6 @@
 namespace: CommentDataImport
 include:
     - tests/SprykerTest/Zed/CommentDataImport
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

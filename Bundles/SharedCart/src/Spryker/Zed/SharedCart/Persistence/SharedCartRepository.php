@@ -309,10 +309,12 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      */
     public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool
     {
-        return (bool)$this->getFactory()
+        return $this->getFactory()
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($idQuote)
-            ->filterByFkCompanyUser($idCompanyUser)->count();
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->filterByIsDefault(true)
+            ->exists();
     }
 
     /**

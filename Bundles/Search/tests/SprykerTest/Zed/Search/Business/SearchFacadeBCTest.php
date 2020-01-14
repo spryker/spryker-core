@@ -12,6 +12,7 @@ use Elastica\Snapshot;
 use Psr\Log\NullLogger;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandlerInterface;
 use Spryker\Zed\Search\Business\SearchBusinessFactory;
 use Spryker\Zed\Search\Business\SearchFacadeInterface;
 
@@ -68,7 +69,7 @@ class SearchFacadeBCTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\SearchBusinessFactory
      */
-    protected function createSearchFactoryMock()
+    protected function createSearchFactoryMock(): SearchBusinessFactory
     {
         $searchFactoryMockBuilder = $this->getMockBuilder(SearchBusinessFactory::class)
             ->setMethods(['createSnapshotHandler']);
@@ -83,7 +84,7 @@ class SearchFacadeBCTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandlerInterface
      */
-    protected function createSnapshotHandlerMock()
+    protected function createSnapshotHandlerMock(): SnapshotHandlerInterface
     {
         $snapshotHandlerMockBuilder = $this->getMockBuilder(SnapshotHandler::class)
             ->setConstructorArgs([$this->createElasticsearchSnapshot()])

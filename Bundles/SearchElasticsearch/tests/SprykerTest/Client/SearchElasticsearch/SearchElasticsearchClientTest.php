@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
@@ -74,7 +73,7 @@ class SearchElasticsearchClientTest extends Unit
     protected function createQueryPluginMock(?Query $query = null): QueryInterface
     {
         /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryPlugin */
-        $queryPlugin = $this->createMock([QueryInterface::class, SearchContextAwareQueryInterface::class]);
+        $queryPlugin = $this->createMock(QueryInterface::class);
 
         if ($query) {
             $queryPlugin->method('getSearchQuery')->willReturn($query);

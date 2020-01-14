@@ -1,6 +1,4 @@
 namespace: Installer
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/Installer
 

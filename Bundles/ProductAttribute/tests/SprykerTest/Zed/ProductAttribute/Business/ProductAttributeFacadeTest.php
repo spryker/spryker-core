@@ -474,7 +474,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslator|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getAttributeTranslatorMock()
+    protected function getAttributeTranslatorMock(): AttributeTranslator
     {
         $productManagementToLocaleBridgeMock = $this->getMockBuilder(ProductAttributeToLocaleBridge::class)
             ->disableOriginalConstructor()

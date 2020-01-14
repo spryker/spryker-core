@@ -1,6 +1,4 @@
 namespace: SprykerTest\Zed\Content
-actor: Tester
-
 include:
   - tests/SprykerTest/Zed/Content
 

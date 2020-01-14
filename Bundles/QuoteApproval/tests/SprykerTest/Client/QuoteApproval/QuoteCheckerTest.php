@@ -10,7 +10,6 @@ namespace SprykerTest\Client\QuoteApproval;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\QuoteApproval\Checker\QuoteChecker;
 use Spryker\Client\QuoteApproval\QuoteApprovalConfig;
 
@@ -93,9 +92,9 @@ class QuoteCheckerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteApproval\Checker\QuoteChecker
      */
-    protected function createQuoteCheckerMock(): MockObject
+    protected function createQuoteCheckerMock(): QuoteChecker
     {
         return $this->getMockBuilder(QuoteChecker::class)
             ->setConstructorArgs([
@@ -107,9 +106,9 @@ class QuoteCheckerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\QuoteApproval\QuoteApprovalConfig|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteApprovalConfigMock(): MockObject
+    protected function createQuoteApprovalConfigMock(): QuoteApprovalConfig
     {
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
             ->setMethods(['getRequiredQuoteFieldsForApprovalProcess'])
