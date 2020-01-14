@@ -1,4 +1,6 @@
 namespace: SprykerTest
+include:
+    - tests/SprykerTest/Zed/SchedulerJenkins
 paths:
     tests: tests/
     log: tests/_output/
