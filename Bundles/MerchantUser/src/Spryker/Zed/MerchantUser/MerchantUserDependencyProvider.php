@@ -17,7 +17,6 @@ use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeBridge;
 class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_USER = 'FACADE_USER';
-    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
