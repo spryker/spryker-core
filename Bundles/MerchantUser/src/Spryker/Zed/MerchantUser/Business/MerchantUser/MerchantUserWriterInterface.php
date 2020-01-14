@@ -15,8 +15,6 @@ interface MerchantUserWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\UserAlreadyHasMerchantException
-     *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
     public function createMerchantUserByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
