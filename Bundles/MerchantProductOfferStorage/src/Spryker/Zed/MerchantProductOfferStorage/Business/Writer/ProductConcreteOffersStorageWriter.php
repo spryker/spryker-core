@@ -118,7 +118,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
             }
 
             if ($storeNamesToRemove && $productOfferReferenceList) {
-                $this->deleteProductConcreteProductOffersStorage($storeNamesToRemove, $productOfferReferenceList);
+                $this->deleteProductConcreteProductOffersStorage($storeNamesToRemove, $concreteSku);
             }
         }
     }
@@ -160,15 +160,15 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
     /**
      * @param string[] $storeNamesToRemove
-     * @param string[] $productOfferReferenceList
+     * @param string $productSku
      *
      * @return void
      */
-    protected function deleteProductConcreteProductOffersStorage(array $storeNamesToRemove, array $productOfferReferenceList): void
+    protected function deleteProductConcreteProductOffersStorage(array $storeNamesToRemove, string $productSku): void
     {
         foreach ($storeNamesToRemove as $storeName) {
-            $this->productConcreteOffersStorageDeleter->deleteByProductOfferReferencesAndStore(
-                $productOfferReferenceList,
+            $this->productConcreteOffersStorageDeleter->deleteByProductSkus(
+                [$productSku],
                 $storeName
             );
         }

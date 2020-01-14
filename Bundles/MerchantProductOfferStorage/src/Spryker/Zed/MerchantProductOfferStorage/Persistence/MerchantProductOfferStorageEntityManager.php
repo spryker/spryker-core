@@ -60,47 +60,41 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
 
     /**
      * @param string[] $productSkus
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function deleteProductConcreteProductOffersStorageEntitiesByProductSkus(array $productSkus): void
-    {
-        $this->getFactory()
-            ->createProductConcreteProductOffersStoragePropelQuery()
-            ->filterByConcreteSku_In($productSkus)
-            ->find()
-            ->delete();
-    }
-
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return void
-     */
-    public function deleteProductOfferStorageEntitiesByProductOfferReferences(array $productOfferReferences): void
-    {
-        $this->getFactory()
-            ->createProductOfferStoragePropelQuery()
-            ->filterByProductOfferReference_In($productOfferReferences)
-            ->find()
-            ->delete();
-    }
-
-    /**
-     * @param string[] $productOfferReferences
-     * @param string $storeName
-     *
-     * @return void
-     */
-    public function deleteProductOfferStorageEntitiesByProductOfferReferencesAndStore(
-        array $productOfferReferences,
-        string $storeName
+    public function deleteProductConcreteProductOffersStorageEntitiesByProductSkus(
+        array $productSkus,
+        ?string $storeName = null
     ): void {
-        $this->getFactory()
+        $query = $this->getFactory()
+            ->createProductConcreteProductOffersStoragePropelQuery()
+            ->filterByConcreteSku_In($productSkus);
+
+        if ($storeName) {
+            $query->filterByStore($storeName);
+        }
+
+        $query->find()->delete();
+    }
+
+    /**
+     * @param string[] $productOfferReferences
+     * @param string|null $storeName
+     *
+     * @return void
+     */
+    public function deleteProductOfferStorageEntitiesByProductOfferReferences(array $productOfferReferences, ?string $storeName = null): void
+    {
+        $query = $this->getFactory()
             ->createProductOfferStoragePropelQuery()
-            ->filterByProductOfferReference_In($productOfferReferences)
-            ->filterByStore($storeName)
-            ->find()
-            ->delete();
+            ->filterByProductOfferReference_In($productOfferReferences);
+
+        if ($storeName) {
+            $query->filterByStore($storeName);
+        }
+
+        $query->find()->delete();
     }
 }

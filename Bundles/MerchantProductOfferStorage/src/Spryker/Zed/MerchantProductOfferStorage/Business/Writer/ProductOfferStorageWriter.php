@@ -130,10 +130,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferReferencesToRemoveGroupedByStoreName = $this->getProductOfferReferenceToRemoveGroupedByStoreName($productOfferTransfer);
 
         foreach ($productOfferReferencesToRemoveGroupedByStoreName as $storeName => $productOfferReference) {
-            $this->productOfferStorageDeleter->deleteByProductOfferReferencesAndStore(
-                [$productOfferReference],
-                $storeName
-            );
+            $this->productOfferStorageDeleter->deleteByProductOfferReferences([$productOfferReference], $storeName);
         }
     }
 
