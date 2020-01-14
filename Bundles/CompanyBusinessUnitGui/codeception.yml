@@ -1,6 +1,4 @@
 namespace: CompanyBusinessUnitGui
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CompanyBusinessUnitGui
 

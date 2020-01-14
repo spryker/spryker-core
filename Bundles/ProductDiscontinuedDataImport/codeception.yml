@@ -1,6 +1,4 @@
 namespace: ProductDiscontinuedDataImport
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductDiscontinuedDataImport
 

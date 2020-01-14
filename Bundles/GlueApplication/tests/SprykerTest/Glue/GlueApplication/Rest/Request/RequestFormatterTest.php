@@ -209,7 +209,7 @@ class RequestFormatterTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\GlueApplicationConfig
      */
-    protected function createGlueApplicationConfigMock(bool $isEagerRelatedResourcesInclusionEnabled = true)
+    protected function createGlueApplicationConfigMock(bool $isEagerRelatedResourcesInclusionEnabled = true): GlueApplicationConfig
     {
         $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)
             ->setMethods(['isEagerRelationshipsLoadingEnabled'])

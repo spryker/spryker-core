@@ -1,6 +1,4 @@
 namespace: ProductLabel
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductLabel
 
