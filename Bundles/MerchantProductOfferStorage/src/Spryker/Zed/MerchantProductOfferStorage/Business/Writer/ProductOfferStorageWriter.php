@@ -73,7 +73,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      *
      * @return void
      */
-    public function writeProductOfferStorageCollectionByProductOfferReferenceEvents(array $eventTransfers): void
+    public function writeByProductOfferReferenceEvents(array $eventTransfers): void
     {
         $productOfferReferences = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
 

@@ -74,7 +74,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
-    public function writeProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void
+    public function writeByProductSkuEvents(array $eventTransfers): void
     {
         $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
@@ -160,7 +160,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected function deleteProductConcreteProductOffersStorage(array $productConcreteSkusToRemove): void
     {
         foreach ($productConcreteSkusToRemove as $storeName => $productSkus) {
-            $this->productConcreteOffersStorageDeleter->deleteProductConcreteProductOffersStorageByProductSkusAndStore(
+            $this->productConcreteOffersStorageDeleter->deleteByProductSkusAndStore(
                 $productSkus,
                 $storeName
             );

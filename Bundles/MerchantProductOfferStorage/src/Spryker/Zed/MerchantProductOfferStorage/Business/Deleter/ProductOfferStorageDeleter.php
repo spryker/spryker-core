@@ -40,7 +40,7 @@ class ProductOfferStorageDeleter implements ProductOfferStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteProductOfferStorageCollectionByProductOfferReferenceEvents(array $eventTransfers): void
+    public function deleteByProductOfferReferenceEvents(array $eventTransfers): void
     {
         $productOfferReferences = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
 
@@ -48,7 +48,7 @@ class ProductOfferStorageDeleter implements ProductOfferStorageDeleterInterface
             return;
         }
 
-        $this->deleteProductOfferStorageCollectionByProductOfferReferences($productOfferReferences);
+        $this->deleteByProductOfferReferences($productOfferReferences);
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductOfferStorageDeleter implements ProductOfferStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteProductOfferStorageCollectionByProductOfferReferences(array $productOfferReferences): void
+    public function deleteByProductOfferReferences(array $productOfferReferences): void
     {
         $this->merchantProductOfferStorageEntityManager->deleteProductOfferStorageEntitiesByProductOfferReferences($productOfferReferences);
     }

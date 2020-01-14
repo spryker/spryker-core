@@ -14,14 +14,14 @@ interface ProductOfferStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteProductOfferStorageCollectionByProductOfferReferenceEvents(array $eventTransfers): void;
+    public function deleteByProductOfferReferenceEvents(array $eventTransfers): void;
 
     /**
      * @param string[] $productOfferReferences
      *
      * @return void
      */
-    public function deleteProductOfferStorageCollectionByProductOfferReferences(array $productOfferReferences): void;
+    public function deleteByProductOfferReferences(array $productOfferReferences): void;
 
     /**
      * @param string[] $productOfferReferences
