@@ -20,6 +20,7 @@
         <property name="idMerchantUser" type="int"/>
         <property name="fkMerchant" type="int"/>
         <property name="fkUser" type="int"/>
+        <property name="user" type="User"/>
     </transfer>
 
     <transfer name="MerchantUserCriteriaFilter">
@@ -42,6 +43,7 @@
         <property name="idUser" type="int"/>
         <property name="password" type="string"/>
         <property name="firstName" type="string"/>
+        <property name="username" type="string"/>
     </transfer>
 
 </transfers>

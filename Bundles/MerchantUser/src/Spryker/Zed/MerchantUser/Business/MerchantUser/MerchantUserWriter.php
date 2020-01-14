@@ -71,7 +71,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
             $this->userFacade->updateUser($this->fillUserTransferFromMerchantTransfer($userTransfer, $merchantTransfer));
 
             return $merchantUserResponseTransfer->setIsSuccess(true)
-                ->setMerchantUser($merchantUserTransferByMerchant);
+                ->setMerchantUser($merchantUserTransferByMerchant->setUser($userTransfer));
         }
 
         if ($this->userFacade->hasUserByUsername($merchantTransfer->getEmail())) {
@@ -98,7 +98,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
         }
 
         return $merchantUserResponseTransfer->setIsSuccess(true)
-            ->setMerchantUser($merchantUserTransferByUser);
+            ->setMerchantUser($merchantUserTransferByUser->setUser($userTransfer));
     }
 
     /**
