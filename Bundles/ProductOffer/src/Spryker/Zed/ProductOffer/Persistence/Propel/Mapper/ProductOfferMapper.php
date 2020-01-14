@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\Store\Persistence\SpyStore;
 
-class ProductOfferMapper implements ProductOfferMapperInterface
+class ProductOfferMapper
 {
     /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $productOfferEntity
