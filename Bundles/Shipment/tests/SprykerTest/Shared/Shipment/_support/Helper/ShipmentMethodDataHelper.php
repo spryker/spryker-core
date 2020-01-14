@@ -115,6 +115,14 @@ class ShipmentMethodDataHelper extends Module
     }
 
     /**
+     * @return \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper|\Codeception\Module
+     */
+    protected function getShipmentCarrierDataHelper()
+    {
+        return $this->getModule(static::NAMESPACE_ROOT . ShipmentCarrierDataHelper::class);
+    }
+
+    /**
      * @param string $currencyIsoCode
      *
      * @return int
@@ -161,14 +169,6 @@ class ShipmentMethodDataHelper extends Module
     protected function getCurrencyFacade(): CurrencyFacadeInterface
     {
         return $this->getLocator()->currency()->facade();
-    }
-
-    /**
-     * @return \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper|\Codeception\Module
-     */
-    protected function getShipmentCarrierDataHelper()
-    {
-        return $this->getModule(static::NAMESPACE_ROOT . ShipmentCarrierDataHelper::class);
     }
 
     /**
