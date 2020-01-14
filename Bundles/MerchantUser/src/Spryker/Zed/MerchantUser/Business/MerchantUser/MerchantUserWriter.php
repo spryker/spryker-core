@@ -151,8 +151,8 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer|null $userTransfer |null
-     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer |null
+     * @param \Generated\Shared\Transfer\UserTransfer|null $userTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */

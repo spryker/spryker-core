@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
@@ -89,9 +90,16 @@ class MerchantUpdater implements MerchantUpdaterInterface
             return $merchantResponseTransfer;
         }
 
-        $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
-            return $this->executeUpdateTransaction($merchantTransfer);
-        });
+        try {
+            $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
+                return $this->executeUpdateTransaction($merchantTransfer);
+            });
+        } catch (MerchantNotSavedException $merchantNotSavedException) {
+            return $merchantResponseTransfer
+                ->setIsSuccess(false)
+                ->addError((new MerchantErrorTransfer())->setMessage($merchantNotSavedException->getMessage()))
+                ->setMerchant($merchantTransfer);
+        }
 
         $merchantResponseTransfer = $merchantResponseTransfer
             ->setIsSuccess(true)

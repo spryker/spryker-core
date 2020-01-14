@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Merchant\Business\Exception\MerchantNotCreatedException;
+use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
@@ -65,10 +65,10 @@ class MerchantCreator implements MerchantCreatorInterface
             $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
                 return $this->executeCreateTransaction($merchantTransfer);
             });
-        } catch (MerchantNotCreatedException $merchantNotCreatedException) {
+        } catch (MerchantNotSavedException $merchantNotSavedException) {
             return $merchantResponseTransfer
                 ->setIsSuccess(false)
-                ->addError((new MerchantErrorTransfer())->setMessage($merchantNotCreatedException->getMessage()))
+                ->addError((new MerchantErrorTransfer())->setMessage($merchantNotSavedException->getMessage()))
                 ->setMerchant($merchantTransfer);
         }
 
