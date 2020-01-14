@@ -53,7 +53,6 @@ class PaymentDataHelper extends Module
      */
     public function havePaymentProvider(array $override = []): PaymentProviderTransfer
     {
-        /** @var \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer */
         $paymentProviderTransfer = (new PaymentProviderBuilder())->seed($override)->build();
 
         $paymentProviderEntity = SpyPaymentProviderQuery::create()
