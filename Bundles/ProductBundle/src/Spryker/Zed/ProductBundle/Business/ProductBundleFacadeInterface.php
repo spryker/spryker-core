@@ -188,6 +188,18 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
+     * - Deactivates product bundles related to product concrete in case it is inactive.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
      * - Persists bundled product to sales database tables, from QuoteTransfer.
      *
      * @api
@@ -369,4 +381,31 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     public function extractQuoteItems(QuoteTransfer $quoteTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands sales order bundle items by product options.
+     * - Copies unique product options from related bundle items to bundle.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderProductBundlesWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Removes items from array related to bundles.
+     * - Expands provided array of ItemTransfers by product bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array;
 }

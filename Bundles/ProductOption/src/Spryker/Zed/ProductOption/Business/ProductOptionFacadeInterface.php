@@ -237,6 +237,8 @@ interface ProductOptionFacadeInterface
      * - Retrieves product options by provided product option IDs.
      * - Filters by product options group active flag using ProductOptionCriteriaTransfer::ProductOptionGroupIsActive.
      * - Filters by product options group assignment to products using ProductOptionCriteriaTransfer::productConcreteSku.
+     * - Sets ProductOptionTransfer::unitPrice based on ProductOptionCriteriaTransfer::currencyIsoCode and ProductOptionCriteriaTransfer::priceMode properties.
+     * - Uses default store currency and price mode if not specified.
      *
      * @api
      *
