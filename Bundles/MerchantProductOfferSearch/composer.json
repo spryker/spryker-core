@@ -19,19 +19,15 @@
     "spryker/category": "*",
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
-    "spryker/locale": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/product-attribute": "*",
-    "spryker/product-category": "*",
-    "spryker/product-search": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
-    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "To use event behavior.",
-    "spryker/merchant-product-offer": "Required for using the Listeners"
+    "spryker/merchant-product-offer": "Required for using the Listeners."
   },
   "autoload": {
     "psr-4": {

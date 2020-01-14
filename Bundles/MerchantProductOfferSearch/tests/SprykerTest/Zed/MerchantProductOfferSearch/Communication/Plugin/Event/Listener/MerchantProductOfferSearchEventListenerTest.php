@@ -68,9 +68,9 @@ class MerchantProductOfferSearchEventListenerTest extends Unit
             (new EventEntityTransfer())->setId($productOfferTransfer->getIdProductOffer()),
         ];
         $merchantProductOfferSearchEventListener->handleBulk($eventTransfers, MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE);
+        $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 
         // Assert
-        $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
         $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->tester->assertProductPageAbstractSearch($merchantTransfer, $productConcreteTransfer);
     }

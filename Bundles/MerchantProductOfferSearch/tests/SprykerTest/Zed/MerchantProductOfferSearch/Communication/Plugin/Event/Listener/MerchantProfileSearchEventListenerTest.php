@@ -68,9 +68,9 @@ class MerchantProfileSearchEventListenerTest extends Unit
             (new EventEntityTransfer())->setId($merchantProfileTransfer->getIdMerchantProfile()),
         ];
         $merchantProfileSearchEventListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE);
+        $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 
         // Assert
-        $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
         $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->tester->assertProductPageAbstractSearch($merchantTransfer, $productConcreteTransfer);
     }
