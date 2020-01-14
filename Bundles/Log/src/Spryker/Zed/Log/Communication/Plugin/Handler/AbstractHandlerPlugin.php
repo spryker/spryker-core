@@ -128,6 +128,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
      */
     public function close(): void
     {
-        $this->getHandler()->close();
+        $handler = $this->getHandler();
+
+        if (method_exists($handler, 'close')) {
+            $this->getHandler()->close();
+        }
     }
 }
