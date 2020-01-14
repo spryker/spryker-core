@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander;
 
+use Generated\Shared\Transfer\MerchantMapTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
@@ -17,11 +18,11 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  */
-class ProductPageDataMerchantExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
+class ProductMerchantPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands the provided ProductAbstractPageSearch transfer object's data by reference.
+     * - Expands the provided ProductAbstractPageSearch transfer object's data by merchant names.
      *
      * @api
      *
@@ -34,8 +35,8 @@ class ProductPageDataMerchantExpanderPlugin extends AbstractPlugin implements Pr
     {
         $productPayloadTransfer = $this->getProductPayloadTransfer($productData);
 
-        if ($productPayloadTransfer->getMerchantNames()) {
-            $productAbstractPageSearchTransfer->setMerchantNames($productPayloadTransfer->getMerchantNames());
+        if ($productPayloadTransfer->getMerchants()) {
+            $this->expandProductPageDataWithMerchantData($productAbstractPageSearchTransfer, $productPayloadTransfer->getMerchants());
         }
     }
 
@@ -47,5 +48,22 @@ class ProductPageDataMerchantExpanderPlugin extends AbstractPlugin implements Pr
     protected function getProductPayloadTransfer(array $productData): ProductPayloadTransfer
     {
         return $productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
+     * @param array $merchantData
+     *
+     * @return void
+     */
+    protected function expandProductPageDataWithMerchantData(ProductPageSearchTransfer $productAbstractPageSearchTransfer, array $merchantData): void
+    {
+        $merchantMapTransfer = new MerchantMapTransfer();
+
+        if (count($merchantData[MerchantMapTransfer::NAMES])) {
+            $merchantMapTransfer->setNames($merchantData[MerchantMapTransfer::NAMES]);
+        }
+
+        $productAbstractPageSearchTransfer->setMerchantMap($merchantMapTransfer);
     }
 }

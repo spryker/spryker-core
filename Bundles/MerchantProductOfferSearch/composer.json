@@ -20,21 +20,17 @@
     "spryker/category": "*",
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
-    "spryker/locale": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/product-attribute": "*",
-    "spryker/product-category": "*",
-    "spryker/product-search": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/search": "*",
-    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
     "spryker/event": "To use event behavior.",
-    "spryker/merchant-product-offer": "Required for using the Listeners",
+    "spryker/merchant-product-offer": "Required for using the Listeners.",
     "spryker/search": "If you want to use Search plugins."
   },
   "autoload": {
@@ -50,8 +46,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
   },
   "extra": {
     "branch-alias": {

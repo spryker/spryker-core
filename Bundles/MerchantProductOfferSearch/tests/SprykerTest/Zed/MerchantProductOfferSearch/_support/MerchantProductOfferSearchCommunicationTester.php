@@ -17,15 +17,11 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\ProductPageDataMerchantExpanderPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\ProductPageDataLoaderMerchantPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\ProductPageMapMerchantExpanderPlugin;
-use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\ProductMerchantPageDataExpanderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\ProductMerchantPageDataLoaderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\ProductMerchantMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
-use Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 /**
  * Inherited Methods
@@ -82,9 +78,12 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $this->addStoreRelationToProductAbstracts($productAbstractTransfer);
         $this->addLocalizedAttributesToProductConcrete($productConcreteTransfer, $localizedAttributes);
 
-        $locale = $this->getLocaleFacade()->getCurrentLocale();
+        $locale = $this->getLocator()->locale()->facade()->getCurrentLocale();
         $categoryTransfer = $this->haveLocalizedCategory(['locale' => $locale]);
-        $this->getProductSearchFacade()->activateProductSearch($productConcreteTransfer->getIdProductConcrete(), [$locale]);
+        $this->getLocator()
+            ->productSearch()
+            ->facade()
+            ->activateProductSearch($productConcreteTransfer->getIdProductConcrete(), [$locale]);
 
         $productIdsToAssign = [$productAbstractTransfer->getIdProductAbstract()];
 
@@ -108,7 +107,7 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $data = $productPageSearchEntity->getStructuredData();
         $decodedData = json_decode($data, true);
 
-        $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_names']);
+        $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_map']['names']);
     }
 
     /**
@@ -131,21 +130,21 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER,
             [
-                new ProductPageMapMerchantExpanderPlugin(),
+                new ProductMerchantMapExpanderPlugin(),
             ]
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER,
             [
-                new ProductPageDataLoaderMerchantPlugin(),
+                new ProductMerchantPageDataLoaderPlugin(),
             ]
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER,
             [
-                MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA => new ProductPageDataMerchantExpanderPlugin(),
+                MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA => new ProductMerchantPageDataExpanderPlugin(),
             ]
         );
     }
@@ -186,7 +185,7 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
     {
         $storeIds = [];
 
-        foreach ($this->getStoreFacade()->getAllStores() as $storeTransfer) {
+        foreach ($this->getLocator()->store()->facade()->getAllStores() as $storeTransfer) {
             $storeIds[] = $storeTransfer->getIdStore();
         }
 
@@ -201,38 +200,9 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
      */
     protected function addProductToCategoryMappings(int $idCategory, array $productIdsToAssign): void
     {
-        $this->getProductCategoryFacade()->createProductCategoryMappings($idCategory, $productIdsToAssign);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface
-     */
-    protected function getProductCategoryFacade(): ProductCategoryFacadeInterface
-    {
-        return $this->getLocator()->productCategory()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
-    protected function getStoreFacade(): StoreFacadeInterface
-    {
-        return $this->getLocator()->store()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
-     */
-    protected function getLocaleFacade(): LocaleFacadeInterface
-    {
-        return $this->getLocator()->locale()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface
-     */
-    protected function getProductSearchFacade(): ProductSearchFacadeInterface
-    {
-        return $this->getLocator()->productSearch()->facade();
+        $this->getLocator()
+            ->productCategory()
+            ->facade()
+            ->createProductCategoryMappings($idCategory, $productIdsToAssign);
     }
 }

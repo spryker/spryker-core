@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader;
 
+use Generated\Shared\Transfer\MerchantMapTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 /**
@@ -16,10 +18,11 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
-class ProductPageDataLoaderMerchantPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
+class ProductMerchantPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Expands ProductPageLoadTransfer object with merchant names.
      *
      * @api
      *
@@ -29,13 +32,29 @@ class ProductPageDataLoaderMerchantPlugin extends AbstractPlugin implements Prod
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
     {
-        $productAbstractIdMerchantNamesMap = $this->getRepository()
-            ->getProductAbstractIdMerchantNamesMapByProductAbstractIds($loadTransfer->getProductAbstractIds());
+        $merchantProductAbstractData = $this->getRepository()
+            ->getMerchantProductAbstractDataByProductAbstractIds($loadTransfer->getProductAbstractIds());
 
-        $updatedPayloadTransfers = $this->updatePayloadTransfers($loadTransfer->getPayloadTransfers(), $productAbstractIdMerchantNamesMap);
-        $loadTransfer->setPayloadTransfers($updatedPayloadTransfers);
+        $productAbstractIdMerchantNamesMap = $this->mapProductAbstractIdToMerchantNames($merchantProductAbstractData);
 
-        return $loadTransfer;
+        $payloadTransfers = $this->updatePayloadTransfers($loadTransfer->getPayloadTransfers(), $productAbstractIdMerchantNamesMap);
+
+        return $loadTransfer->setPayloadTransfers($payloadTransfers);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function mapProductAbstractIdToMerchantNames(array $data): array
+    {
+        $productAbstractIdMerchantNamesMap = [];
+        foreach ($data as $row) {
+            $productAbstractIdMerchantNamesMap[$row[MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID]][MerchantMapTransfer::NAMES][] = $row[MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME];
+        }
+
+        return $productAbstractIdMerchantNamesMap;
     }
 
     /**
@@ -51,7 +70,7 @@ class ProductPageDataLoaderMerchantPlugin extends AbstractPlugin implements Prod
                 continue;
             }
 
-            $payloadTransfer->setMerchantNames($productAbstractIdMerchantNamesMap[$payloadTransfer->getIdProductAbstract()]);
+            $payloadTransfer->setMerchants($productAbstractIdMerchantNamesMap[$payloadTransfer->getIdProductAbstract()]);
         }
 
         return $payloadTransfers;

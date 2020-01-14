@@ -23,10 +23,6 @@
         </unique>
 
         <id-method-parameter value="spy_merchant_pk_seq"/>
-
-        <behavior name="event">
-            <parameter name="spy_merchant_all" column="*"/>
-        </behavior>
     </table>
 
 </database>

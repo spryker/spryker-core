@@ -20,15 +20,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductOfferSearchRepository extends AbstractRepository implements MerchantProductOfferSearchRepositoryInterface
 {
-    protected const KEY_ID = 'id';
-    protected const KEY_NAME = 'name';
+    public const KEY_ABSTRACT_PRODUCT_ID = 'id';
+    public const KEY_MERCHANT_NAME = 'name';
 
     /**
      * @param int[] $productAbstractIds
      *
      * @return array
      */
-    public function getProductAbstractIdMerchantNamesMapByProductAbstractIds(array $productAbstractIds): array
+    public function getMerchantProductAbstractDataByProductAbstractIds(array $productAbstractIds): array
     {
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
         $productOfferPropelQuery->useSpyMerchantQuery()
@@ -39,20 +39,13 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, Criteria::INNER_JOIN);
 
-        $data = $productOfferPropelQuery
-            ->select([static::KEY_ID, static::KEY_NAME])
+        return $productOfferPropelQuery
+            ->select([static::KEY_ABSTRACT_PRODUCT_ID, static::KEY_MERCHANT_NAME])
             ->where(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' IN (' . implode(',', $productAbstractIds) . ')')
-            ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_NAME)
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ID)
+            ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_MERCHANT_NAME)
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
             ->find()
             ->getData();
-
-        $productAbstractIdMerchantNamesMap = [];
-        foreach ($data as $row) {
-            $productAbstractIdMerchantNamesMap[$row[static::KEY_ID]][] = $row[static::KEY_NAME];
-        }
-
-        return $productAbstractIdMerchantNamesMap;
     }
 
     /**
@@ -68,13 +61,11 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductTableMap::COL_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductOfferTableMap::COL_FK_MERCHANT, SpyMerchantTableMap::COL_ID_MERCHANT, Criteria::INNER_JOIN);
 
-        $data = $productAbstractPropelQuery
+        return $productAbstractPropelQuery
             ->where(SpyMerchantTableMap::COL_ID_MERCHANT . ' IN (' . implode(',', $merchantIds) . ')')
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
-
-        return array_values($data);
     }
 
     /**
@@ -91,13 +82,11 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductOfferTableMap::COL_FK_MERCHANT, SpyMerchantTableMap::COL_ID_MERCHANT, Criteria::INNER_JOIN)
             ->addJoin(SpyMerchantTableMap::COL_ID_MERCHANT, SpyMerchantProfileTableMap::COL_FK_MERCHANT, Criteria::INNER_JOIN);
 
-        $data = $productAbstractPropelQuery
+        return $productAbstractPropelQuery
             ->where(SpyMerchantProfileTableMap::COL_ID_MERCHANT_PROFILE . ' IN (' . implode(',', $merchantProfileIds) . ')')
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
-
-        return array_values($data);
     }
 
     /**
@@ -112,12 +101,10 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU, Criteria::INNER_JOIN);
 
-        $data = $productAbstractPropelQuery
+        return $productAbstractPropelQuery
             ->where(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER . ' IN (' . implode(',', $productOfferIds) . ')')
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
-
-        return array_values($data);
     }
 }

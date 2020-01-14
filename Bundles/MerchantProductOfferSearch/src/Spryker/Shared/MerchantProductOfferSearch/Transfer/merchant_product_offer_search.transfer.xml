@@ -4,11 +4,15 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductPageSearch">
-        <property name="merchantNames" type="array" singular="merchantName"/>
+        <property name="merchantMap" type="MerchantMap"/>
+    </transfer>
+
+    <transfer name="MerchantMap">
+        <property name="names" type="array" singular="name"/>
     </transfer>
 
     <transfer name="ProductPayload">
-        <property name="merchantNames" type="array" singular="merchantName"/>
+        <property name="merchants" type="array" singular="merchant"/>
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
