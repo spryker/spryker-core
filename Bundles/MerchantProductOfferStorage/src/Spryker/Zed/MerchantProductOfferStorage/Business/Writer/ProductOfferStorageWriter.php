@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
@@ -81,7 +82,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             return;
         }
 
-        $this->writeProductOfferStorageCollectionByProductOfferReferences($productOfferReferences);
+        $this->writeByProductOfferReferences($productOfferReferences);
     }
 
     /**
@@ -89,30 +90,14 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      *
      * @return void
      */
-    protected function writeProductOfferStorageCollectionByProductOfferReferences(array $productOfferReferences): void
+    protected function writeByProductOfferReferences(array $productOfferReferences): void
     {
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
-        $productOfferReferencesToRemove = [];
-        $flippedProductOfferReferences = array_flip($productOfferReferences);
-
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $productOfferReferencesToRemove[$storeTransfer->getName()] = $productOfferReferences;
-        }
-
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
-            foreach ($productOfferTransfer->getStores() as $storeTransfer) {
-                unset($productOfferReferencesToRemove[$storeTransfer->getName()][$flippedProductOfferReferences[$productOfferTransfer->getProductOfferReference()]]);
-            }
-        }
-
-        foreach ($productOfferReferencesToRemove as $storeName => $productOfferReferences) {
-            $this->productOfferStorageDeleter->deleteProductOfferStorageCollectionByProductOfferReferencesAndStore(
-                $productOfferReferences,
-                $storeName
-            );
+            $this->deleteProductOfferReferenceByStore($productOfferTransfer);
         }
     }
 
@@ -128,5 +113,42 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return void
+     */
+    protected function deleteProductOfferReferenceByStore(ProductOfferTransfer $productOfferTransfer): void
+    {
+        $productOfferReferencesToRemoveGroupedByStoreName = $this->getProductOfferReferenceToRemoveGroupedByStoreName($productOfferTransfer);
+
+        foreach ($productOfferReferencesToRemoveGroupedByStoreName as $storeName => $productOfferReference) {
+            $this->productOfferStorageDeleter->deleteByProductOfferReferencesAndStore(
+                [$productOfferReference],
+                $storeName
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return array
+     */
+    protected function getProductOfferReferenceToRemoveGroupedByStoreName(ProductOfferTransfer $productOfferTransfer): array
+    {
+        $productOfferReferencesToRemoveGroupedByStoreName = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $productOfferReferencesToRemoveGroupedByStoreName[$storeTransfer->getName()] = $productOfferTransfer->getProductOfferReference();
+            foreach ($productOfferTransfer->getStores() as $productOfferStoreTransfer) {
+                if ($storeTransfer->getIdStore() === $productOfferStoreTransfer->getIdStore()) {
+                    unset($productOfferReferencesToRemoveGroupedByStoreName[$productOfferStoreTransfer->getName()]);
+                }
+            }
+        }
+
+        return $productOfferReferencesToRemoveGroupedByStoreName;
     }
 }
