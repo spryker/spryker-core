@@ -93,11 +93,13 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
                 ->endUse();
         }
 
-        if ($productOfferStockRequestTransfer->getStore() && $productOfferStockRequestTransfer->getStore()->getIdStore()) {
+        if ($productOfferStockRequestTransfer->getStore() && $productOfferStockRequestTransfer->getStore()->getName()) {
             $productOfferStockQuery
                 ->useStockQuery()
                     ->useStockStoreQuery()
-                        ->filterByFkStore($productOfferStockRequestTransfer->getStore()->getIdStore())
+                        ->useStoreQuery()
+                            ->filterByName($productOfferStockRequestTransfer->getStore()->getName())
+                        ->endUse()
                     ->endUse()
                 ->endUse();
         }
