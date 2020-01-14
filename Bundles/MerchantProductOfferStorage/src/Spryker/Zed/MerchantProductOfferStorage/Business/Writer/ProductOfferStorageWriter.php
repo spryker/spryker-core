@@ -49,6 +49,11 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $storeFacade;
 
     /**
+     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected $storeTransfers;
+
+    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
@@ -140,7 +145,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected function getProductOfferReferenceToRemoveGroupedByStoreName(ProductOfferTransfer $productOfferTransfer): array
     {
         $productOfferReferencesToRemoveGroupedByStoreName = [];
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+        foreach ($this->getStoreTransfers() as $storeTransfer) {
             $productOfferReferencesToRemoveGroupedByStoreName[$storeTransfer->getName()] = $productOfferTransfer->getProductOfferReference();
             foreach ($productOfferTransfer->getStores() as $productOfferStoreTransfer) {
                 if ($storeTransfer->getIdStore() === $productOfferStoreTransfer->getIdStore()) {
@@ -150,5 +155,21 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         }
 
         return $productOfferReferencesToRemoveGroupedByStoreName;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected function getStoreTransfers(): array
+    {
+        if ($this->storeTransfers) {
+            return $this->storeTransfers;
+        }
+
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $this->storeTransfers[] = $storeTransfer;
+        }
+
+        return $this->storeTransfers;
     }
 }

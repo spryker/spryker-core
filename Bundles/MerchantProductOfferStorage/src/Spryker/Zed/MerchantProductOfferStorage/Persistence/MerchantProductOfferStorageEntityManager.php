@@ -87,22 +87,6 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param string[] $productSkus
-     * @param string $storeName
-     *
-     * @return void
-     */
-    public function deleteProductConcreteProductOffersStorageByProductSkusAndStore(array $productSkus, string $storeName): void
-    {
-        $this->getFactory()
-            ->createProductConcreteProductOffersStoragePropelQuery()
-            ->filterByConcreteSku_In($productSkus)
-            ->filterByStore($storeName)
-            ->find()
-            ->delete();
-    }
-
-    /**
      * @param string[] $productOfferReferences
      * @param string $storeName
      *
