@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Product\Business\Product\Status;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 
 interface ProductConcreteStatusCheckerInterface
 {
@@ -17,4 +19,13 @@ interface ProductConcreteStatusCheckerInterface
      * @return bool
      */
     public function isActive(ProductConcreteTransfer $productConcreteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItemProductIsActive(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer;
 }
