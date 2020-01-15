@@ -140,12 +140,10 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     protected function resolveUserTransferByMerchantTransfer(MerchantTransfer $merchantTransfer): UserTransfer
     {
         if (!$this->userFacade->hasUserByUsername($merchantTransfer->getEmail())) {
-            return $this->createUserByMerchant($merchantTransfer);
+            return $this->createUserForMerchant($merchantTransfer);
         }
 
-        $userTransfer = $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
-
-        return $userTransfer;
+        return $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
     }
 
     /**
@@ -153,7 +151,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function createUserByMerchant(MerchantTransfer $merchantTransfer): UserTransfer
+    protected function createUserForMerchant(MerchantTransfer $merchantTransfer): UserTransfer
     {
         $utilTextService = new UtilTextService();
         $userTransfer = $this->fillUserTransferFromMerchantTransfer(new UserTransfer(), $merchantTransfer)
