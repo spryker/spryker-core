@@ -1,12 +1,12 @@
-namespace: SprykerTest
+namespace: ProductOfferStockDataImport
 include:
     - tests/SprykerTest/Zed/ProductOfferStockDataImport
 paths:
-    tests: tests/
-    log: tests/_output/
-    data: tests/_data/
-    support: tests/_support/
-    envs: tests/_envs/
+    tests: tests
+    log: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
 settings:
     bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
