@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface;
-use Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotCreatedException;
+use Spryker\Zed\MerchantUser\Communication\Exception\MerchantUserNotSavedException;
 
 /**
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
@@ -29,7 +29,7 @@ class MerchantUserMerchantPostSavePlugin extends AbstractPlugin implements Merch
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotCreatedException
+     * @throws \Spryker\Zed\MerchantUser\Communication\Exception\MerchantUserNotSavedException
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
@@ -38,7 +38,7 @@ class MerchantUserMerchantPostSavePlugin extends AbstractPlugin implements Merch
         $merchantUserResponseTransfer = $this->getFacade()->createMerchantUserByMerchant($merchantTransfer);
 
         if (!$merchantUserResponseTransfer->getIsSuccess()) {
-            throw new MerchantUserNotCreatedException($this->getErrorMessage($merchantUserResponseTransfer));
+            throw new MerchantUserNotSavedException($this->getErrorMessage($merchantUserResponseTransfer));
         }
 
         $merchantTransfer->setMerchantUser($merchantUserResponseTransfer->getMerchantUser());

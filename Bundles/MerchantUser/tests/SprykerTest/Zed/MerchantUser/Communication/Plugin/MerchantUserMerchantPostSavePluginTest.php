@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\MerchantUser\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotCreatedException;
+use Spryker\Zed\MerchantUser\Communication\Exception\MerchantUserNotSavedException;
 use Spryker\Zed\MerchantUser\Communication\Plugin\Merchant\MerchantUserMerchantPostSavePlugin;
 
 /**
@@ -68,7 +68,7 @@ class MerchantUserMerchantPostSavePluginTest extends Unit
         $merchantUserMerchantPostSavePlugin = new MerchantUserMerchantPostSavePlugin();
 
         // Assert
-        $this->expectException(MerchantUserNotCreatedException::class);
+        $this->expectException(MerchantUserNotSavedException::class);
 
         // Act
         $merchantUserMerchantPostSavePlugin->execute($merchantTransferWithSameEmail);

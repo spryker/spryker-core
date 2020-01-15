@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantUser\Business\Exception;
+namespace Spryker\Zed\MerchantUser\Communication\Exception;
 
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 
-class MerchantUserNotCreatedException extends MerchantNotSavedException
+class MerchantUserNotSavedException extends MerchantNotSavedException
 {
 }

@@ -19,8 +19,6 @@ interface MerchantPostSavePluginInterface
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException
-     *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function execute(MerchantTransfer $merchantTransfer): MerchantTransfer;

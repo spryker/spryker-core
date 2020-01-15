@@ -13,32 +13,32 @@ use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 class MerchantUserMapper
 {
     /**
-     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUser $spyMerchantUser
+     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUser $merchantUserEntity
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
     public function mapMerchantUserEntityToMerchantUserTransfer(
-        SpyMerchantUser $spyMerchantUser,
+        SpyMerchantUser $merchantUserEntity,
         MerchantUserTransfer $merchantUserTransfer
     ): MerchantUserTransfer {
-        $merchantUserTransfer = $merchantUserTransfer->fromArray($spyMerchantUser->toArray(), true);
+        $merchantUserTransfer = $merchantUserTransfer->fromArray($merchantUserEntity->toArray(), true);
 
         return $merchantUserTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
-     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUser $spyMerchantUser
+     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUser $merchantUserEntity
      *
      * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUser
      */
     public function mapMerchantUserTransferToMerchantUserEntity(
         MerchantUserTransfer $merchantUserTransfer,
-        SpyMerchantUser $spyMerchantUser
+        SpyMerchantUser $merchantUserEntity
     ): SpyMerchantUser {
-        $spyMerchantUser->fromArray($merchantUserTransfer->toArray());
+        $merchantUserEntity->fromArray($merchantUserTransfer->toArray());
 
-        return $spyMerchantUser;
+        return $merchantUserEntity;
     }
 }

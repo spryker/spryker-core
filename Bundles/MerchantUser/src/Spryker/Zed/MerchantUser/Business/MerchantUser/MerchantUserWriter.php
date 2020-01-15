@@ -63,7 +63,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
         $merchantTransfer->requireEmail()
             ->requireMerchantProfile();
 
-        $merchantUserResponseTransfer = $this->createMerchantUserResponseTransfer();
+        $merchantUserResponseTransfer = (new MerchantUserResponseTransfer())->setIsSuccess(false);
 
         $merchantUserTransferByMerchant = $this->findMerchantUser(null, $merchantTransfer);
         if ($merchantUserTransferByMerchant) {
@@ -74,16 +74,11 @@ class MerchantUserWriter implements MerchantUserWriterInterface
                 ->setMerchantUser($merchantUserTransferByMerchant->setUser($userTransfer));
         }
 
-        if ($this->userFacade->hasUserByUsername($merchantTransfer->getEmail())) {
-            $userTransfer = $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
-            $this->userFacade->updateUser($this->fillUserTransferFromMerchantTransfer($userTransfer, $merchantTransfer));
-        } else {
-            $userTransfer = $this->createUserByMerchant($merchantTransfer);
-        }
+        $userTransfer = $this->getUserTransferByMerchantTransfer($merchantTransfer);
 
         $merchantUserTransferByUser = $this->findMerchantUser($userTransfer);
         if (!$merchantUserTransferByUser) {
-            $merchantUserTransferByUser = $this->merchantUserEntityManager->create(
+            $merchantUserTransferByUser = $this->merchantUserEntityManager->createMerchantUser(
                 (new MerchantUserTransfer())
                     ->setFkMerchant($merchantTransfer->getIdMerchant())
                     ->setFkUser($userTransfer->getIdUser())
@@ -91,9 +86,9 @@ class MerchantUserWriter implements MerchantUserWriterInterface
         }
 
         if ($merchantUserTransferByUser->getFkMerchant() !== $merchantTransfer->getIdMerchant()) {
-            return $this->addErrorMessage(
-                $merchantUserResponseTransfer,
-                sprintf('A user with email %s is already connected with another merchant', $merchantTransfer->getEmail())
+            return $merchantUserResponseTransfer->addError(
+                (new MerchantUserErrorTransfer())
+                    ->setMessage(sprintf('A user with email %s is already connected with another merchant', $merchantTransfer->getEmail()))
             );
         }
 
@@ -102,23 +97,20 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
-     */
-    protected function createMerchantUserResponseTransfer(): MerchantUserResponseTransfer
-    {
-        return (new MerchantUserResponseTransfer())
-            ->setIsSuccess(false);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserResponseTransfer
-     * @param string $message
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function addErrorMessage(MerchantUserResponseTransfer $merchantUserResponseTransfer, string $message): MerchantUserResponseTransfer
+    protected function getUserTransferByMerchantTransfer(MerchantTransfer $merchantTransfer): UserTransfer
     {
-        return $merchantUserResponseTransfer->addError((new MerchantUserErrorTransfer())->setMessage($message));
+        if (!$this->userFacade->hasUserByUsername($merchantTransfer->getEmail())) {
+            return $this->createUserByMerchant($merchantTransfer);
+        }
+
+        $userTransfer = $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
+        $this->userFacade->updateUser($this->fillUserTransferFromMerchantTransfer($userTransfer, $merchantTransfer));
+
+        return $userTransfer;
     }
 
     /**
