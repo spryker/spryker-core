@@ -170,12 +170,12 @@ class AvailabilityTable extends AbstractTable
      */
     protected function getStockQuantity(array $productItem, bool $isBundleProduct = false): Decimal
     {
-        $decimal = (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0));
+        $quantity = (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0));
         if ($isBundleProduct) {
-            return $decimal->floor()->trim();
+            return $quantity->floor()->trim();
         }
 
-        return $decimal->trim();
+        return $quantity->trim();
     }
 
     /**
