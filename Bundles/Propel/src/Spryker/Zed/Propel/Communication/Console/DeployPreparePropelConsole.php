@@ -5,25 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Setup\Communication\Console;
+namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
-use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
-use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
- * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
- * @deprecated Use `\Spryker\Zed\Propel\Communication\Console\DeployPreparePropelConsole` instead.
- * @see \Spryker\Zed\Propel\Communication\Console\DeployPreparePropelConsole
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class DeployPreparePropelConsole extends Console
 {
-    public const COMMAND_NAME = 'setup:deploy:prepare-propel';
+    public const COMMAND_NAME = 'propel:deploy:prepare-propel';
     public const DESCRIPTION = 'Prepares Propel configuration on appserver';
 
     /**
@@ -45,10 +40,7 @@ class DeployPreparePropelConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->warning('The console command ' . self::COMMAND_NAME . ' is deprecated. Use propel:deploy:prepare-propel instead');
-
         $dependingCommands = [
-            ConvertConfigConsole::COMMAND_NAME,
             SchemaCopyConsole::COMMAND_NAME,
             BuildModelConsole::COMMAND_NAME,
         ];
