@@ -107,14 +107,14 @@ class AvailabilityHelper implements AvailabilityHelperInterface
      */
     protected function getStockQuantity(SpyProductAbstract $productAbstractEntity): Decimal
     {
-        $decimal = (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::STOCK_QUANTITY) ?? 0));
+        $quantity = (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::STOCK_QUANTITY) ?? 0));
         foreach ($productAbstractEntity->getSpyProducts() as $productEntity) {
             if ($productEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
-                return $decimal->floor()->trim();
+                return $quantity->floor()->trim();
             }
         }
 
-        return $decimal->trim();
+        return $quantity->trim();
     }
 
     /**

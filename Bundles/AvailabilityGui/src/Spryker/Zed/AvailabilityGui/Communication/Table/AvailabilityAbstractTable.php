@@ -136,7 +136,7 @@ class AvailabilityAbstractTable extends AbstractTable
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
-                AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($haveBundledProducts, $productAbstractEntity),
+                AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity, $haveBundledProducts),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
                 static::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
                 AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($isNeverOutOfStock) ? 'Yes' : 'No',
@@ -192,12 +192,12 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param bool $isBundleProduct
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param bool $isBundleProduct
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getStockQuantity(bool $isBundleProduct, SpyProductAbstract $productAbstractEntity): Decimal
+    protected function getStockQuantity(SpyProductAbstract $productAbstractEntity, bool $isBundleProduct): Decimal
     {
         $decimal = (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::STOCK_QUANTITY) ?? 0));
         if ($isBundleProduct) {
