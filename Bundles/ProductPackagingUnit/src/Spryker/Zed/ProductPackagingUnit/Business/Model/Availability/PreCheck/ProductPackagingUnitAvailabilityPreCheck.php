@@ -131,10 +131,10 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     protected function isLeadProductItemTransfer(string $leadProductSku, ItemTransfer $itemTransfer): bool
     {
         $amountLeadProduct = $itemTransfer->getAmountLeadProduct();
-        $isEqualProductSku = $leadProductSku === $itemTransfer->getSku();
-        $isEqualLeadProductSku = $leadProductSku !== $amountLeadProduct->getSku();
+        $isQuantityLeadProduct = $leadProductSku === $itemTransfer->getSku();
+        $isAmountLeadProduct = $amountLeadProduct && $leadProductSku === $amountLeadProduct->getSku();
 
-        return $isEqualProductSku && (!$amountLeadProduct || $isEqualLeadProductSku);
+        return $isQuantityLeadProduct && !$isAmountLeadProduct;
     }
 
     /**
