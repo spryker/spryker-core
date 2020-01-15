@@ -151,7 +151,7 @@ class AvailabilityTable extends AbstractTable
                 AvailabilityHelperInterface::CONCRETE_SKU => $productItem[AvailabilityHelperInterface::CONCRETE_SKU],
                 AvailabilityHelperInterface::CONCRETE_NAME => $productItem[AvailabilityHelperInterface::CONCRETE_NAME],
                 AvailabilityHelperInterface::CONCRETE_AVAILABILITY => $isNeverOutOfStock ? static::NOT_APPLICABLE : (new Decimal($productItem[AvailabilityHelperInterface::CONCRETE_AVAILABILITY] ?? 0))->trim(),
-                AvailabilityHelperInterface::STOCK_QUANTITY => (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0))->trim(),
+                AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($isBundleProduct, $productItem),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => $isBundleProduct ? static::NOT_APPLICABLE : $this->calculateReservation($productItem)->trim(),
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
                 AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $isNeverOutOfStock ? 'Yes' : 'No',
@@ -160,6 +160,22 @@ class AvailabilityTable extends AbstractTable
         }
 
         return $result;
+    }
+
+    /**
+     * @param bool $isBundleProduct
+     * @param array $productItem
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function getStockQuantity(bool $isBundleProduct, array $productItem): Decimal
+    {
+        $decimal = (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0));
+        if ($isBundleProduct) {
+            return $decimal->floor()->trim();
+        }
+
+        return $decimal->trim();
     }
 
     /**
