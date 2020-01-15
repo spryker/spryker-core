@@ -47,4 +47,12 @@
         <property name="lastName" type="string"/>
     </transfer>
 
+    <transfer name="MerchantResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantError">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>
