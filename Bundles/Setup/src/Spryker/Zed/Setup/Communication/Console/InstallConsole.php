@@ -41,7 +41,7 @@ class InstallConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->warning('This command is deprecated without replacement. Use `vendor/bin/install` instead');
+        $this->warning('This command is deprecated. Use `spryker/install` tool and `vendor/bin/install` instead.');
 
         $setupInstallCommandNames = $this->getFactory()->getSetupInstallCommandNames();
 
