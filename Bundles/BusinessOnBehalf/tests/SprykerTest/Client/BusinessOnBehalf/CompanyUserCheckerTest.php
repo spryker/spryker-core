@@ -9,12 +9,12 @@ namespace SprykerTest\Client\BusinessOnBehalf;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\BusinessOnBehalf\Checker\CompanyUserChecker;
 use Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group BusinessOnBehalf
@@ -66,7 +66,7 @@ class CompanyUserCheckerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\BusinessOnBehalf\Checker\CompanyUserChecker
      */
-    protected function createCompanyUserCheckerMock(array $companyUserChangeAllowedCheckPlugins = []): MockObject
+    protected function createCompanyUserCheckerMock(array $companyUserChangeAllowedCheckPlugins = []): CompanyUserChecker
     {
         return $this->getMockBuilder(CompanyUserChecker::class)
             ->setConstructorArgs([

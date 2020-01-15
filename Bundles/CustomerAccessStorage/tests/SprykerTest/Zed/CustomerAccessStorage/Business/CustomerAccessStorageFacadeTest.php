@@ -17,6 +17,7 @@ use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStoragePersisten
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerAccessStorage
@@ -64,7 +65,7 @@ class CustomerAccessStorageFacadeTest extends Unit
         $this->tester->getFacade()->publish();
         $customerAccessEntity = $this->getUnauthenticatedCustomerAccessEntity();
 
-        $this->assertContains(json_encode($customerAccessTransfer->getContentTypeAccess()[0]->toArray()), json_encode($customerAccessEntity->getData()));
+        $this->assertStringContainsString(json_encode($customerAccessTransfer->getContentTypeAccess()[0]->toArray()), json_encode($customerAccessEntity->getData()));
     }
 
     /**

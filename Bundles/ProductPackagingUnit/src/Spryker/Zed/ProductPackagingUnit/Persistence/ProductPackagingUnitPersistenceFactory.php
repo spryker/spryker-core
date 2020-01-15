@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
-use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -40,14 +39,6 @@ class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
-     */
-    public function createProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
-    {
-        return SpyProductPackagingLeadProductQuery::create();
-    }
-
-    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapperInterface
      */
     public function createProductPackagingUnitMapper(): ProductPackagingUnitMapperInterface
@@ -58,7 +49,7 @@ class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function createSalesOrderItemQuery(): SpySalesOrderItemQuery
+    public function getSalesOrderItemQuery(): SpySalesOrderItemQuery
     {
         return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
     }

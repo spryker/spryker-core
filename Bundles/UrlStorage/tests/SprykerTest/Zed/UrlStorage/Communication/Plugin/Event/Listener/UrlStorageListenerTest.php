@@ -28,6 +28,7 @@ use SprykerTest\Zed\UrlStorage\UrlStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group UrlStorage
@@ -53,7 +54,7 @@ class UrlStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -197,7 +198,7 @@ class UrlStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\UrlStorage\Business\UrlStorageFacade
      */
-    protected function getUrlStorageFacade()
+    protected function getUrlStorageFacade(): UrlStorageFacade
     {
         $factory = new UrlStorageBusinessFactory();
         $factory->setConfig(new UrlStorageConfigMock());

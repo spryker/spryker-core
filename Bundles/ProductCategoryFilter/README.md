@@ -1,6 +1,6 @@
 # ProductCategoryFilter Module
-[![Build Status](https://travis-ci.org/spryker/ProductCategoryFilter.svg)](https://travis-ci.org/spryker/ProductCategoryFilter)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductCategoryFilter/badge.svg)](https://coveralls.io/github/spryker/ProductCategoryFilter)
+[![Build Status](https://travis-ci.org/spryker/product-category-filter.svg)](https://travis-ci.org/spryker/product-category-filter)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ProductCategoryFilter module allows the manipulation of search filters in catalog page per product category. 
 

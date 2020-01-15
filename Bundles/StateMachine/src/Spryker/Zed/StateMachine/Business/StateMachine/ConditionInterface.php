@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
@@ -33,7 +34,7 @@ interface ConditionInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][] $itemsWithOnEnterEvent
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName);
 }

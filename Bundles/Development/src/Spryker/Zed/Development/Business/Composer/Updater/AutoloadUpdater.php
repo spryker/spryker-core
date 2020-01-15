@@ -61,10 +61,12 @@ class AutoloadUpdater implements UpdaterInterface
      * @var array
      */
     protected $applications = [
+        'Service',
         'Client',
         'Shared',
         'Yves',
         'Zed',
+        'Glue',
     ];
 
     /**
@@ -112,7 +114,7 @@ class AutoloadUpdater implements UpdaterInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         $composerJson = $this->updateAutoload($composerJson, $composerJsonFile);
 
@@ -334,7 +336,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getPath(array $pathParts)
     {
-        return implode($pathParts, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
     }
 
     /**

@@ -4,8 +4,8 @@
   "description": "Discount module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/cart-code-extension": "^1.0.1",
+    "php": ">=7.2",
+    "spryker/cart-code-extension": "^1.1.0",
     "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
     "spryker/currency": "^3.1.0",
     "spryker/discount-extension": "^1.1.0",
@@ -16,7 +16,7 @@
     "spryker/money": "^2.0.0",
     "spryker/product-option": "^6.0.0 || ^8.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.1.0"
@@ -47,9 +47,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "9.0.x-dev"
     }
   },
   "config": {

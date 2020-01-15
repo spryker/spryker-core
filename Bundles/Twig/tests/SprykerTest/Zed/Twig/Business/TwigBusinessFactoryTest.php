@@ -13,6 +13,7 @@ use Spryker\Zed\Twig\Business\TwigBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig
@@ -25,7 +26,7 @@ class TwigBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateCacheWarmerReturnsCacheWarmerInterface()
+    public function testCreateCacheWarmerReturnsCacheWarmerInterface(): void
     {
         $twigBusinessFactory = new TwigBusinessFactory();
         $this->assertInstanceOf(CacheWarmerInterface::class, $twigBusinessFactory->createCacheWarmer());

@@ -19,7 +19,7 @@ use Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInter
 class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerAdapterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

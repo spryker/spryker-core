@@ -1,6 +1,4 @@
 namespace: ProductList
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductList
 

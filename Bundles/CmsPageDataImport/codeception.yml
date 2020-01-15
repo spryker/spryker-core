@@ -1,5 +1,4 @@
 namespace: CmsPageDataImport
-actor: Tester
 include:
     - tests/SprykerTest/Zed/CmsPageDataImport
 paths:

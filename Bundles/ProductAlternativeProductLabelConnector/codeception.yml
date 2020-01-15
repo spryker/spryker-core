@@ -1,5 +1,4 @@
 namespace: ProductAlternativeProductLabelConnector
-actor: Tester
 include:
     - tests/SprykerTest/Zed/ProductAlternativeProductLabelConnector
 paths:

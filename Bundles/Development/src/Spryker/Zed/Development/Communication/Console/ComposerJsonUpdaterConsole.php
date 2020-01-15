@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @internal
+ *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
@@ -86,7 +88,7 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
             $commands = [];
 
             foreach ($modifiedModules as $modifiedModule) {
-                $commands[] = 'console ' . static::COMMAND_NAME . ' ' . $modifiedModule;
+                $commands[] = 'vendor/bin/console ' . static::COMMAND_NAME . ' ' . $modifiedModule;
             }
 
             $this->info(

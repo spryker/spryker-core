@@ -17,6 +17,7 @@ use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms
@@ -44,7 +45,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -54,7 +55,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testSaveCmsGlossaryShouldPersistUpdatedTranslations()
+    public function testSaveCmsGlossaryShouldPersistUpdatedTranslations(): void
     {
         $fixtures = $this->createCmsPageTransferFixtures();
         $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
@@ -90,7 +91,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePageShouldPersistGivenCmsPage()
+    public function testCreatePageShouldPersistGivenCmsPage(): void
     {
         $fixtures = $this->createCmsPageTransferFixtures();
         $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
@@ -110,7 +111,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testUpdatePageShouldUpdatePageWithNewData()
+    public function testUpdatePageShouldUpdatePageWithNewData(): void
     {
         $fixtures = $this->createCmsPageTransferFixtures();
         $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
@@ -142,7 +143,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testActivatePageShouldActivateInactivePage()
+    public function testActivatePageShouldActivateInactivePage(): void
     {
         $fixtures = $this->createCmsPageTransferFixtures();
         $fixtures[CmsPageTransfer::IS_ACTIVE] = false;
@@ -174,7 +175,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testDeActivatePageShouldActivateInactivePage()
+    public function testDeActivatePageShouldActivateInactivePage(): void
     {
         $fixtures = $this->createCmsPageTransferFixtures();
         $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
@@ -191,7 +192,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testGetPageUrlPrefixShouldBuildUrlPrefixFromGivenLocalName()
+    public function testGetPageUrlPrefixShouldBuildUrlPrefixFromGivenLocalName(): void
     {
         $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
         $cmsPageAttributeTransfer->setLocaleName('en_US');
@@ -204,7 +205,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testBuildPageUrlWhenUrlWithoutPrefixGivenShouldBuildValidUrl()
+    public function testBuildPageUrlWhenUrlWithoutPrefixGivenShouldBuildValidUrl(): void
     {
         $cmsPageAttributesTransfer = new CmsPageAttributesTransfer();
         $cmsPageAttributesTransfer->setLocaleName('en_US');
@@ -218,7 +219,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testBuildPageUrlWhenUrlWithPrefixGivenShouldBuildValidUrl()
+    public function testBuildPageUrlWhenUrlWithPrefixGivenShouldBuildValidUrl(): void
     {
         $cmsPageAttributesTransfer = new CmsPageAttributesTransfer();
         $cmsPageAttributesTransfer->setLocaleName('en_US');
@@ -232,7 +233,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testPublishPageShouldPersistCmsVersion()
+    public function testPublishPageShouldPersistCmsVersion(): void
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $cmsVersionTransfer = $this->cmsFacade->publishWithVersion($idCmsPage);
@@ -246,7 +247,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testPublishPageShouldGetNewVersion()
+    public function testPublishPageShouldGetNewVersion(): void
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
@@ -258,7 +259,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testRollbackPageShouldGetOldData()
+    public function testRollbackPageShouldGetOldData(): void
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
@@ -292,7 +293,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testRevertPageShouldGetOldData()
+    public function testRevertPageShouldGetOldData(): void
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $this->cmsFacade->publishWithVersion($idCmsPage);
@@ -325,7 +326,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testFindLatestCmsVersionReturnsLatestVersion()
+    public function testFindLatestCmsVersionReturnsLatestVersion(): void
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
@@ -339,7 +340,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testFindAllCmsVersionByReturnsAllVersions()
+    public function testFindAllCmsVersionByReturnsAllVersions(): void
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $this->cmsFacade->publishWithVersion($idCmsPage);
@@ -353,7 +354,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testFindCmsVersionByVersionNumberReturnsSameVersion()
+    public function testFindCmsVersionByVersionNumberReturnsSameVersion(): void
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $this->cmsFacade->publishWithVersion($idCmsPage);
@@ -367,7 +368,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsVersionDataRetrievesDraftDataFromDatabase()
+    public function testGetCmsVersionDataRetrievesDraftDataFromDatabase(): void
     {
         // Arrange
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
@@ -395,7 +396,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return int
      */
-    protected function createCmsPageWithGlossaryAttributes()
+    protected function createCmsPageWithGlossaryAttributes(): int
     {
         $fixtures = $this->createCmsPageTransferFixtures();
         $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
@@ -419,7 +420,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return void
      */
-    public function testCreateCmsPageSavesStoreRelation()
+    public function testCreateCmsPageSavesStoreRelation(): void
     {
         $storeFacade = $this->createStoreFacade();
 
@@ -490,7 +491,7 @@ class CmsFacadePageTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    protected function createCmsPageTransfer(array $fixtures)
+    protected function createCmsPageTransfer(array $fixtures): CmsPageTransfer
     {
         $cmsPageTransfer = new CmsPageTransfer();
         $cmsPageTransfer->fromArray($fixtures, true);
@@ -501,7 +502,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return array
      */
-    protected function createCmsPageTransferFixtures()
+    protected function createCmsPageTransferFixtures(): array
     {
         $fixtures = [
             CmsPageTransfer::IS_ACTIVE => 1,
@@ -550,7 +551,7 @@ class CmsFacadePageTest extends Unit
      *
      * @return void
      */
-    protected function assertPageAttributes(CmsPageTransfer $cmsPageTransfer, CmsPageTransfer $persistedCmsPageTransfer)
+    protected function assertPageAttributes(CmsPageTransfer $cmsPageTransfer, CmsPageTransfer $persistedCmsPageTransfer): void
     {
         foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
             foreach ($persistedCmsPageTransfer->getPageAttributes() as $persistedCmsPageAttributesTransfer) {
@@ -571,7 +572,7 @@ class CmsFacadePageTest extends Unit
      *
      * @return void
      */
-    protected function assertPageMetaAttributes(CmsPageTransfer $cmsPageTransfer, CmsPageTransfer $persistedCmsPageTransfer)
+    protected function assertPageMetaAttributes(CmsPageTransfer $cmsPageTransfer, CmsPageTransfer $persistedCmsPageTransfer): void
     {
         foreach ($cmsPageTransfer->getMetaAttributes() as $cmsPageMetaAttributesTransfer) {
             foreach ($persistedCmsPageTransfer->getMetaAttributes() as $persistedCmsPageMetaAttributesTransfer) {
@@ -588,7 +589,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return array
      */
-    protected function getTranslationFixtures()
+    protected function getTranslationFixtures(): array
     {
         $translationFixtures = [
             'en_US' => 'english translation',
@@ -619,7 +620,7 @@ class CmsFacadePageTest extends Unit
     /**
      * @return \Spryker\Zed\Store\Business\StoreFacade
      */
-    protected function createStoreFacade()
+    protected function createStoreFacade(): StoreFacade
     {
         return new StoreFacade();
     }

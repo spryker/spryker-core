@@ -13,6 +13,7 @@ use Spryker\Service\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Kernel
@@ -24,7 +25,7 @@ class AbstractDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCallProvideServiceLayerDependenciesMustReturnContainer()
+    public function testCallProvideServiceLayerDependenciesMustReturnContainer(): void
     {
         $container = new Container();
 
@@ -37,7 +38,7 @@ class AbstractDependencyProviderTest extends Unit
     /**
      * @return \Spryker\Service\Kernel\AbstractBundleDependencyProvider
      */
-    private function getAbstractDependencyProviderMock()
+    private function getAbstractDependencyProviderMock(): AbstractBundleDependencyProvider
     {
         return $this->getMockForAbstractClass(AbstractBundleDependencyProvider::class);
     }

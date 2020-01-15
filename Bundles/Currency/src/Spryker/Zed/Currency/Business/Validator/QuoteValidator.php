@@ -58,7 +58,7 @@ class QuoteValidator implements QuoteValidatorInterface
             return $this->addValidationError($quoteValidationResponseTransfer, static::ERROR_MESSAGE_STORE_NOT_FOUND);
         }
 
-        if ($storeTransfer && array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes()) === false) {
+        if (array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes(), true) === false) {
             return $this->addValidationError(
                 $quoteValidationResponseTransfer,
                 static::MESSAGE_CURRENCY_DATA_IS_INCORRECT,

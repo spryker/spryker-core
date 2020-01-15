@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
+use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleListFinder implements PriceProductScheduleListFinderInterface
 {
@@ -22,12 +23,20 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
     protected $priceProductScheduleRepository;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
+     */
+    protected $priceProductScheduleConfig;
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
+     * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $priceProductScheduleConfig
      */
     public function __construct(
-        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
+        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
+        PriceProductScheduleConfig $priceProductScheduleConfig
     ) {
         $this->priceProductScheduleRepository = $priceProductScheduleRepository;
+        $this->priceProductScheduleConfig = $priceProductScheduleConfig;
     }
 
     /**
@@ -58,6 +67,17 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
         return $priceProductScheduleListResponseTransfer
             ->setIsSuccess(true)
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer|null
+     */
+    public function findDefaultPriceProductScheduleList(): ?PriceProductScheduleListTransfer
+    {
+        return $this->priceProductScheduleRepository
+            ->findPriceProductScheduleListByName(
+                $this->priceProductScheduleConfig->getPriceProductScheduleListDefaultName()
+            );
     }
 
     /**

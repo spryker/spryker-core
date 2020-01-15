@@ -32,6 +32,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     public function resolve(BundleControllerActionInterface $bundleControllerAction)
     {
         $this->bundleControllerAction = $bundleControllerAction;
+
         if ($this->canResolve()) {
             return $this->getResolvedClassInstance();
         }

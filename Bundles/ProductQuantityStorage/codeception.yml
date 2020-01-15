@@ -1,6 +1,4 @@
 namespace: ProductQuantityStorage
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductQuantityStorage
 

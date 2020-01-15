@@ -1,7 +1,6 @@
 namespace: CatalogSearchRestApi
 include:
     - tests/SprykerTest/Glue/CatalogSearchRestApi
-actor: Tester
 paths:
     tests: tests
     log: tests/_output

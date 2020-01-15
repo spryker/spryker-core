@@ -1,5 +1,4 @@
 namespace: SprykerTest\Zed\ShipmentDiscountConnector
-actor: Tester
 paths:
     tests: .
     data: ../../../_data
@@ -21,3 +20,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper

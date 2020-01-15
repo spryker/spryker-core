@@ -77,7 +77,8 @@ class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidat
     protected function getProductOptionValueStorePrice(CartChangeTransfer $cartChangeTransfer, ProductOptionTransfer $productOptionTransfer)
     {
         $productOptionTransfer = $this->productOptionFacade->getProductOptionValueById(
-            $productOptionTransfer->getIdProductOptionValue()
+            $productOptionTransfer->getIdProductOptionValue(),
+            $cartChangeTransfer->getQuote()->getCurrency()->getCode()
         );
 
         $priceMode = $this->getPriceMode($cartChangeTransfer);

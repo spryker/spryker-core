@@ -31,6 +31,7 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandler;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine
@@ -44,14 +45,6 @@ class StateMachineFacadeTest extends Unit
     public const TESTING_SM = 'TestingSm';
     public const TEST_PROCESS_NAME = 'TestProcess';
     public const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
-
-    /**
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-    }
 
     /**
      * @return void

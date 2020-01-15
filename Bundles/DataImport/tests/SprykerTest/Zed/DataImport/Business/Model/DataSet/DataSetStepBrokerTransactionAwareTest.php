@@ -16,6 +16,7 @@ use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterfa
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport
@@ -31,7 +32,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteOpensTransactionOnFirstCall()
+    public function testExecuteOpensTransactionOnFirstCall(): void
     {
         $propelConnectionMock = $this->getPropelConnectionMock(1, 1, false, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
@@ -44,7 +45,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return void
      */
-    public function testTransactionOnlyOpenedOnceForConfiguredBulkSize()
+    public function testTransactionOnlyOpenedOnceForConfiguredBulkSize(): void
     {
         $propelConnectionMock = $this->getPropelConnectionMock(1, 1, false, true, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
@@ -58,7 +59,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return void
      */
-    public function testTransactionIsOpenedForeachConfiguredBulkSize()
+    public function testTransactionIsOpenedForeachConfiguredBulkSize(): void
     {
         $propelConnectionMock = $this->getPropelConnectionMock(2, 2, false, true, true, false, true, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
@@ -74,7 +75,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return void
      */
-    public function testTransactionNotOpenedWhenAlreadyInTransaction()
+    public function testTransactionNotOpenedWhenAlreadyInTransaction(): void
     {
         $propelConnectionMock = $this->getPropelConnectionMock(0, 1, true, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
@@ -87,7 +88,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return void
      */
-    public function testTransactionIsClosedForeachConfiguredBulkSize()
+    public function testTransactionIsClosedForeachConfiguredBulkSize(): void
     {
         $propelConnectionMock = $this->getPropelConnectionMock(1, 1, false, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
@@ -100,7 +101,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return void
      */
-    public function testTransactionIsOnlyClosedOnceForConfiguredBulkSize()
+    public function testTransactionIsOnlyClosedOnceForConfiguredBulkSize(): void
     {
         $propelConnectionMock = $this->getPropelConnectionMock(1, 1, false, true, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
@@ -114,7 +115,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return void
      */
-    public function testTransactionIsAlwaysClosedWhenThereIsAnOpenedOne()
+    public function testTransactionIsAlwaysClosedWhenThereIsAnOpenedOne(): void
     {
         $propelConnectionMock = $this->getPropelConnectionMock(2, 2, false, true, true, false, true, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
@@ -130,7 +131,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return void
      */
-    public function testThrowsExceptionIfNoOpenTransactionGiven()
+    public function testThrowsExceptionIfNoOpenTransactionGiven(): void
     {
         $propelConnectionMock = $this->getPropelConnectionMock(1, 0, false);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
@@ -165,7 +166,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface
      */
-    private function getPropelConnectionMock($beginTransactionCalledCount, $endTransactionCalledCount, ...$isInTransaction)
+    private function getPropelConnectionMock(int $beginTransactionCalledCount, int $endTransactionCalledCount, ...$isInTransaction): DataImportToPropelConnectionInterface
     {
         $mockBuilder = $this->getMockBuilder(DataImportToPropelConnectionInterface::class)
             ->setMethods(['inTransaction', 'beginTransaction', 'endTransaction', 'rollBack']);

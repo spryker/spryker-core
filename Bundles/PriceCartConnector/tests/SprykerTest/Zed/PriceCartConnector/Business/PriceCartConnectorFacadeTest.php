@@ -9,9 +9,11 @@ namespace SprykerTest\Zed\PriceCartConnector\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
+use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceCartConnector
@@ -30,7 +32,7 @@ class PriceCartConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface
      */
-    protected function createPriceCartConnectorFacade()
+    protected function createPriceCartConnectorFacade(): PriceCartConnectorFacadeInterface
     {
         return new PriceCartConnectorFacade();
     }

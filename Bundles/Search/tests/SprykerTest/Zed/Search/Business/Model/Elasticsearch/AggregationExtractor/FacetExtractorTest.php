@@ -16,6 +16,7 @@ use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTra
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search
@@ -31,7 +32,7 @@ class FacetExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testExtractDataFromAggregations()
+    public function testExtractDataFromAggregations(): void
     {
         $testFieldName = 'field1';
 
@@ -58,7 +59,7 @@ class FacetExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testExtractDataFromAggregationsStandaloneAggregation()
+    public function testExtractDataFromAggregationsStandaloneAggregation(): void
     {
         $testFieldName = 'field1';
 
@@ -90,7 +91,7 @@ class FacetExtractorTest extends Unit
      *
      * @return array
      */
-    protected function getStandaloneAggregationFixture($fieldName)
+    protected function getStandaloneAggregationFixture(string $fieldName): array
     {
         return [
             "doc_count" => 50,
@@ -117,7 +118,7 @@ class FacetExtractorTest extends Unit
      *
      * @return array
      */
-    protected function getAggregationFixture($fieldName)
+    protected function getAggregationFixture(string $fieldName): array
     {
         return [
             "doc_count" => 50,

@@ -18,7 +18,7 @@ class TestResourceWithNullableIdController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 }

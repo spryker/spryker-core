@@ -14,6 +14,7 @@ use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Store
@@ -34,7 +35,7 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentStoreShouldReturnCurrentStoreTransfer()
+    public function testGetCurrentStoreShouldReturnCurrentStoreTransfer(): void
     {
         $storeFacade = $this->createStoreFacade();
 
@@ -48,7 +49,7 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetAllStoresShouldReturnAllStore()
+    public function testGetAllStoresShouldReturnAllStore(): void
     {
         $storeFacade = $this->createStoreFacade();
 
@@ -60,7 +61,7 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStoreByIdShouldReturnStoreFromPersistence()
+    public function testGetStoreByIdShouldReturnStoreFromPersistence(): void
     {
         $storeFacade = $this->createStoreFacade();
 
@@ -74,7 +75,7 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStoreByNameShouldReturnStore()
+    public function testGetStoreByNameShouldReturnStore(): void
     {
         $storeFacade = $this->createStoreFacade();
         $storeTransfer = $storeFacade->getStoreByName(static::DEFAULT_STORE_NAME);
@@ -156,7 +157,7 @@ class StoreFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Store\Business\StoreFacade
      */
-    protected function createStoreFacade()
+    protected function createStoreFacade(): StoreFacade
     {
         return new StoreFacade();
     }

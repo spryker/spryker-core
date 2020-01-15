@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -25,7 +25,7 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
      *
      * @return array
      */
-    public function findBlocksByNames($blockNames, $localeName, $storeName)
+    public function findBlocksByNames($blockNames, $localeName, $storeName): array
     {
         return $this->getFactory()
             ->createCmsBlockStorage()
@@ -33,35 +33,20 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param array $options
-     * @param string $localName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function findBlockNamesByOptions(array $options, $localName)
+    public function getCmsBlocksByOptions(array $options, string $localeName, string $storeName): array
     {
         return $this->getFactory()
             ->createCmsBlockStorage()
-            ->getBlockNamesByOptions($options, $localName);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function generateBlockNameKey($name)
-    {
-        return $this->getFactory()
-            ->createCmsBlockStorage()
-            ->generateBlockNameKey($name);
+            ->getCmsBlocksByOptions($options, $localeName, $storeName);
     }
 }

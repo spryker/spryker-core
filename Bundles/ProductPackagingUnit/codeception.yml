@@ -1,6 +1,4 @@
 namespace: ProductPackagingUnit
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductPackagingUnit
 

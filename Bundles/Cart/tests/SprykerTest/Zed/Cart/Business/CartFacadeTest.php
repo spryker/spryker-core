@@ -9,18 +9,21 @@ namespace SprykerTest\Zed\Cart\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\Cart\CartDependencyProvider;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cart
@@ -40,25 +43,16 @@ class CartFacadeTest extends Unit
     public const DUMMY_2_PRICE = 100;
 
     /**
-     * @var \Spryker\Zed\Cart\Business\CartFacadeInterface
+     * @var \SprykerTest\Zed\Cart\CartBusinessTester
      */
-    private $cartFacade;
+    protected $tester;
 
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
-
-        $container = new Container();
-
-        $dependencyProvider = new CartDependencyProvider();
-        $dependencyProvider->provideBusinessLayerDependencies($container);
-        $dependencyProvider->provideCommunicationLayerDependencies($container);
-        $dependencyProvider->providePersistenceLayerDependencies($container);
-
-        $this->cartFacade = new CartFacade();
 
         $this->setTestData();
     }
@@ -66,7 +60,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddToCart()
+    public function testAddToCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
@@ -85,7 +79,7 @@ class CartFacadeTest extends Unit
         $cartChange->setQuote($quoteTransfer);
         $cartChange->addItem($newItem);
 
-        $changedCart = $this->cartFacade->add($cartChange);
+        $changedCart = $this->getCartFacade()->add($cartChange);
 
         $this->assertCount(2, $changedCart->getItems());
 
@@ -104,7 +98,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveFromCart()
+    public function testRemoveFromCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
@@ -125,9 +119,166 @@ class CartFacadeTest extends Unit
         $cartChange->setQuote($quoteTransfer);
         $cartChange->addItem($newItem);
 
-        $changedCart = $this->cartFacade->remove($cartChange);
+        $changedCart = $this->getCartFacade()->remove($cartChange);
 
         $this->assertCount(0, $changedCart->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReloadItemsInQuoteReturnsCorrectData(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $itemTransfer = (new ItemTransfer())
+            ->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(self::DUMMY_1_PRICE);
+        $quoteTransfer->addItem($itemTransfer);
+        $itemTransfer = (new ItemTransfer())
+            ->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+            ->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(self::DUMMY_2_PRICE);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
+            ->setIsSuccessful(true);
+
+        $quoteFacadeMock = $this->getQuoteFacadeMock();
+        $quoteFacadeMock->expects($this->once())
+            ->method('isQuoteLocked')
+            ->willReturn(false);
+        $quoteFacadeMock->expects($this->once())
+            ->method('validateQuote')
+            ->willReturn($quoteValidationResponseTransfer);
+
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
+        $messengerFacadeMock->expects($this->never())
+            ->method('getStoredMessages');
+
+        // Act
+        $quoteResponseTransfer = $this->getCartFacade()->reloadItemsInQuote($quoteTransfer);
+
+        // Assert
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+        $this->assertCount(2, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReloadItemsInQuoteReturnsUnsuccessfulQuoteResponseWithErrorMessageOnLockedQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $itemTransfer = (new ItemTransfer())
+            ->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(self::DUMMY_1_PRICE);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $quoteFacadeMock = $this->getQuoteFacadeMock();
+        $quoteFacadeMock->expects($this->once())
+            ->method('isQuoteLocked')
+            ->willReturn(true);
+        $quoteFacadeMock->expects($this->never())
+            ->method('validateQuote');
+
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
+        $messengerFacadeMock->expects($this->once())
+            ->method('getStoredMessages')
+            ->willReturn((new FlashMessagesTransfer()));
+
+        // Act
+        $quoteResponseTransfer = $this->getCartFacade()->reloadItemsInQuote($quoteTransfer);
+
+        // Assert
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReloadItemsInQuoteReturnsUnsuccessfulQuoteResponseWithErrorMessageOnInvalidItem(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $itemTransfer = (new ItemTransfer())
+            ->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(self::DUMMY_1_PRICE);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
+            ->setIsSuccessful(false);
+
+        $quoteFacadeMock = $this->getQuoteFacadeMock();
+        $quoteFacadeMock->expects($this->once())
+            ->method('isQuoteLocked')
+            ->willReturn(false);
+        $quoteFacadeMock->expects($this->once())
+            ->method('validateQuote')
+            ->willReturn($quoteValidationResponseTransfer);
+
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
+        $messengerFacadeMock->expects($this->once())
+            ->method('getStoredMessages')
+            ->willReturn((new FlashMessagesTransfer()));
+
+        // Act
+        $quoteResponseTransfer = $this->getCartFacade()->reloadItemsInQuote($quoteTransfer);
+
+        // Assert
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
+     */
+    protected function getQuoteFacadeMock(): CartToQuoteFacadeInterface
+    {
+        $quoteFacadeMock = $this
+            ->getMockBuilder(CartToQuoteFacadeInterface::class)
+            ->getMock();
+
+        $this->tester->setDependency(
+            CartDependencyProvider::FACADE_QUOTE,
+            $quoteFacadeMock
+        );
+
+        return $quoteFacadeMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface
+     */
+    protected function getMessengerFacadeMock(): CartToMessengerInterface
+    {
+        $messengerFacadeMock = $this
+            ->getMockBuilder(CartToMessengerInterface::class)
+            ->getMock();
+
+        $this->tester->setDependency(
+            CartDependencyProvider::FACADE_MESSENGER,
+            $messengerFacadeMock
+        );
+
+        return $messengerFacadeMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Business\CartFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    protected function getCartFacade()
+    {
+        return $this->tester->getFacade();
     }
 
     /**
@@ -145,7 +296,7 @@ class CartFacadeTest extends Unit
         $quoteTransfer->addItem($cartItem);
 
         // Act
-        $this->cartFacade->cleanUpItems($quoteTransfer);
+        $this->getCartFacade()->cleanUpItems($quoteTransfer);
 
         // Assert
         $this->assertNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
@@ -171,7 +322,7 @@ class CartFacadeTest extends Unit
         $quoteTransfer->addItem($newItem);
 
         // Act
-        $this->cartFacade->cleanUpItems($quoteTransfer);
+        $this->getCartFacade()->cleanUpItems($quoteTransfer);
 
         // Assert
         $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
@@ -180,7 +331,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setTestData()
+    protected function setTestData(): void
     {
         $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();
         $defaultPriceType->setName(self::PRICE_TYPE_DEFAULT)->save();

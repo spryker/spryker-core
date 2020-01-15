@@ -11,13 +11,17 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
-use Spryker\Client\Availability\AvailabilityClient;
+use Spryker\Client\AvailabilityStorage\AvailabilityStorageClient;
+use Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface;
 use Spryker\Client\Product\ProductClient;
-use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridge;
+use Spryker\Client\Product\ProductClientInterface;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridge;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridgeInterface;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group CartVariant
@@ -33,7 +37,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Product\ProductClientInterface
      */
-    protected function buildProductClientMock($jsonFileToLoad)
+    protected function buildProductClientMock(string $jsonFileToLoad): ProductClientInterface
     {
         $mock = $this->getMockBuilder(ProductClient::class)
             ->disableOriginalConstructor()
@@ -50,7 +54,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge
      */
-    protected function createProductClientBridge($jsonFileToLoad)
+    protected function createProductClientBridge(string $jsonFileToLoad): CartVariantToProductClientBridge
     {
         return new CartVariantToProductClientBridge($this->buildProductClientMock($jsonFileToLoad));
     }
@@ -58,11 +62,11 @@ class CartItemsMapperBaseTest extends Unit
     /**
      * @param string $jsonFileToLoad
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Availability\AvailabilityClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface
      */
-    protected function buildProductAvailabilityClientMock($jsonFileToLoad)
+    protected function buildProductAvailabilityClientMock(string $jsonFileToLoad): AvailabilityStorageClientInterface
     {
-        $mock = $this->getMockBuilder(AvailabilityClient::class)
+        $mock = $this->getMockBuilder(AvailabilityStorageClient::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -75,11 +79,11 @@ class CartItemsMapperBaseTest extends Unit
     /**
      * @param string $jsonFileToLoad
      *
-     * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface
+     * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridgeInterface
      */
-    protected function createAvailabilityClientBridge($jsonFileToLoad)
+    protected function createAvailabilityStorageClientBridge(string $jsonFileToLoad): CartVariantToAvailabilityStorageClientBridgeInterface
     {
-        return new CartVariantToAvailabilityClientBridge($this->buildProductAvailabilityClientMock($jsonFileToLoad));
+        return new CartVariantToAvailabilityStorageClientBridge($this->buildProductAvailabilityClientMock($jsonFileToLoad));
     }
 
     /**
@@ -87,7 +91,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
-    protected function getAvailabilityTransfer($jsonFileToLoad)
+    protected function getAvailabilityTransfer(string $jsonFileToLoad): StorageAvailabilityTransfer
     {
         $transfer = new StorageAvailabilityTransfer();
         $transfer->fromArray(
@@ -101,7 +105,7 @@ class CartItemsMapperBaseTest extends Unit
     /**
      * @return \ArrayObject
      */
-    protected function getItems()
+    protected function getItems(): ArrayObject
     {
         $item = new ItemTransfer();
         $item->setSku('170_28516206');
@@ -117,7 +121,7 @@ class CartItemsMapperBaseTest extends Unit
     /**
      * @return \ArrayObject
      */
-    protected function getNestedItems()
+    protected function getNestedItems(): ArrayObject
     {
         $item = new ItemTransfer();
         $item->setSku('112_312526171');
@@ -135,7 +139,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return int
      */
-    protected function countSelectedAttributes(array $attributes)
+    protected function countSelectedAttributes(array $attributes): int
     {
         $total = 0;
 

@@ -14,9 +14,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
+use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group TaxProductConnector
@@ -30,7 +32,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForDefaultCountry()
+    public function testCalculateTaxRateForDefaultCountry(): void
     {
         $quoteTransfer = $this->createQuoteTransferWithoutShippingAddress();
 
@@ -41,7 +43,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForDifferentCountry()
+    public function testCalculateTaxRateForDifferentCountry(): void
     {
         $quoteTransfer = $this->createQuoteTransferWithShippingAddress();
 
@@ -55,7 +57,7 @@ class TaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
+    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, array $mockData): float
     {
         $productItemTaxRateCalculatorMock = $this->createProductItemTaxRateCalculator();
         $productItemTaxRateCalculatorMock->method('findTaxRatesByAllIdProductAbstractsAndCountryIso2Code')->willReturn($mockData);
@@ -69,7 +71,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator
      */
-    protected function createProductItemTaxRateCalculator()
+    protected function createProductItemTaxRateCalculator(): ProductItemTaxRateCalculator
     {
         return $this->getMockBuilder(ProductItemTaxRateCalculator::class)
             ->setMethods(['findTaxRatesByAllIdProductAbstractsAndCountryIso2Code'])
@@ -81,9 +83,9 @@ class TaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Tax\Business\Model\TaxDefault
+     * @return \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createTaxFacadeMock()
+    protected function createTaxFacadeMock(): TaxProductConnectorToTaxInterface
     {
         $taxDefaultMock = $this->getMockBuilder(TaxProductConnectorToTaxInterface::class)
             ->getMock();
@@ -104,7 +106,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
-    protected function createQueryContainerMock()
+    protected function createQueryContainerMock(): TaxProductConnectorQueryContainerInterface
     {
         return $this->getMockBuilder(TaxProductConnectorQueryContainer::class)
             ->disableOriginalConstructor()
@@ -116,7 +118,7 @@ class TaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getProductItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
+    protected function getProductItemsTaxRateAverage(QuoteTransfer $quoteTransfer): float
     {
         $taxSum = 0;
         foreach ($quoteTransfer->getItems() as $item) {
@@ -131,7 +133,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransferWithoutShippingAddress()
+    protected function createQuoteTransferWithoutShippingAddress(): QuoteTransfer
     {
         $quoteTransfer = $this->createQuoteTransfer();
 
@@ -143,7 +145,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransferWithShippingAddress()
+    protected function createQuoteTransferWithShippingAddress(): QuoteTransfer
     {
         $quoteTransfer = $this->createQuoteTransfer();
 
@@ -162,7 +164,7 @@ class TaxRateCalculationTest extends Unit
      *
      * @return void
      */
-    protected function createItemTransfers(QuoteTransfer $quoteTransfer)
+    protected function createItemTransfers(QuoteTransfer $quoteTransfer): void
     {
         $itemTransfer1 = $this->createProductItemTransfer(1);
         $quoteTransfer->addItem($itemTransfer1);
@@ -176,7 +178,7 @@ class TaxRateCalculationTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createProductItemTransfer($id)
+    protected function createProductItemTransfer(int $id): ItemTransfer
     {
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setIdProductAbstract($id);
@@ -187,7 +189,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         return new QuoteTransfer();
     }
@@ -195,7 +197,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItemTransfer()
+    protected function createItemTransfer(): ItemTransfer
     {
         return new ItemTransfer();
     }
@@ -203,7 +205,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return array
      */
-    protected function getMockDefaultTaxRates()
+    protected function getMockDefaultTaxRates(): array
     {
         return [
             [
@@ -216,7 +218,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return array
      */
-    protected function getMockCountryBasedTaxRates()
+    protected function getMockCountryBasedTaxRates(): array
     {
         return [
             [

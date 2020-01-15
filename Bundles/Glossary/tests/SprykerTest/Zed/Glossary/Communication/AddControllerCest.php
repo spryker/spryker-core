@@ -12,6 +12,7 @@ use SprykerTest\Zed\Glossary\GlossaryCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary
@@ -27,7 +28,7 @@ class AddControllerCest
      *
      * @return void
      */
-    public function addTranslation(GlossaryCommunicationTester $i)
+    public function addTranslation(GlossaryCommunicationTester $i): void
     {
         $keyTranslationTransfer = (new KeyTranslationBuilder())->build();
         $i->amOnPage('/glossary/add');
@@ -48,7 +49,7 @@ class AddControllerCest
      *
      * @return void
      */
-    public function addTranslationWithoutTranslations(GlossaryCommunicationTester $i)
+    public function addTranslationWithoutTranslations(GlossaryCommunicationTester $i): void
     {
         $keyTranslationTransfer = (new KeyTranslationBuilder())->build();
         $i->amOnPage('/glossary/add');

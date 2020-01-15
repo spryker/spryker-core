@@ -45,7 +45,7 @@ interface FinderInterface
      * @param string $flag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC');
 
@@ -54,7 +54,7 @@ interface FinderInterface
      * @param string $flag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC');
 

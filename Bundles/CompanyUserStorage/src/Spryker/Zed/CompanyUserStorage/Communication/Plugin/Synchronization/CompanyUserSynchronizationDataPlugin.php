@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
+ * @deprecated Use `CompanyUserSynchronizationDataBulkPlugin` instead.
+ * @see \Spryker\Zed\CompanyUserStorage\Communication\Plugin\Synchronization\CompanyUserSynchronizationDataBulkPlugin
+ *
  * @method \Spryker\Zed\CompanyUserStorage\CompanyUserStorageConfig getConfig()
  * @method \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanyUserStorage\Business\CompanyUserStorageFacadeInterface getFacade()
@@ -21,7 +24,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +36,7 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +48,7 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +75,7 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -84,7 +87,7 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +99,7 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

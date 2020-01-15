@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProduct
@@ -42,17 +43,17 @@ class PriceProductRemoverTest extends Unit
     protected $priceProductRemover;
 
     /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
     protected $priceProductFacade;
 
     /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Currency\Business\CurrencyFacadeInterface
+     * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
     protected $currencyFacade;
 
@@ -69,7 +70,7 @@ class PriceProductRemoverTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

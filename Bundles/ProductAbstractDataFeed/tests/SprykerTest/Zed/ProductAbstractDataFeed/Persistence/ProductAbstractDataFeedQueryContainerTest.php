@@ -11,11 +11,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAbstractDataFeed
@@ -43,7 +43,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -55,7 +55,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeed()
+    public function testQueryAbstractProductDataFeed(): void
     {
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
@@ -70,7 +70,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeedWithJoinedCategories()
+    public function testQueryAbstractProductDataFeedWithJoinedCategories(): void
     {
         $this->productDataFeedTransfer->setJoinCategory(true);
         $query = $this->productDataFeedQueryContainer
@@ -90,7 +90,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeedWithJoinedPrices()
+    public function testQueryAbstractProductDataFeedWithJoinedPrices(): void
     {
         $this->productDataFeedTransfer->setJoinPrice(true);
         $query = $this->productDataFeedQueryContainer
@@ -110,7 +110,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeedWithJoinedOptions()
+    public function testQueryAbstractProductDataFeedWithJoinedOptions(): void
     {
         $this->productDataFeedTransfer->setJoinOption(true);
         $query = $this->productDataFeedQueryContainer
@@ -130,7 +130,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeedWithJoinedImages()
+    public function testQueryAbstractProductDataFeedWithJoinedImages(): void
     {
         $this->productDataFeedTransfer->setJoinImage(true);
         $query = $this->productDataFeedQueryContainer
@@ -150,7 +150,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeedWithJoinedVariants()
+    public function testQueryAbstractProductDataFeedWithJoinedVariants(): void
     {
         $this->productDataFeedTransfer->setJoinProduct(true);
         $query = $this->productDataFeedQueryContainer
@@ -171,7 +171,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeedWithJoinedAll()
+    public function testQueryAbstractProductDataFeedWithJoinedAll(): void
     {
         $this->productDataFeedTransfer->setJoinProduct(true);
         $this->productDataFeedTransfer->setJoinCategory(true);
@@ -199,7 +199,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeedWithLocaleId()
+    public function testQueryAbstractProductDataFeedWithLocaleId(): void
     {
         $this->productDataFeedTransfer->setIdLocale($this->idLocale);
         $query = $this->productDataFeedQueryContainer
@@ -212,7 +212,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAbstractProductDataFeedWithDatesFilter()
+    public function testQueryAbstractProductDataFeedWithDatesFilter(): void
     {
         $this->productDataFeedTransfer->setUpdatedFrom('2017-01-01');
         $this->productDataFeedTransfer->setUpdatedTo('2017-12-01');
@@ -226,10 +226,9 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer
      */
-    protected function createProductDataFeedQueryContainer()
+    protected function createProductDataFeedQueryContainer(): ProductAbstractDataFeedQueryContainer
     {
-        $productQueryContainer = new ProductQueryContainer();
-        $productDataFeedQueryContainer = new ProductAbstractDataFeedQueryContainer($productQueryContainer);
+        $productDataFeedQueryContainer = new ProductAbstractDataFeedQueryContainer();
 
         return $productDataFeedQueryContainer;
     }
@@ -237,7 +236,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer
      */
-    protected function createProductDataFeedTransfer()
+    protected function createProductDataFeedTransfer(): ProductAbstractDataFeedTransfer
     {
         $productDataFeedTransfer = new ProductAbstractDataFeedTransfer();
 
@@ -247,7 +246,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return int
      */
-    protected function getIdLocale()
+    protected function getIdLocale(): int
     {
         $locale = SpyLocaleQuery::create()
             ->filterByLocaleName('de_DE')
@@ -261,7 +260,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
      *
      * @return array
      */
-    protected function getJoinedTablesNames(SpyProductAbstractQuery $query)
+    protected function getJoinedTablesNames(SpyProductAbstractQuery $query): array
     {
         $tablesNames = [];
         $joins = $query->getJoins();
@@ -280,7 +279,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
      *
      * @return array
      */
-    protected function getSortedExpectedJoinedTables($tablesArray)
+    protected function getSortedExpectedJoinedTables(array $tablesArray): array
     {
         asort($tablesArray);
         $tablesArray = array_values($tablesArray);
@@ -291,7 +290,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getDefaultJoinedTables()
+    protected function getDefaultJoinedTables(): array
     {
         return [
             'spy_product_abstract_localized_attributes',
@@ -301,7 +300,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getCategoryJoinedTables()
+    protected function getCategoryJoinedTables(): array
     {
         return [
             'spy_product_category',
@@ -314,7 +313,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getPriceJoinedTables()
+    protected function getPriceJoinedTables(): array
     {
         return [
             'spy_price_product',
@@ -325,7 +324,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getOptionJoinedTables()
+    protected function getOptionJoinedTables(): array
     {
         return [
             'spy_product_abstract_product_option_group',
@@ -337,7 +336,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getImageJoinedTables()
+    protected function getImageJoinedTables(): array
     {
         return [
             'spy_product_image',
@@ -349,11 +348,12 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getVariantJoinedTables()
+    protected function getVariantJoinedTables(): array
     {
         return [
             'spy_product',
             'spy_product_localized_attributes',
+            'spy_stock',
             'spy_stock_product',
         ];
     }
@@ -361,7 +361,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getParamsForLocaleFilter()
+    protected function getParamsForLocaleFilter(): array
     {
         return [
             [
@@ -375,7 +375,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getParamsForDateFilter()
+    protected function getParamsForDateFilter(): array
     {
         return [
             [

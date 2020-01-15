@@ -1,6 +1,4 @@
 namespace: ProductOption
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/ProductOption
     - tests/SprykerTest/Client/ProductOption

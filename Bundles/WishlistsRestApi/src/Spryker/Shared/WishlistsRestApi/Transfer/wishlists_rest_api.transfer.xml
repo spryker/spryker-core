@@ -15,7 +15,71 @@
     </transfer>
 
     <transfer name="Wishlist">
-        <property name="uuid" type="string" />
+        <property name="uuid" type="string"/>
+        <property name="idWishlist" type="int"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="name" type="string"/>
+        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem"/>
+        <property name="numberOfItems" type="int"/>
+    </transfer>
+
+    <transfer name="WishlistResponse">
+        <property name="wishlist" type="Wishlist"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="array" singular="error"/>
+        <property name="errorIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistRequest">
+        <property name="uuid" type="string"/>
+        <property name="idCustomer" type="int"/>
+        <property name="wishlist" type="Wishlist"/>
+    </transfer>
+
+    <transfer name="WishlistFilter">
+        <property name="idCustomer" type="int"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistItemRequest">
+        <property name="idCustomer" type="int"/>
+        <property name="uuidWishlist" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistItemResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="wishlistItem"  type="WishlistItem"/>
+        <property name="errors" type="array" singular="error"/>
+        <property name="errorIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistCollection">
+        <property name="wishlists" type="Wishlist[]" singular="wishlist"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="idWishlistItem" type="int"/>
+        <property name="fkWishlist" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="wishlistName" type="string"/>
+        <property name="fkCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="surrogateIdentifier" type="int"/>
+        <property name="naturalIdentifier" type="string"/>
     </transfer>
 
 </transfers>

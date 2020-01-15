@@ -12,6 +12,7 @@ use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategoryFilter
@@ -26,7 +27,7 @@ class DeleteProductCategoryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductCategoryFiltersRemovesFromDatabase()
+    public function testDeleteProductCategoryFiltersRemovesFromDatabase(): void
     {
         // Arrange
         $productCategoryFilter = $this->tester->haveProductCategoryFilter();

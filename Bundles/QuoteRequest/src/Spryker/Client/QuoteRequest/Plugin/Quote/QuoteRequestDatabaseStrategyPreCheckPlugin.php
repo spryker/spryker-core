@@ -14,7 +14,7 @@ use Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPlug
 class QuoteRequestDatabaseStrategyPreCheckPlugin extends AbstractPlugin implements DatabaseStrategyPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Disallow database strategy when "quoteRequestReference" is set in quote.
      *
      * @api

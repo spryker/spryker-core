@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductResourceAliasStorageClient extends AbstractClient implements ProductResourceAliasStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,24 @@ class ProductResourceAliasStorageClient extends AbstractClient implements Produc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $skus
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageData(array $skus, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractBulkStorageReader()
+            ->getProductAbstractStorageData($skus, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *

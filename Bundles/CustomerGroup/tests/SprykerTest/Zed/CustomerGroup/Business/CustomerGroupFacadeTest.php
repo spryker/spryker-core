@@ -23,6 +23,7 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerGroup
@@ -38,7 +39,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetValid()
+    public function testGetValid(): void
     {
         $customerGroupEntity = $this->createCustomerGroup();
 
@@ -66,7 +67,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCustomerGroupByIdCustomerShouldReturnGroupTransferWhenValidIdGiven()
+    public function testFindCustomerGroupByIdCustomerShouldReturnGroupTransferWhenValidIdGiven(): void
     {
         $customerGroupEntity = $this->createCustomerGroup();
 
@@ -129,7 +130,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddValid()
+    public function testAddValid(): void
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
@@ -155,7 +156,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateValid()
+    public function testUpdateValid(): void
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
@@ -188,7 +189,7 @@ class CustomerGroupFacadeTest extends Unit
      *
      * @return void
      */
-    public function testUpdateCustomersValid()
+    public function testUpdateCustomersValid(): void
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
@@ -232,7 +233,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteValid()
+    public function testDeleteValid(): void
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
@@ -252,7 +253,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCustomersFromGroupValid()
+    public function testRemoveCustomersFromGroupValid(): void
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
@@ -286,7 +287,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCustomerFromAllGroups()
+    public function testRemoveCustomerFromAllGroups(): void
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
@@ -316,7 +317,7 @@ class CustomerGroupFacadeTest extends Unit
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
-    protected function createCustomer($email = 'one@first.de', $lastName = 'First', $firstName = 'One', $reference = 'one')
+    protected function createCustomer(string $email = 'one@first.de', string $lastName = 'First', string $firstName = 'One', string $reference = 'one'): SpyCustomer
     {
         $customerEntity = new SpyCustomer();
         $customerEntity->setFirstName($firstName);
@@ -332,7 +333,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup
      */
-    protected function createCustomerGroup()
+    protected function createCustomerGroup(): SpyCustomerGroup
     {
         $customerGroupEntity = (new SpyCustomerGroup())
             ->setName('Test' . uniqid(true));
@@ -345,7 +346,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade
      */
-    protected function createCustomerGroupFacade()
+    protected function createCustomerGroupFacade(): CustomerGroupFacade
     {
         return new CustomerGroupFacade();
     }
@@ -356,7 +357,7 @@ class CustomerGroupFacadeTest extends Unit
      *
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer
      */
-    protected function createCustomerToGroup($idCustomer, $idCustomerGroup)
+    protected function createCustomerToGroup(int $idCustomer, int $idCustomerGroup): SpyCustomerGroupToCustomer
     {
         $customerGroupToCustomerEntity = (new SpyCustomerGroupToCustomer())
             ->setFkCustomerGroup($idCustomerGroup)

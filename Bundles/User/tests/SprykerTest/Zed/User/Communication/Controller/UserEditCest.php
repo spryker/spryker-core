@@ -12,6 +12,7 @@ use SprykerTest\Zed\User\UserCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group User
@@ -27,10 +28,10 @@ class UserEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(UserCommunicationTester $i)
+    public function breadcrumbIsVisible(UserCommunicationTester $i): void
     {
         $i->listDataTable(UserListPage::URL . '/index/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / User / Edit User');
+        $i->seeBreadcrumbNavigation('Users Control / User / Edit User');
     }
 }

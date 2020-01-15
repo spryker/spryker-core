@@ -12,6 +12,7 @@ use SprykerTest\Zed\Acl\PageObject\AclRoleListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Acl
@@ -27,10 +28,10 @@ class AclRoleEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(AclCommunicationTester $i)
+    public function breadcrumbIsVisible(AclCommunicationTester $i): void
     {
         $i->listDataTable(AclRoleListPage::URL . '/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Roles / Edit Role');
+        $i->seeBreadcrumbNavigation('Users Control / Roles / Edit Role');
     }
 }

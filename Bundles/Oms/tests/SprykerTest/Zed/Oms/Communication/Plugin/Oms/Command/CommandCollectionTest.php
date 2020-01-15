@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms
@@ -32,7 +33,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddShouldReturnInstance()
+    public function testAddShouldReturnInstance(): void
     {
         $commandCollection = new CommandCollection();
         $result = $commandCollection->add($this->getCommandMock(), self::COMMAND_NAME);
@@ -43,7 +44,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnFalse()
+    public function testHasShouldReturnFalse(): void
     {
         $commandCollection = new CommandCollection();
 
@@ -53,7 +54,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnTrue()
+    public function testHasShouldReturnTrue(): void
     {
         $commandCollection = new CommandCollection();
         $command = $this->getCommandMock();
@@ -65,7 +66,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldReturnCommand()
+    public function testGetShouldReturnCommand(): void
     {
         $commandCollection = new CommandCollection();
         $command = $this->getCommandMock();
@@ -77,7 +78,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldThrowException()
+    public function testGetShouldThrowException(): void
     {
         $commandCollection = new CommandCollection();
 
@@ -89,7 +90,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $commandCollection = new CommandCollection();
         $this->assertFalse(isset($commandCollection[self::COMMAND_NAME]));
@@ -107,7 +108,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
-    private function getCommandMock()
+    private function getCommandMock(): CommandInterface
     {
         return $this->getMockBuilder(CommandInterface::class)->getMock();
     }

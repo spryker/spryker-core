@@ -9,16 +9,21 @@ namespace SprykerTest\Zed\Oms\Helper;
 
 use Codeception\Module;
 use DateInterval;
+use Generated\Shared\DataBuilder\OmsProductReservationBuilder;
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use Symfony\Component\Process\Process;
 
 class OmsHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use ConfigHelperTrait;
 
     /**
@@ -26,7 +31,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    public function triggerEventForNewOrderItems(array $idSalesOrderItems)
+    public function triggerEventForNewOrderItems(array $idSalesOrderItems): void
     {
         $omsFacade = new OmsFacade();
         $omsFacade->triggerEventForNewOrderItems($idSalesOrderItems);
@@ -38,7 +43,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    public function moveItemAfterTimeOut($idSalesOrderItem, DateInterval $timeout)
+    public function moveItemAfterTimeOut(int $idSalesOrderItem, DateInterval $timeout): void
     {
         $omsEventTimeoutQuery = new SpyOmsEventTimeoutQuery();
         $omsEventTimeout = $omsEventTimeoutQuery->findOneByFkSalesOrderItem($idSalesOrderItem);
@@ -54,7 +59,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    public function setItemState($idSalesOrderItem, $stateName)
+    public function setItemState(int $idSalesOrderItem, string $stateName): void
     {
         $salesOrderItemQuery = new SpySalesOrderItemQuery();
         $salesOrderItemEntity = $salesOrderItemQuery->findOneByIdSalesOrderItem($idSalesOrderItem);
@@ -70,7 +75,7 @@ class OmsHelper extends Module
     /**
      * @return void
      */
-    public function checkCondition()
+    public function checkCondition(): void
     {
         $this->runCommand('vendor/bin/console oms:check-condition -q');
     }
@@ -78,7 +83,7 @@ class OmsHelper extends Module
     /**
      * @return void
      */
-    public function checkTimeout()
+    public function checkTimeout(): void
     {
         $this->runCommand('vendor/bin/console oms:check-timeout -q');
     }
@@ -86,7 +91,7 @@ class OmsHelper extends Module
     /**
      * @return void
      */
-    public function clearLocks()
+    public function clearLocks(): void
     {
         $this->runCommand('vendor/bin/console oms:check-locks -q');
     }
@@ -98,7 +103,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    protected function runCommand($command)
+    protected function runCommand(string $command): void
     {
         $process = new Process(explode(' ', $command));
         $process->run();
@@ -110,7 +115,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    public function configureTestStateMachine(array $activeProcesses, $xmlFolder = null)
+    public function configureTestStateMachine(array $activeProcesses, ?string $xmlFolder = null): void
     {
         if (!$xmlFolder) {
             $xmlFolder = realpath(__DIR__ . '/../../../../../_data/state-machine/');
@@ -118,5 +123,28 @@ class OmsHelper extends Module
 
         $this->setConfig(OmsConstants::PROCESS_LOCATION, $xmlFolder);
         $this->setConfig(OmsConstants::ACTIVE_PROCESSES, $activeProcesses);
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\OmsProductReservationTransfer
+     */
+    public function haveOmsProductReservation(array $seed): OmsProductReservationTransfer
+    {
+        $omsProductReservationTransfer = new OmsProductReservationBuilder($seed);
+        $omsProductReservationTransfer = $omsProductReservationTransfer->build();
+
+        $omsProductReservationEntity = (new SpyOmsProductReservation());
+        $omsProductReservationEntity->fromArray($omsProductReservationTransfer->toArray());
+        $omsProductReservationEntity->save();
+
+        $omsProductReservationTransfer->fromArray($omsProductReservationEntity->toArray(), true);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($omsProductReservationEntity): void {
+            $omsProductReservationEntity->delete();
+        });
+
+        return $omsProductReservationTransfer;
     }
 }

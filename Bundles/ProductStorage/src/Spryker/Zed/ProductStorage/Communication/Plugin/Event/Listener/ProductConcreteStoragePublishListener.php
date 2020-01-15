@@ -22,7 +22,7 @@ class ProductConcreteStoragePublishListener extends AbstractPlugin implements Ev
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

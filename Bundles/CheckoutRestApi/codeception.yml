@@ -1,5 +1,4 @@
 namespace: CheckoutRestApi
-actor: Tester
 include:
     - tests/SprykerTest/Zed/CheckoutRestApi
 paths:

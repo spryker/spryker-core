@@ -15,7 +15,11 @@ use Spryker\Zed\Kernel\Container;
  */
 class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @deprecated Use `\Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::PLUGINS_DATA_COLLECTORS` instead.
+     */
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
+    public const PLUGINS_DATA_COLLECTORS = 'PLUGINS_DATA_COLLECTORS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,14 +28,40 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::PLUGINS_WEB_PROFILER] = function () {
+        $container = $this->addDataCollectorPlugins($container);
+
+        $container->set(static::PLUGINS_WEB_PROFILER, function () {
             return $this->getWebProfilerPlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDataCollectorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_DATA_COLLECTORS, function () {
+            return $this->getDataCollectorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     */
+    public function getDataCollectorPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::getDataCollectorPlugins()` instead.
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
     public function getWebProfilerPlugins()
