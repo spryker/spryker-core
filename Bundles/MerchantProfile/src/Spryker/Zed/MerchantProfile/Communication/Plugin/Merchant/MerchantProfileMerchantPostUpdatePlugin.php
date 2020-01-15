@@ -7,41 +7,43 @@
 
 namespace Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant;
 
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface;
+use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant\MerchantProfileMerchantPostCreatePlugin instead.
- *
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
- * @method \Spryker\Zed\MerchantProfile\Communication\MerchantProfileCommunicationFactory getFactory()
  */
-class MerchantProfileMerchantPostSavePlugin extends AbstractPlugin implements MerchantPostSavePluginInterface
+class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements MerchantPostCreatePluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Saves merchant profile after the merchant is saved.
+     * - Saves merchant profile after the merchant is updated.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function execute(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function execute(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
         if ($merchantProfileTransfer->getIdMerchantProfile() === null) {
             $merchantProfileTransfer = $this->getFacade()->createMerchantProfile($merchantProfileTransfer);
 
-            return $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
+            return (new MerchantResponseTransfer())
+                ->setIsSuccess(true)
+                ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
         }
 
         $merchantProfileTransfer = $this->getFacade()->updateMerchantProfile($merchantProfileTransfer);
 
-        return $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
+        return (new MerchantResponseTransfer())
+            ->setIsSuccess(true)
+            ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
     }
 }

@@ -17,7 +17,12 @@ use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceBridge;
 class MerchantDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+    /**
+     * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::PLUGINS_MERCHANT_POST_CREATE instead.
+     */
     public const PLUGINS_MERCHANT_POST_SAVE = 'PLUGINS_MERCHANT_POST_SAVE';
+    public const PLUGINS_MERCHANT_POST_CREATE = 'PLUGINS_MERCHANT_POST_CREATE';
+    public const PLUGINS_MERCHANT_POST_UPDATE = 'PLUGINS_MERCHANT_POST_UPDATE';
     public const PLUGINS_MERCHANT_EXPANDER = 'PLUGINS_MERCHANT_EXPANDER';
 
     /**
@@ -29,6 +34,8 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUtilTextService($container);
         $container = $this->addMerchantPostSavePlugins($container);
+        $container = $this->addMerchantPostCreatePlugins($container);
+        $container = $this->addMerchantPostUpdatePlugins($container);
         $container = $this->addMerchantExpanderPlugins($container);
 
         return $container;
@@ -49,6 +56,36 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPostCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_POST_CREATE, function () {
+            return $this->getMerchantPostCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPostUpdatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_POST_UPDATE, function () {
+            return $this->getMerchantPostUpdatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::addMerchantPostCreatePlugins() instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -77,6 +114,24 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[]
+     */
+    protected function getMerchantPostUpdatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface[]
+     */
+    protected function getMerchantPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use MerchantDependencyProvider::getMerchantPostCreatePlugins() instead.
+     *
      * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
      */
     protected function getMerchantPostSavePlugins(): array

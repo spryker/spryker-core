@@ -36,7 +36,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
         return new MerchantCreator(
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->getMerchantPostSavePlugins()
+            $this->getMerchantPostCreatePlugins()
         );
     }
 
@@ -49,7 +49,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createMerchantStatusValidator(),
-            $this->getMerchantPostSavePlugins()
+            $this->getMerchantPostUpdatePlugins()
         );
     }
 
@@ -93,11 +93,29 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Merchant\Business\MerchantBusinessFactory::getMerchantPostCreatePlugins() instead.
+     *
      * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
      */
     public function getMerchantPostSavePlugins(): array
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface[]
+     */
+    public function getMerchantPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[]
+     */
+    public function getMerchantPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_POST_UPDATE);
     }
 
     /**

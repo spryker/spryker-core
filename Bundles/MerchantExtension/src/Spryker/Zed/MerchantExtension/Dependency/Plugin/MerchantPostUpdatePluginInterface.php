@@ -7,22 +7,20 @@
 
 namespace Spryker\Zed\MerchantExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
-/**
- * @deprecated Use \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface instead.
- */
-interface MerchantPostSavePluginInterface
+interface MerchantPostUpdatePluginInterface
 {
     /**
      * Specification:
-     * - Executes after the merchant is saved.
+     * - Executes after the merchant is updated.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function execute(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function execute(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }

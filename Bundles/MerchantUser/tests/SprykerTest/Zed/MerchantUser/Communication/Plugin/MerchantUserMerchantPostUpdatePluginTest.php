@@ -10,8 +10,7 @@ namespace SprykerTest\Zed\MerchantUser\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MerchantUser\Communication\Exception\MerchantUserNotSavedException;
-use Spryker\Zed\MerchantUser\Communication\Plugin\Merchant\MerchantUserMerchantPostSavePlugin;
+use Spryker\Zed\MerchantUser\Communication\Plugin\Merchant\MerchantUserMerchantPostUpdatePlugin;
 
 /**
  * Auto-generated group annotations
@@ -21,10 +20,10 @@ use Spryker\Zed\MerchantUser\Communication\Plugin\Merchant\MerchantUserMerchantP
  * @group MerchantUser
  * @group Communication
  * @group Plugin
- * @group MerchantUserMerchantPostSavePluginTest
+ * @group MerchantUserMerchantPostUpdatePluginTest
  * Add your own group annotations below this line
  */
-class MerchantUserMerchantPostSavePluginTest extends Unit
+class MerchantUserMerchantPostUpdatePluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantUser\MerchantUserBusinessTester
@@ -34,25 +33,25 @@ class MerchantUserMerchantPostSavePluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantUserPostSaveReturnsSuccessIfUserDoesNotExist(): void
+    public function testMerchantUserPostUpdateReturnsTrueIfUserDoesNotExist(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
-        $merchantUserMerchantPostSavePlugin = new MerchantUserMerchantPostSavePlugin();
+        $merchantUserMerchantPostUpdatePlugin = new MerchantUserMerchantPostUpdatePlugin();
 
         // Act
-        $merchantTransfer = $merchantUserMerchantPostSavePlugin->execute($merchantTransfer);
+        $merchantResponseTransfer = $merchantUserMerchantPostUpdatePlugin->execute($merchantTransfer);
 
         // Assert
-        $this->assertNotEmpty($merchantTransfer);
+        $this->assertTrue($merchantResponseTransfer->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function testMerchantUserPostSaveThrowsExceptionIfUserAlreadyConnectedToAnotherMerchant(): void
+    public function testMerchantUserPostUpdateReturnsFalseIfUserAlreadyConnectedToAnotherMerchant(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com']);
@@ -65,12 +64,12 @@ class MerchantUserMerchantPostSavePluginTest extends Unit
         $merchantTransferWithSameEmail = $this->tester->haveMerchant([MerchantTransfer::EMAIL => $userTransfer->getUsername()]);
         $merchantTransferWithSameEmail->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransferWithSameEmail));
 
-        $merchantUserMerchantPostSavePlugin = new MerchantUserMerchantPostSavePlugin();
-
-        // Assert
-        $this->expectException(MerchantUserNotSavedException::class);
+        $merchantUserMerchantPostUpdatePlugin = new MerchantUserMerchantPostUpdatePlugin();
 
         // Act
-        $merchantUserMerchantPostSavePlugin->execute($merchantTransferWithSameEmail);
+        $merchantResponseTransfer = $merchantUserMerchantPostUpdatePlugin->execute($merchantTransferWithSameEmail);
+
+        // Assert
+        $this->assertFalse($merchantResponseTransfer->getIsSuccess());
     }
 }
