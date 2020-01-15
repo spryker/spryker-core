@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\MerchantMapTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface;
@@ -18,9 +17,9 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
-class ProductMerchantMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
+class ProductMerchantNameMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
 {
-    protected const KEY_MERCHANT_MAP = 'merchant_map';
+    protected const KEY_MERCHANT_NAMES = 'merchant_names';
     protected const KEY_MERCHANT_NAME = 'merchant_name';
 
     /**
@@ -38,32 +37,18 @@ class ProductMerchantMapExpanderPlugin implements ProductAbstractMapExpanderPlug
      */
     public function expandProductMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
     {
-        if (!is_array($productData[static::KEY_MERCHANT_MAP])) {
+        if (!is_array($productData[static::KEY_MERCHANT_NAMES])) {
             return $pageMapTransfer;
         }
 
-        if (count($productData[static::KEY_MERCHANT_MAP][MerchantMapTransfer::NAMES])) {
-            $this->addMerchantNames($pageMapTransfer, $pageMapBuilder, $productData[static::KEY_MERCHANT_MAP][MerchantMapTransfer::NAMES]);
-        }
-
-        return $pageMapTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
-     * @param string[] $merchantNames
-     *
-     * @return void
-     */
-    protected function addMerchantNames(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $merchantNames): void
-    {
-        foreach ($merchantNames as $merchantName) {
+        foreach ($productData[static::KEY_MERCHANT_NAMES] as $merchantName) {
             $pageMapBuilder
                 ->addStringFacet($pageMapTransfer, static::KEY_MERCHANT_NAME, $merchantName)
                 ->addFullTextBoosted($pageMapTransfer, $merchantName)
                 ->addSuggestionTerms($pageMapTransfer, $merchantName)
                 ->addCompletionTerms($pageMapTransfer, $merchantName);
         }
+
+        return $pageMapTransfer;
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader;
 
-use Generated\Shared\Transfer\MerchantMapTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository;
@@ -18,7 +17,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
-class ProductMerchantPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
+class ProductMerchantNamePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -51,7 +50,7 @@ class ProductMerchantPageDataLoaderPlugin extends AbstractPlugin implements Prod
     {
         $productAbstractIdMerchantNamesMap = [];
         foreach ($data as $row) {
-            $productAbstractIdMerchantNamesMap[$row[MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID]][MerchantMapTransfer::NAMES][] = $row[MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME];
+            $productAbstractIdMerchantNamesMap[$row[MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID]][] = $row[MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME];
         }
 
         return $productAbstractIdMerchantNamesMap;
@@ -70,7 +69,7 @@ class ProductMerchantPageDataLoaderPlugin extends AbstractPlugin implements Prod
                 continue;
             }
 
-            $payloadTransfer->setMerchants($productAbstractIdMerchantNamesMap[$payloadTransfer->getIdProductAbstract()]);
+            $payloadTransfer->setMerchantNames($productAbstractIdMerchantNamesMap[$payloadTransfer->getIdProductAbstract()]);
         }
 
         return $payloadTransfers;
