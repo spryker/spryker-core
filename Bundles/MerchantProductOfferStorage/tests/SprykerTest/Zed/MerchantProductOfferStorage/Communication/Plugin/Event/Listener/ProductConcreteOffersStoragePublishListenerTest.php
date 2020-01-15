@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
-use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
@@ -15,7 +14,10 @@ use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductConcreteOffersStoragePublishListener;
+use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +32,7 @@ use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\
  * @group ProductConcreteOffersStoragePublishListenerTest
  * Add your own group annotations below this line
  */
-class ProductConcreteOffersStoragePublishListenerTest extends Unit
+class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePublishListenerTest
 {
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
@@ -41,11 +43,6 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
      * @var \SprykerTest\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageTester
      */
     protected $tester;
-
-    /**
-     * @var \Generated\Shared\Transfer\ProductOfferTransfer
-     */
-    protected $merchantProductOfferTransfer;
 
     /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductConcreteOffersStoragePublishListener
@@ -75,9 +72,9 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
     {
         //Arrange
         $expectedCount = 1;
-        $this->createProductOffer();
+        $productOfferTransfer = $this->tester->createProductOffer($this->tester->getLocator()->store()->facade()->getCurrentStore());
         $eventTransfers = [
-            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $this->merchantProductOfferTransfer->getConcreteSku()]),
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productOfferTransfer->getConcreteSku()]),
         ];
 
         //Act
@@ -85,7 +82,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
             $eventTransfers,
             MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
         );
-        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($this->merchantProductOfferTransfer->getConcreteSku());
+        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
         //Assert
         $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
@@ -98,11 +95,12 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
     {
         //Arrange
         $expectedCount = 0;
-        $this->createProductOffer(
+        $productOfferTransfer = $this->tester->createProductOffer(
+            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
             [ProductOfferTransfer::IS_ACTIVE => false]
         );
         $eventTransfers = [
-            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $this->merchantProductOfferTransfer->getConcreteSku()]),
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productOfferTransfer->getConcreteSku()]),
         ];
 
         //Act
@@ -110,7 +108,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
             $eventTransfers,
             MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
         );
-        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($this->merchantProductOfferTransfer->getConcreteSku());
+        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
         //Assert
         $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
@@ -123,11 +121,12 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
     {
         //Arrange
         $expectedCount = 0;
-        $this->createProductOffer(
+        $productOfferTransfer = $this->tester->createProductOffer(
+            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
             [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DECLINED]
         );
         $eventTransfers = [
-            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $this->merchantProductOfferTransfer->getConcreteSku()]),
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productOfferTransfer->getConcreteSku()]),
         ];
 
         //Act
@@ -135,7 +134,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
             $eventTransfers,
             MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
         );
-        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($this->merchantProductOfferTransfer->getConcreteSku());
+        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
         //Assert
         $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
@@ -148,12 +147,13 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
     {
         //Arrange
         $expectedCount = 0;
-        $this->createProductOffer(
+        $productOfferTransfer = $this->tester->createProductOffer(
+            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
             [],
             [ProductConcreteTransfer::IS_ACTIVE => false]
         );
         $eventTransfers = [
-            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $this->merchantProductOfferTransfer->getConcreteSku()]),
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productOfferTransfer->getConcreteSku()]),
         ];
 
         //Act
@@ -161,29 +161,48 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
             $eventTransfers,
             MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
         );
-        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($this->merchantProductOfferTransfer->getConcreteSku());
+        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
         //Assert
         $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
     }
 
     /**
-     * @param array $productOfferData
-     * @param array $productData
-     *
      * @return void
      */
-    protected function createProductOffer(array $productOfferData = [], array $productData = []): void
+    public function testProductConcreteOffersStoragePublishListenerWithStoreRelatedData(): void
     {
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        //Arrange
+        $productOfferCollectionTransfer = $this->tester->getProductOfferCollectionTransfer();
 
-        $productOfferData[ProductOfferTransfer::FK_MERCHANT] = $this->tester->haveMerchant()->getIdMerchant();
-        $productOfferData[ProductOfferTransfer::CONCRETE_SKU] = $this->tester->haveProduct($productData)->getSku();
+        /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
+        $productOfferTransfer = $productOfferCollectionTransfer->getProductOffers()[0];
 
-        $productOfferTransfer = $this->tester->haveProductOffer($productOfferData)->addStore($storeTransfer);
+        /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageEntityManager */
+        $merchantProductOfferStorageEntityManager = $this->getMockBuilder(MerchantProductOfferStorageEntityManagerInterface::class)->getMock();
+        $merchantProductOfferStorageEntityManager->expects($this->once())
+            ->method('saveProductConcreteProductOffersStorage')
+            ->with($productOfferTransfer->getConcreteSku(), [mb_strtolower($productOfferTransfer->getProductOfferReference())], 'DE');
 
-        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
-        $this->merchantProductOfferTransfer = $productOfferTransfer;
+        /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
+        $productOfferStorageDeleter = $this->getMockBuilder(ProductConcreteOffersStorageDeleterInterface::class)->getMock();
+        $productOfferStorageDeleter->expects($this->exactly(2))
+            ->method('deleteByProductSkus')
+            ->withConsecutive(
+                [[$productOfferTransfer->getConcreteSku()], 'AT'],
+                [[$productOfferTransfer->getConcreteSku()], 'US']
+            );
+
+        $productOfferStorageWriter = new ProductConcreteOffersStorageWriter(
+            $this->getMerchantProductOfferStorageToEventBehaviorFacadeInterfaceMock($productOfferTransfer),
+            $this->getMerchantProductOfferStorageToProductOfferFacadeInterfaceMock($productOfferCollectionTransfer),
+            $merchantProductOfferStorageEntityManager,
+            $productOfferStorageDeleter,
+            $this->getMerchantProductOfferStorageToStoreFacadeInterfaceMock()
+        );
+
+        //Act
+        $productOfferStorageWriter->writeByProductSkuEvents([new EventEntityTransfer()]);
     }
 
     /**
@@ -201,7 +220,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends Unit
      */
     protected function cleanUpProductConcreteOffersStorage(): void
     {
-        $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($this->merchantProductOfferTransfer->getConcreteSku());
+        $merchantProductOfferStorageEntities = $this->tester->findAllProductOfferEntities();
 
         foreach ($merchantProductOfferStorageEntities as $merchantProductOfferStorageEntity) {
             $merchantProductOfferStorageEntity->delete();
