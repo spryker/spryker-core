@@ -10,7 +10,6 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Helper;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface;
@@ -91,30 +90,13 @@ class AvailabilityHelper implements AvailabilityHelperInterface
             ->setSku($productAbstractAvailabilityEntity->getSku())
             ->setAvailability((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::AVAILABILITY_QUANTITY) ?? 0))->trim())
             ->setIsNeverOutOfStock(stripos($productAbstractAvailabilityEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET), 'true') !== false)
-            ->setStockQuantity($this->getStockQuantity($productAbstractAvailabilityEntity))
+            ->setStockQuantity((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::STOCK_QUANTITY) ?? 0))->trim())
             ->setReservationQuantity(
                 $this->calculateReservation(
                     $productAbstractAvailabilityEntity->getVirtualColumn(static::RESERVATION_QUANTITY) ?? '',
                     $storeTransfer
                 )->trim()
             );
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    protected function getStockQuantity(SpyProductAbstract $productAbstractEntity): Decimal
-    {
-        $quantity = (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::STOCK_QUANTITY) ?? 0));
-        foreach ($productAbstractEntity->getSpyProducts() as $productEntity) {
-            if ($productEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
-                return $quantity->floor()->trim();
-            }
-        }
-
-        return $quantity->trim();
     }
 
     /**

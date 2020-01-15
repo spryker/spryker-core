@@ -187,7 +187,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
                 AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $this->getConcreteAvailability($productItem)->trim(),
-                AvailabilityHelperInterface::STOCK_QUANTITY => (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0))->floor()->trim(),
+                AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productItem)->trim(),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => $this->calculateReservation($productItem)->trim(),
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
                 AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $neverOutOfStockFlag,
@@ -212,6 +212,16 @@ class BundledProductAvailabilityTable extends AbstractTable
             $this->storeFacade->getStoreById($this->idStore),
             $reservationQuantity
         );
+    }
+
+    /**
+     * @param array $productItem
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function getStockQuantity(array $productItem): Decimal
+    {
+        return (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0));
     }
 
     /**
