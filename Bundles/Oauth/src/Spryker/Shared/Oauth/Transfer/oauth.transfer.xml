@@ -93,4 +93,14 @@
         <property name="payload" type="array" singular="payload"/>
     </transfer>
 
+    <transfer name="RevokeRefreshTokenRequest">
+        <property name="refreshToken" type="string"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="RevokeRefreshTokenResponse">
+        <property name="isSuccessful" type="string"/>
+        <property name="error" type="string"/>
+    </transfer>
+
 </transfers>

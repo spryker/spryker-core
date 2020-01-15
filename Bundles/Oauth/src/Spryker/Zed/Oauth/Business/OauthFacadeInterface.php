@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
 /**
  * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
@@ -118,4 +120,16 @@ interface OauthFacadeInterface
      * @return void
      */
     public function installOauthClient(): void;
+
+    /**
+     * Specification:
+     *  - Revokes a refresh token.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return void
+     */
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): void;
 }

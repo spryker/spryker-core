@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -134,5 +136,19 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
         $this->getFactory()
             ->createOauthClientInstaller()
             ->install();
+    }
+
+    /**
+     * Specification:
+     *  - Revokes a refresh token.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return void
+     */
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): void
+    {
     }
 }
