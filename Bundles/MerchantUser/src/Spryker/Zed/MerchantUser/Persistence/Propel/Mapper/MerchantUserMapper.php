@@ -22,9 +22,9 @@ class MerchantUserMapper
         SpyMerchantUser $merchantUserEntity,
         MerchantUserTransfer $merchantUserTransfer
     ): MerchantUserTransfer {
-        $merchantUserTransfer = $merchantUserTransfer->fromArray($merchantUserEntity->toArray(), true);
-
-        return $merchantUserTransfer;
+        return $merchantUserTransfer->setIdMerchant($merchantUserEntity->getFkMerchant())
+            ->setIdUser($merchantUserEntity->getFkUser())
+            ->setIdMerchantUser($merchantUserEntity->getIdMerchantUser());
     }
 
     /**
@@ -37,8 +37,8 @@ class MerchantUserMapper
         MerchantUserTransfer $merchantUserTransfer,
         SpyMerchantUser $merchantUserEntity
     ): SpyMerchantUser {
-        $merchantUserEntity->fromArray($merchantUserTransfer->toArray());
-
-        return $merchantUserEntity;
+        return $merchantUserEntity->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
+            ->setFkUser($merchantUserTransfer->getIdUser())
+            ->setFkMerchant($merchantUserTransfer->getIdMerchant());
     }
 }

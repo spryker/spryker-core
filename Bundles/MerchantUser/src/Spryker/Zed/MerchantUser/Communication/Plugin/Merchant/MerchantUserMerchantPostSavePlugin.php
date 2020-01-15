@@ -41,8 +41,6 @@ class MerchantUserMerchantPostSavePlugin extends AbstractPlugin implements Merch
             throw new MerchantUserNotSavedException($this->getErrorMessage($merchantUserResponseTransfer));
         }
 
-        $merchantTransfer->setMerchantUser($merchantUserResponseTransfer->getMerchantUser());
-
         return $merchantTransfer;
     }
 
@@ -54,8 +52,8 @@ class MerchantUserMerchantPostSavePlugin extends AbstractPlugin implements Merch
     protected function getErrorMessage(MerchantUserResponseTransfer $merchantUserResponseTransfer): string
     {
         $errors = [];
-        foreach ($merchantUserResponseTransfer->getErrors() as $merchantUserErrorTransfer) {
-            $errors[] = $merchantUserErrorTransfer->getMessage();
+        foreach ($merchantUserResponseTransfer->getErrors() as $messageTransfer) {
+            $errors[] = $messageTransfer->getMessage();
         }
 
         return implode(', ', $errors);

@@ -43,7 +43,7 @@ class MerchantUserFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());
-        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getFkMerchant(), $merchantTransfer->getIdMerchant());
+        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdMerchant(), $merchantTransfer->getIdMerchant());
     }
 
     /**
@@ -61,8 +61,8 @@ class MerchantUserFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());
-        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getFkMerchant(), $merchantTransfer->getIdMerchant());
-        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getFkUser(), $userTransfer->getIdUser());
+        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdMerchant(), $merchantTransfer->getIdMerchant());
+        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdUser(), $userTransfer->getIdUser());
     }
 
     /**
@@ -82,9 +82,9 @@ class MerchantUserFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());
-        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getFkMerchant(), $merchantTransfer->getIdMerchant());
+        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdMerchant(), $merchantTransfer->getIdMerchant());
         $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getUser()->getUsername(), $merchantTransfer->getEmail());
-        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getFkUser(), $userTransfer->getIdUser());
+        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdUser(), $userTransfer->getIdUser());
     }
 
     /**

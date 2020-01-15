@@ -6,7 +6,6 @@
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
         <property name="merchantProfile" type="MerchantProfile"/>
-        <property name="merchantUser" type="MerchantUser"/>
         <property name="email" type="string"/>
     </transfer>
 
@@ -18,24 +17,24 @@
 
     <transfer name="MerchantUser">
         <property name="idMerchantUser" type="int"/>
-        <property name="fkMerchant" type="int"/>
-        <property name="fkUser" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="idUser" type="int"/>
         <property name="user" type="User"/>
     </transfer>
 
     <transfer name="MerchantUserCriteriaFilter">
         <property name="idMerchantUser" type="int"/>
-        <property name="fkMerchant" type="int"/>
-        <property name="fkUser" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="idUser" type="int"/>
     </transfer>
 
     <transfer name="MerchantUserResponse">
         <property name="merchantUser" type="MerchantUser"/>
         <property name="isSuccess" type="bool"/>
-        <property name="errors" type="MerchantUserError[]" singular="error"/>
+        <property name="errors" type="Message[]" singular="error"/>
     </transfer>
 
-    <transfer name="MerchantUserError">
+    <transfer name="Message">
         <property name="message" type="string"/>
     </transfer>
 
