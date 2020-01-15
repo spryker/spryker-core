@@ -10,13 +10,13 @@ namespace Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface;
+use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
  */
-class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements MerchantPostCreatePluginInterface
+class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface
 {
     /**
      * {@inheritDoc}
