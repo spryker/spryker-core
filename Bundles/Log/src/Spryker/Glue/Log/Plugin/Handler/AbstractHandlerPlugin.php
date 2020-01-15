@@ -28,6 +28,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     abstract protected function getHandler(): HandlerInterface;
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param array $record
      *
      * @return bool
