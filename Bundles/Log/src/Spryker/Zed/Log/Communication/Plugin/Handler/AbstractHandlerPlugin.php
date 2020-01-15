@@ -30,6 +30,8 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     abstract protected function getHandler(): HandlerInterface;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $record
@@ -42,6 +44,8 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $record
@@ -54,6 +58,8 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $records
@@ -66,6 +72,8 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param callable $callback
@@ -81,6 +89,8 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return callable
@@ -94,6 +104,8 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Monolog\Formatter\FormatterInterface $formatter
@@ -109,6 +121,8 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Monolog\Formatter\FormatterInterface
@@ -122,6 +136,8 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void

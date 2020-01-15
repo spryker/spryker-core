@@ -30,6 +30,8 @@ class QueueHandlerPlugin extends AbstractHandlerPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $record
@@ -42,6 +44,6 @@ class QueueHandlerPlugin extends AbstractHandlerPlugin
             return false;
         }
 
-        return $this->getHandler()->isHandling($record);
+        return parent::isHandling($record);
     }
 }

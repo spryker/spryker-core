@@ -28,6 +28,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     abstract protected function getHandler(): HandlerInterface;
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param array $record
      *
      * @return bool
@@ -38,6 +42,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param array $record
      *
      * @return bool
@@ -48,6 +56,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param array $records
      *
      * @return void
@@ -58,6 +70,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param callable $callback
      *
      * @return \Monolog\Handler\HandlerInterface
@@ -71,6 +87,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return callable
      */
     public function popProcessor(): callable
@@ -82,6 +102,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Monolog\Formatter\FormatterInterface $formatter
      *
      * @return \Monolog\Handler\HandlerInterface
@@ -95,6 +119,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return \Monolog\Formatter\FormatterInterface
      */
     public function getFormatter(): FormatterInterface
@@ -106,6 +134,10 @@ abstract class AbstractHandlerPlugin extends AbstractPlugin implements LogHandle
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function close(): void
