@@ -17,9 +17,9 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\ProductMerchantPageDataExpanderPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\ProductMerchantPageDataLoaderPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\ProductMerchantMapExpanderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\ProductMerchantNamePageDataExpanderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\ProductMerchantNamePageDataLoaderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\ProductMerchantNameMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
@@ -107,7 +107,7 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $data = $productPageSearchEntity->getStructuredData();
         $decodedData = json_decode($data, true);
 
-        $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_map']['names']);
+        $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_names']);
     }
 
     /**
@@ -130,21 +130,21 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER,
             [
-                new ProductMerchantMapExpanderPlugin(),
+                new ProductMerchantNameMapExpanderPlugin(),
             ]
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER,
             [
-                new ProductMerchantPageDataLoaderPlugin(),
+                new ProductMerchantNamePageDataLoaderPlugin(),
             ]
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER,
             [
-                MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA => new ProductMerchantPageDataExpanderPlugin(),
+                MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA => new ProductMerchantNamePageDataExpanderPlugin(),
             ]
         );
     }
