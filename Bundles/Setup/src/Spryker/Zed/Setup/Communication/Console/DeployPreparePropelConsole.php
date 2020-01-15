@@ -45,7 +45,7 @@ class DeployPreparePropelConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->warning(sprintf('The console command "%s" is deprecated. Use "propel:deploy:prepare" instead', static::COMMAND_NAME));
+        $this->warning(sprintf('The console command `%s` is deprecated. Use `propel:deploy:prepare` instead', static::COMMAND_NAME));
 
         $dependingCommands = [
             ConvertConfigConsole::COMMAND_NAME,
