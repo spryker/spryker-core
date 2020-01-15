@@ -8,7 +8,10 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
+use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -32,5 +35,38 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
         return $this->getFactory()
             ->createMerchantUserWriter()
             ->createMerchantUserByMerchant($merchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    public function updateUserFromMerchantData(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantUserWriter()
+            ->updateUserFromMerchantData($userTransfer, $merchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
+     */
+    public function getMerchantUser(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantUserReader()
+            ->getMerchantUser($merchantUserCriteriaFilterTransfer);
     }
 }

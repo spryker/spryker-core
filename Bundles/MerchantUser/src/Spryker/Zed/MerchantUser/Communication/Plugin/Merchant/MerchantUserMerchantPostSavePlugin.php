@@ -8,7 +8,9 @@
 namespace Spryker\Zed\MerchantUser\Communication\Plugin\Merchant;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface;
 use Spryker\Zed\MerchantUser\Communication\Exception\MerchantUserNotSavedException;
@@ -35,6 +37,16 @@ class MerchantUserMerchantPostSavePlugin extends AbstractPlugin implements Merch
      */
     public function execute(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
+        $merchantUserTransfer = $this->getFacade()->getMerchantUser((new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
+        if ($merchantUserTransfer) {
+            $this->getFacade()->updateUserFromMerchantData(
+                (new UserTransfer())->setIdUser($merchantUserTransfer->getIdUser()),
+                $merchantTransfer
+            );
+
+            return $merchantTransfer;
+        }
+
         $merchantUserResponseTransfer = $this->getFacade()->createMerchantUserByMerchant($merchantTransfer);
 
         if (!$merchantUserResponseTransfer->getIsSuccess()) {

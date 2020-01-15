@@ -36,7 +36,9 @@ class MerchantUserHelper extends Module
             $merchantUserEntity->delete();
         });
 
-        return (new MerchantUserTransfer())->fromArray($merchantUserEntity->toArray(), true);
+        return (new MerchantUserTransfer())->setIdMerchantUser($merchantUserEntity->getIdMerchantUser())
+            ->setIdMerchant($merchantUserEntity->getFkMerchant())
+            ->setIdUser($merchantUserEntity->getFkUser());
     }
 
     /**

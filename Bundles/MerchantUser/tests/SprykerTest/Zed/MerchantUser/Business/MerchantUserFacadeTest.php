@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantUser\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
@@ -68,28 +69,6 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantUserByMerchantUpdatesUserEmail(): void
-    {
-        // Arrange
-        $userTransfer = $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com']);
-        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => $userTransfer->getUsername()]);
-        $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
-
-        // Act
-        $this->tester->getFacade()->createMerchantUserByMerchant($merchantTransfer);
-        $merchantTransfer->setEmail('test2@examle.com');
-        $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUserByMerchant($merchantTransfer);
-
-        // Assert
-        $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());
-        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdMerchant(), $merchantTransfer->getIdMerchant());
-        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getUser()->getUsername(), $merchantTransfer->getEmail());
-        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdUser(), $userTransfer->getIdUser());
-    }
-
-    /**
-     * @return void
-     */
     public function testCreateMerchantUserByMerchantReturnsFalseIfUserAlreadyConnectedToAnotherMerchant(): void
     {
         // Arrange
@@ -108,5 +87,49 @@ class MerchantUserFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($merchantUserResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateUserFromMerchantData(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com']);
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => $userTransfer->getUsername()]);
+        $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
+
+        // Act
+        $this->tester->getFacade()->createMerchantUserByMerchant($merchantTransfer);
+        $merchantTransfer->setEmail('test2@examle.com');
+        $merchantUserResponseTransfer = $this->tester->getFacade()->updateUserFromMerchantData($userTransfer, $merchantTransfer);
+
+        // Assert
+        $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());
+        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdMerchant(), $merchantTransfer->getIdMerchant());
+        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getUser()->getUsername(), $merchantTransfer->getEmail());
+        $this->assertSame($merchantUserResponseTransfer->getMerchantUser()->getIdUser(), $userTransfer->getIdUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantUser(): void
+    {
+        // Arrange
+        $merchantUser = $this->tester->haveMerchantUser(
+            $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test@example.com']),
+            $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com'])
+        );
+
+        $merchantUserCriteriaFilterTransfer = (new MerchantUserCriteriaFilterTransfer())
+            ->setIdMerchant($merchantUser->getIdMerchant())
+            ->setIdUser($merchantUser->getIdUser());
+
+        // Act
+        $merchantUserFromFacade = $this->tester->getFacade()->getMerchantUser($merchantUserCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertSame($merchantUser->getIdMerchant(), $merchantUserFromFacade->getIdMerchant());
     }
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriter;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -27,8 +29,19 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantUserWriter(
             $this->getUserFacade(),
-            $this->getRepository(),
+            $this->createMerchantUserReader(),
             $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface
+     */
+    public function createMerchantUserReader(): MerchantUserReaderInterface
+    {
+        return new MerchantUserReader(
+            $this->getUserFacade(),
+            $this->getRepository()
         );
     }
 
