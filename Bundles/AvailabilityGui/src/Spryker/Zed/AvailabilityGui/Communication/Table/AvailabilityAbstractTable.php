@@ -197,14 +197,14 @@ class AvailabilityAbstractTable extends AbstractTable
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getStockQuantity(SpyProductAbstract $productAbstractEntity, bool $isBundleProduct): Decimal
+    protected function getStockQuantity(SpyProductAbstract $productAbstractEntity, bool $isBundleProduct = false): Decimal
     {
-        $decimal = (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::STOCK_QUANTITY) ?? 0));
+        $quantity = (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::STOCK_QUANTITY) ?? 0));
         if ($isBundleProduct) {
-            return $decimal->floor()->trim();
+            return $quantity->floor()->trim();
         }
 
-        return $decimal->trim();
+        return $quantity->trim();
     }
 
     /**

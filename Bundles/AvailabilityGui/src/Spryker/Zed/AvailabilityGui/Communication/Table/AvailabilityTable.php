@@ -168,7 +168,7 @@ class AvailabilityTable extends AbstractTable
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getStockQuantity(array $productItem, bool $isBundleProduct): Decimal
+    protected function getStockQuantity(array $productItem, bool $isBundleProduct = false): Decimal
     {
         $decimal = (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0));
         if ($isBundleProduct) {
