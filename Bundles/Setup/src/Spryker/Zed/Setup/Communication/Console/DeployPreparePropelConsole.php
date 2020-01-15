@@ -16,10 +16,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Use `DeployPreparePropelConsole` from Propel module instead.
+ * @see \Spryker\Zed\Propel\Communication\Console\DeployPreparePropelConsole
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
- * @deprecated Use `\Spryker\Zed\Propel\Communication\Console\DeployPreparePropelConsole` instead.
- * @see \Spryker\Zed\Propel\Communication\Console\DeployPreparePropelConsole
  */
 class DeployPreparePropelConsole extends Console
 {
