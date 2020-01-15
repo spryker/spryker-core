@@ -78,7 +78,7 @@ class AvailabilityAbstractTable extends AbstractTable
         $url = Url::generate(
             '/availability-abstract-table',
             [
-                static::URL_PARAM_ID_STORE => $this->idStore,
+               static::URL_PARAM_ID_STORE => $this->idStore,
             ]
         );
 
