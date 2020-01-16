@@ -108,7 +108,7 @@ class ConditionCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
-    private function getConditionMock()
+    private function getConditionMock(): ConditionInterface
     {
         return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }

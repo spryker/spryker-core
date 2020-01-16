@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\QueryContainerMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -62,9 +63,9 @@ class QueryContainerMethodBuilderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\QueryContainerMethodBuilder|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getQueryContainerMethodBuilderMock()
+    protected function getQueryContainerMethodBuilderMock(): QueryContainerMethodBuilder
     {
         $methodBuilderMock = $this
             ->getMockBuilder(QueryContainerMethodBuilder::class)
@@ -83,7 +84,7 @@ class QueryContainerMethodBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
      */
-    protected function getNamespaceExtractorMock()
+    protected function getNamespaceExtractorMock(): NamespaceExtractorInterface
     {
         return $this
             ->getMockBuilder(NamespaceExtractor::class)
