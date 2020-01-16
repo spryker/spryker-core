@@ -22,7 +22,7 @@ use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class MerchantUserWriter implements MerchantUserWriterInterface
 {
-    protected const USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE = 'A user with email %s is already connected to another merchant.';
+    protected const USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE = 'A user with the same email is already connected to another merchant.';
     protected const MERCHANT_USER_NOT_FOUND_ERROR_MESSAGE = 'Merchant user relation was not found.';
 
     /**

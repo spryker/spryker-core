@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 
 interface MerchantUserWriterInterface
 {
