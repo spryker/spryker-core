@@ -38,4 +38,11 @@ interface ProductBundleToProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function deactivateProductConcrete($idProductConcrete);
 }

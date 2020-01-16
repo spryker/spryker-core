@@ -45,6 +45,8 @@
         <property name="shoppingListName" type="string"/>
         <property name="product" type="StorageProduct"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListItemCollection">
@@ -68,6 +70,8 @@
         <property name="shoppingList" type="ShoppingList"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListOverviewResponse">
