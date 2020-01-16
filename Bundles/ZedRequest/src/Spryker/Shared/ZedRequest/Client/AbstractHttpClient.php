@@ -331,6 +331,39 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
+     * @param array $config
+     *
+     * @return array
+     */
+    protected function addCookiesToForwardProfiler(array $config): array
+    {
+        $isProfilerForwardingEnabled = Config::get(ZedRequestConstants::XDEBUG_PROFILER_FORWARD_ENABLED, false);
+
+        if (!$isProfilerForwardingEnabled) {
+            return $config;
+        }
+
+        $profilerName = Config::get(ZedRequestConstants::XDEBUG_PROFILER_NAME, ZedRequestConstants::DEFAULT_XDEBUG_PROFILER_NAME);
+
+        if (!isset($_COOKIE[$profilerName])) {
+            return $config;
+        }
+
+        if (!isset($config['cookies'])) {
+            $config['cookies'] = new CookieJar();
+        }
+
+        $cookie = new SetCookie();
+        $cookie->setName($profilerName);
+        $cookie->setValue($_COOKIE[$profilerName]);
+        $cookie->setDomain(Config::get(ZedRequestConstants::HOST_ZED_API));
+
+        $config['cookies']->setCookie($cookie);
+        
+        return $config;
+    }
+
+    /**
      * @return \GuzzleHttp\HandlerStack
      */
     protected function getHandlerStack()
