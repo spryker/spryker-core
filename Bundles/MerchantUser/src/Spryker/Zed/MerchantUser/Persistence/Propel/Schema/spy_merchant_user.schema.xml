@@ -18,6 +18,10 @@
             <reference foreign="id_merchant" local="fk_merchant"/>
         </foreign-key>
 
+        <index name="index-spy_merchant_user-fk_user">
+            <index-column name="fk_user"/>
+        </index>
+
         <id-method-parameter value="spy_merchant_user_pk_seq"/>
     </table>
 

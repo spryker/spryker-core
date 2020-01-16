@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\MerchantUser\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MerchantUser\Communication\Plugin\Merchant\MerchantUserMerchantPostCreatePlugin;
+use Spryker\Zed\MerchantUser\Communication\Plugin\Merchant\MerchantPortalAdminMerchantPostUpdatePlugin;
 
 /**
  * Auto-generated group annotations
@@ -20,10 +20,10 @@ use Spryker\Zed\MerchantUser\Communication\Plugin\Merchant\MerchantUserMerchantP
  * @group MerchantUser
  * @group Communication
  * @group Plugin
- * @group MerchantUserMerchantPostCreatePluginTest
+ * @group MerchantPortalAdminMerchantPostUpdatePluginTest
  * Add your own group annotations below this line
  */
-class MerchantUserMerchantPostCreatePluginTest extends Unit
+class MerchantPortalAdminMerchantPostUpdatePluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantUser\MerchantUserBusinessTester
@@ -33,16 +33,16 @@ class MerchantUserMerchantPostCreatePluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantUserPostCreateReturnsTrueIfUserDoesNotExist(): void
+    public function testMerchantUserPostUpdateReturnsTrueIfUserDoesNotExist(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
-        $merchantUserMerchantPostCreatePlugin = new MerchantUserMerchantPostCreatePlugin();
+        $merchantPortalAdminMerchantPostUpdatePlugin = new MerchantPortalAdminMerchantPostUpdatePlugin();
 
         // Act
-        $merchantResponseTransfer = $merchantUserMerchantPostCreatePlugin->execute($merchantTransfer);
+        $merchantResponseTransfer = $merchantPortalAdminMerchantPostUpdatePlugin->execute($merchantTransfer);
 
         // Assert
         $this->assertTrue($merchantResponseTransfer->getIsSuccess());
@@ -51,7 +51,7 @@ class MerchantUserMerchantPostCreatePluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantUserPostCreateReturnsFalseIfUserAlreadyConnectedToAnotherMerchant(): void
+    public function testMerchantUserPostUpdateReturnsFalseIfUserAlreadyConnectedToAnotherMerchant(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com']);
@@ -64,10 +64,10 @@ class MerchantUserMerchantPostCreatePluginTest extends Unit
         $merchantTransferWithSameEmail = $this->tester->haveMerchant([MerchantTransfer::EMAIL => $userTransfer->getUsername()]);
         $merchantTransferWithSameEmail->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransferWithSameEmail));
 
-        $merchantUserMerchantPostCreatePlugin = new MerchantUserMerchantPostCreatePlugin();
+        $merchantPortalAdminMerchantPostUpdatePlugin = new MerchantPortalAdminMerchantPostUpdatePlugin();
 
         // Act
-        $merchantResponseTransfer = $merchantUserMerchantPostCreatePlugin->execute($merchantTransferWithSameEmail);
+        $merchantResponseTransfer = $merchantPortalAdminMerchantPostUpdatePlugin->execute($merchantTransferWithSameEmail);
 
         // Assert
         $this->assertFalse($merchantResponseTransfer->getIsSuccess());
