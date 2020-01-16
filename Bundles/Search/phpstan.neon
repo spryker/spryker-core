@@ -4,3 +4,9 @@ parameters:
         -
             message: '#Call to an undefined method .+QueryInterface::.+\(\).#'
             path: 'vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php'
+        -
+            message: '#If condition is always false.#'
+            path: 'vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/QueryInterface.php'
+        -
+            message: '#If condition is always false.#'
+            path: 'vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/ResultFormatterPluginInterface.php'

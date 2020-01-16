@@ -18,7 +18,7 @@ Actions,Actions
 "Create new delivery method","Create new delivery method"
 "Shipment method is not found","Shipment method is not found"
 "View Delivery Method: %s","View Delivery Method: %s"
-"List Shipment Methods","List Shipment Methods"
+"List of delivery methods","List of delivery methods"
 Configuration,Configuration
 "Availability plugin","Availability plugin"
 "Price plugin","Price plugin"

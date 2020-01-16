@@ -148,15 +148,18 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        if (count($quoteTransfer->getItems())) {
-            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
-        }
-        $this->quoteFacade->updateQuote($quoteTransfer);
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setIsSuccessful(true);
 
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-        $quoteResponseTransfer->setIsSuccessful(true);
+        if (count($quoteTransfer->getItems())) {
+            $quoteResponseTransfer = $this->cartFacade->reloadItemsInQuote($quoteTransfer);
+        }
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
+        }
 
         return $quoteResponseTransfer;
     }

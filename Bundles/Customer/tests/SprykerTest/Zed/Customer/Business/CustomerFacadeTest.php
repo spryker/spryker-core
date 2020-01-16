@@ -813,7 +813,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\Business\CustomerBusinessFactory
      */
-    protected function getFactory(?TransferInterface $transfer = null, bool $hasEmail = true)
+    protected function getFactory(?TransferInterface $transfer = null, bool $hasEmail = true): CustomerBusinessFactory
     {
         $factoryMock = $this->getMockBuilder(CustomerBusinessFactory::class)
             ->getMock();
@@ -835,7 +835,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\Business\Customer\Customer
      */
-    private function getCustomerMock(?CustomerTransfer $customerTransfer = null, bool $hasEmail = true)
+    private function getCustomerMock(?CustomerTransfer $customerTransfer = null, bool $hasEmail = true): Customer
     {
         $customerMock = $this->getMockBuilder(Customer::class)
             ->disableOriginalConstructor()
@@ -857,7 +857,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\Business\Customer\Address
      */
-    private function getAddressMock(?AddressTransfer $addressTransfer = null)
+    private function getAddressMock(?AddressTransfer $addressTransfer = null): Address
     {
         $addressMock = $this->getMockBuilder(Address::class)
             ->disableOriginalConstructor()

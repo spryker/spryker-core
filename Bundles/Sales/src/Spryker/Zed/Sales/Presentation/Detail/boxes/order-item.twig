@@ -1,4 +1,4 @@
-{% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
+{% set numberOfItemAdditions = not orderItem.relatedBundleItemIdentifier ? (orderItem.productOptions | length + 1) : 1 %}
 {% set subtotal = group ? bundleItem.sumSubtotalAggregation : orderItem.sumSubtotalAggregation %}
 {% set priceToPay = group ? bundleItem.sumPriceToPayAggregation : orderItem.sumPriceToPayAggregation %}
 {% set image = image %}

@@ -48,4 +48,19 @@ class UtilTextFacadeTest extends Unit
 
         $this->assertEquals($expectedSlug, $slug);
     }
+
+    /**
+     * @return void
+     */
+    public function testGenerateRandomByteStringWillGenerateByteStringOfExpectedLength(): void
+    {
+        //Arrange
+        $length = 64;
+
+        //Act
+        $string = $this->utilTextFacade->generateRandomByteString($length);
+
+        //Assert
+        $this->assertEquals($length, strlen($string), 'String length did not match expected value.');
+    }
 }
