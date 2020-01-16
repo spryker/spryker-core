@@ -116,7 +116,7 @@ class CollectorProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface
      */
-    protected function createCollectorPluginMock()
+    protected function createCollectorPluginMock(): CollectorPluginInterface
     {
         return $this->getMockBuilder(CollectorPluginInterface::class)->getMock();
     }
@@ -124,7 +124,7 @@ class CollectorProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
-    protected function createCollectorSpecificationMock()
+    protected function createCollectorSpecificationMock(): CollectorSpecificationInterface
     {
         return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }

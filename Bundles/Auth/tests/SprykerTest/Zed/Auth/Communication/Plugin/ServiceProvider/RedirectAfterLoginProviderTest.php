@@ -180,7 +180,7 @@ class RedirectAfterLoginProviderTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider
      */
-    protected function getRedirectAfterLoginProvider(array $methods = [])
+    protected function getRedirectAfterLoginProvider(array $methods = []): RedirectAfterLoginProvider
     {
         if (!$methods) {
             return new RedirectAfterLoginProvider();
@@ -194,7 +194,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getHttpKernel()
+    protected function getHttpKernel(): HttpKernelInterface
     {
         return $this->getMockBuilder(HttpKernelInterface::class)->getMock();
     }

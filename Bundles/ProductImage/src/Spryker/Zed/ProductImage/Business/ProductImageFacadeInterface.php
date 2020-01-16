@@ -212,6 +212,7 @@ interface ProductImageFacadeInterface
      * Specification:
      * - Returns collection of ProductImageTransfers indexed by product ids.
      * - Fetched images by array of product ids and product image set name.
+     * - Images in image sets are sorted by `SpyProductImageSetToProductImage.sortOrder` column in ascending order.
      * - If there is no image set with desired name, returns images from the first image set.
      *
      * @api

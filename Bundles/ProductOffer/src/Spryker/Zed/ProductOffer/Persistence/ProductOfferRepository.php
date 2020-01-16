@@ -11,7 +11,10 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -32,7 +35,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
 
-        $productOfferEntities = $productOfferQuery->find();
+        $productOfferEntities = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
 
         foreach ($productOfferEntities as $productOfferEntity) {
             $productOfferTransfer = $this->getFactory()
@@ -82,6 +85,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByProductOfferReference($productOfferCriteriaFilter->getProductOfferReference());
         }
 
+        if ($productOfferCriteriaFilter->getIdProductOffer()) {
+            $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer());
+        }
+
         if ($productOfferCriteriaFilter->getConcreteSkus()) {
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilter->getConcreteSkus());
         }
@@ -90,8 +97,21 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilter->getProductOfferReferences());
         }
 
-        if ($productOfferCriteriaFilter->getPagination()) {
-            $productOfferQuery = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
+        if ($productOfferCriteriaFilter->getIsActive() !== null) {
+            $productOfferQuery->filterByIsActive($productOfferCriteriaFilter->getIsActive());
+        }
+
+        if ($productOfferCriteriaFilter->getApprovalStatuses()) {
+            $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilter->getApprovalStatuses());
+        }
+
+        if ($productOfferCriteriaFilter->getIsActiveConcreteProduct() !== null) {
+            $productOfferQuery->addJoin(
+                SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                SpyProductTableMap::COL_SKU,
+                Criteria::INNER_JOIN
+            );
+            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, true);
         }
 
         return $productOfferQuery;

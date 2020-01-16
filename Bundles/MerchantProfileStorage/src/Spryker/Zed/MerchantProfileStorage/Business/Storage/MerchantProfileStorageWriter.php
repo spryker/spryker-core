@@ -68,11 +68,11 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
         );
 
         $merchantProfileTransfers = $merchantProfileCollectionTransfer->getMerchantProfiles();
-        $merchantIdsForDeleting = [];
+        $merchantIdsForDeletion = [];
 
         foreach ($merchantProfileTransfers as $merchantProfileTransfer) {
             if (!$merchantProfileTransfer->getIsActive()) {
-                $merchantIds[] = $merchantProfileTransfer->getFkMerchant();
+                $merchantIdsForDeletion[] = $merchantProfileTransfer->getFkMerchant();
                 continue;
             }
 
@@ -82,7 +82,7 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
             $this->entityManager->saveMerchantProfileStorage($merchantProfileStorageTransfer);
         }
 
-        $this->entityManager->deleteMerchantProfileStorageEntitiesByMerchantIds($merchantIdsForDeleting);
+        $this->entityManager->deleteMerchantProfileStorageEntitiesByMerchantIds($merchantIdsForDeletion);
     }
 
     /**

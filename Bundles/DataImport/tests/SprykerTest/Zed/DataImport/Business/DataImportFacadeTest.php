@@ -106,7 +106,7 @@ class DataImportFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Business\DataImportBusinessFactory
      */
-    private function createDataImportBusinessFactoryMock()
+    private function createDataImportBusinessFactoryMock(): DataImportBusinessFactory
     {
         $mockBuilder = $this->getMockBuilder(DataImportBusinessFactory::class)
             ->setMethods(['createDataImporterCollection']);
