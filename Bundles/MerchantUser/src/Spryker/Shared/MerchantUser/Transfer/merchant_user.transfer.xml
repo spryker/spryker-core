@@ -49,6 +49,7 @@
 
     <transfer name="MerchantResponse">
         <property name="isSuccess" type="bool"/>
+        <property name="errors" type="MerchantError[]" singular="error"/>
     </transfer>
 
     <transfer name="MerchantError">

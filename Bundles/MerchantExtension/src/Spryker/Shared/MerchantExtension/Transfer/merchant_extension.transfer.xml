@@ -6,4 +6,7 @@
     <transfer name="Merchant">
     </transfer>
 
+    <transfer name="MerchantResponse">
+    </transfer>
+
 </transfers>

@@ -136,6 +136,7 @@
 
     <transfer name="MerchantResponse">
         <property name="isSuccess" type="bool"/>
+        <property name="merchant" type="Merchant"/>
     </transfer>
 
 </transfers>
