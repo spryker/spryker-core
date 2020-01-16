@@ -148,7 +148,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface
      */
-    private function getPropelConnectionMock(int $beginTransactionCalledCount, int $endTransactionCalledCount, ...$isInTransaction)
+    private function getPropelConnectionMock(int $beginTransactionCalledCount, int $endTransactionCalledCount, ...$isInTransaction): DataImportToPropelConnectionInterface
     {
         $mockBuilder = $this->getMockBuilder(DataImportToPropelConnectionInterface::class)
             ->setMethods(['inTransaction', 'beginTransaction', 'endTransaction']);

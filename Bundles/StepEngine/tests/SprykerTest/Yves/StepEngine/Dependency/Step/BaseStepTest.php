@@ -76,7 +76,7 @@ class BaseStepTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    private function getDataTransferMock()
+    private function getDataTransferMock(): AbstractTransfer
     {
         return $this->getMockBuilder(AbstractTransfer::class)->getMock();
     }

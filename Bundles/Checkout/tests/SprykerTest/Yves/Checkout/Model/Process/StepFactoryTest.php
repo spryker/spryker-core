@@ -60,7 +60,7 @@ class StepFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    private function getUrlGeneratorMock()
+    private function getUrlGeneratorMock(): UrlGeneratorInterface
     {
         return $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
     }
