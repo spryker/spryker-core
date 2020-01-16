@@ -79,7 +79,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      *
      * @return void
      */
-    public function writeByProductOfferReferenceEvents(array $eventTransfers): void
+    public function writeCollectionByProductOfferReferenceEvents(array $eventTransfers): void
     {
         $productOfferReferences = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
 
@@ -130,7 +130,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferReferencesToRemoveGroupedByStoreName = $this->getProductOfferReferenceToRemoveGroupedByStoreName($productOfferTransfer);
 
         foreach ($productOfferReferencesToRemoveGroupedByStoreName as $storeName => $productOfferReference) {
-            $this->productOfferStorageDeleter->deleteByProductOfferReferences([$productOfferReference], $storeName);
+            $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences([$productOfferReference], $storeName);
         }
     }
 

@@ -40,7 +40,7 @@ class ProductConcreteOffersStorageDeleter implements ProductConcreteOffersStorag
      *
      * @return void
      */
-    public function deleteByProductSkuEvents(array $eventTransfers): void
+    public function deleteCollectionByProductSkuEvents(array $eventTransfers): void
     {
         $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
@@ -48,7 +48,7 @@ class ProductConcreteOffersStorageDeleter implements ProductConcreteOffersStorag
             return;
         }
 
-        $this->deleteByProductSkus($productSkus);
+        $this->deleteCollectionByProductSkus($productSkus);
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductConcreteOffersStorageDeleter implements ProductConcreteOffersStorag
      *
      * @return void
      */
-    public function deleteByProductSkus(array $productSkus, ?string $storeName = null): void
+    public function deleteCollectionByProductSkus(array $productSkus, ?string $storeName = null): void
     {
         $this->merchantProductOfferStorageEntityManager
             ->deleteProductConcreteProductOffersStorageEntitiesByProductSkus($productSkus, $storeName);

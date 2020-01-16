@@ -198,7 +198,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         );
 
         //Act
-        $productOfferStorageWriter->writeByProductOfferReferenceEvents([new EventEntityTransfer()]);
+        $productOfferStorageWriter->writeCollectionByProductOfferReferenceEvents([new EventEntityTransfer()]);
     }
 
     /**

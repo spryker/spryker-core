@@ -14,5 +14,5 @@ interface ProductConcreteOffersStorageWriterInterface
      *
      * @return void
      */
-    public function writeByProductSkuEvents(array $eventTransfers): void;
+    public function writeCollectionByProductSkuEvents(array $eventTransfers): void;
 }

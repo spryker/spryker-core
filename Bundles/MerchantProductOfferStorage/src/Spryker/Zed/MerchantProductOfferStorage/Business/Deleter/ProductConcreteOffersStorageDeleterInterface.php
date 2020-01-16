@@ -14,7 +14,7 @@ interface ProductConcreteOffersStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteByProductSkuEvents(array $eventTransfers): void;
+    public function deleteCollectionByProductSkuEvents(array $eventTransfers): void;
 
     /**
      * @param string[] $productSkus
@@ -22,5 +22,5 @@ interface ProductConcreteOffersStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteByProductSkus(array $productSkus, ?string $storeName = null): void;
+    public function deleteCollectionByProductSkus(array $productSkus, ?string $storeName = null): void;
 }

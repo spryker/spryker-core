@@ -202,7 +202,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         );
 
         //Act
-        $productOfferStorageWriter->writeByProductSkuEvents([new EventEntityTransfer()]);
+        $productOfferStorageWriter->writeCollectionByProductSkuEvents([new EventEntityTransfer()]);
     }
 
     /**

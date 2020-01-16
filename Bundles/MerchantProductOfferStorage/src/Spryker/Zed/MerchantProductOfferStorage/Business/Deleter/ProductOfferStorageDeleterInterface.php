@@ -14,7 +14,7 @@ interface ProductOfferStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteByProductOfferReferenceEvents(array $eventTransfers): void;
+    public function deleteCollectionByProductOfferReferenceEvents(array $eventTransfers): void;
 
     /**
      * @param string[] $productOfferReferences
@@ -22,5 +22,5 @@ interface ProductOfferStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteByProductOfferReferences(array $productOfferReferences, ?string $storeName = null): void;
+    public function deleteCollectionByProductOfferReferences(array $productOfferReferences, ?string $storeName = null): void;
 }
