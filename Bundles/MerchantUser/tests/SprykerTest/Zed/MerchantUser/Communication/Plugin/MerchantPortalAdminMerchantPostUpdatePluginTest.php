@@ -33,7 +33,7 @@ class MerchantPortalAdminMerchantPostUpdatePluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantUserPostUpdateReturnsTrueIfUserDoesNotExist(): void
+    public function testMerchantPortalAdminPostUpdateReturnsTrueIfUserDoesNotExist(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -51,7 +51,7 @@ class MerchantPortalAdminMerchantPostUpdatePluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantUserPostUpdateReturnsFalseIfUserAlreadyConnectedToAnotherMerchant(): void
+    public function testMerchantPortalAdminPostUpdateReturnsFalseIfUserAlreadyConnectedToAnotherMerchant(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com']);

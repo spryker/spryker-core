@@ -33,14 +33,14 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantUserByMerchantReturnsTrueIfUserDoesNotExist(): void
+    public function testCreateByMerchantReturnsTrueIfUserDoesNotExist(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUserByMerchant($merchantTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->createByMerchant($merchantTransfer);
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());
@@ -50,7 +50,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantUserByMerchantReturnsTrueIfUserExist(): void
+    public function testCreateByMerchantReturnsTrueIfUserExist(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com']);
@@ -58,7 +58,7 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUserByMerchant($merchantTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->createByMerchant($merchantTransfer);
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());
@@ -69,7 +69,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantUserByMerchantReturnsFalseIfUserAlreadyConnectedToAnotherMerchant(): void
+    public function testCreateByMerchantReturnsFalseIfUserAlreadyConnectedToAnotherMerchant(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com']);
@@ -83,7 +83,7 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransferWithSameEmail->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransferWithSameEmail));
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUserByMerchant($merchantTransferWithSameEmail);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->createByMerchant($merchantTransferWithSameEmail);
 
         // Assert
         $this->assertFalse($merchantUserResponseTransfer->getIsSuccess());
@@ -100,9 +100,9 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
         // Act
-        $this->tester->getFacade()->createMerchantUserByMerchant($merchantTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->createByMerchant($merchantTransfer);
         $merchantTransfer->setEmail('test2@examle.com');
-        $merchantUserResponseTransfer = $this->tester->getFacade()->updateUserFromMerchantData($userTransfer, $merchantTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->updateUserByMerchant($merchantUserResponseTransfer->getMerchantUser(), $merchantTransfer);
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());
@@ -114,7 +114,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetMerchantUser(): void
+    public function testFindMerchantUser(): void
     {
         // Arrange
         $merchantUser = $this->tester->haveMerchantUser(
@@ -127,7 +127,7 @@ class MerchantUserFacadeTest extends Unit
             ->setIdUser($merchantUser->getIdUser());
 
         // Act
-        $merchantUserFromFacade = $this->tester->getFacade()->getMerchantUser($merchantUserCriteriaFilterTransfer);
+        $merchantUserFromFacade = $this->tester->getFacade()->findOne($merchantUserCriteriaFilterTransfer);
 
         // Assert
         $this->assertSame($merchantUser->getIdMerchant(), $merchantUserFromFacade->getIdMerchant());

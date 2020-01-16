@@ -22,7 +22,7 @@ class MerchantPortalAdminMerchantPostCreatePlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     * - Creates a user by provided merchant email.
+     * - Creates\finds a user by provided merchant email.
      * - Creates merchant user relation.
      *
      * @api
@@ -33,7 +33,7 @@ class MerchantPortalAdminMerchantPostCreatePlugin extends AbstractPlugin impleme
      */
     public function execute(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        $merchantUserResponseTransfer = $this->getFacade()->createMerchantUserByMerchant($merchantTransfer);
+        $merchantUserResponseTransfer = $this->getFacade()->createByMerchant($merchantTransfer);
 
         return (new MerchantResponseTransfer())
             ->setIsSuccess($merchantUserResponseTransfer->getIsSuccess())

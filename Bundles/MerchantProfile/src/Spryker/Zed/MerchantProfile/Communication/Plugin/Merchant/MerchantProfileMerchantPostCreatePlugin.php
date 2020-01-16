@@ -32,9 +32,10 @@ class MerchantProfileMerchantPostCreatePlugin extends AbstractPlugin implements 
     {
         $merchantProfileTransfer = $merchantTransfer->getMerchantProfile()->setFkMerchant($merchantTransfer->getIdMerchant());
         $merchantProfileTransfer = $this->getFacade()->createMerchantProfile($merchantProfileTransfer);
+        $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
 
         return (new MerchantResponseTransfer())
             ->setIsSuccess(true)
-            ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
+            ->setMerchant($merchantTransfer);
     }
 }

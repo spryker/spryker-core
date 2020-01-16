@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser;
 
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeBridge;
@@ -17,6 +18,7 @@ use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeBridge;
 class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_USER = 'FACADE_USER';
+    public const UTIL_TEXT_SERVICE = 'UTIL_TEXT_SERVICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +30,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
         parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addUserFacade($container);
+        $container = $this->addUntilTextService($container);
 
         return $container;
     }
@@ -43,6 +46,20 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
             return new MerchantUserToUserFacadeBridge(
                 $container->getLocator()->user()->facade()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUntilTextService(Container $container): Container
+    {
+        $container->set(self::UTIL_TEXT_SERVICE, function (Container $container) {
+            return new UtilTextService();
         });
 
         return $container;

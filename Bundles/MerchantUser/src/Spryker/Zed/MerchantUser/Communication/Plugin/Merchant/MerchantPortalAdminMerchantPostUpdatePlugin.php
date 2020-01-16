@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\UserTransfer;
+use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface;
 
@@ -34,21 +34,28 @@ class MerchantPortalAdminMerchantPostUpdatePlugin extends AbstractPlugin impleme
      */
     public function execute(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        $merchantUserTransfer = $this->getFacade()->getMerchantUser((new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
+        $merchantUserTransfer = $this->getFacade()->findOne((new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
         if ($merchantUserTransfer) {
-            $merchantUserResponseTransfer = $this->getFacade()->updateUserFromMerchantData(
-                (new UserTransfer())->setIdUser($merchantUserTransfer->getIdUser()),
-                $merchantTransfer
-            );
+            $merchantUserResponseTransfer = $this->getFacade()->updateUserByMerchant($merchantUserTransfer, $merchantTransfer);
 
-            return (new MerchantResponseTransfer())
-                ->setIsSuccess($merchantUserResponseTransfer->getIsSuccess())
-                ->setErrors($this->convertMessagesToMerchantErrors($merchantUserResponseTransfer->getErrors()))
-                ->setMerchant($merchantTransfer);
+            return $this->createMerchantResponseTransfer($merchantUserResponseTransfer, $merchantTransfer);
         }
 
-        $merchantUserResponseTransfer = $this->getFacade()->createMerchantUserByMerchant($merchantTransfer);
+        $merchantUserResponseTransfer = $this->getFacade()->createByMerchant($merchantTransfer);
 
+        return $this->createMerchantResponseTransfer($merchantUserResponseTransfer, $merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserResponseTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    protected function createMerchantResponseTransfer(
+        MerchantUserResponseTransfer $merchantUserResponseTransfer,
+        MerchantTransfer $merchantTransfer
+    ): MerchantResponseTransfer {
         return (new MerchantResponseTransfer())
             ->setIsSuccess($merchantUserResponseTransfer->getIsSuccess())
             ->setErrors($this->convertMessagesToMerchantErrors($merchantUserResponseTransfer->getErrors()))

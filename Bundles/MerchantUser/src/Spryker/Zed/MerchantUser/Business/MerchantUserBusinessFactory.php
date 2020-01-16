@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\MerchantUser\Business;
 
+use Spryker\Service\UtilText\UtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriter;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -29,19 +28,10 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantUserWriter(
             $this->getUserFacade(),
-            $this->createMerchantUserReader(),
-            $this->getEntityManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface
-     */
-    public function createMerchantUserReader(): MerchantUserReaderInterface
-    {
-        return new MerchantUserReader(
-            $this->getUserFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getConfig(),
+            $this->getUtilTextService()
         );
     }
 
@@ -51,5 +41,13 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function getUserFacade(): MerchantUserToUserFacadeInterface
     {
         return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Service\UtilText\UtilTextServiceInterface
+     */
+    public function getUtilTextService(): UtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::UTIL_TEXT_SERVICE);
     }
 }

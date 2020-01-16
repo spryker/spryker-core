@@ -17,10 +17,11 @@ interface MerchantUserFacadeInterface
 {
     /**
      * Specification:
+     * - Creates new or finds an existing user based on merchant contact person.
      * - Creates a new merchant user entity.
      * - Persists the entity to DB.
-     * - Creates/updates user according to merchant contact person data
-     * - Returns MerchantUserResponseTransfer.
+     * - Returns MerchantUserResponseTransfer.isSuccessful = true.
+     * - Returns MerchantUserResponseTransfer.isSuccessful = false when user is already assigned to another merchant (configurable)
      *
      * @api
      *
@@ -28,21 +29,22 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function createMerchantUserByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
+    public function createByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
 
     /**
      * Specification:
      * - Updates user according to merchant personal data and merchant email.
-     * - Returns MerchantUserResponseTransfer.
+     * - Returns MerchantUserResponseTransfer.isSuccessful = true.
+     * - Returns MerchantUserResponseTransfer.isSuccessful = false if merchant user doesn't exist
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function updateUserFromMerchantData(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
+    public function updateUserByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
 
     /**
      * Specification:
@@ -54,5 +56,5 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function getMerchantUser(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer;
+    public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer;
 }

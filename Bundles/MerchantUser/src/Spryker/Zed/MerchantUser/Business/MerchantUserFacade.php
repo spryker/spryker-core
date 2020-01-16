@@ -30,11 +30,11 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function createMerchantUserByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    public function createByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantUserWriter()
-            ->createMerchantUserByMerchant($merchantTransfer);
+            ->createByMerchant($merchantTransfer);
     }
 
     /**
@@ -42,16 +42,16 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function updateUserFromMerchantData(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    public function updateUserByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantUserWriter()
-            ->updateUserFromMerchantData($userTransfer, $merchantTransfer);
+            ->updateUserByMerchant($merchantUserTransfer, $merchantTransfer);
     }
 
     /**
@@ -63,10 +63,8 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function getMerchantUser(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
+    public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
     {
-        return $this->getFactory()
-            ->createMerchantUserReader()
-            ->getMerchantUser($merchantUserCriteriaFilterTransfer);
+        return $this->getRepository()->findOne($merchantUserCriteriaFilterTransfer);
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 /**
- * @deprecated Use \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface instead.
+ * @deprecated Use \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPortalAdminPostCreatePluginInterface or MerchantPortalAdminPostUpdatePluginInterface instead.
  */
 interface MerchantPostSavePluginInterface
 {

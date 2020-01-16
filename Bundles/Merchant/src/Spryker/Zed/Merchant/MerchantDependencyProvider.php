@@ -18,7 +18,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
     /**
-     * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::PLUGINS_MERCHANT_POST_CREATE instead.
+     * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::PLUGINS_MERCHANT_POST_CREATE or PLUGINS_MERCHANT_POST_UPDATE instead.
      */
     public const PLUGINS_MERCHANT_POST_SAVE = 'PLUGINS_MERCHANT_POST_SAVE';
     public const PLUGINS_MERCHANT_POST_CREATE = 'PLUGINS_MERCHANT_POST_CREATE';
@@ -84,7 +84,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::addMerchantPostCreatePlugins() instead.
+     * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::addMerchantPostCreatePlugins() or addMerchantPostUpdatePlugins() instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -130,7 +130,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use MerchantDependencyProvider::getMerchantPostCreatePlugins() instead.
+     * @deprecated Use MerchantDependencyProvider::getMerchantPostCreatePlugins() or getMerchantPostUpdatePlugins() instead.
      *
      * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
      */
