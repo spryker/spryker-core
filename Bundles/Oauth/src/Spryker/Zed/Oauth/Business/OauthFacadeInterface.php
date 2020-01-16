@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
-use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
 /**
  * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
