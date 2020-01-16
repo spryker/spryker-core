@@ -93,7 +93,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Merchant\Business\MerchantBusinessFactory::getMerchantPostCreatePlugins() instead.
+     * @deprecated Use \Spryker\Zed\Merchant\Business\MerchantBusinessFactory::getMerchantPostCreatePlugins() or getMerchantPostUpdatePlugins() instead.
      *
      * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
      */
