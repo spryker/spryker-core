@@ -82,7 +82,7 @@ interface ZedRequestConstants
 
     /**
      * Specification:
-     * - Enables forwarding of xdebug profiling.
+     * - Enables forwarding of Xdebug profiling.
      *
      * @api
      */
