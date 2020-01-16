@@ -86,6 +86,8 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
      */
     public const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
 
+    protected const DEFAULT_XDEBUG_PROFILER_NAME = 'XDEBUG_PROFILE';
+
     /**
      * @var bool
      */
@@ -344,7 +346,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
             return $config;
         }
 
-        $profilerName = Config::get(ZedRequestConstants::XDEBUG_PROFILER_NAME, ZedRequestConstants::DEFAULT_XDEBUG_PROFILER_NAME);
+        $profilerName = Config::get(ZedRequestConstants::XDEBUG_PROFILER_NAME, static::DEFAULT_XDEBUG_PROFILER_NAME);
 
         if (!isset($_COOKIE[$profilerName])) {
             return $config;

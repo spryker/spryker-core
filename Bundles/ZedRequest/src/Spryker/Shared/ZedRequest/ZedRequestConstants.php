@@ -95,12 +95,4 @@ interface ZedRequestConstants
      * @api
      */
     public const XDEBUG_PROFILER_NAME = 'ZED_REQUEST:XDEBUG_PROFILER_NAME';
-
-    /**
-     * Specification:
-     * - Default Xdebug profiler name.
-     *
-     * @api
-     */
-    public const DEFAULT_XDEBUG_PROFILER_NAME = 'ZED_REQUEST:DEFAULT_XDEBUG_PROFILER_NAME';
 }
