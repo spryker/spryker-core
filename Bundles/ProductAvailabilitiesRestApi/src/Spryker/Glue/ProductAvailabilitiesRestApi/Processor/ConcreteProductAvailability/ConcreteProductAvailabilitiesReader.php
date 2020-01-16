@@ -103,7 +103,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
         $idProductAbstract = $productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT];
 
         $productAbstractAvailabilityTransfer = $this->availabilityStorageClient
-            ->getProductAbstractAvailability((int)$idProductAbstract);
+            ->findProductAbstractAvailability((int)$idProductAbstract);
 
         if (!$productAbstractAvailabilityTransfer) {
             return null;

@@ -95,7 +95,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
         }
 
         $productAbstractAvailabilityTransfer = $this->availabilityStorageClient
-            ->getProductAbstractAvailability($productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT]);
+            ->findProductAbstractAvailability($productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
         if (!$productAbstractAvailabilityTransfer) {
             return null;

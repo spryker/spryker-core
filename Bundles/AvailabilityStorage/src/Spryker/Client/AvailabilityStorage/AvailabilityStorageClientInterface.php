@@ -33,7 +33,7 @@ interface AvailabilityStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function getProductAbstractAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer;
+    public function findProductAbstractAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer;
 
     /**
      * Specification:

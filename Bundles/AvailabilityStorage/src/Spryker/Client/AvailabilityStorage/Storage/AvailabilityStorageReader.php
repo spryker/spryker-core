@@ -109,7 +109,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function getAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
+    public function findAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
     {
         $availabilityStorageData = $this->storageClient->get(
             $this->generateKey($idProductAbstract)
