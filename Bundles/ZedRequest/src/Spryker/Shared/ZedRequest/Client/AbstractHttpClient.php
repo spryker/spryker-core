@@ -325,6 +325,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function getClientConfiguration()
     {
         $config = $this->addCookiesToForwardDebugSession($this->clientConfiguration);
+        $config = $this->addCookiesToForwardDebugProfiler($config);
         $config['handler'] = $this->getHandlerStack();
 
         return $config;
@@ -335,7 +336,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
      *
      * @return array
      */
-    protected function addCookiesToForwardProfiler(array $config): array
+    protected function addCookiesToForwardDebugProfiler(array $config): array
     {
         $isProfilerForwardingEnabled = Config::get(ZedRequestConstants::XDEBUG_PROFILER_FORWARD_ENABLED, false);
 
@@ -359,7 +360,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
         $cookie->setDomain(Config::get(ZedRequestConstants::HOST_ZED_API));
 
         $config['cookies']->setCookie($cookie);
-        
+
         return $config;
     }
 
