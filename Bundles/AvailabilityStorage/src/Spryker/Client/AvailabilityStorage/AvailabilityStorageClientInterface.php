@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\AvailabilityStorage;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+
 interface AvailabilityStorageClientInterface
 {
     /**
@@ -23,9 +25,25 @@ interface AvailabilityStorageClientInterface
 
     /**
      * Specification:
+     * - Return product abstract available item by abstract product id
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function getProductAbstractAvailabilityByIdProductAbstract(
+        int $idProductAbstract
+    ): ProductAbstractAvailabilityTransfer;
+
+    /**
+     * Specification:
      *  - Return entity availability data by abstract product id.
      *
      * @api
+     *
+     * @deprecated Use getProductAvailabilityByIdProductAbstract() instead
      *
      * @param int $idProductAbstract
      *

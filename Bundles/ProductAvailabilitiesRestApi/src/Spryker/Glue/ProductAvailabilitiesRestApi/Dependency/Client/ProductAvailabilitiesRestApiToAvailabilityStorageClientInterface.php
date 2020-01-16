@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+
 interface ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
 {
     /**
@@ -15,4 +17,11 @@ interface ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
      * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
      */
     public function getAvailabilityAbstract($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function getProductAbstractAvailabilityByIdProductAbstract(int $idProductAbstract): ProductAbstractAvailabilityTransfer;
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\AvailabilityStorage\Storage;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+
 interface AvailabilityStorageReaderInterface
 {
     /**
@@ -17,6 +19,17 @@ interface AvailabilityStorageReaderInterface
     public function getAvailabilityAbstractAsStorageTransfer($idProductAbstract);
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function getAvailabilityAbstractAsProductAbstractAvailabilityTransfer(
+        int $idProductAbstract
+    ): ProductAbstractAvailabilityTransfer;
+
+    /**
+     * @deprecated Use getAvailabilityAbstractAsStorageTransfer() instead
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer

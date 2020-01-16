@@ -7,8 +7,9 @@
 
 namespace Spryker\Glue\ProductAvailabilitiesRestApi\Processor\ConcreteProductAvailability;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -101,17 +102,19 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
     public function findConcreteProductAvailabilityBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $localeName = $restRequest->getMetadata()->getLocale();
-            $productConcreteStorageData = $this->productStorageClient
+        $productConcreteStorageData = $this->productStorageClient
             ->findProductConcreteStorageDataByMapping(static::PRODUCT_CONCRETE_MAPPING_TYPE, $sku, $localeName);
         if (!$productConcreteStorageData) {
             return null;
         }
         $idProductAbstract = $productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT];
 
-        $availabilityAbstractEntityTransfer = $this->availabilityStorageClient->getAvailabilityAbstract((int)$idProductAbstract);
-        foreach ($availabilityAbstractEntityTransfer->getSpyAvailabilities() as $availabilityEntityTransfer) {
-            if ($availabilityEntityTransfer->getSku() === $sku) {
-                return $this->buildProductAvailabilitiesResource($availabilityEntityTransfer);
+        $productAbstractAvailabilityTransfer = $this->availabilityStorageClient
+            ->getProductAbstractAvailabilityByIdProductAbstract((int)$idProductAbstract);
+        $productConcreteAvailableItemTransfers = $productAbstractAvailabilityTransfer->getProductConcreteAvailabilities();
+        foreach ($productConcreteAvailableItemTransfers as $productConcreteAvailabilityTransfer) {
+            if ($productConcreteAvailabilityTransfer->getSku() === $sku) {
+                return $this->buildProductAvailabilitiesResource($productConcreteAvailabilityTransfer);
             }
         }
 
@@ -134,24 +137,28 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $availabilityEntityTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function buildProductAvailabilitiesResource(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestResourceInterface
-    {
+    protected function buildProductAvailabilitiesResource(
+        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+    ): RestResourceInterface {
         $restProductsConcreteAvailabilityAttributesTransfer = $this->concreteProductsAvailabilityResourceMapper
-            ->mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer($availabilityEntityTransfer);
+            ->mapProductConcreteAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(
+                $productConcreteAvailabilityTransfer,
+                new RestConcreteProductAvailabilityAttributesTransfer()
+            );
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES,
-            $availabilityEntityTransfer->getSku(),
+            $productConcreteAvailabilityTransfer->getSku(),
             $restProductsConcreteAvailabilityAttributesTransfer
         );
 
         $restResourceSelfLink = sprintf(
             '%s/%s/%s',
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $availabilityEntityTransfer->getSku(),
+            $productConcreteAvailabilityTransfer->getSku(),
             ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES
         );
         $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
