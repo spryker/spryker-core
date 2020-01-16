@@ -21,11 +21,9 @@ interface AvailabilityStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function getAvailabilityAbstractAsProductAbstractAvailabilityTransfer(
-        int $idProductAbstract
-    ): ProductAbstractAvailabilityTransfer;
+    public function getAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer;
 
     /**
      * @deprecated Use getAvailabilityAbstractAsStorageTransfer() instead

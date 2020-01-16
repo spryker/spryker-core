@@ -107,22 +107,23 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function getAvailabilityAbstractAsProductAbstractAvailabilityTransfer(
-        int $idProductAbstract
-    ): ProductAbstractAvailabilityTransfer {
-        $availability = $this->storageClient->get($this->generateKey($idProductAbstract));
-        $productAbstractAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
-        if ($availability) {
-            $productAbstractAvailabilityTransfer = $this->availabilityStorageMapper
-                ->mapAvailabilityStorageDataToProductAbstractAvailabilityTransfer(
-                    $availability,
-                    $productAbstractAvailabilityTransfer
-                );
+    public function getAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
+    {
+        $availabilityStorageData = $this->storageClient->get(
+            $this->generateKey($idProductAbstract)
+        );
+
+        if (!$availabilityStorageData) {
+            return null;
         }
 
-        return $productAbstractAvailabilityTransfer;
+        return $this->availabilityStorageMapper
+            ->mapAvailabilityStorageDataToProductAbstractAvailabilityTransfer(
+                $availabilityStorageData,
+                new ProductAbstractAvailabilityTransfer()
+            );
     }
 
     /**

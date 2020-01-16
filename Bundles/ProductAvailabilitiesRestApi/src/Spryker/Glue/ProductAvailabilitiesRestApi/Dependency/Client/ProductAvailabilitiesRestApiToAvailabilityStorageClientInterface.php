@@ -21,7 +21,7 @@ interface ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function getProductAbstractAvailabilityByIdProductAbstract(int $idProductAbstract): ProductAbstractAvailabilityTransfer;
+    public function getProductAbstractAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer;
 }

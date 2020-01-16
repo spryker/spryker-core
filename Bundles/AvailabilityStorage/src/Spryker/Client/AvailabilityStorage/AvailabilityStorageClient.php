@@ -38,13 +38,13 @@ class AvailabilityStorageClient extends AbstractClient implements AvailabilitySt
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function getProductAbstractAvailabilityByIdProductAbstract(int $idProductAbstract): ProductAbstractAvailabilityTransfer
+    public function getProductAbstractAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
     {
         return $this->getFactory()
             ->createAvailabilityStorageReader()
-            ->getAvailabilityAbstractAsProductAbstractAvailabilityTransfer($idProductAbstract);
+            ->getAbstractProductAvailability($idProductAbstract);
     }
 
     /**

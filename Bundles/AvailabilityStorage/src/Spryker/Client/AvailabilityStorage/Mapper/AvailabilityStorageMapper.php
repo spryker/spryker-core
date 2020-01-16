@@ -7,12 +7,13 @@
 
 namespace Spryker\Client\AvailabilityStorage\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 
 class AvailabilityStorageMapper implements AvailabilityStorageMapperInterface
 {
-    protected const KEY = 'SpyAvailabilities';
+    protected const KEY_SPY_AVAILABILITIES = 'SpyAvailabilities';
     protected const KEY_SKU = 'sku';
     protected const KEY_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
     protected const KEY_QUANTITY = 'quantity';
@@ -31,72 +32,36 @@ class AvailabilityStorageMapper implements AvailabilityStorageMapperInterface
         $productAbstractAvailabilityTransfer->setAvailability($availabilityStorageData[static::KEY_QUANTITY]);
         $productAbstractAvailabilityTransfer->setSku($availabilityStorageData[static::KEY_ABSTRACT_SKU]);
 
-        return $this->fillProductConcreteAvailabilitiesFromSpyAvailabilities(
-            $productAbstractAvailabilityTransfer,
-            $availabilityStorageData[static::KEY]
+        $productConcreteAvailabilityTransfers = $this->mapProductConcreteAvailabilityDataToProductConcreteAvailabilityTransfers(
+            $availabilityStorageData[static::KEY_SPY_AVAILABILITIES],
+            new ArrayObject()
         );
-    }
 
-    /**
-     * @param array $spyAvailabilityItem
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
-     */
-    protected function mapSpyAvailabilityItemToProductConcreteAvailabilityTransfer(
-        array $spyAvailabilityItem,
-        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
-    ): ProductConcreteAvailabilityTransfer {
-        return $productConcreteAvailabilityTransfer->fromArray($spyAvailabilityItem, true)
-            ->setSku($spyAvailabilityItem[static::KEY_SKU])
-            ->setAvailability($spyAvailabilityItem[static::KEY_QUANTITY])
-            ->setIsNeverOutOfStock(!empty($spyAvailabilityItem[static::KEY_IS_NEVER_OUT_OF_STOCK]));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
-     * @param array $storageAvailabilityItems
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
-     */
-    protected function fillProductConcreteAvailabilitiesFromSpyAvailabilities(
-        ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer,
-        array $storageAvailabilityItems
-    ): ProductAbstractAvailabilityTransfer {
-        foreach ($storageAvailabilityItems as $storageAvailabilityItem) {
-            $productConcreteAvailabilityTransfer = $this->mapSpyAvailabilityItemToProductConcreteAvailabilityTransfer(
-                $storageAvailabilityItem,
-                new ProductConcreteAvailabilityTransfer()
-            );
-
-            $productAbstractAvailabilityTransfer->addProductConcreteAvailability($productConcreteAvailabilityTransfer);
-        }
+        $productAbstractAvailabilityTransfer->setProductConcreteAvailabilities($productConcreteAvailabilityTransfers);
 
         return $productAbstractAvailabilityTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
+     * @param array $productConcreteAvailabilityDataItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[] $productConcreteAvailabilityTransfers
      *
-     * @return bool
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
      */
-    protected function isProductAbstractAvailable(ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer): bool
-    {
-        return $productAbstractAvailabilityTransfer->getAvailability() !== null
-            && $productAbstractAvailabilityTransfer->getAvailability()->greaterThan(0);
-    }
+    protected function mapProductConcreteAvailabilityDataToProductConcreteAvailabilityTransfers(
+        array $productConcreteAvailabilityDataItems,
+        ArrayObject $productConcreteAvailabilityTransfers
+    ): ArrayObject {
+        foreach ($productConcreteAvailabilityDataItems as $productConcreteAvailabilityDataItem) {
+            $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
+                ->fromArray($productConcreteAvailabilityDataItem, true)
+                ->setSku($productConcreteAvailabilityDataItem[static::KEY_SKU])
+                ->setAvailability($productConcreteAvailabilityDataItem[static::KEY_QUANTITY])
+                ->setIsNeverOutOfStock((bool)$productConcreteAvailabilityDataItem[static::KEY_IS_NEVER_OUT_OF_STOCK]);
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
-     *
-     * @return bool
-     */
-    protected function isProductConcreteAvailable(
-        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
-    ): bool {
-        return $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()
-            || ($productConcreteAvailabilityTransfer->getAvailability() !== null
-                && $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0)
-            );
+            $productConcreteAvailabilityTransfers->append($productConcreteAvailabilityTransfer);
+        }
+
+        return $productConcreteAvailabilityTransfers;
     }
 }
