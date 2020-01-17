@@ -13,6 +13,9 @@ use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 
+/**
+ * @method \Spryker\Zed\Oauth\Persistence\OauthPersistenceFactory getFactory()
+ */
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
     /**
@@ -87,6 +90,10 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function isRefreshTokenRevoked($tokenId)
     {
-        return false;
+        $authRefreshTokenEntity = $this->getFactory()
+            ->createRefreshTokenQuery()
+            ->findOneByIdentifier($tokenId);
+
+        return !empty($authRefreshTokenEntity->getRevokedAt());
     }
 }
