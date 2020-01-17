@@ -52,7 +52,7 @@ class AvailabilityStorageClient extends AbstractClient implements AvailabilitySt
      *
      * @api
      *
-     * @deprecated Use getProductAvailabilityByIdProductAbstract() instead
+     * @deprecated Use `AvailabilityStorageClientInterface::findProductAbstractAvailability()` instead.
      *
      * @param int $idProductAbstract
      *

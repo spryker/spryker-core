@@ -26,7 +26,7 @@ interface AvailabilityStorageReaderInterface
     public function findAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer;
 
     /**
-     * @deprecated Use getAvailabilityAbstractAsStorageTransfer() instead
+     * @deprecated Use `AvailabilityStorageClientInterface::findProductAbstractAvailability()` instead.
      *
      * @param int $idProductAbstract
      *

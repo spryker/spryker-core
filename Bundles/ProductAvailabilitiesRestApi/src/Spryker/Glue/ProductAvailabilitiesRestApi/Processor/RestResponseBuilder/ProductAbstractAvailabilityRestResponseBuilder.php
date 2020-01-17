@@ -65,13 +65,10 @@ class ProductAbstractAvailabilityRestResponseBuilder implements ProductAbstractA
             $restProductsAbstractAvailabilityAttributesTransfer
         );
 
-        $restResourceSelfLink = sprintf(
-            '%s/%s/%s',
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $productAbstractSku,
-            ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES
+        $restResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->getProductAbstractAvailabilityResourceSelfLink($productAbstractSku)
         );
-        $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 
         return $restResource;
     }
@@ -112,5 +109,20 @@ class ProductAbstractAvailabilityRestResponseBuilder implements ProductAbstractA
             ->setDetail(ProductAvailabilitiesRestApiConfig::RESPONSE_DETAILS_ABSTRACT_PRODUCT_AVAILABILITY_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param string $productAbstractSku
+     *
+     * @return string
+     */
+    protected function getProductAbstractAvailabilityResourceSelfLink(string $productAbstractSku): string
+    {
+        return sprintf(
+            '%s/%s/%s',
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $productAbstractSku,
+            ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES
+        );
     }
 }

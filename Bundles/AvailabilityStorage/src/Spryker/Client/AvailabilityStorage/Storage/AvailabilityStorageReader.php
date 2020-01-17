@@ -127,7 +127,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     }
 
     /**
-     * @deprecated Use getAvailabilityAbstractAsStorageTransfer() instead
+     * @deprecated Use `AvailabilityStorageClientInterface::findProductAbstractAvailability()` instead.
      *
      * @param int $idProductAbstract
      *

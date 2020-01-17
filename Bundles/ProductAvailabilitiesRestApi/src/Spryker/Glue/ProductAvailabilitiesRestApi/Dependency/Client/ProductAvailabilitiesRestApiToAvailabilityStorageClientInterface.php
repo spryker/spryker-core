@@ -14,13 +14,6 @@ interface ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
-     */
-    public function getAvailabilityAbstract($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
     public function findProductAbstractAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer;

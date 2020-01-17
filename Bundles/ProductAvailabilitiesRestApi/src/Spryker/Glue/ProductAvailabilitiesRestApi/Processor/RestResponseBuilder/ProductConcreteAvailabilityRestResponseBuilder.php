@@ -63,13 +63,10 @@ class ProductConcreteAvailabilityRestResponseBuilder implements ProductConcreteA
             $restProductsConcreteAvailabilityAttributesTransfer
         );
 
-        $restResourceSelfLink = sprintf(
-            '%s/%s/%s',
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $productConcreteAvailabilityTransfer->getSku(),
-            ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES
+        $restResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->getProductConcreteAvailabilityResourceSelfLink($productConcreteAvailabilityTransfer->getSku())
         );
-        $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 
         return $restResource;
     }
@@ -110,5 +107,20 @@ class ProductConcreteAvailabilityRestResponseBuilder implements ProductConcreteA
             ->setDetail(ProductAvailabilitiesRestApiConfig::RESPONSE_DETAILS_CONCRETE_PRODUCT_AVAILABILITY_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return string
+     */
+    protected function getProductConcreteAvailabilityResourceSelfLink(string $productConcreteSku): string
+    {
+        return sprintf(
+            '%s/%s/%s',
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+            $productConcreteSku,
+            ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES
+        );
     }
 }

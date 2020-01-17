@@ -27,16 +27,6 @@ class ProductAvailabilitiesRestApiToAvailabilityStorageClientBridge implements P
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
-     */
-    public function getAvailabilityAbstract($idProductAbstract)
-    {
-        return $this->availabilityStorageClient->getAvailabilityAbstract($idProductAbstract);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
     public function findProductAbstractAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
