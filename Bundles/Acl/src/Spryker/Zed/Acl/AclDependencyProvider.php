@@ -48,7 +48,6 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addFacadeUser($container);
-        $container = $this->addAclQueryContainer($container);
         $container = $this->addAclInstallerPlugins($container);
 
         return $container;
@@ -104,7 +103,6 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAclInstallerPlugins(Container $container): Container
     {
-        /** @deprecated Use getQueryContainer() directly for the own bundle's query container */
         $container->set(static::PLUGIN_ACL_INSTALLER_STACK, function (Container $container) {
             return $this->getAclInstallerPlugins();
         });
