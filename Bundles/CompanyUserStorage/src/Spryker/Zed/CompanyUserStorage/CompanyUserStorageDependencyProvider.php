@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage;
 
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeBridge;
 use Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -21,6 +22,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -54,13 +56,26 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addCompanyUserPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CompanyUserStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,11 +87,11 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUserStorageToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -88,9 +103,9 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyUserStorageExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_STORAGE_EXPANDER] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_STORAGE_EXPANDER, function () {
             return $this->getCompanyUserStorageExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -101,5 +116,19 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
     protected function getCompanyUserStorageExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_COMPANY_USER, function () {
+            return SpyCompanyUserQuery::create();
+        });
+
+        return $container;
     }
 }
