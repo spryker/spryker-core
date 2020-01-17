@@ -22,7 +22,7 @@ class MerchantPortalAdminMerchantPostCreatePlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     * - Creates\finds a user by provided merchant email.
+     * - Creates or finds a user by provided merchant email.
      * - Creates merchant user relation.
      *
      * @api
