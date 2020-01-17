@@ -22,7 +22,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\MerchantProfileGuiConfig getConfig()
@@ -285,8 +287,8 @@ class MerchantProfileFormType extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_FIRST_NAME, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_FIRST_NAME,
-            'constraints' => $this->getTextFieldConstraints(),
-            'required' => false,
+            'constraints' => $this->getRequiredTextFieldConstraints(),
+            'required' => true,
         ]);
 
         return $this;
@@ -301,8 +303,8 @@ class MerchantProfileFormType extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_LAST_NAME, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_LAST_NAME,
-            'constraints' => $this->getTextFieldConstraints(),
-            'required' => false,
+            'constraints' => $this->getRequiredTextFieldConstraints(),
+            'required' => true,
         ]);
 
         return $this;
@@ -432,6 +434,18 @@ class MerchantProfileFormType extends AbstractType
     protected function getTextFieldConstraints(): array
     {
         return [
+            new Length(['max' => 255]),
+        ];
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint[]
+     */
+    protected function getRequiredTextFieldConstraints(): array
+    {
+        return [
+            new NotBlank(),
+            new Required(),
             new Length(['max' => 255]),
         ];
     }
