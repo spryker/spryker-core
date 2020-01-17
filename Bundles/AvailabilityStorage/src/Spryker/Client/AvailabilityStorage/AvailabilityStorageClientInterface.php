@@ -25,7 +25,7 @@ interface AvailabilityStorageClientInterface
 
     /**
      * Specification:
-     * - Return product abstract available item by abstract product id
+     * - Returns product abstract availability by abstract product id.
      *
      * @api
      *
@@ -41,7 +41,7 @@ interface AvailabilityStorageClientInterface
      *
      * @api
      *
-     * @deprecated Use getProductAvailabilityByIdProductAbstract() instead
+     * @deprecated Use `AvailabilityStorageClientInterface::findProductAbstractAvailability()` instead.
      *
      * @param int $idProductAbstract
      *

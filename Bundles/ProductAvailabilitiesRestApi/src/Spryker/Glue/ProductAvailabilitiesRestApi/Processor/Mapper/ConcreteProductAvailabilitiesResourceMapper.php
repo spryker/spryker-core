@@ -25,10 +25,18 @@ class ConcreteProductAvailabilitiesResourceMapper implements ConcreteProductAvai
         return $restConcreteProductAvailabilityAttributesTransfer
             ->fromArray($productConcreteAvailabilityTransfer->toArray(), true)
             ->setQuantity($productConcreteAvailabilityTransfer->getAvailability())
-            ->setAvailability(
-                ($productConcreteAvailabilityTransfer->getAvailability() !== null
-                    && $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0))
-                || $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()
-            );
+            ->setAvailability($this->isProductConcreteAvailable($productConcreteAvailabilityTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConcreteAvailable(ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer): bool
+    {
+        return ($productConcreteAvailabilityTransfer->getAvailability() !== null
+                && $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0))
+            || $productConcreteAvailabilityTransfer->getIsNeverOutOfStock();
     }
 }

@@ -33,7 +33,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
     /**
      * @var \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductAbstractAvailabilityRestResponseBuilderInterface
      */
-    protected $productAbstractAvailabilityRestResourceBuilder;
+    protected $productAbstractAvailabilityRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface $productStorageClient
@@ -47,7 +47,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
     ) {
         $this->availabilityStorageClient = $availabilityStorageClient;
         $this->productStorageClient = $productStorageClient;
-        $this->productAbstractAvailabilityRestResourceBuilder = $productAbstractAvailabilityRestResourceBuilder;
+        $this->productAbstractAvailabilityRestResponseBuilder = $productAbstractAvailabilityRestResourceBuilder;
     }
 
     /**
@@ -59,7 +59,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
     {
         $abstractProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$abstractProductResource) {
-            return $this->productAbstractAvailabilityRestResourceBuilder
+            return $this->productAbstractAvailabilityRestResponseBuilder
                 ->createProductAbstractSkuIsNotSpecifiedErrorResponse();
         }
 
@@ -67,11 +67,11 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
 
         $productAbstractAvailabilityRestResource = $this->findAbstractProductAvailabilityBySku($productAbstractSku, $restRequest);
         if (!$productAbstractAvailabilityRestResource) {
-            return $this->productAbstractAvailabilityRestResourceBuilder
+            return $this->productAbstractAvailabilityRestResponseBuilder
                 ->createProductAbstractAvailabilityNotFoundErrorResponse();
         }
 
-        return $this->productAbstractAvailabilityRestResourceBuilder
+        return $this->productAbstractAvailabilityRestResponseBuilder
             ->createProductAbstractAvailabilityResponse($productAbstractAvailabilityRestResource);
     }
 
@@ -101,7 +101,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
             return null;
         }
 
-        return $this->productAbstractAvailabilityRestResourceBuilder
+        return $this->productAbstractAvailabilityRestResponseBuilder
             ->createProductAbstractAvailabilityResource($productAbstractSku, $productAbstractAvailabilityTransfer);
     }
 }

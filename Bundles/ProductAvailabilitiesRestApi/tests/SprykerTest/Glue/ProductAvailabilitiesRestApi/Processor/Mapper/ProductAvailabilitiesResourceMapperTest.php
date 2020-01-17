@@ -131,13 +131,13 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      */
     protected function getProductConcreteAvailabilityTransferWithAvailableProducts(): ProductConcreteAvailabilityTransfer
     {
-        $concreteProductAvailableItemTransfer = new ProductConcreteAvailabilityTransfer();
-        $concreteProductAvailableItemTransfer->setAvailability(static::PRODUCTS_AVAILABILITY_QUANTITY);
-        $concreteProductAvailableItemTransfer
+        $productConcreteAvailabilityTransfer = new ProductConcreteAvailabilityTransfer();
+        $productConcreteAvailabilityTransfer->setAvailability(static::PRODUCTS_AVAILABILITY_QUANTITY);
+        $productConcreteAvailabilityTransfer
             ->setIsNeverOutOfStock(static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $concreteProductAvailableItemTransfer->setSku(static::PRODUCT_CONCRETE_SKU);
+        $productConcreteAvailabilityTransfer->setSku(static::PRODUCT_CONCRETE_SKU);
 
-        return $concreteProductAvailableItemTransfer;
+        return $productConcreteAvailabilityTransfer;
     }
 
     /**
@@ -145,13 +145,13 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      */
     protected function getProductConcreteAvailabilityTransferWithUnavailableProducts(): ProductConcreteAvailabilityTransfer
     {
-        $concreteProductAvailableItemTransfer = new ProductConcreteAvailabilityTransfer();
-        $concreteProductAvailableItemTransfer->setAvailability(0);
-        $concreteProductAvailableItemTransfer
+        $productConcreteAvailabilityTransfer = new ProductConcreteAvailabilityTransfer();
+        $productConcreteAvailabilityTransfer->setAvailability(0);
+        $productConcreteAvailabilityTransfer
             ->setIsNeverOutOfStock(static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $concreteProductAvailableItemTransfer->setSku(static::PRODUCT_CONCRETE_SKU);
+        $productConcreteAvailabilityTransfer->setSku(static::PRODUCT_CONCRETE_SKU);
 
-        return $concreteProductAvailableItemTransfer;
+        return $productConcreteAvailabilityTransfer;
     }
 
     /**
@@ -159,14 +159,14 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      */
     protected function getProductAbstractAvailabilityTransferWithAvailableProducts(): ProductAbstractAvailabilityTransfer
     {
-        $storageAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
-        $storageAvailabilityTransfer->setSku(static::PRODUCT_ABSTRACT_SKU);
-        $storageAvailabilityTransfer->setAvailability(static::PRODUCTS_AVAILABILITY_QUANTITY);
-        $storageAvailabilityTransfer->addProductConcreteAvailability(
+        $productAbstractAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
+        $productAbstractAvailabilityTransfer->setSku(static::PRODUCT_ABSTRACT_SKU);
+        $productAbstractAvailabilityTransfer->setAvailability(static::PRODUCTS_AVAILABILITY_QUANTITY);
+        $productAbstractAvailabilityTransfer->addProductConcreteAvailability(
             $this->getProductConcreteAvailabilityTransferWithAvailableProducts()
         );
 
-        return $storageAvailabilityTransfer;
+        return $productAbstractAvailabilityTransfer;
     }
 
     /**
@@ -174,14 +174,14 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      */
     protected function getProductAbstractAvailabilityTransferWithUnavailableProducts(): ProductAbstractAvailabilityTransfer
     {
-        $storageAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
-        $storageAvailabilityTransfer->setSku(static::PRODUCT_ABSTRACT_SKU);
-        $storageAvailabilityTransfer->setAvailability(0);
-        $storageAvailabilityTransfer->addProductConcreteAvailability(
+        $productAbstractAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
+        $productAbstractAvailabilityTransfer->setSku(static::PRODUCT_ABSTRACT_SKU);
+        $productAbstractAvailabilityTransfer->setAvailability(0);
+        $productAbstractAvailabilityTransfer->addProductConcreteAvailability(
             $this->getProductConcreteAvailabilityTransferWithUnavailableProducts()
         );
 
-        return $storageAvailabilityTransfer;
+        return $productAbstractAvailabilityTransfer;
     }
 
     /**
