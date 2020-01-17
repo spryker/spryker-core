@@ -41,11 +41,17 @@ class FileFinder implements FinderInterface
             return [];
         }
 
-        $finder = new Finder();
-        $finder->files()->in($directories);
+        $res = [];
+        foreach ($directories as $directory) {
+            $finder = new Finder();
+            $finder->files()->in($directory);
 
-        $finder->name('*.php');
+            $finder->name('*.php');
+            $res = array_merge($res, iterator_to_array($finder));
 
-        return iterator_to_array($finder);
+            unset($finder);
+        }
+
+        return $res;
     }
 }
