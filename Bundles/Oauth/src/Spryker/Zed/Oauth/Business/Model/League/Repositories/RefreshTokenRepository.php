@@ -12,10 +12,8 @@ use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
+use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
-/**
- * @method \Spryker\Zed\Oauth\Persistence\OauthPersistenceFactory getFactory()
- */
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
     /**
@@ -29,11 +27,18 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     protected $grantTypeIdentifier;
 
     /**
-     * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     * @var \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface
      */
-    public function __construct(OauthEntityManagerInterface $oauthEntityManager)
+    protected $oauthRepository;
+
+    /**
+     * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
+     */
+    public function __construct(OauthEntityManagerInterface $oauthEntityManager, OauthRepositoryInterface $oauthRepository)
     {
         $this->oauthEntityManager = $oauthEntityManager;
+        $this->oauthRepository = $oauthRepository;
     }
 
     /**
@@ -84,16 +89,14 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     /**
      * Check if the refresh token has been revoked.
      *
-     * @param string $tokenId
+     * @param string $identifier
      *
      * @return bool Return true if this token has been revoked
      */
-    public function isRefreshTokenRevoked($tokenId)
+    public function isRefreshTokenRevoked($identifier)
     {
-        $authRefreshTokenEntity = $this->getFactory()
-            ->createRefreshTokenQuery()
-            ->findOneByIdentifier($tokenId);
+        $authRefreshTokenTransfer = $this->oauthRepository->findRefreshTokenByIdentifier($identifier);
 
-        return !empty($authRefreshTokenEntity->getRevokedAt());
+        return !empty($authRefreshTokenTransfer->getRevokedAt());
     }
 }

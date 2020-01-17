@@ -119,6 +119,9 @@ class RepositoryBuilder implements RepositoryBuilderInterface
      */
     public function createRefreshTokenRepository(): RefreshTokenRepositoryInterface
     {
-        return new RefreshTokenRepository($this->oauthEntityManager);
+        return new RefreshTokenRepository(
+            $this->oauthEntityManager,
+            $this->oauthRepository
+        );
     }
 }

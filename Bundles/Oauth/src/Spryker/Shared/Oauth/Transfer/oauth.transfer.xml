@@ -92,6 +92,7 @@
         <property name="scopes" type="array" singular="oauthScopes"/>
         <property name="userIdentifier" type="string"/>
         <property name="expiresAt" type="string"/>
+        <property name="revokedAt" type="string"/>
     </transfer>
 
     <transfer name="JwtToken">

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
@@ -72,5 +73,25 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
         }
 
         return $oauthScopeTransfers;
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
+     */
+    public function findRefreshTokenByIdentifier(string $identifier): ?OauthRefreshTokenTransfer
+    {
+        $authRefreshTokenEntity = $this->getFactory()
+            ->createRefreshTokenQuery()
+            ->findOneByIdentifier($identifier);
+
+        if (!$authRefreshTokenEntity) {
+            return null;
+        }
+
+        return $authRefreshTokenTransfer = $this->getFactory()
+            ->createOauthRefreshTokenMapper()
+            ->mapOauthRefreshTokenEntityToMapOauthRefreshTokenTransfer($authRefreshTokenEntity, new OauthRefreshTokenTransfer());
     }
 }
