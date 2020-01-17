@@ -11,4 +11,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantUserConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     */
+    public const USER_CREATION_DEFAULT_STATUS = 'blocked';
+
+    public const USER_CREATION_DEFAULT_PASSWORD_LENGTH = 8;
+
+    /**
+     * @return bool
+     */
+    public function canUserHaveManyMerchants(): bool
+    {
+        return false;
+    }
 }

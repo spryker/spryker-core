@@ -8,11 +8,16 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
+use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreator;
+use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreatorInterface;
+use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdater;
+use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdaterInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriter;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
+use Spryker\Zed\MerchantUser\Business\Message\MessageConverter;
+use Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
+use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 
 /**
@@ -23,26 +28,49 @@ use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 class MerchantUserBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @return \Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreatorInterface
+     */
+    public function createMerchantPostCreator(): MerchantPostCreatorInterface
+    {
+        return new MerchantPostCreator(
+            $this->createMerchantUserWriter(),
+            $this->createMessageConverter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdaterInterface
+     */
+    public function createMerchantPostUpdater(): MerchantPostUpdaterInterface
+    {
+        return new MerchantPostUpdater(
+            $this->createMerchantUserWriter(),
+            $this->createMerchantPostCreator(),
+            $this->createMessageConverter(),
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface
      */
     public function createMerchantUserWriter(): MerchantUserWriterInterface
     {
         return new MerchantUserWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getConfig(),
             $this->getUserFacade(),
-            $this->createMerchantUserReader(),
-            $this->getEntityManager()
+            $this->getUtilTextService()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface
+     * @return \Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface
      */
-    public function createMerchantUserReader(): MerchantUserReaderInterface
+    public function createMessageConverter(): MessageConverterInterface
     {
-        return new MerchantUserReader(
-            $this->getUserFacade(),
-            $this->getRepository()
-        );
+        return new MessageConverter();
     }
 
     /**
@@ -51,5 +79,13 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function getUserFacade(): MerchantUserToUserFacadeInterface
     {
         return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): MerchantUserToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

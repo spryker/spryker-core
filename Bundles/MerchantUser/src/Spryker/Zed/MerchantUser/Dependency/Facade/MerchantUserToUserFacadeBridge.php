@@ -35,16 +35,6 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     }
 
     /**
-     * @param string $username
-     *
-     * @return bool
-     */
-    public function hasUserByUsername($username)
-    {
-        return $this->userFacade->hasUserByUsername($username);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer

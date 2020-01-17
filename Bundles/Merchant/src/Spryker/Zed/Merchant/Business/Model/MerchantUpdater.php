@@ -115,29 +115,31 @@ class MerchantUpdater implements MerchantUpdaterInterface
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $merchantTransfer = $this->executeMerchantPostSavePlugins($merchantTransfer);
+        $originalMerchantTransfer = $this->merchantRepository->findOne((new MerchantCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
+        $updatedMerchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
+        $updatedMerchantTransfer = $this->executeMerchantPostSavePlugins($originalMerchantTransfer, $updatedMerchantTransfer);
 
-        return $merchantTransfer;
+        return $updatedMerchantTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
      *
      * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function executeMerchantPostSavePlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
+    protected function executeMerchantPostSavePlugins(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantTransfer
     {
         foreach ($this->merchantPostUpdatePlugins as $merchantPostUpdatePlugin) {
-            $merchantResponseTransfer = $merchantPostUpdatePlugin->execute($merchantTransfer);
+            $merchantResponseTransfer = $merchantPostUpdatePlugin->postUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
             if (!$merchantResponseTransfer->getIsSuccess()) {
                 throw (new MerchantNotSavedException())->addErrors($merchantResponseTransfer->getErrors());
             }
         }
 
-        return $merchantTransfer;
+        return $updatedMerchantTransfer;
     }
 
     /**

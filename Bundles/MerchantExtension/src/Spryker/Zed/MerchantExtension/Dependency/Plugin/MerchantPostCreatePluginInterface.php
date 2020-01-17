@@ -22,5 +22,5 @@ interface MerchantPostCreatePluginInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function execute(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function postCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }

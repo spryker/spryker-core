@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\MerchantUser\Business;
 
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\MerchantUserResponseTransfer;
-use Generated\Shared\Transfer\MerchantUserTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,13 +25,13 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchantUserByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantUserWriter()
-            ->createMerchantUserByMerchant($merchantTransfer);
+            ->createMerchantPostCreator()
+            ->handleMerchantPostCreate($merchantTransfer);
     }
 
     /**
@@ -42,31 +39,15 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function updateUserFromMerchantData(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantUserWriter()
-            ->updateUserFromMerchantData($userTransfer, $merchantTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
-     */
-    public function getMerchantUser(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantUserReader()
-            ->getMerchantUser($merchantUserCriteriaFilterTransfer);
+            ->createMerchantPostUpdater()
+            ->handleMerchantPostUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
     }
 }
