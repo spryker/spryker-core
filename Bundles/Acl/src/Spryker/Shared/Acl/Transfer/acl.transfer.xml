@@ -18,6 +18,7 @@
         <property name="name" type="string"/>
         <property name="idGroup" type="int"/>
         <property name="rules" type="string"/>
+        <property name="group" type="Group"/>
     </transfer>
 
     <transfer name="Roles">
@@ -31,6 +32,7 @@
         <property name="action" type="string"/>
         <property name="type" type="string"/>
         <property name="fkAclRole" type="int"/>
+        <property name="role" type="Role"/>
     </transfer>
 
     <transfer name="Rules">

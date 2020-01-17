@@ -114,6 +114,8 @@ class Installer implements InstallerInterface
     }
 
     /**
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
+     *
      * @return void
      */
     private function addRoles()
@@ -122,7 +124,12 @@ class Installer implements InstallerInterface
 
         foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
             foreach ($aclInstallerPlugin->getRoles() as $roleTransfer) {
-                $roles[] = $roleTransfer->toArray();
+                if (!$roleTransfer->getGroup()) {
+                    throw new GroupNotFoundException();
+                }
+                $role = $roleTransfer->toArray();
+                $role['group'] = $roleTransfer->getGroup()->getName();
+                $roles[] = $role;
             }
         }
 
@@ -162,7 +169,12 @@ class Installer implements InstallerInterface
 
         foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
             foreach ($aclInstallerPlugin->getRules() as $ruleTransfer) {
-                $rules[] = $ruleTransfer->toArray();
+                if (!$ruleTransfer->getRole()) {
+                    throw new RoleNotFoundException();
+                }
+                $rule = $ruleTransfer->toArray();
+                $rule['role'] = $ruleTransfer->getRole()->getName();
+                $rules[] = $rule;
             }
         }
 

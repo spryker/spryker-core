@@ -31,7 +31,7 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
     {
         $roles[] = (new RoleTransfer())
             ->setName(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_ROLE)
-            ->setGroup(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_GROUP);
+            ->setGroup((new GroupTransfer())->setName(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_GROUP));
 
         return $roles;
     }
@@ -50,7 +50,7 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
             ->setController(MerchantUserConfig::VALIDATOR_WILDCARD)
             ->setAction(MerchantUserConfig::VALIDATOR_WILDCARD)
             ->setType(MerchantUserConfig::ALLOW)
-            ->setRole(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_ROLE);
+            ->setRole((new RoleTransfer())->setName(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_ROLE));
 
         return $rules;
     }
