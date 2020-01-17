@@ -42,10 +42,16 @@ class Installer implements InstallerInterface
     protected $config;
 
     /**
+     * @var array|\Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
+     */
+    protected $aclInstallerPlugins;
+
+    /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Business\Model\RoleInterface $role
      * @param \Spryker\Zed\Acl\Business\Model\RuleInterface $rule
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $userFacade
+     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[] $aclInstallerPlugins
      * @param \Spryker\Zed\Acl\AclConfig $config
      */
     public function __construct(
@@ -53,6 +59,7 @@ class Installer implements InstallerInterface
         RoleInterface $role,
         RuleInterface $rule,
         AclToUserInterface $userFacade,
+        array $aclInstallerPlugins,
         AclConfig $config
     ) {
         $this->group = $group;
@@ -60,6 +67,7 @@ class Installer implements InstallerInterface
         $this->rule = $rule;
         $this->userFacade = $userFacade;
         $this->config = $config;
+        $this->aclInstallerPlugins = $aclInstallerPlugins;
     }
 
     /**
@@ -80,7 +88,15 @@ class Installer implements InstallerInterface
      */
     private function addGroups()
     {
-        foreach ($this->config->getInstallerGroups() as $group) {
+        $groups = $this->config->getInstallerGroups();
+
+        foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
+            foreach ($aclInstallerPlugin->getGroups() as $groupTransfer) {
+                $groups[] = $groupTransfer->toArray();
+            }
+        }
+
+        foreach ($groups as $group) {
             $this->addGroup($group['name']);
         }
     }
@@ -102,7 +118,15 @@ class Installer implements InstallerInterface
      */
     private function addRoles()
     {
-        foreach ($this->config->getInstallerRoles() as $role) {
+        $roles = $this->config->getInstallerRoles();
+
+        foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
+            foreach ($aclInstallerPlugin->getRoles() as $roleTransfer) {
+                $roles[] = $roleTransfer->toArray();
+            }
+        }
+
+        foreach ($roles as $role) {
             if (!$this->role->hasRoleName($role['name'])) {
                 $this->addRole($role);
             }
@@ -119,7 +143,7 @@ class Installer implements InstallerInterface
     private function addRole(array $role)
     {
         $group = $this->group->getByName($role['group']);
-        if (!$group) {
+        if (!$group->getIdAclGroup()) {
             throw new GroupNotFoundException();
         }
 
@@ -134,9 +158,17 @@ class Installer implements InstallerInterface
      */
     private function addRules()
     {
-        foreach ($this->config->getInstallerRules() as $rule) {
+        $rules = $this->config->getInstallerRules();
+
+        foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
+            foreach ($aclInstallerPlugin->getRules() as $ruleTransfer) {
+                $rules[] = $ruleTransfer->toArray();
+            }
+        }
+
+        foreach ($rules as $rule) {
             $role = $this->role->getByName($rule['role']);
-            if (!$role) {
+            if (!$role->getIdAclRole()) {
                 throw new RoleNotFoundException();
             }
 
@@ -157,14 +189,22 @@ class Installer implements InstallerInterface
      */
     private function addUserGroupRelations()
     {
-        foreach ($this->config->getInstallerUsers() as $username => $config) {
+        $users = $this->config->getInstallerUsers();
+
+        foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
+            foreach ($aclInstallerPlugin->getUsers() as $userTransfer) {
+                $users[$userTransfer->getUsername()] = ['group' => $userTransfer->getGroup()->getName()];
+            }
+        }
+
+        foreach ($users as $username => $config) {
             $group = $this->group->getByName($config['group']);
-            if (!$group) {
+            if (!$group->getIdAclGroup()) {
                 throw new GroupNotFoundException();
             }
 
             $user = $this->userFacade->getUserByUsername($username);
-            if (!$user) {
+            if (!$user->getIdUser()) {
                 throw new UserNotFoundException();
             }
 

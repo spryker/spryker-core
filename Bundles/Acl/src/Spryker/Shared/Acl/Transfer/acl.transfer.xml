@@ -40,6 +40,7 @@
     <transfer name="User">
         <property name="idUser" type="int"/>
         <property name="username" type="string"/>
+        <property name="group" type="Group"/>
     </transfer>
 
 </transfers>

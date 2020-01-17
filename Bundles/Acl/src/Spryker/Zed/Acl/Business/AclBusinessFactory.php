@@ -74,6 +74,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->createRoleModel(),
             $this->createRuleModel(),
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
+            $this->getAclInstallerPlugins(),
             $this->getConfig()
         );
     }
@@ -84,5 +85,13 @@ class AclBusinessFactory extends AbstractBusinessFactory
     public function getUserFacade()
     {
         return $this->getProvidedDependency(AclDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
+     */
+    public function getAclInstallerPlugins(): array
+    {
+        return $this->getProvidedDependency(AclDependencyProvider::PLUGIN_ACL_INSTALLER_STACK);
     }
 }
