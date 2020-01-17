@@ -7,12 +7,32 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
+use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
+    /**
+     * @var \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface
+     */
+    protected $oauthEntityManager;
+
+    /**
+     * @var string|null
+     */
+    protected $grantTypeIdentifier;
+
+    /**
+     * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     */
+    public function __construct(OauthEntityManagerInterface $oauthEntityManager)
+    {
+        $this->oauthEntityManager = $oauthEntityManager;
+    }
+
     /**
      * Creates a new refresh token
      *
@@ -24,7 +44,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     }
 
     /**
-     * Create a new refresh token_name.
+     * Persists a new refresh token to permanent storage.
      *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *
@@ -32,6 +52,18 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
     {
+        $userIdentifier = (string)$refreshTokenEntity->getAccessToken()->getUserIdentifier();
+//        $userIdentifier = $this->filterUserIdentifier($userIdentifier);
+
+        $refreshTokenTransfer = new OauthRefreshTokenTransfer();
+        $refreshTokenTransfer
+            ->setIdentifier($refreshTokenEntity->getIdentifier())
+            ->setUserIdentifier($userIdentifier)
+            ->setExpiresAt($refreshTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
+            ->setIdOauthClient($refreshTokenEntity->getAccessToken()->getClient()->getIdentifier())
+            ->setScopes($refreshTokenEntity->getAccessToken()->getScopes());
+
+        $this->oauthEntityManager->saveRefreshToken($refreshTokenTransfer);
     }
 
     /**

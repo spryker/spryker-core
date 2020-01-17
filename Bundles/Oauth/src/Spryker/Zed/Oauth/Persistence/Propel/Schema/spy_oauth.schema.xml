@@ -53,12 +53,11 @@
         <column name="identifier" type="VARCHAR" size="3024" required="true"/>
         <column name="scopes" type="VARCHAR" size="1024" required="false"/>
         <column name="user_identifier" type="VARCHAR" size="255" required="true"/>
-        <column name="grant_type" type="VARCHAR" size="255" required="true"/>
         <column name="fk_oauth_client" type="VARCHAR" size="1024" required="true"/>
-        <column name="payload" type="JSON"/>
+        <column name="payload" type="JSON" required="false" />
 
         <column name="expires_at" type="TIMESTAMP" required="true"/>
-        <column name="revoked_at" type="TIMESTAMP" required="true"/>
+        <column name="revoked_at" type="TIMESTAMP" required="false"/>
 
         <foreign-key name="spy_oauth_refresh_token-identifier" foreignTable="spy_oauth_client"
                      phpName="OauthClient" refPhpName="OauthRefreshToken">

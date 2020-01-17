@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
@@ -19,6 +20,13 @@ interface OauthEntityManagerInterface
      * @return \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer
      */
     public function saveAccessToken(SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer): SpyOauthAccessTokenEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
+     */
+    public function saveRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): OauthRefreshTokenTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer

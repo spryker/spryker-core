@@ -86,6 +86,14 @@
         <property name="oauthUserId" type="string"/>
     </transfer>
 
+    <transfer name="OauthRefreshToken">
+        <property name="identifier" type="string"/>
+        <property name="idOauthClient" type="string"/>
+        <property name="scopes" type="array" singular="oauthScopes"/>
+        <property name="userIdentifier" type="string"/>
+        <property name="expiresAt" type="string"/>
+    </transfer>
+
     <transfer name="JwtToken">
         <property name="headers" type="array" singular="headers"/>
         <property name="claims" type="array" singular="claims"/>

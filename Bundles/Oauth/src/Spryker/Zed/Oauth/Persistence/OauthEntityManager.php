@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
+use Orm\Zed\Oauth\Persistence\SpyOauthRefreshToken;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -28,6 +30,21 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
         $spyOauthAccessTokenEntityTransfer = $this->save($spyOauthAccessTokenEntityTransfer);
 
         return $spyOauthAccessTokenEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
+     */
+    public function saveRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): OauthRefreshTokenTransfer
+    {
+        $oauthRefreshTokenMapper = $this->getFactory()->createOauthRefreshTokenMapper();
+        $oauthRefreshTokenEntity = $oauthRefreshTokenMapper->mapOauthRefreshTokenTransferToOauthRefreshTokenEntity($oauthRefreshTokenTransfer, new SpyOauthRefreshToken());
+
+        $oauthRefreshTokenEntity->save();
+
+        return $oauthRefreshTokenMapper->mapOauthRefreshTokenEntityToMapOauthRefreshTokenTransfer($oauthRefreshTokenEntity, $oauthRefreshTokenTransfer);
     }
 
     /**
