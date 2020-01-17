@@ -31,4 +31,8 @@
         <property name="isMultiValued" type="bool"/>
     </transfer>
 
+    <transfer name="SearchConfigExtension">
+        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig"/>
+    </transfer>
+
 </transfers>

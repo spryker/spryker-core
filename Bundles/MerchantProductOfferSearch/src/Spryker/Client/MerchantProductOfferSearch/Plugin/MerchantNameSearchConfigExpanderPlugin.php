@@ -9,19 +9,33 @@ namespace Spryker\Client\MerchantProductOfferSearch\Plugin;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Catalog\Dependency\Plugin\FacetConfigTransferBuilderPluginInterface;
+use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface;
 use Spryker\Shared\Search\SearchConfig;
 
-class MerchantNameFacetConfigTransferBuilderPlugin extends AbstractPlugin implements FacetConfigTransferBuilderPluginInterface
+class MerchantNameSearchConfigExpanderPlugin extends AbstractPlugin implements SearchConfigExpanderPluginInterface
 {
     public const NAME = 'merchant_name';
     public const PARAMETER_NAME = 'merchant_name';
 
     /**
+     * {@inheritDoc}
+     * - Expands facet configuration with merchant name filter.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchConfigExtensionTransfer
+     */
+    public function getSearchConfigExtension()
+    {
+        return (new SearchConfigExtensionTransfer())->addFacetConfig($this->getMerchantNameFacetConfig());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer
      */
-    public function build()
+    protected function getMerchantNameFacetConfig(): FacetConfigTransfer
     {
         return (new FacetConfigTransfer())
             ->setName(static::NAME)
