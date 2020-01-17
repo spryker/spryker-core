@@ -34,22 +34,22 @@ class ProductMerchantNamePageDataLoaderPlugin extends AbstractPlugin implements 
         $merchantProductAbstractData = $this->getRepository()
             ->getMerchantProductAbstractDataByProductAbstractIds($loadTransfer->getProductAbstractIds());
 
-        $productAbstractIdMerchantNamesMap = $this->mapProductAbstractIdToMerchantNames($merchantProductAbstractData);
+        $groupedMerchantNamesByIdProductAbstract = $this->groupMerchantNamesByIdProductAbstract($merchantProductAbstractData);
 
-        $payloadTransfers = $this->updatePayloadTransfers($loadTransfer->getPayloadTransfers(), $productAbstractIdMerchantNamesMap);
+        $payloadTransfers = $this->updatePayloadTransfers($loadTransfer->getPayloadTransfers(), $groupedMerchantNamesByIdProductAbstract);
 
         return $loadTransfer->setPayloadTransfers($payloadTransfers);
     }
 
     /**
-     * @param array $data
+     * @param array $merchantProductAbstractData
      *
      * @return array
      */
-    protected function mapProductAbstractIdToMerchantNames(array $data): array
+    protected function groupMerchantNamesByIdProductAbstract(array $merchantProductAbstractData): array
     {
         $productAbstractIdMerchantNamesMap = [];
-        foreach ($data as $row) {
+        foreach ($merchantProductAbstractData as $row) {
             $productAbstractIdMerchantNamesMap[$row[MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID]][] = $row[MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME];
         }
 
@@ -58,18 +58,18 @@ class ProductMerchantNamePageDataLoaderPlugin extends AbstractPlugin implements 
 
     /**
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
-     * @param array $productAbstractIdMerchantNamesMap
+     * @param array $groupedMerchantNamesByIdProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPayloadTransfer[]
      */
-    protected function updatePayloadTransfers(array $payloadTransfers, array $productAbstractIdMerchantNamesMap): array
+    protected function updatePayloadTransfers(array $payloadTransfers, array $groupedMerchantNamesByIdProductAbstract): array
     {
         foreach ($payloadTransfers as $payloadTransfer) {
-            if (!isset($productAbstractIdMerchantNamesMap[$payloadTransfer->getIdProductAbstract()])) {
+            if (!isset($groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()])) {
                 continue;
             }
 
-            $payloadTransfer->setMerchantNames($productAbstractIdMerchantNamesMap[$payloadTransfer->getIdProductAbstract()]);
+            $payloadTransfer->setMerchantNames($groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()]);
         }
 
         return $payloadTransfers;

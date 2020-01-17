@@ -60,13 +60,13 @@ class MerchantProductOfferSearchEventListenerTest extends Unit
             ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
         ]);
         $this->tester->addProductRelatedData($productConcreteTransfer);
-
-        // Act
         $merchantProductOfferSearchEventListener = new MerchantProductOfferSearchEventListener();
         $merchantProductOfferSearchEventListener->setFacade($this->tester->getFacade());
         $eventTransfers = [
             (new EventEntityTransfer())->setId($productOfferTransfer->getIdProductOffer()),
         ];
+
+        // Act
         $merchantProductOfferSearchEventListener->handleBulk($eventTransfers, MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE);
         $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 

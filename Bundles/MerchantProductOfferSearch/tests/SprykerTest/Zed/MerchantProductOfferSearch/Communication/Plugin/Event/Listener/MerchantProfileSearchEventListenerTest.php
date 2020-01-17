@@ -60,13 +60,13 @@ class MerchantProfileSearchEventListenerTest extends Unit
             ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
         ]);
         $this->tester->addProductRelatedData($productConcreteTransfer);
-
-        // Act
         $merchantProfileSearchEventListener = new MerchantProfileSearchEventListener();
         $merchantProfileSearchEventListener->setFacade($this->tester->getFacade());
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantProfileTransfer->getIdMerchantProfile()),
         ];
+
+        // Act
         $merchantProfileSearchEventListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE);
         $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 

@@ -14,19 +14,19 @@ interface MerchantProductOfferSearchWriterInterface
      *
      * @return void
      */
-    public function writeMerchantProductOfferSearchCollectionByIdMerchantEvents(array $eventTransfers): void;
+    public function writeCollectionByIdMerchantEvents(array $eventTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
-    public function writeMerchantProductOfferSearchCollectionByIdMerchantProfileEvents(array $eventTransfers): void;
+    public function writeCollectionByIdMerchantProfileEvents(array $eventTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
-    public function writeMerchantProductOfferSearchCollectionByIdMerchantProductOfferEvents(array $eventTransfers): void;
+    public function writeCollectionByIdMerchantProductOfferEvents(array $eventTransfers): void;
 }

@@ -48,7 +48,7 @@ class MerchantProductOfferSearchWriter implements MerchantProductOfferSearchWrit
      *
      * @return void
      */
-    public function writeMerchantProductOfferSearchCollectionByIdMerchantEvents(array $eventTransfers): void
+    public function writeCollectionByIdMerchantEvents(array $eventTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
@@ -62,7 +62,7 @@ class MerchantProductOfferSearchWriter implements MerchantProductOfferSearchWrit
      *
      * @return void
      */
-    public function writeMerchantProductOfferSearchCollectionByIdMerchantProfileEvents(array $eventTransfers): void
+    public function writeCollectionByIdMerchantProfileEvents(array $eventTransfers): void
     {
         $merchantProfileIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
@@ -76,7 +76,7 @@ class MerchantProductOfferSearchWriter implements MerchantProductOfferSearchWrit
      *
      * @return void
      */
-    public function writeMerchantProductOfferSearchCollectionByIdMerchantProductOfferEvents(array $eventTransfers): void
+    public function writeCollectionByIdMerchantProductOfferEvents(array $eventTransfers): void
     {
         $productOfferIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 

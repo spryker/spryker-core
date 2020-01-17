@@ -28,6 +28,6 @@ class MerchantProfileSearchEventListener extends AbstractPlugin implements Event
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->writeMerchantProductOfferSearchCollectionByIdMerchantProfileEvents($eventTransfers);
+        $this->getFacade()->writeCollectionByIdMerchantProfileEvents($eventTransfers);
     }
 }
