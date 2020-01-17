@@ -26,5 +26,5 @@ interface MerchantUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function updateUserByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
+    public function updateByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
 }

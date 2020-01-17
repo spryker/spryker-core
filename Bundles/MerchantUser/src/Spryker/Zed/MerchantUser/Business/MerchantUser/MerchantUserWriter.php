@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Service\UtilText\UtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
+use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserConfig;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
@@ -46,7 +46,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     protected $merchantUserConfig;
 
     /**
-     * @var \Spryker\Service\UtilText\UtilTextServiceInterface
+     * @var \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface
      */
     protected $utilTextService;
 
@@ -55,14 +55,14 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
-     * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
+     * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
      */
     public function __construct(
         MerchantUserToUserFacadeInterface $userFacade,
         MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
         MerchantUserConfig $merchantUserConfig,
-        UtilTextServiceInterface $utilTextService
+        MerchantUserToUtilTextServiceInterface $utilTextService
     ) {
         $this->userFacade = $userFacade;
         $this->merchantUserRepository = $merchantUserRepository;
@@ -95,7 +95,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
                 ->setIdMerchant($merchantTransfer->getIdMerchant())
                 ->setIdUser($userTransfer->getIdUser())
         );
-        $this->updateUserByMerchant($merchantUserTransfer, $merchantTransfer);
+        $this->updateByMerchant($merchantUserTransfer, $merchantTransfer);
 
         return (new MerchantUserResponseTransfer())
             ->setIsSuccess(true)
@@ -108,7 +108,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function updateUserByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    public function updateByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
         $merchantUserTransferByUser = $this->merchantUserRepository->findOne(
             (new MerchantUserCriteriaFilterTransfer())->setIdUser($merchantUserTransfer->getIdUser())->setIdMerchant($merchantTransfer->getIdMerchant())

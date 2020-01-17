@@ -92,7 +92,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateUserFromMerchantData(): void
+    public function testUpdateByMerchant(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([UserTransfer::USERNAME => 'test@example.com']);
@@ -102,7 +102,7 @@ class MerchantUserFacadeTest extends Unit
         // Act
         $merchantUserResponseTransfer = $this->tester->getFacade()->createByMerchant($merchantTransfer);
         $merchantTransfer->setEmail('test2@examle.com');
-        $merchantUserResponseTransfer = $this->tester->getFacade()->updateUserByMerchant($merchantUserResponseTransfer->getMerchantUser(), $merchantTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->updateByMerchant($merchantUserResponseTransfer->getMerchantUser(), $merchantTransfer);
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccess());

@@ -18,9 +18,10 @@ interface MerchantPostUpdatePluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function execute(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function postUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer;
 }

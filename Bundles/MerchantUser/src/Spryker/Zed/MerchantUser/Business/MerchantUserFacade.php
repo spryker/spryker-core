@@ -46,11 +46,11 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function updateUserByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    public function updateByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantUserWriter()
-            ->updateUserByMerchant($merchantUserTransfer, $merchantTransfer);
+            ->updateByMerchant($merchantUserTransfer, $merchantTransfer);
     }
 
     /**

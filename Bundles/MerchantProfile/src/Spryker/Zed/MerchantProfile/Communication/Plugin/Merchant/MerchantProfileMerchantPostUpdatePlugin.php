@@ -24,26 +24,27 @@ class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function execute(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    public function postUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
     {
-        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
-        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $merchantProfileTransfer = $updatedMerchantTransfer->getMerchantProfile();
+        $merchantProfileTransfer->setFkMerchant($updatedMerchantTransfer->getIdMerchant());
         if ($merchantProfileTransfer->getIdMerchantProfile() === null) {
             $merchantProfileTransfer = $this->getFacade()->createMerchantProfile($merchantProfileTransfer);
 
             return (new MerchantResponseTransfer())
                 ->setIsSuccess(true)
-                ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
+                ->setMerchant($updatedMerchantTransfer->setMerchantProfile($merchantProfileTransfer));
         }
 
         $merchantProfileTransfer = $this->getFacade()->updateMerchantProfile($merchantProfileTransfer);
 
         return (new MerchantResponseTransfer())
             ->setIsSuccess(true)
-            ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
+            ->setMerchant($updatedMerchantTransfer->setMerchantProfile($merchantProfileTransfer));
     }
 }

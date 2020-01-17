@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\MerchantUser\Business;
 
-use Spryker\Service\UtilText\UtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriter;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
+use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 
 /**
@@ -44,10 +44,10 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Service\UtilText\UtilTextServiceInterface
+     * @return \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface
      */
-    public function getUtilTextService(): UtilTextServiceInterface
+    public function getUtilTextService(): MerchantUserToUtilTextServiceInterface
     {
-        return $this->getProvidedDependency(MerchantUserDependencyProvider::UTIL_TEXT_SERVICE);
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

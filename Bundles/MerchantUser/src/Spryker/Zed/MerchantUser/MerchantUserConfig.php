@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MerchantUserConfig extends AbstractBundleConfig
 {
     /**
-     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
      */
     public const USER_CREATION_DEFAULT_STATUS = 'blocked';
 

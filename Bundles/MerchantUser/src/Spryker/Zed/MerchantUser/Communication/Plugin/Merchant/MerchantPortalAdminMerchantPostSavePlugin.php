@@ -14,13 +14,14 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
  */
-class MerchantPortalAdminMerchantPostUpdatePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface
+class MerchantPortalAdminMerchantPostSavePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface, MerchantPostCreatePluginInterface
 {
     /**
      * {@inheritDoc}
@@ -28,19 +29,38 @@ class MerchantPortalAdminMerchantPostUpdatePlugin extends AbstractPlugin impleme
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function postUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
+    {
+        $merchantUserTransfer = $this->getFacade()->findOne((new MerchantUserCriteriaFilterTransfer())->setIdMerchant($updatedMerchantTransfer->getIdMerchant()));
+        if ($merchantUserTransfer) {
+            $merchantUserResponseTransfer = $this->getFacade()->updateByMerchant($merchantUserTransfer, $updatedMerchantTransfer);
+
+            return $this->createMerchantResponseTransfer($merchantUserResponseTransfer, $updatedMerchantTransfer);
+        }
+
+        $merchantUserResponseTransfer = $this->getFacade()->createByMerchant($updatedMerchantTransfer);
+
+        return $this->createMerchantResponseTransfer($merchantUserResponseTransfer, $updatedMerchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Creates or finds a user by provided merchant email.
+     * - Creates merchant user relation.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function execute(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    public function postCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        $merchantUserTransfer = $this->getFacade()->findOne((new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
-        if ($merchantUserTransfer) {
-            $merchantUserResponseTransfer = $this->getFacade()->updateUserByMerchant($merchantUserTransfer, $merchantTransfer);
-
-            return $this->createMerchantResponseTransfer($merchantUserResponseTransfer, $merchantTransfer);
-        }
-
         $merchantUserResponseTransfer = $this->getFacade()->createByMerchant($merchantTransfer);
 
         return $this->createMerchantResponseTransfer($merchantUserResponseTransfer, $merchantTransfer);
