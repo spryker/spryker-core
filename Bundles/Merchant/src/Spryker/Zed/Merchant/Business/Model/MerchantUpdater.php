@@ -126,6 +126,8 @@ class MerchantUpdater implements MerchantUpdaterInterface
      * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
      * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
      *
+     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException
+     *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     protected function executeMerchantPostSavePlugins(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantTransfer

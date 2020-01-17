@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\MerchantUser;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
+use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 
 /**
  * Inherited Methods
@@ -30,7 +33,39 @@ class MerchantUserBusinessTester extends Actor
 {
     use _generated\MerchantUserBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
+     */
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUser|null
+     */
+    public function findMerchantUser(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?SpyMerchantUser
+    {
+        $query = $this->createMerchantUserPropelQuery();
+
+        if ($merchantUserCriteriaFilterTransfer->getIdMerchant()) {
+            $query->filterByFkMerchant($merchantUserCriteriaFilterTransfer->getIdMerchant());
+        }
+
+        if ($merchantUserCriteriaFilterTransfer->getIdUser()) {
+            $query->filterByFkUser($merchantUserCriteriaFilterTransfer->getIdUser());
+        }
+
+        return $query->findOne();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery
+     */
+    public function createMerchantUserPropelQuery(): SpyMerchantUserQuery
+    {
+        return SpyMerchantUserQuery::create();
+    }
 }

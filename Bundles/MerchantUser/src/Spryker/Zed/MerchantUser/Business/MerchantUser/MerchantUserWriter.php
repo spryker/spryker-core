@@ -51,17 +51,17 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     protected $utilTextService;
 
     /**
-     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
-     * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
+     * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
+     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
      */
     public function __construct(
-        MerchantUserToUserFacadeInterface $userFacade,
-        MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
+        MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserConfig $merchantUserConfig,
+        MerchantUserToUserFacadeInterface $userFacade,
         MerchantUserToUtilTextServiceInterface $utilTextService
     ) {
         $this->userFacade = $userFacade;
