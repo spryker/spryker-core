@@ -80,7 +80,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     {
         $merchantTransfer->requireEmail()->requireMerchantProfile();
 
-        $userTransfer = $this->resolveUserTransferByMerchantTransfer($merchantTransfer);
+        $userTransfer = $this->resolveUserTransferByMerchant($merchantTransfer);
         if (!$this->merchantUserConfig->canUserHaveManyMerchants() && $this->hasUserAnotherMerchant($userTransfer, $merchantTransfer)) {
             return (new MerchantUserResponseTransfer())
                 ->setIsSuccess(false)
@@ -110,24 +110,24 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      */
     public function updateByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
-        $merchantUserTransferByUser = $this->merchantUserRepository->findOne(
+        $merchantUserTransfer = $this->merchantUserRepository->findOne(
             (new MerchantUserCriteriaFilterTransfer())->setIdUser($merchantUserTransfer->getIdUser())->setIdMerchant($merchantTransfer->getIdMerchant())
         );
 
-        if (!$merchantUserTransferByUser) {
+        if (!$merchantUserTransfer) {
             return (new MerchantUserResponseTransfer())
                 ->setIsSuccess(false)
                 ->addError((new MessageTransfer())->setMessage(static::MERCHANT_USER_NOT_FOUND_ERROR_MESSAGE));
         }
 
-        $userTransfer = $this->userFacade->updateUser($this->fillUserTransferFromMerchantTransfer(
+        $userTransfer = $this->userFacade->updateUser($this->fillUserTransferFromMerchant(
             $this->userFacade->getUserById($merchantUserTransfer->getIdUser()),
             $merchantTransfer
         ));
 
         return (new MerchantUserResponseTransfer())
             ->setIsSuccess(true)
-            ->setMerchantUser($merchantUserTransferByUser->setUser($userTransfer));
+            ->setMerchantUser($merchantUserTransfer->setUser($userTransfer));
     }
 
     /**
@@ -154,7 +154,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function resolveUserTransferByMerchantTransfer(MerchantTransfer $merchantTransfer): UserTransfer
+    protected function resolveUserTransferByMerchant(MerchantTransfer $merchantTransfer): UserTransfer
     {
         try {
             return $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
@@ -170,7 +170,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      */
     protected function createUserForMerchant(MerchantTransfer $merchantTransfer): UserTransfer
     {
-        $userTransfer = $this->fillUserTransferFromMerchantTransfer(new UserTransfer(), $merchantTransfer)
+        $userTransfer = $this->fillUserTransferFromMerchant(new UserTransfer(), $merchantTransfer)
             ->setPassword($this->utilTextService->generateRandomString(MerchantUserConfig::USER_CREATION_DEFAULT_PASSWORD_LENGTH))
             ->setStatus(MerchantUserConfig::USER_CREATION_DEFAULT_STATUS);
 
@@ -183,7 +183,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function fillUserTransferFromMerchantTransfer(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): UserTransfer
+    protected function fillUserTransferFromMerchant(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): UserTransfer
     {
         return $userTransfer
             ->setFirstName($merchantTransfer->getMerchantProfile()->getContactPersonFirstName())
