@@ -88,6 +88,16 @@ class Installer implements InstallerInterface
      */
     private function addGroups()
     {
+        foreach ($this->getGroups() as $group) {
+            $this->addGroup($group['name']);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    private function getGroups(): array
+    {
         $groups = $this->config->getInstallerGroups();
 
         foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
@@ -96,9 +106,7 @@ class Installer implements InstallerInterface
             }
         }
 
-        foreach ($groups as $group) {
-            $this->addGroup($group['name']);
-        }
+        return $groups;
     }
 
     /**
@@ -114,11 +122,23 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
-     *
      * @return void
      */
     private function addRoles()
+    {
+        foreach ($this->getRoles() as $role) {
+            if (!$this->role->hasRoleName($role['name'])) {
+                $this->addRole($role);
+            }
+        }
+    }
+
+    /**
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
+     *
+     * @return array
+     */
+    private function getRoles(): array
     {
         $roles = $this->config->getInstallerRoles();
 
@@ -133,11 +153,7 @@ class Installer implements InstallerInterface
             }
         }
 
-        foreach ($roles as $role) {
-            if (!$this->role->hasRoleName($role['name'])) {
-                $this->addRole($role);
-            }
-        }
+        return $roles;
     }
 
     /**
@@ -165,20 +181,7 @@ class Installer implements InstallerInterface
      */
     private function addRules()
     {
-        $rules = $this->config->getInstallerRules();
-
-        foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
-            foreach ($aclInstallerPlugin->getRules() as $ruleTransfer) {
-                if (!$ruleTransfer->getRole()) {
-                    throw new RoleNotFoundException();
-                }
-                $rule = $ruleTransfer->toArray();
-                $rule['role'] = $ruleTransfer->getRole()->getName();
-                $rules[] = $rule;
-            }
-        }
-
-        foreach ($rules as $rule) {
+        foreach ($this->getRules() as $rule) {
             $role = $this->role->getByName($rule['role']);
             if (!$role->getIdAclRole()) {
                 throw new RoleNotFoundException();
@@ -194,6 +197,29 @@ class Installer implements InstallerInterface
     }
 
     /**
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
+     *
+     * @return array
+     */
+    private function getRules(): array
+    {
+        $rules = $this->config->getInstallerRules();
+
+        foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
+            foreach ($aclInstallerPlugin->getRules() as $ruleTransfer) {
+                if (!$ruleTransfer->getRole()) {
+                    throw new RoleNotFoundException();
+                }
+                $rule = $ruleTransfer->toArray();
+                $rule['role'] = $ruleTransfer->getRole()->getName();
+                $rules[] = $rule;
+            }
+        }
+
+        return $rules;
+    }
+
+    /**
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
@@ -201,15 +227,7 @@ class Installer implements InstallerInterface
      */
     private function addUserGroupRelations()
     {
-        $users = $this->config->getInstallerUsers();
-
-        foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
-            foreach ($aclInstallerPlugin->getUsers() as $userTransfer) {
-                $users[$userTransfer->getUsername()] = ['group' => $userTransfer->getGroup()->getName()];
-            }
-        }
-
-        foreach ($users as $username => $config) {
+        foreach ($this->getUserGroupRelations() as $username => $config) {
             $group = $this->group->getByName($config['group']);
             if (!$group->getIdAclGroup()) {
                 throw new GroupNotFoundException();
@@ -224,5 +242,21 @@ class Installer implements InstallerInterface
                 $this->group->addUser($group->getIdAclGroup(), $user->getIdUser());
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    private function getUserGroupRelations(): array
+    {
+        $users = $this->config->getInstallerUsers();
+
+        foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
+            foreach ($aclInstallerPlugin->getUsers() as $userTransfer) {
+                $users[$userTransfer->getUsername()] = ['group' => $userTransfer->getGroup()->getName()];
+            }
+        }
+
+        return $users;
     }
 }
