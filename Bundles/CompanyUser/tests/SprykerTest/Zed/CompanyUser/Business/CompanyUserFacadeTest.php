@@ -607,6 +607,6 @@ class CompanyUserFacadeTest extends Test
 
         // Assert
         $this->assertNotEmpty($companyUserTransfers);
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $companyUserTransfers[0]->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $companyUserTransfers[0]->getIdCompanyUser());
     }
 }

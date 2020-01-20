@@ -27,4 +27,3 @@ suites:
       - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
       - \SprykerTest\Zed\Company\Helper\CompanyHelper
       - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
-      - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
