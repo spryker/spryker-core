@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
@@ -197,7 +198,7 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
      * @return array
      */
@@ -206,12 +207,12 @@ class Installer implements InstallerInterface
         $rules = $this->config->getInstallerRules();
 
         foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
-            foreach ($aclInstallerPlugin->getRules() as $ruleTransfer) {
-                if (!$ruleTransfer->getRole()) {
-                    throw new RoleNotFoundException();
+            foreach ($aclInstallerPlugin->getRoles() as $roleTransfer) {
+                if (!$roleTransfer->getRule()) {
+                    throw new RuleNotFoundException();
                 }
-                $rule = $ruleTransfer->toArray();
-                $rule['role'] = $ruleTransfer->getRole()->getName();
+                $rule = $roleTransfer->getRule()->toArray();
+                $rule['role'] = $roleTransfer->getName();
                 $rules[] = $rule;
             }
         }

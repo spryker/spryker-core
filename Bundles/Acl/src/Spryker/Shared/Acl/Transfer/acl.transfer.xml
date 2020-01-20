@@ -19,6 +19,7 @@
         <property name="idGroup" type="int"/>
         <property name="rules" type="string"/>
         <property name="group" type="Group"/>
+        <property name="rule" type="Rule"/>
     </transfer>
 
     <transfer name="Roles">

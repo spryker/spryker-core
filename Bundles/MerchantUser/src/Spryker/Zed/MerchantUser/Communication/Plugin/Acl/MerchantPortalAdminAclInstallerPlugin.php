@@ -29,30 +29,18 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
      */
     public function getRoles(): array
     {
-        $roles[] = (new RoleTransfer())
-            ->setName(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_ROLE)
-            ->setGroup((new GroupTransfer())->setName(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_GROUP));
-
-        return $roles;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\RuleTransfer[]
-     */
-    public function getRules(): array
-    {
-        $rules[] = (new RuleTransfer())
+        $rule = (new RuleTransfer())
             ->setBundle(MerchantUserConfig::VALIDATOR_WILDCARD)
             ->setController(MerchantUserConfig::VALIDATOR_WILDCARD)
             ->setAction(MerchantUserConfig::VALIDATOR_WILDCARD)
             ->setType(MerchantUserConfig::ALLOW)
             ->setRole((new RoleTransfer())->setName(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_ROLE));
+        $roles[] = (new RoleTransfer())
+            ->setName(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_ROLE)
+            ->setGroup((new GroupTransfer())->setName(MerchantUserConfig::MERCHANT_PORTAL_ADMIN_GROUP))
+            ->setRule($rule);
 
-        return $rules;
+        return $roles;
     }
 
     /**
