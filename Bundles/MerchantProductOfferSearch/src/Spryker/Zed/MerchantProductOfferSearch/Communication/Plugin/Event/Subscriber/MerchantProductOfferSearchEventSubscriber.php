@@ -20,6 +20,8 @@ use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\M
 class MerchantProductOfferSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
@@ -17,7 +16,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  */
-class ProductMerchantNamePageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
+class MerchantProductPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
      * {@inheritDoc}
@@ -32,17 +31,6 @@ class ProductMerchantNamePageDataExpanderPlugin extends AbstractPlugin implement
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
-        $productPayloadTransfer = $this->getProductPayloadTransfer($productData);
-        $productAbstractPageSearchTransfer->setMerchantNames($productPayloadTransfer->getMerchantNames());
-    }
-
-    /**
-     * @param array $productData
-     *
-     * @return \Generated\Shared\Transfer\ProductPayloadTransfer
-     */
-    protected function getProductPayloadTransfer(array $productData): ProductPayloadTransfer
-    {
-        return $productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA];
+        $productAbstractPageSearchTransfer->setMerchantNames($productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getMerchantNames());
     }
 }

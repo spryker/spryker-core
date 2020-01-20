@@ -91,9 +91,9 @@ class MerchantProductOfferSearchDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductOfferPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, $container->factory(function () {
             return SpyProductOfferQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -105,9 +105,9 @@ class MerchantProductOfferSearchDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        });
+        }));
 
         return $container;
     }

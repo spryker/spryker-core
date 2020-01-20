@@ -17,9 +17,9 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\ProductMerchantNamePageDataExpanderPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\ProductMerchantNamePageDataLoaderPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\ProductMerchantNameMapExpanderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\MerchantProductPageDataExpanderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\MerchantProductPageDataLoaderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\MerchantProductAbstractMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
@@ -130,21 +130,21 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER,
             [
-                new ProductMerchantNameMapExpanderPlugin(),
+                new MerchantProductAbstractMapExpanderPlugin(),
             ]
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER,
             [
-                new ProductMerchantNamePageDataLoaderPlugin(),
+                new MerchantProductPageDataLoaderPlugin(),
             ]
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER,
             [
-                MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA => new ProductMerchantNamePageDataExpanderPlugin(),
+                MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA => new MerchantProductPageDataExpanderPlugin(),
             ]
         );
     }
@@ -171,9 +171,9 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
      */
     protected function addStoreRelationToProductAbstracts(ProductAbstractTransfer $productAbstractTransfer): void
     {
-        $idStores = $this->getIdStores();
+        $storeIds = $this->getStoreIds();
 
-        $productAbstractTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores($idStores));
+        $productAbstractTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores($storeIds));
 
         $this->getProductFacade()->saveProductAbstract($productAbstractTransfer);
     }
@@ -181,7 +181,7 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
     /**
      * @return array
      */
-    protected function getIdStores(): array
+    protected function getStoreIds(): array
     {
         $storeIds = [];
 
