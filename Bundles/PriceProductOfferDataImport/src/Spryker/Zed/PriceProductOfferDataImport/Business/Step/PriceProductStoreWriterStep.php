@@ -9,11 +9,10 @@ namespace Spryker\Zed\PriceProductOfferDataImport\Business\Step;
 
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDataSetInterface;
 
-class PriceProductStoreWriterStep extends PublishAwareStep implements DataImportStepInterface
+class PriceProductStoreWriterStep implements DataImportStepInterface
 {
     /**
      * @var string[]
