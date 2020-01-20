@@ -33,21 +33,21 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
     /**
      * @var \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductConcreteAvailabilityRestResponseBuilderInterface
      */
-    protected $productAbstractAvailabilityRestResponseBuilder;
+    protected $productConcreteAvailabilityRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface $availabilityStorageClient
      * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface $productStorageClient
-     * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductConcreteAvailabilityRestResponseBuilderInterface $productAbstractAvailabilityRestResourceBuilder
+     * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductConcreteAvailabilityRestResponseBuilderInterface $productConcreteAvailabilityRestResponseBuilder
      */
     public function __construct(
         ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface $availabilityStorageClient,
         ProductAvailabilitiesRestApiToProductStorageClientInterface $productStorageClient,
-        ProductConcreteAvailabilityRestResponseBuilderInterface $productAbstractAvailabilityRestResourceBuilder
+        ProductConcreteAvailabilityRestResponseBuilderInterface $productConcreteAvailabilityRestResponseBuilder
     ) {
         $this->availabilityStorageClient = $availabilityStorageClient;
         $this->productStorageClient = $productStorageClient;
-        $this->productAbstractAvailabilityRestResponseBuilder = $productAbstractAvailabilityRestResourceBuilder;
+        $this->productConcreteAvailabilityRestResponseBuilder = $productConcreteAvailabilityRestResponseBuilder;
     }
 
     /**
@@ -59,7 +59,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
     {
         $concreteProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$concreteProductResource) {
-            return $this->productAbstractAvailabilityRestResponseBuilder
+            return $this->productConcreteAvailabilityRestResponseBuilder
                 ->createProductConcreteSkuIsNotSpecifiedErrorResponse();
         }
 
@@ -70,11 +70,11 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
         );
 
         if (!$concreteProductAvailabilityRestResource) {
-            return $this->productAbstractAvailabilityRestResponseBuilder
+            return $this->productConcreteAvailabilityRestResponseBuilder
                 ->createProductConcreteAvailabilityNotFoundErrorResponse();
         }
 
-        return $this->productAbstractAvailabilityRestResponseBuilder
+        return $this->productConcreteAvailabilityRestResponseBuilder
             ->createProductConcreteAvailabilityResponse($concreteProductAvailabilityRestResource);
     }
 
@@ -112,7 +112,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
         $productConcreteAvailabilityTransfers = $productAbstractAvailabilityTransfer->getProductConcreteAvailabilities();
         foreach ($productConcreteAvailabilityTransfers as $productConcreteAvailabilityTransfer) {
             if ($productConcreteAvailabilityTransfer->getSku() === $productConcreteSku) {
-                return $this->productAbstractAvailabilityRestResponseBuilder
+                return $this->productConcreteAvailabilityRestResponseBuilder
                     ->createProductConcreteAvailabilityResource($productConcreteAvailabilityTransfer);
             }
         }

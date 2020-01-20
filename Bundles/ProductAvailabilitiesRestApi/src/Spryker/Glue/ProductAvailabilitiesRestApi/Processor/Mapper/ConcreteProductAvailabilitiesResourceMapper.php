@@ -35,8 +35,11 @@ class ConcreteProductAvailabilitiesResourceMapper implements ConcreteProductAvai
      */
     protected function isProductConcreteAvailable(ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer): bool
     {
-        return ($productConcreteAvailabilityTransfer->getAvailability() !== null
-                && $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0))
-            || $productConcreteAvailabilityTransfer->getIsNeverOutOfStock();
+        $isProductConcreteAvailable = $productConcreteAvailabilityTransfer->getAvailability() !== null
+            && $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0);
+
+        $isNeverOutOfStock = $productConcreteAvailabilityTransfer->getIsNeverOutOfStock();
+
+        return $isProductConcreteAvailable || $isNeverOutOfStock;
     }
 }
