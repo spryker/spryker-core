@@ -79,14 +79,14 @@ class LogClear implements LogClearInterface
      */
     protected function getLogFilePathsFromDirectory(string $logFileDirectory): array
     {
+        if (!is_dir($logFileDirectory)) {
+            return [];
+        }
+
         $excludeDirPathValues = [
             '.',
             '..',
         ];
-
-        if (!is_dir($logFileDirectory)) {
-            return [];
-        }
 
         return array_diff(
             scandir($logFileDirectory),
