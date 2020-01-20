@@ -294,7 +294,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Returns an array of CompanyUserTransfer.
+     * - Returns an array of CompanyUserTransfer without relations.
      * - Uses FilterTransfer for pagination.
      *
      * @api
