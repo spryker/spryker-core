@@ -33,7 +33,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
         return new ZedNavigationBuilder(
             $this->createCachedNavigationCollector(),
             $this->createMenuFormatter(),
-            $this->createPathExtractor()
+            $this->createPathExtractor(),
+            $this->getNavigationItemFilterPlugins()
         );
     }
 
@@ -122,6 +123,14 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     protected function getUtilEncodingService()
     {
         return $this->getProvidedDependency(ZedNavigationDependencyProvider::SERVICE_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     */
+    protected function getNavigationItemFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER_STACK);
     }
 
     /**

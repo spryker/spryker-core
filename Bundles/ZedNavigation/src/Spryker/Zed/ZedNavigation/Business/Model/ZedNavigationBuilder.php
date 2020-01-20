@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Model;
 
+use Generated\Shared\Transfer\NavigationItemTransfer;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface;
@@ -32,18 +33,26 @@ class ZedNavigationBuilder
     private $pathExtractor;
 
     /**
+     * @var \Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     */
+    protected $navigationItemFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface $menuFormatter
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface $pathExtractor
+     * @param \Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[] $navigationItemFilterPlugins
      */
     public function __construct(
         ZedNavigationCollectorInterface $navigationCollector,
         MenuFormatterInterface $menuFormatter,
-        PathExtractorInterface $pathExtractor
+        PathExtractorInterface $pathExtractor,
+        array $navigationItemFilterPlugins
     ) {
         $this->navigationCollector = $navigationCollector;
         $this->menuFormatter = $menuFormatter;
         $this->pathExtractor = $pathExtractor;
+        $this->navigationItemFilterPlugins = $navigationItemFilterPlugins;
     }
 
     /**
@@ -54,6 +63,7 @@ class ZedNavigationBuilder
     public function build($pathInfo)
     {
         $navigationPages = $this->navigationCollector->getNavigation();
+        $navigationPages = $this->filterItems($navigationPages);
 
         $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, false);
         $breadcrumb = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, true);
@@ -63,5 +73,40 @@ class ZedNavigationBuilder
             self::MENU => $menu,
             self::PATH => $path,
         ];
+    }
+
+    /**
+     * @param array $navigationItems
+
+     * @return array
+     */
+    protected function filterItems(array $navigationItems): array
+    {
+        foreach ($navigationItems as $itemKey => $item) {
+            if (isset($item['pages'])) {
+                $navigationItemPages = $this->filterItems($item['pages']);
+                if (!$navigationItemPages) {
+                    unset($navigationItems[$itemKey]);
+                    continue;
+                }
+                $item['pages'] = $navigationItemPages;
+                $navigationItems[$itemKey] = $item;
+                continue;
+            }
+
+            $itemTransfer = new NavigationItemTransfer();
+            $itemTransfer->setModule($item['bundle']);
+            $itemTransfer->setController($item['controller']);
+            $itemTransfer->setAction($item['action']);
+
+            foreach ($this->navigationItemFilterPlugins as $plugin) {
+                if (!$plugin->isVisible($itemTransfer)) {
+                    unset($navigationItems[$itemKey]);
+                    break;
+                }
+            }
+        }
+
+        return $navigationItems;
     }
 }
