@@ -44,7 +44,7 @@ class AttributeMergerTest extends Unit
     /**
      * @return array
      */
-    public function getCombinedConcreteAttributesDataProvider()
+    public function getCombinedConcreteAttributesDataProvider(): array
     {
         return [
             'empty attributes' => $this->getEmptyAttributesData(),
@@ -63,7 +63,7 @@ class AttributeMergerTest extends Unit
      *
      * @return void
      */
-    public function testGetCombinedAttributesReturnsCorrectAttributeMergeResults(RawProductAttributesTransfer $rawProductAttributesTransfer, array $expectedAttributes)
+    public function testGetCombinedAttributesReturnsCorrectAttributeMergeResults(RawProductAttributesTransfer $rawProductAttributesTransfer, array $expectedAttributes): void
     {
         $actualAttributes = $this->attributeMerger->merge($rawProductAttributesTransfer);
 
@@ -73,7 +73,7 @@ class AttributeMergerTest extends Unit
     /**
      * @return array
      */
-    protected function getEmptyAttributesData()
+    protected function getEmptyAttributesData(): array
     {
         $expectedAttributes = [];
 
@@ -83,7 +83,7 @@ class AttributeMergerTest extends Unit
     /**
      * @return array
      */
-    protected function getConcreteAttributesData()
+    protected function getConcreteAttributesData(): array
     {
         $expectedAttributes = [
             'foo' => 'Foo',
@@ -100,7 +100,7 @@ class AttributeMergerTest extends Unit
     /**
      * @return array
      */
-    protected function getLocalizedConcreteAttributesData()
+    protected function getLocalizedConcreteAttributesData(): array
     {
         $expectedAttributes = [
             'foo' => 'Foo - localized',
@@ -123,7 +123,7 @@ class AttributeMergerTest extends Unit
     /**
      * @return array
      */
-    protected function getAbstractAttributesData()
+    protected function getAbstractAttributesData(): array
     {
         $expectedAttributes = [
             'foo' => 'Foo - concrete',
@@ -148,7 +148,7 @@ class AttributeMergerTest extends Unit
     /**
      * @return array
      */
-    protected function getLocalizedAbstractAttributesData()
+    protected function getLocalizedAbstractAttributesData(): array
     {
         $expectedAttributes = [
             'foo' => 'Foo - localized',

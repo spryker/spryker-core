@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\GiftCard\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\GiftCardBuilder;
+use Generated\Shared\Transfer\GiftCardTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class GiftCardHelper extends Module
@@ -20,7 +21,7 @@ class GiftCardHelper extends Module
      *
      * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
-    public function haveGiftCard(array $seedData = [])
+    public function haveGiftCard(array $seedData = []): GiftCardTransfer
     {
         $giftCardTransfer = (new GiftCardBuilder($seedData))->build();
         $giftCardTransfer->setIdGiftCard(null);

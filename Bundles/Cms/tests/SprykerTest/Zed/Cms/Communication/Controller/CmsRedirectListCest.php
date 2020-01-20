@@ -28,9 +28,9 @@ class CmsRedirectListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsCommunicationTester $i): void
     {
         $i->amOnPage(CmsRedirectListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects');
+        $i->seeBreadcrumbNavigation('Content Management / Redirects');
     }
 }

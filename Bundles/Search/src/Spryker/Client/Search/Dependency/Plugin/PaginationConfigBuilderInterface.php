@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface` instead.
+ */
 interface PaginationConfigBuilderInterface
 {
     /**

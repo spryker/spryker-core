@@ -31,7 +31,7 @@ class BundleGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testTemplateNameIsDerivedFromGeneratorName()
+    public function testTemplateNameIsDerivedFromGeneratorName(): void
     {
         $twigEnvironmentMock = $this->createTwigEnvironmentMock();
         $twigEnvironmentMock
@@ -47,7 +47,7 @@ class BundleGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testNamespacePatternIsFilledWithApplicationName()
+    public function testNamespacePatternIsFilledWithApplicationName(): void
     {
         $twigEnvironmentMock = $this->createTwigEnvironmentMock();
         $twigEnvironmentMock
@@ -67,7 +67,7 @@ class BundleGeneratorTest extends Unit
     /**
      * @return array
      */
-    protected function getGeneratorOptions()
+    protected function getGeneratorOptions(): array
     {
         return [
             IdeAutoCompletionOptionConstants::APPLICATION_NAME => 'FooApplication',
@@ -83,7 +83,7 @@ class BundleGeneratorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Twig\Environment
      */
-    protected function createTwigEnvironmentMock()
+    protected function createTwigEnvironmentMock(): Environment
     {
         return $this
             ->getMockBuilder(Environment::class)

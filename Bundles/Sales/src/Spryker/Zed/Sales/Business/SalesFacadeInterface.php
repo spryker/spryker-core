@@ -254,6 +254,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
+     * - Executes `ItemPreTransformerPluginInterface` plugins stack.
      * - Transforms provided cart items according configured cart item transformer strategies.
      * - If no cart item transformer strategy is configured, explodes the provided items per quantity.
      * - Recalculates order transfer with new values.
@@ -298,6 +299,8 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `SalesFacadeInterface::getUniqueItemsFromOrder() instead`.
+     *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -315,4 +318,17 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
+
+    /**
+     * Specification:
+     * - Extracts unique items.
+     * - Returns a collection of items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array;
 }

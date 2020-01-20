@@ -35,7 +35,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveSaleOrderBundleItemsShouldPersistGivenBundleItems()
+    public function testSaveSaleOrderBundleItemsShouldPersistGivenBundleItems(): void
     {
         $productBundleMock = $this->createProductBundleSalesOrderSaverMock();
 
@@ -78,7 +78,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver
      */
-    protected function createProductBundleSalesOrderSaverMock()
+    protected function createProductBundleSalesOrderSaverMock(): ProductBundleSalesOrderSaver
     {
         $queryContainerMock = $this->createSalesQueryContainerMock();
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
@@ -94,9 +94,9 @@ class ProductBundleSalesOrderSaverTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle
      */
-    protected function createSalesOrderItemBundleEntityMock()
+    protected function createSalesOrderItemBundleEntityMock(): SpySalesOrderItemBundle
     {
         $salesOrderItemBundleEntityMock = $this->getMockBuilder(SpySalesOrderItemBundle::class)
            ->setMethods(['save'])
@@ -112,7 +112,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function createSalesOrderItemEntityMock()
+    protected function createSalesOrderItemEntityMock(): SpySalesOrderItem
     {
         $salesOrderItemEntityMock = $this->getMockBuilder(SpySalesOrderItem::class)
             ->setMethods(['save'])
@@ -128,7 +128,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
      */
-    protected function createSalesQueryContainerMock()
+    protected function createSalesQueryContainerMock(): ProductBundleToSalesQueryContainerInterface
     {
         return $this->getMockBuilder(ProductBundleToSalesQueryContainerInterface::class)->getMock();
     }
@@ -136,7 +136,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
-    protected function createProductBundleQueryContainerMock()
+    protected function createProductBundleQueryContainerMock(): ProductBundleQueryContainerInterface
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }

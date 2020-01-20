@@ -1,0 +1,21 @@
+Actions,Actions
+Active,Active
+Cancel,Cancel
+Delete,Delete
+"Go Back","Go Back"
+ID,ID
+Inactive,Inactive
+"Move Down","Move Down"
+"Move Up","Move Up"
+Name,Name
+Save,Save
+SprykerCmsSlotBlock,Spryker
+Status,Status
+Stores,Stores
+"There are unsaved changes","There are unsaved changes"
+"List of Blocks for ""%SLOT_NAME%"" Slot","List of Blocks for ""%SLOT_NAME%"" Slot"
+"Select or type a block name to assign","Select or type a block name to assign"
+"Valid From (Included)","Valid From (Included)"
+"Valid To (Excluded)","Valid To (Excluded)"
+"View Block","View Block"
++Add,+Add

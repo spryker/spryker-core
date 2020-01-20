@@ -30,6 +30,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addStoreFacade($container);
@@ -44,6 +45,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addMessengerFacade($container);
 
         return $container;
@@ -56,9 +58,9 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteFacade(Container $container): Container
     {
-        $container[static::FACADE_QUOTE] = function (Container $container) {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
             return new MultiCartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
-        };
+        });
 
         return $container;
     }
@@ -70,9 +72,9 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new MultiCartToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -84,9 +86,9 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new MultiCartToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }

@@ -80,11 +80,31 @@ interface ProductListFacadeInterface
      *
      * @api
      *
+     * @deprecated Use ProductListFacadeInterface::removeProductList() instead.
+     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return void
      */
     public function deleteProductList(ProductListTransfer $productListTransfer): void;
+
+    /**
+     * Specification:
+     * - Finds a Product List by ProductListTransfer::idProductList.
+     * - Executes ProductListDeletePreCheckPluginInterface plugin stack before delete.
+     * - Deletes relations to categories.
+     * - Deletes relations to concrete products.
+     * - Deletes Product List.
+     * - ProductListResponseTransfer::isSuccessful is true if product list was deleted.
+     * - ProductListResponseTransfer::messages contains error messages if deletion was not performed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function removeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
@@ -210,6 +212,7 @@ interface ProductImageFacadeInterface
      * Specification:
      * - Returns collection of ProductImageTransfers indexed by product ids.
      * - Fetched images by array of product ids and product image set name.
+     * - Images in image sets are sorted by `SpyProductImageSetToProductImage.sortOrder` column in ascending order.
      * - If there is no image set with desired name, returns images from the first image set.
      *
      * @api
@@ -220,4 +223,33 @@ interface ProductImageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
      */
     public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array;
+
+    /**
+     * Specification:
+     * - Returns product concrete ids by provided filter criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Merges localized product image sets by name.
+     * - Merges default product image sets by name.
+     * - Merges resulting localized and default product image sets together by name.
+     * - If localized and default product image sets have the same names, localized one wins.
+     * - Returns resulting product image sets.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param string $localeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject;
 }

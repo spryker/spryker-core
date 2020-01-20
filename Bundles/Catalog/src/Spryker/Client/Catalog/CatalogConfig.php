@@ -13,16 +13,28 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class CatalogConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE` instead.
+     *
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
      */
     protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
+    protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
     protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
     protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
     protected const PAGINATION_VALID_ITEMS_PER_PAGE = [
         10,
     ];
+    protected const PAGINATION_CATALOG_SEARCH_VALID_ITEMS_PER_PAGE = [12, 24, 36];
+    protected const PAGINATION_CATALOG_SEARCH_DEFAULT_ITEMS_PER_PAGE = 10;
 
     /**
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     */
+    protected const ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
+
+    /**
+     * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::getElasticsearchFullTextBoostedBoostingValue()` instead.
+     *
      * @return int
      */
     public function getFullTextBoostedBoostingValue(): int
@@ -45,11 +57,36 @@ class CatalogConfig extends AbstractBundleConfig
     {
         $paginationConfigTransfer = new PaginationConfigTransfer();
         $paginationConfigTransfer
-            ->setParameterName('page')
+            ->setParameterName(static::PAGINATION_PARAMETER_NAME_PAGE)
             ->setItemsPerPageParameterName(static::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME)
             ->setDefaultItemsPerPage(static::PAGINATION_DEFAULT_ITEMS_PER_PAGE)
             ->setValidItemsPerPageOptions(static::PAGINATION_VALID_ITEMS_PER_PAGE);
 
         return $paginationConfigTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PaginationConfigTransfer
+     */
+    public function getCatalogSearchPaginationConfigTransfer(): PaginationConfigTransfer
+    {
+        $paginationConfigTransfer = (new PaginationConfigTransfer())
+            ->setParameterName(static::PAGINATION_PARAMETER_NAME_PAGE)
+            ->setItemsPerPageParameterName(static::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME)
+            ->setDefaultItemsPerPage(static::PAGINATION_CATALOG_SEARCH_DEFAULT_ITEMS_PER_PAGE)
+            ->setValidItemsPerPageOptions(static::PAGINATION_CATALOG_SEARCH_VALID_ITEMS_PER_PAGE);
+
+        return $paginationConfigTransfer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getElasticsearchFullTextBoostedBoostingValue(): int
+    {
+        return $this->get(
+            static::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE,
+            $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE)
+        );
     }
 }

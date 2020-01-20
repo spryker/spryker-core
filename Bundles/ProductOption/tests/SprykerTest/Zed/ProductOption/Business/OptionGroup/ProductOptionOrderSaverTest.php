@@ -33,7 +33,7 @@ class ProductOptionOrderSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testSaveOptionShouldPersistProvidedOptions()
+    public function testSaveOptionShouldPersistProvidedOptions(): void
     {
         $glossaryFacadeMock = $this->createGlossaryFacadeMock();
         $glossaryFacadeMock->method('hasTranslation')->willReturn(true);
@@ -46,7 +46,7 @@ class ProductOptionOrderSaverTest extends MockProvider
         $salesOrderItemOptionEntityMock
             ->expects($this->exactly(2))
             ->method('save')
-            ->willReturnCallback(function () use ($salesOrderItemOptionEntityMock) {
+            ->willReturnCallback(function () use ($salesOrderItemOptionEntityMock): void {
                 $salesOrderItemOptionEntityMock->setIdSalesOrderItemOption(1);
             });
 
@@ -81,7 +81,7 @@ class ProductOptionOrderSaverTest extends MockProvider
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver
      */
-    protected function createProductOptionOrderSaver(?ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null)
+    protected function createProductOptionOrderSaver(?ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null): ProductOptionOrderSaver
     {
         if (!$glossaryFacadeMock) {
             $glossaryFacadeMock = $this->createGlossaryFacadeMock();
@@ -96,7 +96,7 @@ class ProductOptionOrderSaverTest extends MockProvider
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItemOption
      */
-    protected function createSalesOrderItemOptionMock()
+    protected function createSalesOrderItemOptionMock(): SpySalesOrderItemOption
     {
         return $this->getMockBuilder(SpySalesOrderItemOption::class)
             ->setMethods(['save'])

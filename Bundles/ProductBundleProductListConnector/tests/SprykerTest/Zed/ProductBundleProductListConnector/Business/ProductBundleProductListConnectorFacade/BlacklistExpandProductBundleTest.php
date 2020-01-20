@@ -12,7 +12,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge;
 
 /**
@@ -124,11 +123,11 @@ class BlacklistExpandProductBundleTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer|null $productBundleCollection
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getProductBundleProductListConnectorToProductBundleFacadeBridgeMock(
         ?ProductBundleCollectionTransfer $productBundleCollection = null
-    ): MockObject {
+    ): ProductBundleProductListConnectorToProductBundleFacadeBridge {
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this
             ->getMockBuilder(ProductBundleProductListConnectorToProductBundleFacadeBridge::class)
             ->disableOriginalConstructor()

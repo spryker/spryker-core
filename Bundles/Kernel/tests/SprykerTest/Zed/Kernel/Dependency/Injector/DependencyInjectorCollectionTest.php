@@ -28,7 +28,7 @@ class DependencyInjectorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddDependencyInjectorShouldReturnInstance()
+    public function testAddDependencyInjectorShouldReturnInstance(): void
     {
         $dependencyInjectorCollection = new DependencyInjectorCollection();
         $result = $dependencyInjectorCollection->addDependencyInjector($this->getDependencyInjectorMock());
@@ -39,7 +39,7 @@ class DependencyInjectorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetDependencyInjectorShouldReturnInstance()
+    public function testGetDependencyInjectorShouldReturnInstance(): void
     {
         $dependencyInjectorCollection = new DependencyInjectorCollection();
         $dependencyInjectorMock = $this->getDependencyInjectorMock();
@@ -52,7 +52,7 @@ class DependencyInjectorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testCountShouldReturnCountOfAddedDependencyInjector()
+    public function testCountShouldReturnCountOfAddedDependencyInjector(): void
     {
         $dependencyInjectorCollection = new DependencyInjectorCollection();
         $this->assertSame(0, $dependencyInjectorCollection->count());
@@ -66,7 +66,7 @@ class DependencyInjectorCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
-    private function getDependencyInjectorMock()
+    private function getDependencyInjectorMock(): DependencyInjectorInterface
     {
         return $this->getMockBuilder(DependencyInjectorInterface::class)->getMock();
     }

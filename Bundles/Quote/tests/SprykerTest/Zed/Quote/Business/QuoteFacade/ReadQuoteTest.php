@@ -31,7 +31,7 @@ class ReadQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testReadQuoteFromDatabaseByCustomer()
+    public function testReadQuoteFromDatabaseByCustomer(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();

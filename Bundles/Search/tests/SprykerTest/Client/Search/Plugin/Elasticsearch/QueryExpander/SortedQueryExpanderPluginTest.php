@@ -38,7 +38,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testSortedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = [])
+    public function testSortedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = []): void
     {
         $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
 
@@ -55,7 +55,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    public function sortedQueryExpanderDataProvider()
+    public function sortedQueryExpanderDataProvider(): array
     {
         return [
             'no sorting' => $this->getDataWithoutSorting(),
@@ -67,7 +67,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataWithoutSorting()
+    protected function getDataWithoutSorting(): array
     {
         $searchConfig = $this->createSimpleSortSearchConfig();
 
@@ -82,7 +82,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForSimpleStringSort()
+    protected function getDataForSimpleStringSort(): array
     {
         $searchConfig = $this->createSimpleSortSearchConfig();
 
@@ -107,7 +107,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForInvalidParameterSort()
+    protected function getDataForInvalidParameterSort(): array
     {
         $searchConfig = $this->createSimpleSortSearchConfig();
 
@@ -124,7 +124,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createSimpleSortSearchConfig()
+    protected function createSimpleSortSearchConfig(): SearchConfigInterface
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getSortConfigBuilder()

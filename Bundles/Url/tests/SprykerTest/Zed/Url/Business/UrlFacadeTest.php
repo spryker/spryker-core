@@ -79,7 +79,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateUrlPersistsNewEntityToDatabase()
+    public function testCreateUrlPersistsNewEntityToDatabase(): void
     {
         $urlQuery = $this->urlQueryContainer->queryUrls();
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
@@ -108,7 +108,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateUrlPersistsChangedToDatabase()
+    public function testUpdateUrlPersistsChangedToDatabase(): void
     {
         $localeTransfer1 = $this->localeFacade->createLocale('ab_CD');
         $localeTransfer2 = $this->localeFacade->createLocale('ef_GH');
@@ -140,7 +140,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindUrlEntityByUrl()
+    public function testFindUrlEntityByUrl(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlEntity = new SpyUrl();
@@ -161,7 +161,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindUrlEntityById()
+    public function testFindUrlEntityById(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlEntity = new SpyUrl();
@@ -232,7 +232,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasUrlEntityByUrl()
+    public function testHasUrlEntityByUrl(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlEntity = new SpyUrl();
@@ -325,7 +325,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasUrlIgnoresRedirectedUrls()
+    public function testHasUrlIgnoresRedirectedUrls(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
@@ -422,7 +422,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasUrlEntityById()
+    public function testHasUrlEntityById(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlEntity = new SpyUrl();
@@ -442,7 +442,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasUrlOrRedirectedUrlById()
+    public function testHasUrlOrRedirectedUrlById(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
@@ -468,7 +468,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteUrlShouldRemoveEntityFromDatabase()
+    public function testDeleteUrlShouldRemoveEntityFromDatabase(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlEntity = new SpyUrl();
@@ -496,7 +496,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteUrlShouldRemoveRelatedUrlRedirectEntitiesFromDatabase()
+    public function testDeleteUrlShouldRemoveRelatedUrlRedirectEntitiesFromDatabase(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
 
@@ -549,7 +549,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testActivateUrlShouldCreateActiveTouchEntry()
+    public function testActivateUrlShouldCreateActiveTouchEntry(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlEntity = new SpyUrl();
@@ -571,7 +571,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeactivateUrlShouldCreateDeletedTouchEntry()
+    public function testDeactivateUrlShouldCreateDeletedTouchEntry(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlEntity = new SpyUrl();
@@ -593,7 +593,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateUrlRedirectEntityPersistsToDatabase()
+    public function testCreateUrlRedirectEntityPersistsToDatabase(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $sourceUrlTransfer = new UrlTransfer();
@@ -617,7 +617,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateUrlRedirectEntityPersistsToDatabase()
+    public function testUpdateUrlRedirectEntityPersistsToDatabase(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
@@ -657,7 +657,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindUrlRedirectEntityById()
+    public function testFindUrlRedirectEntityById(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
@@ -685,7 +685,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasUrlRedirectEntityById()
+    public function testHasUrlRedirectEntityById(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
@@ -712,7 +712,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteUrlRedirectShouldRemoveEntityFromDatabaseAlongWithUrlEntity()
+    public function testDeleteUrlRedirectShouldRemoveEntityFromDatabaseAlongWithUrlEntity(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
@@ -760,7 +760,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testActivateUrlRedirectShouldCreateActiveTouchEntry()
+    public function testActivateUrlRedirectShouldCreateActiveTouchEntry(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
@@ -789,7 +789,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeactivateUrlRedirectShouldCreateDeletedTouchEntry()
+    public function testDeactivateUrlRedirectShouldCreateDeletedTouchEntry(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
@@ -818,7 +818,7 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateUrlRedirectShouldNoticeRedirectLoop()
+    public function testValidateUrlRedirectShouldNoticeRedirectLoop(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();

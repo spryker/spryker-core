@@ -28,7 +28,7 @@ class ZedResponseLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetNameShouldReturnString()
+    public function testGetNameShouldReturnString(): void
     {
         $zedResponseLogPlugin = new ZedResponseLogPlugin();
 
@@ -38,7 +38,7 @@ class ZedResponseLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetCallableShouldReturnCallable()
+    public function testGetCallableShouldReturnCallable(): void
     {
         $zedResponseLogPlugin = new ZedResponseLogPlugin();
 
@@ -48,7 +48,7 @@ class ZedResponseLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteCallableShouldCallLogger()
+    public function testExecuteCallableShouldCallLogger(): void
     {
         $this->markTestIncomplete('test response logging incomplete');
         $loggerMock = $this->getLoggerMock();
@@ -66,7 +66,7 @@ class ZedResponseLogPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function getLoggerMock()
+    protected function getLoggerMock(): LoggerInterface
     {
         $lockerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
 
@@ -78,7 +78,7 @@ class ZedResponseLogPluginTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin
      */
-    protected function getZedResponseLogPluginMock(LoggerInterface $loggerMock)
+    protected function getZedResponseLogPluginMock(LoggerInterface $loggerMock): ZedResponseLogPlugin
     {
         $zedResponseLogPluginMock = $this->getMockBuilder(ZedResponseLogPlugin::class)
             ->setMethods(['getLogger'])

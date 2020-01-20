@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Payment\Persistence" package="src.Orm.Zed.Payment.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
 
-    <table name="spy_sales_payment" phpName="SpySalesPayment">
+    <table name="spy_sales_payment">
         <column name="id_sales_payment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="fk_sales_payment_method_type" type="INTEGER" required="true"/>
@@ -20,7 +20,7 @@
         <id-method-parameter value="spy_sales_payment_pk_seq"/>
     </table>
 
-    <table name="spy_sales_payment_method_type" phpName="SpySalesPaymentMethodType">
+    <table name="spy_sales_payment_method_type">
         <column name="id_sales_payment_method_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="payment_provider" type="VARCHAR" required="true"/>
         <column name="payment_method" type="VARCHAR" required="true"/>

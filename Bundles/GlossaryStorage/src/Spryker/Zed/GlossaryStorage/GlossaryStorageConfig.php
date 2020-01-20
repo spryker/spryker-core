@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class GlossaryStorageConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated will be removed in future version
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @return bool
      */
