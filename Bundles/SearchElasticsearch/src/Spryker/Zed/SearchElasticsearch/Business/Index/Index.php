@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Index;
 
 use Elastica\Client;
+use Elastica\Exception\ResponseException;
 use Elastica\Index as ElasticaIndex;
 use Elastica\Request;
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
@@ -71,11 +73,11 @@ class Index implements IndexInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function closeIndex(?SearchContextTransfer $searchContextTransfer = null): bool
+    public function closeIndex(SearchContextTransfer $searchContextTransfer): bool
     {
         return $this->getIndex($searchContextTransfer)->close()->isOk();
     }
@@ -95,11 +97,11 @@ class Index implements IndexInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function deleteIndex(?SearchContextTransfer $searchContextTransfer = null): bool
+    public function deleteIndex(SearchContextTransfer $searchContextTransfer): bool
     {
         return $this->getIndex($searchContextTransfer)->delete()->isOk();
     }
@@ -131,6 +133,51 @@ class Index implements IndexInterface
             Request::POST,
             $this->buildCopyCommandRequestData($sourceSearchContextTransfer, $targetSearchContextTransfer)
         )->isOk();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer
+     *
+     * @return int
+     */
+    public function getDocumentsTotalCount(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): int
+    {
+        $indexName = $elasticsearchSearchContextTransfer->requireIndexName()->getIndexName();
+
+        try {
+            return $this->elasticaClient->getIndex($indexName)->count();
+        } catch (ResponseException $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer
+     *
+     * @return array
+     */
+    public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): array
+    {
+        $metaData = [];
+        $indexName = $elasticsearchSearchContextTransfer->requireIndexName()->getIndexName();
+
+        try {
+            $index = $this->elasticaClient->getIndex($indexName);
+            $mapping = $index->getMapping()[0] ?? null;
+            $metaData = $mapping['_meta'] ?? [];
+        } catch (ResponseException $e) {
+            // legal catch, if no mapping found (fresh installation etc) we still want to show empty meta data
+        }
+
+        return $metaData;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getIndexNames(): array
+    {
+        return $this->getAvailableIndexNames();
     }
 
     /**

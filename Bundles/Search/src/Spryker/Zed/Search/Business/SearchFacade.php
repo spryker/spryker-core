@@ -40,6 +40,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::getDocumentsTotalCount()` instead.
+     *
      * @return int
      */
     public function getTotalCount()
@@ -54,6 +56,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::getIndexMetaData()` instead.
      *
      * @return array
      */
@@ -402,5 +406,19 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer
     {
         return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be remove without replacement.
+     *
+     * @return bool
+     */
+    public function isInLegacySearchMode(): bool
+    {
+        return $this->getFactory()->createSearchLegacyModeChecker()->isInLegacyMode();
     }
 }

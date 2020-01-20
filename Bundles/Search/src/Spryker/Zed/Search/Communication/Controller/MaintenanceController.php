@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Will be removed in favour of the search provider specific GUI modules.
+ *
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
@@ -27,6 +29,7 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse([
             'totalCount' => $this->getFacade()->getTotalCount(),
             'metaData' => $this->getFacade()->getMetaData(),
+            'isInLegacyMode' => $this->getFacade()->isInLegacySearchMode(),
         ]);
     }
 
@@ -37,7 +40,10 @@ class MaintenanceController extends AbstractController
     {
         $table = $this->getFactory()->createSearchTable();
 
-        return $this->viewResponse(['searchTable' => $table->render()]);
+        return $this->viewResponse([
+            'searchTable' => $table->render(),
+            'isInLegacyMode' => $this->getFacade()->isInLegacySearchMode(),
+        ]);
     }
 
     /**
@@ -45,6 +51,10 @@ class MaintenanceController extends AbstractController
      */
     public function listAjaxAction()
     {
+        if ($this->getFacade()->isInLegacySearchMode()) {
+            return $this->jsonResponse();
+        }
+
         $table = $this->getFactory()->createSearchTable();
 
         return $this->jsonResponse(
@@ -57,6 +67,12 @@ class MaintenanceController extends AbstractController
      */
     public function deleteAllAction()
     {
+        if ($this->getFacade()->isInLegacySearchMode()) {
+            $this->addInfoMessage('Impossible to perform delete operation with the current search setup.');
+
+            return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
+        }
+
         $elasticaResponse = $this->getFacade()->delete();
         $formattedResponse = var_export($elasticaResponse->getData(), true);
         $this->addInfoMessage(self::MESSAGE_RESPONSE, ['%s' => $formattedResponse]);
@@ -79,6 +95,7 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse([
             'value' => var_export($document->getData(), true),
             'key' => $key,
+            'isInLegacyMode' => $this->getFacade()->isInLegacySearchMode(),
         ]);
     }
 }

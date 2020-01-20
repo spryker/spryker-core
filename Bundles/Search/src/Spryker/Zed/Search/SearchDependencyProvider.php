@@ -23,7 +23,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      * @deprecated Will be removed without replacement.
      */
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
-    public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'SEARCH_SCHEMA_INSTALLER_PLUGINS';
+    public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'PLUGINS_SEARCH_SOURCE_INSTALLER';
     public const PLUGINS_SEARCH_MAP_INSTALLER = 'PLUGINS_SEARCH_MAP_INSTALLER';
     public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
 

@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Search keys' %}
+{% set widget_title = 'Search documents' %}
 
 {% block head_title widget_title | trans %}
 
@@ -10,11 +10,7 @@
 
         {% block widget_content %}
 
-            {% if (isInLegacyMode) %}
-                {% include '@Search/_partials/mode-warning-message.twig' %}
-            {% else %}
-                {{ searchTable | raw }}
-            {% endif %}
+            {{ documentTable | raw }}
 
         {% endblock %}
 

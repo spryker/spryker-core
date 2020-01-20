@@ -11,8 +11,12 @@
 
         {% block widget_content %}
 
-            <h1>{{ key }}</h1>
-            <pre>{{ value }}</pre>
+            {% if (isInLegacyMode) %}
+                {% include '@Search/_partials/mode-warning-message.twig' %}
+            {% else %}
+                <h1>{{ key }}</h1>
+                <pre>{{ value }}</pre>
+            {% endif %}
 
         {% endblock %}
 
