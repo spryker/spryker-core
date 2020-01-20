@@ -63,9 +63,9 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\UserTransfer[]
+     * @return \Generated\Shared\Transfer\UserGroupTransfer[]
      */
-    public function getUsers(): array
+    public function getUserGroups(): array
     {
         return [];
     }
