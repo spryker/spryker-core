@@ -34,4 +34,45 @@ class MerchantUserConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * @return array
+     */
+    public function getInstallRoles(): array
+    {
+        return [
+            [
+                'name' => static::MERCHANT_PORTAL_ADMIN_ROLE,
+                'group' => [
+                    'name' => static::MERCHANT_PORTAL_ADMIN_GROUP,
+                ],
+                'rule' => [
+                    'bundle' => static::VALIDATOR_WILDCARD,
+                    'controller' => static::VALIDATOR_WILDCARD,
+                    'action' => static::VALIDATOR_WILDCARD,
+                    'type' => static::ALLOW,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getInstallGroups(): array
+    {
+        return [
+            [
+                'name' => static::MERCHANT_PORTAL_ADMIN_GROUP,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getInstallUserGroups(): array
+    {
+        return [];
+    }
 }
