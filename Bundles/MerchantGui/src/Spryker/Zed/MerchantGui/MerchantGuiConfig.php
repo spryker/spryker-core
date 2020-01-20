@@ -27,6 +27,11 @@ class MerchantGuiConfig extends AbstractBundleConfig
     public const URL_MERCHANT_STATUS = '/merchant-gui/merchant-status';
 
     /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_WAITING_FOR_APPROVAL
+     */
+    public const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+
+    /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
      */
     public const STATUS_APPROVED = 'approved';

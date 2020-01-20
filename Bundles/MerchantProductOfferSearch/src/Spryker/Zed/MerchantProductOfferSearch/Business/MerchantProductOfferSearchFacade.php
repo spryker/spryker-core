@@ -56,10 +56,10 @@ class MerchantProductOfferSearchFacade extends AbstractFacade implements Merchan
      *
      * @return void
      */
-    public function writeCollectionByIdMerchantProductOfferEvents(array $eventTransfers): void
+    public function writeCollectionByIdProductOfferEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createMerchantProductOfferSearchWriter()
-            ->writeCollectionByIdMerchantProductOfferEvents($eventTransfers);
+            ->writeCollectionByIdProductOfferEvents($eventTransfers);
     }
 }

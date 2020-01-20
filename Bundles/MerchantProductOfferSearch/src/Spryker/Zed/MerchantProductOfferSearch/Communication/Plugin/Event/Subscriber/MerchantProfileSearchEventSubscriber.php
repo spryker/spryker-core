@@ -20,6 +20,8 @@ use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 class MerchantProfileSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection

@@ -17,7 +17,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
-class ProductMerchantNamePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
+class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -25,20 +25,20 @@ class ProductMerchantNamePageDataLoaderPlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
         $merchantProductAbstractData = $this->getRepository()
-            ->getMerchantProductAbstractDataByProductAbstractIds($loadTransfer->getProductAbstractIds());
+            ->getMerchantDataByProductAbstractIds($productPageLoadTransfer->getProductAbstractIds());
 
         $groupedMerchantNamesByIdProductAbstract = $this->groupMerchantNamesByIdProductAbstract($merchantProductAbstractData);
 
-        $payloadTransfers = $this->updatePayloadTransfers($loadTransfer->getPayloadTransfers(), $groupedMerchantNamesByIdProductAbstract);
+        $payloadTransfers = $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $groupedMerchantNamesByIdProductAbstract);
 
-        return $loadTransfer->setPayloadTransfers($payloadTransfers);
+        return $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);
     }
 
     /**
@@ -65,11 +65,8 @@ class ProductMerchantNamePageDataLoaderPlugin extends AbstractPlugin implements 
     protected function updatePayloadTransfers(array $payloadTransfers, array $groupedMerchantNamesByIdProductAbstract): array
     {
         foreach ($payloadTransfers as $payloadTransfer) {
-            if (!isset($groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()])) {
-                continue;
-            }
-
-            $payloadTransfer->setMerchantNames($groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()]);
+            $merchantNames = $groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()] ?? [];
+            $payloadTransfer->setMerchantNames($merchantNames);
         }
 
         return $payloadTransfers;

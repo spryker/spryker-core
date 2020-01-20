@@ -55,5 +55,5 @@ interface MerchantProductOfferSearchFacadeInterface
      *
      * @return void
      */
-    public function writeCollectionByIdMerchantProductOfferEvents(array $eventTransfers): void;
+    public function writeCollectionByIdProductOfferEvents(array $eventTransfers): void;
 }

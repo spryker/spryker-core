@@ -47,7 +47,7 @@ class MerchantProductOfferSearchEventListenerTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantProductOfferSearchEventListenerStoreData(): void
+    public function testMerchantProductOfferSearchEventListenerStoresData(): void
     {
         // Arrange
         $beforeCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
@@ -71,7 +71,7 @@ class MerchantProductOfferSearchEventListenerTest extends Unit
         $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 
         // Assert
-        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
         $this->tester->assertProductPageAbstractSearch($merchantTransfer, $productConcreteTransfer);
     }
 }

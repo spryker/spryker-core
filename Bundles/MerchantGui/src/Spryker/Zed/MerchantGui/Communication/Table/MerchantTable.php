@@ -19,6 +19,7 @@ use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 class MerchantTable extends AbstractTable
 {
     protected const STATUS_CLASS_LABEL_MAPPING = [
+        MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
         MerchantGuiConfig::STATUS_APPROVED => 'label-info',
         MerchantGuiConfig::STATUS_DENIED => 'label-danger',
     ];
