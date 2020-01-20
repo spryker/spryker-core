@@ -56,7 +56,7 @@ class RefundTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface
      */
-    protected function getRefundFacadeMock(RefundTransfer $refundTransfer)
+    protected function getRefundFacadeMock(RefundTransfer $refundTransfer): DummyPaymentToRefundInterface
     {
         $refundFacadeMock = $this->getMockBuilder(DummyPaymentToRefundInterface::class)->getMock();
         $refundFacadeMock->method('calculateRefund')->willReturn($refundTransfer);

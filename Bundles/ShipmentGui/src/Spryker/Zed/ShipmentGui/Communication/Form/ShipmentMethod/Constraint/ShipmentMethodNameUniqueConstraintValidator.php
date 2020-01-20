@@ -27,6 +27,10 @@ class ShipmentMethodNameUniqueConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, ShipmentMethodNameUniqueConstraint::CLASS_CONSTRAINT);
         }
 
+        if ($value === null) {
+            return;
+        }
+
         $shipmentMethodTransfer = $constraint->getShipmentFacade()->findShipmentMethodByName($value);
         if ($shipmentMethodTransfer === null) {
             return;

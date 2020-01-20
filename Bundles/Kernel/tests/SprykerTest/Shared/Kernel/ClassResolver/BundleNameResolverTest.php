@@ -38,7 +38,7 @@ class BundleNameResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function getBundleNameResolver(string $storeName)
+    protected function getBundleNameResolver(string $storeName): BundleNameResolver
     {
         $mock = $this
             ->getMockBuilder(BundleNameResolver::class)

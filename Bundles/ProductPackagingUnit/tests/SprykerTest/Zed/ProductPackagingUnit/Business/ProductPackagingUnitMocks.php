@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 
 use Codeception\TestCase\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory;
 use Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacade;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
@@ -23,19 +22,20 @@ abstract class ProductPackagingUnitMocks extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig
      */
-    protected function createProductPackagingUnitConfigMock(): MockObject
+    protected function createProductPackagingUnitConfigMock(): ProductPackagingUnitConfig
     {
         return $this->getMockBuilder(ProductPackagingUnitConfig::class)
             ->getMock();
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|null $config
+     * @param \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig|\PHPUnit\Framework\MockObject\MockObject|null $config
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory
      */
-    protected function createProductPackagingUnitBusinessFactoryMock(?MockObject $config = null): MockObject
+    protected function createProductPackagingUnitBusinessFactoryMock(?ProductPackagingUnitConfig $config = null): ProductPackagingUnitBusinessFactory
     {
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory $mockObject */
         $mockObject = $this->getMockBuilder(ProductPackagingUnitBusinessFactory::class)
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -48,12 +48,13 @@ abstract class ProductPackagingUnitMocks extends Test
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|null $factory
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory|\PHPUnit\Framework\MockObject\MockObject|null $factory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacade
      */
-    protected function createProductPackagingUnitFacadeMock(?MockObject $factory = null): MockObject
+    protected function createProductPackagingUnitFacadeMock(?ProductPackagingUnitBusinessFactory $factory = null): ProductPackagingUnitFacade
     {
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacade $mockObject */
         $mockObject = $this->getMockBuilder(ProductPackagingUnitFacade::class)
             ->enableProxyingToOriginalMethods()
             ->getMock();
