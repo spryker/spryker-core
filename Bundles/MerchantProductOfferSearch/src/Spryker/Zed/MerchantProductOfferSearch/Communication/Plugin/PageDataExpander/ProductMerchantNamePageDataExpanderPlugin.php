@@ -33,10 +33,7 @@ class ProductMerchantNamePageDataExpanderPlugin extends AbstractPlugin implement
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
         $productPayloadTransfer = $this->getProductPayloadTransfer($productData);
-
-        if ($productPayloadTransfer->getMerchantNames()) {
-            $productAbstractPageSearchTransfer->setMerchantNames($productPayloadTransfer->getMerchantNames());
-        }
+        $productAbstractPageSearchTransfer->setMerchantNames($productPayloadTransfer->getMerchantNames());
     }
 
     /**

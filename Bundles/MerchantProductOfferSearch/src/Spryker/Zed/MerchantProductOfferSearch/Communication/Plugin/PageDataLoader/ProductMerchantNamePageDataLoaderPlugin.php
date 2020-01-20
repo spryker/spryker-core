@@ -65,11 +65,8 @@ class ProductMerchantNamePageDataLoaderPlugin extends AbstractPlugin implements 
     protected function updatePayloadTransfers(array $payloadTransfers, array $groupedMerchantNamesByIdProductAbstract): array
     {
         foreach ($payloadTransfers as $payloadTransfer) {
-            if (!isset($groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()])) {
-                continue;
-            }
-
-            $payloadTransfer->setMerchantNames($groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()]);
+            $merchantNames = $groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()] ?? [];
+            $payloadTransfer->setMerchantNames($merchantNames);
         }
 
         return $payloadTransfers;
