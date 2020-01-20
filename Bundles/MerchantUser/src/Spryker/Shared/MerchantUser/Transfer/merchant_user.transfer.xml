@@ -75,11 +75,16 @@
     <transfer name="Group">
         <property name="name" type="string"/>
         <property name="reference" type="string"/>
+        <property name="idAclGroup" type="int"/>
     </transfer>
 
     <transfer name="UserGroup">
         <property name="user" type="User"/>
         <property name="group" type="Group"/>
+    </transfer>
+
+    <transfer name="GroupCriteriaFilter">
+        <property name="reference" type="string"/>
     </transfer>
 
 </transfers>
