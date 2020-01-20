@@ -26,6 +26,7 @@ class MerchantUserConfig extends AbstractBundleConfig
     public const ALLOW = 'allow';
     public const MERCHANT_PORTAL_ADMIN_ROLE = 'merchant_portal_admin_role';
     public const MERCHANT_PORTAL_ADMIN_GROUP = 'merchant_portal_admin_group';
+    public const MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
 
     /**
      * @return bool
@@ -64,6 +65,7 @@ class MerchantUserConfig extends AbstractBundleConfig
         return [
             [
                 'name' => static::MERCHANT_PORTAL_ADMIN_GROUP,
+                'reference' => static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE,
             ],
         ];
     }

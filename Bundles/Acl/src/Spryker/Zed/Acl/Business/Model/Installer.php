@@ -126,7 +126,7 @@ class Installer implements InstallerInterface
     private function addGroup(GroupTransfer $groupTransfer): void
     {
         if (!$this->group->hasGroupName($groupTransfer->getName())) {
-            $this->group->addGroup($groupTransfer->getName());
+            $this->group->save($groupTransfer);
         }
     }
 

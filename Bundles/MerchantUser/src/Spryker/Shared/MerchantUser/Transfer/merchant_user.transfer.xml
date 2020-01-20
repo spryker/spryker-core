@@ -74,6 +74,7 @@
 
     <transfer name="Group">
         <property name="name" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
     <transfer name="UserGroup">

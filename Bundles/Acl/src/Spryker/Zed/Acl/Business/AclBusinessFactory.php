@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
  */
 class AclBusinessFactory extends AbstractBusinessFactory
 {
@@ -29,7 +30,8 @@ class AclBusinessFactory extends AbstractBusinessFactory
     public function createGroupModel()
     {
         return new Group(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getRepository()
         );
     }
 

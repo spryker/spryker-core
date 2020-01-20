@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Acl\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
@@ -49,6 +50,11 @@ class AclTest extends Unit
     protected $rolesTransfer;
 
     /**
+     * @var \SprykerTest\Zed\Acl\AclBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -68,6 +74,7 @@ class AclTest extends Unit
         $data = [];
 
         $data['name'] = sprintf('name-%s', rand(100, 999));
+        $data['reference'] = sprintf('reference-%s', rand(100, 999));
 
         return $data;
     }
@@ -140,6 +147,23 @@ class AclTest extends Unit
         $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $transfer);
         $this->assertNotNull($transfer->getIdAclGroup());
         $this->assertEquals($data['name'], $transfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindGroup(): void
+    {
+        // Arrange
+        $data = $this->mockGroupData();
+        $groupTransfer = $this->tester->haveGroup();
+
+        //Act
+        $foundGroupTransfer = $this->facade->findGroup((new GroupCriteriaFilterTransfer())->setReference($groupTransfer->getReference()));
+
+        //Assert
+
+        $this->assertEquals($groupTransfer->getReference(), $foundGroupTransfer->getReference());
     }
 
     /**
