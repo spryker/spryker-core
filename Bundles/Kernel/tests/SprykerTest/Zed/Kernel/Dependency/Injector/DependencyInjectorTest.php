@@ -86,7 +86,7 @@ class DependencyInjectorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector
      */
-    private function getAbstractDependencyInjectorMock()
+    private function getAbstractDependencyInjectorMock(): AbstractDependencyInjector
     {
         return $this->getMockBuilder(AbstractDependencyInjector::class)->getMock();
     }

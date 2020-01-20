@@ -403,7 +403,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQueueClientBridge()
+    protected function createQueueClientBridge(): SynchronizationToQueueClientInterface
     {
         return $this->getMockBuilder(SynchronizationToQueueClientInterface::class)
             ->disableOriginalConstructor()
@@ -462,7 +462,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createStorageClientBridge()
+    protected function createStorageClientBridge(): SynchronizationToStorageClientInterface
     {
         return $this->getMockBuilder(SynchronizationToStorageClientInterface::class)
             ->disableOriginalConstructor()
@@ -479,7 +479,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSearchClientBridge()
+    protected function createSearchClientBridge(): SynchronizationToSearchClientInterface
     {
         return $this->getMockBuilder(SynchronizationToSearchClientInterface::class)
             ->disableOriginalConstructor()
@@ -496,7 +496,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createUtilEncodingServiceBridgeMock()
+    protected function createUtilEncodingServiceBridgeMock(): SynchronizationToUtilEncodingServiceInterface
     {
         return $this->getMockBuilder(SynchronizationToUtilEncodingServiceInterface::class)
             ->disableOriginalConstructor()

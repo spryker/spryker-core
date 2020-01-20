@@ -227,7 +227,7 @@ class CartsRestApiBusinessTester extends Actor
     {
         $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder(
             [
-                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'quoteUuid' => static::COLLECTION_QUOTES[0]['uuid'],
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'sku' => static::TEST_SKU,
                 'quantity' => static::TEST_QUANTITY,
@@ -261,7 +261,7 @@ class CartsRestApiBusinessTester extends Actor
     {
         return (new CartItemRequestBuilder(
             [
-                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'quoteUuid' => static::COLLECTION_QUOTES[0]['uuid'],
                 'quantity' => static::TEST_QUANTITY,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
                 'sku' => static::TEST_SKU,

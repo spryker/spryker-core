@@ -8,6 +8,8 @@
         <column name="id_product_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="concrete_sku" required="true" type="VARCHAR" size="255"/>
         <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
+        <column name="is_active" default="true" type="BOOLEAN"/>
+        <column name="approval_status" type="VARCHAR" size="64" required="true"/>
 
         <unique name="spy_product_offer-product_offer_reference">
             <unique-column name="product_offer_reference"/>

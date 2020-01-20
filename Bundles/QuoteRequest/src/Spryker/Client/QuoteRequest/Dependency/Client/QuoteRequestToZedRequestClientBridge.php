@@ -27,7 +27,7 @@ class QuoteRequestToZedRequestClientBridge implements QuoteRequestToZedRequestCl
     /**
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest()
+    public function addFlashMessagesFromLastZedRequest(): void
     {
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
     }
@@ -39,7 +39,7 @@ class QuoteRequestToZedRequestClientBridge implements QuoteRequestToZedRequestCl
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null)
+    public function call(string $url, TransferInterface $object, $requestOptions = null): TransferInterface
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }

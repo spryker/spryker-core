@@ -464,6 +464,8 @@
     "spryker/product-offer": "*",
     "spryker/product-offer-stock": "*",
     "spryker/product-offer-stock-data-import": "*",
+    "spryker/product-offer-validity": "*",
+    "spryker/product-offer-validity-data-import": "*",
     "spryker/product-option": "*",
     "spryker/product-option-cart-connector": "*",
     "spryker/product-option-extension": "*",
