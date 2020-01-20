@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CompanyUserStorage\CompanyUserStorageConfig getConfig()
  * @method \Spryker\Zed\CompanyUserStorage\Communication\CompanyUserStorageCommunicationFactory getFactory()
  */
-class CompanyUserEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
+class CompanyUserEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -45,7 +45,8 @@ class CompanyUserEventResourceRepositoryPlugin extends AbstractPlugin implements
      */
     public function getData(int $offset, int $limit): array
     {
-        return $this->getFacade()
+        return $this->getFactory()
+            ->getCompanyUserFacade()
             ->getCompanyUsersByFilter($this->createFilterTransfer($offset, $limit));
     }
 

@@ -80,18 +80,4 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
         return $this->getRepository()
             ->getSynchronizationDataTransfersByFilterAndCompanyUserIds($filterTransfer, $companyUserIds);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    public function getCompanyUsersByFilter(FilterTransfer $filterTransfer): array
-    {
-        return $this->getRepository()->getCompanyUsersByFilter($filterTransfer);
-    }
 }

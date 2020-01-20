@@ -73,22 +73,4 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
             ->createCompanyUserStorageMapper()
             ->mapCompanyUserStorageEntityCollectionToSynchronizationDataTransfers($companyUserStorageEntities);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    public function getCompanyUsersByFilter(FilterTransfer $filterTransfer): array
-    {
-        $query = $this->getFactory()
-            ->getCompanyUserQuery();
-        $companyUserEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
-            ->setFormatter(ObjectFormatter::class)
-            ->find();
-
-        return $this->getFactory()
-            ->createCompanyUserStorageMapper()
-            ->mapCompanyUserEntityCollectionToCompanyUserTransfers($companyUserEntityCollection);
-    }
 }

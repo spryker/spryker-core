@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUserStorage\Communication;
 
 use Spryker\Zed\CompanyUserStorage\CompanyUserStorageDependencyProvider;
+use Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -25,5 +26,13 @@ class CompanyUserStorageCommunicationFactory extends AbstractCommunicationFactor
     public function getEventBehaviorFacade(): CompanyUserStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUserStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): CompanyUserStorageToCompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyUserStorageDependencyProvider::FACADE_COMPANY_USER);
     }
 }

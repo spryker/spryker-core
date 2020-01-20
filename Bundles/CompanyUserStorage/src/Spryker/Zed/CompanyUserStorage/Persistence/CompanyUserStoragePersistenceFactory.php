@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Persistence;
 
-use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorageQuery;
-use Spryker\Zed\CompanyUserStorage\CompanyUserStorageDependencyProvider;
 use Spryker\Zed\CompanyUserStorage\Persistence\Propel\Mapper\CompanyUserStorageMapper;
 use Spryker\Zed\CompanyUserStorage\Persistence\Propel\Mapper\CompanyUserStorageMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -35,13 +33,5 @@ class CompanyUserStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUserStorageMapper(): CompanyUserStorageMapperInterface
     {
         return new CompanyUserStorageMapper();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
-     */
-    public function getCompanyUserQuery(): SpyCompanyUserQuery
-    {
-        return $this->getProvidedDependency(CompanyUserStorageDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
 }

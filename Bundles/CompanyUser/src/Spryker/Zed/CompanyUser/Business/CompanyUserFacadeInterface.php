@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 interface CompanyUserFacadeInterface
 {
@@ -290,4 +291,17 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns an array of CompanyUserTransfer.
+     * - Uses FilterTransfer for pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function getCompanyUsersByFilter(FilterTransfer $filterTransfer): array;
 }

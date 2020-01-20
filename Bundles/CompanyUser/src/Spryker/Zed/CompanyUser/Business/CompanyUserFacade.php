@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -337,5 +338,19 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
         return $this->getFactory()
             ->createCompanyUser()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function getCompanyUsersByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getCompanyUsersByFilter($filterTransfer);
     }
 }

@@ -64,17 +64,4 @@ interface CompanyUserStorageFacadeInterface
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function getSynchronizationDataTransfersByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds = []): array;
-
-    /**
-     * Specification:
-     * - Returns an array of CompanyUserTransfer.
-     * - Uses FilterTransfer for pagination.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    public function getCompanyUsersByFilter(FilterTransfer $filterTransfer): array;
 }
