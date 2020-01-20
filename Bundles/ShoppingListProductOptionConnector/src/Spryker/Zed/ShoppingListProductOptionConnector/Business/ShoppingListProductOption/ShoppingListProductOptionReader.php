@@ -67,6 +67,14 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
             ->setProductConcreteSku($shoppingListItemTransfer->getSku())
             ->setProductOptionGroupIsActive(true);
 
+        $productOptionCriteriaTransfer->setCurrencyIsoCode(
+            $shoppingListItemTransfer->getCurrencyIsoCode()
+        );
+
+        $productOptionCriteriaTransfer->setPriceMode(
+            $shoppingListItemTransfer->getPriceMode()
+        );
+
         return $productOptionCriteriaTransfer;
     }
 }

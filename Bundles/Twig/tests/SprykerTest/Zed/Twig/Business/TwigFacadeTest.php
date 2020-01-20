@@ -40,7 +40,7 @@ class TwigFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\TwigBusinessFactory
      */
-    protected function getFactoryMock()
+    protected function getFactoryMock(): TwigBusinessFactory
     {
         $mockBuilder = $this->getMockBuilder(TwigBusinessFactory::class)
             ->setMethods(['createCacheWarmer']);
@@ -54,7 +54,7 @@ class TwigFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\Model\CacheWarmerInterface
      */
-    protected function getCacheWarmerMock()
+    protected function getCacheWarmerMock(): CacheWarmerInterface
     {
         $mockBuilder = $this->getMockBuilder(CacheWarmerInterface::class);
 

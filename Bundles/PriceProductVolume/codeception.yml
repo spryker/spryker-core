@@ -1,7 +1,5 @@
 namespace: SprykerTest
 
-actor: Tester
-
 paths:
     tests: tests
     log: tests/_output
@@ -16,8 +14,3 @@ settings:
     memory_limit: 1024M
     log: true
 
-coverage:
-    enabled: true
-    whitelist:
-        include:
-            - 'src/*.php'

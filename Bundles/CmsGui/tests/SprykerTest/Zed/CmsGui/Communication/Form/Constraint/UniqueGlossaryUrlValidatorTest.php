@@ -122,7 +122,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Validator\Context\ExecutionContextInterface
      */
-    protected function createExecutionContextMock()
+    protected function createExecutionContextMock(): ExecutionContextInterface
     {
         $executionContextMock = $this->getMockBuilder(ExecutionContextInterface::class)
              ->getMock();
@@ -136,7 +136,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface
      */
-    protected function createConstraintViolationBuilderMock()
+    protected function createConstraintViolationBuilderMock(): ConstraintViolationBuilderInterface
     {
          $constraintViolationBuilderMock = $this->getMockBuilder(ConstraintViolationBuilderInterface::class)
              ->getMock();

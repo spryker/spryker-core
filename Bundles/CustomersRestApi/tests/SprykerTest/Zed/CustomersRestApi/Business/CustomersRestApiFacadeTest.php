@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory;
 use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeBridge;
@@ -410,9 +409,9 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCustomersRestApiFactory(): MockObject
+    protected function getMockCustomersRestApiFactory(): CustomersRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             CustomersRestApiBusinessFactory::class,
@@ -426,9 +425,9 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCustomersRestApiFactoryForGuest(): MockObject
+    protected function getMockCustomersRestApiFactoryForGuest(): CustomersRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             CustomersRestApiBusinessFactory::class,
@@ -442,9 +441,9 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Customer\Business\CustomerFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCustomerFacade(): MockObject
+    protected function getMockCustomerFacade(): CustomerFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
@@ -470,9 +469,9 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Customer\Business\CustomerFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCustomerFacadeForGuest(): MockObject
+    protected function getMockCustomerFacadeForGuest(): CustomerFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,

@@ -69,7 +69,7 @@ class RefundCalculatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
-    protected function getSalesFacadeMock()
+    protected function getSalesFacadeMock(): RefundToSalesInterface
     {
         $salesFacadeMock = $this->getMockBuilder(RefundToSalesInterface::class)->getMock();
         $salesFacadeMock->method('getOrderByIdSalesOrder')->willReturn(new OrderTransfer());
@@ -80,7 +80,7 @@ class RefundCalculatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface
      */
-    protected function getRefundCalculationPlugin()
+    protected function getRefundCalculationPlugin(): RefundCalculatorPluginInterface
     {
         $refundCalculatorPluginMock = $this->getMockBuilder(RefundCalculatorPluginInterface::class)->getMock();
         $refundCalculatorPluginMock->expects($this->once())->method('calculateRefund')->willReturnArgument(0);
