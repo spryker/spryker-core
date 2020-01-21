@@ -34,7 +34,7 @@ class AclNavigationItemsFilterPlugin extends AbstractPlugin implements Navigatio
         $userFacade = $this->getFactory()->getUserFacade();
 
         if (!$userFacade->hasCurrentUser()) {
-            return true;
+            return false;
         }
 
         return $this->getFacade()->checkAccess(

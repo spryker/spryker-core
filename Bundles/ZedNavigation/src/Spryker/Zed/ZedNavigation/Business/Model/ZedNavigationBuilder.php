@@ -84,20 +84,18 @@ class ZedNavigationBuilder
     {
         foreach ($navigationItems as $itemKey => $item) {
             if (isset($item['pages'])) {
-                $navigationItemPages = $this->filterItems($item['pages']);
-                if (!$navigationItemPages) {
+                $navigationItems[$itemKey]['pages'] = $this->filterItems($item['pages']);
+                if (!$navigationItems[$itemKey]['pages']) {
                     unset($navigationItems[$itemKey]);
-                    continue;
                 }
-                $item['pages'] = $navigationItemPages;
-                $navigationItems[$itemKey] = $item;
+
                 continue;
             }
 
-            $itemTransfer = new NavigationItemTransfer();
-            $itemTransfer->setModule($item['bundle']);
-            $itemTransfer->setController($item['controller']);
-            $itemTransfer->setAction($item['action']);
+            $itemTransfer = (new NavigationItemTransfer())
+                ->setModule($item['bundle'])
+                ->setController($item['controller'])
+                ->setAction($item['action']);
 
             foreach ($this->navigationItemFilterPlugins as $plugin) {
                 if (!$plugin->isVisible($itemTransfer)) {
