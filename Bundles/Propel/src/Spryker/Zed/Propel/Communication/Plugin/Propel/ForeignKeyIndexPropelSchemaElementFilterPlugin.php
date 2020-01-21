@@ -31,15 +31,16 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     public function filter(SimpleXMLElement $schemaXmlElement): SimpleXMLElement
     {
         foreach ($schemaXmlElement->children() as $tableXmlElement) {
-            $uniqueIndexes = $this->getUniqueIndexes($tableXmlElement);
-            if (!$uniqueIndexes) {
+            $uniqueIndexElements = $this->getUniqueIndexElements($tableXmlElement);
+            if (!$uniqueIndexElements) {
                 continue;
             }
 
-            $fkFieldNames = $this->getFkFieldNames($uniqueIndexes);
+            $fkFieldNames = $this->getFkFieldNames($uniqueIndexElements);
             if (!$fkFieldNames) {
                 continue;
             }
+
             $this->removeFkIndexes($tableXmlElement, $fkFieldNames);
         }
 
@@ -51,36 +52,59 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
      *
      * @return \SimpleXMLElement[]
      */
-    protected function getUniqueIndexes(SimpleXMLElement $tableXmlElement): array
+    protected function getUniqueIndexElements(SimpleXMLElement $tableXmlElement): array
     {
-        $uniqueIndexes = [];
+        $uniqueIndexElements = [];
         foreach ($tableXmlElement->children() as $tagName => $element) {
             if ($tagName === 'unique') {
-                $uniqueIndexes[] = $element;
+                $uniqueIndexElements[] = $element;
             }
         }
 
-        return $uniqueIndexes;
+        return $uniqueIndexElements;
     }
 
     /**
-     * @param \SimpleXMLElement[] $uniqueIndexes
+     * @param \SimpleXMLElement[] $uniqueIndexElements
      *
      * @return string[]
      */
-    protected function getFkFieldNames(array $uniqueIndexes): array
+    protected function getFkFieldNames(array $uniqueIndexElements): array
     {
         $fkFieldNames = [];
-        foreach ($uniqueIndexes as $uniqueIndex) {
-            foreach ($uniqueIndex->children() as $uniqueIndexField) {
-                $fieldName = (string)$uniqueIndexField->attributes()['name'];
-                if (strpos($fieldName, 'fk_') === 0) {
-                    $fkFieldNames[] = $fieldName;
-                }
+        foreach ($uniqueIndexElements as $uniqueIndexElement) {
+            $fkFieldNames = $this->getFkFieldNamesFromUniqueIndex($uniqueIndexElement, $fkFieldNames);
+        }
+
+        return $fkFieldNames;
+    }
+
+    /**
+     * @param \SimpleXMLElement $uniqueIndexElement
+     * @param string[] $fkFieldNames
+     *
+     * @return string[]
+     */
+    protected function getFkFieldNamesFromUniqueIndex(SimpleXMLElement $uniqueIndexElement, array $fkFieldNames): array
+    {
+        foreach ($uniqueIndexElement->children() as $uniqueIndexField) {
+            $fieldName = (string)$uniqueIndexField->attributes()['name'];
+            if ($this->isFkField($fieldName)) {
+                $fkFieldNames[] = $fieldName;
             }
         }
 
         return $fkFieldNames;
+    }
+
+    /**
+     * @param string $fieldName
+     *
+     * @return bool
+     */
+    protected function isFkField(string $fieldName): bool
+    {
+        return strpos($fieldName, 'fk_') === 0;
     }
 
     /**
@@ -92,16 +116,39 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     protected function removeFkIndexes(SimpleXMLElement $schemaXmlElement, array $fkFieldNames): SimpleXMLElement
     {
         foreach ($schemaXmlElement->children() as $tagName => $element) {
-            $elementAttributes = $element->attributes();
-            if ($tagName === 'index') {
-                $fieldName = mb_substr($elementAttributes['name'], strpos($elementAttributes['name'], 'fk_'));
-                if (in_array($fieldName, $fkFieldNames, true)) {
-                    $this->removeChild($schemaXmlElement, $tagName);
-                }
+            $nameAttribute = (string)$element->attributes()['name'];
+            if ($this->isFkIndex($tagName, $nameAttribute)
+                && $this->isFkIndexMustBeRemoved($nameAttribute, $fkFieldNames)
+            ) {
+                $this->removeIndex($schemaXmlElement, $tagName);
             }
         }
 
         return $schemaXmlElement;
+    }
+
+    /**
+     * @param string $tagName
+     * @param string $nameAttribute
+     *
+     * @return bool
+     */
+    protected function isFkIndex(string $tagName, string $nameAttribute): bool
+    {
+        return $tagName === 'index' && strpos($nameAttribute, 'fk_') !== false;
+    }
+
+    /**
+     * @param string $nameAttribute
+     * @param string[] $fkFieldNames
+     *
+     * @return bool
+     */
+    protected function isFkIndexMustBeRemoved(string $nameAttribute, array $fkFieldNames): bool
+    {
+        $fieldName = mb_substr($nameAttribute, strpos($nameAttribute, 'fk_'));
+
+        return in_array($fieldName, $fkFieldNames, true);
     }
 
     /**
@@ -110,10 +157,11 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
      *
      * @return void
      */
-    protected function removeChild(SimpleXMLElement $simpleXMLElement, string $childName): void
+    protected function removeIndex(SimpleXMLElement $simpleXMLElement, string $childName): void
     {
         $childNode = dom_import_simplexml($simpleXMLElement->$childName);
         $dom = dom_import_simplexml($simpleXMLElement);
+
         $dom->removeChild($childNode);
     }
 }

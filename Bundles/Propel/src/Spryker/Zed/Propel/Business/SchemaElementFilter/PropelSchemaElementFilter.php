@@ -19,7 +19,7 @@ class PropelSchemaElementFilter implements SchemaElementFilterInterface
     /**
      * @param \Spryker\Shared\PropelExtension\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[] $schemaElementFilterPlugins
      */
-    public function __construct(array $schemaElementFilterPlugins = [])
+    public function __construct(array $schemaElementFilterPlugins)
     {
         $this->schemaElementFilterPlugins = $schemaElementFilterPlugins;
     }
