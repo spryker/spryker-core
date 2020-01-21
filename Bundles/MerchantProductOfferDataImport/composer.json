@@ -12,7 +12,7 @@
     "spryker/product": "^6.0.0",
     "spryker/product-offer": "^0.3.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/store": "^1.12.0"
+    "spryker/store": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
