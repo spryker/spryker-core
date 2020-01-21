@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PublisherFacade extends AbstractFacade implements PublisherFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string[]

@@ -32,7 +32,7 @@ class GlossaryStorageEntityManager extends AbstractEntityManager implements Glos
      *
      * @return void
      */
-    protected function saveGlossaryStorageEntity(SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer)
+    protected function saveGlossaryStorageEntity(SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer): void
     {
         $glossaryStorageEntityTransfer->requireFkGlossaryKey();
 

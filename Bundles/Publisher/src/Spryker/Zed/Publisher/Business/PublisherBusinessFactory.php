@@ -31,18 +31,18 @@ class PublisherBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]
-     */
-    public function getPublisherRegistryPlugins(): array
-    {
-        return $this->getProvidedDependency(PublisherDependencyProvider::PUBLISHER_REGISTRY_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
      */
     public function createPublisherEventRegistry(): PublisherEventRegistryInterface
     {
         return new PublisherEventRegistry();
+    }
+
+    /**
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]
+     */
+    public function getPublisherRegistryPlugins(): array
+    {
+        return $this->getProvidedDependency(PublisherDependencyProvider::PLUGINS_PUBLISHER_REGISTRY);
     }
 }

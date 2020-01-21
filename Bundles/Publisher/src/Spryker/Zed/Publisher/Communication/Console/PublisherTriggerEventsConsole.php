@@ -19,9 +19,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class PublisherTriggerEventsConsole extends Console
 {
     public const COMMAND_NAME = 'publish:trigger-events';
-    public const DESCRIPTION = 'This command will publish Zed resource(Product, Price, ...) to frontend storage and search';
+    public const DESCRIPTION = 'This command will publish Zed resource(Product, Price, ...) to storage and search.';
+
     public const RESOURCE_OPTION = 'resource';
     public const RESOURCE_OPTION_SHORTCUT = 'r';
+
     public const RESOURCE_IDS_OPTION = 'ids';
     public const RESOURCE_IDS_OPTION_SHORTCUT = 'i';
 
@@ -30,10 +32,18 @@ class PublisherTriggerEventsConsole extends Console
      */
     protected function configure(): void
     {
-        $this->addOption(static::RESOURCE_OPTION, static::RESOURCE_OPTION_SHORTCUT, InputArgument::OPTIONAL, 'The resource(s) should be published, if there is more than one, use comma to separate them. 
+        $this->addOption(
+            static::RESOURCE_OPTION,
+            static::RESOURCE_OPTION_SHORTCUT,
+            InputArgument::OPTIONAL,
+            'The resource(s) should be published, if there is more than one, use comma to separate them. 
         If not, full data will be published.');
 
-        $this->addOption(static::RESOURCE_IDS_OPTION, static::RESOURCE_IDS_OPTION_SHORTCUT, InputArgument::OPTIONAL, 'Defines ids of entities which should be published, if there is more than one, use comma to separate them. 
+        $this->addOption(
+            static::RESOURCE_IDS_OPTION,
+            static::RESOURCE_IDS_OPTION_SHORTCUT,
+            InputArgument::OPTIONAL,
+            'Defines ids of entities which should be published, if there is more than one, use comma to separate them. 
         If not, all ids will be published.');
 
         $this->setName(static::COMMAND_NAME)
@@ -69,7 +79,7 @@ class PublisherTriggerEventsConsole extends Console
     /**
      * @return string
      */
-    protected function getResourcesUsageText(): string
+    private function getResourcesUsageText(): string
     {
         $availableResourceNames = $this->getFactory()->getEventBehaviorFacade()->getAvailableResourceNames();
 
