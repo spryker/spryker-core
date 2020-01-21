@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -44,5 +46,33 @@ class OauthClient extends AbstractClient implements OauthClientInterface
     public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
     {
         return $this->getFactory()->createAccessTokenValidator()->validate($authAccessTokenValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->getFactory()->createOauthStub()->revokeConcreteRefreshToken($refreshToken);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->getFactory()->createOauthStub()->revokeRefreshTokensByCustomer($refreshToken);
     }
 }

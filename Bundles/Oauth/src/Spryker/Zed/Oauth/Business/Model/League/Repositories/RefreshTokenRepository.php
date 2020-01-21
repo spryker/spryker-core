@@ -61,7 +61,6 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
     {
         $userIdentifier = (string)$refreshTokenEntity->getAccessToken()->getUserIdentifier();
-//        $userIdentifier = $this->filterUserIdentifier($userIdentifier);
 
         $refreshTokenTransfer = new OauthRefreshTokenTransfer();
         $refreshTokenTransfer
@@ -79,11 +78,15 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      *
      * @param string $tokenId
      *
-     * @return bool
+     * @return void
      */
     public function revokeRefreshToken($tokenId)
     {
-        return false;
+        $authRefreshTokenTransfer = $this->oauthRepository->findRefreshTokenByIdentifier($tokenId);
+
+        if (!$authRefreshTokenTransfer->getRevokedAt()) {
+            $this->oauthEntityManager->revokeRefreshToken($authRefreshTokenTransfer);
+        }
     }
 
     /**

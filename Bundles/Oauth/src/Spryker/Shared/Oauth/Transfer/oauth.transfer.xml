@@ -108,7 +108,7 @@
     </transfer>
 
     <transfer name="RevokeRefreshTokenResponse">
-        <property name="isSuccessful" type="string"/>
+        <property name="isSuccessful" type="bool"/>
         <property name="error" type="string"/>
     </transfer>
 

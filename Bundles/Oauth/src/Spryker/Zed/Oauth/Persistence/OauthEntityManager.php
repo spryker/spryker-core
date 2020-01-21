@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
@@ -19,6 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class OauthEntityManager extends AbstractEntityManager implements OauthEntityManagerInterface
 {
+    public const COLUMN_REVOKED_AT = 'RevokedAt';
+
     /**
      * @param \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer
      *
@@ -45,6 +48,19 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
         $oauthRefreshTokenEntity->save();
 
         return $oauthRefreshTokenMapper->mapOauthRefreshTokenEntityToMapOauthRefreshTokenTransfer($oauthRefreshTokenEntity, $oauthRefreshTokenTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshToken
+     *
+     * @return void
+     */
+    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void
+    {
+        $this->getFactory()
+            ->createRefreshTokenQuery()
+            ->filterByIdentifier($oauthRefreshToken->getIdentifier())
+            ->update([static::COLUMN_REVOKED_AT => (new DateTime())->format('Y-m-d H:i:s')]);
     }
 
     /**
@@ -87,6 +103,23 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
 
         if ($authAccessTokenEntity) {
             $authAccessTokenEntity->delete();
+        }
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return void
+     */
+    public function deleteRefreshTokenByIdentifier(string $identifier): void
+    {
+        /** @var \Orm\Zed\Oauth\Persistence\SpyOauthAccessToken|null $authAccessTokenEntity */
+        $authRefreshTokenEntity = $this->getFactory()
+            ->createRefreshTokenQuery()
+            ->findOneByIdentifier($identifier);
+
+        if ($authRefreshTokenEntity) {
+            $authRefreshTokenEntity->delete();
         }
     }
 }

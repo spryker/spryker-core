@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
 class AuthRestApiToOauthClientBridge implements AuthRestApiToOauthClientInterface
 {
@@ -45,5 +47,25 @@ class AuthRestApiToOauthClientBridge implements AuthRestApiToOauthClientInterfac
     public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
     {
         return $this->oauthClient->validateAccessToken($authAccessTokenValidationRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->oauthClient->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->oauthClient->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
     }
 }

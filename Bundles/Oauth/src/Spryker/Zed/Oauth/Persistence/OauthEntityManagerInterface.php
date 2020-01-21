@@ -48,4 +48,18 @@ interface OauthEntityManagerInterface
      * @return void
      */
     public function deleteAccessTokenByIdentifier(string $identifier): void;
+
+    /**
+     * @param string $identifier
+     *
+     * @return void
+     */
+    public function deleteRefreshTokenByIdentifier(string $identifier): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshToken
+     *
+     * @return void
+     */
+    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void;
 }

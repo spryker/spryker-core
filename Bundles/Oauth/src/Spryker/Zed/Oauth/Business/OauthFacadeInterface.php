@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
 /**
  * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
@@ -122,13 +123,25 @@ interface OauthFacadeInterface
 
     /**
      * Specification:
-     *  - Revokes a refresh token.
+     *  - Revokes concrete refresh token.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): void;
+    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Revokes a refresh tokens by customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer;
 }

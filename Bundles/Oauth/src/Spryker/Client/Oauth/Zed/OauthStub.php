@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Client\Oauth\Dependency\Client\OauthToZedRequestClientInterface;
 
 class OauthStub implements OauthStubInterface
@@ -52,5 +54,31 @@ class OauthStub implements OauthStubInterface
         $oauthAccessTokenValidationResponseTransfer = $this->zedRequestClient->call('/oauth/gateway/validate-access-token', $authAccessTokenValidationRequestTransfer);
 
         return $oauthAccessTokenValidationResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer $revokeRefreshTokenRequestTransfer */
+        $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-concrete-refresh-token', $refreshToken);
+
+        return $revokeRefreshTokenRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer $revokeRefreshTokenRequestTransfer */
+        $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-refresh-tokens', $refreshToken);
+
+        return $revokeRefreshTokenRequestTransfer;
     }
 }

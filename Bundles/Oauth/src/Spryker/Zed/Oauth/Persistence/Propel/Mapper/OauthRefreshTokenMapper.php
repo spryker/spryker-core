@@ -26,7 +26,6 @@ class OauthRefreshTokenMapper
         $oauthRefreshTokenEntity->setExpiresAt($oauthRefreshTokenTransfer->getExpiresAt());
         $oauthRefreshTokenEntity->setUserIdentifier($oauthRefreshTokenTransfer->getUserIdentifier());
         $oauthRefreshTokenEntity->setFkOauthClient($oauthRefreshTokenTransfer->getIdOauthClient());
-        $oauthRefreshTokenEntity->setScopes(json_encode($oauthRefreshTokenTransfer->getScopes()));
 
         return $oauthRefreshTokenEntity;
     }
@@ -42,6 +41,7 @@ class OauthRefreshTokenMapper
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
     ): OauthRefreshTokenTransfer {
         $oauthRefreshTokenTransfer->fromArray($oauthRefreshTokenEntity->toArray(), true);
+        $oauthRefreshTokenTransfer->setIdOauthClient($oauthRefreshTokenEntity->getFkOauthClient());
 
         return $oauthRefreshTokenTransfer;
     }

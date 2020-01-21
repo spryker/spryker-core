@@ -5,31 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\AuthRestApi\Dependency\Client;
+namespace Spryker\Zed\Oauth\Business\Model;
 
-use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
-use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
-use Generated\Shared\Transfer\OauthRequestTransfer;
-use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
-interface AuthRestApiToOauthClientInterface
+interface OauthRefreshTokenWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthResponseTransfer
-     */
-    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
-     */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
      *

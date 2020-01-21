@@ -58,4 +58,20 @@ class RefreshTokensResourceController extends AbstractController
     {
         return $this->getFactory()->getResourceBuilder()->createRestResponse();
     }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $refreshTokenIdentifier = $restRequest->getResource()->getId();
+
+        if ($refreshTokenIdentifier !== null) {
+            return $this->getFactory()->createRefreshTokenRevoker()->revokeConcreteRefreshToken($refreshTokenIdentifier, $restRequest);
+        }
+
+        return $this->getFactory()->createRefreshTokenRevoker()->revokeCurrentCustomerRefreshTokens($restRequest);
+    }
 }

@@ -28,6 +28,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_INVALID_LOGIN = '003';
     public const RESPONSE_INVALID_REFRESH_TOKEN = '004';
 
+    public const ACTION_REFRESH_TOKENS_DELETE = 'delete';
+
     /**
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_AUTHORIZATION
      */

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -138,16 +139,30 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Revokes a refresh token.
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): void
+    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
     {
+        return $this->getFactory()->createOauthRefreshTokenWriter()->revokeConcreteRefreshToken($refreshToken);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->getFactory()->createOauthRefreshTokenWriter()->revokeRefreshTokensByCustomer($refreshToken);
     }
 }

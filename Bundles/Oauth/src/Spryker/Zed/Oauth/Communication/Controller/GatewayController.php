@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -36,5 +38,25 @@ class GatewayController extends AbstractGatewayController
     public function validateAccessTokenAction(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
     {
         return $this->getFacade()->validateAccessToken($authAccessTokenValidationRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeConcreteRefreshTokenAction(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->getFacade()->revokeConcreteRefreshToken($refreshToken);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshTokensAction(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->getFacade()->revokeRefreshTokensByCustomer($refreshToken);
     }
 }
