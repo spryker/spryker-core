@@ -6,7 +6,7 @@
     <transfer name="PriceProductOffer">
         <property name="idPriceProductOffer" type="int"/>
         <property name="fkProductOffer" type="int"/>
-        <property name="productOffer" type="ProductOffer"/>
+        <property name="productOfferReference" type="string"/>
         <property name="fkPriceType"  type="int"/>
         <property name="fkStore" type="int"/>
         <property name="fkCurrency" type="int"/>
@@ -14,13 +14,8 @@
         <property name="grossPrice" type="int"/>
     </transfer>
 
-    <transfer name="ProductOffer">
-        <property name="productOfferReference" type="string"/>
-        <property name="concreteSku" type="string"/>
-    </transfer>
-
     <transfer name="PriceProductCriteria">
-        <property name="productOffer" type="ProductOffer"/>
+        <property name="productOfferReference" type="string"/>
         <property name="idCurrency" type="int"/>
     </transfer>
 
@@ -29,6 +24,7 @@
     </transfer>
 
     <transfer name="PriceProduct">
+        <property name="concreteSku" type="string"/>
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="skuProduct" type="string"/>
         <property name="isMergeable" type="bool"/>
