@@ -72,4 +72,15 @@
         <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
+    <transfer name="PromotionItem">
+        <property name="idDiscountPromotion" type="int"/>
+        <property name="abstractSku" type="string"/>
+        <property name="maxQuantity" type="int"/>
+    </transfer>
+
+    <transfer name="RestPromotionalItemsAttributes">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
 </transfers>
