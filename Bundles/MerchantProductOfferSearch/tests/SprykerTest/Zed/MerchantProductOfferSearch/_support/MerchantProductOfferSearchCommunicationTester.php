@@ -72,18 +72,18 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
             $productConcreteTransfer->getFkProductAbstract()
         );
 
-        $localizedAttributes = $this->generateLocalizedAttributes();
+        $localizedAttributeTransfers = $this->generateLocalizedAttributes();
 
-        $this->addLocalizedAttributesToProductAbstract($productAbstractTransfer, $localizedAttributes);
+        $this->addLocalizedAttributesToProductAbstract($productAbstractTransfer, $localizedAttributeTransfers);
         $this->addStoreRelationToProductAbstracts($productAbstractTransfer);
-        $this->addLocalizedAttributesToProductConcrete($productConcreteTransfer, $localizedAttributes);
+        $this->addLocalizedAttributesToProductConcrete($productConcreteTransfer, $localizedAttributeTransfers);
 
-        $locale = $this->getLocator()->locale()->facade()->getCurrentLocale();
-        $categoryTransfer = $this->haveLocalizedCategory(['locale' => $locale]);
+        $localeTransfer = $this->getLocator()->locale()->facade()->getCurrentLocale();
+        $categoryTransfer = $this->haveLocalizedCategory(['locale' => $localeTransfer]);
         $this->getLocator()
             ->productSearch()
             ->facade()
-            ->activateProductSearch($productConcreteTransfer->getIdProductConcrete(), [$locale]);
+            ->activateProductSearch($productConcreteTransfer->getIdProductConcrete(), [$localeTransfer]);
 
         $productIdsToAssign = [$productAbstractTransfer->getIdProductAbstract()];
 

@@ -30,7 +30,7 @@ class MerchantSearchEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_PUBLISH, new MerchantSearchEventListener());
+        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new MerchantSearchEventListener());
         $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new MerchantSearchEventListener());
 
         return $eventCollection;

@@ -86,11 +86,11 @@ class ProductConcreteOffersStorageUnpublishListenerTest extends Unit
         //Act
         $this->productConcreteOffersStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
         );
         $this->productConcreteOffersStorageUnpublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_UNPUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_UNPUBLISH
         );
         $productConcreteProductOffersEntities = $this->tester->getProductConcreteProductOffersEntities($this->merchantProductOfferTransfer->getConcreteSku());
 

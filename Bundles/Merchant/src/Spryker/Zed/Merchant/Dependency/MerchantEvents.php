@@ -15,7 +15,7 @@ class MerchantEvents
      *
      * @api
      */
-    public const ENTITY_SPY_MERCHANT_PUBLISH = 'Entity.spy_merchant.publish';
+    public const MERCHANT_PUBLISH = 'Merchant.merchant.publish';
 
     /**
      * Specification
