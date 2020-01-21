@@ -83,7 +83,7 @@ class ZedNavigationBuilder
     protected function filterItems(array $navigationItems): array
     {
         foreach ($navigationItems as $itemKey => $item) {
-            if (isset($item['pages'])) {
+            if (!isset($item['bundle'], $item['controller'], $item['action'])) {
                 $navigationItems[$itemKey]['pages'] = $this->filterItems($item['pages']);
                 if (!$navigationItems[$itemKey]['pages']) {
                     unset($navigationItems[$itemKey]);
