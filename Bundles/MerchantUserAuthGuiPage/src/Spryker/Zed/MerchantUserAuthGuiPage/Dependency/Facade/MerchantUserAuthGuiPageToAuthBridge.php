@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade;
 
-class MerchantUserAuthGuiPageToAuthBridge implements MerchantUserAuthGuiPageToAuthBridgeInterface
+class MerchantUserAuthGuiPageToAuthBridge implements MerchantUserAuthGuiPageToAuthInterface
 {
     /**
      * @var \Spryker\Zed\Auth\Business\AuthFacadeInterface

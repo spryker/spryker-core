@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade;
 
-interface MerchantUserAuthGuiPageToAuthBridgeInterface
+interface MerchantUserAuthGuiPageToAuthInterface
 {
     /**
      * @param string $username
