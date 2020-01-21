@@ -86,8 +86,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
         $productConcreteMeasurementUnitsStorageData = $this->storageClient->getMulti($productMeasurementUnitStorageKeys);
         $productConcreteMeasurementUnitStorageTransfers = $this
             ->mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
-                $productConcreteMeasurementUnitsStorageData,
-                $productConcreteIds
+                $productConcreteMeasurementUnitsStorageData
             );
 
         return $productConcreteMeasurementUnitStorageTransfers;
@@ -95,13 +94,11 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
 
     /**
      * @param string[] $productConcreteMeasurementUnitsStorageData
-     * @param array $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
      */
     protected function mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
-        array $productConcreteMeasurementUnitsStorageData,
-        array $productConcreteIds
+        array $productConcreteMeasurementUnitsStorageData
     ): array {
         $productConcreteMeasurementUnitStorageTransfers = [];
         foreach ($productConcreteMeasurementUnitsStorageData as $storageKey => $data) {
@@ -110,8 +107,9 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
             }
 
             $arrayStorageKey = explode(':', $storageKey);
-            $productConcreteSku = array_flip($productConcreteIds)[$arrayStorageKey[count($arrayStorageKey) - 1]];
-            $productConcreteMeasurementUnitStorageTransfers[$productConcreteSku] = $this->mapToProductConcreteMeasurementUnitStorage(json_decode($data, true));
+            $idProductConcrete = $arrayStorageKey[count($arrayStorageKey) - 1];
+            $productConcreteMeasurementUnitStorageTransfers[$idProductConcrete] =
+                $this->mapToProductConcreteMeasurementUnitStorage(json_decode($data, true));
         }
 
         return $productConcreteMeasurementUnitStorageTransfers;
