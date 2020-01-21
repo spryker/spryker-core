@@ -17,6 +17,11 @@ use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageCo
 class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeasurementUnitStorageReaderInterface
 {
     /**
+     * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     */
+    protected const KV_PREFIX = 'kv:';
+
+    /**
      * @var \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface
      */
     protected $storageClient;
@@ -61,6 +66,55 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
         }
 
         return $this->mapToProductConcreteMeasurementUnitStorage($productConcreteMeasurementUnitStorageData);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
+     */
+    public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array
+    {
+        if (!$productConcreteIds) {
+            return [];
+        }
+
+        $productMeasurementUnitStorageKeys = [];
+        foreach ($productConcreteIds as $productConcreteSku => $idProductConcrete) {
+            $productMeasurementUnitStorageKeys[$productConcreteSku] = $this->generateKey($idProductConcrete);
+        }
+        $productConcreteMeasurementUnitsStorageData = $this->storageClient->getMulti($productMeasurementUnitStorageKeys);
+        $productConcreteMeasurementUnitStorageTransfers = $this
+            ->mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
+                $productConcreteMeasurementUnitsStorageData,
+                $productConcreteIds
+            );
+
+        return $productConcreteMeasurementUnitStorageTransfers;
+    }
+
+    /**
+     * @param string[] $productConcreteMeasurementUnitsStorageData
+     * @param array $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
+     */
+    protected function mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
+        array $productConcreteMeasurementUnitsStorageData,
+        array $productConcreteIds
+    ): array {
+        $productConcreteMeasurementUnitStorageTransfers = [];
+        foreach ($productConcreteMeasurementUnitsStorageData as $storageKey => $data) {
+            if (!$data) {
+                continue;
+            }
+
+            $arrayStorageKey = explode(':', $storageKey);
+            $productConcreteSku = array_flip($productConcreteIds)[$arrayStorageKey[count($arrayStorageKey) - 1]];
+            $productConcreteMeasurementUnitStorageTransfers[$productConcreteSku] = $this->mapToProductConcreteMeasurementUnitStorage(json_decode($data, true));
+        }
+
+        return $productConcreteMeasurementUnitStorageTransfers;
     }
 
     /**

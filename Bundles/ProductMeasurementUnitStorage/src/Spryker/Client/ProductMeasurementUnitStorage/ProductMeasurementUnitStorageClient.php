@@ -102,6 +102,22 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @api
      *
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->getFactory()
+            ->createProductMeasurementBaseUnitReader()
+            ->getProductMeasurementBaseUnitsByProductConcreteIds($productConcreteIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]

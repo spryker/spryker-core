@@ -76,6 +76,17 @@ interface ProductMeasurementUnitStorageClientInterface
     public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer;
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
      * Specification:
      * - Expands array of ProductConcreteTransfers with base measurement unit data using given product ID.
      * - Returns the unchanged provided ProductConcreteTransfers when no base measurement unit is defined for the product.
