@@ -26,7 +26,7 @@ class PriceProductStoreWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT_STORE] = $this->getIdPriceProductStoreEntity($dataSet);
+        $dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT_STORE] = $this->getIdPriceProductStore($dataSet);
     }
 
     /**
@@ -34,7 +34,7 @@ class PriceProductStoreWriterStep implements DataImportStepInterface
      *
      * @return string
      */
-    protected function getIdPriceProductStoreEntity(DataSetInterface $dataSet): string
+    protected function getIdPriceProductStore(DataSetInterface $dataSet): string
     {
         $cacheIndex = $this->buildCacheIndex($dataSet);
         if (isset($this->idPriceProductStoreCache[$cacheIndex])) {

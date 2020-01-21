@@ -19,7 +19,7 @@
     </foreign-key>
 
 
-    <unique name="spy_price_product_offer-unique-fk_product_offer-fk_price_product_store">
+    <unique name="spy_price_product_offer-unique-fk_p_o-fk_p_p_s">
       <unique-column name="fk_product_offer"/>
       <unique-column name="fk_price_product_store"/>
     </unique>

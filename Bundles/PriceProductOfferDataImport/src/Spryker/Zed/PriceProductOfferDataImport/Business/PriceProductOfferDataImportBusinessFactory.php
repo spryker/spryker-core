@@ -15,7 +15,7 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceProductOfferWrite
 use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceProductStoreWriterStep;
 use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceProductWriterStep;
 use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceTypeToIdPriceTypeStep;
-use Spryker\Zed\PriceProductOfferDataImport\Business\Step\ProductOfferReferenceToIdProductOfferAndConcreteSkuStep;
+use Spryker\Zed\PriceProductOfferDataImport\Business\Step\ProductOfferReferenceToProductOfferDataStep;
 use Spryker\Zed\PriceProductOfferDataImport\Business\Step\ProductOfferToIdProductStep;
 use Spryker\Zed\PriceProductOfferDataImport\Business\Step\StoreToIdStoreStep;
 
@@ -35,7 +35,7 @@ class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFacto
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
 
-        $dataSetStepBroker->addStep($this->createProductOfferReferenceToIdProductOfferStep());
+        $dataSetStepBroker->addStep($this->createProductOfferReferenceToProductOfferDataStep());
         $dataSetStepBroker->addStep($this->createProductOfferToIdProductStep());
         $dataSetStepBroker->addStep($this->createPriceTypeToIdPriceTypeStep());
         $dataSetStepBroker->addStep($this->createPriceProductWriterStep());
@@ -77,9 +77,9 @@ class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFacto
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductOfferReferenceToIdProductOfferStep(): DataImportStepInterface
+    public function createProductOfferReferenceToProductOfferDataStep(): DataImportStepInterface
     {
-        return new ProductOfferReferenceToIdProductOfferAndConcreteSkuStep();
+        return new ProductOfferReferenceToProductOfferDataStep();
     }
 
     /**

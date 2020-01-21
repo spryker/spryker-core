@@ -21,12 +21,12 @@ class PriceProductWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $priceProductQuery = SpyPriceProductQuery::create();
-        $priceProductQuery->filterByFkPriceType($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_TYPE]);
-        $priceProductQuery->filterByFkProduct($dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE]);
-
-        $productPriceEntity = $priceProductQuery->findOneOrCreate();
-        $productPriceEntity->save();
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $productPriceEntity */
+        $productPriceEntity = SpyPriceProductQuery::create()
+            ->filterByFkPriceType($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_TYPE])
+            ->filterByFkProduct($dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE])
+            ->findOneOrCreate()
+            ->save();
 
         $dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT] = $productPriceEntity->getIdPriceProduct();
     }
