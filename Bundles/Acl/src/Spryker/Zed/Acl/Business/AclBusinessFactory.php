@@ -29,10 +29,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
      */
     public function createGroupModel()
     {
-        return new Group(
-            $this->getQueryContainer(),
-            $this->getRepository()
-        );
+        return new Group($this->getQueryContainer());
     }
 
     /**

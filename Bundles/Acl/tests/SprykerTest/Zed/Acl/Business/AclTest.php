@@ -74,7 +74,6 @@ class AclTest extends Unit
         $data = [];
 
         $data['name'] = sprintf('name-%s', rand(100, 999));
-        $data['reference'] = sprintf('reference-%s', rand(100, 999));
 
         return $data;
     }
@@ -155,14 +154,12 @@ class AclTest extends Unit
     public function testFindGroup(): void
     {
         // Arrange
-        $data = $this->mockGroupData();
         $groupTransfer = $this->tester->haveGroup();
 
         //Act
         $foundGroupTransfer = $this->facade->findGroup((new GroupCriteriaFilterTransfer())->setReference($groupTransfer->getReference()));
 
         //Assert
-
         $this->assertEquals($groupTransfer->getReference(), $foundGroupTransfer->getReference());
     }
 

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
@@ -21,7 +20,6 @@ use Spryker\Zed\Acl\Business\Exception\GroupNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
-use Spryker\Zed\Acl\Persistence\AclRepositoryInterface;
 
 class Group implements GroupInterface
 {
@@ -31,20 +29,11 @@ class Group implements GroupInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclRepositoryInterface
-     */
-    protected $aclRepository;
-
-    /**
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Acl\Persistence\AclRepositoryInterface $aclRepository
      */
-    public function __construct(
-        AclQueryContainerInterface $queryContainer,
-        AclRepositoryInterface $aclRepository
-    ) {
+    public function __construct(AclQueryContainerInterface $queryContainer)
+    {
         $this->queryContainer = $queryContainer;
-        $this->aclRepository = $aclRepository;
     }
 
     /**
@@ -409,15 +398,5 @@ class Group implements GroupInterface
         if ($group->getIdAclGroup() !== null && $this->hasGroup($group->getIdAclGroup()) === false) {
             throw new GroupNotFoundException();
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\GroupTransfer|null
-     */
-    public function findOne(GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer): ?GroupTransfer
-    {
-        return $this->aclRepository->findGroup($groupCriteriaFilterTransfer);
     }
 }
