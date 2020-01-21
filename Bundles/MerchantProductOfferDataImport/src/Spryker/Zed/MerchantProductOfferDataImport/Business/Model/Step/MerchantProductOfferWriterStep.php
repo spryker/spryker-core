@@ -71,7 +71,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
     public function afterExecute(): void
     {
         foreach ($this->entityEventTransfers as $entityEventTransfer) {
-            $this->eventFacade->trigger(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH, $entityEventTransfer);
+            $this->eventFacade->trigger(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, $entityEventTransfer);
         }
 
         $this->entityEventTransfers = [];

@@ -11,19 +11,19 @@ interface MerchantProductOfferEvents
 {
     /**
      * Specification
-     * - This events will be used for merchant product offer key publishing.
+     * - This events will be used for merchant product offer publishing.
      *
      * @api
      */
-    public const MERCHANT_PRODUCT_OFFER_KEY_PUBLISH = 'MerchantProductOffer.key.publish';
+    public const MERCHANT_PRODUCT_OFFER_PUBLISH = 'MerchantProductOffer.product_offer.publish';
 
     /**
      * Specification
-     * - This events will be used for merchant product offer key un-publishing.
+     * - This events will be used for merchant product offer un-publishing.
      *
      * @api
      */
-    public const MERCHANT_PRODUCT_OFFER_KEY_UNPUBLISH = 'MerchantProductOffer.key.unpublish';
+    public const MERCHANT_PRODUCT_OFFER_UNPUBLISH = 'MerchantProductOffer.product_offer.unpublish';
 
     /**
      * Specification
