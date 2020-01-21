@@ -88,14 +88,4 @@ class LoginForm extends AbstractType
     {
         return 'merchant-user-auth-gui-page';
     }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->getBlockPrefix();
-    }
 }

@@ -22,7 +22,7 @@ interface MerchantUserAuthGuiPageToAuthBridgeInterface
      *
      * @return bool
      */
-    public function isAuthenticated ($token);
+    public function isAuthenticated($token);
 
     /**
      * @return bool

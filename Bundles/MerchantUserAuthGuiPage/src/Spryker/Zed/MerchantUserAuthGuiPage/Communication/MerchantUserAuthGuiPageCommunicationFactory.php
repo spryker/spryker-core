@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantUserAuthGuiPage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantUserAuthGuiPage\Communication\Form\LoginForm;
-use Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade\MerchantUserAuthGuiPageToAuthBridge;
+use Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade\MerchantUserAuthGuiPageToAuthBridgeInterface;
 use Spryker\Zed\MerchantUserAuthGuiPage\MerchantUserAuthGuiPageDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -27,9 +27,9 @@ class MerchantUserAuthGuiPageCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade\MerchantUserAuthGuiPageToAuthBridge
+     * @return \Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade\MerchantUserAuthGuiPageToAuthBridgeInterface
      */
-    public function getAuthFacade(): MerchantUserAuthGuiPageToAuthBridge
+    public function getAuthFacade(): MerchantUserAuthGuiPageToAuthBridgeInterface
     {
         return $this->getProvidedDependency(MerchantUserAuthGuiPageDependencyProvider::FACADE_AUTH);
     }

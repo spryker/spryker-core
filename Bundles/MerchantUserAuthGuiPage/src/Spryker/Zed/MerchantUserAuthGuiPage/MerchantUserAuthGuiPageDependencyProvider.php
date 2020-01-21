@@ -16,7 +16,7 @@ use Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade\MerchantUserAuthGuiPag
  */
 class MerchantUserAuthGuiPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_AUTH = 'facade_auth';
+    public const FACADE_AUTH = 'FACADE_AUTH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
