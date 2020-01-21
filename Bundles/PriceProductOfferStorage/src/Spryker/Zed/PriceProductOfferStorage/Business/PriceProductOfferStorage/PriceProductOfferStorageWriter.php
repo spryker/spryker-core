@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage
 
 use Generated\Shared\Transfer\PriceProductOfferStorageTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
@@ -49,10 +50,9 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     public function publish(array $priceProductOfferIds): void
     {
-        $priceProductOffers = $this->getPriceProductOffersByIds($priceProductOfferIds);
-        $productSkuToIdMap = $this->getActiveProductIdToSkuMapBySkus(
-            $this->getProductSkusByProductOffers($priceProductOffers)
-        );
+        $productSkus = $this->getProductSkusByPriceProductOfferIds($priceProductOfferIds);
+        $priceProductOffers = $this->getProductOfferDataByProductSkus($productSkus);
+        $productSkuToIdMap = $this->getActiveProductIdToSkuMapBySkus($productSkus);
 
         $this->savePriceProductOfferStorage($priceProductOffers, $productSkuToIdMap);
     }
@@ -123,7 +123,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         $priceProductOfferStorageEntities = SpyProductConcreteProductOfferPriceStorageQuery::create()
             ->filterByFkProduct_In($productIds)
             ->find();
-        
+
         foreach ($priceProductOfferStorageEntities as $priceProductOfferStorageEntity) {
             $priceProductOfferStorageEntity->delete();
         }
@@ -134,28 +134,17 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      *
      * @return array
      */
-    protected function getPriceProductOffersByIds(array $priceProductOfferIds): array
+    protected function getProductSkusByPriceProductOfferIds(array $priceProductOfferIds): array
     {
-        $priceProductOffers = SpyPriceProductOfferQuery::create()
+        $productSkus = SpyPriceProductOfferQuery::create()
             ->filterByIdPriceProductOffer_In($priceProductOfferIds)
             ->joinWithSpyProductOffer()
-            ->joinWithSpyStore()
-            ->joinWithSpyPriceType()
-            ->joinWithSpyCurrency()
-            ->select([
-                SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER,
-                SpyProductOfferTableMap::COL_CONCRETE_SKU,
-                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
-                SpyCurrencyTableMap::COL_CODE,
-                SpyStoreTableMap::COL_NAME,
-                SpyPriceTypeTableMap::COL_NAME,
-                SpyPriceProductOfferTableMap::COL_GROSS_PRICE,
-                SpyPriceProductOfferTableMap::COL_NET_PRICE,
-            ])
+            ->select([SpyProductOfferTableMap::COL_CONCRETE_SKU])
+            ->distinct()
             ->find()
             ->toArray();
 
-        return $priceProductOffers;
+        return $productSkus;
     }
 
     /**
@@ -166,11 +155,14 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     protected function getProductOfferDataByProductSkus(array $productSkus): array
     {
         $priceProductOffers = SpyProductOfferQuery::create()
-            ->filterByConcreteSku_In($productSkus)
             ->useSpyPriceProductOfferQuery()
-                ->joinWithSpyStore()
-                ->joinWithSpyPriceType()
-                ->joinWithSpyCurrency()
+                ->useSpyPriceProductStoreQuery()
+                    ->joinWithCurrency()
+                    ->joinWithStore()
+                    ->usePriceProductQuery()
+                        ->joinWithPriceType()
+                    ->endUse()
+                ->endUse()
             ->endUse()
             ->select([
                 SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER,
@@ -179,28 +171,14 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                 SpyCurrencyTableMap::COL_CODE,
                 SpyStoreTableMap::COL_NAME,
                 SpyPriceTypeTableMap::COL_NAME,
-                SpyPriceProductOfferTableMap::COL_GROSS_PRICE,
-                SpyPriceProductOfferTableMap::COL_NET_PRICE,
+                SpyPriceProductStoreTableMap::COL_GROSS_PRICE,
+                SpyPriceProductStoreTableMap::COL_NET_PRICE,
             ])
+            ->filterByConcreteSku_In($productSkus)
             ->find()
             ->toArray();
 
         return $priceProductOffers;
-    }
-
-    /**
-     * @param array $priceProductOffers
-     *
-     * @return string[]
-     */
-    protected function getProductSkusByProductOffers(array $priceProductOffers): array
-    {
-        $productSkus = [];
-        foreach ($priceProductOffers as $productOffer) {
-            $productSkus[] = $productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU];
-        }
-
-        return array_unique($productSkus);
     }
 
     /**
@@ -274,8 +252,8 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         $priceProductOfferStorageTransfer->setProductOfferReference($productOffer[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE]);
         $priceProductOfferStorageTransfer->setPriceType($productOffer[SpyPriceTypeTableMap::COL_NAME]);
         $priceProductOfferStorageTransfer->setCurrency($productOffer[SpyCurrencyTableMap::COL_CODE]);
-        $priceProductOfferStorageTransfer->setNetPrice($productOffer[SpyPriceProductOfferTableMap::COL_NET_PRICE]);
-        $priceProductOfferStorageTransfer->setGrossPrice($productOffer[SpyPriceProductOfferTableMap::COL_GROSS_PRICE]);
+        $priceProductOfferStorageTransfer->setNetPrice($productOffer[SpyPriceProductStoreTableMap::COL_NET_PRICE]);
+        $priceProductOfferStorageTransfer->setGrossPrice($productOffer[SpyPriceProductStoreTableMap::COL_GROSS_PRICE]);
 
         return $priceProductOfferStorageTransfer;
     }
