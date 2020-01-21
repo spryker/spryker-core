@@ -95,6 +95,10 @@
         <property name="revokedAt" type="string"/>
     </transfer>
 
+    <transfer name="OauthRefreshTokenCollection">
+        <property name="oauthRefreshTokens" type="OauthRefreshToken[]" singular="oauthRefreshToken"/>
+    </transfer>
+
     <transfer name="JwtToken">
         <property name="headers" type="array" singular="headers"/>
         <property name="claims" type="array" singular="claims"/>

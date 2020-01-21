@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Business\Model;
 
+use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
@@ -49,18 +50,16 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
      */
     public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        $revokeRefreshTokenResponseTransfer = (new RevokeRefreshTokenResponseTransfer())->setIsSuccessful(false);
+        $revokeRefreshTokenResponseTransfer = (new RevokeRefreshTokenResponseTransfer());
 
         $revokeRefreshTokenRequestTransfer->requireRefreshToken();
+        $revokeRefreshTokenRequestTransfer->requireCustomer();
 
         $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshTokenByIdentifier($revokeRefreshTokenRequestTransfer->getRefreshToken());
 
         if (!$oauthRefreshTokenTransfer) {
-            $revokeRefreshTokenResponseTransfer->setError(
-                sprintf(static::ERROR_INVALID_REFRESH_TOKEN, $revokeRefreshTokenRequestTransfer->getRefreshToken())
-            );
-
-            return $revokeRefreshTokenResponseTransfer;
+            return $revokeRefreshTokenResponseTransfer
+                ->setIsSuccessful(true);
         }
 
         if ($oauthRefreshTokenTransfer->getRevokedAt()) {
@@ -70,7 +69,9 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
 
         $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s.u"));
 
-        $this->revokeConcreteRefreshTokenWithAccessToken($oauthRefreshTokenTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfer): void {
+            $this->executeRevokeConcreteRefreshTokenTransaction($oauthRefreshTokenTransfer);
+        });
 
         return $revokeRefreshTokenResponseTransfer
             ->setIsSuccessful(true);
@@ -81,19 +82,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
      *
      * @return void
      */
-    protected function revokeConcreteRefreshTokenWithAccessToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfer): void {
-            $this->executeRevokeConcreteRefreshTokenWithAccessTokenTransaction($oauthRefreshTokenTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-     *
-     * @return void
-     */
-    protected function executeRevokeConcreteRefreshTokenWithAccessTokenTransaction(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
+    protected function executeRevokeConcreteRefreshTokenTransaction(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
     {
         $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
 //        $this->oauthEntityManager->deleteAccessTokenByIdentifier(json_decode($this->decrypt($oauthRefreshTokenTransfer), true)[self::KEY_ACCESS_TOKEN_ID]);
@@ -106,30 +95,31 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
      */
     public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        $revokeRefreshTokenResponseTransfer = (new RevokeRefreshTokenResponseTransfer())->setIsSuccessful(false);
+        $revokeRefreshTokenResponseTransfer = (new RevokeRefreshTokenResponseTransfer());
 
         $revokeRefreshTokenRequestTransfer->requireCustomer();
 
-        $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer->getCustomer());
+        $oauthRefreshTokenTransfers = $this->oauthRepository->findRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer->getCustomer())
+        ->getOauthRefreshTokens();
 
-        if (!$oauthRefreshTokenTransfer) {
-            $revokeRefreshTokenResponseTransfer->setError(
-                sprintf(static::ERROR_INVALID_REFRESH_TOKEN, $revokeRefreshTokenRequestTransfer->getRefreshToken())
-            );
+        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers): void {
+            $this->executeRevokeRefreshTokensTransaction($oauthRefreshTokenTransfers);
+        });
 
-            return $revokeRefreshTokenResponseTransfer;
-        }
-
-        if ($oauthRefreshTokenTransfer->getRevokedAt()) {
-            return $revokeRefreshTokenResponseTransfer
-                ->setIsSuccessful(true);
-        }
-
-        $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s.u"));
-
-        $this->revokeConcreteRefreshTokenWithAccessToken($oauthRefreshTokenTransfer);
-
-        $revokeRefreshTokenResponseTransfer
+         return $revokeRefreshTokenResponseTransfer
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     *
+     * @return void
+     */
+    protected function executeRevokeRefreshTokensTransaction(ArrayObject $oauthRefreshTokenTransfers): void
+    {
+        foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
+            $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s.u"));
+            $this->executeRevokeConcreteRefreshTokenTransaction($oauthRefreshTokenTransfer);
+        }
     }
 }

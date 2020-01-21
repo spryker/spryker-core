@@ -8,10 +8,12 @@
 namespace Spryker\Zed\Oauth\Persistence;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -93,30 +95,26 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
 
         return $authRefreshTokenTransfer = $this->getFactory()
             ->createOauthRefreshTokenMapper()
-            ->mapOauthRefreshTokenEntityToMapOauthRefreshTokenTransfer($authRefreshTokenEntity, new OauthRefreshTokenTransfer());
+            ->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer($authRefreshTokenEntity, new OauthRefreshTokenTransfer());
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
-    public function findRefreshTokensByCustomer(CustomerTransfer $customerTransfer): ?OauthRefreshTokenTransfer
+    public function findRefreshTokensByCustomer(CustomerTransfer $customerTransfer): OauthRefreshTokenCollectionTransfer
     {
-        $authRefreshTokenEntity = $this->getFactory()
+        $authRefreshTokensCollection = $this->getFactory()
             ->createRefreshTokenQuery()
-            ->findOneByIdentifier('1');
+            ->filterByRevokedAt(null, Criteria::ISNULL)
+            ->filterByUserIdentifier_Like('%"id_customer":' . $customerTransfer->getIdCustomer() . '%')
+            ->find();
 
-        /**
-         * TODO finish
-         */
+        $d = $authRefreshTokensCollection;
 
-        if (!$authRefreshTokenEntity) {
-            return null;
-        }
-
-        return $authRefreshTokenTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createOauthRefreshTokenMapper()
-            ->mapOauthRefreshTokenEntityToMapOauthRefreshTokenTransfer($authRefreshTokenEntity, new OauthRefreshTokenTransfer());
+            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($authRefreshTokensCollection);
     }
 }

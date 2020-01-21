@@ -47,7 +47,7 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
 
         $oauthRefreshTokenEntity->save();
 
-        return $oauthRefreshTokenMapper->mapOauthRefreshTokenEntityToMapOauthRefreshTokenTransfer($oauthRefreshTokenEntity, $oauthRefreshTokenTransfer);
+        return $oauthRefreshTokenMapper->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer($oauthRefreshTokenEntity, $oauthRefreshTokenTransfer);
     }
 
     /**

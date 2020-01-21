@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Oauth\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthRefreshToken;
+use Propel\Runtime\Collection\Collection;
 
 class OauthRefreshTokenMapper
 {
@@ -36,7 +38,7 @@ class OauthRefreshTokenMapper
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
      */
-    public function mapOauthRefreshTokenEntityToMapOauthRefreshTokenTransfer(
+    public function mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer(
         SpyOauthRefreshToken $oauthRefreshTokenEntity,
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
     ): OauthRefreshTokenTransfer {
@@ -44,5 +46,29 @@ class OauthRefreshTokenMapper
         $oauthRefreshTokenTransfer->setIdOauthClient($oauthRefreshTokenEntity->getFkOauthClient());
 
         return $oauthRefreshTokenTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $refreshTokenEntities
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+     */
+    public function mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection(
+        Collection $refreshTokenEntities
+    ): OauthRefreshTokenCollectionTransfer {
+        $oauthRefreshTokenCollectionTransfer = new OauthRefreshTokenCollectionTransfer();
+
+        foreach ($refreshTokenEntities as $refreshTokenEntity) {
+            $refreshTokenTransfer = $this->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer(
+                $refreshTokenEntity,
+                new OauthRefreshTokenTransfer()
+            );
+            $oauthRefreshTokenCollectionTransfer->addOauthRefreshToken($refreshTokenTransfer);
+        }
+
+        $bbb = $oauthRefreshTokenCollectionTransfer;
+        $a = 1;
+
+        return $oauthRefreshTokenCollectionTransfer;
     }
 }

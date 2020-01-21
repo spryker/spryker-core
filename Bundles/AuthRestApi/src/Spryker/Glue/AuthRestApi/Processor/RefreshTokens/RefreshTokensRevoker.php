@@ -9,6 +9,7 @@ namespace Spryker\Glue\AuthRestApi\Processor\RefreshTokens;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -49,17 +50,16 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
     }
 
     /**
-     * @param string|null $refreshTokenIdentifier
+     * @param string $refreshTokenIdentifier
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function revokeConcreteRefreshToken(?string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface
+    public function revokeConcreteRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $revokeRefreshTokenRequestTransfer = new RevokeRefreshTokenRequestTransfer();
-
         $revokeRefreshTokenRequestTransfer->setRefreshToken($refreshTokenIdentifier);
 
         $revokeRefreshTokenResponseTransfer = $this->oauthClient->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
@@ -71,15 +71,15 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
         return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
     }
 
-    /**
+    /***
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
     protected function createErrorRevokeRefreshTokenIsNotValid(): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
-//            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
-//            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID);
+            ->setCode(AuthRestApiConfig::RESPONSE_INVALID_REFRESH_TOKEN)
+            ->setStatus(Response::HTTP_UNAUTHORIZED)
+            ->setDetail('Failed to revoke refresh token.');
     }
 
     /**

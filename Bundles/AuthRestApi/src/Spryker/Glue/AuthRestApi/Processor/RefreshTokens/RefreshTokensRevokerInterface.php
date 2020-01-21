@@ -13,12 +13,12 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface RefreshTokensRevokerInterface
 {
     /**
-     * @param string|null $refreshTokenIdentifier
+     * @param string $refreshTokenIdentifier
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function revokeConcreteRefreshToken(?string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface;
+    public function revokeConcreteRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

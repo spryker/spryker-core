@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oauth\Persistence;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
@@ -46,9 +47,9 @@ interface OauthRepositoryInterface
     public function findRefreshTokenByIdentifier(string $identifier): ?OauthRefreshTokenTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerCtransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
-    public function findRefreshTokensByCustomer(CustomerTransfer $customerCtransfer): ?OauthRefreshTokenTransfer;
+    public function findRefreshTokensByCustomer(CustomerTransfer $customerTransfer): OauthRefreshTokenCollectionTransfer;
 }
