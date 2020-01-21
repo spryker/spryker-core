@@ -19,6 +19,7 @@ use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
 class GlossaryStoragePublisherRegistryPlugin extends AbstractPlugin implements PublisherRegistryPluginInterface
 {
