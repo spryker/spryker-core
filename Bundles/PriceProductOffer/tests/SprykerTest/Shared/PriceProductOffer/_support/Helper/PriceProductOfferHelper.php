@@ -62,7 +62,7 @@ class PriceProductOfferHelper extends Module
 
         if (!$priceProductOfferTransfer->getFkProductOffer()) {
             $productOfferTransfer = $this->getProductOfferHelper()->haveProductOffer();
-            $priceProductOfferTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+            $priceProductOfferTransfer->setProductOffer($productOfferTransfer);
             $priceProductOfferTransfer->setFkProductOffer($productOfferTransfer->getIdProductOffer());
         }
 

@@ -6,7 +6,7 @@
     <transfer name="PriceProductOffer">
         <property name="idPriceProductOffer" type="int"/>
         <property name="fkProductOffer" type="int"/>
-        <property name="productOfferReference" type="string"/>
+        <property name="productOffer" type="ProductOffer"/>
         <property name="fkPriceType"  type="int"/>
         <property name="fkStore" type="int"/>
         <property name="fkCurrency" type="int"/>
