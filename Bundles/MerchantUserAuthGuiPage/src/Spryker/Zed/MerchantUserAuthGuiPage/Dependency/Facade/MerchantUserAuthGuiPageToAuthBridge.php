@@ -23,7 +23,10 @@ class MerchantUserAuthGuiPageToAuthBridge implements MerchantUserAuthGuiPageToAu
     }
 
     /**
-     * @inheritDoc
+     * @param string $username
+     * @param string $password
+     *
+     * @return bool
      */
     public function login($username, $password)
     {
@@ -31,7 +34,9 @@ class MerchantUserAuthGuiPageToAuthBridge implements MerchantUserAuthGuiPageToAu
     }
 
     /**
-     * @inheritDoc
+     * @param string $token
+     *
+     * @return bool
      */
     public function isAuthenticated($token)
     {
@@ -39,7 +44,7 @@ class MerchantUserAuthGuiPageToAuthBridge implements MerchantUserAuthGuiPageToAu
     }
 
     /**
-     * @inheritDoc
+     * @return bool
      */
     public function hasCurrentUser()
     {
@@ -47,7 +52,7 @@ class MerchantUserAuthGuiPageToAuthBridge implements MerchantUserAuthGuiPageToAu
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function getCurrentUserToken()
     {

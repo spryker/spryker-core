@@ -1,15 +1,15 @@
 {
-  "name": "spryker/merchant-user-auth-zed-page",
+  "name": "spryker/merchant-user-auth-gui-page",
   "description": "MerchantUserAuthGuiPage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/auth": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/auth": "^3.6.0"
+    "spryker/symfony": "*"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -18,11 +18,14 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     }
+  },
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
   },
   "config": {
     "sort-packages": true

@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantUserAuthGuiPageConfig extends AbstractBundleConfig
 {
-    public const MERCHANT_USER_DEFAULT_URL_REDIRECT = '/';
+    protected const MERCHANT_USER_DEFAULT_URL_REDIRECT = '/';
 
     /**
      * @return string

@@ -25,6 +25,15 @@ class LoginController extends AbstractController
     public function indexAction(Request $request)
     {
         $authFacade = $this->getFactory()->getAuthFacade();
+        $token = $request->headers->get(AuthConstants::AUTH_TOKEN, null);
+
+        if ($authFacade->hasCurrentUser()) {
+            $token = $authFacade->getCurrentUserToken();
+        }
+
+        if ($authFacade->isAuthenticated($token)) {
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultUrlRedirect());
+        }
 
         $form = $this
             ->getFactory()
@@ -44,19 +53,6 @@ class LoginController extends AbstractController
             }
 
             $this->addErrorMessage('Authentication failed!');
-        } else {
-            $token = null;
-            if ($authFacade->hasCurrentUser()) {
-                $token = $authFacade->getCurrentUserToken();
-            }
-
-            if ($request->headers->get(AuthConstants::AUTH_TOKEN)) {
-                $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
-            }
-
-            if ($authFacade->isAuthenticated($token)) {
-                return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultUrlRedirect());
-            }
         }
 
         return $this->viewResponse([

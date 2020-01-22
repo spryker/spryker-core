@@ -7,9 +7,10 @@ MerchantUserAuthGuiPage user module provides login to merchant-portal.
 ## Installation
 
 ```
-composer require spryker/merchant-user-auth-zed-page
+composer require spryker/merchant-user-auth-gui-page
 ```
 
 ## Documentation
 
 [Spryker Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+MerchantUserAuthGuiPage
