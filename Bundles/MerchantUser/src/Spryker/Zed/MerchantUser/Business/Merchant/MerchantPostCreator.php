@@ -54,35 +54,37 @@ class MerchantPostCreator implements MerchantPostCreatorInterface
      */
     public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
+        $merchantResponseTransfer = (new MerchantResponseTransfer())->setIsSuccess(true)->setMerchant($merchantTransfer);
         $merchantUserResponseTransfer = $this->merchantUserWriter->createByMerchant($merchantTransfer);
 
         if (!$merchantUserResponseTransfer->getIsSuccess()) {
-            return $this->buildMerchantResponse($merchantUserResponseTransfer, $merchantTransfer);
+            return $this->addMerchantUserResponseErrorsToMerchantResponse($merchantUserResponseTransfer, $merchantResponseTransfer);
         }
 
-        $merchantUserResponseTransferFromGroupAdder = $this->groupAdder->addUserToGroupByReference(
+        $merchantUserResponseTransfer = $this->groupAdder->addUserToGroupByReference(
             $merchantUserResponseTransfer->getMerchantUser(),
             MerchantUserConfig::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE
         );
 
-        if (!$merchantUserResponseTransferFromGroupAdder->getIsSuccess()) {
-            return $this->buildMerchantResponse($merchantUserResponseTransferFromGroupAdder, $merchantTransfer);
+        if (!$merchantUserResponseTransfer->getIsSuccess()) {
+            return $this->addMerchantUserResponseErrorsToMerchantResponse($merchantUserResponseTransfer, $merchantResponseTransfer);
         }
 
-        return $this->buildMerchantResponse($merchantUserResponseTransfer, $merchantTransfer);
+        return $merchantResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserResponseTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantResponseTransfer $merchantResponseTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    protected function buildMerchantResponse(MerchantUserResponseTransfer $merchantUserResponseTransfer, MerchantTransfer $merchantTransfer): MerchantResponseTransfer
-    {
-        return (new MerchantResponseTransfer())
+    protected function addMerchantUserResponseErrorsToMerchantResponse(
+        MerchantUserResponseTransfer $merchantUserResponseTransfer,
+        MerchantResponseTransfer $merchantResponseTransfer
+    ): MerchantResponseTransfer {
+        return $merchantResponseTransfer
             ->setIsSuccess($merchantUserResponseTransfer->getIsSuccess())
-            ->setMerchant($merchantTransfer)
             ->setErrors($this->messageConverter->convertMessageTransfersToMerchantErrorTransfers($merchantUserResponseTransfer->getErrors()));
     }
 }
