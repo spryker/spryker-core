@@ -9,16 +9,23 @@ namespace SprykerTest\Client\SearchElasticsearch\Plugin\Fixtures;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface;
 
-class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
+class BaseQueryPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
     /**
      * @var \Elastica\Query
      */
     protected $query;
+
+    /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
 
     /**
      * @var string
@@ -62,5 +69,41 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     public function getSearchString(): ?string
     {
         return $this->searchString;
+    }
+
+    /**
+     * Specification:
+     * - Returns SearchContextTransfer which contains context information to be used for a query.
+     *
+     * @api
+     *
+     * @deprecated This method will be moved to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function getSearchContext(): SearchContextTransfer
+    {
+        if (!$this->searchContextTransfer) {
+            $this->searchContextTransfer = new SearchContextTransfer();
+        }
+
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Sets SearchContextTransfer which contains context information to be used for a query.
+     *
+     * @api
+     *
+     * @deprecated This method will be moved to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 }
