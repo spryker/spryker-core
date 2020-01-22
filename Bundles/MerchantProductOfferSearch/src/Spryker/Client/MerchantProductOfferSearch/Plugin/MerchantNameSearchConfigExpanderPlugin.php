@@ -16,8 +16,8 @@ use Spryker\Shared\Search\SearchConfig;
 
 class MerchantNameSearchConfigExpanderPlugin extends AbstractPlugin implements SearchConfigExpanderPluginInterface
 {
-    public const NAME = 'merchant_name';
-    public const PARAMETER_NAME = 'merchant_name';
+    protected const NAME = 'merchant_name';
+    protected const PARAMETER_NAME = 'merchant_name';
 
     /**
      * {@inheritDoc}
@@ -27,15 +27,15 @@ class MerchantNameSearchConfigExpanderPlugin extends AbstractPlugin implements S
      *
      * @return \Generated\Shared\Transfer\SearchConfigExtensionTransfer
      */
-    public function getSearchConfigExtension()
+    public function getSearchConfigExtension(): SearchConfigExtensionTransfer
     {
-        return (new SearchConfigExtensionTransfer())->addFacetConfig($this->getMerchantNameFacetConfig());
+        return (new SearchConfigExtensionTransfer())->addFacetConfig($this->createMerchantNameFacetConfig());
     }
 
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer
      */
-    protected function getMerchantNameFacetConfig(): FacetConfigTransfer
+    protected function createMerchantNameFacetConfig(): FacetConfigTransfer
     {
         return (new FacetConfigTransfer())
             ->setName(static::NAME)
