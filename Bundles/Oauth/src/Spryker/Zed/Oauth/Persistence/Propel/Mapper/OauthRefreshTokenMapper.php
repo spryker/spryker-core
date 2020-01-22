@@ -66,9 +66,6 @@ class OauthRefreshTokenMapper
             $oauthRefreshTokenCollectionTransfer->addOauthRefreshToken($refreshTokenTransfer);
         }
 
-        $bbb = $oauthRefreshTokenCollectionTransfer;
-        $a = 1;
-
         return $oauthRefreshTokenCollectionTransfer;
     }
 }

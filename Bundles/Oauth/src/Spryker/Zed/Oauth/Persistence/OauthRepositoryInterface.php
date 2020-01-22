@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
+use Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 
@@ -40,16 +40,16 @@ interface OauthRepositoryInterface
     public function getScopesByIdentifiers(array $customerScopes): array;
 
     /**
-     * @param string $identifier
+     * @param \Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
      */
-    public function findRefreshTokenByIdentifier(string $identifier): ?OauthRefreshTokenTransfer;
+    public function findRefreshToken(RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
-    public function findRefreshTokensByCustomer(CustomerTransfer $customerTransfer): OauthRefreshTokenCollectionTransfer;
+    public function findRefreshTokens(RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Oauth\Business\Model;
 
 use ArrayObject;
 use DateTime;
-use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
+use Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -52,10 +52,16 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
     {
         $revokeRefreshTokenResponseTransfer = (new RevokeRefreshTokenResponseTransfer());
 
-        $revokeRefreshTokenRequestTransfer->requireRefreshToken();
-        $revokeRefreshTokenRequestTransfer->requireCustomer();
+        $revokeRefreshTokenRequestTransfer->requireRefreshToken()
+            ->requireCustomer()
+            ->getCustomer()
+            ->requireCustomerReference();
 
-        $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshTokenByIdentifier($revokeRefreshTokenRequestTransfer->getRefreshToken());
+        $refreshTokenCriteriaFilterTransfer = (new RefreshTokenCriteriaFilterTransfer())
+            ->setRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken())
+            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference());
+
+        $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($refreshTokenCriteriaFilterTransfer);
 
         if (!$oauthRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
@@ -69,23 +75,10 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
 
         $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s.u"));
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfer): void {
-            $this->executeRevokeConcreteRefreshTokenTransaction($oauthRefreshTokenTransfer);
-        });
+        $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
 
         return $revokeRefreshTokenResponseTransfer
             ->setIsSuccessful(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-     *
-     * @return void
-     */
-    protected function executeRevokeConcreteRefreshTokenTransaction(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
-    {
-        $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
-//        $this->oauthEntityManager->deleteAccessTokenByIdentifier(json_decode($this->decrypt($oauthRefreshTokenTransfer), true)[self::KEY_ACCESS_TOKEN_ID]);
     }
 
     /**
@@ -99,8 +92,11 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
 
         $revokeRefreshTokenRequestTransfer->requireCustomer();
 
-        $oauthRefreshTokenTransfers = $this->oauthRepository->findRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer->getCustomer())
-        ->getOauthRefreshTokens();
+        $refreshTokenCriteriaFilterTransfer = (new RefreshTokenCriteriaFilterTransfer())
+            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference());
+
+        $oauthRefreshTokenTransfers = $this->oauthRepository->findRefreshTokens($refreshTokenCriteriaFilterTransfer)
+            ->getOauthRefreshTokens();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers): void {
             $this->executeRevokeRefreshTokensTransaction($oauthRefreshTokenTransfers);
@@ -119,7 +115,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
     {
         foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
             $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s.u"));
-            $this->executeRevokeConcreteRefreshTokenTransaction($oauthRefreshTokenTransfer);
+            $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
         }
     }
 }
