@@ -21,11 +21,11 @@ use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\GatewayController;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\NotGatewayController;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\Request;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\TransferServer;
-use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ZedRequest
@@ -39,7 +39,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->unsetLocator();
@@ -51,7 +51,7 @@ class GatewayControllerListenerPluginTest extends Unit
      *
      * @return void
      */
-    protected function unsetLocator()
+    protected function unsetLocator(): void
     {
         $reflectionClass = new ReflectionClass(AbstractLocatorLocator::class);
         $reflectedProperty = $reflectionClass->getProperty('instance');
@@ -62,7 +62,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->resetTransferServer();
@@ -71,7 +71,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testWhenControllerIsGatewayControllerPluginMustReturnInstanceOfClosure()
+    public function testWhenControllerIsGatewayControllerPluginMustReturnInstanceOfClosure(): void
     {
         $eventMock = new FilterControllerEvent();
         $controller = new GatewayController();
@@ -89,7 +89,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testWhenControllerIsNotAGatewayControllerPluginMustReturnPassedCallable()
+    public function testWhenControllerIsNotAGatewayControllerPluginMustReturnPassedCallable(): void
     {
         $action = 'badAction';
         $eventMock = new FilterControllerEvent();
@@ -107,7 +107,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testIfTwoTransferParameterGivenPluginMustThrowException()
+    public function testIfTwoTransferParameterGivenPluginMustThrowException(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Only one transfer object can be received in yves-action');
@@ -120,7 +120,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testIfTooManyTransferParameterGivenPluginMustThrowException()
+    public function testIfTooManyTransferParameterGivenPluginMustThrowException(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Only one transfer object can be received in yves-action');
@@ -133,7 +133,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testIfPassedParameterIsNotAClassPluginMustThrowException()
+    public function testIfPassedParameterIsNotAClassPluginMustThrowException(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('You need to specify a class for the parameter in the yves-action.');
@@ -146,12 +146,54 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testWhenObjectIsNotTransferClassPluginMustThrowException()
+    public function testWhenObjectIsNotTransferClassPluginMustThrowException(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Only transfer classes are allowed in yves action as parameter');
 
-        $transfer = new stdClass();
+        $transfer = new class () implements TransferInterface
+        {
+            /**
+             * @param bool $isRecursive
+             *
+             * @return array
+             */
+            public function toArray($isRecursive = true)
+            {
+                return [];
+            }
+
+            /**
+             * @param bool $isRecursive
+             *
+             * @return array
+             */
+            public function modifiedToArray($isRecursive = true)
+            {
+                return [];
+            }
+
+            /**
+             * @param array $values
+             * @param bool $fuzzyMatch
+             *
+             * @return $this
+             */
+            public function fromArray(array $values, $fuzzyMatch = false)
+            {
+                return $this;
+            }
+
+            /**
+             * @param string $propertyName
+             *
+             * @return bool
+             */
+            public function isPropertyModified($propertyName)
+            {
+                return (bool)$propertyName;
+            }
+        };
         $controllerCallable = $this->executeMockedListenerTest('notTransferAction', $transfer);
         call_user_func($controllerCallable);
     }
@@ -159,7 +201,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testWhenControllerIsGatewayControllerAndOnlyOneTransferObjectIsGivenActionMustReturnResponse()
+    public function testWhenControllerIsGatewayControllerAndOnlyOneTransferObjectIsGivenActionMustReturnResponse(): void
     {
         $transfer = $this->getTransferMock();
         $controllerCallable = $this->executeMockedListenerTest('goodAction', $transfer);
@@ -171,7 +213,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testTransformMessagesFromController()
+    public function testTransformMessagesFromController(): void
     {
         $action = 'transformMessageAction';
 
@@ -192,7 +234,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ZedRequest\Business\Model\Repeater
      */
-    private function createRepeaterMock()
+    private function createRepeaterMock(): Repeater
     {
         return $this->getMockBuilder(Repeater::class)
             ->disableOriginalConstructor()
@@ -204,7 +246,7 @@ class GatewayControllerListenerPluginTest extends Unit
      *
      * @return void
      */
-    private function initTransferServer($transferObject)
+    private function initTransferServer(TransferInterface $transferObject): void
     {
         $oldTransferServer = CoreTransferServer::getInstance();
         $this->resetSingleton($oldTransferServer);
@@ -217,7 +259,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    private function resetTransferServer()
+    private function resetTransferServer(): void
     {
         $fixtureServer = TransferServer::getInstance();
         $this->resetSingleton($fixtureServer);
@@ -227,11 +269,11 @@ class GatewayControllerListenerPluginTest extends Unit
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $oldTransferServer
+     * @param \Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer $oldTransferServer
      *
      * @return void
      */
-    private function resetSingleton($oldTransferServer)
+    private function resetSingleton(CoreTransferServer $oldTransferServer): void
     {
         $refObject = new ReflectionObject($oldTransferServer);
         $refProperty = $refObject->getProperty('instance');
@@ -245,7 +287,7 @@ class GatewayControllerListenerPluginTest extends Unit
      *
      * @return callable
      */
-    private function executeMockedListenerTest($action, $transfer = null)
+    private function executeMockedListenerTest(string $action, ?TransferInterface $transfer = null): callable
     {
         $eventMock = new FilterControllerEvent();
         $controller = new GatewayController();
@@ -268,7 +310,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    private function getTransferMock()
+    private function getTransferMock(): TransferInterface
     {
         $transfer = $this->getMockBuilder(TransferInterface::class)->getMock();
 

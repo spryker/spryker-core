@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication
@@ -113,14 +114,13 @@ class VersionResolverTest extends Unit
     protected function createVersionResolver(
         ContentTypeResolverInterface $contentTypeResolverMock
     ): VersionResolverInterface {
-
         return new VersionResolver($contentTypeResolverMock);
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface
      */
-    protected function createContentTypeResolverMock()
+    protected function createContentTypeResolverMock(): ContentTypeResolverInterface
     {
         $contentTypeResolverMock = $this->getMockBuilder(ContentTypeResolverInterface::class)
             ->setMethods(['matchContentType', 'addResponseHeaders'])

@@ -8,27 +8,26 @@
 namespace Spryker\Glue\Kernel\Plugin;
 
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\Kernel\Application;
 
 class Pimple extends AbstractPlugin
 {
     /**
-     * @var \Spryker\Glue\Kernel\Application
+     * @var \Spryker\Service\Container\ContainerInterface
      */
     protected static $application;
 
     /**
-     * @param \Spryker\Glue\Kernel\Application $application
+     * @param \Spryker\Service\Container\ContainerInterface $application
      *
      * @return void
      */
-    public static function setApplication(Application $application)
+    public static function setApplication($application)
     {
         self::$application = $application;
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\Application
+     * @return \Spryker\Service\Container\ContainerInterface
      */
     public function getApplication()
     {

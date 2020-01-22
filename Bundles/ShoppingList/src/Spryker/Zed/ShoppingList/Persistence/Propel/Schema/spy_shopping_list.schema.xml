@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ShoppingList\Persistence" package="src.Orm.Zed.ShoppingList.Persistence">
 
-    <table name="spy_shopping_list" phpName="SpyShoppingList">
+    <table name="spy_shopping_list">
         <column name="id_shopping_list" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
@@ -10,7 +10,7 @@
         <id-method-parameter value="spy_shopping_list_pk_seq"/>
     </table>
 
-    <table name="spy_shopping_list_item" phpName="SpyShoppingListItem">
+    <table name="spy_shopping_list_item">
         <column name="id_shopping_list_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shopping_list" required="true" type="INTEGER"/>
         <column name="sku" type="VARCHAR" size="255"/>

@@ -5,36 +5,16 @@
 {% block head_title widget_title | trans %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
-
         {% block widget_content %}
-
             <div class="row">
-                <div class="col-md-6">
-
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>{{ "Number of entries:" | trans }}</th>
-                            <td><a href="/storage/maintenance/list">{{ totalCount }}</a></td>
-                        </tr>
-
-
-                        {% for key, timestamp in metaData %}
-                            <tr>
-                                <th>{{ key }}</th>
-                                <td>{{ timestamp }}</td>
-                            </tr>
-                        {% endfor %}
-                        <tr>
-                            <th></th>
-                            <td><a href="/collector-storage-connector/maintenance/drop-timestamps">{{ "Drop timestamps" | trans }}</a></td>
-                        </tr>
-                    </table>
+                <div class="col-md-12">
+                    <dl class="row">
+                        <dt class="col-xs-3">{{ "Number of entries:" | trans }}</dt>
+                        <dd class="col-xs-9"><a href="/storage/maintenance/list">{{ totalCount }}</a></dd>
+                    </dl>
                 </div>
             </div>
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}

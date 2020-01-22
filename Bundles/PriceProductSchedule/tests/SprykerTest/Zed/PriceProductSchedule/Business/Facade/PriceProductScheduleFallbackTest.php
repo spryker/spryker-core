@@ -84,7 +84,6 @@ class PriceProductScheduleFallbackTest extends Unit
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
 
         $this->tester->havePriceProduct([
-            PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::PRICE_TYPE => $defaultPriceTypeTransfer,
             PriceProductTransfer::MONEY_VALUE => [
@@ -97,7 +96,6 @@ class PriceProductScheduleFallbackTest extends Unit
         $fallbackPriceTypeTransfer = $this->tester->havePriceType();
 
         $fallbackPriceProductTransfer = $this->tester->havePriceProduct([
-            PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::PRICE_TYPE => $fallbackPriceTypeTransfer,
             PriceProductTransfer::MONEY_VALUE => [
@@ -220,7 +218,7 @@ class PriceProductScheduleFallbackTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName)
+    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
             ->setMethods(['getFallbackPriceTypeList'])
@@ -235,7 +233,7 @@ class PriceProductScheduleFallbackTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected function getNotConfiguredConfigMock()
+    protected function getNotConfiguredConfigMock(): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
             ->setMethods(['getFallbackPriceTypeList'])

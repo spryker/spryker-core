@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Client\Availability;
 
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
@@ -18,6 +19,8 @@ interface AvailabilityClientInterface
      * - Reads product availability data for current locale, from current Yves storage provider
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface::getProductAvailabilityByIdProductAbstract() instead`.
      *
      * @param int $idProductAbstract
      *
@@ -45,6 +48,8 @@ interface AvailabilityClientInterface
      *  - Reads product concrete availability as it's persisted in Zed database
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *

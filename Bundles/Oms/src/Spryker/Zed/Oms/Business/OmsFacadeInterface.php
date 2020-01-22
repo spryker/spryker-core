@@ -8,10 +8,12 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 
 interface OmsFacadeInterface
 {
@@ -43,7 +45,6 @@ interface OmsFacadeInterface
     public function isOrderFlagged($idOrder, $flag);
 
     /**
-     *
      * Specification:
      *  - Checks if all order items is in state with givent flag
      *  - Returns true if all order items have flag in state
@@ -254,6 +255,8 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
@@ -262,55 +265,45 @@ interface OmsFacadeInterface
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 
     /**
-     *
-     * Specification:
-     *  - Reads all order items having state with reserved attribute for given concrete product
-     *
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku);
-
-    /**
      * Specification:
      *  - Count orders with items with given sku which are in state with flag reserved
      *
      * @api
      *
+     * @deprecated Not used anymore. Will be removed with next major release.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal;
 
     /**
      * Specification:
-     *  - Returns reserved quantity for the given sku which aggregated in OMS
+     *  - Returns reserved quantity for the given sku which aggregated in OMS.
      *
      * @api
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer);
+    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * Specification:
-     *  - Gets state entity by state name from persistence
+     *  - Returns reserved quantity summarized for the given skus which aggregated in OMS.
      *
      * @api
      *
-     * @param string $stateName
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getStateEntity($stateName);
+    public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * Specification:
@@ -463,6 +456,19 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     *  - Reads all order manual events from persistence.
+     *  - Returns a list of grouped manual events.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
+
+    /**
+     * Specification:
      *  - Clears state machine lock table, which used when items are locked. This is garbage collection call
      *
      * @api
@@ -540,15 +546,17 @@ interface OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer);
+    public function getReservationsFromOtherStores(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * Specification:
      *  - Returns last exported reservation version when exporting to external stores
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return int
      */
@@ -560,6 +568,8 @@ interface OmsFacadeInterface
      *  - Returns a list of state flags
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $processName
      * @param string $stateName
@@ -574,22 +584,38 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void;
+
+    /**
+     * Specification:
+     *  - Updates reservation quantity for a given sku.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateReservationQuantity(string $sku): void;
 
     /**
      * Specification:
      *  - Reads states from XML definition
-     *  - Returns a list of reserved state names
+     *  - Returns a list of reserved state objects in an associative array
      *
      * @api
      *
-     * @return string[]
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStateNames(): array;
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
 }

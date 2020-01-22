@@ -13,6 +13,7 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -35,7 +36,7 @@ class NumberOfChildrenTest extends Unit
      *
      * @return void
      */
-    public function testApplyDoesNotAddViolationIfNodeIsIgnorable($fullyQualifiedClassName)
+    public function testApplyDoesNotAddViolationIfNodeIsIgnorable(string $fullyQualifiedClassName): void
     {
         $nodeMock = $this->getNodeMock($fullyQualifiedClassName);
 
@@ -47,7 +48,7 @@ class NumberOfChildrenTest extends Unit
     /**
      * @return array
      */
-    public function ignorableNodesProvider()
+    public function ignorableNodesProvider(): array
     {
         return [
             ['Zed\\Importer\\Business\\Importer\\AbstractImporter'],
@@ -58,7 +59,7 @@ class NumberOfChildrenTest extends Unit
     /**
      * @return void
      */
-    public function testApplyAddsViolationWhenClassIsNotIgnorable()
+    public function testApplyAddsViolationWhenClassIsNotIgnorable(): void
     {
         $nodeMock = $this->getNodeMock('Foo');
 
@@ -70,7 +71,7 @@ class NumberOfChildrenTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren
      */
-    protected function getNumberOfChildrenMock()
+    protected function getNumberOfChildrenMock(): NumberOfChildren
     {
         $mockBuilder = $this->getMockBuilder(NumberOfChildren::class);
         $mockBuilder->setMethods(['addViolation', 'getIntProperty']);
@@ -86,7 +87,7 @@ class NumberOfChildrenTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\PHPMD\AbstractNode
      */
-    protected function getNodeMock($fullyQualifiedClassName)
+    protected function getNodeMock(string $fullyQualifiedClassName): AbstractNode
     {
         $mockBuilder = $this->getMockBuilder(AbstractNode::class);
         $mockBuilder->setMethods(['getMetric', 'getName', 'getNamespace', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName'])

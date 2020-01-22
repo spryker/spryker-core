@@ -7,16 +7,19 @@
 
 namespace Spryker\Client\UrlStorage;
 
+use Generated\Shared\Transfer\UrlRedirectStorageTransfer;
+
 interface UrlStorageClientInterface
 {
     /**
      * Specification:
-     * - Matches a URL and a locale to its storage entry
+     * - Matches a URL and a locale to its storage entry.
+     * - When localeName is null the localeName will be retrieved from the URL details.
      *
      * @api
      *
      * @param string $url
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return array
      */
@@ -35,4 +38,17 @@ interface UrlStorageClientInterface
      * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
      */
     public function findUrlStorageTransferByUrl($url);
+
+    /**
+     * Specification:
+     * - Looks up the redirect entity in key-value storage.
+     * - Returns UrlRedirectStorageTransfer in case redirect is found in the storage and null otherwise.
+     *
+     * @api
+     *
+     * @param int $idRedirectUrl
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectStorageTransfer|null
+     */
+    public function findUrlRedirectStorageById(int $idRedirectUrl): ?UrlRedirectStorageTransfer;
 }

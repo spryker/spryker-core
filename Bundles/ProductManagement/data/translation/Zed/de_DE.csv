@@ -1,3 +1,4 @@
+Active,Aktiv
 Activate,Aktivieren
 "Add General Information","Allgemeine Informationen hinzufügen"
 "Add image","Bild hinzufügen"
@@ -19,6 +20,7 @@ Categories,Kategorien
 "Create Bundle Product","Bundle-Produkt erstellen"
 "Create Product","Produkt erstellen"
 Deactivate,Deaktivieren
+Deactivated,Deaktiviert
 Default,Standard
 "Delete image","Lösche Bild"
 "Delete image set","Bilderset löschen"

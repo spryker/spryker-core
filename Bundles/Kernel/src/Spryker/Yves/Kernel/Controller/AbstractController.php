@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Kernel\Controller;
 
-use Silex\Application;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
@@ -16,13 +15,29 @@ use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerBridge;
 use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
 use Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException;
 use Spryker\Yves\Kernel\View\View;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
 {
+    protected const SERVICE_LOCALE = 'locale';
+    protected const SERVICE_FLASH_MESSENGER = 'flash_messenger';
+
     /**
-     * @var \Spryker\Yves\Kernel\Application
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    protected const SERVICE_ROUTER = 'routers';
+
+    /**
+     * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    protected const SERVICE_TWIG = 'twig';
+
+    /**
+     * @var \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
     private $application;
 
@@ -44,11 +59,11 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Application $application
+     * @param \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface $application
      *
      * @return $this
      */
-    public function setApplication(Application $application)
+    public function setApplication($application)
     {
         $this->application = $application;
 
@@ -64,11 +79,19 @@ abstract class AbstractController
      */
     protected function redirectResponseInternal($path, $parameters = [], $code = 302)
     {
-        return new RedirectResponse($this->getApplication()->path($path, $parameters), $code);
+        return new RedirectResponse($this->getRouter()->generate($path, $parameters), $code);
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Application
+     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    protected function getRouter(): ChainRouterInterface
+    {
+        return $this->getApplication()->get(static::SERVICE_ROUTER);
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
     protected function getApplication()
     {
@@ -80,10 +103,13 @@ abstract class AbstractController
      */
     protected function getLocale()
     {
-        return $this->getApplication()['locale'];
+        return $this->getApplication()->get(static::SERVICE_LOCALE);
     }
 
     /**
+     * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
+     * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
+     *
      * @param string $absoluteUrl
      * @param int $code
      *
@@ -231,21 +257,41 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        $messenger = ($this->application->offsetExists('flash_messenger')) ? $this->application['flash_messenger'] : new NullMessenger();
+        $messenger = ($this->getApplication()->has(static::SERVICE_FLASH_MESSENGER)) ? $this->getApplication()->get(static::SERVICE_FLASH_MESSENGER) : new NullMessenger();
         $applicationToMessengerBridge = new KernelToMessengerBridge($messenger);
 
         return $applicationToMessengerBridge;
     }
 
     /**
-     * @param string $viewPath
+     * @param string $view
      * @param array $parameters
+     * @param \Symfony\Component\HttpFoundation\Response|null $response
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderView($viewPath, array $parameters = [])
+    protected function renderView($view, array $parameters = [], ?Response $response = null)
     {
-        return $this->getApplication()->render($viewPath, $parameters);
+        if ($response instanceof StreamedResponse) {
+            $response->setCallback(function () use ($view, $parameters) {
+                $this->getTwig()->display($view, $parameters);
+            });
+        } else {
+            if ($response === null) {
+                $response = new Response();
+            }
+            $response->setContent($this->getTwig()->render($view, $parameters));
+        }
+
+        return $response;
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    protected function getTwig()
+    {
+        return $this->getApplication()->get(static::SERVICE_TWIG);
     }
 
     /**

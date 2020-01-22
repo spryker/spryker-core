@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -37,6 +38,10 @@ class Customer implements CustomerInterface
 {
     protected const BCRYPT_FACTOR = 12;
     protected const BCRYPT_SALT = '';
+
+    protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
+    protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
+    protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -156,12 +161,10 @@ class Customer implements CustomerInterface
     protected function attachAddresses(CustomerTransfer $customerTransfer, SpyCustomer $customerEntity)
     {
         $addresses = $customerEntity->getAddresses();
-        if ($addresses) {
-            $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
-            $customerTransfer->setAddresses($addressesTransfer);
+        $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
+        $customerTransfer->setAddresses($addressesTransfer);
 
-            $customerTransfer = $this->attachAddressesTransfer($customerTransfer, $addressesTransfer);
-        }
+        $customerTransfer = $this->attachAddressesTransfer($customerTransfer, $addressesTransfer);
 
         return $customerTransfer;
     }
@@ -173,6 +176,13 @@ class Customer implements CustomerInterface
      */
     public function add($customerTransfer)
     {
+        if ($customerTransfer->getPassword()) {
+            $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getPassword());
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                return $customerResponseTransfer;
+            }
+        }
+
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customerEntity = new SpyCustomer();
@@ -550,6 +560,11 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer;
         }
 
+        $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getNewPassword());
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return $customerResponseTransfer;
+        }
+
         $customerTransfer = $this->encryptNewPassword($customerTransfer);
 
         $customerEntity->setPassword($customerTransfer->getNewPassword());
@@ -784,7 +799,7 @@ class Customer implements CustomerInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findById($customerTransfer)
     {
@@ -804,7 +819,7 @@ class Customer implements CustomerInterface
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference)
     {
@@ -885,5 +900,42 @@ class Customer implements CustomerInterface
         );
 
         return $customerResponseTransfer;
+    }
+
+    /**
+     * @param string $password
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    protected function validateCustomerPasswordLength(string $password): CustomerResponseTransfer
+    {
+        $customerResponseTransfer = (new CustomerResponseTransfer())
+            ->setIsSuccess(false);
+
+        $customerPasswordLength = mb_strlen($password);
+        $minLength = $this->customerConfig->getCustomerPasswordMinLength();
+        $maxLength = $this->customerConfig->getCustomerPasswordMaxLength();
+
+        if ($customerPasswordLength < $minLength) {
+            $messageTransfer = (new MessageTransfer())
+                ->setValue(static::GLOSSARY_KEY_MIN_LENGTH_ERROR)
+                ->setParameters([
+                    static::GLOSSARY_PARAM_VALIDATION_LENGTH => $minLength,
+                ]);
+
+            return $customerResponseTransfer->setMessage($messageTransfer);
+        }
+
+        if ($customerPasswordLength > $maxLength) {
+            $messageTransfer = (new MessageTransfer())
+                ->setValue(static::GLOSSARY_KEY_MAX_LENGTH_ERROR)
+                ->setParameters([
+                    static::GLOSSARY_PARAM_VALIDATION_LENGTH => $maxLength,
+                ]);
+
+            return $customerResponseTransfer->setMessage($messageTransfer);
+        }
+
+        return $customerResponseTransfer->setIsSuccess(true);
     }
 }

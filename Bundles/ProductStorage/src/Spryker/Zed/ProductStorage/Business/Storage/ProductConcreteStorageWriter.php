@@ -37,6 +37,8 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected $queryContainer;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;

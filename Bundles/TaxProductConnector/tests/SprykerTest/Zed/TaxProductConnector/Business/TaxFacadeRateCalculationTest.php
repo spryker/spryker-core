@@ -20,6 +20,7 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group TaxProductConnector
@@ -33,7 +34,7 @@ class TaxFacadeRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate()
+    public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate(): void
     {
         $abstractProductEntity = $this->createAbstractProductWithTaxSet(20, 'GB');
 
@@ -52,7 +53,7 @@ class TaxFacadeRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate()
+    public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate(): void
     {
         $abstractProductEntity = $this->createAbstractProductWithTaxSet(20, 'DE');
 
@@ -74,7 +75,7 @@ class TaxFacadeRateCalculationTest extends Unit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    protected function createAbstractProductWithTaxSet($taxRate, $iso2Code)
+    protected function createAbstractProductWithTaxSet(int $taxRate, string $iso2Code): SpyProductAbstract
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
 
@@ -126,7 +127,7 @@ class TaxFacadeRateCalculationTest extends Unit
     /**
      * @return \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade
      */
-    protected function createTaxProductConnectorFacade()
+    protected function createTaxProductConnectorFacade(): TaxProductConnectorFacade
     {
         return new TaxProductConnectorFacade();
     }

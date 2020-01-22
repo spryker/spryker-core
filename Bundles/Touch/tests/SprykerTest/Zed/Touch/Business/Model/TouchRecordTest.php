@@ -16,6 +16,7 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch
@@ -41,7 +42,7 @@ class TouchRecordTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

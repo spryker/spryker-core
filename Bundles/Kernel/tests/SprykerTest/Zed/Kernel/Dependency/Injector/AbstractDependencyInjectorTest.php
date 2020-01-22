@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -26,7 +27,7 @@ class AbstractDependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectBusinessLayerDependenciesShouldReturnContainer()
+    public function testInjectBusinessLayerDependenciesShouldReturnContainer(): void
     {
         $dependencyInjector = new AbstractDependencyInjector();
         $container = new Container();
@@ -38,7 +39,7 @@ class AbstractDependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectCommunicationLayerDependenciesShouldReturnContainer()
+    public function testInjectCommunicationLayerDependenciesShouldReturnContainer(): void
     {
         $dependencyInjector = new AbstractDependencyInjector();
         $container = new Container();
@@ -50,7 +51,7 @@ class AbstractDependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectPersistenceLayerDependenciesShouldReturnContainer()
+    public function testInjectPersistenceLayerDependenciesShouldReturnContainer(): void
     {
         $dependencyInjector = new AbstractDependencyInjector();
         $container = new Container();

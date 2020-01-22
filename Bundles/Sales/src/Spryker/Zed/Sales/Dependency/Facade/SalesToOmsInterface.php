@@ -53,6 +53,13 @@ interface SalesToOmsInterface
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
+
+    /**
      * @return array
      */
     public function getOrderItemMatrix();

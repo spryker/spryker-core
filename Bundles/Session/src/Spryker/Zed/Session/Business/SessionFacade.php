@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Session\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -17,7 +18,7 @@ class SessionFacade extends AbstractFacade implements SessionFacadeInterface
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      *
      * @param string $sessionId
      *
@@ -34,7 +35,7 @@ class SessionFacade extends AbstractFacade implements SessionFacadeInterface
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      *
      * @param string $sessionId
      *
@@ -46,5 +47,17 @@ class SessionFacade extends AbstractFacade implements SessionFacadeInterface
             ->getFactory()
             ->createZedSessionLockReleaser()
             ->release($sessionId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeSessionHealthCheck(): HealthCheckServiceResponseTransfer
+    {
+        return $this->getFactory()->createSessionHealthChecker()->executeHealthCheck();
     }
 }

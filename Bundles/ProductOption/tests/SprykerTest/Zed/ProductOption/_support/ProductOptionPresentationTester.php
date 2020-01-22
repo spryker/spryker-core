@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -57,7 +58,7 @@ class ProductOptionPresentationTester extends Actor
      *
      * @return void
      */
-    public function fillOptionValues(array $values)
+    public function fillOptionValues(array $values): void
     {
         foreach ($values as $index => $value) {
             $elementNr = $index + 1;
@@ -88,7 +89,7 @@ class ProductOptionPresentationTester extends Actor
      *
      * @return void
      */
-    public function fillOptionGroupData(array $groupData)
+    public function fillOptionGroupData(array $groupData): void
     {
         $this->fillField('#product_option_general_name', $groupData['group_name_translation_key'] . rand(1, 999));
         $this->selectOption('#product_option_general_fkTaxSet', $groupData['fk_tax_set']);
@@ -107,7 +108,7 @@ class ProductOptionPresentationTester extends Actor
     /**
      * @return void
      */
-    public function expandSecondTranslationBlock()
+    public function expandSecondTranslationBlock(): void
     {
         $this->click(self::LANGUAGE_SWITCH_XPATH);
     }
@@ -115,7 +116,7 @@ class ProductOptionPresentationTester extends Actor
     /**
      * @return void
      */
-    public function assignProducts()
+    public function assignProducts(): void
     {
         $this->selectProductTab();
 
@@ -134,7 +135,7 @@ class ProductOptionPresentationTester extends Actor
     /**
      * @return void
      */
-    public function unassignProduct()
+    public function unassignProduct(): void
     {
         $this->click('#products-to-be-assigned');
 
@@ -148,7 +149,7 @@ class ProductOptionPresentationTester extends Actor
     /**
      * @return void
      */
-    public function selectProductTab()
+    public function selectProductTab(): void
     {
         $this->click('//*[@id="page-wrapper"]/div[3]/div[2]/ul/li[2]/a');
     }
@@ -156,7 +157,7 @@ class ProductOptionPresentationTester extends Actor
     /**
      * @return void
      */
-    public function submitProductGroupForm()
+    public function submitProductGroupForm(): void
     {
         $this->click('#create-product-option-button');
     }
@@ -164,7 +165,7 @@ class ProductOptionPresentationTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function createProductOptionGroupTransfer()
+    public function createProductOptionGroupTransfer(): ProductOptionGroupTransfer
     {
         $productOptionGroupTransfer = new ProductOptionGroupTransfer();
         $productOptionGroupTransfer->setName('group.name.translation.key.edit');
@@ -215,7 +216,7 @@ class ProductOptionPresentationTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductOptionTranslationTransfer
      */
-    protected function createTranslation($translationKey, $localeIsoCode)
+    protected function createTranslation(string $translationKey, string $localeIsoCode): ProductOptionTranslationTransfer
     {
         $productOptionTranslationTransfer = new ProductOptionTranslationTransfer();
         $productOptionTranslationTransfer->setKey($translationKey);
@@ -234,7 +235,7 @@ class ProductOptionPresentationTester extends Actor
     protected function addOptionValueTranslations(
         ProductOptionValueTransfer $productOptionValueTransfer,
         ProductOptionGroupTransfer $productOptionGroupTransfer
-    ) {
+    ): void {
         foreach ($this->locales as $locale) {
             $productOptionTranslationTransfer = $this->createTranslation(
                 $productOptionValueTransfer->getValue(),
@@ -249,7 +250,7 @@ class ProductOptionPresentationTester extends Actor
      *
      * @return void
      */
-    protected function addGroupNameTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    protected function addGroupNameTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer): void
     {
         foreach ($this->locales as $locale) {
             $productOptionTranslationTransfer = $this->createTranslation($productOptionGroupTransfer->getName(), $locale);

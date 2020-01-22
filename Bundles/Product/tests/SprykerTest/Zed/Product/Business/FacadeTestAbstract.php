@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -138,7 +140,7 @@ class FacadeTestAbstract extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -193,7 +195,7 @@ class FacadeTestAbstract extends Unit
     /**
      * @return void
      */
-    protected function setupLocales()
+    protected function setupLocales(): void
     {
         $this->locales['de_DE'] = new LocaleTransfer();
         $this->locales['de_DE']
@@ -211,7 +213,7 @@ class FacadeTestAbstract extends Unit
     /**
      * @return void
      */
-    protected function setupProductAbstract()
+    protected function setupProductAbstract(): void
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
@@ -235,7 +237,7 @@ class FacadeTestAbstract extends Unit
     /**
      * @return void
      */
-    protected function setupProductConcrete()
+    protected function setupProductConcrete(): void
     {
         $this->productConcreteTransfer = new ProductConcreteTransfer();
         $this->productConcreteTransfer
@@ -260,7 +262,7 @@ class FacadeTestAbstract extends Unit
     /**
      * @return void
      */
-    protected function setupDefaultProducts()
+    protected function setupDefaultProducts(): void
     {
         $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
     }
@@ -270,7 +272,7 @@ class FacadeTestAbstract extends Unit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
      */
-    protected function getProductAbstractEntityById($idProductAbstract)
+    protected function getProductAbstractEntityById(int $idProductAbstract): ?SpyProductAbstract
     {
         return $this->productQueryContainer
             ->queryProductAbstract()
@@ -283,7 +285,7 @@ class FacadeTestAbstract extends Unit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
-    protected function getProductConcreteEntityByAbstractId($idProductAbstract)
+    protected function getProductConcreteEntityByAbstractId(int $idProductAbstract): ?SpyProduct
     {
         return $this->productQueryContainer
             ->queryProduct()

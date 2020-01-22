@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Price

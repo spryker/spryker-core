@@ -1,5 +1,5 @@
 {
   "include": {
-    "Transfer": "Required by module"
+    "spryker/transfer": "Required by module"
   }
 }

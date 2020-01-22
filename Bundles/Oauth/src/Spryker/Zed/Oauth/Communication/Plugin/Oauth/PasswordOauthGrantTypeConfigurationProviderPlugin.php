@@ -20,7 +20,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProv
 class PasswordOauthGrantTypeConfigurationProviderPlugin extends AbstractPlugin implements OauthGrantTypeConfigurationProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Returns configuration of Password GrantType.
      *
      * @api

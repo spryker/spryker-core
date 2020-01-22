@@ -4,7 +4,7 @@
   "description": "Category module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/category-extension": "^1.0.0",
     "spryker/event": "^1.0.0 || ^2.0.0",
     "spryker/graph": "^3.0.0",
@@ -32,7 +32,8 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Category\\Helper\\": "tests/SprykerTest/Zed/Category/_support/Helper/"
+      "SprykerTest\\Zed\\Category\\Helper\\": "tests/SprykerTest/Zed/Category/_support/Helper/",
+      "SprykerTest\\Zed\\Category\\PageObject\\": "tests/SprykerTest/Zed/Category/_support/PageObject/"
     }
   },
   "autoload-dev": {
@@ -43,9 +44,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

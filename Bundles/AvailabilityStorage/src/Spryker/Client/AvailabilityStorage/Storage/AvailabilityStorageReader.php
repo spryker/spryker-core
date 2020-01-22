@@ -7,12 +7,15 @@
 
 namespace Spryker\Client\AvailabilityStorage\Storage;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
+use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface;
+use Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Shared\Kernel\Store;
@@ -30,13 +33,23 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface
+     */
+    protected $availabilityStorageMapper;
+
+    /**
      * @param \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface $availabilityStorageMapper
      */
-    public function __construct(AvailabilityStorageToStorageClientInterface $storageClient, AvailabilityStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        AvailabilityStorageToStorageClientInterface $storageClient,
+        AvailabilityStorageToSynchronizationServiceInterface $synchronizationService,
+        AvailabilityStorageMapperInterface $availabilityStorageMapper
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->availabilityStorageMapper = $availabilityStorageMapper;
     }
 
     /**
@@ -52,15 +65,14 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
 
         $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstract($idProductAbstract);
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
-
-        $isAbstractProductAvailable = $spyAvailabilityAbstractTransfer->getQuantity() > 0;
-        $storageAvailabilityTransfer->setIsAbstractProductAvailable($isAbstractProductAvailable);
+        $isProductAbstractAvailable = $this->isProductAbstractAvailable($spyAvailabilityAbstractTransfer);
+        $storageAvailabilityTransfer->setIsAbstractProductAvailable($isProductAbstractAvailable);
 
         $concreteAvailabilities = [];
         foreach ($spyAvailabilityAbstractTransfer->getSpyAvailabilities() as $spyAvailability) {
-            $isProductConcreteAvailable = $spyAvailability->getQuantity() > 0 || $spyAvailability->getIsNeverOutOfStock();
+            $isProductConcreteAvailable = $this->isProductConcreteAvailable($spyAvailability);
             $concreteAvailabilities[$spyAvailability->getSku()] = $isProductConcreteAvailable;
-            if ($isProductConcreteAvailable === true && $isAbstractProductAvailable === false) {
+            if ($isProductConcreteAvailable === true && $isProductAbstractAvailable === false) {
                 $storageAvailabilityTransfer->setIsAbstractProductAvailable(true);
             }
         }
@@ -71,6 +83,52 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer
+     *
+     * @return bool
+     */
+    protected function isProductAbstractAvailable(SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer): bool
+    {
+        return $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
+            $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $spyAvailability
+     *
+     * @return bool
+     */
+    protected function isProductConcreteAvailable(SpyAvailabilityEntityTransfer $spyAvailability): bool
+    {
+        return $spyAvailability->getIsNeverOutOfStock() ||
+            ($spyAvailability->getQuantity() !== null && $spyAvailability->getQuantity()->greaterThan(0));
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
+    {
+        $availabilityStorageData = $this->storageClient->get(
+            $this->generateKey($idProductAbstract)
+        );
+
+        if (!$availabilityStorageData) {
+            return null;
+        }
+
+        return $this->availabilityStorageMapper
+            ->mapAvailabilityStorageDataToProductAbstractAvailabilityTransfer(
+                $availabilityStorageData,
+                new ProductAbstractAvailabilityTransfer()
+            );
+    }
+
+    /**
+     * @deprecated Use `AvailabilityStorageClientInterface::findProductAbstractAvailability()` instead.
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
@@ -81,7 +139,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $availability = $this->storageClient->get($key);
 
         $spyAvailabilityAbstractEntityTransfer = new SpyAvailabilityAbstractEntityTransfer();
-        if ($availability === null) {
+        if (!$availability) {
             return $spyAvailabilityAbstractEntityTransfer;
         }
 
@@ -123,7 +181,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
 
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setStore($store);
-        $synchronizationDataTransfer->setReference($idProductAbstract);
+        $synchronizationDataTransfer->setReference((string)$idProductAbstract);
 
         return $this->synchronizationService->getStorageKeyBuilder(AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }

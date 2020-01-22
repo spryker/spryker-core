@@ -13,13 +13,20 @@ use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
 use Symfony\Component\HttpKernel\Fragment\HIncludeFragmentRenderer;
 use Twig\Environment;
 
+/**
+ * @deprecated Use `Spryker\Zed\Http\Communication\Plugin\Twig\HttpKernelTwigPlugin` instead.
+ * @deprecated Use `Spryker\Yves\Http\Plugin\Twig\HttpKernelTwigPlugin` instead.
+ *
+ * @deprecated Use `Spryker\Zed\Http\Communication\Plugin\Http\HIncludeRendererFragmentHandlerPlugin` instead.
+ * @deprecated Use `Spryker\Yves\Http\Plugin\Http\HIncludeRendererFragmentHandlerPlugin` instead.
+ */
 class HttpKernelTwigPlugin implements TwigPluginInterface
 {
     protected const SERVICE_FRAGMENT_HANDLER = 'fragment.handler';
     protected const SERVICE_FRAGMENT_RENDERER_HINCLUDE = 'fragment.renderer.hinclude';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

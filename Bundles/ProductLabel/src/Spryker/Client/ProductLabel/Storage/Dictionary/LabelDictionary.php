@@ -68,6 +68,9 @@ class LabelDictionary implements LabelDictionaryInterface
      */
     public function getDictionary($localeName)
     {
+        /**
+         * @var \Generated\Shared\Transfer\StorageProductLabelTransfer[] $labelDictionary
+         */
         static $labelDictionary = [];
 
         $strategy = get_class($this->dictionaryKeyStrategy);

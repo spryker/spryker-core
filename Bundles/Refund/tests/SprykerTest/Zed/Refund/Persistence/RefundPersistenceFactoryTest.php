@@ -13,6 +13,7 @@ use Spryker\Zed\Refund\Persistence\RefundPersistenceFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund
@@ -25,7 +26,7 @@ class RefundPersistenceFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateRefundQueryShouldReturnRefundQuery()
+    public function testCreateRefundQueryShouldReturnRefundQuery(): void
     {
         $refundPersistenceFactory = new RefundPersistenceFactory();
 

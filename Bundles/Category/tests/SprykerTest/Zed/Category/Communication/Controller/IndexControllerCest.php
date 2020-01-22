@@ -11,6 +11,7 @@ use SprykerTest\Zed\Category\CategoryCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category
@@ -26,7 +27,7 @@ class IndexControllerCest
      *
      * @return void
      */
-    public function listCategories(CategoryCommunicationTester $i)
+    public function listCategories(CategoryCommunicationTester $i): void
     {
         $i->amOnPage('/category');
         $i->seeResponseCodeIs(200);

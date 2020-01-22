@@ -15,6 +15,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -30,7 +31,7 @@ class DecisionRuleOrSpecificationTest extends Unit
     /**
      * @return void
      */
-    public function testIsSatisfiedWhenAnyReturnTrueShouldEvaluateToTrue()
+    public function testIsSatisfiedWhenAnyReturnTrueShouldEvaluateToTrue(): void
     {
         $leftSpecificationMock = $this->createDecisionRuleSpecificationMock();
         $leftSpecificationMock->expects($this->once())
@@ -52,7 +53,7 @@ class DecisionRuleOrSpecificationTest extends Unit
     /**
      * @return void
      */
-    public function testIsSatisfiedWhenAllOfSpecificationReturnsFalseShouldEvaluateToFalse()
+    public function testIsSatisfiedWhenAllOfSpecificationReturnsFalseShouldEvaluateToFalse(): void
     {
         $leftSpecificationMock = $this->createDecisionRuleSpecificationMock();
         $leftSpecificationMock->expects($this->once())
@@ -77,7 +78,7 @@ class DecisionRuleOrSpecificationTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification
      */
-    protected function createDecisionRuleOrSpecification(DecisionRuleSpecificationInterface $leftMock, DecisionRuleSpecificationInterface $rightMock)
+    protected function createDecisionRuleOrSpecification(DecisionRuleSpecificationInterface $leftMock, DecisionRuleSpecificationInterface $rightMock): DecisionRuleOrSpecification
     {
         return new DecisionRuleOrSpecification($leftMock, $rightMock);
     }
@@ -85,7 +86,7 @@ class DecisionRuleOrSpecificationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function createDecisionRuleSpecificationMock()
+    protected function createDecisionRuleSpecificationMock(): DecisionRuleSpecificationInterface
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }

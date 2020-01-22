@@ -13,6 +13,7 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category
@@ -27,7 +28,7 @@ class CategoryListCest
      *
      * @return void
      */
-    public function testICanSeeRootNodesList(CategoryPresentationTester $i)
+    public function testICanSeeRootNodesList(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->seeElement(['class' => CategoryListPage::SELECTOR_TABLE]);
@@ -38,7 +39,7 @@ class CategoryListCest
      *
      * @return void
      */
-    public function testICanGoToCreateCategoryPage(CategoryPresentationTester $i)
+    public function testICanGoToCreateCategoryPage(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->click(CategoryListPage::BUTTON_CREATE_CATEGORY);
@@ -50,7 +51,7 @@ class CategoryListCest
      *
      * @return void
      */
-    public function testThatICanSeeCategoryTreeForFirstRootNode(CategoryPresentationTester $i)
+    public function testThatICanSeeCategoryTreeForFirstRootNode(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::SELECTOR_TREE_LIST);

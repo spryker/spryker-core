@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
@@ -41,7 +42,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -99,28 +100,31 @@ class ProductMeasurementUnitFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCalculateQuantityNormalizedSalesUnitValueCalculatesCorrectValues($quantity, $conversion, $precision, $expectedResult)
+    public function testCalculateQuantitySalesUnitValueCalculatesCorrectValues(int $quantity, float $conversion, int $precision, int $expectedResult): void
     {
         // Assign
-        $itemTransfer = (new ItemTransfer())
-            ->setQuantity($quantity)
-            ->setQuantitySalesUnit(
-                (new ProductMeasurementSalesUnitTransfer())
-                    ->setConversion($conversion)
-                    ->setPrecision($precision)
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setQuantity($quantity)
+                    ->setQuantitySalesUnit(
+                        (new ProductMeasurementSalesUnitTransfer())
+                            ->setConversion($conversion)
+                            ->setPrecision($precision)
+                    )
             );
 
         // Act
-        $actualResult = $this->productMeasurementUnitFacade->calculateQuantityNormalizedSalesUnitValue($itemTransfer);
+        $actualResult = $this->productMeasurementUnitFacade->calculateQuantitySalesUnitValueInQuote($quoteTransfer);
 
         // Assert
-        $this->assertSame($expectedResult, $actualResult);
+        $this->assertSame($expectedResult, $actualResult->getItems()[0]->getQuantitySalesUnit()->getValue());
     }
 
     /**
      * @return array
      */
-    public function calculateQuantityNormalizedSalesUnitValues()
+    public function calculateQuantityNormalizedSalesUnitValues(): array
     {
         // round(1st / 2nd * 3rd) = 4th
         return [
@@ -139,7 +143,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities()
+    public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
@@ -159,7 +163,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits()
+    public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
@@ -199,7 +203,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandCartChangeWithQuantitySalesUnitExpandsCartChangeWithQuantitySalesUnit()
+    public function testExpandCartChangeWithQuantitySalesUnitExpandsCartChangeWithQuantitySalesUnit(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);

@@ -20,4 +20,4 @@ use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery as BaseSpy
  */
 abstract class AbstractSpyStateMachineProcessQuery extends BaseSpyStateMachineProcessQuery
 {
-} // SpyStateMachineProcessQuery
+}

@@ -216,6 +216,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
 
         $productConcreteSkusInListAndCategory = $this->getFactory()
             ->createProductListCategoryQuery()
+            ->filterByFkProductList_In($productListIds)
             ->useSpyProductListQuery()
                 ->filterByType($listType)
             ->endUse()
@@ -353,11 +354,15 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
         $query = $this->getFactory()
             ->createProductListQuery()
             ->filterByIdProductList($idProductList);
-        $spyProductListEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        $productListEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        if (!$productListEntityTransfer) {
+            return $productListTransfer;
+        }
 
         return $this->getFactory()
             ->createProductListMapper()
-            ->mapEntityTransferToProductListTransfer($spyProductListEntityTransfer, $productListTransfer);
+            ->mapEntityTransferToProductListTransfer($productListEntityTransfer, $productListTransfer);
     }
 
     /**

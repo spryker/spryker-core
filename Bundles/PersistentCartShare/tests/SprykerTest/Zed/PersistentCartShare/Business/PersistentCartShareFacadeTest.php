@@ -20,6 +20,7 @@ use Spryker\Shared\PersistentCartShare\PersistentCartShareConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PersistentCartShare
@@ -244,7 +245,7 @@ class PersistentCartShareFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacadeInterface
+     * @return \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacadeInterface
      */
     protected function getFacade()
     {

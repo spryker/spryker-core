@@ -2,6 +2,6 @@
   "include": {
   },
   "exclude": {
-    "Messenger": "Required by tests"
+    "spryker/messenger": "Required by tests"
   }
 }

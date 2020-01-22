@@ -14,6 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Kernel
@@ -61,7 +62,7 @@ abstract class AbstractResolverTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -78,12 +79,12 @@ abstract class AbstractResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
      */
-    abstract protected function getResolverMock(array $methods);
+    abstract protected function getResolverMock(array $methods): AbstractClassResolver;
 
     /**
      * @return void
      */
-    public function testResolveMustThrowExceptionIfClassCanNotBeResolved()
+    public function testResolveMustThrowExceptionIfClassCanNotBeResolved(): void
     {
         $this->expectException($this->expectedExceptionClass);
 
@@ -97,7 +98,7 @@ abstract class AbstractResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveMustReturnProjectClass()
+    public function testResolveMustReturnProjectClass(): void
     {
         $this->createClass($this->projectClass);
 
@@ -112,7 +113,7 @@ abstract class AbstractResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveMustReturnStoreClass()
+    public function testResolveMustReturnStoreClass(): void
     {
         $this->createClass($this->projectClass);
         $this->createClass($this->storeClass);
@@ -128,7 +129,7 @@ abstract class AbstractResolverTest extends Unit
     /**
      * @return void
      */
-    private function deleteCreatedFiles()
+    private function deleteCreatedFiles(): void
     {
         if (is_dir($this->getBasePath())) {
             $filesystem = new Filesystem();
@@ -141,7 +142,7 @@ abstract class AbstractResolverTest extends Unit
      *
      * @return void
      */
-    protected function createClass($className)
+    protected function createClass(string $className): void
     {
         $classNameParts = explode('\\', $className);
         $class = array_pop($classNameParts);
@@ -167,7 +168,7 @@ abstract class AbstractResolverTest extends Unit
     /**
      * @return string
      */
-    private function getBasePath()
+    private function getBasePath(): string
     {
         return __DIR__ . '/../_data/Generated';
     }

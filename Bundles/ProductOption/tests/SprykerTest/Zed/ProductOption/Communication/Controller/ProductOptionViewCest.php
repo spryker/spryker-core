@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductOption\ProductOptionCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -27,10 +28,10 @@ class ProductOptionViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductOptionCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductOptionCommunicationTester $i): void
     {
         $i->listDataTable(ProductOptionListPage::URL . '/list-table');
         $i->clickDataTableViewButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Options / View Product Option');
+        $i->seeBreadcrumbNavigation('Products / Product Options / View Product Option');
     }
 }

@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Customer\Business;
 
+use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
+use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverWithMultiShippingAddress;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\CustomerReader;
@@ -19,6 +22,8 @@ use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOr
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
+use Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolver;
+use Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -130,11 +135,25 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     *
      * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */
     public function createCheckoutCustomerOrderSaver()
     {
         return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
+     */
+    public function createCheckoutCustomerOrderSaverWithMultiShippingAddress(): CustomerOrderSaverInterface
+    {
+        return new CustomerOrderSaverWithMultiShippingAddress(
+            $this->createCustomer(),
+            $this->createAddress(),
+            $this->getCustomerService()
+        );
     }
 
     /**
@@ -235,5 +254,33 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerExpander(
             $this->getCustomerTransferExpanderPlugins()
         );
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     *
+     * @return \Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface
+     */
+    public function createCustomerOrderSaverStrategyResolver(): OrderSaverStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createCheckoutCustomerOrderSaver();
+        };
+
+        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress();
+        };
+
+        return new OrderSaverStrategyResolver($strategyContainer);
+    }
+
+    /**
+     * @return \Spryker\Service\Customer\CustomerServiceInterface
+     */
+    public function getCustomerService(): CustomerServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_CUSTOMER);
     }
 }

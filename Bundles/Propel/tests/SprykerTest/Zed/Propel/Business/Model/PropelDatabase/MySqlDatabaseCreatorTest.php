@@ -14,6 +14,7 @@ use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -28,7 +29,7 @@ class MySqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testGetEngine()
+    public function testGetEngine(): void
     {
         $mySqlDatabaseCreator = new MySqlDatabaseCreator();
 
@@ -38,7 +39,7 @@ class MySqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testCreateIfNotExists()
+    public function testCreateIfNotExists(): void
     {
         $mySqlDatabaseCreatorMock = $this->getMySqlDatabaseCreatorMock();
 
@@ -48,7 +49,7 @@ class MySqlDatabaseCreatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator
      */
-    protected function getMySqlDatabaseCreatorMock()
+    protected function getMySqlDatabaseCreatorMock(): MySqlDatabaseCreator
     {
         $mySqlDatabaseCreatorMock = $this->getMockBuilder(MySqlDatabaseCreator::class)->setMethods(['getConnection'])->getMock();
         $pdo = new PDO('sqlite::memory:');

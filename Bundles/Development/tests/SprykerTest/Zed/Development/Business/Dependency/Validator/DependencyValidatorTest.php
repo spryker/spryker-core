@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -30,7 +31,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsValidWhenDependencyTypeIsDevOnly()
+    public function testDependencyIsValidWhenDependencyTypeIsDevOnly(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getDevOnlyComposerDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -41,7 +42,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsInvalidWhenDependencyInSourceButMissingInComposerRequire()
+    public function testDependencyIsInvalidWhenDependencyInSourceButMissingInComposerRequire(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidSourceDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -52,7 +53,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsInvalidWhenDependencyNotInSourceButInComposerRequire()
+    public function testDependencyIsInvalidWhenDependencyNotInSourceButInComposerRequire(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidRequireDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -63,7 +64,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsValidWhenDependencyInSourceAndInComposerRequire()
+    public function testDependencyIsValidWhenDependencyInSourceAndInComposerRequire(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getValidSourceDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -74,7 +75,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsInvalidWhenDependencyInTestButMissingInComposerRequireDev()
+    public function testDependencyIsInvalidWhenDependencyInTestButMissingInComposerRequireDev(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidTestDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -85,7 +86,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsInvalidWhenDependencyNotInTestButInComposerRequireDev()
+    public function testDependencyIsInvalidWhenDependencyNotInTestButInComposerRequireDev(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidRequireDevDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -96,7 +97,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsValidWhenDependencyInTestAndInComposerRequireDev()
+    public function testDependencyIsValidWhenDependencyInTestAndInComposerRequireDev(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidTestDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -107,7 +108,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsValidWhenDependencyIsOptionalAndNotInRequire()
+    public function testDependencyIsValidWhenDependencyIsOptionalAndNotInRequire(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getValidOptionalRequiredDevDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -118,7 +119,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsInvalidWhenDependencyIsOptionalButInRequire()
+    public function testDependencyIsInvalidWhenDependencyIsOptionalButInRequire(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidOptionalRequiredDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -129,7 +130,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsInvalidWhenDependencyIsOptionalButNotInRequireDev()
+    public function testDependencyIsInvalidWhenDependencyIsOptionalButNotInRequireDev(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidOptionalNotRequiredDevDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -140,7 +141,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsInvalidWhenDependencyIsOptionalButNotSuggested()
+    public function testDependencyIsInvalidWhenDependencyIsOptionalButNotSuggested(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidOptionalNotSuggestedDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());
@@ -151,7 +152,7 @@ class DependencyValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testDependencyIsInvalidWhenDependencyInRequireAndInRequireDev()
+    public function testDependencyIsInvalidWhenDependencyInRequireAndInRequireDev(): void
     {
         $developmentFacade = $this->tester->getFacadeForDependencyTests($this->tester->getInvalidRequireAndRequireDevDependency());
         $dependencyValidationResponseTransfer = $developmentFacade->validateModuleDependencies($this->tester->getDependencyValidationRequestTransfer());

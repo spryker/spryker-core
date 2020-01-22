@@ -91,7 +91,6 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         int $idPriceProductStore,
         int $idMerchantRelationship
     ): void {
-
         $priceProductMerchantRelationshipEnitity = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->filterByFkPriceProductStore($idPriceProductStore)

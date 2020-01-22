@@ -31,4 +31,12 @@ interface MultiCartRepositoryInterface
      * @return array
      */
     public function findCustomerQuoteData(string $customerReference): array;
+
+    /**
+     * @param int $idQuote
+     * @param string $customerReference
+     *
+     * @return bool
+     */
+    public function isQuoteDefault(int $idQuote, string $customerReference): bool;
 }

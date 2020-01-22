@@ -12,6 +12,8 @@ use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToGlossaryStor
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReader;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
+use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractRestUrlResolverAttributesReader;
+use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractRestUrlResolverAttributesReaderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReader;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Expander\ConcreteProductsRelationshipExpander;
@@ -49,7 +51,18 @@ class ProductsRestApiFactory extends AbstractFactory
             $this->createAbstractProductsResourceMapper(),
             $this->createConcreteProductsReader(),
             $this->getConfig(),
-            $this->createAbstractProductAttributeTranslationExpander()
+            $this->createAbstractProductAttributeTranslationExpander(),
+            $this->getAbstractProductResourceExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractRestUrlResolverAttributesReaderInterface
+     */
+    public function createProductAbstractRestUrlResolverAttributesReader(): ProductAbstractRestUrlResolverAttributesReaderInterface
+    {
+        return new ProductAbstractRestUrlResolverAttributesReader(
+            $this->getProductStorageClient()
         );
     }
 
@@ -125,5 +138,13 @@ class ProductsRestApiFactory extends AbstractFactory
     public function getConcreteProductResourceExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductsRestApiDependencyProvider::PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface[]
+     */
+    public function getAbstractProductResourceExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductsRestApiDependencyProvider::PLUGINS_ABSTRACT_PRODUCTS_RESOURCE_EXPANDER);
     }
 }

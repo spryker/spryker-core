@@ -66,10 +66,6 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer): array
     {
-        if ($storeRelationTransfer->getIdStores() === null) {
-            return [];
-        }
-
         return $storeRelationTransfer->getIdStores();
     }
 

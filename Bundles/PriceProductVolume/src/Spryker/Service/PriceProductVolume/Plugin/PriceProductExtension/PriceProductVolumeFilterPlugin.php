@@ -16,11 +16,12 @@ use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -47,7 +48,7 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

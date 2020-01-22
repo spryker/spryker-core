@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
@@ -76,9 +77,9 @@ class ShipmentDataProvider implements FormDataProviderInterface
         if (!$quoteTransfer->getStore() || !$quoteTransfer->getCurrency()) {
             return [];
         }
-        $shipmentMethodsTransfer = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
-        $shipmentMethodList = [];
 
+        $shipmentMethodList = [];
+        $shipmentMethodsTransfer = $this->resolveShipmentMethods($quoteTransfer);
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             $moneyTransfer = $this->moneyFacade->fromInteger($shipmentMethodTransfer->getStoreCurrencyPrice(), $shipmentMethodTransfer->getCurrencyIsoCode());
 
@@ -92,5 +93,46 @@ class ShipmentDataProvider implements FormDataProviderInterface
         }
 
         return $shipmentMethodList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function resolveShipmentMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
+    {
+        $this->setItemLevelEmptyShipmentFromQuote($quoteTransfer);
+
+        $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
+
+        return $shipmentMethodsTransfer;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setItemLevelEmptyShipmentFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteShipmentTransfer = $quoteTransfer->getShipment();
+        if ($quoteShipmentTransfer === null) {
+            return $quoteTransfer;
+        }
+
+        $quoteShipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $itemTransfer->setShipment($quoteShipmentTransfer);
+            }
+        }
+
+        return $quoteTransfer;
     }
 }

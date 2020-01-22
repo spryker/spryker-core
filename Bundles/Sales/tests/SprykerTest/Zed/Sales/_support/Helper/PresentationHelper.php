@@ -18,7 +18,7 @@ class PresentationHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $e)
+    public function _before(TestInterface $e): void
     {
         $this->getZedModule()->amZed();
         $this->getZedModule()->amLoggedInUser();

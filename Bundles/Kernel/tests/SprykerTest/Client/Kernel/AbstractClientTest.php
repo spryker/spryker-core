@@ -12,6 +12,7 @@ use SprykerTest\Client\Kernel\Fixtures\KernelClient;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Kernel
@@ -23,7 +24,7 @@ class AbstractClientTest extends Unit
     /**
      * @return void
      */
-    public function testAbstractStubMustBeConstructable()
+    public function testAbstractStubMustBeConstructable(): void
     {
         $abstractStub = new KernelClient();
 

@@ -13,6 +13,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsPayedPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment
@@ -28,7 +29,7 @@ class IsPayedPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCheckReturnAlwaysTrue()
+    public function testCheckReturnAlwaysTrue(): void
     {
         $isPayedPlugin = new IsPayedPlugin();
         $salesOrderItemEntity = new SpySalesOrderItem();

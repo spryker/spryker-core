@@ -2,7 +2,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% block section_title %}
-    {{ 'Edit Tax Set:' | trans ~ '' ~ taxSet.idTaxSet }}
+    {{ 'Edit Tax Set:' | trans ~ ' ' ~ taxSet.name }}
 {% endblock %}
 
 {% block action %}
@@ -34,5 +34,5 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-tax-main.css">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-tax-main.css') }}">
 {% endblock %}

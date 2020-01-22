@@ -1,5 +1,5 @@
 {
   "include": {
-    "Transfer": "Transfer provides attributes meta-data."
+    "spryker/transfer": "Transfer provides attributes meta-data."
   }
 }

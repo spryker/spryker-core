@@ -14,6 +14,7 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -27,7 +28,7 @@ class CurrencyDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testDecisionRuleWhenCurrencyMatchesShouldReturnTrue()
+    public function testDecisionRuleWhenCurrencyMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $currency) {
@@ -49,7 +50,7 @@ class CurrencyDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\CurrencyDecisionRule
      */
-    protected function createCurrencyDecisionRuleMock(?ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createCurrencyDecisionRuleMock(?ComparatorOperatorsInterface $comparatorMock = null): CurrencyDecisionRule
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

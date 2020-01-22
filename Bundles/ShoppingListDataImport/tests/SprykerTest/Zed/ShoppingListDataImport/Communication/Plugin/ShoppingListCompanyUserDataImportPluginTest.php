@@ -23,6 +23,7 @@ use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShoppingListDataImport

@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui;
 
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyFacadeBridge;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCountryFacadeBridge;
-use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_CONTAINER_COMPANY_UNIT_ADDRESS = 'QUERY_CONTAINER_COMPANY_UNIT_ADDRESS';
     public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
     public const PLUGINS_COMPANY_UNIT_ADDRESS_FORM = 'PLUGINS_COMPANY_UNIT_ADDRESS_FORM';
     public const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER';
@@ -24,16 +23,16 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     public const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER';
     public const FACADE_COMPANY = 'FACADE_COMPANY';
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    public const PROPEL_QUERY_COMPANY_UNIT_ADDRESS = 'PROPEL_QUERY_COMPANY_UNIT_ADDRESS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addCompanyUnitAddressQueryContainer($container);
         $container = $this->addCompanyUnitAddressFacade($container);
         $container = $this->addCompanyUnitAddressFormPlugins($container);
         $container = $this->addCompanyUnitAddressTableConfigExpanderPlugins($container);
@@ -41,6 +40,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCompanyUnitAddressTableDataExpanderPlugins($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addCountryFacade($container);
+        $container = $this->addCompanyUnitAddressPropelQuery($container);
 
         return $container;
     }
@@ -50,29 +50,13 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUnitAddressQueryContainer(Container $container)
+    protected function addCompanyUnitAddressFacade(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_COMPANY_UNIT_ADDRESS] = function (Container $container) {
-            return new CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerBridge(
-                $container->getLocator()->companyUnitAddress()->queryContainer()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyUnitAddressFacade(Container $container)
-    {
-        $container[static::FACADE_COMPANY_UNIT_ADDRESS] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_UNIT_ADDRESS, function (Container $container) {
             return new CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge(
                 $container->getLocator()->companyUnitAddress()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -82,13 +66,27 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyFacade(Container $container)
+    protected function addCompanyUnitAddressPropelQuery(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY_UNIT_ADDRESS, $container->factory(function () {
+            return SpyCompanyUnitAddressQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyUnitAddressGuiToCompanyFacadeBridge(
                 $container->getLocator()->company()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -98,13 +96,13 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCountryFacade(Container $container)
+    protected function addCountryFacade(Container $container): Container
     {
-        $container[static::FACADE_COUNTRY] = function (Container $container) {
+        $container->set(static::FACADE_COUNTRY, function (Container $container) {
             return new CompanyUnitAddressGuiToCountryFacadeBridge(
                 $container->getLocator()->country()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -114,11 +112,11 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUnitAddressFormPlugins(Container $container)
+    protected function addCompanyUnitAddressFormPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_UNIT_ADDRESS_FORM] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_UNIT_ADDRESS_FORM, function () {
             return $this->getCompanyUnitAddressFormPlugins();
-        };
+        });
 
         return $container;
     }
@@ -136,11 +134,11 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUnitAddressTableConfigExpanderPlugins(Container $container)
+    protected function addCompanyUnitAddressTableConfigExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER, function () {
             return $this->getCompanyUnitAddressTableConfigExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -158,11 +156,11 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUnitAddressTableHeaderExpanderPlugins(Container $container)
+    protected function addCompanyUnitAddressTableHeaderExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_HEADER_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_HEADER_EXPANDER, function () {
             return $this->getCompanyUnitAddressTableHeaderExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -180,11 +178,11 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUnitAddressTableDataExpanderPlugins(Container $container)
+    protected function addCompanyUnitAddressTableDataExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER, function () {
             return $this->getCompanyUnitAddressTableDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Vault\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Vault\Business\Converter\InitialVectorConverter;
+use Spryker\Zed\Vault\Business\Converter\InitialVectorConverterInterface;
 use Spryker\Zed\Vault\Business\Reader\VaultReader;
 use Spryker\Zed\Vault\Business\Reader\VaultReaderInterface;
 use Spryker\Zed\Vault\Business\Writer\VaultWriter;
@@ -30,7 +32,8 @@ class VaultBusinessFactory extends AbstractBusinessFactory
         return new VaultReader(
             $this->getConfig(),
             $this->getUtilEncryptionService(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createInitialVectorConverter()
         );
     }
 
@@ -43,8 +46,17 @@ class VaultBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getUtilEncryptionService(),
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createInitialVectorConverter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Vault\Business\Converter\InitialVectorConverterInterface
+     */
+    public function createInitialVectorConverter(): InitialVectorConverterInterface
+    {
+        return new InitialVectorConverter();
     }
 
     /**

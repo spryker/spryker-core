@@ -14,6 +14,7 @@ use SprykerTest\Zed\ProductSearch\PageObject\SearchPreferencesPage;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -47,7 +48,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return int
      */
-    public function createFilter($filterName)
+    public function createFilter(string $filterName): int
     {
         $this->amOnPage(FilterPreferencesPage::URL_CREATE);
 
@@ -69,7 +70,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function updateFilter($id)
+    public function updateFilter(int $id): void
     {
         $this->amOnPage(FilterPreferencesPage::URL_VIEW . $id);
 
@@ -89,7 +90,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function deleteFilter($id)
+    public function deleteFilter(int $id): void
     {
         $this->amOnPage(FilterPreferencesPage::URL_VIEW . $id);
 
@@ -97,7 +98,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(FilterPreferencesPage::URL_LIST);
 
-        $this->canSee('Filter successfully deleted.');
+        $this->seeInPageSource('Filter successfully deleted.');
     }
 
     /**
@@ -105,7 +106,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function addAttributeToSearch($attributeKey)
+    public function addAttributeToSearch(string $attributeKey): void
     {
         $this->amOnPage(SearchPreferencesPage::URL_CREATE);
 
@@ -118,7 +119,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
-        $this->canSee('Attribute to search was added successfully.', SearchPreferencesPage::SELECTOR_ALERT_SUCCESS);
+        $this->seeInPageSource('Attribute to search was added successfully.');
     }
 
     /**
@@ -126,7 +127,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function updateAttributeToSearch($attributeKey)
+    public function updateAttributeToSearch(string $attributeKey): void
     {
         $this->searchTableByAttributeKey($attributeKey);
 
@@ -141,7 +142,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
-        $this->canSee('Attribute to search was successfully updated.', SearchPreferencesPage::SELECTOR_ALERT_SUCCESS);
+        $this->seeInPageSource('Attribute to search was successfully updated.');
     }
 
     /**
@@ -149,7 +150,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function deactivateAttributeToSearch($attributeKey)
+    public function deactivateAttributeToSearch(string $attributeKey): void
     {
         $this->searchTableByAttributeKey($attributeKey);
 
@@ -157,7 +158,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
-        $this->canSee('Attribute to search was successfully deactivated.', SearchPreferencesPage::SELECTOR_ALERT_SUCCESS);
+        $this->seeInPageSource('Attribute to search was successfully deactivated.');
     }
 
     /**
@@ -165,7 +166,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    protected function searchTableByAttributeKey($attributeKey)
+    protected function searchTableByAttributeKey(string $attributeKey): void
     {
         $this->amOnPage(SearchPreferencesPage::URL_LIST);
         $this->fillField(SearchPreferencesPage::SELECTOR_TABLE_SEARCH, $attributeKey);

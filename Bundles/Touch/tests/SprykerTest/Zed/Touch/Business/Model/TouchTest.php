@@ -16,6 +16,7 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch
@@ -39,7 +40,7 @@ class TouchTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->touchFacade = new TouchFacade();
@@ -55,7 +56,7 @@ class TouchTest extends Unit
     /**
      * @return void
      */
-    public function testTouchActiveInsertsSomething()
+    public function testTouchActiveInsertsSomething(): void
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');
 
@@ -69,7 +70,7 @@ class TouchTest extends Unit
     /**
      * @return void
      */
-    public function testTouchInactiveInsertsSomething()
+    public function testTouchInactiveInsertsSomething(): void
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');
 
@@ -83,7 +84,7 @@ class TouchTest extends Unit
     /**
      * @return void
      */
-    public function testTouchDeletedInsertsSomething()
+    public function testTouchDeletedInsertsSomething(): void
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');
 

@@ -32,7 +32,7 @@ class MockPostHook implements CheckoutPostSaveHookInterface
      *
      * @return void
      */
-    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
     {
         $checkoutResponse->fromArray($this->checkoutResponse->toArray(true), true);
     }

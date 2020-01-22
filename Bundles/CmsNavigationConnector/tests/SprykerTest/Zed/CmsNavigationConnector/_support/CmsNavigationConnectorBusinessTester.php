@@ -8,9 +8,11 @@
 namespace SprykerTest\Zed\CmsNavigationConnector;
 
 use Codeception\Actor;
+use Spryker\Zed\Navigation\Business\NavigationFacadeInterface;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,7 +30,11 @@ class CmsNavigationConnectorBusinessTester extends Actor
 {
     use _generated\CmsNavigationConnectorBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Spryker\Zed\Navigation\Business\NavigationFacadeInterface
+     */
+    public function getNavigationFacade(): NavigationFacadeInterface
+    {
+        return $this->getLocator()->navigation()->facade();
+    }
 }

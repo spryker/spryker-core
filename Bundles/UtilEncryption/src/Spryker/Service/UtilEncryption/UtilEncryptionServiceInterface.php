@@ -26,6 +26,18 @@ interface UtilEncryptionServiceInterface
 
     /**
      * Specification:
+     * - Generates a random byte string vector for provided OpenSsl encryption method.
+     *
+     * @api
+     *
+     * @param string|null $encryptionMethod
+     *
+     * @return string
+     */
+    public function generateByteStringOpenSslEncryptInitVector(?string $encryptionMethod = null): string;
+
+    /**
+     * Specification:
      * - Encrypts given data using OpenSsl.
      * - Encodes encrypted data with base64 algorithm.
      *

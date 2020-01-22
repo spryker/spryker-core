@@ -15,6 +15,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -30,10 +31,11 @@ class CollectorAndSpecificationTest extends Unit
     /**
      * @return void
      */
-    public function testCollectShouldReturnRecordsOnlyExistingInBoth()
+    public function testCollectShouldReturnRecordsOnlyExistingInBoth(): void
     {
         $leftMock = $this->createCollectorSpecificationMock();
 
+        $items = [];
         $items[] = new DiscountableItemTransfer();
 
         $leftMock->expects($this->once())
@@ -60,7 +62,7 @@ class CollectorAndSpecificationTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification
      */
-    protected function createCollectorAndSpecification(CollectorSpecificationInterface $leftMock, CollectorSpecificationInterface $rightMock)
+    protected function createCollectorAndSpecification(CollectorSpecificationInterface $leftMock, CollectorSpecificationInterface $rightMock): CollectorAndSpecification
     {
         return new CollectorAndSpecification($leftMock, $rightMock);
     }
@@ -68,7 +70,7 @@ class CollectorAndSpecificationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
-    protected function createCollectorSpecificationMock()
+    protected function createCollectorSpecificationMock(): CollectorSpecificationInterface
     {
         return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }

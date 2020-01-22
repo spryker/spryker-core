@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -31,7 +32,7 @@ class DirectoryRemoverTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->fixtureDirectory = __DIR__ . '/TempFixtures';
         $directory = $this->fixtureDirectory . DIRECTORY_SEPARATOR . 'Foo';
@@ -45,7 +46,7 @@ class DirectoryRemoverTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (is_dir($this->fixtureDirectory)) {
             $filesystem = new Filesystem();
@@ -56,7 +57,7 @@ class DirectoryRemoverTest extends Unit
     /**
      * @return void
      */
-    public function testAfterExecutionGeneratedDirectoryMustBeRemoved()
+    public function testAfterExecutionGeneratedDirectoryMustBeRemoved(): void
     {
         $directoryRemover = new DirectoryRemover($this->fixtureDirectory);
         $directoryRemover->execute();

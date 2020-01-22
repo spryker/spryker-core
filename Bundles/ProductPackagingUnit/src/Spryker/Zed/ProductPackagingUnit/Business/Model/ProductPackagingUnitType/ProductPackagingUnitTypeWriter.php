@@ -66,7 +66,6 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     public function createProductPackagingUnitType(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
-
         $this->productPackagingUnitTypeKeyGenerator->generateProductPackagingUnitTypeKey($productPackagingUnitTypeTransfer);
 
         $productPackagingUnitTypeTransfer->requireName();

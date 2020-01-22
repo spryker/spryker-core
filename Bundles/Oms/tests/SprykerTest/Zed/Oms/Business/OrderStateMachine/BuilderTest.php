@@ -19,6 +19,7 @@ use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms
@@ -32,7 +33,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $processACopyTarget = $this->getProcessLocationB() . DIRECTORY_SEPARATOR . 'process-a.xml';
         if (file_exists($processACopyTarget)) {
@@ -45,7 +46,7 @@ class BuilderTest extends Unit
      *
      * @return void
      */
-    public function testInstantiationWithoutXmlFolder()
+    public function testInstantiationWithoutXmlFolder(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -59,7 +60,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithXmlFolderAsString()
+    public function testInstantiationWithXmlFolderAsString(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -73,7 +74,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithXmlFolderAsArray()
+    public function testInstantiationWithXmlFolderAsArray(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -87,7 +88,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessShouldThrowExceptionWhenProcessFoundInMoreThenOneLocation()
+    public function testGetProcessShouldThrowExceptionWhenProcessFoundInMoreThenOneLocation(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -105,7 +106,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessShouldThrowExceptionWhenNoProcessFound()
+    public function testGetProcessShouldThrowExceptionWhenNoProcessFound(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -121,7 +122,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcess()
+    public function testGetProcess(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -137,7 +138,7 @@ class BuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Process\EventInterface
      */
-    private function getEventMock()
+    private function getEventMock(): EventInterface
     {
         return $this->getMockBuilder(EventInterface::class)->getMock();
     }
@@ -145,7 +146,7 @@ class BuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Process\StateInterface
      */
-    private function getStateMock()
+    private function getStateMock(): StateInterface
     {
         return $this->getMockBuilder(StateInterface::class)->getMock();
     }
@@ -153,7 +154,7 @@ class BuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Process\TransitionInterface
      */
-    private function getTransitionMock()
+    private function getTransitionMock(): TransitionInterface
     {
         return $this->getMockBuilder(TransitionInterface::class)->getMock();
     }
@@ -161,7 +162,7 @@ class BuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface
      */
-    private function getProcess()
+    private function getProcess(): ProcessInterface
     {
         $drawerMock = $this->getDrawerMock();
 
@@ -171,7 +172,7 @@ class BuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\DrawerInterface
      */
-    private function getDrawerMock()
+    private function getDrawerMock(): DrawerInterface
     {
         return $this->getMockBuilder(DrawerInterface::class)->getMock();
     }
@@ -179,7 +180,7 @@ class BuilderTest extends Unit
     /**
      * @return string
      */
-    private function getProcessLocationA()
+    private function getProcessLocationA(): string
     {
         return __DIR__ . '/Builder/Fixtures/DefinitionLocationA';
     }
@@ -187,7 +188,7 @@ class BuilderTest extends Unit
     /**
      * @return string
      */
-    private function getProcessLocationB()
+    private function getProcessLocationB(): string
     {
         return __DIR__ . '/Builder/Fixtures/DefinitionLocationB';
     }

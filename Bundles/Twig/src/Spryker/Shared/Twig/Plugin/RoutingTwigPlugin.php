@@ -17,7 +17,7 @@ class RoutingTwigPlugin implements TwigPluginInterface
     protected const SERVICE_URL_GENERATOR = 'url_generator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

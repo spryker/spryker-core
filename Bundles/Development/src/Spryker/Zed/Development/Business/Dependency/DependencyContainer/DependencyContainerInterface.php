@@ -20,14 +20,14 @@ interface DependencyContainerInterface
     public function initialize(ModuleTransfer $moduleTransfer);
 
     /**
-     * @param string $module
+     * @param string $moduleOrComposerName
      * @param string $type
      * @param bool $isOptional
      * @param bool $isTest
      *
      * @return $this
      */
-    public function addDependency(string $module, string $type, bool $isOptional = false, bool $isTest = false);
+    public function addDependency(string $moduleOrComposerName, string $type, bool $isOptional = false, bool $isTest = false);
 
     /**
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer

@@ -16,6 +16,7 @@ use Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group ZedRequest
@@ -28,7 +29,7 @@ class ZedRequestLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetNameShouldReturnString()
+    public function testGetNameShouldReturnString(): void
     {
         $zedRequestLogPlugin = new ZedRequestLogPlugin();
 
@@ -38,7 +39,7 @@ class ZedRequestLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetCallableShouldReturnCallable()
+    public function testGetCallableShouldReturnCallable(): void
     {
         $zedRequestLogPlugin = new ZedRequestLogPlugin();
 
@@ -48,7 +49,7 @@ class ZedRequestLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteCallableShouldCallLogger()
+    public function testExecuteCallableShouldCallLogger(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('info');
@@ -66,7 +67,7 @@ class ZedRequestLogPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function getLoggerMock()
+    protected function getLoggerMock(): LoggerInterface
     {
         $lockerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
 
@@ -78,7 +79,7 @@ class ZedRequestLogPluginTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin
      */
-    protected function getZedRequestLogPluginMock(LoggerInterface $loggerMock)
+    protected function getZedRequestLogPluginMock(LoggerInterface $loggerMock): ZedRequestLogPlugin
     {
         $zedRequestLogPluginMock = $this->getMockBuilder(ZedRequestLogPlugin::class)
             ->setMethods(['getLogger'])

@@ -1,0 +1,3 @@
+shipment_method_key,store,currency,value_net,value_gross
+spryker_dummy_shipment-standard,DE,EUR,390,490
+spryker_dummy_shipment-express,DE,EUR,490,590

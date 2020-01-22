@@ -172,7 +172,6 @@ class AttributeAbstractForm extends AbstractSubForm
         $inputManager = new AttributeInputManager();
         $inputType = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_INPUT_TYPE);
         $allowInput = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT);
-        $isSuper = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_SUPER);
         $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
         $isProductSpecific = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC);
         $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
@@ -188,7 +187,7 @@ class AttributeAbstractForm extends AbstractSubForm
         if ($isDisabled) {
             $config = $this->getValueFieldConfig($name, $attributes);
             $config['attr']['readonly'] = true; // Check if this will work too or if we need to add readonly only to the attr if $isDisabled is true
-            $input = $inputManager->getSymfonyInputType(null, $value);
+            $input = $inputManager->getSymfonyInputType('', $value);
         } else {
             if (strtolower($input) === Select2ComboBoxType::class) {
                 $idLocale = $this->getFactory()->createLocaleProvider()->getCurrentLocale()->getIdLocale();
