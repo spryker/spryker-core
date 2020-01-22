@@ -46,12 +46,12 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param array $ratingAggregation
+     * @param int[] $ratingAggregation
      * @param int $totalReview
      *
      * @return float
      */
-    protected function getAverageRating(array $ratingAggregation, $totalReview): float
+    protected function getAverageRating(array $ratingAggregation, int $totalReview): float
     {
         if ($totalReview === 0) {
             return 0.0;
@@ -63,7 +63,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param array $ratingAggregation
+     * @param int[] $ratingAggregation
      *
      * @return array
      */
@@ -76,7 +76,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param array $ratingAggregation
+     * @param int[] $ratingAggregation
      *
      * @return array
      */
@@ -92,7 +92,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param array $ratingAggregation
+     * @param int[] $ratingAggregation
      *
      * @return array
      */
@@ -104,7 +104,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param array $ratingAggregation
+     * @param int[] $ratingAggregation
      *
      * @return int
      */
@@ -120,7 +120,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param array $ratingAggregation
+     * @param int[] $ratingAggregation
      *
      * @return int
      */
