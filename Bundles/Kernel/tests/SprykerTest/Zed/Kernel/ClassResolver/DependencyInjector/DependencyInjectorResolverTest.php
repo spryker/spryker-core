@@ -88,7 +88,7 @@ class DependencyInjectorResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): DependencyInjectorResolver
     {
         $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->setMethods($methods)->getMock();
 

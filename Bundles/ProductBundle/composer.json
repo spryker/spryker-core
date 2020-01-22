@@ -18,6 +18,7 @@
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
+    "spryker/sales-extension": "^1.5.0",
     "spryker/shopping-list-extension": "^1.0.0",
     "spryker/stock": "^8.0.0",
     "spryker/store": "^1.5.0",
@@ -52,9 +53,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "7.0.x-dev"
     }
   },
   "config": {

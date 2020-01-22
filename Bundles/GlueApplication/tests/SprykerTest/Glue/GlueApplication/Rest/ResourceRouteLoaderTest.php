@@ -9,16 +9,15 @@ namespace SprykerTest\Glue\GlueApplication\Rest;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestVersionTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoader;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer;
+use SprykerTest\Glue\GlueApplication\Stub\TestResourceWithParentRoutePlugin;
+use SprykerTest\Glue\GlueApplication\Stub\TestVersionableResourceRoutePlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -180,10 +179,7 @@ class ResourceRouteLoaderTest extends Unit
      */
     protected function createResourceRoutePluginWithVersionMock(): ResourceRoutePluginInterface
     {
-        return $this->getMockBuilder([
-            ResourceRoutePluginInterface::class,
-            ResourceVersionableInterface::class,
-        ])->getMock();
+        return $this->getMockBuilder(TestVersionableResourceRoutePlugin::class)->getMock();
     }
 
     /**
@@ -191,10 +187,7 @@ class ResourceRouteLoaderTest extends Unit
      */
     protected function createResourceRoutePluginWithParent(): ResourceRoutePluginInterface
     {
-        return $this->getMockBuilder([
-            ResourceRoutePluginInterface::class,
-            ResourceWithParentPluginInterface::class,
-        ])->getMock();
+        return $this->createMock(TestResourceWithParentRoutePlugin::class);
     }
 
     /**
@@ -221,11 +214,11 @@ class ResourceRouteLoaderTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $resourceRoutePluginMock
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface|\PHPUnit\Framework\MockObject\MockObject $resourceRoutePluginMock
      *
      * @return void
      */
-    protected function configureBaseRouteMock(MockObject $resourceRoutePluginMock): void
+    protected function configureBaseRouteMock(ResourceRoutePluginInterface $resourceRoutePluginMock): void
     {
         $resourceRoutePluginMock
             ->method('getResourceType')

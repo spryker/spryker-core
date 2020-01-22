@@ -38,4 +38,8 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="ProductList">
+        <property name="idProductList" type="int"/>
+    </transfer>
+
 </transfers>

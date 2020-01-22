@@ -44,6 +44,11 @@
     </transfer>
 
     <transfer name="ProductSetDataStorage">
+        <property name="weight" type="int"/>
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
     </transfer>
 
 </transfers>
