@@ -52,7 +52,7 @@ class CartVouchersResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/carts/{cartId}/discounts",
+     *          "path": "/carts/{cartId}/vouchers",
      *          "summary": [
      *              "Deletes a code from cart."
      *          ],
