@@ -63,4 +63,20 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     {
         return $this->userFacade->updateUser($user);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function activateUser($idUser)
+    {
+        return $this->userFacade->activateUser($idUser);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deactivateUser($idUser)
+    {
+        return $this->userFacade->deactivateUser($idUser);
+    }
 }

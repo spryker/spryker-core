@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Spryker\Zed\Merchant\MerchantConfig;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserConfig;
@@ -24,6 +27,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
 {
     protected const USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE = 'A user with the same email is already connected to another merchant.';
     protected const MERCHANT_USER_NOT_FOUND_ERROR_MESSAGE = 'Merchant user relation was not found.';
+    protected const MERCHANT_USER_ACTIVATION_FAIL = 'Merchant user activation fail';
 
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
@@ -51,24 +55,32 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     protected $utilTextService;
 
     /**
+     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
+     */
+    private $authFacade;
+
+    /**
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
+     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface $authFacade
      */
     public function __construct(
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
         MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserConfig $merchantUserConfig,
         MerchantUserToUserFacadeInterface $userFacade,
-        MerchantUserToUtilTextServiceInterface $utilTextService
+        MerchantUserToUtilTextServiceInterface $utilTextService,
+        MerchantUserToAuthFacadeInterface $authFacade
     ) {
         $this->userFacade = $userFacade;
         $this->merchantUserRepository = $merchantUserRepository;
         $this->merchantUserEntityManager = $merchantUserEntityManager;
         $this->merchantUserConfig = $merchantUserConfig;
         $this->utilTextService = $utilTextService;
+        $this->authFacade = $authFacade;
     }
 
     /**
@@ -110,16 +122,6 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      */
     public function updateByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
-        $merchantUserTransfer = $this->merchantUserRepository->findOne(
-            (new MerchantUserCriteriaFilterTransfer())->setIdUser($merchantUserTransfer->getIdUser())->setIdMerchant($merchantTransfer->getIdMerchant())
-        );
-
-        if (!$merchantUserTransfer) {
-            return (new MerchantUserResponseTransfer())
-                ->setIsSuccess(false)
-                ->addError((new MessageTransfer())->setMessage(static::MERCHANT_USER_NOT_FOUND_ERROR_MESSAGE));
-        }
-
         $userTransfer = $this->userFacade->updateUser($this->fillUserTransferFromMerchant(
             $this->userFacade->getUserById($merchantUserTransfer->getIdUser()),
             $merchantTransfer
@@ -128,6 +130,115 @@ class MerchantUserWriter implements MerchantUserWriterInterface
         return (new MerchantUserResponseTransfer())
             ->setIsSuccess(true)
             ->setMerchantUser($merchantUserTransfer->setUser($userTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    public function syncUserWithMerchant(
+        MerchantTransfer $originalMerchantTransfer,
+        MerchantTransfer $updatedMerchantTransfer,
+        MerchantUserTransfer $merchantUserTransfer
+    ): MerchantUserResponseTransfer {
+        $merchantUserTransferResponse = $this->updateByMerchant(
+            $merchantUserTransfer,
+            $updatedMerchantTransfer
+        );
+
+        if ($merchantUserTransferResponse->getIsSuccess() === true &&
+            $this->isMerchantStatusChanged($originalMerchantTransfer, $updatedMerchantTransfer) === true) {
+            $merchantUserTransferResponse = $this->updateUserStatus(
+                $updatedMerchantTransfer,
+                $merchantUserTransferResponse
+            );
+        }
+
+        return $merchantUserTransferResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserTransferResponse
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    protected function updateUserStatus(
+        MerchantTransfer $updatedMerchantTransfer,
+        MerchantUserResponseTransfer $merchantUserTransferResponse
+    ): MerchantUserResponseTransfer {
+        $currentMerchantStatus = $updatedMerchantTransfer->getStatus();
+        $userTransfer = $merchantUserTransferResponse->getMerchantUser()->getUser();
+
+        if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_BLOCKED &&
+            $currentMerchantStatus === MerchantConfig::STATUS_APPROVED) {
+            return $this->activateUser($userTransfer, $merchantUserTransferResponse);
+        }
+
+        if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_ACTIVE &&
+            $currentMerchantStatus === MerchantConfig::STATUS_DENIED) {
+            return $this->deactivateUser($userTransfer, $merchantUserTransferResponse);
+        }
+
+        return $merchantUserTransferResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserTransferResponse
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    protected function deactivateUser(
+        UserTransfer $userTransfer,
+        MerchantUserResponseTransfer $merchantUserTransferResponse
+    ): MerchantUserResponseTransfer {
+        $isDeactivated = $this->userFacade->deactivateUser($userTransfer->getIdUser());
+
+        if ($isDeactivated === false) {
+            $merchantUserTransferResponse->setIsSuccess(false)
+                ->addError((new MessageTransfer())->setMessage(static::MERCHANT_USER_ACTIVATION_FAIL));
+        }
+
+        return $merchantUserTransferResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserTransferResponse
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    protected function activateUser(
+        UserTransfer $userTransfer,
+        MerchantUserResponseTransfer $merchantUserTransferResponse
+    ): MerchantUserResponseTransfer {
+        $isActivated = $this->userFacade->activateUser($userTransfer->getIdUser());
+
+        $isPasswordReset = $this->authFacade->requestPasswordReset($userTransfer->getUsername());
+
+        if ($isActivated === false || $isPasswordReset === false) {
+            $merchantUserTransferResponse->setIsSuccess(false)
+                ->addError((new MessageTransfer())->setMessage(static::MERCHANT_USER_ACTIVATION_FAIL));
+        }
+
+        return $merchantUserTransferResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     *
+     * @return bool
+     */
+    protected function isMerchantStatusChanged(
+        MerchantTransfer $originalMerchantTransfer,
+        MerchantTransfer $updatedMerchantTransfer
+    ): bool {
+        return $originalMerchantTransfer->getStatus() !== $updatedMerchantTransfer->getStatus();
     }
 
     /**

@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriter;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
 use Spryker\Zed\MerchantUser\Business\Message\MessageConverter;
 use Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
@@ -61,7 +62,8 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getConfig(),
             $this->getUserFacade(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
+            $this->getAuthFacade()
         );
     }
 
@@ -79,6 +81,14 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function getUserFacade(): MerchantUserToUserFacadeInterface
     {
         return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
+     */
+    public function getAuthFacade(): MerchantUserToAuthFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_AUTH);
     }
 
     /**
