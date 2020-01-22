@@ -123,14 +123,15 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      *
      * @api
      *
-     * @param array $ratingAggregation
+     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function calculateProductReviewSummary(array $ratingAggregation): ProductReviewSummaryTransfer
-    {
+    public function calculateProductReviewSummary(
+        ProductReviewSummaryTransfer $productReviewSummaryTransfer
+    ): ProductReviewSummaryTransfer {
         return $this->getFactory()
             ->createProductReviewSummaryCalculator()
-            ->execute($ratingAggregation);
+            ->execute($productReviewSummaryTransfer);
     }
 }

@@ -29,21 +29,20 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param array $ratingAggregation
+     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function execute(array $ratingAggregation): ProductReviewSummaryTransfer
+    public function execute(ProductReviewSummaryTransfer $productReviewSummaryTransfer): ProductReviewSummaryTransfer
     {
+        $ratingAggregation = $productReviewSummaryTransfer->getRatingAggregation();
         $totalReview = $this->getTotalReview($ratingAggregation);
 
-        $summary = (new ProductReviewSummaryTransfer())
+        return (new ProductReviewSummaryTransfer())
             ->setRatingAggregation($this->formatRatingAggregation($ratingAggregation))
             ->setMaximumRating($this->productReviewConfig->getMaximumRating())
             ->setAverageRating($this->getAverageRating($ratingAggregation, $totalReview))
             ->setTotalReview($totalReview);
-
-        return $summary;
     }
 
     /**

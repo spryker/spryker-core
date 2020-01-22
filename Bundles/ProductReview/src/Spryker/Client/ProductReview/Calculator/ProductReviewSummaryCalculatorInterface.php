@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
 interface ProductReviewSummaryCalculatorInterface
 {
     /**
-     * @param array $ratingAggregation
+     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function execute(array $ratingAggregation): ProductReviewSummaryTransfer;
+    public function execute(ProductReviewSummaryTransfer $productReviewSummaryTransfer): ProductReviewSummaryTransfer;
 }
