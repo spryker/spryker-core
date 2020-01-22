@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartCodesRestApi\Plugin\GlueApplication;
+namespace Spryker\Glue\DiscountPromotionsRestApi\Plugin\GlueApplication;
 
-use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
+use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
+ * @method \Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiFactory getFactory()
  */
 class PromotionItemByQuoteTransferResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
@@ -44,6 +44,6 @@ class PromotionItemByQuoteTransferResourceRelationshipPlugin extends AbstractPlu
      */
     public function getRelationshipResourceType(): string
     {
-        return CartCodesRestApiConfig::RESOURCE_PROMOTIONAL_ITEMS;
+        return DiscountPromotionsRestApiConfig::RESOURCE_PROMOTIONAL_ITEMS;
     }
 }

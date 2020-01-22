@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartCodesRestApi\Processor\Expander;
+namespace Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
-use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
-use Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapperInterface;
+use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
+use Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -24,13 +24,13 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapperInterface
+     * @var \Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface
      */
     protected $promotionItemMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapperInterface $promotionItemMapper
+     * @param \Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface $promotionItemMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
@@ -58,7 +58,7 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
                     );
 
                 $promotionalItemsResource = $this->restResourceBuilder->createRestResource(
-                    CartCodesRestApiConfig::RESOURCE_PROMOTIONAL_ITEMS,
+                    DiscountPromotionsRestApiConfig::RESOURCE_PROMOTIONAL_ITEMS,
                     (string)$promotionItemTransfer->getIdDiscountPromotion(),
                     $restPromotionalItemsAttributesTransfer
                 );

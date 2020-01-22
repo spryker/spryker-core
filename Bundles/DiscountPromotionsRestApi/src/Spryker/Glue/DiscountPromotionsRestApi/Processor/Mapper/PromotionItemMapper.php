@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartCodesRestApi\Processor\Mapper;
+namespace Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;

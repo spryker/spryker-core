@@ -16,7 +16,6 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_VOUCHERS = 'vouchers';
     public const RESOURCE_CART_RULES = 'cart-rules';
-    public const RESOURCE_PROMOTIONAL_ITEMS = 'promotional-items';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CARTS

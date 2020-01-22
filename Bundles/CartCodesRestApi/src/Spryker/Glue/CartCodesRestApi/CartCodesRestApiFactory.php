@@ -113,23 +113,4 @@ class CartCodesRestApiFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::RESOURCE_CARTS_REST_API);
     }
-
-    /**
-     * @return \Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapperInterface
-     */
-    public function createPromotionItemMapper(): PromotionItemMapperInterface
-    {
-        return new PromotionItemMapper();
-    }
-
-    /**
-     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpanderInterface
-     */
-    public function createPromotionItemByQuoteResourceRelationshipExpander(): PromotionItemByQuoteResourceRelationshipExpanderInterface
-    {
-        return new PromotionItemByQuoteResourceRelationshipExpander(
-            $this->getResourceBuilder(),
-            $this->createPromotionItemMapper()
-        );
-    }
 }
