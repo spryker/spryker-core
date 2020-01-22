@@ -36,6 +36,11 @@ use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 class PriceManagerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testAddPriceToItems(): void
@@ -195,7 +200,7 @@ class PriceManagerTest extends Unit
 
         $priceProductFilterMock = $this->createPriceProductFilterMock($priceProductCartToPriceAdapter, $priceFacadeMock);
 
-        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock);
+        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock, $this->tester->getLocator()->priceProduct()->service());
     }
 
     /**
