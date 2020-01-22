@@ -45,21 +45,29 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected $merchantPostUpdatePlugins;
 
     /**
+     * @var array|\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
+     */
+    protected $merchantPostSavePlugins;
+
+    /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
+     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[] $merchantPostUpdatePlugins
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantRepositoryInterface $merchantRepository,
         MerchantStatusValidatorInterface $merchantStatusValidator,
+        array $merchantPostSavePlugins,
         array $merchantPostUpdatePlugins
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantRepository = $merchantRepository;
         $this->merchantStatusValidator = $merchantStatusValidator;
         $this->merchantPostUpdatePlugins = $merchantPostUpdatePlugins;
+        $this->merchantPostSavePlugins = $merchantPostSavePlugins;
     }
 
     /**
@@ -117,7 +125,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
     {
         $originalMerchantTransfer = $this->merchantRepository->findOne((new MerchantCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
         $updatedMerchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $updatedMerchantTransfer = $this->executeMerchantPostSavePlugins($originalMerchantTransfer, $updatedMerchantTransfer);
+        $updatedMerchantTransfer = $this->executeMerchantPostUpdatePlugins($originalMerchantTransfer, $updatedMerchantTransfer);
 
         return $updatedMerchantTransfer;
     }
@@ -130,8 +138,12 @@ class MerchantUpdater implements MerchantUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function executeMerchantPostSavePlugins(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantTransfer
+    protected function executeMerchantPostUpdatePlugins(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantTransfer
     {
+        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
+            $merchantPostSavePlugin->execute($updatedMerchantTransfer);
+        }
+
         foreach ($this->merchantPostUpdatePlugins as $merchantPostUpdatePlugin) {
             $merchantResponseTransfer = $merchantPostUpdatePlugin->postUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
             if (!$merchantResponseTransfer->getIsSuccess()) {

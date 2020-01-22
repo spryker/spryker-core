@@ -66,6 +66,42 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testHandleMerchantPostCreate(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantTransfer->setMerchantProfile($this->tester->buildMerchantProfile($merchantTransfer));
+
+        // Act
+        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostCreate($merchantTransfer);
+
+        // Assert
+        $this->assertTrue($merchantResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testHandleMerchantPostUpdate(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantTransfer->setMerchantProfile($this->tester->buildMerchantProfile($merchantTransfer));
+
+        // Act
+        $this->tester->getFacade()->handleMerchantPostCreate($merchantTransfer);
+        $updatedMerchantTransfer = clone $merchantTransfer;
+        $updatedMerchantTransfer->getMerchantProfile()->setPublicEmail('example@test.test');
+        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostUpdate($merchantTransfer, $updatedMerchantTransfer);
+
+        // Assert
+        $this->assertTrue($merchantResponseTransfer->getIsSuccess());
+        $this->assertSame($merchantResponseTransfer->getMerchant()->getMerchantProfile()->getPublicEmail(), $updatedMerchantTransfer->getMerchantProfile()->getPublicEmail());
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateMerchantProfilePersistsToDatabase(): void
     {
         // Arrange

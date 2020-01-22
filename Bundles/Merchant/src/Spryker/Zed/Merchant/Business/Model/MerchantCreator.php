@@ -34,18 +34,26 @@ class MerchantCreator implements MerchantCreatorInterface
     protected $merchantPostCreatePlugins;
 
     /**
+     * @var array|\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
+     */
+    protected $merchantPostSavePlugins;
+
+    /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
+     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface[] $merchantPostCreatePlugins
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantConfig $merchantConfig,
+        array $merchantPostSavePlugins,
         array $merchantPostCreatePlugins
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantConfig = $merchantConfig;
         $this->merchantPostCreatePlugins = $merchantPostCreatePlugins;
+        $this->merchantPostSavePlugins = $merchantPostSavePlugins;
     }
 
     /**
@@ -86,7 +94,7 @@ class MerchantCreator implements MerchantCreatorInterface
     protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $merchantTransfer = $this->executeMerchantPostSavePlugins($merchantTransfer);
+        $merchantTransfer = $this->executeMerchantPostCreatePlugins($merchantTransfer);
 
         return $merchantTransfer;
     }
@@ -107,8 +115,12 @@ class MerchantCreator implements MerchantCreatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function executeMerchantPostSavePlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
+    protected function executeMerchantPostCreatePlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
+        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
+            $merchantPostSavePlugin->execute($merchantTransfer);
+        }
+
         foreach ($this->merchantPostCreatePlugins as $merchantPostCreatePlugin) {
             $merchantResponseTransfer = $merchantPostCreatePlugin->postCreate($merchantTransfer);
             if (!$merchantResponseTransfer->getIsSuccess()) {

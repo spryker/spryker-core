@@ -36,6 +36,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
         return new MerchantCreator(
             $this->getEntityManager(),
             $this->getConfig(),
+            $this->getMerchantPostSavePlugins(),
             $this->getMerchantPostCreatePlugins()
         );
     }
@@ -49,6 +50,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createMerchantStatusValidator(),
+            $this->getMerchantPostSavePlugins(),
             $this->getMerchantPostUpdatePlugins()
         );
     }
