@@ -59,14 +59,13 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $revokeRefreshTokenRequestTransfer = new RevokeRefreshTokenRequestTransfer();
-        $revokeRefreshTokenRequestTransfer->setRefreshToken($refreshTokenIdentifier);
+        $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
 
-        $revokeRefreshTokenResponseTransfer = $this->oauthClient->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
+        $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
+            ->setRefreshToken($refreshTokenIdentifier)
+            ->setCustomer($customer);
 
-        if (!$revokeRefreshTokenResponseTransfer->getIsSuccessful()) {
-            return $restResponse->addError($this->createErrorRevokeRefreshTokenIsNotValid());
-        }
+        $this->oauthClient->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
 
         return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
     }
@@ -91,13 +90,10 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $revokeRefreshTokenRequestTransfer = new RevokeRefreshTokenRequestTransfer();
+        $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
 
-        $restUserTransfer = $restRequest->getRestUser();
-
-        $customer = $this->customerClient->getCustomerById($restUserTransfer->getSurrogateIdentifier());
-
-        $revokeRefreshTokenRequestTransfer->setCustomer($customer);
+        $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
+            ->setCustomer($customer);
 
         $revokeRefreshTokenResponseTransfer = $this->oauthClient->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
 

@@ -135,12 +135,12 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
             );
         }
 
-        if ($refreshTokenCriteriaFilterTransfer->getRefreshToken()) {
-            $authRefreshTokenQuery->filterByIdentifier($refreshTokenCriteriaFilterTransfer->getRefreshToken());
+        if ($refreshTokenCriteriaFilterTransfer->getIdentifier()) {
+            $authRefreshTokenQuery->filterByIdentifier($refreshTokenCriteriaFilterTransfer->getIdentifier());
         }
 
         if ($refreshTokenCriteriaFilterTransfer->getRevokedAt()) {
-            $authRefreshTokenQuery->filterByRevokedAt(null, Criteria::ISNULL);
+            $authRefreshTokenQuery->filterByRevokedAt($refreshTokenCriteriaFilterTransfer->getRevokedAt(), Criteria::ISNULL);
         }
 
         return $authRefreshTokenQuery;

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oauth\Business\Model;
 use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer;
+use Generated\Shared\Transfer\RefreshTokenErrorTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -22,7 +23,9 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
 
     protected const KEY_ACCESS_TOKEN_ID = 'access_token_id';
 
-    protected const ERROR_INVALID_REFRESH_TOKEN = 'Refresh token "%s" is not found';
+    protected const REFRESH_TOKEN_INVALID_ERROR_MESSAGE = 'Refresh token "%s" is not found';
+    protected const REFRESH_TOKEN_INVALID_ERROR_TYPE = 100;
+
     /**
      * @var \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface
      */
@@ -58,19 +61,20 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
             ->requireCustomerReference();
 
         $refreshTokenCriteriaFilterTransfer = (new RefreshTokenCriteriaFilterTransfer())
-            ->setRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken())
-            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference());
+            ->setIdentifier($revokeRefreshTokenRequestTransfer->getRefreshToken())
+            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference())
+            ->setRevokedAt(null);
 
         $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($refreshTokenCriteriaFilterTransfer);
 
         if (!$oauthRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
-                ->setIsSuccessful(true);
-        }
-
-        if ($oauthRefreshTokenTransfer->getRevokedAt()) {
-            return $revokeRefreshTokenResponseTransfer
-                ->setIsSuccessful(true);
+                ->setIsSuccessful(false)
+                ->setError(
+                    (new RefreshTokenErrorTransfer())
+                        ->setMessage(sprintf(static::REFRESH_TOKEN_INVALID_ERROR_MESSAGE, $revokeRefreshTokenRequestTransfer->getRefreshToken()))
+                        ->setErrorType(static::REFRESH_TOKEN_INVALID_ERROR_TYPE)
+                );
         }
 
         $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s.u"));
@@ -93,7 +97,8 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
         $revokeRefreshTokenRequestTransfer->requireCustomer();
 
         $refreshTokenCriteriaFilterTransfer = (new RefreshTokenCriteriaFilterTransfer())
-            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference());
+            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference())
+            ->setRevokedAt(null);
 
         $oauthRefreshTokenTransfers = $this->oauthRepository->findRefreshTokens($refreshTokenCriteriaFilterTransfer)
             ->getOauthRefreshTokens();

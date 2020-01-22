@@ -113,7 +113,12 @@
 
     <transfer name="RevokeRefreshTokenResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="error" type="string"/>
+        <property name="error" type="RefreshTokenError"/>
+    </transfer>
+
+    <transfer name="RefreshTokenError">
+        <property name="errorType" type="string"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="RefreshTokenCriteriaFilter">
