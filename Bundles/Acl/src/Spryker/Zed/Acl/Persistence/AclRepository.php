@@ -9,7 +9,6 @@ namespace Spryker\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
-use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -24,8 +23,9 @@ class AclRepository extends AbstractRepository implements AclRepositoryInterface
      */
     public function findGroup(GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer): ?GroupTransfer
     {
-        $aclGroupQuery = $this->getFactory()->createGroupQuery();
-        $aclGroupQuery = $this->applyGroupFilters($aclGroupQuery, $groupCriteriaFilterTransfer);
+        $aclGroupQuery = $this->getFactory()
+            ->createGroupQuery()
+            ->filterByArray(array_filter($groupCriteriaFilterTransfer->toArray()));
 
         $aclGroupEntity = $aclGroupQuery->findOne();
 
@@ -36,20 +36,5 @@ class AclRepository extends AbstractRepository implements AclRepositoryInterface
         return $this->getFactory()
             ->createAclMapper()
             ->mapAclGroupEntityToGroupTransfer($aclGroupEntity, new GroupTransfer());
-    }
-
-    /**
-     * @param \Orm\Zed\Acl\Persistence\SpyAclGroupQuery $aclGroupQuery
-     * @param \Generated\Shared\Transfer\GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer
-     *
-     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
-     */
-    protected function applyGroupFilters(SpyAclGroupQuery $aclGroupQuery, GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer): SpyAclGroupQuery
-    {
-        if ($groupCriteriaFilterTransfer->getReference()) {
-            $aclGroupQuery->filterByReference($groupCriteriaFilterTransfer->getReference());
-        }
-
-        return $aclGroupQuery;
     }
 }
