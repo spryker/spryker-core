@@ -37,7 +37,7 @@ class MerchantUserAuthGuiPageDependencyProvider extends AbstractBundleDependency
      */
     protected function addFacadeAuth(Container $container): Container
     {
-        $container->set(self::FACADE_AUTH, function (Container $container) {
+        $container->set(static::FACADE_AUTH, function (Container $container) {
             return new MerchantUserAuthGuiPageToAuthBridge($container->getLocator()->auth()->facade());
         });
 
