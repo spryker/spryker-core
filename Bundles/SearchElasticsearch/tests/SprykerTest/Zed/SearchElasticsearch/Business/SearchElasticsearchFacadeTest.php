@@ -96,8 +96,6 @@ class SearchElasticsearchFacadeTest extends Unit
     }
 
     /**
-     * @group facadeclose
-     *
      * @return void
      */
     public function testCanCloseAllIndexes(): void
