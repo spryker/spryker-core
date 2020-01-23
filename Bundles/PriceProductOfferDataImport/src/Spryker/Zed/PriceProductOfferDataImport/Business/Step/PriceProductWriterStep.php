@@ -25,8 +25,11 @@ class PriceProductWriterStep implements DataImportStepInterface
         $productPriceEntity = SpyPriceProductQuery::create()
             ->filterByFkPriceType($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_TYPE])
             ->filterByFkProduct($dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE])
-            ->findOneOrCreate()
-            ->save();
+            ->findOneOrCreate();
+
+        if ($productPriceEntity->isNew()) {
+            $productPriceEntity->save();
+        }
 
         $dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT] = $productPriceEntity->getIdPriceProduct();
     }

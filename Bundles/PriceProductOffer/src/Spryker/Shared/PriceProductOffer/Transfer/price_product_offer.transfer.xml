@@ -24,6 +24,19 @@
         <property name="idCurrency" type="int"/>
     </transfer>
 
+    <transfer name="QueryCriteria">
+        <property name="joins" type="QueryJoin[]" singular="join"/>
+        <property name="withColumns" type="array" singular="withColumn"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="left" type="array" singular="left"/>
+        <property name="right" type="array" singular="right"/>
+        <property name="joinType" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="condition" type="string"/>
+    </transfer>
+
     <transfer name="Item">
         <property name="productOfferReference" type="string"/>
     </transfer>

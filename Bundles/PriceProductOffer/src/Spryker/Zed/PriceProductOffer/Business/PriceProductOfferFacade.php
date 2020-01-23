@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,19 +15,4 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceProductOfferFacade extends AbstractFacade implements PriceProductOfferFacadeInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string[] $skus
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function getPriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
-    {
-        return $this->getRepository()
-            ->getPriceProductTransfers($skus, $priceProductCriteriaTransfer);
-    }
 }

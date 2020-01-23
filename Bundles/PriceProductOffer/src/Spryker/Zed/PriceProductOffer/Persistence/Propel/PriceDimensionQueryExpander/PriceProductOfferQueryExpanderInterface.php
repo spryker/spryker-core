@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOffer\Persistence;
+namespace Spryker\Zed\PriceProductOffer\Persistence\Propel\PriceDimensionQueryExpander;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
-interface PriceProductOfferRepositoryInterface
+interface PriceProductOfferQueryExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer

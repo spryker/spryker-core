@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,32 +17,20 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class PriceProductOfferRepository extends AbstractRepository implements PriceProductOfferRepositoryInterface
 {
     /**
-     * @param string[] $skus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function getPriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    public function buildPriceProductOfferDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
-        $priceProductOfferEntities = $this->getFactory()
-            ->getPriceProductOfferPropelQuery()
-            ->joinWithSpyProductOffer()
-            ->useSpyProductOfferQuery()
-                ->filterByConcreteSku_In($skus)
-            ->endUse()
-            ->joinWithSpyPriceType()
-            ->joinWithSpyCurrency()
-            ->filterByFkCurrency($priceProductCriteriaTransfer->getIdCurrency())
-            ->find();
+        return $this->getFactory()->createPriceProductOfferQueryExpander()->buildPriceProductOfferDimensionQueryCriteria($priceProductCriteriaTransfer);
+    }
 
-        $priceProductTransfers = [];
-
-        foreach ($priceProductOfferEntities as $priceProductOfferEntity) {
-            $priceProductTransfers[] = $this->getFactory()
-                ->createPriceProductOfferMapper()
-                ->mapPriceProductOfferEntityToPriceProductTransfer($priceProductOfferEntity, new PriceProductTransfer());
-        }
-
-        return $priceProductTransfers;
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceProductOfferDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getFactory()->createPriceProductOfferQueryExpander()->buildUnconditionalPriceProductOfferDimensionQueryCriteria();
     }
 }
