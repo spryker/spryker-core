@@ -33,10 +33,15 @@ interface ProductLabelStorageClientInterface
      *
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array;
+    public function getProductLabelsByProductAbstractIds(
+        array $productAbstractIds,
+        string $localeName,
+        ?string $storeName = null
+    ): array;
 
     /**
      * Specification:
