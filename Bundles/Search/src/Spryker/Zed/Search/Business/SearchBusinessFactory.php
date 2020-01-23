@@ -344,6 +344,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterface
      */
     public function createSearchLegacyModeChecker(): SearchLegacyModeCheckerInterface

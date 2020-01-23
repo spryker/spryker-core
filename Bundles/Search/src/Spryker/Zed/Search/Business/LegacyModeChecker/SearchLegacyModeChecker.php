@@ -13,7 +13,7 @@ namespace Spryker\Zed\Search\Business\LegacyModeChecker;
 class SearchLegacyModeChecker implements SearchLegacyModeCheckerInterface
 {
     /**
-     * @var array|\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     * @var \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
      */
     protected $sourceInstallerPlugins;
 
@@ -30,6 +30,6 @@ class SearchLegacyModeChecker implements SearchLegacyModeCheckerInterface
      */
     public function isInLegacyMode(): bool
     {
-        return !(bool)count($this->sourceInstallerPlugins);
+        return !count($this->sourceInstallerPlugins);
     }
 }

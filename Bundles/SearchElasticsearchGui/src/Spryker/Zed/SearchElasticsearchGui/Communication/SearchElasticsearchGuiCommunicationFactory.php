@@ -18,7 +18,7 @@ use Spryker\Zed\SearchElasticsearchGui\Dependency\Facade\SearchElasticsearchGuiT
 use Spryker\Zed\SearchElasticsearchGui\SearchElasticsearchGuiDependencyProvider;
 
 /**
- * @method \Spryker\Zed\SearchElasticsearchGui\SearchElasticsearchGuiConfig getConfig()
+ * @method \Spryker\Zed\SearchElasticsearchGui\Business\SearchElasticsearchGuiFacadeInterface getFacade()
  */
 class SearchElasticsearchGuiCommunicationFactory extends AbstractCommunicationFactory
 {

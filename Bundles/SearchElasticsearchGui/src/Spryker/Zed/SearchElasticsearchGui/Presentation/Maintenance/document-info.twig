@@ -9,14 +9,9 @@
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Search Document' } %}
-
         {% block widget_content %}
-
             <h1>{{ documentId }}</h1>
             <pre>{{ data }}</pre>
-
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}

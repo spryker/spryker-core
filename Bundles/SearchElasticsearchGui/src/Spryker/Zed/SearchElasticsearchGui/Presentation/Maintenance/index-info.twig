@@ -12,7 +12,7 @@
                 <div class="col-md-12">
                     <dl class="row">
                         <dt class="col-xs-3">{{ "Number of entries:" | trans }}</dt>
-                        <dd class="col-xs-9"><a href="{{ url }}">{{ totalCount }}</a></dd>
+                        <dd class="col-xs-9"><a href="{{ documentsListUrl }}">{{ totalCount }}</a></dd>
                         {% for key, timestamp in metaData %}
                             <dt class="col-xs-3">{{ key }}</dt>
                             <dd class="col-xs-9">{{ timestamp }}</dd>

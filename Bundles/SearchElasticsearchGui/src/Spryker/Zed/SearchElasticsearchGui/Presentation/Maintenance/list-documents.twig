@@ -5,15 +5,9 @@
 {% block head_title widget_title | trans %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
-
         {% block widget_content %}
-
             {{ documentTable | raw }}
-
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}

@@ -12,13 +12,23 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SearchElasticsearchGui\Dependency\Client\SearchElasticsearchGuiToSearchElasticsearchClientBridge;
 use Spryker\Zed\SearchElasticsearchGui\Dependency\Facade\SearchElasticsearchGuiToSearchElasticsearchFacadeBridge;
 
-/**
- * @method \Spryker\Zed\SearchElasticsearchGui\SearchElasticsearchGuiConfig getConfig()
- */
 class SearchElasticsearchGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SEARCH_ELASTICSEARCH = 'CLIENT_SEARCH_ELASTICSEARCH';
     public const FACADE_SEARCH_ELASTICSEARCH = 'FACADE_SEARCH_ELASTICSEARCH';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = $this->addSearchElasticsearchClient($container);
+        $container = $this->addSearchElasticsearchFacade($container);
+
+        return $container;
+    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

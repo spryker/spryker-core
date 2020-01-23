@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Search\Business\LegacyModeChecker;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface SearchLegacyModeCheckerInterface
 {
     /**

@@ -9,7 +9,7 @@
                         <title>Elasticsearch</title>
                         <bundle>search-elasticsearch-gui</bundle>
                         <controller>maintenance</controller>
-                        <action>listIndexes</action>
+                        <action>list-indexes</action>
                         <icon>fa-search</icon>
                     </elasticsearch>
                 </pages>

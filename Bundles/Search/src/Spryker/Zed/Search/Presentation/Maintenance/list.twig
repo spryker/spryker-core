@@ -5,19 +5,13 @@
 {% block head_title widget_title | trans %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
-
         {% block widget_content %}
-
             {% if (isInLegacyMode) %}
                 {% include '@Search/_partials/mode-warning-message.twig' %}
             {% else %}
                 {{ searchTable | raw }}
             {% endif %}
-
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}

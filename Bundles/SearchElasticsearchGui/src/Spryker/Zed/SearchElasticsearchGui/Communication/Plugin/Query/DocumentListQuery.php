@@ -11,7 +11,6 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
-use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
@@ -19,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SearchElasticsearchGui\Communication\SearchElasticsearchGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\SearchElasticsearchGui\SearchElasticsearchGuiConfig getConfig()
+ * @method \Spryker\Zed\SearchElasticsearchGui\Business\SearchElasticsearchGuiFacadeInterface getFacade()
  */
 class DocumentListQuery extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
@@ -91,10 +90,7 @@ class DocumentListQuery extends AbstractPlugin implements QueryInterface, Search
      */
     protected function createFullTextSearchQuery(string $searchString): BoolQuery
     {
-        $fields = [
-            PageIndexMap::FULL_TEXT,
-            sprintf('%s^%d', PageIndexMap::FULL_TEXT_BOOSTED, $this->getConfig()->getFullTextBoostedBoostingValue()),
-        ];
+        $fields = ['_all'];
 
         $multiMatch = (new MultiMatch())
             ->setFields($fields)

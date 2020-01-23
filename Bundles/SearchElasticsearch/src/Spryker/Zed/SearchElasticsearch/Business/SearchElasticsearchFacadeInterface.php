@@ -124,8 +124,8 @@ interface SearchElasticsearchFacadeInterface
 
     /**
      * Specification:
-     * - Returns the total number of documents in the index.
-     * - The name of and index to get metadata from is passed in ElasticsearchSearchContextTransfer.
+     * - Returns the total number of documents in an index.
+     * - The name of an index to get metadata from is passed in ElasticsearchSearchContextTransfer.
      *
      * @api
      *
@@ -155,6 +155,8 @@ interface SearchElasticsearchFacadeInterface
      * - Available indexes are those matching the configured list of supported source identifiers.
      *
      * @api
+     *
+     * @see \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig::SUPPORTED_SOURCE_IDENTIFIERS
      *
      * @return string[]
      */

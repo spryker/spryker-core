@@ -13,6 +13,7 @@ use Elastica\Index as ElasticaIndex;
 use Elastica\Request;
 use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
@@ -147,6 +148,8 @@ class Index implements IndexInterface
         try {
             return $this->elasticaClient->getIndex($indexName)->count();
         } catch (ResponseException $e) {
+            ErrorLogger::getInstance()->log($e);
+
             return 0;
         }
     }
@@ -167,6 +170,7 @@ class Index implements IndexInterface
             $metaData = $mapping['_meta'] ?? [];
         } catch (ResponseException $e) {
             // legal catch, if no mapping found (fresh installation etc) we still want to show empty meta data
+            ErrorLogger::getInstance()->log($e);
         }
 
         return $metaData;

@@ -7,20 +7,19 @@
 
 namespace Spryker\Zed\SearchElasticsearchGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
-use Generated\Shared\Transfer\SearchContextTransfer;
-use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SearchElasticsearchGui\Communication\SearchElasticsearchGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SearchElasticsearchGui\Business\SearchElasticsearchGuiFacadeInterface getFacade()()
  */
 class MaintenanceController extends AbstractController
 {
     public const URL_PARAM_INDEX = 'index';
     public const URL_PARAM_TYPE = 'type';
+    public const URL_PARAM_DOCUMENT_ID = 'documentId';
 
     /**
      * @return array
@@ -52,13 +51,11 @@ class MaintenanceController extends AbstractController
     public function indexInfoAction(Request $request): array
     {
         $indexName = $request->query->get(static::URL_PARAM_INDEX);
-        $elasticsearchContextTransfer = $this->createElasticsearchContextTransferFromIndexName($indexName);
-        $searchElasticsearchFacade = $this->getFactory()->getSearchElasticsearchFacade();
 
         return $this->viewResponse([
             'indexName' => $indexName,
-            'totalCount' => $searchElasticsearchFacade->getDocumentsTotalCount($elasticsearchContextTransfer),
-            'metaData' => $searchElasticsearchFacade->getDocumentsTotalCount($elasticsearchContextTransfer),
+            'totalCount' => $this->getFacade()->getTotalCountOfDocumentsInIndex($indexName),
+            'metaData' => $this->getFacade()->getIndexMetaData($indexName),
         ]);
     }
 
@@ -91,12 +88,11 @@ class MaintenanceController extends AbstractController
      */
     public function documentInfoAction(Request $request): array
     {
-        $documentId = $request->get('documentId');
-        $typeName = $request->get('type');
-        $indexName = $request->get('index');
-        $searchDocumentTransfer = $this->createSearchDocumentTransfer($documentId, $indexName, $typeName);
+        $documentId = $request->get(static::URL_PARAM_DOCUMENT_ID);
+        $indexName = $request->get(static::URL_PARAM_INDEX);
+        $typeName = $request->get(static::URL_PARAM_TYPE);
 
-        $document = $this->getFactory()->getSearchElasticsearchClient()->readDocument($searchDocumentTransfer);
+        $document = $this->getFacade()->readDocument($documentId, $indexName, $typeName);
 
         return $this->viewResponse([
             'data' => var_export($document->getData(), true),
@@ -104,34 +100,5 @@ class MaintenanceController extends AbstractController
             'indexName' => $indexName,
             'typeName' => $typeName,
         ]);
-    }
-
-    /**
-     * @param string $indexName
-     * @param string|null $typeName
-     *
-     * @return \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer
-     */
-    protected function createElasticsearchContextTransferFromIndexName(string $indexName, ?string $typeName = null): ElasticsearchSearchContextTransfer
-    {
-        return (new ElasticsearchSearchContextTransfer())
-            ->setIndexName($indexName)
-            ->setTypeName($typeName);
-    }
-
-    /**
-     * @param string $documentId
-     * @param string $indexName
-     * @param string $typeName
-     *
-     * @return \Generated\Shared\Transfer\SearchDocumentTransfer
-     */
-    protected function createSearchDocumentTransfer(string $documentId, string $indexName, string $typeName): SearchDocumentTransfer
-    {
-        $elasticsearchContextTransfer = $this->createElasticsearchContextTransferFromIndexName($indexName, $typeName);
-        $searchContextTransfer = (new SearchContextTransfer())->setElasticsearchContext($elasticsearchContextTransfer);
-        $searchDocumentTransfer = (new SearchDocumentTransfer())->setId($documentId)->setSearchContext($searchContextTransfer);
-
-        return $searchDocumentTransfer;
     }
 }

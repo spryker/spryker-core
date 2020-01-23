@@ -29,7 +29,7 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse([
             'totalCount' => $this->getFacade()->getTotalCount(),
             'metaData' => $this->getFacade()->getMetaData(),
-            'isInLegacyMode' => $this->getFacade()->isInLegacySearchMode(),
+            'isInLegacyMode' => $this->getFacade()->isInLegacyMode(),
         ]);
     }
 
@@ -42,7 +42,7 @@ class MaintenanceController extends AbstractController
 
         return $this->viewResponse([
             'searchTable' => $table->render(),
-            'isInLegacyMode' => $this->getFacade()->isInLegacySearchMode(),
+            'isInLegacyMode' => $this->getFacade()->isInLegacyMode(),
         ]);
     }
 
@@ -51,7 +51,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAjaxAction()
     {
-        if ($this->getFacade()->isInLegacySearchMode()) {
+        if ($this->getFacade()->isInLegacyMode()) {
             return $this->jsonResponse();
         }
 
@@ -67,17 +67,17 @@ class MaintenanceController extends AbstractController
      */
     public function deleteAllAction()
     {
-        if ($this->getFacade()->isInLegacySearchMode()) {
+        if ($this->getFacade()->isInLegacyMode()) {
             $this->addInfoMessage('Impossible to perform delete operation with the current search setup.');
 
-            return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
+            return $this->redirectResponse(static::URL_SEARCH_MAINTENANCE);
         }
 
         $elasticaResponse = $this->getFacade()->delete();
         $formattedResponse = var_export($elasticaResponse->getData(), true);
-        $this->addInfoMessage(self::MESSAGE_RESPONSE, ['%s' => $formattedResponse]);
+        $this->addInfoMessage(static::MESSAGE_RESPONSE, ['%s' => $formattedResponse]);
 
-        return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
+        return $this->redirectResponse(static::URL_SEARCH_MAINTENANCE);
     }
 
     /**
@@ -95,7 +95,7 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse([
             'value' => var_export($document->getData(), true),
             'key' => $key,
-            'isInLegacyMode' => $this->getFacade()->isInLegacySearchMode(),
+            'isInLegacyMode' => $this->getFacade()->isInLegacyMode(),
         ]);
     }
 }

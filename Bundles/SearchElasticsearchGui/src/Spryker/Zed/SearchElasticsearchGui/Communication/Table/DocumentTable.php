@@ -90,15 +90,15 @@ class DocumentTable extends AbstractTable
 
         foreach ($results as $result) {
             $tableData[] = [
-                self::COL_ID => sprintf(
+                static::COL_ID => sprintf(
                     '<a href="/search-elasticsearch-gui/maintenance/document-info?documentId=%s&index=%s&type=%s">%s</a>',
                     $result->getId(),
                     $result->getIndex(),
                     $result->getType(),
                     $result->getId()
                 ),
-                self::COL_INDEX => $result->getIndex(),
-                self::COL_SCORE => $result->getScore(),
+                static::COL_INDEX => $result->getIndex(),
+                static::COL_SCORE => $result->getScore(),
             ];
         }
 

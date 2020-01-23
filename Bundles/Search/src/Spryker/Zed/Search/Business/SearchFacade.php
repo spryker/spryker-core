@@ -417,7 +417,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @return bool
      */
-    public function isInLegacySearchMode(): bool
+    public function isInLegacyMode(): bool
     {
         return $this->getFactory()->createSearchLegacyModeChecker()->isInLegacyMode();
     }
