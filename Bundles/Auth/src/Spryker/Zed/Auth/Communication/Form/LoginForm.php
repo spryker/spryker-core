@@ -46,7 +46,7 @@ class LoginForm extends AbstractType
     protected function addUserNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::FIELD_USERNAME, EmailType::class, [
+            ->add(self::FIELD_USERNAME, EmailType::class, [
                 'constraints' => [
                     new Required(),
                     new NotBlank(),
@@ -67,7 +67,7 @@ class LoginForm extends AbstractType
     protected function addPasswordField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::FIELD_PASSWORD, PasswordType::class, [
+            ->add(self::FIELD_PASSWORD, PasswordType::class, [
                 'constraints' => [
                     new Required(),
                     new NotBlank(),
@@ -87,5 +87,15 @@ class LoginForm extends AbstractType
     public function getBlockPrefix()
     {
         return 'auth';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }
