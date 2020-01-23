@@ -444,6 +444,32 @@ class DiscountPromotionFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFindDiscountPromotionByUuidShouldReturnPersistedPromotion(): void
+    {
+        // Arrange
+        $promotionItemSku = '001';
+        $promotionItemQuantity = 1;
+        $discountGeneralTransfer = $this->tester->haveDiscount();
+        $uuid = $discountGeneralTransfer->getIdDiscount() . $promotionItemSku . $promotionItemQuantity;
+
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
+        $discountPromotionTransfer->setUuid($uuid);
+
+        $discountPromotionTransferSaved = $this->getDiscountPromotionFacade()
+            ->createPromotionDiscount($discountPromotionTransfer);
+
+        // Act
+        $discountPromotionTransferRead = $this->getDiscountPromotionFacade()
+            ->findDiscountPromotionByUuid($discountPromotionTransferSaved);
+
+        // Assert
+        $this->assertNotNull($discountPromotionTransferRead);
+    }
+
+    /**
      * @return \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getDiscountPromotionFacade()

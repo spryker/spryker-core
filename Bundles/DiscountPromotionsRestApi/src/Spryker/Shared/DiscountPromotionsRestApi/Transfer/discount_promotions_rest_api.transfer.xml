@@ -9,9 +9,21 @@
         <property name="maxQuantity" type="int"/>
     </transfer>
 
+    <transfer name="DiscountPromotion">
+        <property name="idDiscountPromotion" type="int"/>
+        <property name="abstractSku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="fkDiscount" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
     <transfer name="RestPromotionalItemsAttributes">
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
 </transfers>

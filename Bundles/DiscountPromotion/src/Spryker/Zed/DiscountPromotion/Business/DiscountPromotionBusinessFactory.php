@@ -12,6 +12,8 @@ use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\Promo
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionWriter;
 use Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapper;
+use Spryker\Zed\DiscountPromotion\Business\Reader\DiscountPromotionReader as DiscountPromotionDataReader;
+use Spryker\Zed\DiscountPromotion\Business\Reader\DiscountPromotionReaderInterface;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -19,6 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepositoryInterface getRepository()
  */
 class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
 {
@@ -56,6 +59,14 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     public function createDiscountPromotionReader()
     {
         return new DiscountPromotionReader($this->getQueryContainer(), $this->createDiscountPromotionMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\Reader\DiscountPromotionReaderInterface
+     */
+    public function createDiscountPromotionDataReader(): DiscountPromotionReaderInterface
+    {
+        return new DiscountPromotionDataReader($this->getRepository());
     }
 
     /**
