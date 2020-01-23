@@ -8,34 +8,26 @@
 namespace Spryker\Zed\MerchantUser\Business\User;
 
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface UserWriterInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
      * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserTransferResponse
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
-     */
-    public function updateUserStatus(
-        MerchantTransfer $updatedMerchantTransfer,
-        MerchantUserResponseTransfer $merchantUserTransferResponse
-    ): MerchantUserResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function createUser(UserTransfer $userTransfer): UserTransfer;
+    public function syncUserWithMerchant(
+        MerchantTransfer $originalMerchantTransfer,
+        MerchantTransfer $updatedMerchantTransfer,
+        MerchantUserTransfer $merchantUserTransfer
+    ): UserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
@@ -47,6 +39,13 @@ interface UserWriterInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $userTransfer): UserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function createUser(UserTransfer $userTransfer): UserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer

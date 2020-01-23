@@ -17,7 +17,6 @@ use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
 use Spryker\Zed\MerchantUser\Business\Message\MessageConverter;
 use Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface;
 use Spryker\Zed\MerchantUser\Business\User\UserWriter;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
@@ -36,7 +35,9 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantPostCreator(
             $this->createMerchantUserWriter(),
-            $this->createMessageConverter()
+            $this->createMessageConverter(),
+            $this->createUserWriter(),
+            $this->getUtilTextService()
         );
     }
 
@@ -46,10 +47,9 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function createMerchantPostUpdater(): MerchantPostUpdaterInterface
     {
         return new MerchantPostUpdater(
-            $this->createMerchantUserWriter(),
             $this->createMerchantPostCreator(),
-            $this->createMessageConverter(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createUserWriter()
         );
     }
 
@@ -61,9 +61,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
         return new MerchantUserWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getConfig(),
-            $this->getUtilTextService(),
-            $this->createUserWriter()
+            $this->getConfig()
         );
     }
 
@@ -80,7 +78,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
      */
     public function createUserWriter()
     {
-        return new UserWriter($this->getAuthFacade(), $this->getUserFacade());
+        return new UserWriter($this->getUserFacade());
     }
 
     /**
@@ -89,14 +87,6 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function getUserFacade(): MerchantUserToUserFacadeInterface
     {
         return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_USER);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
-     */
-    public function getAuthFacade(): MerchantUserToAuthFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_AUTH);
     }
 
     /**

@@ -10,17 +10,11 @@ namespace Spryker\Zed\MerchantUser\Business\Merchant;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
-use Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface;
+use Spryker\Zed\MerchantUser\Business\User\UserWriterInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
 class MerchantPostUpdater implements MerchantPostUpdaterInterface
 {
-    /**
-     * @var \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface
-     */
-    protected $merchantUserWriter;
-
     /**
      * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface
      */
@@ -32,26 +26,23 @@ class MerchantPostUpdater implements MerchantPostUpdaterInterface
     protected $merchantPostCreator;
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface
+     * @var \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface
      */
-    protected $messageConverter;
+    protected $userWriter;
 
     /**
-     * @param \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface $merchantUserWriter
      * @param \Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreatorInterface $merchantPostCreator
-     * @param \Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface $messageConverter
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
+     * @param \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface $userWriter
      */
     public function __construct(
-        MerchantUserWriterInterface $merchantUserWriter,
         MerchantPostCreatorInterface $merchantPostCreator,
-        MessageConverterInterface $messageConverter,
-        MerchantUserRepositoryInterface $merchantUserRepository
+        MerchantUserRepositoryInterface $merchantUserRepository,
+        UserWriterInterface $userWriter
     ) {
-        $this->merchantUserWriter = $merchantUserWriter;
         $this->merchantUserRepository = $merchantUserRepository;
         $this->merchantPostCreator = $merchantPostCreator;
-        $this->messageConverter = $messageConverter;
+        $this->userWriter = $userWriter;
     }
 
     /**
@@ -69,15 +60,12 @@ class MerchantPostUpdater implements MerchantPostUpdaterInterface
             return $this->merchantPostCreator->handleMerchantPostCreate($updatedMerchantTransfer);
         }
 
-        $merchantUserResponseTransfer = $this->merchantUserWriter->syncUserWithMerchant(
+        $this->userWriter->syncUserWithMerchant(
             $originalMerchantTransfer,
             $updatedMerchantTransfer,
             $merchantUserTransfer
         );
 
-        return (new MerchantResponseTransfer())
-            ->setIsSuccess($merchantUserResponseTransfer->getIsSuccess())
-            ->setMerchant($updatedMerchantTransfer)
-            ->setErrors($this->messageConverter->convertMessageTransfersToMerchantErrorTransfers($merchantUserResponseTransfer->getErrors()));
+        return (new MerchantResponseTransfer())->setIsSuccess(true)->setMerchant($updatedMerchantTransfer);
     }
 }
