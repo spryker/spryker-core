@@ -131,4 +131,8 @@
     <transfer name="Company">
     </transfer>
 
+    <transfer name="ShipmentMethod">
+        <property name="sourcePrice" type="MoneyValue"/>
+    </transfer>
+
 </transfers>
