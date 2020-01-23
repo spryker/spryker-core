@@ -7,9 +7,8 @@
 
 namespace Spryker\Glue\AuthRestApi\Processor\RefreshTokens;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
-use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -70,17 +69,6 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
         return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
     }
 
-    /***
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createErrorRevokeRefreshTokenIsNotValid(): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())
-            ->setCode(AuthRestApiConfig::RESPONSE_INVALID_REFRESH_TOKEN)
-            ->setStatus(Response::HTTP_UNAUTHORIZED)
-            ->setDetail('Failed to revoke refresh token.');
-    }
-
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -93,13 +81,10 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
         $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
 
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
-            ->setCustomer($customer);
+//            ->setCustomer($customer);
+            ->setCustomer(new CustomerTransfer());
 
-        $revokeRefreshTokenResponseTransfer = $this->oauthClient->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
-
-        if (!$revokeRefreshTokenResponseTransfer->getIsSuccessful()) {
-            return $restResponse->addError($this->createErrorRevokeRefreshTokenIsNotValid());
-        }
+        $this->oauthClient->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
 
         return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
     }

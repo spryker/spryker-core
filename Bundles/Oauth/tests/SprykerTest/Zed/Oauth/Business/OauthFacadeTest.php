@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
@@ -41,11 +42,18 @@ class OauthFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected $customerTransfer;
+
+    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->customerTransfer = $this->tester->haveCustomer();
     }
 
     /**
@@ -211,6 +219,39 @@ class OauthFacadeTest extends Unit
         foreach ($oauthScopeTransfers as $oauthScopeTransfer) {
             $this->assertNotEmpty($oauthScopeTransfer->getIdOauthScope());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testRevokeConcreteRefreshTokenShouldFailedWithInvalidToken(): void
+    {
+        // Arrange
+        $oauthRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
+            ->setCustomer($this->customerTransfer)
+            ->setRefreshToken('test');
+
+        // Act
+        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeConcreteRefreshToken($oauthRequestTransfer);
+
+        // Assert
+        $this->assertFalse($revokerRefreshTokenResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRevokeRefreshTokensByCustomerShouldSuccessWithValidCustomer(): void
+    {
+        // Arrange
+        $oauthRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
+            ->setCustomer($this->customerTransfer);
+
+        // Act
+        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshTokensByCustomer($oauthRequestTransfer);
+
+        // Assert
+        $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Oauth\Business\Model;
 use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer;
-use Generated\Shared\Transfer\RefreshTokenErrorTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -23,8 +22,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
 
     protected const KEY_ACCESS_TOKEN_ID = 'access_token_id';
 
-    protected const REFRESH_TOKEN_INVALID_ERROR_MESSAGE = 'Refresh token "%s" is not found';
-    protected const REFRESH_TOKEN_INVALID_ERROR_TYPE = 100;
+    protected const REFRESH_TOKEN_INVALID_ERROR_MESSAGE = 'Refresh token is not found';
 
     /**
      * @var \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface
@@ -70,11 +68,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
         if (!$oauthRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
-                ->setError(
-                    (new RefreshTokenErrorTransfer())
-                        ->setMessage(sprintf(static::REFRESH_TOKEN_INVALID_ERROR_MESSAGE, $revokeRefreshTokenRequestTransfer->getRefreshToken()))
-                        ->setErrorType(static::REFRESH_TOKEN_INVALID_ERROR_TYPE)
-                );
+                ->setError(static::REFRESH_TOKEN_INVALID_ERROR_MESSAGE);
         }
 
         $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s.u"));
@@ -94,7 +88,9 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
     {
         $revokeRefreshTokenResponseTransfer = (new RevokeRefreshTokenResponseTransfer());
 
-        $revokeRefreshTokenRequestTransfer->requireCustomer();
+        $revokeRefreshTokenRequestTransfer->requireCustomer()
+            ->getCustomer()
+            ->requireCustomerReference();
 
         $refreshTokenCriteriaFilterTransfer = (new RefreshTokenCriteriaFilterTransfer())
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference())
