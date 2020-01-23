@@ -38,7 +38,7 @@ class MerchantPostCreator implements MerchantPostCreatorInterface
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface
      */
-    private $utilTextService;
+    protected $utilTextService;
 
     /**
      * @param \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface $merchantUserWriter
