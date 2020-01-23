@@ -39,7 +39,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::getDocumentsTotalCount()` instead.
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
      *
      * @return int
      */
@@ -52,7 +52,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::getIndexMetaData()` instead.
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
      *
      * @return array
      */
