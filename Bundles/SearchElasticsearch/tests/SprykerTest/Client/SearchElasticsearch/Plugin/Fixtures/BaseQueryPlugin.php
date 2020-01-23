@@ -72,8 +72,7 @@ class BaseQueryPlugin implements QueryInterface, SearchContextAwareQueryInterfac
     }
 
     /**
-     * Specification:
-     * - Returns SearchContextTransfer which contains context information to be used for a query.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,8 +90,7 @@ class BaseQueryPlugin implements QueryInterface, SearchContextAwareQueryInterfac
     }
 
     /**
-     * Specification:
-     * - Sets SearchContextTransfer which contains context information to be used for a query.
+     * {@inheritDoc}
      *
      * @api
      *

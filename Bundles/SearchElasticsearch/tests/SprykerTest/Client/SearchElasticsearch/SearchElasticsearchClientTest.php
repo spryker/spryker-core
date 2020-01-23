@@ -42,8 +42,6 @@ class SearchElasticsearchClientTest extends Unit
     protected $tester;
 
     /**
-     * @group foobar
-     *
      * @return void
      */
     public function testSearchesBySearchString(): void
