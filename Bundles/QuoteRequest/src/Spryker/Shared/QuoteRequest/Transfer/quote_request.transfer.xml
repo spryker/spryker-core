@@ -81,6 +81,7 @@
     <transfer name="Item">
         <property name="sourceUnitGrossPrice" type="int"/>
         <property name="sourceUnitNetPrice" type="int"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="CompanyUser">
