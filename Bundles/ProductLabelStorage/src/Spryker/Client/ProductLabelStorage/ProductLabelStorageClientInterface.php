@@ -28,6 +28,7 @@ interface ProductLabelStorageClientInterface
      * Specification:
      * - Retrieves product labels by abstract product IDs and by locale.
      * - Returns array of ProductLabelDictionaryItemTransfers indexed by id of product abstract.
+     * - From the next major (Forward compatibility): only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
