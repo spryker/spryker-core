@@ -7,7 +7,7 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-            {% set url = '/search-elasticsearch-gui/maintenance/list-documents?index=' ~ indexName %}
+            {% set documentsListUrl = '/search-elasticsearch-gui/maintenance/list-documents?index=' ~ indexName %}
             <div class="row">
                 <div class="col-md-12">
                     <dl class="row">
