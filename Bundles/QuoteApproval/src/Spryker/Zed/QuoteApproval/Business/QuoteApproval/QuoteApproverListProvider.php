@@ -52,10 +52,7 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
         $quoteTransfer
             ->requireCustomer()
             ->getCustomer()
-                ->requireCompanyUserTransfer()
-                ->getCompanyUserTransfer()
-                    ->requireFkCompanyBusinessUnit()
-                    ->requireFkCompany();
+                ->requireCompanyUserTransfer();
 
         $companyUserTransfer = $quoteTransfer->getCustomer()->getCompanyUserTransfer();
 
@@ -106,11 +103,11 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
     }
 
     /**
-     * @param int $idCompany
+     * @param int|null $idCompany
      *
      * @return int[]
      */
-    protected function getApproversIds(int $idCompany): array
+    protected function getApproversIds(?int $idCompany = null): array
     {
         return $this->companyRoleFacade->getCompanyUserIdsByPermissionKey(ApproveQuotePermissionPlugin::KEY, $idCompany);
     }
