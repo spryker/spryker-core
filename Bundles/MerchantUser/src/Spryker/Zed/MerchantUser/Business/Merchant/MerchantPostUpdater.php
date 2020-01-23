@@ -69,7 +69,11 @@ class MerchantPostUpdater implements MerchantPostUpdaterInterface
             return $this->merchantPostCreator->handleMerchantPostCreate($updatedMerchantTransfer);
         }
 
-        $merchantUserResponseTransfer = $this->merchantUserWriter->updateByMerchant($merchantUserTransfer, $updatedMerchantTransfer);
+        $merchantUserResponseTransfer = $this->merchantUserWriter->syncUserWithMerchant(
+            $originalMerchantTransfer,
+            $updatedMerchantTransfer,
+            $merchantUserTransfer
+        );
 
         return (new MerchantResponseTransfer())
             ->setIsSuccess($merchantUserResponseTransfer->getIsSuccess())

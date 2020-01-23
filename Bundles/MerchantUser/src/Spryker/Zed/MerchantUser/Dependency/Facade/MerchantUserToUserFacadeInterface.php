@@ -40,4 +40,18 @@ interface MerchantUserToUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $user);
+
+    /**
+     * @param int $idUser
+     *
+     * @return bool
+     */
+    public function activateUser($idUser);
+
+    /**
+     * @param int $idUser
+     *
+     * @return bool
+     */
+    public function deactivateUser($idUser);
 }
