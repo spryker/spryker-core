@@ -10,12 +10,15 @@ namespace Spryker\Zed\Url\Business\Url;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrl;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -52,17 +55,9 @@ class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterfac
     {
         $this->assertUrlTransferForUpdate($urlTransfer);
 
-        $this->urlQueryContainer
-            ->getConnection()
-            ->beginTransaction();
-
-        $urlTransfer = $this->persistUrlTransfer($urlTransfer);
-
-        $this->urlQueryContainer
-            ->getConnection()
-            ->commit();
-
-        return $urlTransfer;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($urlTransfer): UrlTransfer {
+            return $this->executeUpdateUrlTransaction($urlTransfer);
+        });
     }
 
     /**
@@ -80,7 +75,7 @@ class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterfac
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function persistUrlTransfer(UrlTransfer $urlTransfer)
+    protected function executeUpdateUrlTransaction(UrlTransfer $urlTransfer): UrlTransfer
     {
         $urlEntity = $this->getUrlById($urlTransfer->getIdUrl());
         $originalUrlTransfer = new UrlTransfer();

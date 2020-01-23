@@ -8,12 +8,15 @@
 namespace Spryker\Zed\Url\Business\Redirect;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
 use Spryker\Zed\Url\Business\Url\UrlUpdaterInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectUpdater implements UrlRedirectUpdaterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -50,8 +53,18 @@ class UrlRedirectUpdater implements UrlRedirectUpdaterInterface
     {
         $urlRedirectTransfer->requireIdUrlRedirect();
 
-        $this->urlQueryContainer->getConnection()->beginTransaction();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($urlRedirectTransfer): UrlRedirectTransfer {
+            return $this->executeUpdateUrlRedirectTransaction($urlRedirectTransfer);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
+    protected function executeUpdateUrlRedirectTransaction(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectTransfer
+    {
         $urlRedirectEntity = $this->getRedirectById($urlRedirectTransfer->getIdUrlRedirect());
         $urlRedirectEntity->fromArray($urlRedirectTransfer->modifiedToArray());
         $urlRedirectEntity->save();
@@ -64,8 +77,6 @@ class UrlRedirectUpdater implements UrlRedirectUpdaterInterface
         }
 
         $this->urlRedirectActivator->activateUrlRedirect($urlRedirectTransfer);
-
-        $this->urlQueryContainer->getConnection()->commit();
 
         return $urlRedirectTransfer;
     }

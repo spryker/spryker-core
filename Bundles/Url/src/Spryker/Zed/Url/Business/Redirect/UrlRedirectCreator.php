@@ -9,11 +9,14 @@ namespace Spryker\Zed\Url\Business\Redirect;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Url\Business\Url\UrlCreatorInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectCreator implements UrlRedirectCreatorInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -50,17 +53,20 @@ class UrlRedirectCreator implements UrlRedirectCreatorInterface
     {
         $this->assertUrlRedirectTransfer($urlRedirectTransfer);
 
-        $this->urlQueryContainer
-            ->getConnection()
-            ->beginTransaction();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($urlRedirectTransfer): UrlRedirectTransfer {
+            return $this->executeCreateUrlTransaction($urlRedirectTransfer);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
+    protected function executeCreateUrlTransaction(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectTransfer
+    {
         $urlRedirectTransfer = $this->persistUrlRedirectEntity($urlRedirectTransfer);
-
         $this->urlRedirectActivator->activateUrlRedirect($urlRedirectTransfer);
-
-        $this->urlQueryContainer
-            ->getConnection()
-            ->commit();
 
         return $urlRedirectTransfer;
     }
