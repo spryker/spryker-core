@@ -108,23 +108,23 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     }
 
     /**
-     * @param \SimpleXMLElement $schemaXmlElement
+     * @param \SimpleXMLElement $tableXmlElement
      * @param string[] $fkFieldNames
      *
      * @return \SimpleXMLElement
      */
-    protected function removeFkIndexes(SimpleXMLElement $schemaXmlElement, array $fkFieldNames): SimpleXMLElement
+    protected function removeFkIndexes(SimpleXMLElement $tableXmlElement, array $fkFieldNames): SimpleXMLElement
     {
-        foreach ($schemaXmlElement->children() as $tagName => $element) {
-            $nameAttribute = (string)$element->attributes()['name'];
+        foreach ($tableXmlElement->children() as $tagName => $childXmlElement) {
+            $nameAttribute = (string)$childXmlElement->attributes()['name'];
             if ($this->isFkIndex($tagName, $nameAttribute)
                 && $this->isFkIndexMustBeRemoved($nameAttribute, $fkFieldNames)
             ) {
-                $this->removeIndex($schemaXmlElement, $tagName);
+                $this->removeElement($tableXmlElement, $childXmlElement);
             }
         }
 
-        return $schemaXmlElement;
+        return $tableXmlElement;
     }
 
     /**
@@ -152,15 +152,15 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     }
 
     /**
-     * @param \SimpleXMLElement $simpleXMLElement
-     * @param string $childName
+     * @param \SimpleXMLElement $parentXMLElement
+     * @param \SimpleXMLElement $childXMLElement
      *
      * @return void
      */
-    protected function removeIndex(SimpleXMLElement $simpleXMLElement, string $childName): void
+    protected function removeElement(SimpleXMLElement $parentXMLElement, SimpleXMLElement $childXMLElement): void
     {
-        $childNode = dom_import_simplexml($simpleXMLElement->$childName);
-        $dom = dom_import_simplexml($simpleXMLElement);
+        $childNode = dom_import_simplexml($childXMLElement);
+        $dom = dom_import_simplexml($parentXMLElement);
 
         $dom->removeChild($childNode);
     }
