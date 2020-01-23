@@ -25,20 +25,20 @@ class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInter
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $plugins = $this->getFacade()->getPublisherPlugins();
+        $publisherEventCollection = $this->getFacade()->getPublisherEventCollection();
 
-        return $this->extractEventListenerCollection($eventCollection, $plugins);
+        return $this->extractEventListenerCollection($eventCollection, $publisherEventCollection);
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     * @param array $publisherPlugins
+     * @param string[] $publisherEventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, array $publisherPlugins): EventCollectionInterface
+    protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, array $publisherEventCollection): EventCollectionInterface
     {
-        foreach ($publisherPlugins as $eventName => $listeners) {
+        foreach ($publisherEventCollection as $eventName => $listeners) {
             $this->addListenerToEventCollection($eventCollection, $listeners, $eventName);
         }
 

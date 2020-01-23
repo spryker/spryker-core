@@ -13,7 +13,7 @@ interface PublisherRegistryPluginInterface
 {
     /**
      * Specification:
-     * - Expands PublisherEventRegistry with new publisher plugins.
+     * - Expands PublisherEventRegistry with new publisher events.
      *
      * @api
      *

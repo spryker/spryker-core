@@ -11,11 +11,11 @@ interface PublisherFacadeInterface
 {
     /**
      * Specification:
-     * - Returns all publisher plugins to one flattened array and groups them by event type.
+     * - Returns an event collection for all registered publisher plugins to one flattened array and grouped by an event type.
      *
      * @api
      *
      * @return string[]
      */
-    public function getPublisherPlugins(): array;
+    public function getPublisherEventCollection(): array;
 }

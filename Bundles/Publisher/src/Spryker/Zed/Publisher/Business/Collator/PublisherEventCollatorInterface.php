@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Publisher\Business\Collator;
 
-interface PublisherPluginCollatorInterface
+interface PublisherEventCollatorInterface
 {
     /**
      * @return string[]
      */
-    public function getPublisherPlugins(): array;
+    public function getPublisherEventCollection(): array;
 }

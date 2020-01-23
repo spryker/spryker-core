@@ -15,7 +15,7 @@ use Traversable;
 class PublisherEventRegistry implements PublisherEventRegistryInterface
 {
     /**
-     * @var array
+     * @var array|\SplPriorityQueue[]
      */
     protected $publisherPlugins = [];
 
@@ -45,6 +45,50 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
         }
 
         $this->publisherPlugins[$eventName][] = $publisherPluginClassName;
+    }
+
+    /**
+     * @param string $eventName
+     *
+     * @return bool
+     */
+    protected function has(string $eventName): bool
+    {
+        return isset($this->publisherPlugins[$eventName]);
+    }
+
+    /**
+     * @param string $eventName
+     *
+     * @throws \Exception
+     *
+     * @return \SplPriorityQueue|\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface
+     */
+    protected function get(string $eventName)
+    {
+        if (!isset($this->publisherPlugins[$eventName]) || count($this->publisherPlugins[$eventName]) === 0) {
+            throw new Exception(
+                sprintf(
+                    'Could not find publisher for event "%s". You have to add a publisher for the event "%s" to PublisherDependencyProvider::getPublisherRegistryPlugins()',
+                    $eventName,
+                    $eventName
+                )
+            );
+        }
+
+        return $this->publisherPlugins[$eventName];
+    }
+
+    /**
+     * Retrieve an external iterator
+     *
+     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     *
+     * @return \Traversable
+     */
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->publisherPlugins);
     }
 
     /**
@@ -102,49 +146,5 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
     public function offsetUnset($offset): void
     {
         unset($this->publisherPlugins[$offset]);
-    }
-
-    /**
-     * Retrieve an external iterator
-     *
-     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
-     *
-     * @return \Traversable
-     */
-    public function getIterator(): Traversable
-    {
-        return new ArrayIterator($this->publisherPlugins);
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @return bool
-     */
-    protected function has(string $eventName): bool
-    {
-        return isset($this->publisherPlugins[$eventName]);
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @throws \Exception
-     *
-     * @return \SplPriorityQueue|\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface
-     */
-    protected function get(string $eventName)
-    {
-        if (!isset($this->publisherPlugins[$eventName]) || count($this->publisherPlugins[$eventName]) === 0) {
-            throw new Exception(
-                sprintf(
-                    'Could not find publisher for event "%s". You have to add a publisher for the event "%s" to PublisherDependencyProvider::getPublisherRegistryPlugins()',
-                    $eventName,
-                    $eventName
-                )
-            );
-        }
-
-        return $this->publisherPlugins[$eventName];
     }
 }

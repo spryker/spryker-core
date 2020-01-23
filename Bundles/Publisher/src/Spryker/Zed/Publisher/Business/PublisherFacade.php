@@ -21,10 +21,10 @@ class PublisherFacade extends AbstractFacade implements PublisherFacadeInterface
      *
      * @return string[]
      */
-    public function getPublisherPlugins(): array
+    public function getPublisherEventCollection(): array
     {
         return $this->getFactory()
-            ->createPublisherPluginCollator()
-            ->getPublisherPlugins();
+            ->createPublisherEventCollator()
+            ->getPublisherEventCollection();
     }
 }

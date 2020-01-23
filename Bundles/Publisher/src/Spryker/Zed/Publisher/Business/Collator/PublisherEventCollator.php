@@ -9,7 +9,7 @@ namespace Spryker\Zed\Publisher\Business\Collator;
 
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 
-class PublisherPluginCollator implements PublisherPluginCollatorInterface
+class PublisherEventCollator implements PublisherEventCollatorInterface
 {
     /**
      * @var \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]
@@ -22,7 +22,7 @@ class PublisherPluginCollator implements PublisherPluginCollatorInterface
     protected $publisherEventRegistry;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected static $eventCollectionBuffer;
 
@@ -39,10 +39,10 @@ class PublisherPluginCollator implements PublisherPluginCollatorInterface
     /**
      * @return string[]
      */
-    public function getPublisherPlugins(): array
+    public function getPublisherEventCollection(): array
     {
         if (static::$eventCollectionBuffer === null) {
-            static::$eventCollectionBuffer = $this->getPublisherEventCollection();
+            static::$eventCollectionBuffer = $this->getEventCollection();
         }
 
         return static::$eventCollectionBuffer;
@@ -51,12 +51,13 @@ class PublisherPluginCollator implements PublisherPluginCollatorInterface
     /**
      * @return string[]
      */
-    protected function getPublisherEventCollection(): array
+    protected function getEventCollection(): array
     {
-        $eventCollection = [];
         foreach ($this->publisherRegistryPlugins as $publisherRegistryPlugin) {
             $this->publisherEventRegistry = $publisherRegistryPlugin->expandPublisherEventRegistry($this->publisherEventRegistry);
         }
+
+        $eventCollection = [];
 
         foreach ($this->publisherEventRegistry as $eventName => $listeners) {
             $eventCollection[$eventName] = $listeners;

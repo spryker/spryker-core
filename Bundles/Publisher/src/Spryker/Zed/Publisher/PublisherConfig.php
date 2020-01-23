@@ -9,6 +9,9 @@ namespace Spryker\Zed\Publisher;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Publisher\PublisherConfig getSharedConfig()
+ */
 class PublisherConfig extends AbstractBundleConfig
 {
 }
