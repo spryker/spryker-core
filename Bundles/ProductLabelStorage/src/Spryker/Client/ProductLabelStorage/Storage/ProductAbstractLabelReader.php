@@ -62,18 +62,26 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, ?string $storeName = null)
     {
+        if (!$storeName) {
+            trigger_error(
+                'Pass the $storeName parameter for the forward compatibility with next major version.',
+                E_USER_DEPRECATED
+            );
+        }
+
         $productLabelIds = $this->findIdsProductLabelByIdAbstractProduct($idProductAbstract);
 
         if (!$productLabelIds) {
             return [];
         }
 
-        return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName);
+        return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName, $storeName);
     }
 
     /**

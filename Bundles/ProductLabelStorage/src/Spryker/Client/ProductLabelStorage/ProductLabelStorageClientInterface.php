@@ -11,16 +11,18 @@ interface ProductLabelStorageClientInterface
 {
     /**
      * Specification:
-     * - TODO: add specification
+     * - Retrieves labels collection for given abstract product id, locale and store name.
+     * - From the next major (Forward compatibility): only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName);
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, ?string $storeName = null);
 
     /**
      * Specification:

@@ -233,3 +233,4 @@ class ProductLabelReader implements ProductLabelReaderInterface
         return $restResponse->addError($restErrorTransfer);
     }
 }
+                               
