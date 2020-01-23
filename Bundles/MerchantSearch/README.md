@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-search.svg)](https://travis-ci.org/spryker/merchant-search)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-MerchantSearch module allows searching products by merchant name.
+The module manages Elasticsearch documents for merchant entities.
 
 ## Installation
 
