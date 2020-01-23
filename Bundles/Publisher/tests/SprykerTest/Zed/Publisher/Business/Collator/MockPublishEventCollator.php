@@ -7,15 +7,15 @@
 
 namespace SprykerTest\Zed\Publisher\Business\Collator;
 
-use Spryker\Zed\Publisher\Business\Collator\PublisherPluginCollator;
+use Spryker\Zed\Publisher\Business\Collator\PublisherEventCollator;
 
-class MockPublishPluginCollator extends PublisherPluginCollator
+class MockPublishEventCollator extends PublisherEventCollator
 {
     /**
      * @return array
      */
-    public function getPublisherPlugins(): array
+    public function getPublisherEventCollection(): array
     {
-        return $this->getPublisherEventCollection();
+        return $this->getEventCollection();
     }
 }

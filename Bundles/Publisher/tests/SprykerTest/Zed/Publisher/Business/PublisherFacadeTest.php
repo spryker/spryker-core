@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface;
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
-use SprykerTest\Zed\Publisher\Business\Collator\MockPublishPluginCollator;
+use SprykerTest\Zed\Publisher\Business\Collator\MockPublishEventCollator;
 
 /**
  * Auto-generated group annotations
@@ -38,10 +38,10 @@ class PublisherFacadeTest extends Unit
     {
         $this->setPublisherRegistryPlugins();
 
-        $publisherPlugins = $this->tester->getFacade()
-            ->getPublisherPlugins();
+        $publisherEvents = $this->tester->getFacade()
+            ->getPublisherEventCollection();
 
-        $this->assertSame($this->getMergedPublisherPlugins(), $publisherPlugins);
+        $this->assertSame($this->getMergedPublisherEvents(), $publisherEvents);
     }
 
     /**
@@ -75,7 +75,7 @@ class PublisherFacadeTest extends Unit
      */
     protected function setPublisherRegistryPlugins(): void
     {
-        $this->tester->mockFactoryMethod('createPublisherPluginCollator', new MockPublishPluginCollator(
+        $this->tester->mockFactoryMethod('createPublisherEventCollator', new MockPublishEventCollator(
             $this->getPublisherRegistryPlugins(),
             $this->createPublisherEventRegistry()
         ));
@@ -115,7 +115,7 @@ class PublisherFacadeTest extends Unit
     /**
      * @return array
      */
-    protected function getMergedPublisherPlugins(): array
+    protected function getMergedPublisherEvents(): array
     {
         return [
             'TestEvent-1' => [
