@@ -53,4 +53,23 @@
         <property name="valueTransformer" type="string"/>
     </transfer>
 
+    <transfer name="ProductLabelCriteria">
+        <property name="idProductAbstracts" type="array" singular="idProductAbstract"/>
+        <property name="storeName" type="string" />
+    </transfer>
+
+    <transfer name="ProductLabelCollection">
+        <property name="productLabels" type="ProductLabel[]" singular="productLabel"/>
+    </transfer>
+
+    <transfer name="ProductLabelResponse">
+        <property name="productLabel" type="ProductLabel"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>
