@@ -13,10 +13,7 @@ use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Zed\Merchant\MerchantConfig;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
+use Spryker\Zed\MerchantUser\Business\User\UserWriterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserConfig;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface;
@@ -27,12 +24,6 @@ class MerchantUserWriter implements MerchantUserWriterInterface
 {
     protected const USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE = 'A user with the same email is already connected to another merchant.';
     protected const MERCHANT_USER_NOT_FOUND_ERROR_MESSAGE = 'Merchant user relation was not found.';
-    protected const MERCHANT_USER_ACTIVATION_FAIL = 'Merchant user activation fail';
-
-    /**
-     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
-     */
-    protected $userFacade;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface
@@ -55,32 +46,29 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     protected $utilTextService;
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
+     * @var \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface
      */
-    private $authFacade;
+    private $userWriter;
 
     /**
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
-     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
-     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface $authFacade
+     * @param \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface $userWriter
      */
     public function __construct(
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
         MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserConfig $merchantUserConfig,
-        MerchantUserToUserFacadeInterface $userFacade,
         MerchantUserToUtilTextServiceInterface $utilTextService,
-        MerchantUserToAuthFacadeInterface $authFacade
+        UserWriterInterface $userWriter
     ) {
-        $this->userFacade = $userFacade;
         $this->merchantUserRepository = $merchantUserRepository;
         $this->merchantUserEntityManager = $merchantUserEntityManager;
         $this->merchantUserConfig = $merchantUserConfig;
         $this->utilTextService = $utilTextService;
-        $this->authFacade = $authFacade;
+        $this->userWriter = $userWriter;
     }
 
     /**
@@ -120,10 +108,10 @@ class MerchantUserWriter implements MerchantUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function updateByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    protected function updateByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
-        $userTransfer = $this->userFacade->updateUser($this->fillUserTransferFromMerchant(
-            $this->userFacade->getUserById($merchantUserTransfer->getIdUser()),
+        $userTransfer = $this->userWriter->updateUser($this->fillUserTransferFromMerchant(
+            $this->userWriter->getUserByMerchantUser($merchantUserTransfer),
             $merchantTransfer
         ));
 
@@ -150,79 +138,12 @@ class MerchantUserWriter implements MerchantUserWriterInterface
         );
 
         if ($merchantUserTransferResponse->getIsSuccess() === true &&
-            $this->isMerchantStatusChanged($originalMerchantTransfer, $updatedMerchantTransfer) === true) {
-            $merchantUserTransferResponse = $this->updateUserStatus(
+            $this->isMerchantStatusChanged($originalMerchantTransfer, $updatedMerchantTransfer) === true
+        ) {
+            $merchantUserTransferResponse = $this->userWriter->updateUserStatus(
                 $updatedMerchantTransfer,
                 $merchantUserTransferResponse
             );
-        }
-
-        return $merchantUserTransferResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserTransferResponse
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
-     */
-    protected function updateUserStatus(
-        MerchantTransfer $updatedMerchantTransfer,
-        MerchantUserResponseTransfer $merchantUserTransferResponse
-    ): MerchantUserResponseTransfer {
-        $currentMerchantStatus = $updatedMerchantTransfer->getStatus();
-        $userTransfer = $merchantUserTransferResponse->getMerchantUser()->getUser();
-
-        if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_BLOCKED &&
-            $currentMerchantStatus === MerchantConfig::STATUS_APPROVED) {
-            return $this->activateUser($userTransfer, $merchantUserTransferResponse);
-        }
-
-        if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_ACTIVE &&
-            $currentMerchantStatus === MerchantConfig::STATUS_DENIED) {
-            return $this->deactivateUser($userTransfer, $merchantUserTransferResponse);
-        }
-
-        return $merchantUserTransferResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserTransferResponse
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
-     */
-    protected function deactivateUser(
-        UserTransfer $userTransfer,
-        MerchantUserResponseTransfer $merchantUserTransferResponse
-    ): MerchantUserResponseTransfer {
-        $isDeactivated = $this->userFacade->deactivateUser($userTransfer->getIdUser());
-
-        if ($isDeactivated === false) {
-            $merchantUserTransferResponse->setIsSuccess(false)
-                ->addError((new MessageTransfer())->setMessage(static::MERCHANT_USER_ACTIVATION_FAIL));
-        }
-
-        return $merchantUserTransferResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserTransferResponse
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
-     */
-    protected function activateUser(
-        UserTransfer $userTransfer,
-        MerchantUserResponseTransfer $merchantUserTransferResponse
-    ): MerchantUserResponseTransfer {
-        $isActivated = $this->userFacade->activateUser($userTransfer->getIdUser());
-
-        $isPasswordReset = $this->authFacade->requestPasswordReset($userTransfer->getUsername());
-
-        if ($isActivated === false || $isPasswordReset === false) {
-            $merchantUserTransferResponse->setIsSuccess(false)
-                ->addError((new MessageTransfer())->setMessage(static::MERCHANT_USER_ACTIVATION_FAIL));
         }
 
         return $merchantUserTransferResponse;
@@ -268,7 +189,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
     protected function resolveUserTransferByMerchant(MerchantTransfer $merchantTransfer): UserTransfer
     {
         try {
-            return $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
+            return $this->userWriter->getUserByMerchant($merchantTransfer);
         } catch (UserNotFoundException $exception) {
             return $this->createUserForMerchant($merchantTransfer);
         }
@@ -285,7 +206,7 @@ class MerchantUserWriter implements MerchantUserWriterInterface
             ->setPassword($this->utilTextService->generateRandomString(MerchantUserConfig::USER_CREATION_DEFAULT_PASSWORD_LENGTH))
             ->setStatus(MerchantUserConfig::USER_CREATION_DEFAULT_STATUS);
 
-        return $this->userFacade->createUser($userTransfer);
+        return $this->userWriter->createUser($userTransfer);
     }
 
     /**

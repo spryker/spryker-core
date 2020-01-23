@@ -21,14 +21,6 @@ interface MerchantUserWriterInterface
     public function createByMerchant(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
-     */
-    public function updateByMerchant(MerchantUserTransfer $merchantUserTransfer, MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
      * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer

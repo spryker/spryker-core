@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriter;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
 use Spryker\Zed\MerchantUser\Business\Message\MessageConverter;
 use Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface;
+use Spryker\Zed\MerchantUser\Business\User\UserWriter;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
@@ -61,9 +62,8 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig(),
-            $this->getUserFacade(),
             $this->getUtilTextService(),
-            $this->getAuthFacade()
+            $this->createUserWriter()
         );
     }
 
@@ -73,6 +73,14 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function createMessageConverter(): MessageConverterInterface
     {
         return new MessageConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\User\UserWriter
+     */
+    public function createUserWriter()
+    {
+        return new UserWriter($this->getAuthFacade(), $this->getUserFacade());
     }
 
     /**

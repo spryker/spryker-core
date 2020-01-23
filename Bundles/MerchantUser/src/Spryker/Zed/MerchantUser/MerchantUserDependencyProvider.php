@@ -45,7 +45,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserFacade(Container $container): Container
     {
-        $container->set(self::FACADE_USER, function (Container $container) {
+        $container->set(static::FACADE_USER, function (Container $container) {
             return new MerchantUserToUserFacadeBridge(
                 $container->getLocator()->user()->facade()
             );
@@ -61,7 +61,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAuthFacade(Container $container): Container
     {
-        $container->set(self::FACADE_AUTH, function (Container $container) {
+        $container->set(static::FACADE_AUTH, function (Container $container) {
             return new MerchantUserToAuthFacadeBridge(
                 $container->getLocator()->auth()->facade()
             );
