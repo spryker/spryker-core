@@ -32,7 +32,7 @@ class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInter
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     * @param string[] $publisherEventCollection
+     * @param array $publisherEventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */

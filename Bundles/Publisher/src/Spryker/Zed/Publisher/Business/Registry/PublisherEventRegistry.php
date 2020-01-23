@@ -15,7 +15,7 @@ use Traversable;
 class PublisherEventRegistry implements PublisherEventRegistryInterface
 {
     /**
-     * @var array|\SplPriorityQueue[]
+     * @var array
      */
     protected $publisherPlugins = [];
 
