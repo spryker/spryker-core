@@ -12,20 +12,24 @@ interface LabelDictionaryReaderInterface
     /**
      * @param int[] $idsProductLabel
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName);
+    public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, string $localeName, ?string $storeName = null);
 
     /**
      * @param int $idProductLabel
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByIdProductLabel($idProductLabel, $localeName);
+    public function findLabelByIdProductLabel($idProductLabel, string $localeName, ?string $storeName = null);
 
     /**
+     * x
+     *
      * @param string $labelName
      * @param string $localeName
      *

@@ -257,11 +257,12 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param int[] $productLabelIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName)
+    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName, ?string $storeName = null)
     {
-        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName);
+        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName, $storeName);
     }
 }

@@ -56,15 +56,23 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @param array $idProductLabels
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName)
+    public function findLabels(array $idProductLabels, $localeName, ?string $storeName = null)
     {
+        if (!$storeName) {
+            trigger_error(
+                'Pass the $storeName parameter for the forward compatibility with next major version.',
+                E_USER_DEPRECATED
+            );
+        }
+
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
-            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName);
+            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName, $storeName);
     }
 
     /**

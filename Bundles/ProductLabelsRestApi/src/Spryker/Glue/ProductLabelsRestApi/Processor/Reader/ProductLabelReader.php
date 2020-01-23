@@ -78,7 +78,8 @@ class ProductLabelReader implements ProductLabelReaderInterface
 
         $labelTransfers = $this->productLabelStorageClient->findLabels(
             [$restRequest->getResource()->getId()],
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
+            APPLICATION_STORE
         );
 
         if (!count($labelTransfers)) {
