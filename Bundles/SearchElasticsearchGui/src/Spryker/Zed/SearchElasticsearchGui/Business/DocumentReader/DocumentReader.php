@@ -30,13 +30,12 @@ class DocumentReader implements DocumentReaderInterface
     /**
      * @param string $documentId
      * @param string $indexName
-     * @param string $typeName
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    public function readDocument(string $documentId, string $indexName, string $typeName): SearchDocumentTransfer
+    public function readDocument(string $documentId, string $indexName): SearchDocumentTransfer
     {
-        $searchDocumentTransfer = $this->createSearchDocumentTransfer($documentId, $indexName, $typeName);
+        $searchDocumentTransfer = $this->createSearchDocumentTransfer($documentId, $indexName);
 
         return $this->searchElasticsearchClient->readDocument($searchDocumentTransfer);
     }
@@ -44,29 +43,15 @@ class DocumentReader implements DocumentReaderInterface
     /**
      * @param string $documentId
      * @param string $indexName
-     * @param string $typeName
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    protected function createSearchDocumentTransfer(string $documentId, string $indexName, string $typeName): SearchDocumentTransfer
+    protected function createSearchDocumentTransfer(string $documentId, string $indexName): SearchDocumentTransfer
     {
-        $elasticsearchContextTransfer = $this->createElasticsearchContextTransferFromIndexName($indexName, $typeName);
+        $elasticsearchContextTransfer = (new ElasticsearchSearchContextTransfer())->setIndexName($indexName);
         $searchContextTransfer = (new SearchContextTransfer())->setElasticsearchContext($elasticsearchContextTransfer);
         $searchDocumentTransfer = (new SearchDocumentTransfer())->setId($documentId)->setSearchContext($searchContextTransfer);
 
         return $searchDocumentTransfer;
-    }
-
-    /**
-     * @param string $indexName
-     * @param string|null $typeName
-     *
-     * @return \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer
-     */
-    protected function createElasticsearchContextTransferFromIndexName(string $indexName, ?string $typeName = null): ElasticsearchSearchContextTransfer
-    {
-        return (new ElasticsearchSearchContextTransfer())
-            ->setIndexName($indexName)
-            ->setTypeName($typeName);
     }
 }

@@ -25,7 +25,6 @@ class SearchElasticsearchGuiDependencyProvider extends AbstractBundleDependencyP
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addSearchElasticsearchClient($container);
-        $container = $this->addSearchElasticsearchFacade($container);
 
         return $container;
     }

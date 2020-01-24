@@ -77,6 +77,6 @@ class DocumentReader implements DocumentReaderInterface
      */
     protected function readMappingTypeNameFromElasticsearch(Index $elasticaIndex): string
     {
-        return $elasticaIndex->getMapping()[0];
+        return key($elasticaIndex->getMapping());
     }
 }

@@ -152,11 +152,9 @@ interface SearchElasticsearchFacadeInterface
     /**
      * Specification:
      * - Returns the names of all the available indexes present in Elasticsearch.
-     * - Available indexes are those matching the configured list of supported source identifiers.
+     * - Available indexes are those matching {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig::SUPPORTED_SOURCE_IDENTIFIERS}.
      *
      * @api
-     *
-     * @see \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig::SUPPORTED_SOURCE_IDENTIFIERS
      *
      * @return string[]
      */

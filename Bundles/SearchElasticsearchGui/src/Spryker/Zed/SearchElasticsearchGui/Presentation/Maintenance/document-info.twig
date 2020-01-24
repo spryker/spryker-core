@@ -3,7 +3,7 @@
 {% block body_class %}spy-page{% endblock %}
 
 {% block action %}
-    {% set allDocumentsUrl = '/search-elasticsearch-gui/maintenance/list-documents?index=%s&type=%s' | format(indexName, typeName) %}
+    {% set allDocumentsUrl = '/search-elasticsearch-gui/maintenance/list-documents?index=' ~ indexName %}
     {{ viewActionButton(allDocumentsUrl, 'All Documents' | trans) }}
 {% endblock %}
 

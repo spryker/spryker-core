@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="SearchDocument">
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
         <property name="id" type="string"/>
         <property name="searchContext" type="SearchContext"/>
     </transfer>

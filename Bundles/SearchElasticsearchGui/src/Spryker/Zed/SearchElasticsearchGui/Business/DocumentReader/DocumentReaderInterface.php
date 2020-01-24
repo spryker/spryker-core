@@ -14,9 +14,8 @@ interface DocumentReaderInterface
     /**
      * @param string $documentId
      * @param string $indexName
-     * @param string $typeName
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    public function readDocument(string $documentId, string $indexName, string $typeName): SearchDocumentTransfer;
+    public function readDocument(string $documentId, string $indexName): SearchDocumentTransfer;
 }

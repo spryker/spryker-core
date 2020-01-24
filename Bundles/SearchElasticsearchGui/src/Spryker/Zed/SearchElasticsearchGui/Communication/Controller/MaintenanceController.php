@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class MaintenanceController extends AbstractController
 {
     public const URL_PARAM_INDEX = 'index';
-    public const URL_PARAM_TYPE = 'type';
     public const URL_PARAM_DOCUMENT_ID = 'documentId';
 
     /**
@@ -41,22 +40,6 @@ class MaintenanceController extends AbstractController
         return $this->jsonResponse(
             $indexTable->fetchData()
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function indexInfoAction(Request $request): array
-    {
-        $indexName = $request->query->get(static::URL_PARAM_INDEX);
-
-        return $this->viewResponse([
-            'indexName' => $indexName,
-            'totalCount' => $this->getFacade()->getTotalCountOfDocumentsInIndex($indexName),
-            'metaData' => $this->getFacade()->getIndexMetaData($indexName),
-        ]);
     }
 
     /**
@@ -90,15 +73,13 @@ class MaintenanceController extends AbstractController
     {
         $documentId = $request->get(static::URL_PARAM_DOCUMENT_ID);
         $indexName = $request->get(static::URL_PARAM_INDEX);
-        $typeName = $request->get(static::URL_PARAM_TYPE);
 
-        $document = $this->getFacade()->readDocument($documentId, $indexName, $typeName);
+        $document = $this->getFacade()->readDocument($documentId, $indexName);
 
         return $this->viewResponse([
             'data' => var_export($document->getData(), true),
             'documentId' => $documentId,
             'indexName' => $indexName,
-            'typeName' => $typeName,
         ]);
     }
 }

@@ -20,42 +20,13 @@ class SearchElasticsearchGuiFacade extends AbstractFacade implements SearchElast
      *
      * @api
      *
-     * @param string $indexName
-     *
-     * @return int
-     */
-    public function getTotalCountOfDocumentsInIndex(string $indexName): int
-    {
-        return $this->getFactory()->createDocumentCounter()->getTotalCountOfDocumentsInIndex($indexName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $indexName
-     *
-     * @return array
-     */
-    public function getIndexMetaData(string $indexName): array
-    {
-        return $this->getFactory()->createIndexMetaDataReader()->getIndexMetaData($indexName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $documentId
      * @param string $indexName
-     * @param string $typeName
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    public function readDocument(string $documentId, string $indexName, string $typeName): SearchDocumentTransfer
+    public function readDocument(string $documentId, string $indexName): SearchDocumentTransfer
     {
-        return $this->getFactory()->createDocumentReader()->readDocument($documentId, $indexName, $typeName);
+        return $this->getFactory()->createDocumentReader()->readDocument($documentId, $indexName);
     }
 }

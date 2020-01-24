@@ -68,7 +68,7 @@ class IndexTable extends AbstractTable
         foreach ($indexNames as $indexName) {
             $tableData[] = [
                 static::COL_INDEX => sprintf(
-                    '<a href="index-info?index=%s">%s</a>',
+                    '<a href="list-documents?index=%s">%s</a>',
                     $indexName,
                     $indexName
                 ),
