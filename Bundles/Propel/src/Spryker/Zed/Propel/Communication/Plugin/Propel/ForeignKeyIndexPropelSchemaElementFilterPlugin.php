@@ -115,14 +115,17 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
      */
     protected function removeFkIndexes(SimpleXMLElement $tableXmlElement, array $fkFieldNames): SimpleXMLElement
     {
+        $elementsToRemove = [];
         foreach ($tableXmlElement->children() as $tagName => $childXmlElement) {
             $nameAttribute = (string)$childXmlElement->attributes()['name'];
             if ($this->isFkIndex($tagName, $nameAttribute)
                 && $this->isFkIndexMustBeRemoved($nameAttribute, $fkFieldNames)
             ) {
-                $this->removeElement($tableXmlElement, $childXmlElement);
+                $elementsToRemove[] = $childXmlElement;
             }
         }
+
+        $this->removeElements($elementsToRemove);
 
         return $tableXmlElement;
     }
@@ -152,16 +155,16 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     }
 
     /**
-     * @param \SimpleXMLElement $parentXMLElement
-     * @param \SimpleXMLElement $childXMLElement
+     * @param \SimpleXMLElement[] $elementsToRemove
      *
      * @return void
      */
-    protected function removeElement(SimpleXMLElement $parentXMLElement, SimpleXMLElement $childXMLElement): void
+    protected function removeElements(array $elementsToRemove): void
     {
-        $childNode = dom_import_simplexml($childXMLElement);
-        $dom = dom_import_simplexml($parentXMLElement);
+        foreach ($elementsToRemove as $element) {
+            $childNode = dom_import_simplexml($element);
 
-        $dom->removeChild($childNode);
+            $childNode->parentNode->removeChild($childNode);
+        }
     }
 }
