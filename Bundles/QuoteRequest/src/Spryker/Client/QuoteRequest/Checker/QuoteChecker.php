@@ -46,7 +46,7 @@ class QuoteChecker implements QuoteCheckerInterface
      */
     protected function extractShipmentSourcePrice(ItemTransfer $itemTransfer): ?MoneyValueTransfer
     {
-        $shipmentMethodTransfer = $itemTransfer->getShipment() ?? $itemTransfer->getShipment()->getMethod();
+        $shipmentMethodTransfer = $itemTransfer->getShipment() ? $itemTransfer->getShipment()->getMethod() : null;
 
         if (!$shipmentMethodTransfer) {
             return null;
