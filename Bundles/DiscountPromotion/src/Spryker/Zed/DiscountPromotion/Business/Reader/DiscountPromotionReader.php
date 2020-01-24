@@ -26,14 +26,12 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     * @param string $uuid
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
-    public function findDiscountPromotionByUuid(DiscountPromotionTransfer $discountPromotionTransfer): ?DiscountPromotionTransfer
+    public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer
     {
-        $discountPromotionTransfer->requireUuid();
-
-        return $this->discountPromotionRepository->findDiscountPromotionByUuid($discountPromotionTransfer->getUuid());
+        return $this->discountPromotionRepository->findDiscountPromotionByUuid($uuid);
     }
 }

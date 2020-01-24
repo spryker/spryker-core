@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\DiscountPromotion;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 
 /**
  * Inherited Methods
@@ -29,7 +30,42 @@ class DiscountPromotionBusinessTester extends Actor
 {
     use _generated\DiscountPromotionBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param string $promotionItemSku
+     * @param int $promotionItemQuantity
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function getDiscountPromotionTransfer(string $promotionItemSku, int $promotionItemQuantity): DiscountPromotionTransfer
+    {
+        $discountGeneralTransfer = $this->haveDiscount();
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+
+        return $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
+    }
+
+    /**
+     * @param array $discountPromotionAttributes
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function mapDiscountPromotionAttributesToTransfer(array $discountPromotionAttributes): DiscountPromotionTransfer
+    {
+        $discountPromotionTransfer = new DiscountPromotionTransfer();
+
+        return $discountPromotionTransfer->fromArray($discountPromotionAttributes);
+    }
+
+    /**
+     * @param string $promotionSku
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    protected function createDiscountPromotionTransfer(string $promotionSku, int $quantity): DiscountPromotionTransfer
+    {
+        return (new DiscountPromotionTransfer())
+            ->setAbstractSku($promotionSku)
+            ->setQuantity($quantity);
+    }
 }

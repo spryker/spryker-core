@@ -25,6 +25,22 @@ class PromotionItemMapper implements PromotionItemMapperInterface
         return $restPromotionalItemsAttributesTransfer
             ->fromArray($promotionItemTransfer->toArray(), true)
             ->setSku($promotionItemTransfer->getAbstractSku())
-            ->setQuantity($promotionItemTransfer->getMaxQuantity());
+            ->setQuantity($promotionItemTransfer->getMaxQuantity())
+            ->setUuid($this->findDiscountPromotionUuid($promotionItemTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
+     *
+     * @return string
+     */
+    protected function findDiscountPromotionUuid(PromotionItemTransfer $promotionItemTransfer): string
+    {
+        $discountTransfer = $promotionItemTransfer->getDiscount();
+        if ($discountTransfer === null || $discountTransfer->getDiscountPromotion() === null) {
+            return null;
+        }
+
+        return $discountTransfer->getDiscountPromotion()->getUuid();
     }
 }
