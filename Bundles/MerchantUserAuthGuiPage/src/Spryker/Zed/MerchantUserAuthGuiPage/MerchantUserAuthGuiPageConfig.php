@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantUserAuthGuiPage;
 
-use Spryker\Shared\MerchantUserAuthGuiPage\MerchantUserAuthGuiPageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantUserAuthGuiPageConfig extends AbstractBundleConfig
@@ -19,9 +18,6 @@ class MerchantUserAuthGuiPageConfig extends AbstractBundleConfig
      */
     public function getDefaultUrlRedirect(): string
     {
-        return $this->get(
-            MerchantUserAuthGuiPageConstants::MERCHANT_USER_DEFAULT_URL_REDIRECT,
-            static::MERCHANT_USER_DEFAULT_URL_REDIRECT
-        );
+        return static::MERCHANT_USER_DEFAULT_URL_REDIRECT;
     }
 }

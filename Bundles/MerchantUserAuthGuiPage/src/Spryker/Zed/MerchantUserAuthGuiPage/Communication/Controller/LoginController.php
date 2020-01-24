@@ -35,20 +35,14 @@ class LoginController extends AbstractController
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultUrlRedirect());
         }
 
-        $form = $this
-            ->getFactory()
-            ->createLoginForm()
-            ->handleRequest($request);
+        $form = $this->getFactory()->createLoginForm()->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            $isLogged = $authFacade->login(
-                $formData[LoginForm::FIELD_USERNAME],
-                $formData[LoginForm::FIELD_PASSWORD]
-            );
+            $isLoggedIn = $authFacade->login($formData[LoginForm::FIELD_USERNAME], $formData[LoginForm::FIELD_PASSWORD]);
 
-            if ($isLogged) {
+            if ($isLoggedIn) {
                 return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultUrlRedirect());
             }
 

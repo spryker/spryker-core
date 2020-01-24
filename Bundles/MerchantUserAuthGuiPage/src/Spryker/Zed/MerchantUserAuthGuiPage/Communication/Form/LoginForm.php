@@ -15,10 +15,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
- * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
- * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
- * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Auth\AuthConfig getConfig()
+ * @method \Spryker\Zed\MerchantUserAuthGuiPage\MerchantUserAuthGuiPageConfig getConfig()
+ * @method \Spryker\Zed\MerchantUserAuthGuiPage\Communication\MerchantUserAuthGuiPageCommunicationFactory getFactory()
  */
 class LoginForm extends AbstractType
 {
@@ -33,9 +31,7 @@ class LoginForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this
-            ->addUserNameField($builder)
-            ->addPasswordField($builder);
+        $this->addUserNameField($builder)->addPasswordField($builder);
     }
 
     /**
@@ -45,16 +41,19 @@ class LoginForm extends AbstractType
      */
     protected function addUserNameField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_USERNAME, EmailType::class, [
-                'constraints' => [
-                    new Required(),
-                    new NotBlank(),
-                ],
-                'attr' => [
+        $builder->add(
+            static::FIELD_USERNAME,
+            EmailType::class,
+            [
+                    'constraints' => [
+                        new Required(),
+                        new NotBlank(),
+                    ],
+                    'attr' => [
                     'placeholder' => 'Email Address',
-                ],
-            ]);
+                    ],
+            ]
+        );
 
         return $this;
     }
@@ -66,17 +65,20 @@ class LoginForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_PASSWORD, PasswordType::class, [
-                'constraints' => [
-                    new Required(),
-                    new NotBlank(),
-                ],
-                'attr' => [
+        $builder->add(
+            static::FIELD_PASSWORD,
+            PasswordType::class,
+            [
+                    'constraints' => [
+                        new Required(),
+                        new NotBlank(),
+                    ],
+                    'attr' => [
                     'placeholder' => 'Password',
                     'autocomplete' => 'off',
-                ],
-            ]);
+                    ],
+            ]
+        );
 
         return $this;
     }
