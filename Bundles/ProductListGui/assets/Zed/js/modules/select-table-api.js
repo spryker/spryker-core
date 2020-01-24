@@ -169,7 +169,7 @@ var SelectTableAPI = function() {
         var self = this;
 
         this.selectedProductsData.every(function(elem,index) {
-            if (elem[0] !== id) {
+            if (elem[0] !== Number(id)) {
                 return true;
             }
 

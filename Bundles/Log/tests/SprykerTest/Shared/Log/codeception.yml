@@ -2,9 +2,9 @@ namespace: SprykerTest\Shared\Log
 
 paths:
     tests: .
-    data: ../../../_data
-    support: _support
-    log: ../../../_output
+    data: ../../../_data/
+    support: _support/
+    log: ../../../_output/
 
 coverage:
     enabled: true
@@ -17,7 +17,6 @@ suites:
         class_name: LogSharedTester
         modules:
             enabled:
-                - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
