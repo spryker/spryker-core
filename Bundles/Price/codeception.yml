@@ -2,6 +2,7 @@ namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Zed/Price
+    - tests/SprykerTest/Client/Price
 
 paths:
     tests: tests
@@ -16,10 +17,6 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-
-coverage:
-    enabled: true
-    whitelist: { include: ['src/*'] }
 
 extensions:
     enabled:

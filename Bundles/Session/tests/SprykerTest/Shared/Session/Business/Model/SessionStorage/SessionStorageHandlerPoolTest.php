@@ -14,6 +14,7 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Session
@@ -30,7 +31,7 @@ class SessionStorageHandlerPoolTest extends Unit
     /**
      * @return void
      */
-    public function testGetHandlerReturnsAddedHandlerWhichMatchesConfiguredHandlerName()
+    public function testGetHandlerReturnsAddedHandlerWhichMatchesConfiguredHandlerName(): void
     {
         $sessionHandlerInterfaceMock = $this->getSessionHandlerInterfaceMock();
 
@@ -43,7 +44,7 @@ class SessionStorageHandlerPoolTest extends Unit
     /**
      * @return void
      */
-    public function testGetHandlerThrowsExceptionWhenTryingToGetNotAddedHandler()
+    public function testGetHandlerThrowsExceptionWhenTryingToGetNotAddedHandler(): void
     {
         $this->expectException(SessionHandlerNotFoundInSessionHandlerPoolException::class);
 
@@ -54,7 +55,7 @@ class SessionStorageHandlerPoolTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SessionHandlerInterface
      */
-    protected function getSessionHandlerInterfaceMock()
+    protected function getSessionHandlerInterfaceMock(): SessionHandlerInterface
     {
         return $this->getMockBuilder(SessionHandlerInterface::class)->getMock();
     }

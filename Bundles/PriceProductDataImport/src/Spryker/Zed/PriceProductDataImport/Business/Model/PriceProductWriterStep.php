@@ -8,8 +8,10 @@
 namespace Spryker\Zed\PriceProductDataImport\Business\Model;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
@@ -64,34 +66,76 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
         $productPriceEntity = $priceProductQuery->findOneOrCreate();
         $productPriceEntity->save();
 
+        $priceProductStoreEntity = $this->getPriceProductStoreEntityWithDefaultDimension($dataSet, $productPriceEntity);
+        $priceProductStoreEntity->save();
+
+        $this->savePriceProductDefault($priceProductStoreEntity);
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $productPriceEntity
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
+     */
+    protected function getPriceProductStoreEntityWithDefaultDimension(
+        DataSetInterface $dataSet,
+        SpyPriceProduct $productPriceEntity
+    ): SpyPriceProductStore {
         $priceProductStoreEntity = SpyPriceProductStoreQuery::create()
             ->filterByFkStore($dataSet[PriceProductDataSet::ID_STORE])
             ->filterByFkCurrency($dataSet[PriceProductDataSet::ID_CURRENCY])
             ->filterByFkPriceProduct($productPriceEntity->getPrimaryKey())
-            ->findOneOrCreate();
+            ->joinPriceProductDefault()
+            ->findOne();
 
-        $priceProductStoreEntity->setGrossPrice($dataSet[PriceProductDataSet::KEY_PRICE_GROSS]);
-        $priceProductStoreEntity->setNetPrice($dataSet[PriceProductDataSet::KEY_PRICE_NET]);
-        $priceProductStoreEntity->setPriceData($dataSet[PriceProductDataSet::KEY_PRICE_DATA]);
-        $priceProductStoreEntity->setPriceDataChecksum($dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM]);
+        if ($priceProductStoreEntity
+            && $priceProductStoreEntity->getGrossPrice() === (int)$dataSet[PriceProductDataSet::KEY_PRICE_GROSS]
+            && $priceProductStoreEntity->getNetPrice() === (int)$dataSet[PriceProductDataSet::KEY_PRICE_NET]
+            && $priceProductStoreEntity->getPriceDataChecksum() === $dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM]
+        ) {
+            return $priceProductStoreEntity;
+        }
 
-        $priceProductStoreEntity->save();
+        $priceProductDefaultEntity = $this->getPriceProductDefaultEntity($priceProductStoreEntity);
 
-        $this->savePriceProductDefault($priceProductStoreEntity->getPrimaryKey());
+        return (new SpyPriceProductStore())
+            ->setFkStore($dataSet[PriceProductDataSet::ID_STORE])
+            ->setFkCurrency($dataSet[PriceProductDataSet::ID_CURRENCY])
+            ->setFkPriceProduct($productPriceEntity->getPrimaryKey())
+            ->setGrossPrice((int)$dataSet[PriceProductDataSet::KEY_PRICE_GROSS])
+            ->setNetPrice((int)$dataSet[PriceProductDataSet::KEY_PRICE_NET])
+            ->setPriceData($dataSet[PriceProductDataSet::KEY_PRICE_DATA])
+            ->setPriceDataChecksum($dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM])
+            ->addPriceProductDefault($priceProductDefaultEntity);
     }
 
     /**
-     * @param string $idPriceProductStore
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore|null $priceProductStoreEntity
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault
+     */
+    protected function getPriceProductDefaultEntity(
+        ?SpyPriceProductStore $priceProductStoreEntity
+    ): SpyPriceProductDefault {
+        if ($priceProductStoreEntity) {
+            return $priceProductStoreEntity->getPriceProductDefaults()->getFirst();
+        }
+
+        return new SpyPriceProductDefault();
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
      *
      * @return void
      */
-    protected function savePriceProductDefault(string $idPriceProductStore): void
+    protected function savePriceProductDefault(SpyPriceProductStore $priceProductStoreEntity): void
     {
-        $priceProductDefaultEntity = SpyPriceProductDefaultQuery::create()
-            ->filterByFkPriceProductStore($idPriceProductStore)
-            ->findOneOrCreate();
+        $priceProductDefaultEntity = $priceProductStoreEntity->getPriceProductDefaults()->getFirst();
+        $priceProductDefaultEntity->setFkPriceProductStore($priceProductStoreEntity->getIdPriceProductStore());
 
-        if ($priceProductDefaultEntity->isNew()) {
+        if ($priceProductDefaultEntity->getModifiedColumns()) {
             $priceProductDefaultEntity->save();
         }
     }

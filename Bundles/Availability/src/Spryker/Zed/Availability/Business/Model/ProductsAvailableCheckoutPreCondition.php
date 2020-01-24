@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
@@ -47,17 +48,20 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $quoteTransfer->requireStore();
-
         $isPassed = true;
-
         $storeTransfer = $quoteTransfer->getStore();
-        $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
 
-        foreach ($groupedItemQuantities as $sku => $quantity) {
-            if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer->getSku());
+
+            $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
+                ->fromArray($itemTransfer->toArray(), true);
+
+            if ($this->sellable->isProductSellableForStore($itemTransfer->getSku(), $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
                 continue;
             }
-            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sku);
+
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $itemTransfer->getSku());
             $isPassed = false;
         }
 
@@ -65,36 +69,36 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return bool
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer)
+    protected function getAccumulatedItemQuantityForGivenItemSku(QuoteTransfer $quoteTransfer, string $sku): Decimal
     {
-        return $this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer);
+        $quantity = new Decimal(0);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getSku() !== $sku) {
+                continue;
+            }
+
+            $quantity = $quantity->add($itemTransfer->getQuantity());
+        }
+
+        return $quantity;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    private function groupItemsBySku(ArrayObject $items)
+    protected function filterItemsWithAmount(array $itemTransfers): array
     {
-        $result = [];
-
-        foreach ($items as $itemTransfer) {
-            $sku = $itemTransfer->getSku();
-
-            if (!isset($result[$sku])) {
-                $result[$sku] = 0;
-            }
-            $result[$sku] += $itemTransfer->getQuantity();
-        }
-
-        return $result;
+        return array_filter($itemTransfers, function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getAmount() === null;
+        });
     }
 
     /**
@@ -111,7 +115,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      *
      * @return void
      */
-    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku)
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku): void
     {
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
         $checkoutErrorTransfer

@@ -228,7 +228,7 @@ class ProductTable extends AbstractProductTable
         );
 
         $urls[] = $this->generateEditButton(
-            Url::generate('/product-attribute-gui/view/productAbstract', [
+            Url::generate('/product-attribute-gui/view/product-abstract', [
                 EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
             ]),
             'Manage Attributes'

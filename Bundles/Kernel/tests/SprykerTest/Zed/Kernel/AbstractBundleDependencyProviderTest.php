@@ -8,10 +8,12 @@
 namespace SprykerTest\Zed\Kernel;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -23,7 +25,7 @@ class AbstractBundleDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCallProvidePersistenceLayerDependenciesMustReturnContainer()
+    public function testCallProvidePersistenceLayerDependenciesMustReturnContainer(): void
     {
         $container = new Container();
 
@@ -36,7 +38,7 @@ class AbstractBundleDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCallProvideCommunicationLayerDependenciesMustReturnContainer()
+    public function testCallProvideCommunicationLayerDependenciesMustReturnContainer(): void
     {
         $container = new Container();
 
@@ -49,7 +51,7 @@ class AbstractBundleDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCallProvideBusinessLayerDependenciesMustReturnContainer()
+    public function testCallProvideBusinessLayerDependenciesMustReturnContainer(): void
     {
         $container = new Container();
 
@@ -62,7 +64,7 @@ class AbstractBundleDependencyProviderTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
      */
-    private function getAbstractBundleDependencyProviderMock()
+    private function getAbstractBundleDependencyProviderMock(): AbstractBundleDependencyProvider
     {
         return $this->getMockForAbstractClass('Spryker\Zed\Kernel\AbstractBundleDependencyProvider');
     }

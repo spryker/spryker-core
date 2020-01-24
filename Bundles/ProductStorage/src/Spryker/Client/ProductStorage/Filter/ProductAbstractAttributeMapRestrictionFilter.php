@@ -75,13 +75,9 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      */
     protected function getRestrictedProductConcreteIds(array $productConcreteIds): array
     {
-        return array_reduce($productConcreteIds, function (array $restrictedProductConcreteIds, int $productConcreteId) {
-            if ($this->productConcreteStorageReader->isProductConcreteRestricted($productConcreteId)) {
-                $restrictedProductConcreteIds[] = $productConcreteId;
-            }
+        $nonRestrictedConcreteIds = $this->productConcreteStorageReader->filterRestrictedProductConcreteIds($productConcreteIds);
 
-            return $restrictedProductConcreteIds;
-        }, []);
+        return array_diff($productConcreteIds, $nonRestrictedConcreteIds);
     }
 
     /**
@@ -160,7 +156,9 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
         string $attributeVariantKey,
         array $attributeVariantValue
     ): array {
-        $attributeVariantPath[$attributeVariantKey] = $attributeVariantValue;
+        $attributeVariantPath = [
+            $attributeVariantKey => $attributeVariantValue,
+        ];
         for ($i = $iterator->getDepth() - 1; $i >= 0; $i--) {
             $attributeVariantPath = [
                 $iterator->getSubIterator($i)->key() => $attributeVariantPath,

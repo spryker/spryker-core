@@ -23,7 +23,7 @@ use Spryker\Zed\ProductQuantity\Dependency\ProductQuantityEvents;
 class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

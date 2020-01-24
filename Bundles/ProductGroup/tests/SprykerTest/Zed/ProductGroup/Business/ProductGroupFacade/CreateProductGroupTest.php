@@ -14,6 +14,7 @@ use Spryker\Shared\ProductGroup\ProductGroupConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductGroup
@@ -29,7 +30,7 @@ class CreateProductGroupTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductGroupPersistNewEntitiesToDatabase()
+    public function testCreateProductGroupPersistNewEntitiesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();

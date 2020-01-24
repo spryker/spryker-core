@@ -14,6 +14,7 @@ use Spryker\Yves\CmsContentWidgetProductSearchConnector\Plugin\CmsProductSearchC
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group CmsContentWidgetProductSetConnector
@@ -26,7 +27,7 @@ class CmsProductSearchContentWidgetPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCmsProductSearchContentWidgetPluginCreated()
+    public function testCmsProductSearchContentWidgetPluginCreated(): void
     {
         $plugin = new CmsProductSearchContentWidgetPlugin(
             $this->createCmsContentWidgetConfigurationProviderMock()
@@ -38,7 +39,7 @@ class CmsProductSearchContentWidgetPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
-    protected function createCmsContentWidgetConfigurationProviderMock()
+    protected function createCmsContentWidgetConfigurationProviderMock(): CmsContentWidgetConfigurationProviderInterface
     {
         return $this->getMockBuilder(CmsContentWidgetConfigurationProviderInterface::class)->getMock();
     }

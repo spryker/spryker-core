@@ -141,6 +141,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `vendor/bin/console queue:worker:start --stop-only-when-empty` instead.
+     *
      * @return bool
      */
     public function getIsWorkerLoopEnabled(): bool

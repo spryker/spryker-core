@@ -1,0 +1,103 @@
+{{ form_start(form) }}
+    {{ form_widget(form.shipment.idSalesShipment) }}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Delivery Address' } %}
+        {% block widget_content %}
+            {{ form_row(form.shipment.shippingAddress.idCustomerAddress) }}
+            {{ form_row(form.shipment.shippingAddress) }}
+        {% endblock %}
+    {% endembed %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Shipment method' } %}
+        {% block widget_content %}
+            {{ form_row(form.shipment.method.idShipmentMethod) }}
+        {% endblock %}
+    {% endembed %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Requested delivery date' } %}
+        {% block widget_content %}
+            {{ form_row(form.shipment.requestedDeliveryDate, {
+                type: 'text',
+                attr: {
+                    placeholder: 'YYYY-MM-DD',
+                },
+            }) }}
+        {% endblock %}
+    {% endembed %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order items inside this shipment' } %}
+        {% block widget_content %}
+            <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+                <thead>
+                    <th/>
+                    <th/>
+                    <th>{{ 'Product' | trans }}</th>
+                    <th>{{ 'Quantity' | trans }}</th>
+                    <th>{{ 'State' | trans }}</th>
+                    <th>{{ 'Current shipment' | trans }}</th>
+                </thead>
+                <tbody>
+                    {% set shipmentNumberList = {} %}
+                    {% set shipmentNumber = 0 %}
+
+                    {% for item in form.items %}
+                        {% set itemData = item.vars.data %}
+                        <tr>
+                            <td class="item-checker">
+                                {{ form_row(item) }}
+                            </td>
+                            <td>
+                                <img class="product-image" src="{{ itemData.metadata.image }}" width="100"/>
+                            </td>
+                            <td>
+                                <div>
+                                    <a target="_blank"
+                                       href="{{ url('/product-management/view/variant', {'id-product-abstract': itemData.idProductAbstract, 'id-product': itemData.id, 'type': 'regular'}) }}">
+                                        {{ itemData.name }}
+                                    </a>
+                                </div>
+                                <div class="sku">
+                                    {{ 'Sku' | trans }}: <span>{{ itemData.sku }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                {{ itemData.quantity }}
+                            </td>
+                            <td class="state-history">
+                                <div>
+                                    <a href="{{ url('/oms/index/draw', {'process': itemData.process, 'state': itemData.state.name}) }}"
+                                       target="_blank">{{ (itemData.stateHistory | first).name }}</a>
+                                    ({{ itemData.process }})
+                                </div>
+                                {% if itemData.stateHistory | length > 1 %}
+                                    <div id="history_details_{{ itemData.idSalesOrderItem }}" class="hidden">
+                                        {% for stateHistory in itemData.stateHistory | slice(1) %}
+                                            <div>
+                                                {{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }} )
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <a id="history-btn-{{ itemData.idSalesOrderItem }}"
+                                       class="btn btn-sm more-history is-hidden"
+                                       data-id="{{ itemData.idSalesOrderItem }}">
+                                        <span class="show-more">{{ 'Show history' | trans }}</span>
+                                        <span class="show-less">{{ 'Hide history' | trans }}</span>
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% set key = 'key_' ~ itemData.shipment.idSalesShipment %}
+
+                                {% if shipmentNumberList[key] is not defined %}
+                                    {% set shipmentNumber = shipmentNumber + 1 %}
+                                    {% set data = {(key):shipmentNumber} %}
+                                    {% set shipmentNumberList = shipmentNumberList|merge(data) %}
+                                {% endif %}
+
+                                {{ 'Shipment n° %shipmentNumber%'|trans({'%shipmentNumber%': shipmentNumberList[key]}) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
+{{ form_end(form) }}

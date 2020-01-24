@@ -18,7 +18,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractForm
 class ScheduledPriceProductAbstractFormEditTabsExpanderPlugin extends AbstractPlugin implements ProductAbstractFormEditTabsExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands tabs for edit product abstract with Scheduled Prices tab.
      *
      * @api

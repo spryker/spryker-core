@@ -28,7 +28,7 @@ var ContentItemEditor = function(options) {
             this.dialogContentUrl,
             this.insertButtonTitle,
             this.editorContentWidgetTemplate,
-            this.maxWidgetNumber,
+            this.maxWidgetNumber
         );
         new ContentItemPopover();
     };
@@ -135,6 +135,7 @@ var ContentItemEditor = function(options) {
             var selection = window.getSelection();
             selection.removeAllRanges();
             selection.addRange(range);
+            range.collapse(false);
         };
 
         if (isWidgetWrapper) {

@@ -14,6 +14,7 @@ use SprykerTest\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category
@@ -37,7 +38,7 @@ class CategoryTreeStructureTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->input = new CategoryStructureInput();
         $this->expected = new CategoryStructureExpected();
@@ -46,7 +47,7 @@ class CategoryTreeStructureTest extends Unit
     /**
      * @return void
      */
-    public function testOutputTreeStructureFromOrderedCategoriesArray()
+    public function testOutputTreeStructureFromOrderedCategoriesArray(): void
     {
         $categories = $this->input->getOrderedCategoriesArray();
 
@@ -59,7 +60,7 @@ class CategoryTreeStructureTest extends Unit
     /**
      * @return void
      */
-    public function testOutputTreeStructureFromOrderedCategoriesArrayWhereParentWasChangedForAnItem()
+    public function testOutputTreeStructureFromOrderedCategoriesArrayWhereParentWasChangedForAnItem(): void
     {
         $categories = $this->input->getSecondOrderedCategoriesArray();
 
@@ -72,7 +73,7 @@ class CategoryTreeStructureTest extends Unit
     /**
      * @return void
      */
-    public function testOutputTreeStructureFromRandomOrderCategoryArray()
+    public function testOutputTreeStructureFromRandomOrderCategoryArray(): void
     {
         $categories = $this->input->getCategoryStructureWithChildrenBeforeParent();
 
@@ -85,7 +86,7 @@ class CategoryTreeStructureTest extends Unit
     /**
      * @return void
      */
-    public function testOutputStructureWithCategoryArrayItemThatParentDoesNotExist()
+    public function testOutputStructureWithCategoryArrayItemThatParentDoesNotExist(): void
     {
         $categories = $this->input->getCategoryStructureWithNonexistentParent();
 

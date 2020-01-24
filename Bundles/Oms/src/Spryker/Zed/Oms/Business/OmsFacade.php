@@ -8,10 +8,12 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,7 +23,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +39,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +56,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +73,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +89,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +107,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +124,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +142,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +156,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +170,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -184,7 +186,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -194,16 +196,16 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function checkTimeouts(array $logContext = [])
     {
-        $orderStateMachine = $this->getFactory()
+        $factory = $this->getFactory();
+        $orderStateMachine = $factory
             ->createLockedOrderStateMachine($logContext);
 
-        return $this->getFactory()
-            ->createOrderStateMachineTimeout()
+        return $factory->createOrderStateMachineTimeout()
             ->checkTimeouts($orderStateMachine);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -224,7 +226,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -240,7 +242,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -257,7 +259,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -274,9 +276,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
@@ -291,32 +295,18 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku)
-    {
-        return $this->getFactory()
-            ->createOrderStateMachineFinder()
-            ->getReservedOrderItemsForSku($sku);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
+     * @deprecated Not used anymore. Will be removed with next major release.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         return $this->getFactory()
             ->createUtilReservation()
@@ -324,16 +314,16 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
+    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
             ->createUtilReservation()
@@ -341,23 +331,24 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param string $stateName
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getStateEntity($stateName)
+    public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
-            ->createOrderStateMachinePersistenceManager()
-            ->getStateEntity($stateName);
+            ->createUtilReservation()
+            ->getOmsReservedProductQuantityForSkus($skus, $storeTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -373,7 +364,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -387,7 +378,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -403,7 +394,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -424,7 +415,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -444,7 +435,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -465,7 +456,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -477,7 +468,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -493,7 +484,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -509,7 +500,23 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
+    {
+        return $this->getFactory()
+            ->createManualOrderReader()
+            ->getGroupedDistinctManualEventsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -545,7 +552,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -559,7 +566,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -574,7 +581,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -586,24 +593,26 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
+    public function getReservationsFromOtherStores(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()->createUtilReservation()->getReservationsFromOtherStores($sku, $storeTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return int
      */
@@ -613,9 +622,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $processName
      * @param string $stateName
@@ -628,17 +639,19 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
     {
         $this->getFactory()
             ->createUtilReservation()
@@ -646,14 +659,32 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
-     * @return string[]
+     * @param string $sku
+     *
+     * @return void
      */
-    public function getReservedStateNames(): array
+    public function updateReservationQuantity(string $sku): void
     {
-        return $this->getFactory()->createUtilReservation()->getReservedStateNames();
+        $this->getFactory()
+            ->createUtilReservation()
+            ->updateReservationQuantity($sku);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
+    {
+        return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
     }
 }

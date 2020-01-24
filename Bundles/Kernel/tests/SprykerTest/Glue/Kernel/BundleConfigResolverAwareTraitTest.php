@@ -13,6 +13,7 @@ use Spryker\Glue\Kernel\BundleConfigResolverAwareTrait;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel
@@ -24,7 +25,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     /**
      * @return void
      */
-    public function testSetConfigMustReturnFluentInterface()
+    public function testSetConfigMustReturnFluentInterface(): void
     {
         $bundleConfigResolverAwareTraitMock = $this->getBundleConfigResolverAwareTraitMock();
         $returned = $bundleConfigResolverAwareTraitMock->setConfig(
@@ -45,7 +46,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\AbstractBundleConfig
      */
-    private function getAbstractBundleConfigMock()
+    private function getAbstractBundleConfigMock(): AbstractBundleConfig
     {
         return $this->getMockForAbstractClass(AbstractBundleConfig::class);
     }

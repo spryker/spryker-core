@@ -1,7 +1,7 @@
 namespace: Testify
-actor: Tester
 include:
     - tests/SprykerTest/Shared/Testify
+    - tests/SprykerTest/Zed/Testify
 paths:
     tests: tests
     log: tests/_output
@@ -14,6 +14,4 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-coverage:
-    enabled: true
-    whitelist: { include: ['src/*'] }
+

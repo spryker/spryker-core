@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -64,10 +65,12 @@ class ResponseHeaders implements ResponseHeadersInterface
             $restRequest->getMetadata()->getLocale()
         );
 
-        $httpResponse->headers->set(
-            RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN,
-            $this->config->getCorsAllowOrigin()
-        );
+        if ($this->config->getCorsAllowOrigin()) {
+            $httpResponse->headers->set(
+                RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN,
+                $this->config->getCorsAllowOrigin()
+            );
+        }
 
         $httpResponse = $this->executeResponseHeaderPlugins($httpResponse, $restResponse, $restRequest);
 

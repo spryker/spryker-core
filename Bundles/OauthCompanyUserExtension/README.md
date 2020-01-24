@@ -1,6 +1,6 @@
 # OauthCompanyUserExtension Module
 [![Build Status](https://travis-ci.org/spryker/oauth-company-user-extension.svg)](https://travis-ci.org/spryker/oauth-company-user-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/oauth-company-user-extension/badge.svg)](https://coveralls.io/github/spryker/oauth-company-user-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Provides extension plugins for module OauthCompanyUser.
 

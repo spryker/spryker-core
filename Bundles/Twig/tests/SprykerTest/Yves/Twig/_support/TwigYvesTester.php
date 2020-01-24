@@ -11,6 +11,7 @@ use Codeception\Actor;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,7 +36,7 @@ class TwigYvesTester extends Actor
      *
      * @return void
      */
-    public function assertPathsInOrder(array $templatePaths, array $expectedPaths)
+    public function assertPathsInOrder(array $templatePaths, array $expectedPaths): void
     {
         $this->assertSame($expectedPaths, $templatePaths);
     }

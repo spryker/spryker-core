@@ -216,6 +216,22 @@ class LocaleManager
     }
 
     /**
+     * @return string[]
+     */
+    public function getSupportedLocaleCodes(): array
+    {
+        $localeCodes = [];
+        $allowedStores = Store::getInstance()->getAllowedStores();
+
+        foreach ($allowedStores as $allowedStore) {
+            $localesPerStore = Store::getInstance()->getLocalesPerStore($allowedStore);
+            $localeCodes[] = array_values($localesPerStore);
+        }
+
+        return array_unique(array_merge(...$localeCodes));
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Store $store
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]

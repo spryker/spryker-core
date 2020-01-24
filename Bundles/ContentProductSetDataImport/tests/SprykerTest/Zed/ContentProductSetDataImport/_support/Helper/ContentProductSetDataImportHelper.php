@@ -42,7 +42,7 @@ class ContentProductSetDataImportHelper extends Module
     {
         $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($idLocale);
 
-        $this->assertContains($this->createUtilEncodingService()->encodeJson($data), $contentLocalized->getParameters());
+        $this->assertStringContainsString($this->createUtilEncodingService()->encodeJson($data), $contentLocalized->getParameters());
     }
 
     /**

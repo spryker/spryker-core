@@ -24,7 +24,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     use PermissionAwareTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -84,7 +84,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,7 +99,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -114,7 +114,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -129,7 +129,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -144,7 +144,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -158,7 +158,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -174,7 +174,49 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->addToCart($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->removeFromCart($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->updateQuantity($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +232,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +248,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -218,7 +260,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -230,7 +272,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -246,7 +288,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -260,8 +302,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
+     * {@inheritDoc}
      *
      * @api
      *
@@ -273,11 +314,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @deprecated
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated
      *
      * @return \Spryker\Client\Cart\Zed\CartStubInterface|\Spryker\Client\ZedRequest\Stub\ZedRequestStub
      */
@@ -295,7 +336,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -311,7 +352,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -323,7 +364,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

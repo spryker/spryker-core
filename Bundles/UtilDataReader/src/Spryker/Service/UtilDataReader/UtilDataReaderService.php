@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 class UtilDataReaderService extends AbstractService implements UtilDataReaderServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -79,7 +79,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -97,7 +97,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -114,12 +114,14 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
+     * @param string $orderBy
+     * @param string $orderByDirection
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
@@ -129,7 +131,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

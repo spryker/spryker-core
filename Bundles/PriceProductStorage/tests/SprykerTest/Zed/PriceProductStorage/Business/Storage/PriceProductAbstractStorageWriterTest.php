@@ -20,6 +20,7 @@ use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductStorage
@@ -43,7 +44,7 @@ class PriceProductAbstractStorageWriterTest extends Unit
         // Prepare
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $productAbstractTransfer2 = $this->tester->haveProductAbstract();
-        $priceProductTransfer = $this->tester->havePriceProduct([
+        $this->tester->havePriceProduct([
             PriceProductTransfer::ID_PRICE_PRODUCT => $productAbstractTransfer->getIdProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productAbstractTransfer->getSku(),
         ]);

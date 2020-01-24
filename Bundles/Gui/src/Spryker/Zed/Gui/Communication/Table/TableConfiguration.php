@@ -42,7 +42,7 @@ class TableConfiguration
      *
      * @var array|null
      */
-    protected $searchableFields = null;
+    protected $searchableFields;
 
     /**
      * @var array
@@ -52,7 +52,7 @@ class TableConfiguration
     /**
      * @var array|null
      */
-    protected $defaultSortField = null;
+    protected $defaultSortField;
 
     /**
      * @deprecated Use $defaultSortField instead.
@@ -99,11 +99,36 @@ class TableConfiguration
     protected $ordering = true;
 
     /**
+     * @var bool
+     */
+    protected $hasSearchableFieldsWithAggregateFunctions = false;
+
+    /**
      * @return array
      */
     public function getRawColumns()
     {
         return $this->rawColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHasSearchableFieldsWithAggregateFunctions(): bool
+    {
+        return $this->hasSearchableFieldsWithAggregateFunctions;
+    }
+
+    /**
+     * @param bool $hasSearchableFieldsWithAggregateFunctions
+     *
+     * @return $this
+     */
+    public function setHasSearchableFieldsWithAggregateFunctions(bool $hasSearchableFieldsWithAggregateFunctions)
+    {
+        $this->hasSearchableFieldsWithAggregateFunctions = $hasSearchableFieldsWithAggregateFunctions;
+
+        return $this;
     }
 
     /**

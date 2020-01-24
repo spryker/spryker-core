@@ -58,10 +58,11 @@ class QuoteMapper implements QuoteMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Quote\Persistence\SpyQuote $quoteEntity
+     * @param string[] $quoteFieldsAllowedForSaving
      *
      * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */
-    public function mapTransferToEntity(QuoteTransfer $quoteTransfer, SpyQuote $quoteEntity): SpyQuote
+    public function mapTransferToEntity(QuoteTransfer $quoteTransfer, SpyQuote $quoteEntity, array $quoteFieldsAllowedForSaving): SpyQuote
     {
         $quoteEntity->fromArray($quoteTransfer->modifiedToArray());
 
@@ -70,7 +71,7 @@ class QuoteMapper implements QuoteMapperInterface
                 ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
                 ->setFkStore($quoteTransfer->getStore()->getIdStore());
         }
-        $quoteEntity->setQuoteData($this->encodeQuoteData($quoteTransfer));
+        $quoteEntity->setQuoteData($this->encodeQuoteData($quoteTransfer, $quoteFieldsAllowedForSaving));
 
         return $quoteEntity;
     }
@@ -87,57 +88,30 @@ class QuoteMapper implements QuoteMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string[] $quoteFieldsAllowedForSaving
      *
      * @return string
      */
-    protected function encodeQuoteData(QuoteTransfer $quoteTransfer)
+    protected function encodeQuoteData(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving)
     {
-        $allowedQuoteFields = $this->getQuoteFieldsTreeAllowedForSaving();
-        $filteredQuoteData = $this->filterDisallowedQuoteData(
-            $quoteTransfer->modifiedToArray(true, true),
-            $allowedQuoteFields
-        );
+        $quoteData = $this->filterDisallowedQuoteData($quoteTransfer, $quoteFieldsAllowedForSaving);
 
-        return $this->encodingService->encodeJson($filteredQuoteData, JSON_OBJECT_AS_ARRAY);
+        return $this->encodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY);
     }
 
     /**
-     * @return array
-     */
-    protected function getQuoteFieldsTreeAllowedForSaving(): array
-    {
-        $fields = $this->quoteConfig->getQuoteFieldsAllowedForSaving();
-
-        $position = array_search(QuoteTransfer::ITEMS, $fields);
-        if ($position !== false) {
-            $fields[QuoteTransfer::ITEMS] = $this->quoteConfig->getQuoteItemFieldsAllowedForSaving();
-            unset($fields[$position]);
-        }
-
-        return $fields;
-    }
-
-    /**
-     * @param array $quoteData
-     * @param array $allowedQuoteFields
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string[] $quoteFieldsAllowedForSaving
      *
      * @return array
      */
-    protected function filterDisallowedQuoteData(array $quoteData, array $allowedQuoteFields): array
+    protected function filterDisallowedQuoteData(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving): array
     {
         $data = [];
-
-        foreach ($allowedQuoteFields as $fieldKey => $fieldData) {
-            if (is_string($fieldData) && isset($quoteData[$fieldData])) {
-                $data[$fieldData] = $quoteData[$fieldData];
-
-                continue;
-            }
-
-            if (is_array($fieldData) && isset($quoteData[$fieldKey])) {
-                foreach ($quoteData[$fieldKey] as $itemData) {
-                    $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData);
-                }
+        $quoteData = $quoteTransfer->modifiedToArray(true, true);
+        foreach ($quoteFieldsAllowedForSaving as $dataKey) {
+            if (isset($quoteData[$dataKey])) {
+                $data[$dataKey] = $quoteData[$dataKey];
             }
         }
 

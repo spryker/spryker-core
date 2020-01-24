@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Generated\Shared\Transfer\AddressTransfer;
+
 interface SalesToCustomerInterface
 {
     /**
@@ -15,4 +17,11 @@ interface SalesToCustomerInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference);
+
+    /**
+     * @param int $idCustomerAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer;
 }

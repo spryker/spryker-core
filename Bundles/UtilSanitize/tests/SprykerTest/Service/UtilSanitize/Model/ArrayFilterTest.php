@@ -12,6 +12,7 @@ use Spryker\Service\UtilSanitize\Model\ArrayFilter;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilSanitize

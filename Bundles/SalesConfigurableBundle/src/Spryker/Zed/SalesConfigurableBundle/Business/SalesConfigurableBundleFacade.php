@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfigurableBundleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,5 +66,21 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
         return $this->getFactory()
             ->createSalesOrderConfiguredBundleExpander()
             ->expandOrderWithConfiguredBundles($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function transformConfiguredBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleItemTransformer()
+            ->transformConfiguredBundleOrderItems($orderTransfer);
     }
 }

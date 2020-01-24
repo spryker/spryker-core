@@ -13,6 +13,7 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSet
@@ -28,7 +29,7 @@ class DeleteProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductSetRemovesEntitiesFromDatabase()
+    public function testDeleteProductSetRemovesEntitiesFromDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();

@@ -15,4 +15,11 @@ interface ProductListStorageToStorageClientInterface
      * @return mixed
      */
     public function get(string $key);
+
+    /**
+     * @param string[] $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys);
 }

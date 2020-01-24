@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductBarcodeClient extends AbstractClient implements ProductBarcodeClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

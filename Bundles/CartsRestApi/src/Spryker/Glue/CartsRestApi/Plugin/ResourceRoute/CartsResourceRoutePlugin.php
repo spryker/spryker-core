@@ -14,12 +14,12 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiFactory getFactory()
+ * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -63,7 +63,7 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

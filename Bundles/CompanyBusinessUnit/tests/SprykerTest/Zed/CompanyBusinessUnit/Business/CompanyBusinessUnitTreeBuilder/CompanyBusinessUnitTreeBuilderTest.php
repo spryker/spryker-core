@@ -9,13 +9,13 @@ namespace SprykerTest\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBu
 
 use ArrayObject;
 use Codeception\TestCase\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionMethod;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyBusinessUnit
@@ -64,7 +64,7 @@ class CompanyBusinessUnitTreeBuilderTest extends Test
     /**
      * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createCompanyBusinessUnitRepositoryMock(): MockObject
+    protected function createCompanyBusinessUnitRepositoryMock(): CompanyBusinessUnitRepositoryInterface
     {
         return $this->getMockBuilder(CompanyBusinessUnitRepositoryInterface::class)
             ->getMock();

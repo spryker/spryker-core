@@ -1,0 +1,29 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Are you sure about deleting this scheduled price?' | trans %}
+
+{% block head_title %}
+    {{ widget_title }}
+{% endblock %}
+{% block section_title %}
+    {{ 'Scheduled Prices'| trans }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="{{ redirectUrl }}" class="btn btn-back">{{ 'No, I want to keep this price' | trans}}</a>
+                </div>
+                <div class="col-md-2">
+                    {{ form(form, {'method': 'POST'}) }}
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

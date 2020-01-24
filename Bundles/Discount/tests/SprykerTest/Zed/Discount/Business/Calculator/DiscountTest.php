@@ -28,6 +28,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -69,7 +70,7 @@ class DiscountTest extends Unit
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -121,7 +122,7 @@ class DiscountTest extends Unit
      *
      * @return void
      */
-    public function testCalculateDiscountsRetrievesDiscount()
+    public function testCalculateDiscountsRetrievesDiscount(): void
     {
         // Assign
         $expectedDiscount = (new DiscountTransfer())
@@ -186,9 +187,6 @@ class DiscountTest extends Unit
                 'day-of-week = "' . (new DateTime('yesterday'))->format('l') . '"'
             )->setIdDiscount(5);
 
-        $collectedDiscount = (new CollectedDiscountTransfer())
-            ->setDiscount($expectedVoucherDiscount);
-
         $quoteTransfer = (new QuoteTransfer())
             ->setStore($this->getCurrentStore())
             ->setUsedNotAppliedVoucherCodes([])
@@ -237,7 +235,7 @@ class DiscountTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getCurrentStore()
+    protected function getCurrentStore(): StoreTransfer
     {
         return (new StoreTransfer())
             ->setIdStore(1)

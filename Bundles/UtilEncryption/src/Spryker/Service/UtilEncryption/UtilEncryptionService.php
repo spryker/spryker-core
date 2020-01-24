@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilEncryptionService extends AbstractService implements UtilEncryptionServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,23 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string|null $encryptionMethod
+     *
+     * @return string
+     */
+    public function generateByteStringOpenSslEncryptInitVector(?string $encryptionMethod = null): string
+    {
+        return $this->getFactory()
+            ->createOpenSslEncryptInitVectorGenerator()
+            ->generateByteStringOpenSslEncryptInitVector($encryptionMethod);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +66,7 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

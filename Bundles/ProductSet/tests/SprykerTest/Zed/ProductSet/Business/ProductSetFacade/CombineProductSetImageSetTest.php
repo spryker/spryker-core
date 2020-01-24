@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSet
@@ -30,7 +31,7 @@ class CombineProductSetImageSetTest extends Unit
     /**
      * @return void
      */
-    public function testGetCombinedAbstractImageSets()
+    public function testGetCombinedAbstractImageSets(): void
     {
         $localeTransfer = $this->tester->haveLocale();
 

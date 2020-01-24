@@ -13,6 +13,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group ErrorHandler
@@ -25,7 +26,7 @@ class CliErrorRendererTest extends Unit
     /**
      * @return void
      */
-    public function testRenderExceptionShouldReturnString()
+    public function testRenderExceptionShouldReturnString(): void
     {
         $errorRenderer = new CliErrorRenderer();
         $exception = new Exception('ExceptionMessage');

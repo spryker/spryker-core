@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ProductsRestApiResource extends AbstractRestResource implements ProductsRestApiResourceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,24 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $skus
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array
+    {
+        return $this->getFactory()
+            ->createAbstractProductsReader()
+            ->getProductAbstractsBySkus($skus, $restRequest);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +69,7 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +86,7 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

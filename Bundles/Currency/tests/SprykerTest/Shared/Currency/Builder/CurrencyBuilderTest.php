@@ -16,6 +16,7 @@ use Symfony\Component\Intl\Intl;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Currency
@@ -30,7 +31,7 @@ class CurrencyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $currencyBuilder = $this->getCurrencyBuilder();
         $this->assertInstanceOf(CurrencyBuilderInterface::class, $currencyBuilder);
@@ -39,7 +40,7 @@ class CurrencyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromIsoCodeShouldReturnCurrencyTransfer()
+    public function testFromIsoCodeShouldReturnCurrencyTransfer(): void
     {
         $currencyBuilder = $this->getCurrencyBuilder();
 
@@ -50,7 +51,7 @@ class CurrencyBuilderTest extends Unit
     /**
      * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
-    protected function getCurrencyBuilder()
+    protected function getCurrencyBuilder(): CurrencyBuilderInterface
     {
         $currencyRepository = new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());
 

@@ -14,6 +14,7 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductRelation
@@ -26,7 +27,7 @@ class ProductRelationQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryProductRelationsReturnCorrectQuery()
+    public function testQueryProductRelationsReturnCorrectQuery(): void
     {
         $productRelationQueryContainer = new ProductRelationQueryContainer();
         $productRelationQueryContainer->setFactory(new ProductRelationPersistenceFactory());

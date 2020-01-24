@@ -20,4 +20,4 @@ use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabelProductAbstractQuery;
  */
 abstract class AbstractSpyProductLabelProductAbstractQuery extends SpyProductLabelProductAbstractQuery
 {
-} // SpyProductLabelProductAbstractQuery
+}

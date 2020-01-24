@@ -20,7 +20,7 @@ use Spryker\Shared\Quote\QuoteConfig;
 class MultiCartClient extends AbstractClient implements MultiCartClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,9 +34,11 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `markQuoteAsDefault()` instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -50,7 +52,23 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartUpdater()
+            ->markQuoteAsDefault($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +82,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +96,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +112,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -110,7 +128,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -126,7 +144,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -142,7 +160,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,7 +180,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -178,7 +196,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -194,7 +212,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -208,7 +226,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

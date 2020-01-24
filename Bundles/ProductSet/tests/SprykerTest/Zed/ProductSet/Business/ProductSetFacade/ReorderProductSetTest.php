@@ -13,6 +13,7 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSet
@@ -28,7 +29,7 @@ class ReorderProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductSetAbstractProductsPersistChangesToDatabase()
+    public function testUpdateProductSetAbstractProductsPersistChangesToDatabase(): void
     {
         $productSetTransfer1 = $this->tester->generateProductSetTransfer([
             ProductSetTransfer::WEIGHT => 10,

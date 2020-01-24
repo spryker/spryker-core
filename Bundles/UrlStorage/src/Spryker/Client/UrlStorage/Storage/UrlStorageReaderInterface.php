@@ -11,7 +11,7 @@ interface UrlStorageReaderInterface
 {
     /**
      * @param string $url
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return array
      */

@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConvertOfferToOrderPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -7,12 +7,14 @@
 
 namespace SprykerTest\Zed\Kernel\ClassResolver\Factory;
 
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use SprykerTest\Zed\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -63,7 +65,7 @@ class FactoryResolverTest extends AbstractResolverTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): AbstractClassResolver
     {
         $resolverMock = $this->getMockBuilder(FactoryResolver::class)->setMethods($methods)->getMock();
 

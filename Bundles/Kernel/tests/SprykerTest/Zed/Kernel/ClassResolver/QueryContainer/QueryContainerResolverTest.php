@@ -7,12 +7,14 @@
 
 namespace SprykerTest\Zed\Kernel\ClassResolver\QueryContainer;
 
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use SprykerTest\Zed\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -53,7 +55,7 @@ class QueryContainerResolverTest extends AbstractResolverTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): AbstractClassResolver
     {
         $resolverMock = $this->getMockBuilder(QueryContainerResolver::class)->setMethods($methods)->getMock();
 

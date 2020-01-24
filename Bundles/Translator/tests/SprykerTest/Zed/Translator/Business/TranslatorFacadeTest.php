@@ -16,6 +16,7 @@ use Spryker\Zed\Translator\TranslatorConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Translator
@@ -78,7 +79,7 @@ class TranslatorFacadeTest extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Translator\Business\TranslatorBusinessFactory
      */
-    protected function getFactoryMock()
+    protected function getFactoryMock(): TranslatorBusinessFactory
     {
         $factoryMock = $this->getMockBuilder(TranslatorBusinessFactory::class)
             ->setMethods(['getConfig', 'getStore', 'getLocaleFacade'])
@@ -91,7 +92,7 @@ class TranslatorFacadeTest extends Test
             ->willReturn($this->getStoreMock());
 
         $factoryMock->method('getLocaleFacade')
-            ->willReturn(new TranslatorToLocaleFacadeBridge($this->tester->getLocator()->locale()->facade()));
+            ->willReturn($this->getLocaleFacadeMock());
 
         return $factoryMock;
     }
@@ -99,7 +100,7 @@ class TranslatorFacadeTest extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
      */
-    protected function getStoreMock()
+    protected function getStoreMock(): Store
     {
         $storeMock = $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()
@@ -115,7 +116,7 @@ class TranslatorFacadeTest extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Translator\TranslatorConfig
      */
-    protected function getConfigMock()
+    protected function getConfigMock(): TranslatorConfig
     {
         $configMock = $this->getMockBuilder(TranslatorConfig::class)
             ->setMethods(['getTranslationFilePathPatterns', 'getTranslatorCacheDirectory'])
@@ -128,6 +129,23 @@ class TranslatorFacadeTest extends Test
             ->willReturn(codecept_output_dir());
 
         return $configMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getLocaleFacadeMock(): TranslatorToLocaleFacadeBridge
+    {
+        $localeFacadeMock = $this->getMockBuilder(TranslatorToLocaleFacadeBridge::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->tester->getLocator()->locale()->facade()])
+            ->setMethods(['getCurrentLocale', 'getSupportedLocaleCodes'])
+            ->getMock();
+
+        $localeFacadeMock->method('getCurrentLocale')->willReturn('de_DE');
+        $localeFacadeMock->method('getSupportedLocaleCodes')->willReturn(['de_DE']);
+
+        return $localeFacadeMock;
     }
 
     /**

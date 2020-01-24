@@ -9,12 +9,14 @@ namespace SprykerTest\Zed\Cms\Business\Page;
 
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
+use Spryker\Zed\Cms\Business\Template\TemplateReaderInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms
@@ -28,11 +30,12 @@ class CmsPageActivatorTest extends CmsMocks
     /**
      * @return void
      */
-    public function testActivatePageShouldPersistActiveFlagAndTriggerTouch()
+    public function testActivatePageShouldPersistActiveFlagAndTriggerTouch(): void
     {
         $cmsPageEntityMock = $this->createCmsPageEntityMock();
         $cmsPageEntityMock->expects($this->once())
             ->method('save');
+        $cmsPageEntityMock->method('getVirtualColumn')->willReturn('');
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())
@@ -51,7 +54,7 @@ class CmsPageActivatorTest extends CmsMocks
     /**
      * @return void
      */
-    public function testDeActivatePageShouldPersistInActiveFlagAndTriggerTouch()
+    public function testDeActivatePageShouldPersistInActiveFlagAndTriggerTouch(): void
     {
         $cmsPageEntityMock = $this->createCmsPageEntityMock();
         $cmsPageEntityMock->expects($this->once())
@@ -73,15 +76,16 @@ class CmsPageActivatorTest extends CmsMocks
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface|null $touchFacadeMock
+     * @param \Spryker\Zed\Cms\Business\Template\TemplateReaderInterface|null $templateReader
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageActivator
      */
     protected function createCmsPageActivateMock(
         SpyCmsPage $cmsPageEntity,
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        ?CmsToTouchFacadeInterface $touchFacadeMock = null
-    ) {
-
+        ?CmsToTouchFacadeInterface $touchFacadeMock = null,
+        ?TemplateReaderInterface $templateReader = null
+    ): CmsPageActivator {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }
@@ -90,12 +94,21 @@ class CmsPageActivatorTest extends CmsMocks
             $touchFacadeMock = $this->createTouchFacadeMock();
         }
 
+        if ($templateReader === null) {
+            $templateReader = $this->createTemplateReaderMock();
+            $templateReader->method('getPlaceholdersByTemplatePath')
+                ->willReturn(['title', 'content']);
+        }
+
         $cmsPageActivatorMock = $this->getMockBuilder(CmsPageActivator::class)
-            ->setMethods(['getCmsPageEntity', 'countNumberOfGlossaryKeysForIdCmsPage'])
-            ->setConstructorArgs([$cmsQueryContainerMock, $touchFacadeMock, []])
+            ->setMethods(['getCmsPageEntity', 'countNumberOfGlossaryKeysForIdCmsPage', 'getCmsPageEntityWithTemplatesAndUrl'])
+            ->setConstructorArgs([$cmsQueryContainerMock, $touchFacadeMock, [], $templateReader])
             ->getMock();
 
         $cmsPageActivatorMock->method('getCmsPageEntity')
+            ->willReturn($cmsPageEntity);
+
+        $cmsPageActivatorMock->method('getCmsPageEntityWithTemplatesAndUrl')
             ->willReturn($cmsPageEntity);
 
         return $cmsPageActivatorMock;

@@ -39,7 +39,7 @@ interface CustomerGroupFacadeInterface
      *
      * @throws \Spryker\Zed\CustomerGroup\Business\Exception\CustomerGroupNotFoundException
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
      */
     public function get(CustomerGroupTransfer $customerGroupTransfer);
 
@@ -91,7 +91,6 @@ interface CustomerGroupFacadeInterface
     public function removeCustomersFromGroup(CustomerGroupTransfer $customerGroupTransfer);
 
     /**
-     *
      * Specification:
      *  - Finds Customer group by given customer id
      *

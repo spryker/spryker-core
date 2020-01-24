@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotionFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,7 +83,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,7 +99,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -115,7 +115,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -131,7 +131,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

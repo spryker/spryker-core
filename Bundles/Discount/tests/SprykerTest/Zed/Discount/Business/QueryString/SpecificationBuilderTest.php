@@ -30,6 +30,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -43,7 +44,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSpecificationBuildSingleClause()
+    public function testSpecificationBuildSingleClause(): void
     {
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
@@ -55,7 +56,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSpecificationBuildMultipleWithBooleanAndShouldReturnAndSpec()
+    public function testSpecificationBuildMultipleWithBooleanAndShouldReturnAndSpec(): void
     {
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
@@ -69,7 +70,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSpecificationBuildMultipleWithBooleanOrShouldReturnOrSpec()
+    public function testSpecificationBuildMultipleWithBooleanOrShouldReturnOrSpec(): void
     {
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
@@ -83,7 +84,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSpecificationBuildMultipleWithBooleanOrShouldReturnOrSpecs()
+    public function testSpecificationBuildMultipleWithBooleanOrShouldReturnOrSpecs(): void
     {
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
@@ -97,7 +98,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSpecificationBuildWhenInvalidFieldIsUsedShouldThrowException()
+    public function testSpecificationBuildWhenInvalidFieldIsUsedShouldThrowException(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -109,7 +110,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSpecificationBuildWhenInvalidComparatorIsUsedShouldThrowException()
+    public function testSpecificationBuildWhenInvalidComparatorIsUsedShouldThrowException(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -121,7 +122,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSpecificationBuildWhenInvalidCharactersUsedForFieldShouldThrowException()
+    public function testSpecificationBuildWhenInvalidCharactersUsedForFieldShouldThrowException(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -133,7 +134,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
-    protected function createDecisionRuleSpecificationBuilder()
+    protected function createDecisionRuleSpecificationBuilder(): SpecificationBuilder
     {
         $comparatorOperators = $this->createComparatorOperators();
 
@@ -155,7 +156,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createDecisionRulePlugins()
+    protected function createDecisionRulePlugins(): array
     {
         return [
            new SkuDecisionRulePlugin(),
@@ -165,7 +166,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
-    protected function createMetaDataProvider()
+    protected function createMetaDataProvider(): MetaDataProvider
     {
         return new MetaDataProvider(
             $this->createDecisionRulePlugins(),
@@ -177,7 +178,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
-    protected function createComparatorOperators()
+    protected function createComparatorOperators(): ComparatorOperators
     {
         $operators = (new OperatorProvider())->createComparators();
         $comparatorOperators = new ComparatorOperators($operators);
@@ -188,7 +189,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
-    protected function createLogicalComparators()
+    protected function createLogicalComparators(): LogicalComparators
     {
         return new LogicalComparators();
     }
@@ -196,7 +197,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
      */
-    protected function createTokenizer()
+    protected function createTokenizer(): Tokenizer
     {
         return new Tokenizer();
     }
@@ -204,7 +205,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider
      */
-    protected function createDecisionRuleProvider()
+    protected function createDecisionRuleProvider(): DecisionRuleProvider
     {
         return new DecisionRuleProvider($this->createDecisionRulePlugins());
     }
@@ -215,7 +216,7 @@ class SpecificationBuilderTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
      */
-    protected function createClauseValidator(ComparatorOperators $comparatorOperators, MetaDataProvider $decisionRuleMetaProvider)
+    protected function createClauseValidator(ComparatorOperators $comparatorOperators, MetaDataProvider $decisionRuleMetaProvider): ClauseValidator
     {
         return new ClauseValidator($comparatorOperators, $decisionRuleMetaProvider);
     }
@@ -223,7 +224,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildDecisionRuleWhenOneClauseUsed()
+    public function testBuildDecisionRuleWhenOneClauseUsed(): void
     {
         $specificationProviderMock = $this->createSpecificationProviderMock();
         $specificationProviderMock->expects($this->once())
@@ -245,7 +246,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildDecisionRuleWhenOrLogicalComparatorUsed()
+    public function testBuildDecisionRuleWhenOrLogicalComparatorUsed(): void
     {
         $specificationProviderMock = $this->createSpecificationProviderMock();
         $specificationProviderMock->expects($this->exactly(2))
@@ -270,7 +271,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildDecisionRuleWhenAndLogicalComparatorUsed()
+    public function testBuildDecisionRuleWhenAndLogicalComparatorUsed(): void
     {
         $specificationProviderMock = $this->createSpecificationProviderMock();
         $specificationProviderMock->expects($this->exactly(2))
@@ -295,7 +296,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildDecisionRuleWhenMultipleParenthesisUsed()
+    public function testBuildDecisionRuleWhenMultipleParenthesisUsed(): void
     {
         $specificationProviderMock = $this->createSpecificationProviderMock();
         $specificationProviderMock->expects($this->exactly(4))
@@ -331,7 +332,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildDecisionRuleWithAttributeClauseShouldBuildClauseWithAdditionalAttributeData()
+    public function testBuildDecisionRuleWithAttributeClauseShouldBuildClauseWithAdditionalAttributeData(): void
     {
         $specificationProviderMock = $this->createSpecificationProviderMock();
         $specificationProviderMock->expects($this->exactly(1))
@@ -359,7 +360,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildDecisionRuleWhenIncompleteQueryStringGivenShouldThrowException()
+    public function testBuildDecisionRuleWhenIncompleteQueryStringGivenShouldThrowException(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -383,7 +384,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildDecisionRuleWhenEmptyQueryStringGivenShouldThrowException()
+    public function testBuildDecisionRuleWhenEmptyQueryStringGivenShouldThrowException(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -398,7 +399,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildDecisionRuleWhenNumberOfParenthesisNotMatchingShouldThrowException()
+    public function testBuildDecisionRuleWhenNumberOfParenthesisNotMatchingShouldThrowException(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -430,8 +431,7 @@ class SpecificationBuilderTest extends Unit
         SpecificationProviderInterface $specificationProviderMock,
         ?ComparatorOperatorsInterface $createComparatorOperatorsMock = null,
         ?MetaDataProviderInterface $metaDataProviderMock = null
-    ) {
-
+    ): SpecificationBuilder {
         if ($createComparatorOperatorsMock === null) {
             $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
         }
@@ -461,7 +461,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface
      */
-    protected function createMetaDataProviderMock()
+    protected function createMetaDataProviderMock(): MetaDataProviderInterface
     {
         return $this->getMockBuilder(MetaDataProviderInterface::class)->getMock();
     }
@@ -469,7 +469,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface
      */
-    protected function createClauseValidatorMock()
+    protected function createClauseValidatorMock(): ClauseValidatorInterface
     {
         return $this->getMockBuilder(ClauseValidatorInterface::class)->getMock();
     }
@@ -477,7 +477,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
-    protected function createComparatorOperatorsMock()
+    protected function createComparatorOperatorsMock(): ComparatorOperatorsInterface
     {
         $createComparatorOperatorsMock = $this->getMockBuilder(ComparatorOperatorsInterface::class)->getMock();
 
@@ -489,7 +489,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface
      */
-    protected function createSpecificationProviderMock()
+    protected function createSpecificationProviderMock(): SpecificationProviderInterface
     {
         $specificationProviderMock = $this->getMockBuilder(SpecificationProviderInterface::class)->getMock();
 
@@ -499,7 +499,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext
      */
-    protected function createDecisionRuleContextMock()
+    protected function createDecisionRuleContextMock(): DecisionRuleContext
     {
         return $this->getMockBuilder(DecisionRuleContext::class)
             ->disableOriginalConstructor()
@@ -509,7 +509,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function createDecisionRuleSpecificationMock()
+    protected function createDecisionRuleSpecificationMock(): DecisionRuleSpecificationInterface
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }

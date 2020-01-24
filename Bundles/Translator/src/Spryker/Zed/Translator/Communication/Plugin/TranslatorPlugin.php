@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,16 +53,17 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
+     *
      * @param string $locale
      *
-     * @@return void
+     * @return void
      */
     public function setLocale($locale): void
     {
@@ -70,12 +71,13 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @return string The locale
      */
@@ -85,7 +87,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

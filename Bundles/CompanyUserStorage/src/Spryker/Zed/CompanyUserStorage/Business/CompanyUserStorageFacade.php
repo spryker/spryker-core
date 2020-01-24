@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +34,7 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +50,7 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,5 +63,21 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
         $this->getFactory()
             ->createCompanyUserStorageWriter()
             ->unpublishByCompanyUserIds($companyUserIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds = []): array
+    {
+        return $this->getRepository()
+            ->getSynchronizationDataTransfersByFilterAndCompanyUserIds($filterTransfer, $companyUserIds);
     }
 }

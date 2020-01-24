@@ -10,10 +10,12 @@ namespace SprykerTest\Zed\Tax\Business\Model;
 use Codeception\Test\Unit;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Tax
@@ -39,7 +41,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +51,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetTaxRates()
+    public function testGetTaxRates(): void
     {
         $this->loadFixtures();
         $taxRateCollectionTransfer = $this->taxFacade->getTaxRates();
@@ -59,7 +61,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetTaxRate()
+    public function testGetTaxRate(): void
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->getTaxRate($persistedTaxSet->getSpyTaxRates()[0]->getIdTaxRate());
@@ -70,7 +72,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function testTaxRateExists()
+    public function testTaxRateExists(): void
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->taxRateExists($persistedTaxSet->getSpyTaxRates()[0]->getIdTaxRate());
@@ -80,7 +82,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetTaxSets()
+    public function testGetTaxSets(): void
     {
         $this->loadFixtures();
         $taxSetCollectionTransfer = $this->taxFacade->getTaxSets();
@@ -90,7 +92,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetTaxSet()
+    public function testGetTaxSet(): void
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->getTaxSet($persistedTaxSet->getIdTaxSet());
@@ -100,7 +102,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function testTaxSetExists()
+    public function testTaxSetExists(): void
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->taxSetExists($persistedTaxSet->getIdTaxSet());
@@ -110,25 +112,25 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate()
+    public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate(): void
     {
-        $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
+        $this->expectException(ResourceNotFoundException::class);
         $this->taxFacade->getTaxSet(self::NON_EXISTENT_ID);
     }
 
     /**
      * @return void
      */
-    public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet()
+    public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet(): void
     {
-        $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
+        $this->expectException(ResourceNotFoundException::class);
         $this->taxFacade->getTaxRate(self::NON_EXISTENT_ID);
     }
 
     /**
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
      */
-    private function loadFixtures()
+    private function loadFixtures(): SpyTaxSet
     {
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->setName(self::DUMMY_TAX_RATE1_NAME);

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ModuleDependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\ValidationMessageTransfer;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface;
+use stdClass;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -139,6 +140,9 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         $composerJsonArray = $this->orderEntriesInComposerJsonArray($composerJsonArray);
         $composerJsonArray = $this->removeEmptyEntriesInComposerJsonArray($composerJsonArray);
 
+        if (isset($composerJsonArray['scripts']) && empty($composerJsonArray['scripts'])) {
+            $composerJsonArray['scripts'] = new stdClass();
+        }
         $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
 

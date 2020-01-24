@@ -15,6 +15,9 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use `Spryker\Yves\Session\Plugin\Application\Session\SessionApplicationPlugin` instead.
+ * @deprecated Use `Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Yves\Session\SessionFactory getFactory()
  * @method \Spryker\Client\Session\SessionClientInterface getClient()
  */
@@ -55,13 +58,13 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function extendCookieLifetime(FilterResponseEvent $event): void
     {
-        if ($event->isMasterRequest() === false) {
+        if ($event->isMasterRequest() === false || !$event->getRequest()->hasSession()) {
             return;
         }
 
         $session = $event->getRequest()->getSession();
 
-        if ($session === null || $session->isStarted() === false) {
+        if ($session->isStarted() === false) {
             return;
         }
 

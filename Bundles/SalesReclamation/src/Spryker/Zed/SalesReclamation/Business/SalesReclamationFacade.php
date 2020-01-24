@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesReclamationFacade extends AbstractFacade implements SalesReclamationFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,11 +52,12 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
@@ -70,7 +71,7 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

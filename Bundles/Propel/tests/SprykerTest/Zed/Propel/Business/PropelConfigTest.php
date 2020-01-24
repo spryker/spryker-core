@@ -13,6 +13,7 @@ use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -25,7 +26,7 @@ class PropelConfigTest extends Unit
     /**
      * @return \Spryker\Zed\Propel\PropelConfig
      */
-    private function getConfig()
+    private function getConfig(): PropelConfig
     {
         return new PropelConfig();
     }
@@ -33,7 +34,7 @@ class PropelConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetGeneratedDirectoryShouldReturnPathToGeneratedFiles()
+    public function testGetGeneratedDirectoryShouldReturnPathToGeneratedFiles(): void
     {
         $this->assertTrue(is_dir($this->getConfig()->getGeneratedDirectory()));
     }
@@ -41,7 +42,7 @@ class PropelConfigTest extends Unit
     /**
      * @return void
      */
-    public function getPropelConfig()
+    public function getPropelConfig(): void
     {
         $this->assertIsArray($this->getConfig()->getPropelConfig());
     }
@@ -49,7 +50,7 @@ class PropelConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSchemaDirectoryShouldReturnPathToSchemas()
+    public function testGetSchemaDirectoryShouldReturnPathToSchemas(): void
     {
         $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));
     }
@@ -57,7 +58,7 @@ class PropelConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetPropelSchemaPathPatterShouldReturnArrayWithPatternsToSchemaDirectories()
+    public function testGetPropelSchemaPathPatterShouldReturnArrayWithPatternsToSchemaDirectories(): void
     {
         $pathPatterns = $this->getConfig()->getPropelSchemaPathPatterns();
         $this->assertTrue(is_array($pathPatterns));
@@ -66,7 +67,7 @@ class PropelConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetLogPath()
+    public function testGetLogPath(): void
     {
         $this->assertIsString($this->getConfig()->getLogPath());
     }
@@ -74,7 +75,7 @@ class PropelConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentDatabaseEngine()
+    public function testGetCurrentDatabaseEngine(): void
     {
         $this->assertIsString($this->getConfig()->getCurrentDatabaseEngine());
     }
@@ -82,7 +83,7 @@ class PropelConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentDatabaseEngineName()
+    public function testGetCurrentDatabaseEngineName(): void
     {
         $this->assertIsString($this->getConfig()->getCurrentDatabaseEngineName());
     }
@@ -90,7 +91,7 @@ class PropelConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentDatabaseEngineNameThrowsException()
+    public function testGetCurrentDatabaseEngineNameThrowsException(): void
     {
         $propelConfigMock = $this->getPropelConfigMock();
 
@@ -101,7 +102,7 @@ class PropelConfigTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\PropelConfig
      */
-    protected function getPropelConfigMock()
+    protected function getPropelConfigMock(): PropelConfig
     {
         $propelConfigMock = $this->getMockBuilder(PropelConfig::class)->setMethods(['getCurrentDatabaseEngine'])->getMock();
         $propelConfigMock->expects($this->once())->method('getCurrentDatabaseEngine')->willReturn('Un supported database engine');

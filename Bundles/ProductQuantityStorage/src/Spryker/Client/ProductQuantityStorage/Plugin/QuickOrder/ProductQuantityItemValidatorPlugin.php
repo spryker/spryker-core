@@ -18,7 +18,7 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInte
 class ProductQuantityItemValidatorPlugin extends AbstractPlugin implements ItemValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Requires ItemTransfer inside ItemValidationTransfer.
      * - Returns not modified ItemValidationTransfer if ItemTransfer.id is missing.
      * - Calls ProductQuantityStorageClient::findProductQuantityStorage() to find product quantity restrictions.

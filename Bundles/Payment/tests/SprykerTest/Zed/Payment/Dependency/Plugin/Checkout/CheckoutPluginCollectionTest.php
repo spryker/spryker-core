@@ -15,6 +15,7 @@ use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Payment
@@ -32,7 +33,7 @@ class CheckoutPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddShouldReturnInstance()
+    public function testAddShouldReturnInstance(): void
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
@@ -44,7 +45,7 @@ class CheckoutPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnFalse()
+    public function testHasShouldReturnFalse(): void
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
 
@@ -54,7 +55,7 @@ class CheckoutPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnTrue()
+    public function testHasShouldReturnTrue(): void
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
@@ -66,7 +67,7 @@ class CheckoutPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldReturnPluginForGivenProviderAndPluginType()
+    public function testGetShouldReturnPluginForGivenProviderAndPluginType(): void
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
@@ -79,7 +80,7 @@ class CheckoutPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldThrowExceptionIfProviderNotFound()
+    public function testGetShouldThrowExceptionIfProviderNotFound(): void
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
@@ -93,7 +94,7 @@ class CheckoutPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldThrowExceptionIfPluginTypeNotFound()
+    public function testGetShouldThrowExceptionIfPluginTypeNotFound(): void
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
@@ -107,7 +108,7 @@ class CheckoutPluginCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
      */
-    private function getPluginMock()
+    private function getPluginMock(): CheckoutPluginInterface
     {
         return $this->getMockBuilder(CheckoutPluginInterface::class)->getMock();
     }

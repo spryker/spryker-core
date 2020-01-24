@@ -20,4 +20,4 @@ use Orm\Zed\PriceProduct\Persistence\Base\SpyPriceProductQuery as BaseSpyPricePr
  */
 abstract class AbstractSpyPriceProductQuery extends BaseSpyPriceProductQuery
 {
-} // SpyPriceProductQuery
+}

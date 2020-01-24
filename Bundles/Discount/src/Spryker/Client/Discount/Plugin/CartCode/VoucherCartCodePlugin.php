@@ -13,12 +13,14 @@ use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed in the next major version. Please use \Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin.
+ *
  * @method \Spryker\Client\Discount\DiscountFactory getFactory()
  */
 class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets voucher discount to the quote if the code hasn't been added already.
      *
      * @api
@@ -36,7 +38,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes matching applied and not applied voucher discount from quote.
      *
      * @api
@@ -54,7 +56,24 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     * - Clears all applied and not applied voucher codes from the quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createVoucherCartCode()
+            ->clearAllCodes($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      * - Returns voucher apply success message in case the given voucher code has been applied successfully.
      * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
      * - Returns an empty failed message if code is not relevant.
@@ -71,22 +90,5 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
         return $this->getFactory()
             ->createVoucherCartCode()
             ->getOperationResponseMessage($quoteTransfer, $code);
-    }
-
-    /**
-     * {@inheritdoc}
-     * - Clears all applied and not applied voucher codes from the quote.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()
-            ->createVoucherCartCode()
-            ->clearAllCodes($quoteTransfer);
     }
 }

@@ -16,7 +16,7 @@ interface NodeWriterInterface
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
-     * @return int $nodeId
+     * @return int
      */
     public function create(NodeTransfer $categoryNodeTransfer);
 

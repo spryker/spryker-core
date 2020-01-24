@@ -15,6 +15,7 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group SessionRedis
@@ -71,12 +72,11 @@ class SessionHandlerRedisLockingTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException
-     *
      * @return void
      */
     public function testReadingSessionDataWillThrowExceptionWhenImpossibleToAcquireLock(): void
     {
+        $this->expectException('Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException');
         $this->spinLockLockerMock
             ->expects($this->once())
             ->method('lock')
@@ -94,7 +94,7 @@ class SessionHandlerRedisLockingTest extends Unit
             ->expects($this->once())
             ->method('del')
             ->with(['session:session_key'])
-            ->willReturn(true);
+            ->willReturn(1);
 
         $this->spinLockLockerMock
             ->expects($this->once())

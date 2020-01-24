@@ -13,6 +13,7 @@ use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig
@@ -29,7 +30,7 @@ class TwigToUtilTextServiceBridgeTest extends Unit
     /**
      * @return void
      */
-    public function testCamelCaseToDashReturnConvertedString()
+    public function testCamelCaseToDashReturnConvertedString(): void
     {
         $utilTextService = new UtilTextService();
         $twigToUtilTextBridge = new TwigToUtilTextServiceBridge($utilTextService);

@@ -18,7 +18,7 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 class ConcreteAlternativeProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Configures action to retrieve concrete alternative products collection.
      *
      * @api
@@ -34,7 +34,7 @@ class ConcreteAlternativeProductsResourceRoutePlugin extends AbstractPlugin impl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class ConcreteAlternativeProductsResourceRoutePlugin extends AbstractPlugin impl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -58,7 +58,7 @@ class ConcreteAlternativeProductsResourceRoutePlugin extends AbstractPlugin impl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeInterface
@@ -27,9 +29,9 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->merchantFacade->createMerchant($merchantTransfer);
     }
@@ -37,40 +39,30 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->merchantFacade->updateMerchant($merchantTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    public function deleteMerchant(MerchantTransfer $merchantTransfer): void
-    {
-        $this->merchantFacade->deleteMerchant($merchantTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
     {
-        return $this->merchantFacade->getMerchantById($merchantTransfer);
+        return $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $currentStatus
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     * @return string[]
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    public function getApplicableMerchantStatuses(string $currentStatus): array
     {
-        return $this->merchantFacade->findMerchantById($merchantTransfer);
+        return $this->merchantFacade->getApplicableMerchantStatuses($currentStatus);
     }
 }

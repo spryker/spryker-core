@@ -10,6 +10,7 @@ namespace Spryker\Zed\Currency\Business;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +34,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +46,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +62,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -77,7 +78,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,7 +92,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +106,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -119,7 +120,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -133,7 +134,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -161,5 +162,21 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
         return $this->getFactory()
             ->createCurrencyBulkReader()
             ->getCurrencyTransfersByIsoCodes($isoCodes);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getStoreWithCurrenciesByIdStore(int $idStore): StoreWithCurrencyTransfer
+    {
+        return $this->getFactory()
+            ->createCurrencyReader()
+            ->getStoreWithCurrenciesByIdStore($idStore);
     }
 }

@@ -23,7 +23,7 @@ class BundleConfig extends Module
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
      */
-    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    public function __construct(ModuleContainer $moduleContainer, ?array $config = null)
     {
         parent::__construct($moduleContainer, $config);
 
@@ -35,7 +35,7 @@ class BundleConfig extends Module
      *
      * @return void
      */
-    public function addBundleConfigMock(AbstractBundleConfig $bundleConfig)
+    public function addBundleConfigMock(AbstractBundleConfig $bundleConfig): void
     {
         $this->bundleConfigMock->addBundleConfigMock($bundleConfig);
     }
@@ -45,7 +45,7 @@ class BundleConfig extends Module
      *
      * @return bool
      */
-    public function hasBundleConfigMock(AbstractBundleConfig $bundleConfig)
+    public function hasBundleConfigMock(AbstractBundleConfig $bundleConfig): bool
     {
         return $this->bundleConfigMock->hasBundleConfigMock($bundleConfig);
     }
@@ -55,7 +55,7 @@ class BundleConfig extends Module
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    public function getBundleConfigMock(AbstractBundleConfig $bundleConfig)
+    public function getBundleConfigMock(AbstractBundleConfig $bundleConfig): AbstractBundleConfig
     {
         return $this->bundleConfigMock->getBundleConfigMock($bundleConfig);
     }
@@ -63,7 +63,7 @@ class BundleConfig extends Module
     /**
      * @return void
      */
-    public function reset()
+    public function reset(): void
     {
         $this->bundleConfigMock->reset();
     }

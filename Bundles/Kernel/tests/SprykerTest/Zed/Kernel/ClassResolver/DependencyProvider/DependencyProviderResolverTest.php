@@ -7,12 +7,14 @@
 
 namespace SprykerTest\Zed\Kernel\ClassResolver\DependencyProvider;
 
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use SprykerTest\Zed\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -53,7 +55,7 @@ class DependencyProviderResolverTest extends AbstractResolverTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): AbstractClassResolver
     {
         $resolverMock = $this->getMockBuilder(DependencyProviderResolver::class)->setMethods($methods)->getMock();
 
