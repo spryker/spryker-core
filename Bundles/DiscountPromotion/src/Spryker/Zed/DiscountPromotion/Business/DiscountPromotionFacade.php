@@ -152,14 +152,14 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     * @param string $uuid
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
-    public function findDiscountPromotionByUuid(DiscountPromotionTransfer $discountPromotionTransfer): ?DiscountPromotionTransfer
+    public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer
     {
         return $this->getFactory()
             ->createDiscountPromotionDataReader()
-            ->findDiscountPromotionByUuid($discountPromotionTransfer);
+            ->findDiscountPromotionByUuid($uuid);
     }
 }
