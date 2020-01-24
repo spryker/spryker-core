@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\DiscountPromotionsRestApi;
 
+use Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\CartItemExpander;
+use Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\CartItemExpanderInterface;
 use Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpander;
 use Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpanderInterface;
 use Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapper;
@@ -36,5 +38,13 @@ class DiscountPromotionsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createPromotionItemMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\CartItemExpanderInterface
+     */
+    public function createCartItemExpander(): CartItemExpanderInterface
+    {
+        return new CartItemExpander();
     }
 }

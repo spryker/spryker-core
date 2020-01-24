@@ -26,4 +26,12 @@
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
+    <transfer name="RestCartItemsAttributes">
+        <property name="idPromotionalItem" type="int" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="discountPromotionUuid" type="string"/>
+    </transfer>
+
 </transfers>
