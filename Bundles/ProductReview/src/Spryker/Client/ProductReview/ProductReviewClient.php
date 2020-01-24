@@ -10,6 +10,8 @@ namespace Spryker\Client\ProductReview;
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -44,12 +46,9 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      */
     public function findProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
     {
-        $searchQuery = $this->getFactory()->createProductReviewsQueryPlugin($productReviewSearchRequestTransfer);
-        $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
-
         return $this->getFactory()
-            ->getSearchClient()
-            ->search($searchQuery, $resultFormatters, $productReviewSearchRequestTransfer->getRequestParams());
+            ->createProductReviewSearchReader($productReviewSearchRequestTransfer)
+            ->findProductReviews($productReviewSearchRequestTransfer);
     }
 
     /**
@@ -98,5 +97,41 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
     public function getMaximumRating()
     {
         return $this->getFactory()->getProductReviewConfig()->getMaximumRating();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductReviewData(
+        ProductViewTransfer $productViewTransfer,
+        ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+    ): ProductViewTransfer {
+        return $this->getFactory()
+            ->createProductViewExpander($productReviewSearchRequestTransfer)
+            ->expandProductViewWithProductReviewData($productViewTransfer, $productReviewSearchRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
+     */
+    public function calculateProductReviewSummary(
+        ProductReviewSummaryTransfer $productReviewSummaryTransfer
+    ): ProductReviewSummaryTransfer {
+        return $this->getFactory()
+            ->createProductReviewSummaryCalculator()
+            ->execute($productReviewSummaryTransfer);
     }
 }
