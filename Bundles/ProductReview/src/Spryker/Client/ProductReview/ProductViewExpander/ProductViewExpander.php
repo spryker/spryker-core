@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductReview\ProductViewExpander;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface;
 use Spryker\Client\ProductReview\Search\ProductReviewSearchReaderInterface;
@@ -54,9 +55,22 @@ class ProductViewExpander implements ProductViewExpanderInterface
             return $productViewTransfer;
         }
 
-        $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->execute($productReviews[static::KEY_RATING_AGGREGATION]);
+        $productReviewSummaryTransfer = $this->productReviewSummaryCalculator
+            ->execute($this->createProductReviewSummary($productReviews));
+
         $productViewTransfer->setRating($productReviewSummaryTransfer);
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param array $productReviews
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
+     */
+    protected function createProductReviewSummary(array $productReviews): ProductReviewSummaryTransfer
+    {
+        return (new ProductReviewSummaryTransfer())
+            ->setRatingAggregation($productReviews[static::KEY_RATING_AGGREGATION]);
     }
 }

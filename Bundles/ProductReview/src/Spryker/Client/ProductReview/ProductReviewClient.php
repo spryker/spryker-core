@@ -130,8 +130,6 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
     public function calculateProductReviewSummary(
         ProductReviewSummaryTransfer $productReviewSummaryTransfer
     ): ProductReviewSummaryTransfer {
-        $productReviewSummaryTransfer->requireRatingAggregation();
-
         return $this->getFactory()
             ->createProductReviewSummaryCalculator()
             ->execute($productReviewSummaryTransfer);

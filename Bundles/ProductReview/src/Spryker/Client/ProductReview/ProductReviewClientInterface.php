@@ -97,6 +97,7 @@ interface ProductReviewClientInterface
      * - Calculates the product review average rating value.
      * - Calculates the product total review value.
      * - Provides the product review available maximum rating value.
+     * - Requires `ProductReviewSummaryTransfer.ratingAggregation` property to calculate product review summary.
      *
      * @api
      *

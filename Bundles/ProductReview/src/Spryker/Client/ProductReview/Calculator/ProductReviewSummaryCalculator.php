@@ -35,6 +35,8 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      */
     public function execute(ProductReviewSummaryTransfer $productReviewSummaryTransfer): ProductReviewSummaryTransfer
     {
+        $productReviewSummaryTransfer->requireRatingAggregation();
+
         $ratingAggregation = $productReviewSummaryTransfer->getRatingAggregation();
         $totalReview = $this->getTotalReview($ratingAggregation);
 
@@ -65,7 +67,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     /**
      * @param int[] $ratingAggregation
      *
-     * @return array
+     * @return int[]
      */
     protected function formatRatingAggregation(array $ratingAggregation): array
     {
@@ -78,7 +80,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     /**
      * @param int[] $ratingAggregation
      *
-     * @return array
+     * @return int[]
      */
     protected function fillRatings(array $ratingAggregation): array
     {
@@ -94,7 +96,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     /**
      * @param int[] $ratingAggregation
      *
-     * @return array
+     * @return int[]
      */
     protected function sortRatings(array $ratingAggregation): array
     {
