@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 
 interface CompanyUserStorageToCompanyUserFacadeInterface
 {
@@ -26,9 +26,9 @@ interface CompanyUserStorageToCompanyUserFacadeInterface
     public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
 
     /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function getCompanyUsersByFilter(FilterTransfer $filterTransfer): array;
+    public function getRawCompanyUsersByCriteria(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): array;
 }

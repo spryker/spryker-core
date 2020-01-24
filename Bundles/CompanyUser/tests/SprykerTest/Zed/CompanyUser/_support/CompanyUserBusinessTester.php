@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\CompanyUser;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 
 /**
@@ -70,21 +69,5 @@ class CompanyUserBusinessTester extends Actor
     public function getCustomerFacade(): CustomerFacadeInterface
     {
         return $this->getLocator()->customer()->facade();
-    }
-
-    /**
-     * @return void
-     */
-    public function ensureCompanyUserDatabaseTableIsEmpty(): void
-    {
-        $this->ensureDatabaseTableIsEmpty($this->getCompanyUserQuery());
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
-     */
-    protected function getCompanyUserQuery(): SpyCompanyUserQuery
-    {
-        return SpyCompanyUserQuery::create();
     }
 }

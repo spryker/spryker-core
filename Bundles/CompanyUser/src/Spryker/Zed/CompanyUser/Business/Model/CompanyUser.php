@@ -495,4 +495,18 @@ class CompanyUser implements CompanyUserInterface
 
         return $companyUserCollectionTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function getRawCompanyUsersByCriteria(
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): array {
+        return $this->companyUserRepository
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer)
+            ->getCompanyUsers()
+            ->getArrayCopy();
+    }
 }

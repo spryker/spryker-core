@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUser;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface CompanyUserMapperInterface
 {
@@ -48,11 +47,4 @@ interface CompanyUserMapperInterface
     public function mapCompanyUserEntityToCompanyUserTransfer(
         SpyCompanyUser $companyUser
     ): CompanyUserTransfer;
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CompanyUser\Persistence\SpyCompanyUser[] $companyUserEntityCollection
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    public function mapCompanyUserEntityCollectionToCompanyUserTransfers(ObjectCollection $companyUserEntityCollection): array;
 }

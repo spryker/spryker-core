@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 
 /**
  * Auto-generated group annotations
@@ -596,14 +595,17 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyUsersByFilter(): void
+    public function testRawCompanyUsersByCriteriaShouldReturnTransfer(): void
     {
         // Arrange
-        $this->tester->ensureCompanyUserDatabaseTableIsEmpty();
         $companyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
+            CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
+        ]))->build();
 
         // Act
-        $companyUserTransfers = $this->tester->getFacade()->getCompanyUsersByFilter(new FilterTransfer());
+        $companyUserTransfers = $this->tester->getFacade()
+            ->getRawCompanyUsersByCriteria($companyUserCriteriaFilterTransfer);
 
         // Assert
         $this->assertNotEmpty($companyUserTransfers);

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 
 interface CompanyUserRepositoryInterface
 {
@@ -114,11 +113,4 @@ interface CompanyUserRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    public function getCompanyUsersByFilter(FilterTransfer $filterTransfer): array;
 }

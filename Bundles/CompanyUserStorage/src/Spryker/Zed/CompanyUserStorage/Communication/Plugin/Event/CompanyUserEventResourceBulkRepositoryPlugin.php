@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Communication\Plugin\Event;
 
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
@@ -47,7 +48,7 @@ class CompanyUserEventResourceBulkRepositoryPlugin extends AbstractPlugin implem
     {
         return $this->getFactory()
             ->getCompanyUserFacade()
-            ->getCompanyUsersByFilter($this->createFilterTransfer($offset, $limit));
+            ->getRawCompanyUsersByCriteria($this->createCompanyUserCriteriaFilterTransfer($offset, $limit));
     }
 
     /**
@@ -78,13 +79,16 @@ class CompanyUserEventResourceBulkRepositoryPlugin extends AbstractPlugin implem
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\FilterTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer
      */
-    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    protected function createCompanyUserCriteriaFilterTransfer(int $offset, int $limit): CompanyUserCriteriaFilterTransfer
     {
-        return (new FilterTransfer())
+        $filterTransfer = (new FilterTransfer())
             ->setOrderBy(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)
             ->setOffset($offset)
             ->setLimit($limit);
+
+        return (new CompanyUserCriteriaFilterTransfer())
+            ->setFilter($filterTransfer);
     }
 }
