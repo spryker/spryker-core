@@ -71,25 +71,23 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
 
         $discountPromotionEntity = $this->getDiscountPromotionEntity($discountPromotionTransfer->getIdDiscountPromotion());
 
-        $idDiscountPromotion = $this->handleDatabaseTransaction(function () use ($discountPromotionEntity, $discountPromotionTransfer) {
+        $discountPromotionEntity = $this->handleDatabaseTransaction(function () use ($discountPromotionEntity, $discountPromotionTransfer) {
             return $this->executeSaveDiscountPromotionTransaction($discountPromotionEntity, $discountPromotionTransfer);
         });
 
-        $discountPromotionTransfer->setIdDiscountPromotion($idDiscountPromotion);
-
-        return $discountPromotionTransfer;
+        return $this->discountPromotionMapper->mapDiscountPromotionEntityToTransfer($discountPromotionEntity, $discountPromotionTransfer);
     }
 
     /**
      * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
      * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @return int
+     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion
      */
     protected function executeSaveDiscountPromotionTransaction(
         SpyDiscountPromotion $discountPromotionEntity,
         DiscountPromotionTransfer $discountPromotionTransfer
-    ) {
+    ): SpyDiscountPromotion {
         $this->removeCollectorQueryString($discountPromotionEntity);
 
         $discountPromotionEntity = $this->discountPromotionMapper->mapEntity(
@@ -98,7 +96,7 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
         );
         $discountPromotionEntity->save();
 
-        return $discountPromotionEntity->getIdDiscountPromotion();
+        return $discountPromotionEntity;
     }
 
     /**

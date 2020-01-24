@@ -20,6 +20,7 @@
     <transfer name="RestPromotionalItemsAttributes">
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Quote">
