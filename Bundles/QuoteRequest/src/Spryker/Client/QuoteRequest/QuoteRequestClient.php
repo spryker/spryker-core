@@ -250,10 +250,10 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return bool
      */
-    public function isQuoteRequestVersionReferenceAndCustomShipmentPriceSet(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteRequestInQuoteCheckoutProcess(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteChecker()
-            ->isQuoteRequestVersionReferenceAndCustomShipmentPriceSet($quoteTransfer);
+            ->isQuoteRequestInQuoteCheckoutProcess($quoteTransfer);
     }
 }

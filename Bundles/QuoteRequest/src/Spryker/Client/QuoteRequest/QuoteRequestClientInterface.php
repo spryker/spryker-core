@@ -235,7 +235,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Checks if quote request version reference and custom shipment price are set.
+     * - Returns true if request version reference and custom shipment price are set, false otherwise.
      *
      * @api
      *
@@ -243,5 +243,5 @@ interface QuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestVersionReferenceAndCustomShipmentPriceSet(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteRequestInQuoteCheckoutProcess(QuoteTransfer $quoteTransfer): bool;
 }

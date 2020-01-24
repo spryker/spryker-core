@@ -16,9 +16,9 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteRequestVersionReferenceAndCustomShipmentPriceSet(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteRequestInQuoteCheckoutProcess(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->isQuoteRequestVersionReferenceSet($quoteTransfer) && $this->isCustomShipmentPriceSet($quoteTransfer);
+        return $quoteTransfer->getQuoteRequestVersionReference() && $this->isCustomShipmentPriceSet($quoteTransfer);
     }
 
     /**
@@ -29,21 +29,15 @@ class QuoteChecker implements QuoteCheckerInterface
     protected function isCustomShipmentPriceSet(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment()->getMethod()->getSourcePrice()) {
+            $isCustomShipmentPriceSet = $itemTransfer->getShipment() &&
+                $itemTransfer->getShipment()->getMethod() &&
+                $itemTransfer->getShipment()->getMethod()->getSourcePrice();
+
+            if ($isCustomShipmentPriceSet) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteRequestVersionReferenceSet(QuoteTransfer $quoteTransfer): bool
-    {
-        return (bool)$quoteTransfer->getQuoteRequestVersionReference();
     }
 }

@@ -136,4 +136,8 @@
         <property name="sourcePrice" type="MoneyValue"/>
     </transfer>
 
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+    </transfer>
+
 </transfers>
