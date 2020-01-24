@@ -8,21 +8,13 @@
 namespace Spryker\Glue\Log\Plugin\Handler;
 
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
-use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\HandlerInterface;
-use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface;
 
 /**
  * @method \Spryker\Glue\Log\LogFactory getFactory()
  */
-class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInterface
+class QueueHandlerPlugin extends AbstractHandlerPlugin
 {
-    /**
-     * @var \Monolog\Handler\HandlerInterface|null
-     */
-    protected $handler;
-
     /**
      * @return \Monolog\Handler\HandlerInterface
      */
@@ -36,6 +28,10 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param array $record
      *
      * @return bool
@@ -46,62 +42,6 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
             return false;
         }
 
-        return $this->getHandler()->isHandling($record);
-    }
-
-    /**
-     * @param array $record
-     *
-     * @return bool
-     */
-    public function handle(array $record): bool
-    {
-        return $this->getHandler()->handle($record);
-    }
-
-    /**
-     * @param array $records
-     *
-     * @return mixed
-     */
-    public function handleBatch(array $records)
-    {
-        return $this->getHandler()->handleBatch($records);
-    }
-
-    /**
-     * @param callable $callback
-     *
-     * @return \Monolog\Handler\HandlerInterface
-     */
-    public function pushProcessor($callback): HandlerInterface
-    {
-        return $this->getHandler()->pushProcessor($callback);
-    }
-
-    /**
-     * @return callable
-     */
-    public function popProcessor(): callable
-    {
-        return $this->getHandler()->popProcessor();
-    }
-
-    /**
-     * @param \Monolog\Formatter\FormatterInterface $formatter
-     *
-     * @return \Monolog\Handler\HandlerInterface
-     */
-    public function setFormatter(FormatterInterface $formatter): HandlerInterface
-    {
-        return $this->getHandler()->setFormatter($formatter);
-    }
-
-    /**
-     * @return \Monolog\Formatter\FormatterInterface
-     */
-    public function getFormatter(): FormatterInterface
-    {
-        return $this->getHandler()->getFormatter();
+        return parent::isHandling($record);
     }
 }
