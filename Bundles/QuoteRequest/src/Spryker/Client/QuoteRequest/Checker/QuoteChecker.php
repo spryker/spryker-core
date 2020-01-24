@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\QuoteRequest\Checker;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class QuoteChecker implements QuoteCheckerInterface
@@ -16,9 +18,9 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteRequestInQuoteCheckoutProcess(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getQuoteRequestVersionReference() && $this->isCustomShipmentPriceSet($quoteTransfer);
+        return $quoteTransfer->getQuoteRequestVersionReference() && $this->isShipmentSourcePriceSet($quoteTransfer);
     }
 
     /**
@@ -26,18 +28,30 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
-    protected function isCustomShipmentPriceSet(QuoteTransfer $quoteTransfer): bool
+    protected function isShipmentSourcePriceSet(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $isCustomShipmentPriceSet = $itemTransfer->getShipment() &&
-                $itemTransfer->getShipment()->getMethod() &&
-                $itemTransfer->getShipment()->getMethod()->getSourcePrice();
-
-            if ($isCustomShipmentPriceSet) {
+            if ($this->extractShipmentSourcePrice($itemTransfer)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
+     */
+    protected function extractShipmentSourcePrice(ItemTransfer $itemTransfer): ?MoneyValueTransfer
+    {
+        $shipmentMethodTransfer = $itemTransfer->getShipment() ?? $itemTransfer->getShipment()->getMethod();
+
+        if (!$shipmentMethodTransfer) {
+            return null;
+        }
+
+        return $shipmentMethodTransfer->getSourcePrice();
     }
 }
