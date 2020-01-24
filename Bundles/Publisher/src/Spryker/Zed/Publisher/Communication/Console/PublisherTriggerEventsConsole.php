@@ -75,6 +75,7 @@ class PublisherTriggerEventsConsole extends Console
             $resourcesIds = explode(',', $idsString);
         }
 
+        $resourcePublishedPlugins = $this->getFactory()->getResourcePublisherPlugins();
         $this->getFactory()->getEventBehaviorFacade()->executeResolvedPluginsBySources($resources, $resourcesIds);
     }
 

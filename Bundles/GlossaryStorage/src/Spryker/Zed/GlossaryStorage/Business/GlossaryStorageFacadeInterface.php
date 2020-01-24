@@ -42,9 +42,9 @@ interface GlossaryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries all glossary keys with the given $eventTransfer by GlossaryKeyEvents
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Queries all glossary keys with the given $eventTransfer by GlossaryKeyEvents.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
@@ -52,12 +52,12 @@ interface GlossaryStorageFacadeInterface
      *
      * @return void
      */
-    public function writeGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers);
+    public function writeCollectionByGlossaryKeyEvents(array $eventTransfers);
 
     /**
      * Specification:
-     * - Finds and deletes glossary storage entities with the given $eventTransfer by GlossaryKeyEvents
-     * - Sends delete message to queue based on module config
+     * - Finds and deletes glossary storage entities with the given $eventTransfer by GlossaryKeyEvents.
+     * - Sends delete message to queue based on module config.
      *
      * @api
      *
@@ -65,13 +65,13 @@ interface GlossaryStorageFacadeInterface
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers): void;
+    public function deleteCollectionByGlossaryKeyEvents(array $eventTransfers): void;
 
     /**
      * Specification:
-     * - Queries all glossary keys with the given $eventTransfer by GlossaryTranslationEvents
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Queries all glossary keys with the given $eventTransfer by GlossaryTranslationEvents.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
@@ -79,7 +79,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @return void
      */
-    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers): void;
+    public function writeCollectionByGlossaryTranslationEvents(array $eventTransfers): void;
 
     /**
      * Specification
@@ -96,7 +96,7 @@ interface GlossaryStorageFacadeInterface
 
     /**
      * Specification
-     * - Retrieves a collection of glossary storage transfer according to provided offset, limit and ida.
+     * - Retrieves a collection of glossary storage transfer according to provided offset, limit and ids.
      *
      * @api
      *

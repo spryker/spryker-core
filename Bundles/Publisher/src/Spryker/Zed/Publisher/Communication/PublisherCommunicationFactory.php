@@ -24,4 +24,12 @@ class PublisherCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(PublisherDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
+
+    /**
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface[]
+     */
+    public function getResourcePublisherPlugins(): array
+    {
+        return $this->getProvidedDependency(PublisherDependencyProvider::PLUGINS_RESOURCE_PUBLISHER);
+    }
 }

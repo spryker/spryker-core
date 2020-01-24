@@ -30,6 +30,6 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        $this->getFacade()->writeGlossaryStorageCollectionByGlossaryTranslationEvents($eventTransfers);
+        $this->getFacade()->writeCollectionByGlossaryTranslationEvents($eventTransfers);
     }
 }

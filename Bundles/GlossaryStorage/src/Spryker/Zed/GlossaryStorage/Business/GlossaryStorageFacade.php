@@ -53,7 +53,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @return void
      */
-    public function writeGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers)
+    public function writeCollectionByGlossaryKeyEvents(array $eventTransfers)
     {
         $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
     }
@@ -67,7 +67,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers): void
+    public function deleteCollectionByGlossaryKeyEvents(array $eventTransfers): void
     {
         $this->getFactory()->createGlossaryTranslationStorageDeleter()->deleteGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
     }
@@ -81,7 +81,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @return void
      */
-    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers): void
+    public function writeCollectionByGlossaryTranslationEvents(array $eventTransfers): void
     {
         $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollectionByGlossaryTranslationEvents($eventTransfers);
     }

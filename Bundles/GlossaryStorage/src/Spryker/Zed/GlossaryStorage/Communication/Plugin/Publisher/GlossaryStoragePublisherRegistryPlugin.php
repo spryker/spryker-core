@@ -35,6 +35,9 @@ class GlossaryStoragePublisherRegistryPlugin extends AbstractPlugin implements P
     public function expandPublisherEventRegistry(PublisherEventRegistryInterface $publisherEventRegistry): PublisherEventRegistryInterface
     {
         $publisherEventRegistry->register(GlossaryEvents::GLOSSARY_KEY_PUBLISH, GlossaryWritePublisherPlugin::class);
+        $publisherEventRegistry->register(GlossaryEvents::GLOSSARY_KEY_PUBLISH, GlossaryTranslationWritePublisherPlugin::class);
+        $publisherEventRegistry->register(GlossaryEvents::GLOSSARY_KEY_PUBLISH, GlossaryTranslationWritePublisherPlugin::class);
+
         $publisherEventRegistry->register(GlossaryEvents::GLOSSARY_KEY_UNPUBLISH, GlossaryDeletePublisherPlugin::class);
 
         $publisherEventRegistry->register(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, GlossaryWritePublisherPlugin::class);
@@ -43,7 +46,6 @@ class GlossaryStoragePublisherRegistryPlugin extends AbstractPlugin implements P
 
         $publisherEventRegistry->register(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE, GlossaryTranslationWritePublisherPlugin::class);
         $publisherEventRegistry->register(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE, GlossaryTranslationWritePublisherPlugin::class);
-        $publisherEventRegistry->register(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_DELETE, GlossaryTranslationWritePublisherPlugin::class);
 
         return $publisherEventRegistry;
     }
