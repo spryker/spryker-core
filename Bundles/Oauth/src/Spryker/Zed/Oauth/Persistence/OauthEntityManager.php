@@ -113,7 +113,6 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
      */
     public function deleteRefreshTokenByIdentifier(string $identifier): void
     {
-        /** @var \Orm\Zed\Oauth\Persistence\SpyOauthAccessToken|null $authAccessTokenEntity */
         $authRefreshTokenEntity = $this->getFactory()
             ->createRefreshTokenQuery()
             ->findOneByIdentifier($identifier);

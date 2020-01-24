@@ -144,4 +144,14 @@ interface OauthFacadeInterface
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
     public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer;
+
+    /**
+     *  Specification:
+     *  - Deletes a refresh tokens that were expired.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function cleanExpiredRefreshTokens(): void;
 }

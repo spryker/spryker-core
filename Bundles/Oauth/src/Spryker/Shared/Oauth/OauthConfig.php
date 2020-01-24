@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Oauth;
 
+use DateInterval;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 
@@ -64,5 +65,15 @@ class OauthConfig extends AbstractSharedConfig
     public function getAccessTokenTTL(): string
     {
         return 'PT8H';
+    }
+
+    /**
+     * Interval for how long the expired tokens will be stored in the system
+     *
+     * @return \DateInterval
+     */
+    public function getRefreshTokenRetentionInterval(): DateInterval
+    {
+        return new DateInterval('PT0M');
     }
 }

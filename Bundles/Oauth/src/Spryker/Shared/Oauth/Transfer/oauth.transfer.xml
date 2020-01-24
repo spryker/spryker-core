@@ -120,6 +120,7 @@
         <property name="identifier" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="revokedAt" type="string"/>
+        <property name="expiresAt" type="string"/>
     </transfer>
 
 </transfers>

@@ -35,6 +35,8 @@ use Spryker\Zed\Oauth\Business\Model\OauthClientReader;
 use Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriterInterface;
+use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleaner;
+use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleanerInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenWriterInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReader;
@@ -221,6 +223,17 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function createOauthRefreshTokenWriter(): OauthRefreshTokenWriterInterface
     {
         return new OauthRefreshTokenWriter(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleanerInterface
+     */
+    public function createOauthRefreshTokenCleaner(): OauthRefreshTokenCleanerInterface
+    {
+        return new OauthRefreshTokenCleaner(
             $this->getRepository(),
             $this->getEntityManager()
         );

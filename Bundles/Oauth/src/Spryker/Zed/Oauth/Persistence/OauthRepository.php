@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
@@ -120,6 +121,24 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     }
 
     /**
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+     */
+    public function getExpiredRefreshTokens(): OauthRefreshTokenCollectionTransfer
+    {
+        $expiredAt = (new DateTime())
+            ->add($this->getFactory()->getConfig()->getRefreshTokenRetentionInterval())
+            ->format('Y-m-d H:i:s');
+        $authRefreshTokensCollection = $this->getFactory()
+            ->createRefreshTokenQuery()
+            ->filterByExpiresAt($expiredAt, Criteria::LESS_EQUAL)
+            ->find();
+
+        return $this->getFactory()
+            ->createOauthRefreshTokenMapper()
+            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($authRefreshTokensCollection);
+    }
+
+    /**
      * @param \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery $authRefreshTokenQuery
      * @param \Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer
      *
@@ -140,7 +159,7 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
         }
 
         if ($refreshTokenCriteriaFilterTransfer->getRevokedAt()) {
-            $authRefreshTokenQuery->filterByRevokedAt($refreshTokenCriteriaFilterTransfer->getRevokedAt(), Criteria::ISNULL);
+            $authRefreshTokenQuery->filterByRevokedAt($refreshTokenCriteriaFilterTransfer->getRevokedAt());
         }
 
         return $authRefreshTokenQuery;
