@@ -33,7 +33,10 @@ interface MerchantProfileWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer;
+    public function handleMerchantPostUpdate(
+        MerchantTransfer $originalMerchantTransfer,
+        MerchantTransfer $updatedMerchantTransfer
+    ): MerchantResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer

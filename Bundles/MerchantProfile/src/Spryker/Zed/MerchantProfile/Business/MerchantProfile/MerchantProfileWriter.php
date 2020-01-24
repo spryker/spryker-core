@@ -109,8 +109,10 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
-    {
+    public function handleMerchantPostUpdate(
+        MerchantTransfer $originalMerchantTransfer,
+        MerchantTransfer $updatedMerchantTransfer
+    ): MerchantResponseTransfer {
         $updatedMerchantTransfer->requireMerchantProfile();
         $merchantProfileTransfer = $updatedMerchantTransfer->getMerchantProfile();
 
