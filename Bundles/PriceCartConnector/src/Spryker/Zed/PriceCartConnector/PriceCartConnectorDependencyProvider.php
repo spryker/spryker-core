@@ -61,7 +61,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPriceProductService(Container $container)
+    protected function addPriceProductService(Container $container): Container
     {
         $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
             return new PriceCartConnectorToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());
