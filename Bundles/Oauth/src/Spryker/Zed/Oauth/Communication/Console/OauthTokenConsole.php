@@ -25,8 +25,9 @@ class OauthTokenConsole extends Console
      */
     protected function configure(): void
     {
-        $this->setName(static::COMMAND_NAME);
-        $this->setDescription(static::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME)
+            ->setDescription(static::DESCRIPTION)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
 
         parent::configure();
     }
