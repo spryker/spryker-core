@@ -97,7 +97,7 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
     public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantPostCreator()
+            ->createMerchantProfileWriter()
             ->handleMerchantPostCreate($merchantTransfer);
     }
 
@@ -114,7 +114,7 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
     public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantPostUpdater()
+            ->createMerchantProfileWriter()
             ->handleMerchantPostUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
     }
 }

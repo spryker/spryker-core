@@ -140,15 +140,15 @@ class MerchantUpdater implements MerchantUpdaterInterface
      */
     protected function executeMerchantPostUpdatePlugins(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantTransfer
     {
-        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
-            $merchantPostSavePlugin->execute($updatedMerchantTransfer);
-        }
-
         foreach ($this->merchantPostUpdatePlugins as $merchantPostUpdatePlugin) {
             $merchantResponseTransfer = $merchantPostUpdatePlugin->postUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
             if (!$merchantResponseTransfer->getIsSuccess()) {
-                throw (new MerchantNotSavedException())->addErrors($merchantResponseTransfer->getErrors());
+                throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));
             }
+        }
+
+        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
+            $updatedMerchantTransfer = $merchantPostSavePlugin->execute($updatedMerchantTransfer);
         }
 
         return $updatedMerchantTransfer;

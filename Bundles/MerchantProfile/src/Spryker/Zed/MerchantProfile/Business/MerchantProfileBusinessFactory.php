@@ -10,10 +10,6 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilder;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface;
-use Spryker\Zed\MerchantProfile\Business\Merchant\MerchantPostCreator;
-use Spryker\Zed\MerchantProfile\Business\Merchant\MerchantPostCreatorInterface;
-use Spryker\Zed\MerchantProfile\Business\Merchant\MerchantPostUpdater;
-use Spryker\Zed\MerchantProfile\Business\Merchant\MerchantPostUpdaterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReader;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriter;
@@ -68,25 +64,6 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->getLocaleFacade(),
             $this->createMerchantProfileGlossaryKeyBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfile\Business\Merchant\MerchantPostCreatorInterface
-     */
-    public function createMerchantPostCreator(): MerchantPostCreatorInterface
-    {
-        return new MerchantPostCreator($this->createMerchantProfileWriter());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfile\Business\Merchant\MerchantPostUpdaterInterface
-     */
-    public function createMerchantPostUpdater(): MerchantPostUpdaterInterface
-    {
-        return new MerchantPostUpdater(
-            $this->createMerchantProfileWriter(),
-            $this->createMerchantPostCreator()
         );
     }
 

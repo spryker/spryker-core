@@ -24,6 +24,8 @@ use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
  */
 class MerchantProfileFacadeTest extends Unit
 {
+    protected const TEST_EMAIL = 'example@test.test';
+
     /**
      * @var \SprykerTest\Zed\MerchantProfile\MerchantProfileBusinessTester
      */
@@ -91,12 +93,12 @@ class MerchantProfileFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->handleMerchantPostCreate($merchantTransfer);
         $updatedMerchantTransfer = clone $merchantTransfer;
-        $updatedMerchantTransfer->getMerchantProfile()->setPublicEmail('example@test.test');
+        $updatedMerchantTransfer->getMerchantProfile()->setPublicEmail(static::TEST_EMAIL);
         $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostUpdate($merchantTransfer, $updatedMerchantTransfer);
 
         // Assert
         $this->assertTrue($merchantResponseTransfer->getIsSuccess());
-        $this->assertSame($merchantResponseTransfer->getMerchant()->getMerchantProfile()->getPublicEmail(), $updatedMerchantTransfer->getMerchantProfile()->getPublicEmail());
+        $this->assertSame($merchantResponseTransfer->getMerchant()->getMerchantProfile()->getPublicEmail(), static::TEST_EMAIL);
     }
 
     /**

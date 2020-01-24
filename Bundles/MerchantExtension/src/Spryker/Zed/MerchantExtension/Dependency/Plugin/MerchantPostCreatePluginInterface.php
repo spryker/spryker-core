@@ -14,7 +14,7 @@ interface MerchantPostCreatePluginInterface
 {
     /**
      * Specification:
-     * - Executes after the merchant is created.
+     * - Executes after a merchant is created.
      *
      * @api
      *

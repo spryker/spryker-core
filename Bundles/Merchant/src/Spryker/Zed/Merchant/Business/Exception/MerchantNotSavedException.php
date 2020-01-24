@@ -19,15 +19,16 @@ class MerchantNotSavedException extends Exception
     protected $merchantErrorTransfers;
 
     /**
+     * @param \ArrayObject $merchantErrorTransfers
      * @param string $message
      * @param int $code
      * @param \Throwable|null $previous
      */
-    public function __construct($message = "", $code = 0, ?Throwable $previous = null)
+    public function __construct(ArrayObject $merchantErrorTransfers, $message = "", $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
 
-        $this->merchantErrorTransfers = new ArrayObject();
+        $this->merchantErrorTransfers = $merchantErrorTransfers;
     }
 
     /**
@@ -36,17 +37,5 @@ class MerchantNotSavedException extends Exception
     public function getErrors(): ArrayObject
     {
         return $this->merchantErrorTransfers;
-    }
-
-    /**
-     * @param \ArrayObject $merchantErrorTransfers
-     *
-     * @return $this
-     */
-    public function addErrors(ArrayObject $merchantErrorTransfers)
-    {
-        $this->merchantErrorTransfers = $merchantErrorTransfers;
-
-        return $this;
     }
 }

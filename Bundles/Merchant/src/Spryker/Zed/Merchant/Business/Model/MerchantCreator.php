@@ -34,7 +34,7 @@ class MerchantCreator implements MerchantCreatorInterface
     protected $merchantPostCreatePlugins;
 
     /**
-     * @var array|\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
+     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
      */
     protected $merchantPostSavePlugins;
 
@@ -117,15 +117,15 @@ class MerchantCreator implements MerchantCreatorInterface
      */
     protected function executeMerchantPostCreatePlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
-            $merchantPostSavePlugin->execute($merchantTransfer);
-        }
-
         foreach ($this->merchantPostCreatePlugins as $merchantPostCreatePlugin) {
             $merchantResponseTransfer = $merchantPostCreatePlugin->postCreate($merchantTransfer);
             if (!$merchantResponseTransfer->getIsSuccess()) {
-                throw (new MerchantNotSavedException())->addErrors($merchantResponseTransfer->getErrors());
+                throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));
             }
+        }
+
+        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
+            $merchantTransfer = $merchantPostSavePlugin->execute($merchantTransfer);
         }
 
         return $merchantTransfer;

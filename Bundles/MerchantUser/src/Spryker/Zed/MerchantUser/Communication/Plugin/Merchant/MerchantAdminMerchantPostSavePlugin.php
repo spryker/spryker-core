@@ -17,7 +17,7 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInte
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
  */
-class MerchantPortalAdminMerchantPostSavePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface, MerchantPostCreatePluginInterface
+class MerchantAdminMerchantPostSavePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface, MerchantPostCreatePluginInterface
 {
     /**
      * {@inheritDoc}

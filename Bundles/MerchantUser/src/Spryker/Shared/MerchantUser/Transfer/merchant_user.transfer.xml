@@ -31,7 +31,7 @@
 
     <transfer name="MerchantUserResponse">
         <property name="merchantUser" type="MerchantUser"/>
-        <property name="isSuccess" type="bool"/>
+        <property name="isSuccessful" type="bool"/>
         <property name="errors" type="Message[]" singular="error"/>
     </transfer>
 

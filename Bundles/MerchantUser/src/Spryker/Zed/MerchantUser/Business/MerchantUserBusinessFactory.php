@@ -8,14 +8,12 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreator;
-use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreatorInterface;
-use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdater;
-use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdaterInterface;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriter;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
-use Spryker\Zed\MerchantUser\Business\Message\MessageConverter;
-use Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
+use Spryker\Zed\MerchantUser\Business\User\UserReader;
+use Spryker\Zed\MerchantUser\Business\User\UserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\User\UserWriter;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
@@ -29,36 +27,14 @@ use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 class MerchantUserBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreatorInterface
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface
      */
-    public function createMerchantPostCreator(): MerchantPostCreatorInterface
+    public function createMerchantUserCreator(): MerchantUserCreatorInterface
     {
-        return new MerchantPostCreator(
-            $this->createMerchantUserWriter(),
-            $this->createMessageConverter(),
+        return new MerchantUserCreator(
             $this->createUserWriter(),
-            $this->getUtilTextService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdaterInterface
-     */
-    public function createMerchantPostUpdater(): MerchantPostUpdaterInterface
-    {
-        return new MerchantPostUpdater(
-            $this->createMerchantPostCreator(),
-            $this->getRepository(),
-            $this->createUserWriter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface
-     */
-    public function createMerchantUserWriter(): MerchantUserWriterInterface
-    {
-        return new MerchantUserWriter(
+            $this->createUserReader(),
+            $this->getUtilTextService(),
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig()
@@ -66,11 +42,23 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface
      */
-    public function createMessageConverter(): MessageConverterInterface
+    public function createMerchantUserUpdater(): MerchantUserUpdaterInterface
     {
-        return new MessageConverter();
+        return new MerchantUserUpdater(
+            $this->createMerchantUserCreator(),
+            $this->getRepository(),
+            $this->createUserWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\User\UserReaderInterface
+     */
+    public function createUserReader(): UserReaderInterface
+    {
+        return new UserReader($this->getUserFacade());
     }
 
     /**
@@ -78,7 +66,10 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
      */
     public function createUserWriter()
     {
-        return new UserWriter($this->getUserFacade());
+        return new UserWriter(
+            $this->getUserFacade(),
+            $this->createUserReader()
+        );
     }
 
     /**

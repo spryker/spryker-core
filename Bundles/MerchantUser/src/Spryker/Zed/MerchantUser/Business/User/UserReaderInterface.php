@@ -11,30 +11,26 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
-interface UserWriterInterface
+interface UserReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getUserByMerchant(MerchantTransfer $merchantTransfer): UserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function hasUserByMerchant(MerchantTransfer $merchantTransfer): bool;
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function syncUserWithMerchant(
-        MerchantTransfer $merchantTransfer,
-        MerchantUserTransfer $merchantUserTransfer
-    ): UserTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function updateUser(UserTransfer $userTransfer): UserTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function createUser(UserTransfer $userTransfer): UserTransfer;
+    public function getUserByMerchantUser(MerchantUserTransfer $merchantUserTransfer): UserTransfer;
 }

@@ -20,36 +20,40 @@ class UserWriter implements UserWriterInterface
     protected $userFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
+     * @var \Spryker\Zed\MerchantUser\Business\User\UserReaderInterface
      */
-    public function __construct(MerchantUserToUserFacadeInterface $userFacade)
-    {
+    protected $userReader;
+
+    /**
+     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
+     * @param \Spryker\Zed\MerchantUser\Business\User\UserReaderInterface $userReader
+     */
+    public function __construct(
+        MerchantUserToUserFacadeInterface $userFacade,
+        UserReaderInterface $userReader
+    ) {
         $this->userFacade = $userFacade;
+        $this->userReader = $userReader;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function syncUserWithMerchant(
-        MerchantTransfer $originalMerchantTransfer,
-        MerchantTransfer $updatedMerchantTransfer,
+        MerchantTransfer $merchantTransfer,
         MerchantUserTransfer $merchantUserTransfer
     ): UserTransfer {
-        return $this->updateUser($this->fillUserTransferFromMerchant($this->getUserByMerchantUser($merchantUserTransfer), $updatedMerchantTransfer));
-    }
+        $userTransfer = $this->userReader->getUserByMerchantUser($merchantUserTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUserByMerchant(MerchantTransfer $merchantTransfer): UserTransfer
-    {
-        return $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
+        $userTransfer
+            ->setFirstName($merchantTransfer->getMerchantProfile()->getContactPersonFirstName())
+            ->setLastName($merchantTransfer->getMerchantProfile()->getContactPersonLastName())
+            ->setUsername($merchantTransfer->getEmail());
+
+        return $this->updateUser($userTransfer);
     }
 
     /**
@@ -70,29 +74,5 @@ class UserWriter implements UserWriterInterface
     public function createUser(UserTransfer $userTransfer): UserTransfer
     {
         return $this->userFacade->createUser($userTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUserByMerchantUser(MerchantUserTransfer $merchantUserTransfer): UserTransfer
-    {
-        return $this->userFacade->getUserById($merchantUserTransfer->getIdUser());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    protected function fillUserTransferFromMerchant(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): UserTransfer
-    {
-        return $userTransfer
-            ->setFirstName($merchantTransfer->getMerchantProfile()->getContactPersonFirstName())
-            ->setLastName($merchantTransfer->getMerchantProfile()->getContactPersonLastName())
-            ->setUsername($merchantTransfer->getEmail());
     }
 }
