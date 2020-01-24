@@ -12,6 +12,8 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasure
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpander;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpanderInterface;
 
 /**
  * @method \Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig getConfig()
@@ -24,6 +26,18 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     public function createProductMeasurementUnitByProductConcreteResourceRelationshipExpander(): ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface
     {
         return new ProductMeasurementUnitByProductConcreteResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->getProductStorageClient(),
+            $this->getProductMeasurementUnitStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpanderInterface
+     */
+    public function createSalesUnitByProductConcreteResourceRelationshipExpander(): SalesUnitByProductConcreteResourceRelationshipExpanderInterface
+    {
+        return new SalesUnitByProductConcreteResourceRelationshipExpander(
             $this->getResourceBuilder(),
             $this->getProductStorageClient(),
             $this->getProductMeasurementUnitStorageClient()

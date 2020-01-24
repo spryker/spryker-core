@@ -12,4 +12,5 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class ProductMeasurementUnitsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_PRODUCT_MEASUREMENT_UNITS = 'product-measurement-units';
+    public const RESOURCE_SALES_UNITS = 'sales-units';
 }
