@@ -67,7 +67,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
             $extractedPrices = $this->mapConcretePriceDataToExtractedPrice($extractedPrices, $priceProductTransfers[0]);
         }
 
-        return $extractedPrices;
+        return array_merge($extractedPrices, $priceProductTransfers);
     }
 
     /**
