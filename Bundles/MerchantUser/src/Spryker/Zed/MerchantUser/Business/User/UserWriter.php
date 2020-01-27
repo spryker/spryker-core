@@ -10,13 +10,21 @@ namespace Spryker\Zed\MerchantUser\Business\User;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 
 class UserWriter implements UserWriterInterface
 {
+    /**
+     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     */
+    protected const USER_STATUS_BLOCKED = 'blocked';
+    /**
+     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     */
+    protected const USER_STATUS_ACTIVE = 'active';
+
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
      */
@@ -72,7 +80,7 @@ class UserWriter implements UserWriterInterface
 
         $userTransfer = $this->updateUser($userTransfer);
 
-        if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_ACTIVE
+        if ($userTransfer->getStatus() === static::USER_STATUS_ACTIVE
             && $usersStatusBeforeUpdate !== $userTransfer->getStatus()
         ) {
             $this->authFacade->requestPasswordReset($userTransfer->getUsername());
@@ -103,18 +111,18 @@ class UserWriter implements UserWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantUserTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function setUserStatusByMerchantStatus(
         UserTransfer $userTransfer,
-        MerchantTransfer $merchantUserTransfer
+        MerchantTransfer $merchantTransfer
     ): UserTransfer {
-        $userTransfer->setStatus(SpyUserTableMap::COL_STATUS_BLOCKED);
+        $userTransfer->setStatus(static::USER_STATUS_BLOCKED);
 
-        if ($merchantUserTransfer->getStatus() === MerchantConfig::STATUS_APPROVED) {
-            $userTransfer->setStatus(SpyUserTableMap::COL_STATUS_ACTIVE);
+        if ($merchantTransfer->getStatus() === MerchantConfig::STATUS_APPROVED) {
+            $userTransfer->setStatus(static::USER_STATUS_ACTIVE);
         }
 
         return $userTransfer;
