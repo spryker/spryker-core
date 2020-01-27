@@ -21,7 +21,7 @@ class DiscountPromotionsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\DiscountPromotionsRestApi\Business\Mapper\DiscountPromotionMapperInterface
      */
-    public function createProductOptionMapper(): DiscountPromotionMapperInterface
+    public function createDiscountPromotionMapper(): DiscountPromotionMapperInterface
     {
         return new DiscountPromotionMapper($this->getDiscountPromotionFacade());
     }

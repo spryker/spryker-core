@@ -14,7 +14,8 @@ interface DiscountPromotionsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Maps CartItemRequestTransfer::$productOptionValues to PersistentCartChangeTransfer::$productOptions.
+     * - Maps CartItemRequestTransfer::$discountPromotionUuid data to the IdDiscountPromotion property of the first item in the PersistentCartChangeTransfer::$items.
+     * - Does nothing if there is no item in the PersistentCartChangeTransfer::$items or CartItemRequestTransfer::$discountPromotionUuid is not set.
      *
      * @api
      *

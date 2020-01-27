@@ -38,7 +38,12 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         PersistentCartChangeTransfer $persistentCartChangeTransfer
     ): PersistentCartChangeTransfer {
-        if (!isset($persistentCartChangeTransfer->getItems()[0]) || $cartItemRequestTransfer->getDiscountPromotionUuid() === null) {
+        if ($cartItemRequestTransfer->getDiscountPromotionUuid() === null) {
+            return $persistentCartChangeTransfer;
+        }
+
+        $itemTransfer = $this->getItemTransfer($persistentCartChangeTransfer);
+        if ($itemTransfer === null) {
             return $persistentCartChangeTransfer;
         }
 
@@ -46,8 +51,7 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
             $cartItemRequestTransfer->getDiscountPromotionUuid()
         );
 
-        $this->getItemTransfer($persistentCartChangeTransfer)
-            ->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
+        $itemTransfer->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
 
         return $persistentCartChangeTransfer;
     }
@@ -68,10 +72,12 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function getItemTransfer(PersistentCartChangeTransfer $persistentCartChangeTransfer): ItemTransfer
+    protected function getItemTransfer(PersistentCartChangeTransfer $persistentCartChangeTransfer): ?ItemTransfer
     {
-        return $persistentCartChangeTransfer->getItems()[0];
+        return $persistentCartChangeTransfer->getItems()
+            ->getIterator()
+            ->current();
     }
 }
