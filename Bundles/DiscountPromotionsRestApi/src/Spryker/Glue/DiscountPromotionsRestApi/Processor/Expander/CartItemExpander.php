@@ -22,6 +22,10 @@ class CartItemExpander implements CartItemExpanderInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        return $cartItemRequestTransfer->setDiscountPromotionUuid($restCartItemsAttributesTransfer->getIdPromotionalItem());
+        if ($restCartItemsAttributesTransfer->getIdPromotionalItem() === null) {
+            return $cartItemRequestTransfer->setDiscountPromotionUuid(null);
+        }
+        
+        return $cartItemRequestTransfer->setDiscountPromotionUuid((string)$restCartItemsAttributesTransfer->getIdPromotionalItem());
     }
 }

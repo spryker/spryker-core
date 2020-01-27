@@ -57,19 +57,6 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
     }
 
     /**
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
-     */
-    protected function findDiscountPromotionByUuid(string $uuid): DiscountPromotionTransfer
-    {
-        $discountPromotionTransfer = new DiscountPromotionTransfer();
-        $discountPromotionTransfer->setUuid($uuid);
-
-        return $this->discountPromotionFacade->findDiscountPromotionByUuid($discountPromotionTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
