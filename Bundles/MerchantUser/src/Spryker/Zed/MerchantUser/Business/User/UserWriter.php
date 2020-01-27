@@ -38,7 +38,7 @@ class UserWriter implements UserWriterInterface
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
      */
-    private $authFacade;
+    protected $authFacade;
 
     /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
