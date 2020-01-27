@@ -22,4 +22,12 @@ interface ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInt
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[][]
      */
     public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     *
+     * @return array
+     */
+    public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array;
 }

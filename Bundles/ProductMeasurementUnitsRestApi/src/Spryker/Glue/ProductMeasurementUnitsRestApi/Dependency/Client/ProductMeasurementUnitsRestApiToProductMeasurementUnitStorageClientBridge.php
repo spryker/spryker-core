@@ -43,4 +43,15 @@ class ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientBridge 
         return $this->productMeasurementUnitStorageClient
             ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
     }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     *
+     * @return array
+     */
+    public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array
+    {
+        return $this->productMeasurementUnitStorageClient->getProductMeasurementUnitsByMapping($mappingType, $identifiers);
+    }
 }

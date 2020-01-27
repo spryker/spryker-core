@@ -79,11 +79,11 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
             return [];
         }
 
-        $productMeasurementUnitStorageKeys = [];
+        $productConcreteMeasurementUnitStorageKeys = [];
         foreach ($productConcreteIds as $productConcreteSku => $idProductConcrete) {
-            $productMeasurementUnitStorageKeys[$productConcreteSku] = $this->generateKey($idProductConcrete);
+            $productConcreteMeasurementUnitStorageKeys[$productConcreteSku] = $this->generateKey($idProductConcrete);
         }
-        $productConcreteMeasurementUnitsStorageData = $this->storageClient->getMulti($productMeasurementUnitStorageKeys);
+        $productConcreteMeasurementUnitsStorageData = $this->storageClient->getMulti($productConcreteMeasurementUnitStorageKeys);
         $productConcreteMeasurementUnitStorageTransfers = $this
             ->mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
                 $productConcreteMeasurementUnitsStorageData

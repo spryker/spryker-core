@@ -12,6 +12,8 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasure
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpander;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpanderInterface;
 
@@ -38,6 +40,18 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     public function createSalesUnitByProductConcreteResourceRelationshipExpander(): SalesUnitByProductConcreteResourceRelationshipExpanderInterface
     {
         return new SalesUnitByProductConcreteResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->getProductStorageClient(),
+            $this->getProductMeasurementUnitStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface
+     */
+    public function createProductMeasurementUnitBySalesUnitResourceRelationshipExpander(): ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface
+    {
+        return new ProductMeasurementUnitBySalesUnitResourceRelationshipExpander(
             $this->getResourceBuilder(),
             $this->getProductStorageClient(),
             $this->getProductMeasurementUnitStorageClient()
