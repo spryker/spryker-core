@@ -14,7 +14,7 @@ interface MerchantSearchFacadeInterface
 {
     /**
      * Specification:
-     * - Return the list of active merchants.
+     * - Returns the list of active merchants.
      * - Can be filtered by MerchantCriteriaFilterTransfer.
      *
      * @api
