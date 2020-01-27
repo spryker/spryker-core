@@ -9,8 +9,7 @@ namespace SprykerTest\Zed\Publisher\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface;
-use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 use SprykerTest\Zed\Publisher\Business\Collator\MockPublishEventCollator;
 
 /**
@@ -45,39 +44,13 @@ class PublisherFacadeTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface $publisherEventRegistry
-     *
-     * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
-     */
-    protected function expandPublisherEventRegistryOne(PublisherEventRegistryInterface $publisherEventRegistry): PublisherEventRegistryInterface
-    {
-        $publisherEventRegistry->register('TestEvent-1', 'TestPluginClassFoo');
-        $publisherEventRegistry->register('TestEvent-2', 'TestPluginClassFoo');
-
-        return $publisherEventRegistry;
-    }
-
-    /**
-     * @param \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface $publisherEventRegistry
-     *
-     * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
-     */
-    protected function expandPublisherEventRegistryTwo(PublisherEventRegistryInterface $publisherEventRegistry): PublisherEventRegistryInterface
-    {
-        $publisherEventRegistry->register('TestEvent-2', 'TestPluginClassBar');
-        $publisherEventRegistry->register('TestEvent-3', 'TestPluginClassBaz');
-
-        return $publisherEventRegistry;
-    }
-
-    /**
      * @return void
      */
     protected function setPublisherRegistryPlugins(): void
     {
         $this->tester->mockFactoryMethod('createPublisherEventCollator', new MockPublishEventCollator(
-            $this->getPublisherRegistryPlugins(),
-            $this->createPublisherEventRegistry()
+            $this->createPublisherEventRegistry(),
+            $this->getPublisherRegistryPlugins()
         ));
     }
 
@@ -86,21 +59,41 @@ class PublisherFacadeTest extends Unit
      */
     protected function getPublisherRegistryPlugins(): array
     {
-        $publisherRegistryPluginMockOne = $this->createMock(PublisherRegistryPluginInterface::class);
-        $publisherRegistryPluginMockOne->method('expandPublisherEventRegistry')
-            ->willReturnCallback(function (PublisherEventRegistryInterface $publisherEventRegistry) {
-                return $this->expandPublisherEventRegistryOne($publisherEventRegistry);
-            });
+        $publisherRegistryPluginMockOne = $this->getMockBuilder(PublisherPluginInterface::class)
+            ->setMockClassName('TestPluginClassFooPlugin')
+            ->getMock();
 
-        $publisherRegistryPluginMockTwo = $this->createMock(PublisherRegistryPluginInterface::class);
-        $publisherRegistryPluginMockTwo->method('expandPublisherEventRegistry')
-            ->willReturnCallback(function (PublisherEventRegistryInterface $publisherEventRegistry) {
-                return $this->expandPublisherEventRegistryTwo($publisherEventRegistry);
-            });
+        $publisherRegistryPluginMockOne
+            ->method('getSubscribedEvents')
+            ->willReturn([
+                'TestEvent-1',
+                'TestEvent-2',
+            ]);
+
+        $publisherRegistryPluginMockTwo = $this->getMockBuilder(PublisherPluginInterface::class)
+            ->setMockClassName('TestPluginClassBarPlugin')
+            ->getMock();
+
+        $publisherRegistryPluginMockTwo
+            ->method('getSubscribedEvents')
+            ->willReturn([
+                'TestEvent-2',
+            ]);
+
+        $publisherRegistryPluginMockThree = $this->getMockBuilder(PublisherPluginInterface::class)
+            ->setMockClassName('TestPluginClassBazPlugin')
+            ->getMock();
+
+        $publisherRegistryPluginMockThree
+            ->method('getSubscribedEvents')
+            ->willReturn([
+                'TestEvent-3',
+            ]);
 
         return [
             $publisherRegistryPluginMockOne,
             $publisherRegistryPluginMockTwo,
+            $publisherRegistryPluginMockThree,
         ];
     }
 
@@ -119,14 +112,14 @@ class PublisherFacadeTest extends Unit
     {
         return [
             'TestEvent-1' => [
-                'TestPluginClassFoo',
+                'TestPluginClassFooPlugin',
             ],
             'TestEvent-2' => [
-                'TestPluginClassFoo',
-                'TestPluginClassBar',
+                'TestPluginClassFooPlugin',
+                'TestPluginClassBarPlugin',
             ],
             'TestEvent-3' => [
-                'TestPluginClassBaz',
+                'TestPluginClassBazPlugin',
             ],
         ];
     }

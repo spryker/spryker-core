@@ -25,19 +25,22 @@ class PublisherToEventBehaviorFacadeBridge implements PublisherToEventBehaviorFa
     /**
      * @param array $resources
      * @param array $ids
+     * @param array $resourcePublisherPlugins
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources, array $ids = []): void
+    public function executeResolvedPluginsBySources(array $resources, array $ids = [], array $resourcePublisherPlugins = []): void
     {
-        $this->eventBehaviorFacade->executeResolvedPluginsBySources($resources, $ids);
+        $this->eventBehaviorFacade->executeResolvedPluginsBySources($resources, $ids, $resourcePublisherPlugins);
     }
 
     /**
+     * @param array $resourcePublisherPlugins
+     *
      * @return string[]
      */
-    public function getAvailableResourceNames(): array
+    public function getAvailableResourceNames(array $resourcePublisherPlugins = []): array
     {
-        return $this->eventBehaviorFacade->getAvailableResourceNames();
+        return $this->eventBehaviorFacade->getAvailableResourceNames($resourcePublisherPlugins);
     }
 }

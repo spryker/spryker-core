@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Publisher;
 
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryPublisherTriggerPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Publisher\Dependency\Facade\PublisherToEventBehaviorFacadeBridge;
@@ -17,7 +16,7 @@ use Spryker\Zed\Publisher\Dependency\Facade\PublisherToEventBehaviorFacadeBridge
  */
 class PublisherDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGINS_PUBLISHER_REGISTRY = 'PLUGINS_PUBLISHER_REGISTRY';
+    public const PLUGINS_PUBLISHER = 'PLUGINS_PUBLISHER';
     public const PLUGINS_RESOURCE_PUBLISHER = 'PLUGINS_RESOURCE_PUBLISHER';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
@@ -29,7 +28,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = $this->addPublisherRegistryPlugins($container);
+        $container = $this->addPublisherPlugins($container);
 
         return $container;
     }
@@ -52,10 +51,10 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPublisherRegistryPlugins(Container $container): Container
+    protected function addPublisherPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PUBLISHER_REGISTRY, function (Container $container) {
-            return $this->getPublisherRegistryPlugins();
+        $container->set(static::PLUGINS_PUBLISHER, function (Container $container) {
+            return $this->getPublisherPlugins();
         });
 
         return $container;
@@ -92,9 +91,9 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
      */
-    protected function getPublisherRegistryPlugins(): array
+    protected function getPublisherPlugins(): array
     {
         return [];
     }

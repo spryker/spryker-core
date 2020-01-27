@@ -9,7 +9,6 @@ namespace Spryker\Zed\Publisher\Business\Registry;
 
 use ArrayIterator;
 use Exception;
-use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 use Traversable;
 
 class PublisherEventRegistry implements PublisherEventRegistryInterface
@@ -17,7 +16,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
     /**
      * @var array
      */
-    protected $publisherPlugins = [];
+    protected $publisherEvents = [];
 
     /**
      * @param string $eventName
@@ -41,10 +40,10 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
     protected function add(string $eventName, string $publisherPluginClassName): void
     {
         if (!$this->has($eventName)) {
-            $this->publisherPlugins[$eventName] = [];
+            $this->publisherEvents[$eventName] = [];
         }
 
-        $this->publisherPlugins[$eventName][] = $publisherPluginClassName;
+        $this->publisherEvents[$eventName][] = $publisherPluginClassName;
     }
 
     /**
@@ -54,7 +53,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      */
     protected function has(string $eventName): bool
     {
-        return isset($this->publisherPlugins[$eventName]);
+        return isset($this->publisherEvents[$eventName]);
     }
 
     /**
@@ -66,7 +65,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      */
     protected function get(string $eventName)
     {
-        if (!isset($this->publisherPlugins[$eventName]) || count($this->publisherPlugins[$eventName]) === 0) {
+        if (!isset($this->publisherPlugins[$eventName]) || count($this->publisherEvents[$eventName]) === 0) {
             throw new Exception(
                 sprintf(
                     'Could not find publisher for event "%s". You have to add a publisher for the event "%s" to PublisherDependencyProvider::getPublisherRegistryPlugins()',
@@ -76,7 +75,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
             );
         }
 
-        return $this->publisherPlugins[$eventName];
+        return $this->publisherEvents[$eventName];
     }
 
     /**
@@ -88,21 +87,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      */
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->publisherPlugins);
-    }
-
-    /**
-     * Whether a offset exists
-     *
-     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
-     *
-     * @param mixed $offset
-     *
-     * @return bool
-     */
-    public function offsetExists($offset): bool
-    {
-        return $this->has($offset);
+        return new ArrayIterator($this->publisherEvents);
     }
 
     /**
@@ -117,6 +102,20 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
     public function offsetGet($offset)
     {
         return $this->get($offset);
+    }
+
+    /**
+     * Whether a offset exists
+     *
+     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
+     *
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset): bool
+    {
+        return $this->has($offset);
     }
 
     /**
@@ -145,6 +144,6 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      */
     public function offsetUnset($offset): void
     {
-        unset($this->publisherPlugins[$offset]);
+        unset($this->publisherEvents[$offset]);
     }
 }

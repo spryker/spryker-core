@@ -12,13 +12,16 @@ interface PublisherToEventBehaviorFacadeInterface
     /**
      * @param array $resources
      * @param array $ids
+     * @param array $resourcePublisherPlugins
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources, array $ids = []): void;
+    public function executeResolvedPluginsBySources(array $resources, array $ids = [], array $resourcePublisherPlugins = []): void;
 
     /**
+     * @param array $resourcePublisherPlugins
+     *
      * @return string[]
      */
-    public function getAvailableResourceNames(): array;
+    public function getAvailableResourceNames(array $resourcePublisherPlugins = []): array;
 }

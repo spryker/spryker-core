@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Publisher\Business\Collator\PublisherEventCollator;
 use Spryker\Zed\Publisher\Business\Collator\PublisherEventCollatorInterface;
 use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
+use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistryInterface;
 use Spryker\Zed\Publisher\PublisherDependencyProvider;
-use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 
 /**
  * @method \Spryker\Zed\Publisher\PublisherConfig getConfig()
@@ -25,13 +25,13 @@ class PublisherBusinessFactory extends AbstractBusinessFactory
     public function createPublisherEventCollator(): PublisherEventCollatorInterface
     {
         return new PublisherEventCollator(
-            $this->getPublisherRegistryPlugins(),
-            $this->createPublisherEventRegistry()
+            $this->createPublisherEventRegistry(),
+            $this->getPublisherPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
+     * @return \Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistryInterface
      */
     public function createPublisherEventRegistry(): PublisherEventRegistryInterface
     {
@@ -39,10 +39,10 @@ class PublisherBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
      */
-    public function getPublisherRegistryPlugins(): array
+    public function getPublisherPlugins(): array
     {
-        return $this->getProvidedDependency(PublisherDependencyProvider::PLUGINS_PUBLISHER_REGISTRY);
+        return $this->getProvidedDependency(PublisherDependencyProvider::PLUGINS_PUBLISHER);
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryTranslation;
 
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
+use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -31,5 +33,25 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->getFacade()->writeCollectionByGlossaryTranslationEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSubscribedEvents(): array
+    {
+        return [
+            GlossaryEvents::GLOSSARY_KEY_PUBLISH,
+            GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE,
+            GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE,
+
+            GlossaryStorageConfig::GLOSSARY_KEY_WRITE,
+            GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE,
+            GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE,
+        ];
     }
 }

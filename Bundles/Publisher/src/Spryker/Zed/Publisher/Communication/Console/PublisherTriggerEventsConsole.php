@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Publisher\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
+use Spryker\Zed\Publisher\Business\PublisherBusinessFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -65,6 +66,8 @@ class PublisherTriggerEventsConsole extends Console
         $resources = [];
         $resourcesIds = [];
 
+        (new PublisherBusinessFactory())->createPublisherEventCollator()->getPublisherEventCollection();
+
         if ($input->getOption(static::RESOURCE_OPTION)) {
             $resourceString = $input->getOption(static::RESOURCE_OPTION);
             $resources = explode(',', $resourceString);
@@ -75,16 +78,19 @@ class PublisherTriggerEventsConsole extends Console
             $resourcesIds = explode(',', $idsString);
         }
 
-        $resourcePublishedPlugins = $this->getFactory()->getResourcePublisherPlugins();
-        $this->getFactory()->getEventBehaviorFacade()->executeResolvedPluginsBySources($resources, $resourcesIds);
+        $resourcePublisherPlugins = $this->getFactory()->getResourcePublisherPlugins();
+
+        $this->getFactory()->getEventBehaviorFacade()->executeResolvedPluginsBySources($resources, $resourcesIds, $resourcePublisherPlugins);
     }
 
     /**
      * @return string
      */
-    private function getResourcesUsageText(): string
+    protected function getResourcesUsageText(): string
     {
-        $availableResourceNames = $this->getFactory()->getEventBehaviorFacade()->getAvailableResourceNames();
+        $availableResourceNames = $this->getFactory()->getEventBehaviorFacade()->getAvailableResourceNames(
+            $this->getFactory()->getResourcePublisherPlugins()
+        );
 
         return sprintf(
             "-%s [\n\t%s\n]",

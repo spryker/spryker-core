@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\Publisher\Business\Collator;
 
-use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
+use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistryInterface;
 
 class PublisherEventCollator implements PublisherEventCollatorInterface
 {
     /**
-     * @var \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]
+     * @var \Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistryInterface
      */
-    protected $publisherRegistryPlugins = [];
+    protected $publishedEventRegistry;
 
     /**
-     * @var \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
+     * @var \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
      */
-    protected $publisherEventRegistry;
+    protected $publisherPlugins = [];
 
     /**
      * @var string[]
@@ -27,13 +27,13 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
     protected static $eventCollectionBuffer;
 
     /**
-     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[] $publisherRegistryPlugins
-     * @param \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface $publisherEventRegistry
+     * @param \Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistryInterface $publishedEventRegistry
+     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[] $publisherPlugins
      */
-    public function __construct(array $publisherRegistryPlugins, PublisherEventRegistryInterface $publisherEventRegistry)
+    public function __construct(PublisherEventRegistryInterface $publishedEventRegistry, array $publisherPlugins)
     {
-        $this->publisherRegistryPlugins = $publisherRegistryPlugins;
-        $this->publisherEventRegistry = $publisherEventRegistry;
+        $this->publishedEventRegistry = $publishedEventRegistry;
+        $this->publisherPlugins = $publisherPlugins;
     }
 
     /**
@@ -42,7 +42,7 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
     public function getPublisherEventCollection(): array
     {
         if (static::$eventCollectionBuffer === null) {
-            static::$eventCollectionBuffer = $this->getEventCollection();
+            static::$eventCollectionBuffer = $this->registerEventCollection();
         }
 
         return static::$eventCollectionBuffer;
@@ -51,15 +51,25 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
     /**
      * @return string[]
      */
-    protected function getEventCollection(): array
+    protected function registerEventCollection(): array
     {
-        foreach ($this->publisherRegistryPlugins as $publisherRegistryPlugin) {
-            $this->publisherEventRegistry = $publisherRegistryPlugin->expandPublisherEventRegistry($this->publisherEventRegistry);
+        foreach ($this->publisherPlugins as $publisherPlugin) {
+            foreach ($publisherPlugin->getSubscribedEvents() as $subscribedEvent) {
+                $this->publishedEventRegistry = $this->publishedEventRegistry->register($subscribedEvent, get_class($publisherPlugin));
+            }
         }
 
+        return $this->getEventCollection();
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getEventCollection(): array
+    {
         $eventCollection = [];
 
-        foreach ($this->publisherEventRegistry as $eventName => $listeners) {
+        foreach ($this->publishedEventRegistry as $eventName => $listeners) {
             $eventCollection[$eventName] = $listeners;
         }
 

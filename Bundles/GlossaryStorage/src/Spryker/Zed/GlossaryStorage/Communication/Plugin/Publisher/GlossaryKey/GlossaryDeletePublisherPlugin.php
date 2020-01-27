@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey;
 
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
+use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -31,5 +33,23 @@ class GlossaryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->getFacade()->deleteCollectionByGlossaryKeyEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSubscribedEvents(): array
+    {
+        return [
+            GlossaryEvents::GLOSSARY_KEY_UNPUBLISH,
+            GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE,
+
+            GlossaryStorageConfig::GLOSSARY_KEY_DELETE,
+            GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE,
+        ];
     }
 }

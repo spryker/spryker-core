@@ -16,6 +16,6 @@ class MockPublishEventCollator extends PublisherEventCollator
      */
     public function getPublisherEventCollection(): array
     {
-        return $this->getEventCollection();
+        return $this->registerEventCollection();
     }
 }

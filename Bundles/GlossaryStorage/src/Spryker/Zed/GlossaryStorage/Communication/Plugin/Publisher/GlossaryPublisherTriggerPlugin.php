@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher;
 
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
