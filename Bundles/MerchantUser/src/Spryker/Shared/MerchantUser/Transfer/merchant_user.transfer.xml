@@ -46,6 +46,7 @@
         <property name="username" type="string"/>
         <property name="status" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="MerchantResponse">
