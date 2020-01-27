@@ -33,6 +33,20 @@ class MerchantProfileHelper extends Module
      */
     public function haveMerchantProfile(MerchantTransfer $merchantTransfer, array $seedData = []): MerchantProfileTransfer
     {
+        return $this->getLocator()
+            ->merchantProfile()
+            ->facade()
+            ->createMerchantProfile($this->buildMerchantProfile($merchantTransfer, $seedData));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function buildMerchantProfile(MerchantTransfer $merchantTransfer, array $seedData = []): MerchantProfileTransfer
+    {
         $merchantProfileTransfer = (new MerchantProfileBuilder($seedData))->build();
         $merchantProfileTransfer->setIdMerchantProfile(null);
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
@@ -41,10 +55,7 @@ class MerchantProfileHelper extends Module
         $merchantProfileTransfer->setUrlCollection($this->createMerchantUrlTransfers());
         $merchantProfileTransfer->setAddressCollection($this->creatMerchantProfileAddressCollectionTransfer());
 
-        return $this->getLocator()
-            ->merchantProfile()
-            ->facade()
-            ->createMerchantProfile($merchantProfileTransfer);
+        return $merchantProfileTransfer;
     }
 
     /**

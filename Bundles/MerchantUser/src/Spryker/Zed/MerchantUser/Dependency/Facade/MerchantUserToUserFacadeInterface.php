@@ -40,4 +40,11 @@ interface MerchantUserToUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $user);
+
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasUserByUsername($username);
 }

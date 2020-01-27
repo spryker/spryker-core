@@ -30,7 +30,7 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantPostCreator()
+            ->createMerchantUserCreator()
             ->handleMerchantPostCreate($merchantTransfer);
     }
 
@@ -47,7 +47,7 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantPostUpdater()
+            ->createMerchantUserUpdater()
             ->handleMerchantPostUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
     }
 }

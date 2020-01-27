@@ -20,6 +20,7 @@
         <property name="idMerchant" type="int"/>
         <property name="idUser" type="int"/>
         <property name="user" type="User"/>
+        <property name="merchant" type="Merchant"/>
     </transfer>
 
     <transfer name="MerchantUserCriteriaFilter">
@@ -30,7 +31,7 @@
 
     <transfer name="MerchantUserResponse">
         <property name="merchantUser" type="MerchantUser"/>
-        <property name="isSuccess" type="bool"/>
+        <property name="isSuccessful" type="bool"/>
         <property name="errors" type="Message[]" singular="error"/>
     </transfer>
 

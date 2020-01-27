@@ -14,7 +14,7 @@ interface MerchantPostUpdatePluginInterface
 {
     /**
      * Specification:
-     * - Executes after the merchant is updated.
+     * - Executes after a merchant is updated.
      *
      * @api
      *
