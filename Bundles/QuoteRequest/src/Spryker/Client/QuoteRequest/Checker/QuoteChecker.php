@@ -7,18 +7,33 @@
 
 namespace Spryker\Client\QuoteRequest\Checker;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 class QuoteChecker implements QuoteCheckerInterface
 {
+    /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     */
+    protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
+    public function shouldCheckoutAddressStepBeHidden(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getQuoteRequestVersionReference() && $this->isShipmentSourcePriceSet($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function shouldCheckoutShipmentStepBeHidden(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getQuoteRequestVersionReference() && $this->isShipmentSourcePriceSet($quoteTransfer);
     }
@@ -30,8 +45,14 @@ class QuoteChecker implements QuoteCheckerInterface
      */
     protected function isShipmentSourcePriceSet(QuoteTransfer $quoteTransfer): bool
     {
+        $shipmentTransfer = $this->findQuoteLevelShipment($quoteTransfer);
+        if ($shipmentTransfer) {
+            return (bool)$this->extractShipmentSourcePrice($shipmentTransfer);
+        }
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($this->extractShipmentSourcePrice($itemTransfer)) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+            if ($shipmentTransfer && $this->extractShipmentSourcePrice($shipmentTransfer)) {
                 return true;
             }
         }
@@ -40,18 +61,37 @@ class QuoteChecker implements QuoteCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    protected function findQuoteLevelShipment(QuoteTransfer $quoteTransfer): ?ShipmentTransfer
+    {
+        $shipmentTransfer = $quoteTransfer->getShipment();
+        if ($shipmentTransfer) {
+            return $shipmentTransfer;
+        }
+
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getType() === static::SHIPMENT_EXPENSE_TYPE) {
+                return $expenseTransfer->getShipment();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
      */
-    protected function extractShipmentSourcePrice(ItemTransfer $itemTransfer): ?MoneyValueTransfer
+    protected function extractShipmentSourcePrice(ShipmentTransfer $shipmentTransfer): ?MoneyValueTransfer
     {
-        $shipmentMethodTransfer = $itemTransfer->getShipment() ? $itemTransfer->getShipment()->getMethod() : null;
-
-        if (!$shipmentMethodTransfer) {
-            return null;
+        if ($shipmentTransfer->getMethod()) {
+            return $shipmentTransfer->getMethod()->getSourcePrice();
         }
 
-        return $shipmentMethodTransfer->getSourcePrice();
+        return null;
     }
 }

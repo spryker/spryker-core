@@ -243,5 +243,17 @@ interface QuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
+    public function shouldCheckoutAddressStepBeHidden(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Returns true if request version reference and custom shipment price are set, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function shouldCheckoutShipmentStepBeHidden(QuoteTransfer $quoteTransfer): bool;
 }

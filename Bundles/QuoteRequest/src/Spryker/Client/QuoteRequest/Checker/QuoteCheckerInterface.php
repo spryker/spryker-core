@@ -16,5 +16,12 @@ interface QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
+    public function shouldCheckoutAddressStepBeHidden(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function shouldCheckoutShipmentStepBeHidden(QuoteTransfer $quoteTransfer): bool;
 }

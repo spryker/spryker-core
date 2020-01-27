@@ -250,10 +250,26 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
+    public function shouldCheckoutAddressStepBeHidden(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteChecker()
-            ->isQuoteInQuoteRequestProcess($quoteTransfer);
+            ->shouldCheckoutAddressStepBeHidden($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function shouldCheckoutShipmentStepBeHidden(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteChecker()
+            ->shouldCheckoutShipmentStepBeHidden($quoteTransfer);
     }
 }
