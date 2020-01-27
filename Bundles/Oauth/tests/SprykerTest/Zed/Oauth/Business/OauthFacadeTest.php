@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Oauth\Business;
 
 use Codeception\Test\Unit;
+use DateInterval;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
@@ -17,8 +18,13 @@ use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Oauth\OauthConstants;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
+use Spryker\Zed\Oauth\Business\OauthBusinessFactory;
+use Spryker\Zed\Oauth\Business\OauthFacade;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
+use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
@@ -47,6 +53,11 @@ class OauthFacadeTest extends Unit
     protected $customerTransfer;
 
     /**
+     * @var \Spryker\Zed\Oauth\OauthConfig|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $oauthConfigMock;
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -54,6 +65,7 @@ class OauthFacadeTest extends Unit
         parent::setUp();
 
         $this->customerTransfer = $this->tester->haveCustomer();
+        $this->setUpOauthConfigMock();
     }
 
     /**
@@ -255,6 +267,41 @@ class OauthFacadeTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function dependencyOfRefreshTokenRetentionIntervalToRefreshTokenCountDataProvider()
+    {
+        return [
+            ['P2M', 0],
+            ['PT0M', 1],
+        ];
+    }
+
+    /**
+     * @dataProvider dependencyOfRefreshTokenRetentionIntervalToRefreshTokenCountDataProvider
+     *
+     * @param string $interval
+     * @param int $matches
+     *
+     * @return void
+     */
+    public function testCleanExpiredRefreshTokens(string $interval, int $matches): void
+    {
+        // Arrange
+        $this->tester->deleteAllOauthRefreshTokens();
+        $this->oauthConfigMock->method('getRefreshTokenRetentionInterval')->willReturn(new DateInterval($interval));
+        $this->setUserProviderPluginMock();
+        $oauthRequestTransfer = $this->createOauthRequestTransfer();
+        $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+
+        // Act
+        $this->getOauthFacade()->cleanExpiredRefreshTokens();
+
+        // Assert
+        $this->assertEquals($matches, $this->tester->getOauthRefreshTokensCount());
+    }
+
+    /**
      * @return void
      */
     protected function setUserProviderPluginMock(): void
@@ -335,11 +382,33 @@ class OauthFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    protected function setUpOauthConfigMock(): void
+    {
+        $this->oauthConfigMock = $this->createMock(OauthConfig::class);
+        $this->oauthConfigMock
+            ->method('getPrivateKeyPath')->willReturn(Config::getInstance()->get(OauthConstants::PRIVATE_KEY_PATH));
+        $this->oauthConfigMock
+            ->method('getPublicKeyPath')->willReturn(Config::getInstance()->get(OauthConstants::PUBLIC_KEY_PATH));
+        $this->oauthConfigMock
+            ->method('getAccessTokenTTL')->willReturn('PT8H');
+        $this->oauthConfigMock
+            ->method('getRefreshTokenTTL')->willReturn('P1M');
+    }
+
+    /**
      * @return \Spryker\Zed\Oauth\Business\OauthFacadeInterface
      */
     protected function getOauthFacade(): OauthFacadeInterface
     {
-        return $this->tester->getLocator()->oauth()->facade();
+        $businessFactory = (new OauthBusinessFactory())
+            ->setConfig($this->oauthConfigMock);
+
+        $facade = (new OauthFacade())
+            ->setFactory($businessFactory);
+
+        return $facade;
     }
 
     /**

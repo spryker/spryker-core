@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Oauth;
 
 use Codeception\Actor;
+use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
 
 /**
  * Inherited Methods
@@ -30,6 +31,18 @@ class OauthBusinessTester extends Actor
     use _generated\OauthBusinessTesterActions;
 
     /**
-     * Define custom actions here
+     * @return int
      */
+    public function getOauthRefreshTokensCount(): int
+    {
+        return SpyOauthRefreshTokenQuery::create()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function deleteAllOauthRefreshTokens(): int
+    {
+        return SpyOauthRefreshTokenQuery::create()->deleteAll();
+    }
 }

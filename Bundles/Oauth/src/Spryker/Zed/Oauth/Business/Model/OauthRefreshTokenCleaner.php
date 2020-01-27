@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Oauth\Business\Model;
 
 use ArrayObject;
+use DateTime;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
@@ -27,13 +29,23 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
     protected $oauthRepository;
 
     /**
+     * @var \Spryker\Zed\Oauth\OauthConfig
+     */
+    protected $oauthConfig;
+
+    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      */
-    public function __construct(OauthRepositoryInterface $oauthRepository, OauthEntityManagerInterface $oauthEntityManager)
-    {
+    public function __construct(
+        OauthRepositoryInterface $oauthRepository,
+        OauthEntityManagerInterface $oauthEntityManager,
+        OauthConfig $oauthConfig
+    ) {
         $this->oauthRepository = $oauthRepository;
         $this->oauthEntityManager = $oauthEntityManager;
+        $this->oauthConfig = $oauthConfig;
     }
 
     /**
@@ -41,7 +53,11 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
      */
     public function cleanExpiredRefreshTokens(): void
     {
-        $oauthRefreshTokenTransfers = $this->oauthRepository->getExpiredRefreshTokens()->getOauthRefreshTokens();
+        $expiredAt = (new DateTime())
+            ->add($this->oauthConfig->getRefreshTokenRetentionInterval())
+            ->format('Y-m-d H:i:s');
+
+        $oauthRefreshTokenTransfers = $this->oauthRepository->getExpiredRefreshTokens($expiredAt)->getOauthRefreshTokens();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers): void {
             $this->executeDeleteRefreshTokensTransaction($oauthRefreshTokenTransfers);

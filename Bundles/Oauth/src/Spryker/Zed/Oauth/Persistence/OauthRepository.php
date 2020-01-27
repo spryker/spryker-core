@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
-use DateTime;
 use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
@@ -121,13 +120,12 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     }
 
     /**
+     * @param string $expiredAt
+     *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
-    public function getExpiredRefreshTokens(): OauthRefreshTokenCollectionTransfer
+    public function getExpiredRefreshTokens(string $expiredAt): OauthRefreshTokenCollectionTransfer
     {
-        $expiredAt = (new DateTime())
-            ->add($this->getFactory()->getConfig()->getRefreshTokenRetentionInterval())
-            ->format('Y-m-d H:i:s');
         $authRefreshTokensCollection = $this->getFactory()
             ->createRefreshTokenQuery()
             ->filterByExpiresAt($expiredAt, Criteria::LESS_EQUAL)
