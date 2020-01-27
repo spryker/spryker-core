@@ -56,6 +56,23 @@ class ShipmentFacadeCalculateShipmentTotalTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testCalculateShipmentTotalCalculatesExpansesWithoutExpenses(): void
+    {
+        // Arrange
+        $calculableObjectTransfer = (new CalculableObjectTransfer())
+            ->setOriginalQuote(new QuoteTransfer())
+            ->setTotals(new TotalsTransfer());
+
+        // Act
+        $this->tester->getFacade()->calculateShipmentTotal($calculableObjectTransfer);
+
+        // Assert
+        $this->assertSame(0, $calculableObjectTransfer->getTotals()->getShipmentTotal());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CalculableObjectTransfer
      */
     protected function createCalculableObjectWithFakeExpenses(): CalculableObjectTransfer
