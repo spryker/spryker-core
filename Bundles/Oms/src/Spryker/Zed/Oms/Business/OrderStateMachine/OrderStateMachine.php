@@ -553,7 +553,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
                 ErrorLogger::getInstance()->log($e);
 
-                if ($type === self::BY_ORDER) {
+                if ($type === static::BY_ORDER) {
                     return null; // intercept the processing of a grouped order items for the current order state
                 }
             }
