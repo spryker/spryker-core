@@ -32,9 +32,9 @@ class PromotionItemMapper implements PromotionItemMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
      *
-     * @return string
+     * @return string|null
      */
-    protected function findDiscountPromotionUuid(PromotionItemTransfer $promotionItemTransfer): string
+    protected function findDiscountPromotionUuid(PromotionItemTransfer $promotionItemTransfer): ?string
     {
         $discountTransfer = $promotionItemTransfer->getDiscount();
         if ($discountTransfer === null || $discountTransfer->getDiscountPromotion() === null) {
