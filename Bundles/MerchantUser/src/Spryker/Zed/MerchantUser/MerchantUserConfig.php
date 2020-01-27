@@ -16,16 +16,6 @@ class MerchantUserConfig extends AbstractBundleConfig
      */
     public const USER_CREATION_DEFAULT_STATUS = 'blocked';
 
-    public const USER_CREATION_DEFAULT_PASSWORD_LENGTH = 64;
-
-    /**
-     * @return int
-     */
-    public function getUserPasswordLength(): int
-    {
-        return static::USER_CREATION_DEFAULT_PASSWORD_LENGTH;
-    }
-
     /**
      * @return string
      */

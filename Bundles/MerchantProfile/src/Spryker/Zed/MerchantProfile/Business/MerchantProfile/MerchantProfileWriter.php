@@ -104,28 +104,25 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function handleMerchantPostUpdate(
-        MerchantTransfer $originalMerchantTransfer,
-        MerchantTransfer $updatedMerchantTransfer
-    ): MerchantResponseTransfer {
-        $updatedMerchantTransfer->requireMerchantProfile();
-        $merchantProfileTransfer = $updatedMerchantTransfer->getMerchantProfile();
+    public function handleMerchantPostUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    {
+        $merchantTransfer->requireMerchantProfile();
+        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
 
         if ($merchantProfileTransfer->getIdMerchantProfile() === null) {
-            return $this->handleMerchantPostCreate($updatedMerchantTransfer);
+            return $this->handleMerchantPostCreate($merchantTransfer);
         }
-        $merchantProfileTransfer->setFkMerchant($updatedMerchantTransfer->getIdMerchant());
+        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
 
         $merchantProfileTransfer = $this->update($merchantProfileTransfer);
 
         return (new MerchantResponseTransfer())
             ->setIsSuccess(true)
-            ->setMerchant($updatedMerchantTransfer->setMerchantProfile($merchantProfileTransfer));
+            ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
     }
 
     /**

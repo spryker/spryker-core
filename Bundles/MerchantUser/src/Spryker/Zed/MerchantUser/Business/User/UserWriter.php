@@ -46,6 +46,8 @@ class UserWriter implements UserWriterInterface
         MerchantTransfer $merchantTransfer,
         MerchantUserTransfer $merchantUserTransfer
     ): UserTransfer {
+        $merchantTransfer->requireMerchantProfile();
+
         $userTransfer = $this->userReader->getUserByMerchantUser($merchantUserTransfer);
 
         $userTransfer
