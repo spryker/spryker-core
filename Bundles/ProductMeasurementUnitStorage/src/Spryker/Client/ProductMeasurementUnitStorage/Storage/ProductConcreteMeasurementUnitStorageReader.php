@@ -73,7 +73,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
      */
-    public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array
+    public function getBulkProductConcreteMeasurementUnitStorage(array $productConcreteIds): array
     {
         if (!$productConcreteIds) {
             return [];

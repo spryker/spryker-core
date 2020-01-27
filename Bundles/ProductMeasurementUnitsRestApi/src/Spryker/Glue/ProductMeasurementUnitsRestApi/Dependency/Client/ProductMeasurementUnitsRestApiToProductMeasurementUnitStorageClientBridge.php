@@ -32,4 +32,15 @@ class ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientBridge 
         return $this->productMeasurementUnitStorageClient
             ->getProductMeasurementBaseUnitsByProductConcreteIds($productConcreteIds);
     }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[][]
+     */
+    public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->productMeasurementUnitStorageClient
+            ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
+    }
 }

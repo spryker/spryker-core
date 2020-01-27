@@ -64,15 +64,15 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
         }
 
         $productConcreteMeasurementUnitStorageTransfers = $this->productConcreteMeasurementUnitStorageReader
-            ->getProductMeasurementBaseUnitsByProductConcreteIds($productConcreteIds);
+            ->getBulkProductConcreteMeasurementUnitStorage($productConcreteIds);
 
         if (!$productConcreteMeasurementUnitStorageTransfers) {
             return [];
         }
 
         $productMeasurementUnitTransfers = [];
-        foreach ($productConcreteMeasurementUnitStorageTransfers as $productConcreteSku => $productConcreteMeasurementUnitStorageTransfer) {
-            $productMeasurementUnitTransfers[$productConcreteSku] = $this->productMeasurementUnitReader->findProductMeasurementUnit(
+        foreach ($productConcreteMeasurementUnitStorageTransfers as $idProductConcrete => $productConcreteMeasurementUnitStorageTransfer) {
+            $productMeasurementUnitTransfers[$idProductConcrete] = $this->productMeasurementUnitReader->findProductMeasurementUnit(
                 $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementUnit()
             );
         }

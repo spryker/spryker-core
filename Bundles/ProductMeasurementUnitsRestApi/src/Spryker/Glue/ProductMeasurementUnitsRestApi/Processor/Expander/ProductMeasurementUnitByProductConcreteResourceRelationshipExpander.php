@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -73,29 +74,29 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
         }
 
         foreach ($resources as $resource) {
-            $this->addRelationships($indexedProductMeasurementUnitTransfers, $resource);
+            if (!isset($indexedProductMeasurementUnitTransfers[$resource->getId()])) {
+                continue;
+            }
+
+            $this->addRelationships($indexedProductMeasurementUnitTransfers[$resource->getId()], $resource);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $productMeasurementUnitTransfers
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
      */
-    protected function addRelationships(array $productMeasurementUnitTransfers, RestResourceInterface $resource): void
+    protected function addRelationships(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer, RestResourceInterface $resource): void
     {
-        foreach ($productMeasurementUnitTransfers as $productConcreteSku => $productMeasurementUnitTransfer) {
-            if ($resource->getId() === $productConcreteSku) {
-                $productMeasurementUnitResource = $this->restResourceBuilder->createRestResource(
-                    ProductMeasurementUnitsRestApiConfig::RESOURCE_PRODUCT_MEASUREMENT_UNITS,
-                    (string)$productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-                    $productMeasurementUnitTransfer
-                );
+        $productMeasurementUnitResource = $this->restResourceBuilder->createRestResource(
+            ProductMeasurementUnitsRestApiConfig::RESOURCE_PRODUCT_MEASUREMENT_UNITS,
+            (string)$productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementUnitTransfer
+        );
 
-                $resource->addRelationship($productMeasurementUnitResource);
-            }
-        }
+        $resource->addRelationship($productMeasurementUnitResource);
     }
 
     /**

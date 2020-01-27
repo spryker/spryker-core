@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 
 use Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
 class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitReaderInterface
@@ -48,6 +49,39 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
             return null;
         }
 
+        return $this->getProductMeasurementSalesUnits($productConcreteMeasurementUnitStorageTransfer);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[][]
+     */
+    public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array
+    {
+        if (!$productConcreteIds) {
+            return [];
+        }
+
+        $productConcreteMeasurementUnitStorageTransfers = $this->productConcreteMeasurementUnitStorageReader
+            ->getBulkProductConcreteMeasurementUnitStorage($productConcreteIds);
+
+        if (!$productConcreteMeasurementUnitStorageTransfers) {
+            return [];
+        }
+
+        $productMeasurementSalesUnits = [];
+        foreach ($productConcreteMeasurementUnitStorageTransfers as $idProductConcrete => $productConcreteMeasurementUnitStorageTransfer) {
+            $productMeasurementSalesUnits[$idProductConcrete] = $this->getProductMeasurementSalesUnits(
+                $productConcreteMeasurementUnitStorageTransfer
+            );
+        }
+
+        return $productMeasurementSalesUnits;
+    }
+
+    protected function getProductMeasurementSalesUnits(ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer)
+    {
         $productMeasurementSalesUnits = [];
         $defaultFound = false;
         foreach ($productConcreteMeasurementUnitStorageTransfer->getSalesUnits() as $productConcreteMeasurementSalesUnitTransfer) {

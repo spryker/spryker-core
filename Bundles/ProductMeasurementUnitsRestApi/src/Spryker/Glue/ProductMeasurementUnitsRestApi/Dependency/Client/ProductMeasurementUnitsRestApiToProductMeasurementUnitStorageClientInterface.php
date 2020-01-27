@@ -15,4 +15,11 @@ interface ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInt
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[][]
+     */
+    public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array;
 }
