@@ -446,19 +446,6 @@ class DiscountPromotionFacadeTest extends Unit
     }
 
     /**
-     * @param string $promotionSku
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
-     */
-    protected function createDiscountPromotionTransfer(string $promotionSku, int $quantity): DiscountPromotionTransfer
-    {
-        return (new DiscountPromotionTransfer())
-            ->setAbstractSku($promotionSku)
-            ->setQuantity($quantity);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
