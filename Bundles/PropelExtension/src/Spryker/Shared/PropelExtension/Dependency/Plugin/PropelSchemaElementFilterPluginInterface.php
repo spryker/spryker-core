@@ -19,7 +19,7 @@ interface PropelSchemaElementFilterPluginInterface
      *
      * @param \SimpleXMLElement $schemaXmlElement
      *
-     * @return \SimpleXMLElement[]
+     * @return \SimpleXMLElement
      */
     public function filter(SimpleXMLElement $schemaXmlElement): SimpleXMLElement;
 }
