@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -15,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @api
  *
  * @method \Spryker\Zed\ProductLabel\Business\ProductLabelBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface getRepository()
  */
 class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInterface
 {
@@ -152,6 +155,23 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->getFactory()
             ->createLabelUpdater()
             ->update($productLabelTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelResponseTransfer
+     */
+    public function removeLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createLabelDeleter()
+            ->remove($productLabelTransfer);
     }
 
     /**

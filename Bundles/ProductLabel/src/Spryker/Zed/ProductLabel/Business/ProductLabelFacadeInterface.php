@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
 
@@ -118,6 +119,18 @@ interface ProductLabelFacadeInterface
      * @return void
      */
     public function updateLabel(ProductLabelTransfer $productLabelTransfer);
+
+    /**
+     * Specification:
+     * - Remove given product-label from database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelResponseTransfer
+     */
+    public function removeLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer;
 
     /**
      * Specification:

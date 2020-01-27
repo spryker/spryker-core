@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductLabel\Business;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
+use Spryker\Zed\ProductLabel\Business\Label\LabelDeleter;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
@@ -26,6 +27,8 @@ use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
  * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface getRepository()
  */
 class ProductLabelBusinessFactory extends AbstractBusinessFactory
 {
@@ -62,6 +65,17 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
         return new LabelReader(
             $this->getQueryContainer(),
             $this->createLocalizedAttributesCollectionReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\LabelDeleter
+     */
+    public function createLabelDeleter()
+    {
+        return new LabelDeleter(
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

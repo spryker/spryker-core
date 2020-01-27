@@ -63,7 +63,6 @@
     </transfer>
 
     <transfer name="ProductLabelResponse">
-        <property name="productLabel" type="ProductLabel"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
