@@ -25,12 +25,12 @@ class DiscountPromotionsRestApiToDiscountPromotionBridge implements DiscountProm
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     * @param string $uuid
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
-    public function findDiscountPromotionByUuid(DiscountPromotionTransfer $discountPromotionTransfer): ?DiscountPromotionTransfer
+    public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer
     {
-        return $this->discountPromotionFacade->findDiscountPromotionByUuid($discountPromotionTransfer);
+        return $this->discountPromotionFacade->findDiscountPromotionByUuid($uuid);
     }
 }
