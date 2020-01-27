@@ -26,6 +26,7 @@ use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 class MerchantUserCreator implements MerchantUserCreatorInterface
 {
     protected const USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE = 'A user with the same email is already connected to another merchant.';
+    protected const USER_CREATION_DEFAULT_PASSWORD_LENGTH = 64;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface
@@ -186,7 +187,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     {
         if (!$this->userReader->hasUserByMerchant($merchantTransfer)) {
             $userTransfer = $this->fillUserTransferFromMerchant(new UserTransfer(), $merchantTransfer)
-                ->setPassword($this->utilTextService->generateRandomByteString($this->merchantUserConfig->getUserPasswordLength()))
+                ->setPassword($this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH))
                 ->setStatus($this->merchantUserConfig->getUserCreationStatus());
 
             return $this->userWriter->createUser($userTransfer);

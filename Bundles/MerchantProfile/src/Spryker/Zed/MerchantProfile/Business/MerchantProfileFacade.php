@@ -115,6 +115,6 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
     {
         return $this->getFactory()
             ->createMerchantProfileWriter()
-            ->handleMerchantPostUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
+            ->handleMerchantPostUpdate($updatedMerchantTransfer);
     }
 }

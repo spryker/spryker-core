@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
 use Spryker\Zed\MerchantUser\Business\User\UserReader;
 use Spryker\Zed\MerchantUser\Business\User\UserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\User\UserWriter;
+use Spryker\Zed\MerchantUser\Business\User\UserWriterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
@@ -63,9 +64,9 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\User\UserWriter
+     * @return \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface
      */
-    public function createUserWriter()
+    public function createUserWriter(): UserWriterInterface
     {
         return new UserWriter(
             $this->getUserFacade(),
