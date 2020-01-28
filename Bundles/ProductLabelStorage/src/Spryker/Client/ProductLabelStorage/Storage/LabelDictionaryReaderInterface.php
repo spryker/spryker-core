@@ -28,8 +28,6 @@ interface LabelDictionaryReaderInterface
     public function findLabelByIdProductLabel($idProductLabel, string $localeName, ?string $storeName = null);
 
     /**
-     * x
-     *
      * @param string $labelName
      * @param string $localeName
      *

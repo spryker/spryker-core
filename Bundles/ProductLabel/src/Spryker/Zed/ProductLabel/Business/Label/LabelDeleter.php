@@ -63,7 +63,9 @@ class LabelDeleter implements LabelDeleterInterface
                 ->addMessage($this->createProductLabelNotFoundMessage(static::MESSAGE_PRODUCT_LABEL_NOT_FOUND));
         }
 
-        $this->executeProductLabelDeleteTransaction($productLabelTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
+            $this->executeProductLabelDeleteTransaction($productLabelTransfer);
+        });
 
         return $productLabelResponseTransfer;
     }
@@ -75,11 +77,9 @@ class LabelDeleter implements LabelDeleterInterface
      */
     protected function executeProductLabelDeleteTransaction(ProductLabelTransfer $productLabelTransfer): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
-            $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations($productLabelTransfer->getIdProductLabel());
-            $this->productLabelEntityManager->deleteProductLabelLocalizedAttributes($productLabelTransfer->getIdProductLabel());
-            $this->productLabelEntityManager->deleteProductLabel($productLabelTransfer->getIdProductLabel());
-        });
+        $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations($productLabelTransfer->getIdProductLabel());
+        $this->productLabelEntityManager->deleteProductLabelLocalizedAttributes($productLabelTransfer->getIdProductLabel());
+        $this->productLabelEntityManager->deleteProductLabel($productLabelTransfer->getIdProductLabel());
     }
 
     /**
