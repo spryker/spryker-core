@@ -17,5 +17,5 @@ interface SalesUnitReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getSalesUnit(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getSalesUnits(RestRequestInterface $restRequest): RestResponseInterface;
 }

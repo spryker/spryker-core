@@ -61,40 +61,34 @@ class SalesUnitReader implements SalesUnitReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getSalesUnit(RestRequestInterface $restRequest): RestResponseInterface
+    public function getSalesUnits(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $parentResource = $restRequest->findParentResourceByType(
-            ProductMeasurementUnitsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
-        );
-
+        $parentResource = $restRequest->findParentResourceByType(ProductMeasurementUnitsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$parentResource) {
             return $this->salesUnitRestResponseBuilder->createProductConcreteSkuMissingErrorResponse();
         }
 
+        $parentResourceId = $parentResource->getId();
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
-            [$parentResource->getId()],
+            [$parentResourceId],
             $restRequest->getMetadata()->getLocale()
         );
-
         if (!$productConcreteIds) {
             return $this->salesUnitRestResponseBuilder->createProductConcreteNotFoundErrorResponse();
         }
 
+        $restResponse = $this->salesUnitRestResponseBuilder->createRestResponse();
+
         $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
-
-        $restResponse = $this->salesUnitRestResponseBuilder->createRestResponse();
         if (!$productMeasurementSalesUnitTransfers) {
             return $restResponse;
         }
 
-        foreach (reset($productMeasurementSalesUnitTransfers) as $productMeasurementSalesUnitTransfer) {
-            $restResponse->addResource(
-                $this->salesUnitRestResponseBuilder->createSalesUnitRestResource($productMeasurementSalesUnitTransfer)
-            );
-        }
-
-        return $restResponse;
+        return $this->salesUnitRestResponseBuilder->createSalesUnitResourceCollectionResponse(
+            reset($productMeasurementSalesUnitTransfers),
+            $parentResourceId
+        );
     }
 }

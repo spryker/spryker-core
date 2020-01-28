@@ -20,14 +20,15 @@ class SalesUnitsResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves product sales unit by code."
+     *              "Retrieves a collection of sales units."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Resource id has not been specified."
+     *              "400": "Abstract product id is not specified.",
+     *              "404": "Abstract product not found."
      *          }
      *     }
      * })
@@ -38,6 +39,6 @@ class SalesUnitsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createSalesUnitReader()->getSalesUnit($restRequest);
+        return $this->getFactory()->createSalesUnitReader()->getSalesUnits($restRequest);
     }
 }
