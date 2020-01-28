@@ -63,5 +63,21 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="id" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="groupKeyPrefix" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="images" type="ProductImage[]" singular="image"/>
+        <property name="name" type="string"/>
+        <property name="unitPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="isOrdered" type="bool"/>
+    </transfer>
+
 </transfers>
 
