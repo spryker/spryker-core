@@ -51,7 +51,7 @@ class ZedNavigationBusinessTester extends Unit
     {
         $cacheMock = $this
             ->getMockBuilder(ZedNavigationCacheInterface::class)
-            ->setMethods(['setNavigation', 'getNavigation', 'hasContent', 'isEnabled'])
+            ->setMethods(['setNavigation', 'getNavigation', 'hasContent', 'isEnabled', 'removeNavigation'])
             ->getMock();
 
         $cacheMock->expects($this->never())
@@ -74,7 +74,7 @@ class ZedNavigationBusinessTester extends Unit
     ): ZedNavigationCacheInterface {
         $cacheMock = $this
             ->getMockBuilder(ZedNavigationCacheInterface::class)
-            ->setMethods(['setNavigation', 'getNavigation', 'hasContent', 'isEnabled'])
+            ->setMethods(['setNavigation', 'getNavigation', 'hasContent', 'isEnabled', 'removeNavigation'])
             ->getMock();
 
         $cacheMock->expects($this->never())
