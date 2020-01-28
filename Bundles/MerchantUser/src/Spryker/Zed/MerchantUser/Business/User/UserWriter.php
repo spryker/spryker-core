@@ -68,20 +68,20 @@ class UserWriter implements UserWriterInterface
         $merchantTransfer->requireMerchantProfile();
 
         $originalUserTransfer = $this->userReader->getUserByMerchantUser($merchantUserTransfer);
-        $updatedUserTransfer = $this->makeUserTransferCopy($originalUserTransfer);
+        $userTransfer = clone $originalUserTransfer;
 
-        $updatedUserTransfer
+        $userTransfer
             ->setFirstName($merchantTransfer->getMerchantProfile()->getContactPersonFirstName())
             ->setLastName($merchantTransfer->getMerchantProfile()->getContactPersonLastName())
             ->setUsername($merchantTransfer->getEmail());
 
-        $updatedUserTransfer = $this->setUserStatusByMerchantStatus($updatedUserTransfer, $merchantTransfer);
+        $userTransfer = $this->setUserStatusByMerchantStatus($userTransfer, $merchantTransfer);
 
-        $updatedUserTransfer = $this->updateUser($updatedUserTransfer);
+        $userTransfer = $this->updateUser($userTransfer);
 
-        $this->resetPassword($originalUserTransfer, $updatedUserTransfer);
+        $this->resetUserPassword($originalUserTransfer, $userTransfer);
 
-        return $updatedUserTransfer;
+        return $userTransfer;
     }
 
     /**
@@ -105,22 +105,12 @@ class UserWriter implements UserWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    protected function makeUserTransferCopy(UserTransfer $userTransfer): UserTransfer
-    {
-        return clone $userTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $originalUserTransfer
      * @param \Generated\Shared\Transfer\UserTransfer $updatedUserTransfer
      *
      * @return void
      */
-    protected function resetPassword(UserTransfer $originalUserTransfer, UserTransfer $updatedUserTransfer): void
+    protected function resetUserPassword(UserTransfer $originalUserTransfer, UserTransfer $updatedUserTransfer): void
     {
         if ($updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
             && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
