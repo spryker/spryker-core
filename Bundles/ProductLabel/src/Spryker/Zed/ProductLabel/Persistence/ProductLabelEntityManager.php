@@ -19,7 +19,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      *
      * @return void
      */
-    public function deleteProductLabel(int $idProductLabel)
+    public function deleteProductLabel(int $idProductLabel): void
     {
         $this->getFactory()
             ->createProductLabelQuery()
@@ -32,7 +32,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      *
      * @return void
      */
-    public function deleteProductLabelLocalizedAttributes(int $idProductLabel)
+    public function deleteProductLabelLocalizedAttributes(int $idProductLabel): void
     {
         $this->getFactory()
             ->createLocalizedAttributesQuery()
@@ -45,7 +45,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      *
      * @return void
      */
-    public function deleteProductLabelProductAbstractRelations(int $idProductLabel)
+    public function deleteProductLabelProductAbstractRelations(int $idProductLabel): void
     {
         $this->getFactory()
             ->createProductRelationQuery()

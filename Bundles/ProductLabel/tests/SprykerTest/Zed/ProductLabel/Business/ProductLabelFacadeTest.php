@@ -61,19 +61,17 @@ class ProductLabelFacadeTest extends Unit
         //Arrange
         $productLabelTransfer = $this->tester->haveProductLabel();
 
-        $productLabelCount = SpyProductLabelQuery::create()
-            ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())->count();
-
         //Act
         $productLabelResponseTransfer = $this->getProductLabelFacade()->removeLabel($productLabelTransfer);
 
         //Assert
         $this->assertTrue($productLabelResponseTransfer->getIsSuccessful());
 
-        $productLabelCountAfterDeleting = SpyProductLabelQuery::create()
-            ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())->count();
+        $deletedProductLabel = SpyProductLabelQuery::create()
+            ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())
+            ->findOne();
 
-        $this->assertEquals($productLabelCount - 1, $productLabelCountAfterDeleting, 'Product label record was not deleted from the database!');
+        $this->assertNull($deletedProductLabel, 'Product label record was not deleted from the database!');
     }
 
     /**

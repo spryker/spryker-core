@@ -71,7 +71,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelDeleter
      */
-    public function createLabelDeleter()
+    public function createLabelDeleter(): LabelDeleter
     {
         return new LabelDeleter(
             $this->getEntityManager(),

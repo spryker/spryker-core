@@ -21,7 +21,7 @@ class ProductLabelMapper
     public function mapProductLabelEntityToProductLabelTransfer(
         SpyProductLabel $productLabelEntity,
         ProductLabelTransfer $productLabelTransfer
-    ) {
+    ): ProductLabelTransfer {
         return $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
     }
 }

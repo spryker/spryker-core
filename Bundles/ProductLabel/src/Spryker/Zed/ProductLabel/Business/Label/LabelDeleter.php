@@ -73,7 +73,7 @@ class LabelDeleter implements LabelDeleterInterface
      *
      * @return void
      */
-    protected function executeProductLabelDeleteTransaction(ProductLabelTransfer $productLabelTransfer)
+    protected function executeProductLabelDeleteTransaction(ProductLabelTransfer $productLabelTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
             $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations($productLabelTransfer->getIdProductLabel());
@@ -87,7 +87,7 @@ class LabelDeleter implements LabelDeleterInterface
      *
      * @return void
      */
-    protected function assertProductLabel(ProductLabelTransfer $productLabelTransfer)
+    protected function assertProductLabel(ProductLabelTransfer $productLabelTransfer): void
     {
         $productLabelTransfer
             ->requireIdProductLabel()
