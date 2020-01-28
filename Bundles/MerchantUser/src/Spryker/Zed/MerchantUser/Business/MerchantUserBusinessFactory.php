@@ -12,8 +12,8 @@ use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
-use Spryker\Zed\MerchantUser\Business\User\UserReader;
-use Spryker\Zed\MerchantUser\Business\User\UserReaderInterface;
+use Spryker\Zed\MerchantUser\Business\User\UserMapper;
+use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
 use Spryker\Zed\MerchantUser\Business\User\UserWriter;
 use Spryker\Zed\MerchantUser\Business\User\UserWriterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -33,13 +33,21 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function createMerchantUserCreator(): MerchantUserCreatorInterface
     {
         return new MerchantUserCreator(
-            $this->createUserWriter(),
-            $this->createUserReader(),
             $this->getUtilTextService(),
+            $this->getUserFacade(),
+            $this->createUserMapper(),
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface
+     */
+    public function createUserMapper(): UserMapperInterface
+    {
+        return new UserMapper();
     }
 
     /**
@@ -55,21 +63,13 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\User\UserReaderInterface
-     */
-    public function createUserReader(): UserReaderInterface
-    {
-        return new UserReader($this->getUserFacade());
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface
      */
     public function createUserWriter(): UserWriterInterface
     {
         return new UserWriter(
             $this->getUserFacade(),
-            $this->createUserReader()
+            $this->createUserMapper()
         );
     }
 

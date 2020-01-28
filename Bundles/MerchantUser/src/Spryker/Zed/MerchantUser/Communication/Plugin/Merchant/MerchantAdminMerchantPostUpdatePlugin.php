@@ -10,14 +10,13 @@ namespace Spryker\Zed\MerchantUser\Communication\Plugin\Merchant;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
  */
-class MerchantAdminMerchantPostSavePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface, MerchantPostCreatePluginInterface
+class MerchantAdminMerchantPostUpdatePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface
 {
     /**
      * {@inheritDoc}
@@ -33,21 +32,5 @@ class MerchantAdminMerchantPostSavePlugin extends AbstractPlugin implements Merc
     public function postUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
     {
         return $this->getFacade()->handleMerchantPostUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     * - Creates or finds a user by provided merchant email.
-     * - Creates merchant user relation.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
-    public function postCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
-    {
-        return $this->getFacade()->handleMerchantPostCreate($merchantTransfer);
     }
 }

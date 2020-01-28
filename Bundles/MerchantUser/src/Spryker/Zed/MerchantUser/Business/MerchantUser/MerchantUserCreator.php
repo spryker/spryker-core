@@ -16,8 +16,8 @@ use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MerchantUser\Business\User\UserReaderInterface;
-use Spryker\Zed\MerchantUser\Business\User\UserWriterInterface;
+use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserConfig;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface;
@@ -29,19 +29,9 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected const USER_CREATION_DEFAULT_PASSWORD_LENGTH = 64;
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface
-     */
-    protected $userWriter;
-
-    /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface
      */
     protected $utilTextService;
-
-    /**
-     * @var \Spryker\Zed\MerchantUser\Business\User\UserReaderInterface
-     */
-    protected $userReader;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface
@@ -59,27 +49,37 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected $merchantUserConfig;
 
     /**
-     * @param \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface $userWriter
-     * @param \Spryker\Zed\MerchantUser\Business\User\UserReaderInterface $userReader
+     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
+     */
+    protected $userFacade;
+
+    /**
+     * @var \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface
+     */
+    protected $userMapper;
+
+    /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
+     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
+     * @param \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface $userMapper
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
      */
     public function __construct(
-        UserWriterInterface $userWriter,
-        UserReaderInterface $userReader,
         MerchantUserToUtilTextServiceInterface $utilTextService,
+        MerchantUserToUserFacadeInterface $userFacade,
+        UserMapperInterface $userMapper,
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
         MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserConfig $merchantUserConfig
     ) {
-        $this->userWriter = $userWriter;
         $this->utilTextService = $utilTextService;
-        $this->userReader = $userReader;
         $this->merchantUserEntityManager = $merchantUserEntityManager;
         $this->merchantUserRepository = $merchantUserRepository;
         $this->merchantUserConfig = $merchantUserConfig;
+        $this->userFacade = $userFacade;
+        $this->userMapper = $userMapper;
     }
 
     /**
@@ -185,30 +185,16 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      */
     protected function resolveUserTransferByMerchant(MerchantTransfer $merchantTransfer): UserTransfer
     {
-        if (!$this->userReader->hasUserByMerchant($merchantTransfer)) {
-            $userTransfer = $this->fillUserTransferFromMerchant(new UserTransfer(), $merchantTransfer)
+        if (!$this->userFacade->hasUserByUsername($merchantTransfer->getEmail())) {
+            $userTransfer = $this->userMapper->mapMerchantTransferToUserTransfer($merchantTransfer, new UserTransfer())
                 ->setPassword($this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH))
                 ->setStatus($this->merchantUserConfig->getUserCreationStatus());
 
-            return $this->userWriter->createUser($userTransfer);
+            return $this->userFacade->createUser($userTransfer);
         }
-        $userTransfer = $this->userReader->getUserByMerchant($merchantTransfer);
+        $userTransfer = $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
 
-        return $this->userWriter->updateUser($this->fillUserTransferFromMerchant($userTransfer, $merchantTransfer));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    protected function fillUserTransferFromMerchant(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): UserTransfer
-    {
-        return $userTransfer
-            ->setFirstName($merchantTransfer->getMerchantProfile()->getContactPersonFirstName())
-            ->setLastName($merchantTransfer->getMerchantProfile()->getContactPersonLastName())
-            ->setUsername($merchantTransfer->getEmail());
+        return $this->userFacade->updateUser($this->userMapper->mapMerchantTransferToUserTransfer($merchantTransfer, $userTransfer));
     }
 
     /**

@@ -8,19 +8,15 @@
 namespace Spryker\Zed\MerchantUser\Business\User;
 
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
-interface UserWriterInterface
+interface UserMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function updateFromMerchant(
-        MerchantTransfer $merchantTransfer,
-        MerchantUserTransfer $merchantUserTransfer
-    ): UserTransfer;
+    public function mapMerchantTransferToUserTransfer(MerchantTransfer $merchantTransfer, UserTransfer $userTransfer): UserTransfer;
 }

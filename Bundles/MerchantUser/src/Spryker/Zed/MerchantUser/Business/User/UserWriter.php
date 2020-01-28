@@ -20,20 +20,20 @@ class UserWriter implements UserWriterInterface
     protected $userFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Business\User\UserReaderInterface
+     * @var \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface
      */
-    protected $userReader;
+    protected $userMapper;
 
     /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
-     * @param \Spryker\Zed\MerchantUser\Business\User\UserReaderInterface $userReader
+     * @param \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface $userMapper
      */
     public function __construct(
         MerchantUserToUserFacadeInterface $userFacade,
-        UserReaderInterface $userReader
+        UserMapperInterface $userMapper
     ) {
         $this->userFacade = $userFacade;
-        $this->userReader = $userReader;
+        $this->userMapper = $userMapper;
     }
 
     /**
@@ -42,39 +42,15 @@ class UserWriter implements UserWriterInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function syncUserWithMerchant(
+    public function updateFromMerchant(
         MerchantTransfer $merchantTransfer,
         MerchantUserTransfer $merchantUserTransfer
     ): UserTransfer {
         $merchantTransfer->requireMerchantProfile();
 
-        $userTransfer = $this->userReader->getUserByMerchantUser($merchantUserTransfer);
+        $userTransfer = $this->userFacade->getUserById($merchantUserTransfer->getIdUser());
+        $userTransfer = $this->userMapper->mapMerchantTransferToUserTransfer($merchantTransfer, $userTransfer);
 
-        $userTransfer
-            ->setFirstName($merchantTransfer->getMerchantProfile()->getContactPersonFirstName())
-            ->setLastName($merchantTransfer->getMerchantProfile()->getContactPersonLastName())
-            ->setUsername($merchantTransfer->getEmail());
-
-        return $this->updateUser($userTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function updateUser(UserTransfer $userTransfer): UserTransfer
-    {
         return $this->userFacade->updateUser($userTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function createUser(UserTransfer $userTransfer): UserTransfer
-    {
-        return $this->userFacade->createUser($userTransfer);
     }
 }
