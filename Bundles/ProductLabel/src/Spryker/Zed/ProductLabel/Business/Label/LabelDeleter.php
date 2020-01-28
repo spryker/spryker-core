@@ -60,7 +60,7 @@ class LabelDeleter implements LabelDeleterInterface
         if ($productLabelTransfer === null) {
             return $productLabelResponseTransfer
                 ->setIsSuccessful(false)
-                ->addMessage($this->createProductLabelNotFoundMessage(static::MESSAGE_PRODUCT_LABEL_NOT_FOUND));
+                ->addMessage($this->createMessageTransfer(static::MESSAGE_PRODUCT_LABEL_NOT_FOUND));
         }
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
@@ -99,7 +99,7 @@ class LabelDeleter implements LabelDeleterInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createProductLabelNotFoundMessage(string $message): MessageTransfer
+    protected function createMessageTransfer(string $message): MessageTransfer
     {
         return (new MessageTransfer())->setValue($message);
     }

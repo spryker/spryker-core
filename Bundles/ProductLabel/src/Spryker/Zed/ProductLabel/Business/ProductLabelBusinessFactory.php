@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleter;
+use Spryker\Zed\ProductLabel\Business\Label\LabelDeleterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
@@ -69,9 +70,9 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\Label\LabelDeleter
+     * @return \Spryker\Zed\ProductLabel\Business\Label\LabelDeleterInterface
      */
-    public function createLabelDeleter(): LabelDeleter
+    public function createLabelDeleter(): LabelDeleterInterface
     {
         return new LabelDeleter(
             $this->getEntityManager(),
