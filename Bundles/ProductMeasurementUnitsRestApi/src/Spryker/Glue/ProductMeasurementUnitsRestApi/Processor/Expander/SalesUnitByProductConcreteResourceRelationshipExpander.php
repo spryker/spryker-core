@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
@@ -68,7 +69,7 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         foreach ($productMeasurementSalesUnitTransferData as $idProductConcrete => $productMeasurementSalesUnitTransfers) {
             $productConcreteSku = array_flip($productConcreteIds)[$idProductConcrete];
             foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
-                $restSalesUnitsResources[$productConcreteSku] =
+                $restSalesUnitsResources[$productConcreteSku][] =
                     $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
                         $productMeasurementSalesUnitTransfer
                     );
@@ -76,11 +77,26 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         }
 
         foreach ($resources as $resource) {
-            if (!isset($restSalesUnitsResources[$resource->getId()])) {
-                continue;
-            }
+            $this->addSalesUnitResourceRelationships($restSalesUnitsResources, $resource);
+        }
+    }
 
-            $resource->addRelationship($restSalesUnitsResources[$resource->getId()]);
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $restSalesUnitsResources
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return void
+     */
+    protected function addSalesUnitResourceRelationships(
+        array $restSalesUnitsResources,
+        RestResourceInterface $resource
+    ): void {
+        if (!isset($restSalesUnitsResources[$resource->getId()])) {
+            return;
+        }
+
+        foreach ($restSalesUnitsResources[$resource->getId()] as $restSalesUnitsResource) {
+            $resource->addRelationship($restSalesUnitsResource);
         }
     }
 
