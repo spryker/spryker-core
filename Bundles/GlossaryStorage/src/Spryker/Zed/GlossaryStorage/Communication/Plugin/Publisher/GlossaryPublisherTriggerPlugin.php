@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher;
 
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
-use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
@@ -61,7 +60,7 @@ class GlossaryPublisherTriggerPlugin extends AbstractPlugin implements Publisher
      */
     public function getEventName(): string
     {
-        return GlossaryEvents::GLOSSARY_KEY_PUBLISH;
+        return GlossaryStorageConfig::GLOSSARY_KEY_WRITE;
     }
 
     /**

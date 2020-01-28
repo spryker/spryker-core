@@ -92,10 +92,12 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
     public function findFilteredGlossaryKeyEntities(int $offset, int $limit): array
     {
         /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $query */
-        $query = $this->getFactory()->getGlossaryKeyQuery();
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+        $query = $this->getFactory()
+            ->getGlossaryKeyQuery()
+            ->setLimit($limit)
+            ->setOffset($offset);
 
-        $glossaryKeyEntities = $this->buildQueryFromCriteria($query, $filterTransfer)
+        $glossaryKeyEntities = $this->buildQueryFromCriteria($query)
             ->setFormatter(ModelCriteria::FORMAT_OBJECT)
             ->find()
             ->getData();
