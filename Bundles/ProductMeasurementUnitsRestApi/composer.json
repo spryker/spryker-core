@@ -4,6 +4,14 @@
   "description": "ProductMeasurementUnitsRestApi module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.2",
+    "spryker/glue-application": "^1.15.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-measurement-unit-storage": "^1.6.0",
+    "spryker/product-storage": "^1.19.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/synchronization-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
