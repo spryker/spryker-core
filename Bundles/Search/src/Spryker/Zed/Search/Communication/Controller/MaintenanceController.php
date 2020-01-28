@@ -29,7 +29,7 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse([
             'totalCount' => $this->getFacade()->getTotalCount(),
             'metaData' => $this->getFacade()->getMetaData(),
-            'isInLegacyMode' => $this->getFacade()->isInLegacyMode(),
+            'isInSearchLegacyMode' => $this->getFacade()->isInLegacyMode(),
         ]);
     }
 
@@ -42,7 +42,7 @@ class MaintenanceController extends AbstractController
 
         return $this->viewResponse([
             'searchTable' => $table->render(),
-            'isInLegacyMode' => $this->getFacade()->isInLegacyMode(),
+            'isInSearchLegacyMode' => $this->getFacade()->isInLegacyMode(),
         ]);
     }
 
@@ -95,7 +95,7 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse([
             'value' => var_export($document->getData(), true),
             'key' => $key,
-            'isInLegacyMode' => $this->getFacade()->isInLegacyMode(),
+            'isInSearchLegacyMode' => $this->getFacade()->isInLegacyMode(),
         ]);
     }
 }

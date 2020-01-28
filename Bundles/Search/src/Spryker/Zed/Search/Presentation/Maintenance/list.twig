@@ -7,7 +7,7 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-            {% if (isInLegacyMode) %}
+            {% if not isInSearchLegacyMode %}
                 {% include '@Search/_partials/mode-warning-message.twig' %}
             {% else %}
                 {{ searchTable | raw }}
