@@ -18,6 +18,10 @@
         <property name="uuid" type="string"/>
     </transfer>
 
+    <transfer name="Discount">
+        <property name="discountPromotion" type="DiscountPromotion"/>
+    </transfer>
+
     <transfer name="RestPromotionalItemsAttributes">
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
@@ -34,6 +38,14 @@
 
     <transfer name="CartItemRequest">
         <property name="discountPromotionUuid" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idDiscountPromotion" type="int"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>
