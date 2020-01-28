@@ -67,26 +67,21 @@ class UserWriter implements UserWriterInterface
     ): UserTransfer {
         $merchantTransfer->requireMerchantProfile();
 
-        $userTransfer = $this->userReader->getUserByMerchantUser($merchantUserTransfer);
+        $originalUserTransfer = $this->userReader->getUserByMerchantUser($merchantUserTransfer);
+        $updatedUserTransfer = clone $originalUserTransfer;
 
-        $usersStatusBeforeUpdate = $userTransfer->getStatus();
-
-        $userTransfer
+        $updatedUserTransfer
             ->setFirstName($merchantTransfer->getMerchantProfile()->getContactPersonFirstName())
             ->setLastName($merchantTransfer->getMerchantProfile()->getContactPersonLastName())
             ->setUsername($merchantTransfer->getEmail());
 
-        $userTransfer = $this->setUserStatusByMerchantStatus($userTransfer, $merchantTransfer);
+        $updatedUserTransfer = $this->setUserStatusByMerchantStatus($updatedUserTransfer, $merchantTransfer);
 
-        $userTransfer = $this->updateUser($userTransfer);
+        $updatedUserTransfer = $this->updateUser($updatedUserTransfer);
 
-        if ($userTransfer->getStatus() === static::USER_STATUS_ACTIVE
-            && $usersStatusBeforeUpdate !== $userTransfer->getStatus()
-        ) {
-            $this->authFacade->requestPasswordReset($userTransfer->getUsername());
-        }
+        $this->resetPassword($originalUserTransfer, $updatedUserTransfer);
 
-        return $userTransfer;
+        return $updatedUserTransfer;
     }
 
     /**
@@ -107,6 +102,21 @@ class UserWriter implements UserWriterInterface
     public function createUser(UserTransfer $userTransfer): UserTransfer
     {
         return $this->userFacade->createUser($userTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $originalUserTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $updatedUserTransfer
+     *
+     * @return void
+     */
+    protected function resetPassword(UserTransfer $originalUserTransfer, UserTransfer $updatedUserTransfer): void
+    {
+        if ($updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
+            && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
+        ) {
+            $this->authFacade->requestPasswordReset($updatedUserTransfer->getUsername());
+        }
     }
 
     /**
