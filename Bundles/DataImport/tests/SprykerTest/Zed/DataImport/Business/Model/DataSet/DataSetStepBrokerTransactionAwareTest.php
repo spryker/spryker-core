@@ -25,7 +25,7 @@ use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterfa
  * @group DataSet
  * @group DataSetStepBrokerTransactionAwareTest
  * Add your own group annotations below this line
- * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
+ * @property \SprykerTest\Zed\DataImport\DataImportBusinessTester $tester
  */
 class DataSetStepBrokerTransactionAwareTest extends Unit
 {
@@ -183,7 +183,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createDataImportStepMockWithExpectedExceptionOnExecute()
+    protected function createDataImportStepMockWithExpectedExceptionOnExecute(): DataImportStepInterface
     {
         $dataImportStepMockBuilder = $this->getMockBuilder(DataImportStepInterface::class)
             ->setMethods(['execute']);
@@ -197,7 +197,7 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface
      */
-    protected function createPropelConnectionMockWithExpectedRollBack()
+    protected function createPropelConnectionMockWithExpectedRollBack(): DataImportToPropelConnectionInterface
     {
         $propelConnectionMock = $this->getPropelConnectionMock(1, 0, false);
         $propelConnectionMock->expects($this->exactly(1))->method('rollBack');
