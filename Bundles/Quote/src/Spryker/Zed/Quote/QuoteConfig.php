@@ -48,6 +48,8 @@ class QuoteConfig extends AbstractBundleConfig
         return [
             ItemTransfer::ID,
             ItemTransfer::SKU,
+            ItemTransfer::GROUP_KEY,
+            ItemTransfer::GROUP_KEY_PREFIX,
             ItemTransfer::QUANTITY,
             ItemTransfer::ID_PRODUCT_ABSTRACT,
             ItemTransfer::IMAGES,

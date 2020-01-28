@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Quote\Persistence\Propel\Mapper;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -20,12 +19,15 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Quote\Persistence\SpyQuote;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfigurator;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceBridge;
 use Spryker\Zed\Quote\Persistence\Propel\Mapper\QuoteMapper;
 use Spryker\Zed\Quote\QuoteConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote
@@ -53,12 +55,15 @@ class QuoteMapperTest extends Unit
     ): void {
         // Arrange
         $utilEncodingServiceMock = new QuoteToUtilEncodingServiceBridge(new UtilEncodingService());
-        $mapper = new QuoteMapper($utilEncodingServiceMock, $this->createQuoteConfig());
+        $mapper = new QuoteMapper($utilEncodingServiceMock);
+
+        $quoteFieldsAllowedForSaving = $this->createQuoteFieldsConfigurator()->getQuoteFieldsAllowedForSaving($quoteTransfer);
 
         // Act
         $updatedQuoteEntity = $mapper->mapTransferToEntity(
             $quoteTransfer,
-            $quoteEntity
+            $quoteEntity,
+            $quoteFieldsAllowedForSaving
         );
         $decodedQuoteData = $utilEncodingServiceMock->decodeJson($updatedQuoteEntity->getQuoteData(), true);
 
@@ -67,9 +72,17 @@ class QuoteMapperTest extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface
+     */
+    protected function createQuoteFieldsConfigurator(): QuoteFieldsConfiguratorInterface
+    {
+        return new QuoteFieldsConfigurator($this->createQuoteConfig());
+    }
+
+    /**
      * @return \Spryker\Zed\Quote\QuoteConfig
      */
-    protected function createQuoteConfig()
+    protected function createQuoteConfig(): QuoteConfig
     {
         return new QuoteConfig();
     }
@@ -112,6 +125,8 @@ class QuoteMapperTest extends Unit
             ->withAnotherItem([
                 ItemTransfer::ID => 27,
                 ItemTransfer::SKU => '027_26976107',
+                ItemTransfer::GROUP_KEY => '',
+                ItemTransfer::GROUP_KEY_PREFIX => '',
                 ItemTransfer::QUANTITY => 1,
                 ItemTransfer::ID_PRODUCT_ABSTRACT => 27,
                 ItemTransfer::NAME => 'Sony Cyber-shot DSC-WX500',
@@ -159,6 +174,8 @@ class QuoteMapperTest extends Unit
                 [
                     ItemTransfer::ID => 27,
                     ItemTransfer::SKU => '027_26976107',
+                    ItemTransfer::GROUP_KEY => '',
+                    ItemTransfer::GROUP_KEY_PREFIX => '',
                     ItemTransfer::QUANTITY => 1,
                     ItemTransfer::ID_PRODUCT_ABSTRACT => 27,
                     ItemTransfer::IMAGES => [
