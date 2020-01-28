@@ -75,7 +75,7 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemReturnUpdatedTransferWithCorrectData(): void
+    public function testExpandOrderItemWithMerchantReturnsUpdatedTransferWithCorrectData(): void
     {
         // Arrange
         $merchantReference = 'test-merchant-reference';
@@ -87,7 +87,7 @@ class MerchantSalesOrderFacadeTest extends Unit
         // Act
         $newSalesOrderItemEntityTransfer = $this->tester
             ->getFacade()
-            ->expandOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
 
         // Assert
         $this->assertEquals($newSalesOrderItemEntityTransfer->getMerchantReference(), $merchantReference);
@@ -96,7 +96,7 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemDoesNothingWithIncorrectData(): void
+    public function testExpandOrderItemWithMerchantDoesNothingWithIncorrectData(): void
     {
         // Arrange
         $itemTransfer = $this->getItemTransfer();
@@ -105,7 +105,7 @@ class MerchantSalesOrderFacadeTest extends Unit
         // Act
         $newSalesOrderItemEntityTransfer = $this->tester
             ->getFacade()
-            ->expandOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
 
         // Assert
         $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());

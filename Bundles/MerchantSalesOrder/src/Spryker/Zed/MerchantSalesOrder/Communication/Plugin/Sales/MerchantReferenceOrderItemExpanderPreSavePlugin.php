@@ -21,7 +21,7 @@ class MerchantReferenceOrderItemExpanderPreSavePlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritDoc}
-     * - Adds product offer reference to sales order item before saving
+     * - Adds merchant reference to sales order item before saving
      * - Returns $salesOrderItemEntity without changes if there is no product offer reference
      *
      * @api
@@ -37,6 +37,6 @@ class MerchantReferenceOrderItemExpanderPreSavePlugin extends AbstractPlugin imp
         ItemTransfer $itemTransfer,
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity
     ): SpySalesOrderItemEntityTransfer {
-        return $this->getFacade()->expandOrderItem($salesOrderItemEntity, $itemTransfer);
+        return $this->getFacade()->expandOrderItemWithMerchant($salesOrderItemEntity, $itemTransfer);
     }
 }

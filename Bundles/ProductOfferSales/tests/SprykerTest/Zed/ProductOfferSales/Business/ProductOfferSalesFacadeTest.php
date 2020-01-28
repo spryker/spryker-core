@@ -33,7 +33,7 @@ class ProductOfferSalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemReturnUpdatedTransferWithCorrectData(): void
+    public function testExpandOrderItemWithProductOfferReturnsUpdatedTransferWithCorrectData(): void
     {
         // Arrange
         $productOfferReference = 'test-product-offer-reference';
@@ -45,7 +45,7 @@ class ProductOfferSalesFacadeTest extends Unit
         // Act
         $newSalesOrderItemEntityTransfer = $this->tester
             ->getFacade()
-            ->expandOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            ->expandOrderItemWithProductOffer($salesOrderItemEntityTransfer, $itemTransfer);
 
         // Assert
         $this->assertEquals($newSalesOrderItemEntityTransfer->getProductOfferReference(), $productOfferReference);
@@ -54,7 +54,7 @@ class ProductOfferSalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemDoesNothingWithIncorrectData(): void
+    public function testExpandOrderItemWithProductOfferDoesNothingWithIncorrectData(): void
     {
         // Arrange
         $itemTransfer = $this->getItemTransfer();
@@ -63,7 +63,7 @@ class ProductOfferSalesFacadeTest extends Unit
         // Act
         $newSalesOrderItemEntityTransfer = $this->tester
             ->getFacade()
-            ->expandOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            ->expandOrderItemWithProductOffer($salesOrderItemEntityTransfer, $itemTransfer);
 
         // Assert
         $this->assertNull($newSalesOrderItemEntityTransfer->getProductOfferReference());

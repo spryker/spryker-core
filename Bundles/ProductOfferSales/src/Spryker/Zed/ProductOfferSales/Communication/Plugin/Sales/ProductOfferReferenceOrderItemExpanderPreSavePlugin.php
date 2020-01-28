@@ -37,6 +37,6 @@ class ProductOfferReferenceOrderItemExpanderPreSavePlugin extends AbstractPlugin
         ItemTransfer $itemTransfer,
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity
     ): SpySalesOrderItemEntityTransfer {
-        return $this->getFacade()->expandOrderItem($salesOrderItemEntity, $itemTransfer);
+        return $this->getFacade()->expandOrderItemWithProductOffer($salesOrderItemEntity, $itemTransfer);
     }
 }

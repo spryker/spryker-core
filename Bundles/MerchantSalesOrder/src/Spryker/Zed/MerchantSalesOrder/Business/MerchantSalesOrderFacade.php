@@ -40,17 +40,17 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandOrderItem(
-        SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
+    public function expandOrderItemWithMerchant(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer {
         return $this->getFactory()
             ->createOrderItemExpander()
-            ->expandOrderItem($salesOrderItemEntity, $itemTransfer);
+            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
     }
 }

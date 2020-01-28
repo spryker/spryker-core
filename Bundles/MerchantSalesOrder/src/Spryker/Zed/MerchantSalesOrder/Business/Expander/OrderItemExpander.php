@@ -13,21 +13,21 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 class OrderItemExpander implements OrderItemExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandOrderItem(
-        SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
+    public function expandOrderItemWithMerchant(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer {
         $merchantReference = $itemTransfer->getMerchantReference();
 
         if (!$merchantReference) {
-            return $salesOrderItemEntity;
+            return $salesOrderItemEntityTransfer;
         }
 
-        return $salesOrderItemEntity->setMerchantReference($merchantReference);
+        return $salesOrderItemEntityTransfer->setMerchantReference($merchantReference);
     }
 }
