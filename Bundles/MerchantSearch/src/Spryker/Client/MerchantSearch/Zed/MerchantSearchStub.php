@@ -16,14 +16,14 @@ class MerchantSearchStub implements MerchantSearchStubInterface
     /**
      * @var \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface
      */
-    protected $zedStub;
+    protected $zedRequestClient;
 
     /**
      * @param \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface $zedStub
      */
     public function __construct(MerchantSearchToZedRequestClientInterface $zedStub)
     {
-        $this->zedStub = $zedStub;
+        $this->zedRequestClient = $zedStub;
     }
 
     /**
@@ -34,7 +34,7 @@ class MerchantSearchStub implements MerchantSearchStubInterface
     public function getActiveMerchants(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer */
-        $merchantCollectionTransfer = $this->zedStub->call('/merchant-search/gateway/get-active-merchants', $merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->zedRequestClient->call('/merchant-search/gateway/get-active-merchants', $merchantCriteriaFilterTransfer);
 
         return $merchantCollectionTransfer;
     }

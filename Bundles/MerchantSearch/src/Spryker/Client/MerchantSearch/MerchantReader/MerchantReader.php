@@ -31,16 +31,6 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getActiveMerchants(): MerchantCollectionTransfer
     {
-        $merchantCriteriaFilterTransfer = $this->createMerchantCriteriaFilterTransfer();
-
-        return $this->merchantSearchStub->getActiveMerchants($merchantCriteriaFilterTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer
-     */
-    protected function createMerchantCriteriaFilterTransfer(): MerchantCriteriaFilterTransfer
-    {
-        return new MerchantCriteriaFilterTransfer();
+        return $this->merchantSearchStub->getActiveMerchants(new MerchantCriteriaFilterTransfer());
     }
 }

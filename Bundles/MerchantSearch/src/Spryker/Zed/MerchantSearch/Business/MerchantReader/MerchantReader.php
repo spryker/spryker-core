@@ -36,13 +36,13 @@ class MerchantReader implements MerchantReaderInterface
     {
         $merchantCollectionTransfer = $this->merchantFacade->find($merchantCriteriaFilterTransfer);
 
-        $activeMerchants = [];
+        $activeMerchantTransfers = [];
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             if ($merchantTransfer->getMerchantProfile() && $merchantTransfer->getMerchantProfile()->getIsActive()) {
-                $activeMerchants[] = $merchantTransfer;
+                $activeMerchantTransfers[] = $merchantTransfer;
             }
         }
 
-        return $merchantCollectionTransfer->setMerchants(new ArrayObject($activeMerchants));
+        return $merchantCollectionTransfer->setMerchants(new ArrayObject($activeMerchantTransfers));
     }
 }

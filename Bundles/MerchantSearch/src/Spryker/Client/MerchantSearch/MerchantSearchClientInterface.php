@@ -13,7 +13,7 @@ interface MerchantSearchClientInterface
 {
     /**
      * Specification:
-     * - Returns the list of active merchants.
+     * - Returns the list of merchants with isActive=true.
      *
      * @api
      *

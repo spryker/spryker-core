@@ -35,28 +35,4 @@ class MerchantSearchToZedRequestClientBridge implements MerchantSearchToZedReque
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    public function getLastResponseInfoMessages()
-    {
-        return $this->zedRequestClient->getLastResponseInfoMessages();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    public function getLastResponseErrorMessages()
-    {
-        return $this->zedRequestClient->getLastResponseErrorMessages();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    public function getLastResponseSuccessMessages()
-    {
-        return $this->zedRequestClient->getLastResponseSuccessMessages();
-    }
 }
