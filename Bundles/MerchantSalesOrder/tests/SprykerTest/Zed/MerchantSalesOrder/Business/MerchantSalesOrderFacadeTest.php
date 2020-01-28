@@ -8,9 +8,10 @@
 namespace SprykerTest\Zed\MerchantSalesOrder\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantSalesOrderTransfer;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 /**
  * Auto-generated group annotations
@@ -47,7 +48,7 @@ class MerchantSalesOrderFacadeTest extends Unit
      */
     public function testCreateMerchantSalesOrder(): void
     {
-        //Arrange
+        // Arrange
         $saveOrderTransfer = $this->tester->haveOrder([
             ItemTransfer::UNIT_PRICE => 100,
             ItemTransfer::SUM_PRICE => 100,
@@ -60,21 +61,63 @@ class MerchantSalesOrderFacadeTest extends Unit
         $merchantSalesOrderTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $merchantSalesOrderTransfer->setOrderReference($saveOrderTransfer->getOrderReference());
 
-        //Act
-        $merchantSalesOrderTransfer = $this->getFacade()
+        // Act
+        $merchantSalesOrderTransfer = $this->tester
+            ->getFacade()
             ->createMerchantSalesOrder($merchantSalesOrderTransfer);
 
-        //Assert
+        // Assert
         $this->assertIsInt($merchantSalesOrderTransfer->getIdMerchantSalesOrder());
         $this->assertEquals($merchantSalesOrderTransfer->getMerchantReference(), $merchantTransfer->getMerchantKey());
         $this->assertEquals($merchantSalesOrderTransfer->getFkSalesOrder(), $saveOrderTransfer->getIdSalesOrder());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface
+     * @return void
      */
-    protected function getFacade(): MerchantSalesOrderFacadeInterface
+    public function testExpandOrderItemReturnUpdatedTransferWithCorrectData(): void
     {
-        return $this->tester->getFacade();
+        // Arrange
+        $merchantReference = 'test-merchant-reference';
+        $itemTransfer = $this->getItemTransfer([
+            ItemTransfer::MERCHANT_REFERENCE => $merchantReference,
+        ]);
+        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
+
+        // Act
+        $newSalesOrderItemEntityTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+
+        // Assert
+        $this->assertEquals($newSalesOrderItemEntityTransfer->getMerchantReference(), $merchantReference);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderItemDoesNothingWithIncorrectData(): void
+    {
+        // Arrange
+        $itemTransfer = $this->getItemTransfer();
+        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
+
+        // Act
+        $newSalesOrderItemEntityTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+
+        // Assert
+        $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     */
+    protected function getItemTransfer(array $seedData = []): ItemTransfer
+    {
+        return (new ItemBuilder($seedData))->build();
     }
 }

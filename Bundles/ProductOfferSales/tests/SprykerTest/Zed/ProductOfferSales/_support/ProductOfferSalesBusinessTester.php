@@ -2,10 +2,10 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantSalesOrder;
+namespace SprykerTest\Zed\ProductOfferSales;
 
 use Codeception\Actor;
 
@@ -22,13 +22,13 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
- * @method \Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOfferSales\Business\ProductOfferSalesFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class MerchantSalesOrderBusinessTester extends Actor
+class ProductOfferSalesBusinessTester extends Actor
 {
-    use _generated\MerchantSalesOrderBusinessTesterActions;
+    use _generated\ProductOfferSalesBusinessTesterActions;
 
    /**
     * Define custom actions here

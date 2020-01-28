@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantSalesOrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -31,5 +33,24 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
         return $this->getFactory()
             ->createMerchantSalesOrderWriter()
             ->createMerchantSalesOrder($merchantSalesOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function expandOrderItem(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
+        ItemTransfer $itemTransfer
+    ): SpySalesOrderItemEntityTransfer {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItem($salesOrderItemEntity, $itemTransfer);
     }
 }

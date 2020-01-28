@@ -41,7 +41,7 @@ class EditMerchantController extends AbstractController
         }
 
         $merchantForm = $this->getFactory()
-            ->getMerchantForm(
+            ->getMerchantUpdateForm(
                 $merchantTransfer,
                 $dataProvider->getOptions($merchantTransfer)
             )

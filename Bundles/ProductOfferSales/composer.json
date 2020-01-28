@@ -1,20 +1,14 @@
 {
-  "name": "spryker/merchant-sales-order",
-  "type": "library",
-  "description": "MerchantSalesOrder module",
+  "name": "spryker/product-offer-sales",
+  "description": "ProductOfferSales module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.33.0",
-    "spryker/sales": "^11.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/sales-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/merchant": "*",
-    "spryker/oms": "*",
-    "spryker/product-offer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -29,10 +23,7 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
-  },
+  "scripts": {},
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantUpdateFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
 use Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
@@ -48,6 +49,17 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMerchantForm(?MerchantTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(MerchantForm::class, $data, $options);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMerchantUpdateForm(?MerchantTransfer $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantUpdateForm::class, $data, $options);
     }
 
     /**
