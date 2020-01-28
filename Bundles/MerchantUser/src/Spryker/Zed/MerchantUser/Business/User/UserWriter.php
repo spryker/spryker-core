@@ -68,7 +68,7 @@ class UserWriter implements UserWriterInterface
         $merchantTransfer->requireMerchantProfile();
 
         $originalUserTransfer = $this->userReader->getUserByMerchantUser($merchantUserTransfer);
-        $updatedUserTransfer = clone $originalUserTransfer;
+        $updatedUserTransfer = $this->makeUserTransferCopy($originalUserTransfer);
 
         $updatedUserTransfer
             ->setFirstName($merchantTransfer->getMerchantProfile()->getContactPersonFirstName())
@@ -102,6 +102,16 @@ class UserWriter implements UserWriterInterface
     public function createUser(UserTransfer $userTransfer): UserTransfer
     {
         return $this->userFacade->createUser($userTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function makeUserTransferCopy(UserTransfer $userTransfer): UserTransfer
+    {
+        return clone $userTransfer;
     }
 
     /**
