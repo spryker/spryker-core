@@ -55,7 +55,7 @@
 
     <transfer name="ProductLabelCriteria">
         <property name="idProductAbstracts" type="array" singular="idProductAbstract"/>
-        <property name="storeName" type="string" />
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="ProductLabelCollection">
