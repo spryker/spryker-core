@@ -31,4 +31,9 @@ interface ProductMeasurementUnitRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCodeMissingErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductMeasurementUnitNotFoundErrorResponse(): RestResponseInterface;
 }

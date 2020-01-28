@@ -93,7 +93,7 @@ interface ProductMeasurementUnitStorageClientInterface
      *
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[][]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[][]
      */
     public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array;
 
