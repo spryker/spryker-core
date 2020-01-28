@@ -19,11 +19,11 @@ class MerchantSearchStub implements MerchantSearchStubInterface
     protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface $zedStub
+     * @param \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(MerchantSearchToZedRequestClientInterface $zedStub)
+    public function __construct(MerchantSearchToZedRequestClientInterface $zedRequestClient)
     {
-        $this->zedRequestClient = $zedStub;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**

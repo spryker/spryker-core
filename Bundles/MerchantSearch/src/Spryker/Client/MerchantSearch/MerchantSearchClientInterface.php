@@ -13,6 +13,7 @@ interface MerchantSearchClientInterface
 {
     /**
      * Specification:
+     * - Makes Zed request.
      * - Returns the list of merchants with isActive=true.
      *
      * @api

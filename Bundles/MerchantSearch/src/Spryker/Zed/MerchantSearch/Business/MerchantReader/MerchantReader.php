@@ -38,7 +38,7 @@ class MerchantReader implements MerchantReaderInterface
 
         $activeMerchantTransfers = [];
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            if ($merchantTransfer->getMerchantProfile() && $merchantTransfer->getMerchantProfile()->getIsActive()) {
+            if (!$merchantTransfer->getMerchantProfile() || $merchantTransfer->getMerchantProfile()->getIsActive()) {
                 $activeMerchantTransfers[] = $merchantTransfer;
             }
         }
