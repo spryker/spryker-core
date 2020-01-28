@@ -8,12 +8,14 @@
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductMeasurementUnitsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUnitRestResponseBuilderInterface
 {
@@ -71,5 +73,31 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
             $resourceId,
             $restProductMeasurementUnitsAttributesTransfer
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCodeMissingErrorResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductMeasurementUnitsRestApiConfig::RESPONSE_CODE_PRODUCT_MEASUREMENT_UNIT_CODE_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductMeasurementUnitsRestApiConfig::RESPONSE_DETAIL_MEASUREMENT_UNIT_CODE_IS_NOT_SPECIFIED);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductMeasurementUnitNotFoundErrorResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductMeasurementUnitsRestApiConfig::RESPONSE_CODE_PRODUCT_MEASUREMENT_UNIT_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductMeasurementUnitsRestApiConfig::RESPONSE_DETAIL_PRODUCT_MEASUREMENT_UNIT_NOT_FOUND);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
 }

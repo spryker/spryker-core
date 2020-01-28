@@ -19,7 +19,7 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
     /**
      * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface
      */
-    protected $productMeasurementUnitRestResponseBuilderInterface;
+    protected $productMeasurementUnitRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface
@@ -32,16 +32,16 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
     protected $productMeasurementUnitStorageClient;
 
     /**
-     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilderInterface
+     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
      */
     public function __construct(
-        ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilderInterface,
+        ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder,
         ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient,
         ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
     ) {
-        $this->productMeasurementUnitRestResponseBuilderInterface = $productMeasurementUnitRestResponseBuilderInterface;
+        $this->productMeasurementUnitRestResponseBuilder = $productMeasurementUnitRestResponseBuilder;
         $this->productStorageClient = $productStorageClient;
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
     }
@@ -68,7 +68,7 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
         foreach ($productMeasurementUnitTransfers as $idProductConcrete => $productMeasurementUnitTransfer) {
             $productConcreteSku = array_flip($productConcreteIds)[$idProductConcrete];
             $restProductMeasurementUnitsResources[$productConcreteSku] =
-                $this->productMeasurementUnitRestResponseBuilderInterface->createProductMeasurementUnitRestResource(
+                $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResource(
                     $productMeasurementUnitTransfer
                 );
         }

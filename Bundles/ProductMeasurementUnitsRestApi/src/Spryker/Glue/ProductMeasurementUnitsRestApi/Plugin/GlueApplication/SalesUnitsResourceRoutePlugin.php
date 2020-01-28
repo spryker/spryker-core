@@ -10,10 +10,11 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Plugin\GlueApplication;
 use Generated\Shared\Transfer\RestSalesUnitsAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig;
 
-class SalesUnitsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class SalesUnitsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -65,5 +66,17 @@ class SalesUnitsResourceRoutePlugin extends AbstractPlugin implements ResourceRo
     public function getResourceAttributesClassName(): string
     {
         return RestSalesUnitsAttributesTransfer::class;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getParentResourceType(): string
+    {
+        return ProductMeasurementUnitsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS;
     }
 }

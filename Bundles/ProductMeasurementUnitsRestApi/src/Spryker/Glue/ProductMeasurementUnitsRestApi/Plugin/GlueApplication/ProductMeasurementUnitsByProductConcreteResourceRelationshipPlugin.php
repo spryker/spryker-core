@@ -15,11 +15,11 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiCo
 /**
  * @method \Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiFactory getFactory()
  */
-class SalesUnitByProductConcreteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ProductMeasurementUnitsByProductConcreteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds sales-units resource as relationship by quote.
+     * - Adds product-measurement-units resource as relationship by quote.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class SalesUnitByProductConcreteResourceRelationshipPlugin extends AbstractPlugi
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createSalesUnitByProductConcreteResourceRelationshipExpander()
+            ->createProductMeasurementUnitByProductConcreteResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
@@ -44,6 +44,6 @@ class SalesUnitByProductConcreteResourceRelationshipPlugin extends AbstractPlugi
      */
     public function getRelationshipResourceType(): string
     {
-        return ProductMeasurementUnitsRestApiConfig::RESOURCE_SALES_UNITS;
+        return ProductMeasurementUnitsRestApiConfig::RESOURCE_PRODUCT_MEASUREMENT_UNITS;
     }
 }

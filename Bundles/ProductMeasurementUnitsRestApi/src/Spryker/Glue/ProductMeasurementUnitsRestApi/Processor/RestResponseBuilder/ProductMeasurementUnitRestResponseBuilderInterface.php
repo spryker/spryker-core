@@ -26,4 +26,9 @@ interface ProductMeasurementUnitRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createProductMeasurementUnitRestResource(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResourceInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCodeMissingErrorResponse(): RestResponseInterface;
 }

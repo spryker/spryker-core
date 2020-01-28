@@ -62,16 +62,16 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
             $restRequest->getMetadata()->getLocale()
         );
 
-        $productMeasurementSalesUnitTransferData = $this->productMeasurementUnitStorageClient
+        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
 
         $restSalesUnitsResources = [];
-        foreach ($productMeasurementSalesUnitTransferData as $idProductConcrete => $productMeasurementSalesUnitTransfers) {
+        foreach ($productMeasurementSalesUnitTransfers as $idProductConcrete => $productConcreteProductMeasurementSalesUnitTransfers) {
             $productConcreteSku = array_flip($productConcreteIds)[$idProductConcrete];
-            foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
                 $restSalesUnitsResources[$productConcreteSku][] =
                     $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
-                        $productMeasurementSalesUnitTransfer
+                        $productConcreteProductMeasurementSalesUnitTransfer
                     );
             }
         }
