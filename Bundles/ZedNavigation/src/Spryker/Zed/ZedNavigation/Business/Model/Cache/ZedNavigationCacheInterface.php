@@ -30,4 +30,9 @@ interface ZedNavigationCacheInterface
      * @return bool
      */
     public function hasContent(): bool;
+
+    /**
+     * @return void
+     */
+    public function removeNavigation(): void;
 }

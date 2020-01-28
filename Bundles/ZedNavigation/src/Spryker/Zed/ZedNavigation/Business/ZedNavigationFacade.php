@@ -43,4 +43,16 @@ class ZedNavigationFacade extends AbstractFacade implements ZedNavigationFacadeI
     {
         $this->getFactory()->createNavigationCacheBuilder()->writeNavigationCache();
     }
+
+    /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeNavigationCache(): void
+    {
+        $this->getFactory()->createNavigationCacheBuilder()->removeNavigationCache();
+    }
 }

@@ -265,11 +265,29 @@ interface DevelopmentFacadeInterface
     public function generateYvesIdeAutoCompletion();
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeYvesIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
      */
     public function generateZedIdeAutoCompletion();
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeZedIdeAutoCompletion(): void;
 
     /**
      * @api
@@ -279,6 +297,15 @@ interface DevelopmentFacadeInterface
     public function generateClientIdeAutoCompletion();
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeClientIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
@@ -286,11 +313,29 @@ interface DevelopmentFacadeInterface
     public function generateServiceIdeAutoCompletion();
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeServiceIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
      */
     public function generateGlueIdeAutoCompletion();
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeGlueIdeAutoCompletion(): void;
 
     /**
      * Run the architecture sniffer against the given module and returns the violations

@@ -5,17 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestRequestValidator\Business\Builder;
+namespace Spryker\Zed\Development\Business\FileGeneration;
 
-interface RestRequestValidatorCacheBuilderInterface
+interface DirectoryCleanerInterface
 {
     /**
      * @return void
      */
-    public function build(): void;
-
-    /**
-     * @return void
-     */
-    public function remove(): void;
+    public function clear(): void;
 }

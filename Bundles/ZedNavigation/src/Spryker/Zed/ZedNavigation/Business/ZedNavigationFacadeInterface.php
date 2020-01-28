@@ -35,4 +35,14 @@ interface ZedNavigationFacadeInterface
      * @return void
      */
     public function writeNavigationCache();
+
+    /**
+     * Specification:
+     * - Removes the navigation cache file.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeNavigationCache(): void;
 }

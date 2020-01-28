@@ -20,4 +20,14 @@ interface RestRequestValidatorFacadeInterface
      * @return void
      */
     public function buildValidationCache(): void;
+
+    /**
+     * Specification:
+     * - Removes outdated validation rules cache file.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeValidationCache(): void;
 }

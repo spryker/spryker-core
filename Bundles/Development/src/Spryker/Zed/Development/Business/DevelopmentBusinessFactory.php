@@ -134,6 +134,10 @@ use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\BundleUsesCo
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignConstants;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignException;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinder;
+use Spryker\Zed\Development\Business\FileGeneration\DirectoryCleaner;
+use Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface;
+use Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface;
+use Spryker\Zed\Development\Business\FileGeneration\PatternFileFinder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilder as IdeAutoCompletionBundleBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
@@ -1602,6 +1606,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     */
+    public function createYvesIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    {
+        return new DirectoryCleaner(
+            $this->getConfig()->getYvesIdeAutoCompletionOptions(),
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
+            $this->createGeneratedFileFinder('/.*\.php/')
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
     public function createZedIdeAutoCompletionWriter()
@@ -1609,6 +1625,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return $this->createIdeAutoCompletionWriter(
             $this->createZedIdeAutoCompletionBundleBuilder(),
             $this->getConfig()->getZedIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     */
+    public function createZedIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    {
+        return new DirectoryCleaner(
+            $this->getConfig()->getZedIdeAutoCompletionOptions(),
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
+            $this->createGeneratedFileFinder('/.*\.php/')
         );
     }
 
@@ -1646,6 +1674,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     */
+    public function createGlueIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    {
+        return new DirectoryCleaner(
+            $this->getConfig()->getGlueIdeAutoCompletionOptions(),
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
+            $this->createGeneratedFileFinder('/.*\.php/')
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
     public function createClientIdeAutoCompletionWriter()
@@ -1653,6 +1693,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return $this->createIdeAutoCompletionWriter(
             $this->createClientIdeAutoCompletionBundleBuilder(),
             $this->getConfig()->getClientIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     */
+    public function createClientIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    {
+        return new DirectoryCleaner(
+            $this->getConfig()->getClientIdeAutoCompletionOptions(),
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
+            $this->createGeneratedFileFinder('/.*\.php/')
         );
     }
 
@@ -1675,6 +1727,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return $this->createIdeAutoCompletionWriter(
             $this->createServiceIdeAutoCompletionBundleBuilder(),
             $this->getConfig()->getServiceIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     */
+    public function createServiceIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    {
+        return new DirectoryCleaner(
+            $this->getConfig()->getServiceIdeAutoCompletionOptions(),
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
+            $this->createGeneratedFileFinder('/.*\.php/')
         );
     }
 
@@ -2048,5 +2112,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerNameFinder(): ComposerNameFinderInterface
     {
         return new ComposerNameFinder($this->getModuleFinderFacade());
+    }
+
+    /**
+     * @param string $pattern
+     *
+     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     */
+    protected function createGeneratedFileFinder(string $pattern): GeneratedFileFinderInterface
+    {
+        return new PatternFileFinder(
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $pattern
+        );
     }
 }

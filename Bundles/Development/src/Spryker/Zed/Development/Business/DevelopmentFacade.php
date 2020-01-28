@@ -367,9 +367,33 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
+    public function removeYvesIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createYvesIdeAutoCompletionDirectoryCleaner()->clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
     public function generateZedIdeAutoCompletion()
     {
         $this->getFactory()->createZedIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeZedIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createZedIdeAutoCompletionDirectoryCleaner()->clear();
     }
 
     /**
@@ -391,6 +415,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
+    public function removeClientIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createClientIdeAutoCompletionDirectoryCleaner()->clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
     public function generateServiceIdeAutoCompletion()
     {
         $this->getFactory()->createServiceIdeAutoCompletionWriter()->writeCompletionFiles();
@@ -403,9 +439,33 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
+    public function removeServiceIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createServiceIdeAutoCompletionDirectoryCleaner()->clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
     public function generateGlueIdeAutoCompletion()
     {
         $this->getFactory()->createGlueIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeGlueIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createGlueIdeAutoCompletionDirectoryCleaner()->clear();
     }
 
     /**

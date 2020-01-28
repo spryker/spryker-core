@@ -346,4 +346,14 @@ interface SearchFacadeInterface
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
     public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer;
+
+    /**
+     * Specification:
+     * - Removes previously generated map class.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeSourceMap(): void;
 }

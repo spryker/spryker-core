@@ -403,4 +403,16 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     {
         return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
     }
+
+    /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeSourceMap(): void
+    {
+        $this->getFactory()->createElasticsearchIndexMapCleaner()->cleanDirectory();
+    }
 }
