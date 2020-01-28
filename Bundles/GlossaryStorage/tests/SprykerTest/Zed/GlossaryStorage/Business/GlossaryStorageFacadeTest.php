@@ -58,50 +58,7 @@ class GlossaryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteGlossaryStorageCollectionByGlossaryKeyEvents(): void
-    {
-        // Assign
-        $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
-        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
-        ];
-
-        // Act
-        $this->getGlossaryStorageFacade()->writeGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
-
-        // Assert
-        $this->assertGlossaryStorage(static::ID_GLOSSARY, $glossaryStorageCount);
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeleteGlossaryStorageCollectionByGlossaryKeyEvents(): void
-    {
-        // Assign
-        $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
-        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
-        $this->assertSame(0, $glossaryStorageCount);
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
-        ];
-
-        // Act
-        $this->getGlossaryStorageFacade()->writeGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
-        $this->getGlossaryStorageFacade()->deleteGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
-
-        // Assert
-        $glossaryStorageCountAfterDeleteFacadeCall = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
-        $this->assertSame($glossaryStorageCountAfterDeleteFacadeCall, 0);
-    }
-
-    /**
-     * @return void
-     */
-    public function testWriteGlossaryStorageCollectionByGlossaryTranslationEvents(): void
+    public function testWriteCollectionByGlossaryTranslationEvents(): void
     {
         // Assign
         $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
@@ -114,7 +71,50 @@ class GlossaryStorageFacadeTest extends Unit
         ];
 
         // Act
-        $this->getGlossaryStorageFacade()->writeGlossaryStorageCollectionByGlossaryTranslationEvents($eventTransfers);
+        $this->getGlossaryStorageFacade()->writeCollectionByGlossaryTranslationEvents($eventTransfers);
+
+        // Assert
+        $this->assertGlossaryStorage(static::ID_GLOSSARY, $glossaryStorageCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteCollectionByGlossaryKeyEvents(): void
+    {
+        // Assign
+        $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
+        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
+        $this->assertSame(0, $glossaryStorageCount);
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
+        ];
+
+        // Act
+        $this->getGlossaryStorageFacade()->writeCollectionByGlossaryKeyEvents($eventTransfers);
+        $this->getGlossaryStorageFacade()->deleteCollectionByGlossaryKeyEvents($eventTransfers);
+
+        // Assert
+        $glossaryStorageCountAfterDeleteFacadeCall = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
+        $this->assertSame($glossaryStorageCountAfterDeleteFacadeCall, 0);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByGlossaryKeyEvents(): void
+    {
+        // Assign
+        $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
+        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
+        ];
+
+        // Act
+        $this->getGlossaryStorageFacade()->writeCollectionByGlossaryKeyEvents($eventTransfers);
 
         // Assert
         $this->assertGlossaryStorage(static::ID_GLOSSARY, $glossaryStorageCount);

@@ -65,7 +65,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      */
     protected function get(string $eventName)
     {
-        if (!isset($this->publisherPlugins[$eventName]) || count($this->publisherEvents[$eventName]) === 0) {
+        if (!isset($this->publisherEvents[$eventName]) || count($this->publisherEvents[$eventName]) === 0) {
             throw new Exception(
                 sprintf(
                     'Could not find publisher for event "%s". You have to add a publisher for the event "%s" to PublisherDependencyProvider::getPublisherRegistryPlugins()',
