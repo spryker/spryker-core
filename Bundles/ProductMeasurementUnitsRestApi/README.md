@@ -1,7 +1,7 @@
 # ProductMeasurementUnitsRestApi Module
 [![Build Status](https://travis-ci.org/spryker/product-measurement-units-rest-api.svg)](https://travis-ci.org/spryker/product-measurement-units-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+ProductMeasurementUnitsRestApi provides Glue API endpoints for product measurement units.
 
 ## Installation
 

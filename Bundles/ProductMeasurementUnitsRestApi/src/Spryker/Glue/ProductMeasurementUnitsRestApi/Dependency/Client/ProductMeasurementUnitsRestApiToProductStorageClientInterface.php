@@ -16,7 +16,7 @@ interface ProductMeasurementUnitsRestApiToProductStorageClientInterface
      *
      * @return array
      */
-    public function getBulkProductConcreteIdsByMapping(
+    public function getProductConcreteIdsByMapping(
         string $mappingType,
         array $identifiers,
         string $localeName

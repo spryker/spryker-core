@@ -29,12 +29,12 @@ class ProductMeasurementUnitsRestApiToProductStorageClientBridge implements Prod
      *
      * @return array
      */
-    public function getBulkProductConcreteIdsByMapping(
+    public function getProductConcreteIdsByMapping(
         string $mappingType,
         array $identifiers,
         string $localeName
     ): array {
-        return $this->productStorageClient->getBulkProductConcreteIdsByMapping(
+        return $this->productStorageClient->getProductConcreteIdsByMapping(
             $mappingType,
             $identifiers,
             $localeName

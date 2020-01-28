@@ -13,4 +13,7 @@ class ProductMeasurementUnitsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_PRODUCT_MEASUREMENT_UNITS = 'product-measurement-units';
     public const RESOURCE_SALES_UNITS = 'sales-units';
+
+    public const CONTROLLER_PRODUCT_MEASUREMENT_UNITS = 'product-measurement-units-resource';
+    public const CONTROLLER_SALES_UNITS = 'sales-units-resource';
 }

@@ -7,12 +7,13 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig;
 
 class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface
@@ -21,9 +22,9 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     protected const PRODUCT_MEASUREMENT_UNIT_MAPPING_TYPE = 'code';
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $productMeasurementUnitRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface
@@ -36,16 +37,16 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     protected $productMeasurementUnitStorageClient;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
+        ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder,
         ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient,
         ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->productMeasurementUnitRestResponseBuilder = $productMeasurementUnitRestResponseBuilder;
         $this->productStorageClient = $productStorageClient;
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
     }
@@ -67,14 +68,15 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
             );
 
         foreach ($resources as $resource) {
-            /** @var \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer */
-            $productMeasurementSalesUnitTransfer = $resource->getAttributes();
-            if (!isset($productMeasurementUnitData[$productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()])) {
+            $productMeasurementUnitTransfer = $this->getProductMeasurementSalesUnitTransfer($resource)
+                ->getProductMeasurementUnit();
+
+            if (!isset($productMeasurementUnitData[$productMeasurementUnitTransfer->getIdProductMeasurementUnit()])) {
                 continue;
             }
 
             $this->addRelationships(
-                $productMeasurementUnitData[$productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()],
+                $productMeasurementUnitData[$productMeasurementUnitTransfer->getIdProductMeasurementUnit()],
                 $resource
             );
         }
@@ -86,8 +88,10 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
      *
      * @return void
      */
-    protected function addRelationships(ProductMeasurementUnitStorageTransfer $productMeasurementUnitStorageTransfer, RestResourceInterface $resource): void
-    {
+    protected function addRelationships(
+        ProductMeasurementUnitStorageTransfer $productMeasurementUnitStorageTransfer,
+        RestResourceInterface $resource
+    ): void {
         $productMeasurementUnitResource = $this->restResourceBuilder->createRestResource(
             ProductMeasurementUnitsRestApiConfig::RESOURCE_PRODUCT_MEASUREMENT_UNITS,
             (string)$productMeasurementUnitStorageTransfer->getCode(),
@@ -106,11 +110,23 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     {
         $codes = [];
         foreach ($resources as $resource) {
-            /** @var \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer */
-            $productMeasurementSalesUnitTransfer = $resource->getAttributes();
+            $productMeasurementSalesUnitTransfer = $this->getProductMeasurementSalesUnitTransfer($resource);
             $codes[$resource->getId()] = $productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getCode();
         }
 
         return $codes;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    protected function getProductMeasurementSalesUnitTransfer(RestResourceInterface $resource): ProductMeasurementSalesUnitTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer */
+        $productMeasurementSalesUnitTransfer = $resource->getAttributes();
+
+        return $productMeasurementSalesUnitTransfer;
     }
 }

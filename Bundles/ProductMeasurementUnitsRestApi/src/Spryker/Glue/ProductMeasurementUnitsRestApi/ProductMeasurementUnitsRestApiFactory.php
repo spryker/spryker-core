@@ -16,6 +16,18 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasur
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapper;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\SalesUnitMapper;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\SalesUnitMapperInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Reader\ProductMeasurementUnitReader;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Reader\ProductMeasurementUnitReaderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Reader\SalesUnitReader;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Reader\SalesUnitReaderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilder;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilder;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilderInterface;
 
 /**
  * @method \Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig getConfig()
@@ -23,12 +35,34 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByPr
 class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
 {
     /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Reader\ProductMeasurementUnitReaderInterface
+     */
+    public function createProductMeasurementUnitReader(): ProductMeasurementUnitReaderInterface
+    {
+        return new ProductMeasurementUnitReader(
+            $this->getProductMeasurementUnitStorageClient(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Reader\SalesUnitReaderInterface
+     */
+    public function createSalesUnitReader(): SalesUnitReaderInterface
+    {
+        return new SalesUnitReader(
+            $this->getProductMeasurementUnitStorageClient(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface
      */
     public function createProductMeasurementUnitByProductConcreteResourceRelationshipExpander(): ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface
     {
         return new ProductMeasurementUnitByProductConcreteResourceRelationshipExpander(
-            $this->getResourceBuilder(),
+            $this->createProductMeasurementUnitRestResponseBuilder(),
             $this->getProductStorageClient(),
             $this->getProductMeasurementUnitStorageClient()
         );
@@ -40,7 +74,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     public function createSalesUnitByProductConcreteResourceRelationshipExpander(): SalesUnitByProductConcreteResourceRelationshipExpanderInterface
     {
         return new SalesUnitByProductConcreteResourceRelationshipExpander(
-            $this->getResourceBuilder(),
+            $this->createSalesUnitRestResponseBuilder(),
             $this->getProductStorageClient(),
             $this->getProductMeasurementUnitStorageClient()
         );
@@ -52,10 +86,48 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     public function createProductMeasurementUnitBySalesUnitResourceRelationshipExpander(): ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface
     {
         return new ProductMeasurementUnitBySalesUnitResourceRelationshipExpander(
-            $this->getResourceBuilder(),
+            $this->createProductMeasurementUnitRestResponseBuilder(),
             $this->getProductStorageClient(),
             $this->getProductMeasurementUnitStorageClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface
+     */
+    public function createProductMeasurementUnitRestResponseBuilder(): ProductMeasurementUnitRestResponseBuilderInterface
+    {
+        return new ProductMeasurementUnitRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createProductMeasurementUnitMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilderInterface
+     */
+    public function createSalesUnitRestResponseBuilder(): SalesUnitRestResponseBuilderInterface
+    {
+        return new SalesUnitRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createSalesUnitMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface
+     */
+    public function createProductMeasurementUnitMapper(): ProductMeasurementUnitMapperInterface
+    {
+        return new ProductMeasurementUnitMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\SalesUnitMapperInterface
+     */
+    public function createSalesUnitMapper(): SalesUnitMapperInterface
+    {
+        return new SalesUnitMapper();
     }
 
     /**
