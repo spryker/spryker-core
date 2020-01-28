@@ -7,20 +7,39 @@
 
 namespace Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer;
-use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
 
 class ConcreteProductAvailabilitiesResourceMapper implements ConcreteProductAvailabilitiesResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $availabilityEntityTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer $restConcreteProductAvailabilityAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer
      */
-    public function mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestConcreteProductAvailabilityAttributesTransfer
+    public function mapProductConcreteAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(
+        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer,
+        RestConcreteProductAvailabilityAttributesTransfer $restConcreteProductAvailabilityAttributesTransfer
+    ): RestConcreteProductAvailabilityAttributesTransfer {
+        return $restConcreteProductAvailabilityAttributesTransfer
+            ->fromArray($productConcreteAvailabilityTransfer->toArray(), true)
+            ->setQuantity($productConcreteAvailabilityTransfer->getAvailability())
+            ->setAvailability($this->isProductConcreteAvailable($productConcreteAvailabilityTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConcreteAvailable(ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer): bool
     {
-        return (new RestConcreteProductAvailabilityAttributesTransfer())
-            ->fromArray($availabilityEntityTransfer->toArray(), true)
-            ->setAvailability($availabilityEntityTransfer->getQuantity()->greaterThan(0));
+        $isProductConcreteAvailable = $productConcreteAvailabilityTransfer->getAvailability() !== null
+            && $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0);
+
+        $isNeverOutOfStock = $productConcreteAvailabilityTransfer->getIsNeverOutOfStock();
+
+        return $isProductConcreteAvailable || $isNeverOutOfStock;
     }
 }
