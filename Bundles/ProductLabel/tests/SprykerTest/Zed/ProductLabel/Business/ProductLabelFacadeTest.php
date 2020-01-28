@@ -15,6 +15,7 @@ use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductLabelProductAbstractRelationsBuilder;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
@@ -50,6 +51,29 @@ class ProductLabelFacadeTest extends Unit
         $productLabelTransfer = $productLabelFacade->findLabelById($productLabelTransfer->getIdProductLabel());
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\ProductLabelTransfer', $productLabelTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveProductLabelShouldDeleteFromDatabase(): void
+    {
+        //Arrange
+        $productLabelTransfer = $this->tester->haveProductLabel();
+
+        $productLabelCount = SpyProductLabelQuery::create()
+            ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())->count();
+
+        //Act
+        $productLabelResponseTransfer = $this->getProductLabelFacade()->removeLabel($productLabelTransfer);
+
+        //Assert
+        $this->assertTrue($productLabelResponseTransfer->getIsSuccessful());
+
+        $productLabelCountAfterDeleting = SpyProductLabelQuery::create()
+            ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())->count();
+
+        $this->assertEquals($productLabelCount - 1, $productLabelCountAfterDeleting, 'Product label record was not deleted from the database!');
     }
 
     /**
