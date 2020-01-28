@@ -106,7 +106,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    protected function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
         $merchantUserTransfer->requireMerchant()->getMerchant()->requireEmail();
         $merchantUserTransfer->requireUser()->getUser()->requireIdUser();
