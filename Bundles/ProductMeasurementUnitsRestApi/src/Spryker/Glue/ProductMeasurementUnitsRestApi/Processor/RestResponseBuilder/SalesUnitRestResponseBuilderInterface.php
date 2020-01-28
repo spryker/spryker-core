@@ -18,12 +18,12 @@ interface SalesUnitRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductMeasurementSalesUnitRestResponse(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResponseInterface;
+    public function createSalesUnitRestResponse(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createProductMeasurementSalesUnitRestResource(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResourceInterface;
+    public function createSalesUnitRestResource(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResourceInterface;
 }

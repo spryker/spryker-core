@@ -48,7 +48,8 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
         if ($restRequest->getResource()->getId()) {
             return;
         }
-        $productMeasurementUnitsData = $this->productMeasurementUnitStorageClient->getProductMeasurementUnitsByMapping(
+
+        $productMeasurementUnitStorageTransfers = $this->productMeasurementUnitStorageClient->getProductMeasurementUnitsByMapping(
             static::PRODUCT_MEASUREMENT_UNIT_MAPPING_TYPE,
             [$restRequest->getResource()->getId()]
         );

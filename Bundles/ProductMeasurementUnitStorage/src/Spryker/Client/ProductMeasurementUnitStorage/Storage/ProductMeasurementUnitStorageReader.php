@@ -69,7 +69,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      * @param string $mappingType
      * @param string[] $identifiers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array
     {
@@ -93,7 +93,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     /**
      * @param int[] $productMeasurementUnitIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
      */
     public function getBulkProductMeasurementUnitStorageDataByProductMeasurementIds(array $productMeasurementUnitIds): array
     {
@@ -102,8 +102,8 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
         }
 
         $productMeasurementUnitStorageKeys = [];
-        foreach ($productMeasurementUnitIds as $productConcreteSku => $idProductMeasurementUnit) {
-            $productMeasurementUnitStorageKeys[$productConcreteSku] = $this->generateKey($idProductMeasurementUnit);
+        foreach ($productMeasurementUnitIds as $idProductMeasurementUnit) {
+            $productMeasurementUnitStorageKeys[] = $this->generateKey($idProductMeasurementUnit);
         }
         $productMeasurementUnitsStorageData = $this->storageClient->getMulti($productMeasurementUnitStorageKeys);
         $productMeasurementUnitStorageTransfers = $this
@@ -128,9 +128,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
                 continue;
             }
 
-            $arrayStorageKey = explode(':', $storageKey);
-            $idProductConcrete = $arrayStorageKey[count($arrayStorageKey) - 1];
-            $productConcreteMeasurementUnitStorageTransfers[$idProductConcrete] =
+            $productConcreteMeasurementUnitStorageTransfers[] =
                 $this->mapToProductMeasurementUnitStorage(json_decode($data, true));
         }
 

@@ -27,7 +27,7 @@ interface ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInt
      * @param string $mappingType
      * @param string[] $identifiers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array;
 }

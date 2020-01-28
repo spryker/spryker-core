@@ -26,7 +26,7 @@ interface ProductConcreteStorageReaderInterface
      *
      * @return int[]
      */
-    public function getBulkProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array;
+    public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array;
 
     /**
      * @param int $idProductConcrete

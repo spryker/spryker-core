@@ -44,11 +44,11 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductMeasurementSalesUnitRestResponse(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResponseInterface
+    public function createSalesUnitRestResponse(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        return $restResponse->addResource($this->createProductMeasurementSalesUnitRestResource($productMeasurementSalesUnitTransfer));
+        return $restResponse->addResource($this->createSalesUnitRestResource($productMeasurementSalesUnitTransfer));
     }
 
     /**
@@ -56,7 +56,7 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createProductMeasurementSalesUnitRestResource(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResourceInterface
+    public function createSalesUnitRestResource(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResourceInterface
     {
         $restProductMeasurementUnitsAttributesTransfer = $this->salesUnitMapper
             ->mapProductMeasurementSalesUnitTransferToRestSalesUnitsAttributesTransfer(

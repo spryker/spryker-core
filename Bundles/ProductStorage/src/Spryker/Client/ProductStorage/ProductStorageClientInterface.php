@@ -344,7 +344,7 @@ interface ProductStorageClientInterface
      *
      * @return int[]
      */
-    public function getBulkProductConcreteIdsByMapping(
+    public function getProductConcreteIdsByMapping(
         string $mappingType,
         array $identifiers,
         string $localeName
