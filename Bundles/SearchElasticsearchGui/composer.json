@@ -16,6 +16,9 @@
     "spryker/elastica": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/elastica": "If you want to use Elastica plugin to build GUI."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -34,8 +37,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/elastica": "If you want to use Elastica plugin to build GUI."
   }
 }
