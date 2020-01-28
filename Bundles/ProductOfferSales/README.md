@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-offer-sales.svg)](https://travis-ci.org/spryker/product-offer-sales)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-{{ADD DESCRIPTION HERE}}
+Provides product offer functionality to Sales module.
 
 ## Installation
 
