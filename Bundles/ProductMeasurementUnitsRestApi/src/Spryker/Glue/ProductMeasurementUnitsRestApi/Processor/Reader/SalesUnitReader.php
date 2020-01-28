@@ -89,7 +89,7 @@ class SalesUnitReader implements SalesUnitReaderInterface
             return $restResponse;
         }
 
-        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+        foreach (reset($productMeasurementSalesUnitTransfers) as $productMeasurementSalesUnitTransfer) {
             $restResponse->addResource(
                 $this->salesUnitRestResponseBuilder->createSalesUnitRestResource($productMeasurementSalesUnitTransfer)
             );
