@@ -20,7 +20,7 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="email" dataBuilderRule="email"/>
+        <property name="email" dataBuilderRule="unique()->email"/>
         <property name="firstName" dataBuilderRule="firstName"/>
         <property name="lastName" dataBuilderRule="lastName"/>
         <property name="company" dataBuilderRule="company"/>
