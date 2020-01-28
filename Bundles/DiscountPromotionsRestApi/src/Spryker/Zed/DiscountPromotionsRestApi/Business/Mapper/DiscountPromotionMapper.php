@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DiscountPromotionsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
-use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionInterface;
