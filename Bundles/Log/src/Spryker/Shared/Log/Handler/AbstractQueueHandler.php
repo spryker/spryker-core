@@ -27,7 +27,7 @@ class AbstractQueueHandler extends AbstractProcessingHandler
      *
      * @return void
      */
-    protected function write(array $record)
+    protected function write(array $record): void
     {
         $this->send($record['formatted']);
     }
@@ -37,7 +37,7 @@ class AbstractQueueHandler extends AbstractProcessingHandler
      *
      * @return void
      */
-    public function handleBatch(array $records)
+    public function handleBatch(array $records): void
     {
         $level = $this->level;
 
@@ -55,7 +55,7 @@ class AbstractQueueHandler extends AbstractProcessingHandler
      *
      * @return void
      */
-    protected function send($data)
+    protected function send($data): void
     {
         $queueSendTransfer = new QueueSendMessageTransfer();
         $queueSendTransfer->setBody($data);
