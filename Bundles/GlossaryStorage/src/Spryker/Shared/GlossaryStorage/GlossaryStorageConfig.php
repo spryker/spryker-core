@@ -24,12 +24,12 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     /**
      * This events that will be used for key writing.
      */
-    public const GLOSSARY_KEY_WRITE = 'Glossary.key.write';
+    public const GLOSSARY_KEY_PUBLISH = 'Glossary.key.publish';
 
     /**
      * This events that will be used for key deleting.
      */
-    public const GLOSSARY_KEY_DELETE = 'Glossary.key.delete';
+    public const GLOSSARY_KEY_UNPUBLISH = 'Glossary.key.unpublish';
 
     /**
      * This events will be used for spy_glossary_key entity creation.
@@ -47,12 +47,17 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     public const ENTITY_SPY_GLOSSARY_KEY_DELETE = 'Entity.spy_glossary_key.delete';
 
     /**
-     * This events will be used for spy_glossary_translation entity creation
+     * This events will be used for spy_glossary_translation entity creation.
      */
     public const ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE = 'Entity.spy_glossary_translation.create';
 
     /**
-     * This events will be used for spy_glossary_translation entity changes
+     * This events will be used for spy_glossary_translation entity changes.
      */
     public const ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE = 'Entity.spy_glossary_translation.update';
+
+    /**
+     * This events will be used for spy_glossary_translation entity deletion.
+     */
+    public const ENTITY_SPY_GLOSSARY_TRANSLATION_DELETE = 'Entity.spy_glossary_translation.delete';
 }

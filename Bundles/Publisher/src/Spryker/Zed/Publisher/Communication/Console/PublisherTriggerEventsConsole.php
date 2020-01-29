@@ -78,7 +78,7 @@ class PublisherTriggerEventsConsole extends Console
             $resourcesIds = explode(',', $idsString);
         }
 
-        $resourcePublisherPlugins = $this->getFactory()->getResourcePublisherPlugins();
+        $resourcePublisherPlugins = $this->getFactory()->getPublisherTriggerPlugins();
 
         $this->getFactory()->getEventBehaviorFacade()->executeResolvedPluginsBySources($resources, $resourcesIds, $resourcePublisherPlugins);
     }
@@ -89,7 +89,7 @@ class PublisherTriggerEventsConsole extends Console
     protected function getResourcesUsageText(): string
     {
         $availableResourceNames = $this->getFactory()->getEventBehaviorFacade()->getAvailableResourceNames(
-            $this->getFactory()->getResourcePublisherPlugins()
+            $this->getFactory()->getPublisherTriggerPlugins()
         );
 
         return sprintf(

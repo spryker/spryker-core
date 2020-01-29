@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey;
 
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
-use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -43,11 +42,7 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
     public function getSubscribedEvents(): array
     {
         return [
-            GlossaryEvents::GLOSSARY_KEY_PUBLISH,
-            GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE,
-            GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE,
-
-            GlossaryStorageConfig::GLOSSARY_KEY_WRITE,
+            GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH,
             GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_CREATE,
             GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_UPDATE,
         ];

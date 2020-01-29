@@ -28,8 +28,8 @@ class PublisherCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface[]
      */
-    public function getResourcePublisherPlugins(): array
+    public function getPublisherTriggerPlugins(): array
     {
-        return $this->getProvidedDependency(PublisherDependencyProvider::PLUGINS_RESOURCE_PUBLISHER);
+        return $this->getProvidedDependency(PublisherDependencyProvider::PLUGINS_PUBLISHER_TRIGGER);
     }
 }

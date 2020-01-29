@@ -22,14 +22,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class GlossaryStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface
-     */
-    public function createGlossaryTranslationStorageFinder()
-    {
-        return new GlossaryTranslationStorageMapper();
-    }
-
-    /**
      * @return \Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriterInterface
      */
     public function createGlossaryTranslationStorageWriter()
@@ -53,6 +45,14 @@ class GlossaryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createGlossaryTranslationStorageFinder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface
+     */
+    public function createGlossaryTranslationStorageFinder()
+    {
+        return new GlossaryTranslationStorageMapper();
     }
 
     /**

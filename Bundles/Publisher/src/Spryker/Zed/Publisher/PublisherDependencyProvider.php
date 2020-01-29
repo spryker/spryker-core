@@ -17,7 +17,7 @@ use Spryker\Zed\Publisher\Dependency\Facade\PublisherToEventBehaviorFacadeBridge
 class PublisherDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_PUBLISHER = 'PLUGINS_PUBLISHER';
-    public const PLUGINS_RESOURCE_PUBLISHER = 'PLUGINS_RESOURCE_PUBLISHER';
+    public const PLUGINS_PUBLISHER_TRIGGER = 'PLUGINS_PUBLISHER_TRIGGER';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
@@ -41,7 +41,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addEventBehaviorFacade($container);
-        $container = $this->addResourcePublishedPlugins($container);
+        $container = $this->addPublisherTriggerPlugins($container);
 
         return $container;
     }
@@ -81,10 +81,10 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addResourcePublishedPlugins(Container $container): Container
+    protected function addPublisherTriggerPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_RESOURCE_PUBLISHER, function (Container $container) {
-            return $this->getResourcePublisherPlugins();
+        $container->set(static::PLUGINS_PUBLISHER_TRIGGER, function (Container $container) {
+            return $this->getPublisherTriggerPlugins();
         });
 
         return $container;
@@ -101,7 +101,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface[]
      */
-    protected function getResourcePublisherPlugins(): array
+    protected function getPublisherTriggerPlugins(): array
     {
         return [];
     }
