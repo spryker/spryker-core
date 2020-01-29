@@ -66,12 +66,11 @@ interface MerchantProfileFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer;
+    public function handleMerchantPostUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * Specification:

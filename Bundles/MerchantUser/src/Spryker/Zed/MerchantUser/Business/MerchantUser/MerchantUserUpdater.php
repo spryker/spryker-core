@@ -46,22 +46,21 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
+    public function handleMerchantPostUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         $merchantUserTransfer = $this->merchantUserRepository->findOne(
-            (new MerchantUserCriteriaFilterTransfer())->setIdMerchant($updatedMerchantTransfer->getIdMerchant())
+            (new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
         );
         if (!$merchantUserTransfer) {
-            return $this->merchantUserCreator->handleMerchantPostCreate($updatedMerchantTransfer);
+            return $this->merchantUserCreator->handleMerchantPostCreate($merchantTransfer);
         }
 
-        $this->userWriter->updateFromMerchant($updatedMerchantTransfer, $merchantUserTransfer);
+        $this->userWriter->updateFromMerchant($merchantTransfer, $merchantUserTransfer);
 
-        return (new MerchantResponseTransfer())->setIsSuccess(true)->setMerchant($updatedMerchantTransfer);
+        return (new MerchantResponseTransfer())->setIsSuccess(true)->setMerchant($merchantTransfer);
     }
 }
