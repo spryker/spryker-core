@@ -22,7 +22,7 @@ class MerchantReferenceOrderItemExpanderPreSavePlugin extends AbstractPlugin imp
     /**
      * {@inheritDoc}
      * - Adds merchant reference to sales order item before saving
-     * - Returns $salesOrderItemEntity without changes if there is no product offer reference
+     * - Returns $salesOrderItemEntity without changes if there is no merchant reference
      *
      * @api
      *
