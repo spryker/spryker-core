@@ -113,8 +113,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->getQueryContainer(),
             $this->createTemplateManager(),
-            $this->createPageManager(),
-            $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->createPageManager()
         );
     }
 

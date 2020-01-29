@@ -16,12 +16,20 @@ class ProductAbstractTouch extends AbstractProductTouch implements ProductAbstra
      */
     public function touchProductAbstract($idProductAbstract)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
+        $this->getTransactionHandler()->handleTransaction(function () use ($idProductAbstract): void {
+            $this->executeTouchProductAbstractTransaction($idProductAbstract);
+        });
+    }
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function executeTouchProductAbstractTransaction(int $idProductAbstract): void
+    {
         $this->touchAbstractByStatus($idProductAbstract);
         $this->touchVariantsByStatus($idProductAbstract);
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**

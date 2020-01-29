@@ -12,16 +12,18 @@ use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 {
+    use TransactionTrait;
+
     public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
 
     /**
@@ -45,29 +47,21 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected $pageManager;
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected $connection;
-
-    /**
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
      * @param \Spryker\Zed\Cms\Business\Page\PageManagerInterface $pageManager
-     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         CmsToGlossaryFacadeInterface $glossaryFacade,
         CmsQueryContainerInterface $cmsQueryContainer,
         TemplateManagerInterface $templateManager,
-        PageManagerInterface $pageManager,
-        ConnectionInterface $connection
+        PageManagerInterface $pageManager
     ) {
         $this->glossaryFacade = $glossaryFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
         $this->pageManager = $pageManager;
-        $this->connection = $connection;
     }
 
     /**
@@ -241,17 +235,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         $uniquePlaceholder = $placeholder . '-' . $pageTransfer->getIdCmsPage();
         $keyName = $this->generateGlossaryKeyName($template->getTemplateName(), $uniquePlaceholder, $autoGlossaryKeyIncrement);
 
-        $this->connection->beginTransaction();
-
-        $pageKeyMapping = $this->createGlossaryPageKeyMapping($pageTransfer, $placeholder, $keyName, $value, $localeTransfer);
-
-        if (!$this->hasPagePlaceholderMapping($pageTransfer->getIdCmsPage(), $placeholder)) {
-            $pageKeyMapping = $this->savePageKeyMapping($pageKeyMapping);
-        }
-
-        $this->connection->commit();
-
-        return $pageKeyMapping;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($pageTransfer, $placeholder, $keyName, $value, $localeTransfer): PageKeyMappingTransfer {
+            return $this->executeAddPlaceholderTextTransaction($pageTransfer, $placeholder, $keyName, $value, $localeTransfer);
+        });
     }
 
     /**
@@ -309,6 +295,31 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param string $placeholder
+     * @param string $glossaryKey
+     * @param string $value
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
+     */
+    protected function executeAddPlaceholderTextTransaction(
+        PageTransfer $pageTransfer,
+        string $placeholder,
+        string $glossaryKey,
+        string $value,
+        ?LocaleTransfer $localeTransfer = null
+    ): PageKeyMappingTransfer {
+        $pageKeyMapping = $this->createGlossaryPageKeyMapping($pageTransfer, $placeholder, $glossaryKey, $value, $localeTransfer);
+
+        if ($this->hasPagePlaceholderMapping($pageTransfer->getIdCmsPage(), $placeholder)) {
+            return $pageKeyMapping;
+        }
+
+        return $this->savePageKeyMapping($pageKeyMapping);
     }
 
     /**

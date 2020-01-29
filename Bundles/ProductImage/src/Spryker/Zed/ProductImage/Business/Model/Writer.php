@@ -14,10 +14,13 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Writer implements WriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -238,8 +241,18 @@ class Writer implements WriterInterface
      */
     public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
-        $this->productImageQueryContainer->getConnection()->beginTransaction();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productImageSetTransfer): ProductImageSetTransfer {
+            return $this->executeSaveProductImageSetTransaction($productImageSetTransfer);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     */
+    protected function executeSaveProductImageSetTransaction(ProductImageSetTransfer $productImageSetTransfer): ProductImageSetTransfer
+    {
         if ($productImageSetTransfer->getIdProductImageSet()) {
             $this->deleteMissingProductImageInProductImageSet($productImageSetTransfer);
         }
@@ -257,8 +270,6 @@ class Writer implements WriterInterface
         );
 
         $productImageSetTransfer = $this->persistProductImageSetCollection($productImageSetTransfer);
-
-        $this->productImageQueryContainer->getConnection()->commit();
 
         return $productImageSetTransfer;
     }

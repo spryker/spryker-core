@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms;
 
-use Propel\Runtime\Propel;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeBridge;
@@ -30,7 +29,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
-    public const PLUGIN_PROPEL_CONNECTION = 'PLUGIN_PROPEL_CONNECTION';
     public const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS';
     public const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS';
     public const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
@@ -60,7 +58,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $this->addPropelPluginConnection($container);
         $this->addTouchFacade($container);
         $this->addGlossaryFacade($container);
         $this->addUrlFacade($container);
@@ -135,18 +132,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new CmsToTouchFacadeBridge($container->getLocator()->touch()->facade());
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function addPropelPluginConnection(Container $container): void
-    {
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return Propel::getConnection();
         };
     }
 
