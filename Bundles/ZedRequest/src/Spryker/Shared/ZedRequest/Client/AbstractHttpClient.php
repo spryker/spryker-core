@@ -88,6 +88,8 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
     protected const DEFAULT_XDEBUG_PROFILER_NAME = 'XDEBUG_PROFILE';
 
+    protected const DEFAULT_XDEBUG_SESSIOIN_NAME = 'XDEBUG_SESSION';
+
     /**
      * @var bool
      */
@@ -340,30 +342,21 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
      */
     protected function addCookiesToForwardDebugProfiler(array $config): array
     {
-        $isProfilerForwardingEnabled = Config::get(ZedRequestConstants::XDEBUG_PROFILER_FORWARD_ENABLED, false);
+        $isProfilerForwardingEnabled = Config::get(
+            ZedRequestConstants::XDEBUG_PROFILER_FORWARD_ENABLED,
+            false
+        );
 
         if (!$isProfilerForwardingEnabled) {
             return $config;
         }
 
-        $profilerName = Config::get(ZedRequestConstants::XDEBUG_PROFILER_NAME, static::DEFAULT_XDEBUG_PROFILER_NAME);
+        $profilerName = Config::get(
+            ZedRequestConstants::XDEBUG_PROFILER_NAME,
+            static::DEFAULT_XDEBUG_PROFILER_NAME
+        );
 
-        if (!isset($_COOKIE[$profilerName])) {
-            return $config;
-        }
-
-        if (!isset($config['cookies'])) {
-            $config['cookies'] = new CookieJar();
-        }
-
-        $cookie = new SetCookie();
-        $cookie->setName($profilerName);
-        $cookie->setValue($_COOKIE[$profilerName]);
-        $cookie->setDomain(Config::get(ZedRequestConstants::HOST_ZED_API));
-
-        $config['cookies']->setCookie($cookie);
-
-        return $config;
+        return $this->addCookie($config, $profilerName);
     }
 
     /**
@@ -458,28 +451,47 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
      *
      * @return array
      */
-    protected function addCookiesToForwardDebugSession(array $config)
+    protected function addCookiesToForwardDebugSession(array $config): array
     {
-        $isSessionForwardingEnabled = Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED, false);
+        $isSessionForwardingEnabled = Config::get(
+            ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED,
+            false
+        );
 
         if (!$isSessionForwardingEnabled) {
             return $config;
         }
 
-        $debugSessionName = Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME, 'XDEBUG_SESSION');
-        if (!isset($_COOKIE[$debugSessionName])) {
+        $debugSessionName = Config::get(
+            ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME,
+            static::DEFAULT_XDEBUG_SESSIOIN_NAME
+        );
+
+        return $this->addCookie($config, $debugSessionName);
+    }
+
+    /**
+     * @param array $config
+     * @param string $name
+     *
+     * @return array
+     */
+    protected function addCookie(array $config, string $name): array
+    {
+        if (!isset($_COOKIE[$name])) {
             return $config;
         }
 
+        if (!isset($config['cookies'])) {
+            $config['cookies'] = new CookieJar();
+        }
+
         $cookie = new SetCookie();
-        $cookie->setName($debugSessionName);
-        $cookie->setValue($_COOKIE[$debugSessionName]);
+        $cookie->setName($name);
+        $cookie->setValue($_COOKIE[$name]);
         $cookie->setDomain(Config::get(ZedRequestConstants::HOST_ZED_API));
 
-        $cookieJar = new CookieJar();
-        $cookieJar->setCookie($cookie);
-
-        $config['cookies'] = $cookieJar;
+        $config['cookies']->setCookie($cookie);
 
         return $config;
     }
