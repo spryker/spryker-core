@@ -2,7 +2,7 @@ namespace: SprykerTest\Zed\ProductOfferStockDataImport
 
 paths:
   tests: .
-  data: ../../_data
+  data: ../../../_data
   support: _support
   log: ../../../_output
 
