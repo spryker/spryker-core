@@ -94,7 +94,7 @@ class MerchantProfileFacadeTest extends Unit
         $this->tester->getFacade()->handleMerchantPostCreate($merchantTransfer);
         $updatedMerchantTransfer = clone $merchantTransfer;
         $updatedMerchantTransfer->getMerchantProfile()->setPublicEmail(static::TEST_EMAIL);
-        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostUpdate($merchantTransfer, $updatedMerchantTransfer);
+        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostUpdate($updatedMerchantTransfer);
 
         // Assert
         $this->assertTrue($merchantResponseTransfer->getIsSuccess());
