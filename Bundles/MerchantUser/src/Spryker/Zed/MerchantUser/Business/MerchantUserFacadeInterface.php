@@ -26,7 +26,7 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function createMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * Specification:
@@ -40,5 +40,5 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function handleMerchantPostUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function updateMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }

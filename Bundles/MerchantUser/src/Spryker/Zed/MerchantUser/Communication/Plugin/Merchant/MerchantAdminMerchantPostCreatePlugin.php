@@ -31,6 +31,6 @@ class MerchantAdminMerchantPostCreatePlugin extends AbstractPlugin implements Me
      */
     public function postCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        return $this->getFacade()->handleMerchantPostCreate($merchantTransfer);
+        return $this->getFacade()->createMerchantAdmin($merchantTransfer);
     }
 }

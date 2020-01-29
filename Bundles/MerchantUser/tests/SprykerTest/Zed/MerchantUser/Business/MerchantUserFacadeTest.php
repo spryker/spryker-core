@@ -40,7 +40,7 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
         // Act
-        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostCreate($merchantTransfer);
+        $merchantResponseTransfer = $this->tester->getFacade()->createMerchantAdmin($merchantTransfer);
         $merchantUserEntity = $this->tester->findMerchantUser(
             (new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
         );
@@ -61,7 +61,7 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
         // Act
-        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostCreate($merchantTransfer);
+        $merchantResponseTransfer = $this->tester->getFacade()->createMerchantAdmin($merchantTransfer);
         $merchantUserEntity = $this->tester->findMerchantUser(
             (new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
         );
@@ -88,7 +88,7 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransferWithSameEmail->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransferWithSameEmail));
 
         // Act
-        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostCreate($merchantTransferWithSameEmail);
+        $merchantResponseTransfer = $this->tester->getFacade()->createMerchantAdmin($merchantTransferWithSameEmail);
         $merchantUserEntity = $this->tester->findMerchantUser(
             (new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransferWithSameEmail->getIdMerchant())
         );
@@ -109,9 +109,9 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
         // Act
-        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostCreate($merchantTransfer);
+        $this->tester->getFacade()->createMerchantAdmin($merchantTransfer);
         $merchantTransfer->setEmail('test2@examle.com');
-        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostUpdate($merchantTransfer, $merchantTransfer);
+        $merchantResponseTransfer = $this->tester->getFacade()->updateMerchantAdmin($merchantTransfer);
 
         // Assert
         $this->assertTrue($merchantResponseTransfer->getIsSuccess());

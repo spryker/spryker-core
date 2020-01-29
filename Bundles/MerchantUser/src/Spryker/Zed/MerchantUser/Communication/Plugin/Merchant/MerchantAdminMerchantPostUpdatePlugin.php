@@ -30,6 +30,6 @@ class MerchantAdminMerchantPostUpdatePlugin extends AbstractPlugin implements Me
      */
     public function postUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        return $this->getFacade()->handleMerchantPostUpdate($merchantTransfer);
+        return $this->getFacade()->updateMerchantAdmin($merchantTransfer);
     }
 }
