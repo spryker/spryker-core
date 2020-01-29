@@ -100,7 +100,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             $responseSchemaDataTransfer,
-            (string)Response::HTTP_OK
+            (string)Response::HTTP_CREATED
         );
         $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
 
@@ -228,7 +228,12 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         PathSchemaDataTransfer $responseSchemaDataTransfer,
         string $defaultResponseCode
     ): PathSchemaDataTransfer {
-        if ($this->isSuccessResponseCodeDeclared($pathMethodDataTransfer->getResponseSchemas())) {
+        $pathSchemaDataTransfer = $this->getSuccessResponseSchema($pathMethodDataTransfer->getResponseSchemas());
+
+        if ($pathSchemaDataTransfer) {
+            $responseSchemaDataTransfer->setCode($pathSchemaDataTransfer->getCode());
+            $responseSchemaDataTransfer->setDescription($pathSchemaDataTransfer->getDescription());
+
             return $responseSchemaDataTransfer;
         }
 
@@ -242,17 +247,17 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PathSchemaDataTransfer[] $responseSchemas
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer|null
      */
-    protected function isSuccessResponseCodeDeclared(ArrayObject $responseSchemas): bool
+    protected function getSuccessResponseSchema(ArrayObject $responseSchemas): ?PathSchemaDataTransfer
     {
         foreach ($responseSchemas as $responseSchema) {
             $responseSchemaCode = (int)$responseSchema->getCode();
             if ($responseSchemaCode >= 200 && $responseSchemaCode < 300) {
-                return true;
+                return $responseSchema;
             }
         }
 
-        return false;
+        return null;
     }
 }

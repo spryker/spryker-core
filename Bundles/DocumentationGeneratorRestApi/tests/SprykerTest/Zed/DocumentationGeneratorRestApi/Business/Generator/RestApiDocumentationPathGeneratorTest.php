@@ -70,6 +70,40 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function statusCodesAndDescriptionDataProvider(): array
+    {
+        return [
+            [204, 'No Content'],
+            [208, 'Already Reported'],
+            [226, 'IM Used'],
+        ];
+    }
+
+    /**
+     * @dataProvider statusCodesAndDescriptionDataProvider
+     *
+     * @param int|null $code
+     * @param string|null $description
+     *
+     * @return void
+     */
+    public function testAddGetPathShouldGenerateValidGetMethodDataForPathWithSuccessResponseType(?int $code, ?string $description): void
+    {
+        $pathMethodDataTransfer = $this->tester->getPathMethodDataTransferForGetMethod()
+            ->addResponseSchema($this->tester->getResponseSchemaDataTransfer($code, $description));
+        $errorSchemaDataTransfer = $this->tester->getErrorSchemaDataTransfer();
+        $responseSchemaDataTransfer = $this->tester->getResponseSchemaDataTransfer(static::RESPONSE_CODE_OK);
+        $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchemaDataTransfer, $responseSchemaDataTransfer);
+
+        $paths = $this->pathGenerator->getPaths();
+
+        $this->assertArrayHasKey(static::TEST_PATH, $paths);
+        $this->assertArraySubset($this->tester->getPathGeneratorExpectedGetPathData($code, $description), $paths[static::TEST_PATH]);
+    }
+
+    /**
      * @return void
      */
     public function testAddPostPath(): void
@@ -87,6 +121,29 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     }
 
     /**
+     * @dataProvider statusCodesAndDescriptionDataProvider
+     *
+     * @param int|null $code
+     * @param string|null $description
+     *
+     * @return void
+     */
+    public function testAddPostPathWithSuccessResponseType(?int $code, ?string $description): void
+    {
+        $pathMethodDataTransfer = $this->tester->getPathMethodDataTransferForPostMethod()
+            ->addResponseSchema($this->tester->getResponseSchemaDataTransfer($code, $description));
+        $requestSchemaDataTransfer = $this->tester->getRequestSchemaDataTransfer();
+        $errorSchemaDataTransfer = $this->tester->getErrorSchemaDataTransfer();
+        $responseSchemaDataTransfer = $this->tester->getResponseSchemaDataTransfer($code);
+        $this->pathGenerator->addPostPath($pathMethodDataTransfer, $requestSchemaDataTransfer, $errorSchemaDataTransfer, $responseSchemaDataTransfer);
+
+        $paths = $this->pathGenerator->getPaths();
+
+        $this->assertArrayHasKey(static::TEST_PATH, $paths);
+        $this->assertArraySubset($this->tester->getPathGeneratorExpectedPostPathData($code, $description), $paths[static::TEST_PATH]);
+    }
+
+    /**
      * @return void
      */
     public function testAddPatchPath(): void
@@ -101,6 +158,29 @@ class RestApiDocumentationPathGeneratorTest extends Unit
 
         $this->assertArrayHasKey(static::TEST_PATH_WITH_ID, $paths);
         $this->assertArraySubset($this->tester->getPathGeneratorExpectedPatchPathData(), $paths[static::TEST_PATH_WITH_ID]);
+    }
+
+    /**
+     * @dataProvider statusCodesAndDescriptionDataProvider
+     *
+     * @param int|null $code
+     * @param string|null $description
+     *
+     * @return void
+     */
+    public function testAddPatchPathWithSuccessResponseType(?int $code, ?string $description): void
+    {
+        $pathMethodDataTransfer = $this->tester->getPathMethodDataTransferForPatchMethod()
+            ->addResponseSchema($this->tester->getResponseSchemaDataTransfer($code, $description));
+        $requestSchemaDataTransfer = $this->tester->getRequestSchemaDataTransfer();
+        $errorSchemaDataTransfer = $this->tester->getErrorSchemaDataTransfer();
+        $responseSchemaDataTransfer = $this->tester->getResponseSchemaDataTransfer(static::RESPONSE_CODE_ACCEPTED);
+        $this->pathGenerator->addPatchPath($pathMethodDataTransfer, $requestSchemaDataTransfer, $errorSchemaDataTransfer, $responseSchemaDataTransfer);
+
+        $paths = $this->pathGenerator->getPaths();
+
+        $this->assertArrayHasKey(static::TEST_PATH_WITH_ID, $paths);
+        $this->assertArraySubset($this->tester->getPathGeneratorExpectedPatchPathData($code, $description), $paths[static::TEST_PATH_WITH_ID]);
     }
 
     /**
@@ -134,5 +214,26 @@ class RestApiDocumentationPathGeneratorTest extends Unit
 
         $this->assertArrayHasKey(static::TEST_PATH_WITH_ID, $paths);
         $this->assertArraySubset($this->tester->getPathGeneratorExpectedDeletePathData(), $paths[static::TEST_PATH_WITH_ID]);
+    }
+
+    /**
+     * @dataProvider statusCodesAndDescriptionDataProvider
+     *
+     * @param int|null $code
+     * @param string|null $description
+     *
+     * @return void
+     */
+    public function testAddDeletePathWithSuccessResponseType(?int $code, ?string $description): void
+    {
+        $pathMethodDataTransfer = $this->tester->getPathMethodDataTransferForDeleteMethod()
+            ->addResponseSchema($this->tester->getResponseSchemaDataTransfer($code, $description));
+        $errorSchemaDataTransfer = $this->tester->getErrorSchemaDataTransfer();
+        $this->pathGenerator->addDeletePath($pathMethodDataTransfer, $errorSchemaDataTransfer);
+
+        $paths = $this->pathGenerator->getPaths();
+
+        $this->assertArrayHasKey(static::TEST_PATH_WITH_ID, $paths);
+        $this->assertArraySubset($this->tester->getPathGeneratorExpectedDeletePathData($code, $description), $paths[static::TEST_PATH_WITH_ID]);
     }
 }
