@@ -7,15 +7,19 @@
 
 namespace Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer;
-use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 
 interface AbstractProductAvailabilitiesResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer $restAbstractProductAvailabilityAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer
      */
-    public function mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): RestAbstractProductAvailabilityAttributesTransfer;
+    public function mapProductAbstractAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(
+        ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer,
+        RestAbstractProductAvailabilityAttributesTransfer $restAbstractProductAvailabilityAttributesTransfer
+    ): RestAbstractProductAvailabilityAttributesTransfer;
 }

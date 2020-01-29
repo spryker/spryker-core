@@ -132,7 +132,8 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      */
     protected function getDocumentAttributesFromDocumentDataSet(array $documentDataSet): array
     {
-        $documentId = array_key_first($documentDataSet);
+        reset($documentDataSet);
+        $documentId = key($documentDataSet);
 
         if (!$documentId) {
             throw new InvalidDataSetException('Document id is not found in data set.');
