@@ -10,6 +10,8 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\CartItemExpander;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\CartItemExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpander;
@@ -90,6 +92,17 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     {
         return new ProductMeasurementUnitBySalesUnitResourceRelationshipExpander(
             $this->createProductMeasurementUnitRestResponseBuilder(),
+            $this->getProductStorageClient(),
+            $this->getProductMeasurementUnitStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\CartItemExpanderInterface
+     */
+    public function createCartItemExpander(): CartItemExpanderInterface
+    {
+        return new CartItemExpander(
             $this->getProductStorageClient(),
             $this->getProductMeasurementUnitStorageClient()
         );

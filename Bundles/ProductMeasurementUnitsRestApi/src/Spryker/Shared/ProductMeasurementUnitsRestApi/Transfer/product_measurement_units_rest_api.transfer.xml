@@ -17,4 +17,26 @@
         <property name="measurementUnitCode" type="string"/>
     </transfer>
 
+    <transfer name="ProductMeasurementUnit">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="idProductMeasurementSalesUnit" type="int"/>
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="idProductMeasurementSalesUnit" type="int"/>
+        <property name="value" type="int"/>
+    </transfer>
+
 </transfers>
