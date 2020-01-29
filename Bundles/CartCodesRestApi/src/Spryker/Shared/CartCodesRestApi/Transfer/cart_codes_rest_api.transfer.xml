@@ -38,6 +38,7 @@
         <property name="customer" type="Customer"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
     <transfer name="RestUser">

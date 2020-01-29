@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DiscountPromotion\Persistence;
 
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
+use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -25,5 +27,72 @@ class DiscountPromotionEntityManager extends AbstractEntityManager implements Di
             ->createDiscountPromotionQuery()
             ->filterByFkDiscount($idDiscount)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function createDiscountPromotion(DiscountPromotionTransfer $discountPromotionTransfer): DiscountPromotionTransfer
+    {
+        $mapper = $this->getFactory()
+            ->createDiscountPromotionMapper();
+        $discountPromotionEntity = $mapper->mapDiscountPromotionTransferToEntity(
+            $discountPromotionTransfer,
+            new SpyDiscountPromotion()
+        );
+
+        $discountPromotionEntity->save();
+
+        $this->removeCollectorQueryString($discountPromotionEntity);
+
+        return $mapper->mapDiscountPromotionEntityToTransfer($discountPromotionEntity, new DiscountPromotionTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function updateDiscountPromotion(DiscountPromotionTransfer $discountPromotionTransfer): DiscountPromotionTransfer
+    {
+        $discountPromotionEntity = $this->getFactory()
+            ->createDiscountPromotionQuery()
+            ->findOneByIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
+
+        if ($discountPromotionEntity === null) {
+            return $discountPromotionTransfer;
+        }
+
+        $mapper = $this->getFactory()
+            ->createDiscountPromotionMapper();
+        $discountPromotionEntity = $mapper->mapDiscountPromotionTransferToEntity(
+            $discountPromotionTransfer,
+            $discountPromotionEntity
+        );
+
+        $discountPromotionEntity->save();
+
+        $this->removeCollectorQueryString($discountPromotionEntity);
+
+        return $mapper->mapDiscountPromotionEntityToTransfer($discountPromotionEntity, new DiscountPromotionTransfer());
+    }
+
+    /**
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
+     *
+     * @return void
+     */
+    public function removeCollectorQueryString(SpyDiscountPromotion $discountPromotionEntity): void
+    {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount|null $discountEntity */
+        $discountEntity = $discountPromotionEntity->getDiscount();
+        if (!$discountEntity) {
+            return;
+        }
+
+        $discountEntity->setCollectorQueryString('');
+        $discountEntity->save();
     }
 }

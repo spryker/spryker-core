@@ -19,7 +19,8 @@ class ProductAbstractBySkuResourceRelationshipPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Adds abstract-products resource as relationship by sku.
+     * - Adds `abstract-products` resource as relationship.
+     * - Will add relationship only in case resource has an `RestPromotionalItemsAttributesTransfer` with SKU payload.
      *
      * @api
      *
@@ -32,7 +33,7 @@ class ProductAbstractBySkuResourceRelationshipPlugin extends AbstractPlugin impl
     {
         $this->getFactory()
             ->createAbstractProductsRelationshipExpander()
-            ->addResourceRelationshipsBySkus($resources, $restRequest);
+            ->addResourceRelationshipsBySkuList($resources, $restRequest);
     }
 
     /**

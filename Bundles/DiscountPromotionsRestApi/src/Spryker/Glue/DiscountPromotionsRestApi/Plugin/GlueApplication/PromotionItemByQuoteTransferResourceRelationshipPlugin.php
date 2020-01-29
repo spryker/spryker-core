@@ -19,7 +19,9 @@ class PromotionItemByQuoteTransferResourceRelationshipPlugin extends AbstractPlu
 {
     /**
      * {@inheritDoc}
-     * - Adds promotional-items resource as relationship by cart resource.
+     * - Adds `promotional-items` resource as relationship.
+     * - Will add relationship only in case `QuoteTransfer` is provided as parent resource payload.
+     * - Builds `promotional-items` resources from each `QuoteTransfer.promotionItems`.
      *
      * @api
      *

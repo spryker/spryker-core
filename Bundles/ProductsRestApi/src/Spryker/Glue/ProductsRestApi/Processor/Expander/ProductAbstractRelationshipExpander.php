@@ -12,7 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
 
-class AbstractProductsRelationshipExpander implements AbstractProductsRelationshipExpanderInterface
+class ProductAbstractRelationshipExpander implements ProductAbstractRelationshipExpanderInterface
 {
     protected const KEY_SKU = 'sku';
 
@@ -35,14 +35,14 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
      *
      * @return void
      */
-    public function addResourceRelationshipsBySkus(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationshipsBySkuList(array $resources, RestRequestInterface $restRequest): void
     {
-        $productAbstractSkus = $this->findSkusByResources($resources);
-        if (!$productAbstractSkus) {
+        $productAbstractSkuList = $this->getProductAbstractSkuList($resources);
+        if (!$productAbstractSkuList) {
             return;
         }
 
-        $abstractProductsResources = $this->abstractProductsReader->getProductAbstractsBySkus($productAbstractSkus, $restRequest);
+        $abstractProductsResources = $this->abstractProductsReader->getProductAbstractsBySkus($productAbstractSkuList, $restRequest);
         if (!$abstractProductsResources) {
             return;
         }
@@ -62,19 +62,19 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
      *
      * @return array
      */
-    protected function findSkusByResources(array $resources): array
+    protected function getProductAbstractSkuList(array $resources): array
     {
-        $productAbstractSkus = [];
+        $productAbstractSkuList = [];
         foreach ($resources as $resource) {
             $productAbstractSku = $this->findProductAbstractSkuInRestResourceAttributes($resource);
             if (!$productAbstractSku) {
                 continue;
             }
 
-            $productAbstractSkus[] = $productAbstractSku;
+            $productAbstractSkuList[] = $productAbstractSku;
         }
 
-        return $productAbstractSkus;
+        return $productAbstractSkuList;
     }
 
     /**
