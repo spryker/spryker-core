@@ -30,7 +30,7 @@ class GlossaryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createGlossaryTranslationStorageFinder()
+            $this->createGlossaryTranslationStorageMapper()
         );
     }
 
@@ -43,14 +43,14 @@ class GlossaryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createGlossaryTranslationStorageFinder()
+            $this->createGlossaryTranslationStorageMapper()
         );
     }
 
     /**
      * @return \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface
      */
-    public function createGlossaryTranslationStorageFinder()
+    public function createGlossaryTranslationStorageMapper()
     {
         return new GlossaryTranslationStorageMapper();
     }

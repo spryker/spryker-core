@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class GlossaryStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
