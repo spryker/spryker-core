@@ -148,7 +148,8 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             ->setAbstractSku($discountPromotionEntity->getAbstractSku())
             ->setIdProductAbstract($idProductAbstract)
             ->setMaxQuantity($promotionProductMaximumQuantity)
-            ->setDiscount($discountTransfer);
+            ->setDiscount($discountTransfer)
+            ->setUuid($discountPromotionEntity->getUuid());
 
         return $promotionItemTransfer;
     }

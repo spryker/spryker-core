@@ -59,7 +59,7 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
 
                 $promotionalItemsResource = $this->restResourceBuilder->createRestResource(
                     DiscountPromotionsRestApiConfig::RESOURCE_PROMOTIONAL_ITEMS,
-                    (string)$promotionItemTransfer->getIdDiscountPromotion(),
+                    $promotionItemTransfer->getUuid(),
                     $restPromotionalItemsAttributesTransfer
                 );
 
