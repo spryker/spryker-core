@@ -65,7 +65,7 @@ class ProductLabelFacadeTest extends Unit
         $productLabelResponseTransfer = $this->getProductLabelFacade()->removeLabel($productLabelTransfer);
 
         //Assert
-        $this->assertTrue($productLabelResponseTransfer->getIsSuccessful());
+        $this->assertTrue($productLabelResponseTransfer->getIsSuccessful(), 'Response transfer does not match the expected result');
 
         $deletedProductLabel = SpyProductLabelQuery::create()
             ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())

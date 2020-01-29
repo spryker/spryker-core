@@ -168,8 +168,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      */
     public function removeLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createLabelDeleter()
             ->remove($productLabelTransfer);
     }

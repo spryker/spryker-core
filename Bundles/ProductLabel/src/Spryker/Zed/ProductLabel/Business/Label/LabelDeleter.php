@@ -23,12 +23,12 @@ class LabelDeleter implements LabelDeleterInterface
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface
      */
-    private $productLabelEntityManager;
+    protected $productLabelEntityManager;
 
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface
      */
-    private $productLabelRepository;
+    protected $productLabelRepository;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface $productLabelEntityManager

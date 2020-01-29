@@ -122,7 +122,7 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
-     * - Remove given product-label from database.
+     * - Removes the given product label from the database.
      *
      * @api
      *
