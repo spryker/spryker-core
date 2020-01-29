@@ -226,4 +226,8 @@
         <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
+    <transfer name="Totals">
+        <property name="shipmentTotal" type="int"/>
+    </transfer>
+
 </transfers>
