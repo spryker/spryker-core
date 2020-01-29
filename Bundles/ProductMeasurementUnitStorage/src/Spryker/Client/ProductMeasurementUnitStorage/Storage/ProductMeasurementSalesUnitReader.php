@@ -80,7 +80,12 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         return $productMeasurementSalesUnits;
     }
 
-    protected function getProductMeasurementSalesUnits(ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer)
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer
+     *
+     * @return array
+     */
+    protected function getProductMeasurementSalesUnits(ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer): array
     {
         $productMeasurementSalesUnits = [];
         $defaultFound = false;
