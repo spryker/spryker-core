@@ -34,7 +34,7 @@ class QuoteRequestDataImportHelper extends Module
         $quoteRequestItemQuery = $this->getQuoteRequestVersionQuery();
 
         $this->assertTrue(
-            $quoteRequestItemQuery->count() > 0,
+            $quoteRequestItemQuery->find()->count() > 0,
             'Expected at least one entry in the database table but database table is empty.'
         );
     }
