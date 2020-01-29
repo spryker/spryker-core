@@ -80,6 +80,7 @@
     </transfer>
 
     <transfer name="OauthAccessTokenData">
+        <property name="identifier" type="string"/>
         <property name="oauthAccessTokenId" type="string"/>
         <property name="oauthClientId" type="string"/>
         <property name="oauthScopes" type="array" singular="oauthScopes"/>
@@ -88,6 +89,7 @@
 
     <transfer name="OauthRefreshToken">
         <property name="identifier" type="string"/>
+        <property name="accessTokenIdentifier" type="string"/>
         <property name="idOauthClient" type="string"/>
         <property name="scopes" type="array" singular="oauthScopes"/>
         <property name="userIdentifier" type="string"/>
@@ -97,6 +99,10 @@
 
     <transfer name="OauthRefreshTokenCollection">
         <property name="oauthRefreshTokens" type="OauthRefreshToken[]" singular="oauthRefreshToken"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenCollection">
+        <property name="oauthAccessTokens" type="OauthAccessTokenData[]" singular="oauthAccessTokenData"/>
     </transfer>
 
     <transfer name="JwtToken">
@@ -116,7 +122,7 @@
         <property name="error" type="string"/>
     </transfer>
 
-    <transfer name="RefreshTokenCriteriaFilter">
+    <transfer name="OauthTokenCriteriaFilter">
         <property name="identifier" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="revokedAt" type="string"/>

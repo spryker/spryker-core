@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
-use Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
@@ -83,11 +82,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function revokeRefreshToken($tokenId)
     {
-        $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken((new RefreshTokenCriteriaFilterTransfer())->setIdentifier($tokenId));
-
-        if (!$oauthRefreshTokenTransfer->getRevokedAt()) {
-            $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
-        }
+        $this->isRefreshTokenRevoked($tokenId) ?: $this->oauthEntityManager->revokeRefreshToken((new OauthRefreshTokenTransfer())->setIdentifier($tokenId));
     }
 
     /**
