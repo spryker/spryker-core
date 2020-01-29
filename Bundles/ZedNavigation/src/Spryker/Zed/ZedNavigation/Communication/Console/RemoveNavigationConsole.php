@@ -23,10 +23,10 @@ class RemoveNavigationConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         parent::configure();
     }
@@ -35,11 +35,13 @@ class RemoveNavigationConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getMessenger()->info('Remove navigation cache');
         $this->getFacade()->removeNavigationCache();
+
+        return static::CODE_SUCCESS;
     }
 }

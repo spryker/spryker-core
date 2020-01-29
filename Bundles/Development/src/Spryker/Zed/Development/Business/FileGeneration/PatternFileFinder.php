@@ -15,7 +15,7 @@ class PatternFileFinder extends AbstractDirectoryFileFinder
     /**
      * @var string
      */
-    private $pattern;
+    protected $pattern;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder

@@ -22,7 +22,7 @@ class RemoveGlueIdeAutoCompletionConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -34,12 +34,14 @@ class RemoveGlueIdeAutoCompletionConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getFacade()->removeGlueIdeAutoCompletion();
 
         $this->info('Removed Glue IDE auto-completion files');
+
+        return static::CODE_SUCCESS;
     }
 }

@@ -45,7 +45,7 @@ class ZedNavigationFacade extends AbstractFacade implements ZedNavigationFacadeI
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *

@@ -405,7 +405,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *

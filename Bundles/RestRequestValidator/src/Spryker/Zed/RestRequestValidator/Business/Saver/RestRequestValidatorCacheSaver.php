@@ -60,7 +60,10 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     }
 
     /**
-     * @inheritDoc
+     * @param array $validatorConfig
+     * @param string $storeName
+     *
+     * @return void
      */
     public function remove(array $validatorConfig, string $storeName): void
     {

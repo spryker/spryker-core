@@ -191,6 +191,7 @@ use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInt
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Symfony\Component\Yaml\Parser;
 use Zend\Config\Reader\Xml;
@@ -1612,8 +1613,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new DirectoryCleaner(
             $this->getConfig()->getYvesIdeAutoCompletionOptions(),
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
-            $this->createGeneratedFileFinder('/.*\.php/')
+            $this->getFilesystem(),
+            $this->createYvesIdeAutoCompletionGeneratedFileFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     */
+    public function createYvesIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
+    {
+        return $this->createGeneratedFileFinder(
+            $this->getConfig()->getYvesIdeAutocompletionGeneratedFilePattern()
         );
     }
 
@@ -1635,8 +1646,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new DirectoryCleaner(
             $this->getConfig()->getZedIdeAutoCompletionOptions(),
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
-            $this->createGeneratedFileFinder('/.*\.php/')
+            $this->getFilesystem(),
+            $this->createZedIdeAutoCompletionGeneratedFileFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     */
+    public function createZedIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
+    {
+        return $this->createGeneratedFileFinder(
+            $this->getConfig()->getZedIdeAutocompletionGeneratedFilePattern()
         );
     }
 
@@ -1680,8 +1701,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new DirectoryCleaner(
             $this->getConfig()->getGlueIdeAutoCompletionOptions(),
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
-            $this->createGeneratedFileFinder('/.*\.php/')
+            $this->getFilesystem(),
+            $this->createGlueIdeAutoCompletionGeneratedFileFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     */
+    public function createGlueIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
+    {
+        return $this->createGeneratedFileFinder(
+            $this->getConfig()->getGlueIdeAutocompletionGeneratedFilePattern()
         );
     }
 
@@ -1703,8 +1734,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new DirectoryCleaner(
             $this->getConfig()->getClientIdeAutoCompletionOptions(),
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
-            $this->createGeneratedFileFinder('/.*\.php/')
+            $this->getFilesystem(),
+            $this->createClientIdeAutoCompletionGeneratedFileFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     */
+    public function createClientIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
+    {
+        return $this->createGeneratedFileFinder(
+            $this->getConfig()->getClientIdeAutocompletionGeneratedFilePattern()
         );
     }
 
@@ -1737,8 +1778,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new DirectoryCleaner(
             $this->getConfig()->getServiceIdeAutoCompletionOptions(),
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM),
-            $this->createGeneratedFileFinder('/.*\.php/')
+            $this->getFilesystem(),
+            $this->createServiceIdeAutoCompletionGeneratedFileFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     */
+    public function createServiceIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
+    {
+        return $this->createGeneratedFileFinder(
+            $this->getConfig()->getServiceIdeAutocompletionGeneratedFilePattern()
         );
     }
 
@@ -1872,7 +1923,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createIdeAutoCompletionBundleFinder(BundleBuilderInterface $bundleBuilder)
     {
         return new BundleFinder(
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $this->getFinder(),
             $bundleBuilder,
             $this->getConfig()->getIdeAutoCompletionSourceDirectoryGlobPatterns()
         );
@@ -2097,6 +2148,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function getFinder(): Finder
+    {
+        return $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER);
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface
      */
     public function createConfigArgumentCollectionBuilder(): CodeceptionArgumentsBuilderInterface
@@ -2122,7 +2181,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createGeneratedFileFinder(string $pattern): GeneratedFileFinderInterface
     {
         return new PatternFileFinder(
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $this->getFinder(),
             $pattern
         );
     }

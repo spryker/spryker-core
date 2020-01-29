@@ -22,7 +22,7 @@ class RemoveIdeAutoCompletionConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -36,7 +36,7 @@ class RemoveIdeAutoCompletionConsole extends Console
      *
      * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $dependingCommands = [
             RemoveYvesIdeAutoCompletionConsole::COMMAND_NAME,
@@ -68,8 +68,10 @@ class RemoveIdeAutoCompletionConsole extends Console
      */
     protected function showCommandNotFoundMessage(string $commandName): void
     {
-        $message = "Can not find $commandName in your project." . PHP_EOL;
-        $message .= "You can fix this by adding the missing command to your project ConsoleDependencyProvider.";
+        $message = sprintf(
+            "Can not find %s in your project." . PHP_EOL . "You can fix this by adding the missing command to your project ConsoleDependencyProvider.",
+            $commandName
+        );
         $this->output->writeln("<comment>$message</comment>");
     }
 }

@@ -265,7 +265,8 @@ interface DevelopmentFacadeInterface
     public function generateYvesIdeAutoCompletion();
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Removes Yves Ide autocompletion files
      *
      * @api
      *
@@ -281,7 +282,8 @@ interface DevelopmentFacadeInterface
     public function generateZedIdeAutoCompletion();
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Removes Zed Ide autocompletion files
      *
      * @api
      *
@@ -297,7 +299,8 @@ interface DevelopmentFacadeInterface
     public function generateClientIdeAutoCompletion();
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Removes Client Ide autocompletion files
      *
      * @api
      *
@@ -313,7 +316,8 @@ interface DevelopmentFacadeInterface
     public function generateServiceIdeAutoCompletion();
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Removes Service Ide autocompletion files
      *
      * @api
      *
@@ -329,7 +333,8 @@ interface DevelopmentFacadeInterface
     public function generateGlueIdeAutoCompletion();
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Removes Glue Ide autocompletion files
      *
      * @api
      *

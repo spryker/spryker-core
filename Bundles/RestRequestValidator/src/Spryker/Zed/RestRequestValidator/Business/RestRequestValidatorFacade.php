@@ -27,7 +27,7 @@ class RestRequestValidatorFacade extends AbstractFacade implements RestRequestVa
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *
