@@ -52,4 +52,11 @@ interface OauthRepositoryInterface
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
     public function findRefreshTokens(RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return bool
+     */
+    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
 }

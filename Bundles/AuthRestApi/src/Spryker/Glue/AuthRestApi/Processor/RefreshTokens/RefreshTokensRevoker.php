@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\AuthRestApi\Processor\RefreshTokens;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
@@ -81,8 +80,7 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
         $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
 
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
-//            ->setCustomer($customer);
-            ->setCustomer(new CustomerTransfer());
+            ->setCustomer($customer);
 
         $this->oauthClient->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
 
