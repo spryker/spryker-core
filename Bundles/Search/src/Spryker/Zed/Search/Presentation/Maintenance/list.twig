@@ -7,10 +7,10 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-            {% if not isInSearchLegacyMode %}
-                {% include '@Search/_partials/mode-warning-message.twig' %}
-            {% else %}
+            {% if isInSearchLegacyMode %}
                 {{ searchTable | raw }}
+            {% else %}
+                {% include '@Search/_partials/mode-warning-message.twig' %}
             {% endif %}
         {% endblock %}
     {% endembed %}

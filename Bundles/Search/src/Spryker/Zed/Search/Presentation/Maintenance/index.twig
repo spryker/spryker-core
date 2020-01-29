@@ -9,9 +9,7 @@
         {% block widget_content %}
             <div class="row">
                 <div class="col-md-12">
-                    {% if not isInSearchLegacyMode %}
-                        {% include '@Search/_partials/mode-warning-message.twig' %}
-                    {% else %}
+                    {% if isInSearchLegacyMode %}
                         <dl class="row">
                             <dt class="col-xs-3">{{ "Number of entries:" | trans }}</dt>
                             <dd class="col-xs-9"><a href="/search/maintenance/list">{{ totalCount }}</a></dd>
@@ -20,6 +18,8 @@
                                 <dd class="col-xs-9">{{ timestamp }}</dd>
                             {% endfor %}
                         </dl>
+                    {% else %}
+                        {% include '@Search/_partials/mode-warning-message.twig' %}
                     {% endif %}
                 </div>
             </div>

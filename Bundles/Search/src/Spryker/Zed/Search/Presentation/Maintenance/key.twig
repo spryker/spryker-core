@@ -9,11 +9,11 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Search Key' } %}
         {% block widget_content %}
-            {% if not isInSearchLegacyMode %}
-                {% include '@Search/_partials/mode-warning-message.twig' %}
-            {% else %}
+            {% if isInSearchLegacyMode %}
                 <h1>{{ key }}</h1>
                 <pre>{{ value }}</pre>
+            {% else %}
+                {% include '@Search/_partials/mode-warning-message.twig' %}
             {% endif %}
         {% endblock %}
     {% endembed %}
