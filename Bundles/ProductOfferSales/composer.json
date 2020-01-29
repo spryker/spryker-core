@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-offer-sales",
+  "type": "library",
   "description": "ProductOfferSales module",
   "license": "proprietary",
   "require": {
