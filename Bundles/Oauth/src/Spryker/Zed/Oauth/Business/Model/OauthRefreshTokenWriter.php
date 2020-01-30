@@ -64,7 +64,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
      */
     public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        $revokeRefreshTokenResponseTransfer = (new RevokeRefreshTokenResponseTransfer());
+        $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
 
         $revokeRefreshTokenRequestTransfer->requireRefreshToken()
             ->requireCustomer()
@@ -99,8 +99,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
             $this->oauthEntityManager->deleteAccessTokenByIdentifier($encryptedRefreshTokenTransfer->getAccessTokenIdentifier());
         });
 
-        return $revokeRefreshTokenResponseTransfer
-            ->setIsSuccessful(true);
+        return $revokeRefreshTokenResponseTransfer->setIsSuccessful(true);
     }
 
     /**
@@ -110,7 +109,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
      */
     public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        $revokeRefreshTokenResponseTransfer = (new RevokeRefreshTokenResponseTransfer());
+        $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
 
         $revokeRefreshTokenRequestTransfer->requireCustomer()
             ->getCustomer()
@@ -132,8 +131,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
             $this->executeRevokeAccessTokensTransaction($oauthAccessTokenTransfers);
         });
 
-         return $revokeRefreshTokenResponseTransfer
-            ->setIsSuccessful(true);
+         return $revokeRefreshTokenResponseTransfer->setIsSuccessful(true);
     }
 
     /**

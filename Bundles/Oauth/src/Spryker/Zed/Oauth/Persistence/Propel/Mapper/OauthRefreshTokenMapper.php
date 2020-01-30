@@ -57,7 +57,6 @@ class OauthRefreshTokenMapper
         Collection $refreshTokenEntities
     ): OauthRefreshTokenCollectionTransfer {
         $oauthRefreshTokenCollectionTransfer = new OauthRefreshTokenCollectionTransfer();
-
         foreach ($refreshTokenEntities as $refreshTokenEntity) {
             $refreshTokenTransfer = $this->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer(
                 $refreshTokenEntity,

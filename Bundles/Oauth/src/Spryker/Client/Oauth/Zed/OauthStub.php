@@ -57,6 +57,8 @@ class OauthStub implements OauthStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Oauth\Communication\Controller\GatewayController::revokeConcreteRefreshTokenAction()
+     *
      * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
@@ -70,6 +72,8 @@ class OauthStub implements OauthStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Oauth\Communication\Controller\GatewayController::revokeRefreshTokensAction()
+     *
      * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer

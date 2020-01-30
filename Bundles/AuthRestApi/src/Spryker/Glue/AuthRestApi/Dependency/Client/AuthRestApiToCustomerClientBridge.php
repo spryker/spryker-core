@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\AuthRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 class AuthRestApiToCustomerClientBridge implements AuthRestApiToCustomerClientInterface
 {
     /**
@@ -29,7 +27,7 @@ class AuthRestApiToCustomerClientBridge implements AuthRestApiToCustomerClientIn
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomerById($idCustomer): CustomerTransfer
+    public function getCustomerById($idCustomer)
     {
         return $this->customerClient->getCustomerById($idCustomer);
     }

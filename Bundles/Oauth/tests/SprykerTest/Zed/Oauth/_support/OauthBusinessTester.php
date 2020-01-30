@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Oauth;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 
 /**
  * Inherited Methods
@@ -30,6 +32,19 @@ class OauthBusinessTester extends Actor
     use _generated\OauthBusinessTesterActions;
 
     /**
-     * Define custom actions here
+     * @param string|null $refreshToken
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer
      */
+    public function createRevokeRefreshTokenRequestTransfer(?string $refreshToken = null, ?CustomerTransfer $customerTransfer = null): RevokeRefreshTokenRequestTransfer
+    {
+        $revokeRefreshTokenRequestTransfer = new RevokeRefreshTokenRequestTransfer();
+        if ($refreshToken) {
+            $revokeRefreshTokenRequestTransfer->setRefreshToken($refreshToken);
+        }
+        $revokeRefreshTokenRequestTransfer->setCustomer($customerTransfer ?? $this->haveCustomer());
+
+        return $revokeRefreshTokenRequestTransfer;
+    }
 }

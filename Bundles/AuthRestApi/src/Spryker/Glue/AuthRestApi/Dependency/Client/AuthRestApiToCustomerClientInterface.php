@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\AuthRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 interface AuthRestApiToCustomerClientInterface
 {
     /**
@@ -16,5 +14,5 @@ interface AuthRestApiToCustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomerById($idCustomer): CustomerTransfer;
+    public function getCustomerById($idCustomer);
 }
