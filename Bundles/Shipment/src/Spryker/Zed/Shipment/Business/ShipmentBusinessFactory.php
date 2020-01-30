@@ -624,6 +624,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentTotalCalculator(): ShipmentTotalCalculatorInterface
     {
-        return new ShipmentTotalCalculator();
+        return new ShipmentTotalCalculator(
+            $this->getConfig()
+        );
     }
 }
