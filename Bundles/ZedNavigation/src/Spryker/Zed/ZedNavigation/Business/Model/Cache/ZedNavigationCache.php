@@ -102,6 +102,8 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
      */
     public function removeNavigation(): void
     {
-        unlink($this->cacheFile);
+        if (file_exists($this->cacheFile)) {
+            unlink($this->cacheFile);
+        }
     }
 }
