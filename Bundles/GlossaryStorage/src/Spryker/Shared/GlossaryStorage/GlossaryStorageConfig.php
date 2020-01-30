@@ -24,12 +24,12 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     /**
      * This events that will be used for key writing.
      */
-    public const GLOSSARY_KEY_PUBLISH = 'Glossary.key.publish';
+    public const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
 
     /**
      * This events that will be used for key deleting.
      */
-    public const GLOSSARY_KEY_UNPUBLISH = 'Glossary.key.unpublish';
+    public const GLOSSARY_KEY_PUBLISH_DELETE = 'Glossary.key.unpublish';
 
     /**
      * This events will be used for spy_glossary_key entity creation.

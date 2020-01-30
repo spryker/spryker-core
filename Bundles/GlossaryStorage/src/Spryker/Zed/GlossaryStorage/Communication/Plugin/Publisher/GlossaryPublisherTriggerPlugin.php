@@ -60,7 +60,7 @@ class GlossaryPublisherTriggerPlugin extends AbstractPlugin implements Publisher
      */
     public function getEventName(): string
     {
-        return GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH;
+        return GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE;
     }
 
     /**

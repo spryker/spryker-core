@@ -12,11 +12,11 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet\MerchantProfileDataSetInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
@@ -104,7 +104,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
                 $glossaryTranslationEntity->save();
             }
 
-            $this->addPublishEvents(GlossaryEvents::GLOSSARY_KEY_PUBLISH, $glossaryKeyEntity->getIdGlossaryKey());
+            $this->addPublishEvents(GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryKeyEntity->getIdGlossaryKey());
         }
 
         return $merchantProfileEntity;

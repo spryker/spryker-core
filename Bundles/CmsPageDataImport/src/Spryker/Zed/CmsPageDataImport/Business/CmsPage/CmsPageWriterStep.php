@@ -15,13 +15,13 @@ use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\CmsPageDataImport\Business\DataSet\CmsPageDataSet;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterface
@@ -156,6 +156,6 @@ class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterf
             $pageKeyMappingEntity->save();
         }
 
-        $this->addPublishEvents(GlossaryEvents::GLOSSARY_KEY_PUBLISH, $glossaryTranslationEntity->getFkGlossaryKey());
+        $this->addPublishEvents(GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryTranslationEntity->getFkGlossaryKey());
     }
 }

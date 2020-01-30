@@ -44,7 +44,7 @@ class GlossaryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
     public function getSubscribedEvents(): array
     {
         return [
-            GlossaryStorageConfig::GLOSSARY_KEY_UNPUBLISH,
+            GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_DELETE,
             GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE,
         ];
     }

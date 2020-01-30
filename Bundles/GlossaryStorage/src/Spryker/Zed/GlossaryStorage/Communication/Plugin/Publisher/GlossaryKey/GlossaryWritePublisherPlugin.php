@@ -42,7 +42,7 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
     public function getSubscribedEvents(): array
     {
         return [
-            GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH,
+            GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE,
             GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_CREATE,
             GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_UPDATE,
         ];
