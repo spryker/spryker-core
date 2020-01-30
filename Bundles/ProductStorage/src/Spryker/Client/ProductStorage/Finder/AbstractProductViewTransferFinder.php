@@ -100,10 +100,11 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
                 $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
             }
 
+            $productSelectedAttributes = $this->getProductSelectedAttributes($productStorageData, $selectedAttributes);
             $productViewTransfer = $this
                 ->productStorageDataMapper
                 ->mapProductStorageData($localeName, $productStorageData, $this->getProductSelectedAttributes($productStorageData, $selectedAttributes));
-            $this->cacheProductViewTransfer($productViewTransfer, $localeName);
+            $this->cacheProductViewTransfer($productViewTransfer, $localeName, $productSelectedAttributes);
 
             $productViewTransfers[$this->getProductId($productViewTransfer)] = $productViewTransfer;
         }
