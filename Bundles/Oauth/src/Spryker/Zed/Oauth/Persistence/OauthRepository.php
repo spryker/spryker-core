@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use Generated\Shared\Transfer\OauthAccessTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
-use Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer;
+use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
+use Orm\Zed\Oauth\Persistence\SpyOauthAccessTokenQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -82,41 +85,72 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
      */
-    public function findRefreshToken(RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
+    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
     {
-        $authRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
-        $authRefreshTokenQuery = $this->applyFilters($authRefreshTokenQuery, $refreshTokenCriteriaFilterTransfer);
+        $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
+        $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
 
-        $authRefreshTokenEntity = $authRefreshTokenQuery->findOne();
+        $oauthRefreshTokenEntity = $oauthRefreshTokenQuery->findOne();
 
-        if (!$authRefreshTokenEntity) {
+        if (!$oauthRefreshTokenEntity) {
             return null;
         }
 
-        return $authRefreshTokenTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createOauthRefreshTokenMapper()
-            ->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer($authRefreshTokenEntity, new OauthRefreshTokenTransfer());
+            ->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer($oauthRefreshTokenEntity, new OauthRefreshTokenTransfer());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
-    public function findRefreshTokens(RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
+    public function findRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
     {
-        $authRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
-        $authRefreshTokenQuery = $this->applyFilters($authRefreshTokenQuery, $refreshTokenCriteriaFilterTransfer);
+        $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
+        $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
 
-        $authRefreshTokensCollection = $authRefreshTokenQuery->find();
+        $oauthRefreshTokensCollection = $oauthRefreshTokenQuery->find();
 
         return $this->getFactory()
             ->createOauthRefreshTokenMapper()
-            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($authRefreshTokensCollection);
+            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($oauthRefreshTokensCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenCollectionTransfer
+     */
+    public function findAccessTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthAccessTokenCollectionTransfer
+    {
+        $oauthAccessTokenQuery = $this->getFactory()->createAccessTokenQuery();
+        $oauthAccessTokenQuery = $this->applyAccessTokenFilters($oauthAccessTokenQuery, $oauthTokenCriteriaFilterTransfer);
+
+        $oauthAccessTokensCollection = $oauthAccessTokenQuery->find();
+
+        return $this->getFactory()
+            ->createOauthAccessTokenMapper()
+            ->mapOauthAccessTokenEntityCollectionToOauthAccessTokenTransferCollection($oauthAccessTokensCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return bool
+     */
+    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool
+    {
+        $oauthRefreshTokenTransfer = $this->findRefreshToken(
+            (new OauthTokenCriteriaFilterTransfer())->setIdentifier($oauthRefreshTokenTransfer->getIdentifier())
+        );
+
+        return !empty($oauthRefreshTokenTransfer->getRevokedAt());
     }
 
     /**
@@ -137,29 +171,52 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     }
 
     /**
-     * @param \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery $authRefreshTokenQuery
-     * @param \Generated\Shared\Transfer\RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer
+     * @param \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
-     * @return \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function applyFilters(
-        SpyOauthRefreshTokenQuery $authRefreshTokenQuery,
-        RefreshTokenCriteriaFilterTransfer $refreshTokenCriteriaFilterTransfer
-    ): SpyOauthRefreshTokenQuery {
-        if ($refreshTokenCriteriaFilterTransfer->getCustomerReference()) {
-            $authRefreshTokenQuery->filterByUserIdentifier_Like(
-                static::CUSTOMER_REFERENCE_PATTERN . $refreshTokenCriteriaFilterTransfer->getCustomerReference() . '"%'
+    protected function applyRefreshTokenFilters(
+        SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery,
+        OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+    ): ModelCriteria {
+        if ($oauthTokenCriteriaFilterTransfer->getCustomerReference()) {
+            $oauthRefreshTokenQuery->filterByUserIdentifier_Like(
+                static::CUSTOMER_REFERENCE_PATTERN . $oauthTokenCriteriaFilterTransfer->getCustomerReference() . '"%'
             );
         }
 
-        if ($refreshTokenCriteriaFilterTransfer->getIdentifier()) {
-            $authRefreshTokenQuery->filterByIdentifier($refreshTokenCriteriaFilterTransfer->getIdentifier());
+        if ($oauthTokenCriteriaFilterTransfer->getIdentifier()) {
+            $oauthRefreshTokenQuery->filterByIdentifier($oauthTokenCriteriaFilterTransfer->getIdentifier());
         }
 
-        if ($refreshTokenCriteriaFilterTransfer->getRevokedAt()) {
-            $authRefreshTokenQuery->filterByRevokedAt($refreshTokenCriteriaFilterTransfer->getRevokedAt());
+        if ($oauthTokenCriteriaFilterTransfer->getRevokedAt()) {
+            $oauthRefreshTokenQuery->filterByRevokedAt($oauthTokenCriteriaFilterTransfer->getRevokedAt(), Criteria::ISNULL);
         }
 
-        return $authRefreshTokenQuery;
+        return $oauthRefreshTokenQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Oauth\Persistence\SpyOauthAccessTokenQuery $oauthAccessTokenQuery
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyAccessTokenFilters(
+        SpyOauthAccessTokenQuery $oauthAccessTokenQuery,
+        OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+    ): ModelCriteria {
+        if ($oauthTokenCriteriaFilterTransfer->getCustomerReference()) {
+            $oauthAccessTokenQuery->filterByUserIdentifier_Like(
+                static::CUSTOMER_REFERENCE_PATTERN . $oauthTokenCriteriaFilterTransfer->getCustomerReference() . '"%'
+            );
+        }
+
+        if ($oauthTokenCriteriaFilterTransfer->getIdentifier()) {
+            $oauthAccessTokenQuery->filterByIdentifier($oauthTokenCriteriaFilterTransfer->getIdentifier());
+        }
+
+        return $oauthAccessTokenQuery;
     }
 }

@@ -236,6 +236,31 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testRevokeConcreteRefreshTokenShouldSuccessWithValidToken(): void
+    {
+        // Arrange
+        $this->createTestClient();
+        $this->setUserProviderPluginMock();
+        $this->setGrantTypeConfigurationProviderPluginMock();
+        $oauthRequestTransfer = $this->createOauthRequestTransfer();
+        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+        $customerTransfer = $this->tester->haveCustomer()
+            ->setCustomerReference($oauthResponseTransfer->getCustomerReference());
+
+        $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
+            ->setCustomer($customerTransfer)
+            ->setRefreshToken($oauthResponseTransfer->getRefreshToken());
+
+        // Act
+        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
+
+        // Assert
+        $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
     public function testRevokeConcreteRefreshTokenShouldFailedWithInvalidToken(): void
     {
         // Arrange
@@ -256,11 +281,11 @@ class OauthFacadeTest extends Unit
     public function testRevokeRefreshTokensByCustomerShouldSuccessWithValidCustomer(): void
     {
         // Arrange
-        $oauthRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
+        $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
             ->setCustomer($this->customerTransfer);
 
         // Act
-        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshTokensByCustomer($oauthRequestTransfer);
+        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
 
         // Assert
         $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());
