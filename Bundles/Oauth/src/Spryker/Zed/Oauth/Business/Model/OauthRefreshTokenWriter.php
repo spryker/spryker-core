@@ -162,6 +162,8 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
     /**
      * @param string $refreshToken
      *
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
      */
     protected function decryptRefreshToken(string $refreshToken): OauthRefreshTokenTransfer
@@ -169,7 +171,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
         try {
             $refreshToken = $this->decrypt($refreshToken);
         } catch (Exception $e) {
-            throw OAuthServerException::invalidRefreshToken('Cannot decrypt the refresh token', $e);
+            throw new OAuthServerException('The refresh token is invalid.', 8, 'invalid_request', 401);
         }
 
         $refreshTokenData = json_decode($refreshToken, true);
