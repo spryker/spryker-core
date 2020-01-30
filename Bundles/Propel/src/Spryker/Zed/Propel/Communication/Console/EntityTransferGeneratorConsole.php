@@ -23,7 +23,7 @@ class EntityTransferGeneratorConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this
@@ -36,16 +36,20 @@ class EntityTransferGeneratorConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $transferFacade = $this->getFactory()->getTransferFacade();
         $messenger = $this->getMessenger();
 
-        $transferFacade->deleteGeneratedEntityTransferObjects();
+        $result = $this->runDependingCommand(EntityTransferRemoverConsole::COMMAND_NAME);
+        if ($result != static::CODE_SUCCESS) {
+            return $result;
+        }
+
         $transferFacade->generateEntityTransferObjects($messenger);
 
-        return null;
+        return static::CODE_SUCCESS;
     }
 }
