@@ -25,12 +25,12 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
      */
-    private $userFacade;
+    protected $userFacade;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface
      */
-    private $userMapper;
+    protected $userMapper;
 
     /**
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
