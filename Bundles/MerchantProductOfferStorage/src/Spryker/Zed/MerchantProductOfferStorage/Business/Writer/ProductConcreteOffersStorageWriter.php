@@ -92,7 +92,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
             return;
         }
 
-        $this->writeProductConcreteProductOffersStorageCollectionByProductSkus($productSkus);
+        $this->writeCollectionByProductSkus($productSkus);
     }
 
     /**
@@ -100,7 +100,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
-    protected function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productConcreteSkus): void
+    protected function writeCollectionByProductSkus(array $productConcreteSkus): void
     {
         $productConcreteSkus = array_unique($productConcreteSkus);
 
