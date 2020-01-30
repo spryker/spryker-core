@@ -7,7 +7,7 @@
     "php": ">=7.2",
     "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-offer": "^0.3.0",
+    "spryker/product-offer": "^0.2.0 || ^0.3.0",
     "spryker/stock": "^7.0.0 || ^8.0.0",
     "spryker/transfer": "^3.18.0"
   },
