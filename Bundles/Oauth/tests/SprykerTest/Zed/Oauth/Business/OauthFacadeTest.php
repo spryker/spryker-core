@@ -239,10 +239,10 @@ class OauthFacadeTest extends Unit
             ->setCustomer($customerTransfer)
             ->setRefreshToken($oauthResponseTransfer->getRefreshToken());
 
-//        // Act
+        // Act
         $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
 
-//        // Assert
+        // Assert
         $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());
     }
 

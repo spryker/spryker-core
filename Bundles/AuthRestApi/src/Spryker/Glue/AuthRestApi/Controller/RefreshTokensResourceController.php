@@ -60,6 +60,21 @@ class RefreshTokensResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Revokes customer's refresh token."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "204": "No content."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
