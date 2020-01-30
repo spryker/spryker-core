@@ -48,7 +48,9 @@ class CompanyUserEventResourceBulkRepositoryPlugin extends AbstractPlugin implem
     {
         return $this->getFactory()
             ->getCompanyUserFacade()
-            ->getRawCompanyUsersByCriteria($this->createCompanyUserCriteriaFilterTransfer($offset, $limit));
+            ->getRawCompanyUsersByCriteria($this->createCompanyUserCriteriaFilterTransfer($offset, $limit))
+            ->getCompanyUsers()
+            ->getArrayCopy();
     }
 
     /**

@@ -294,13 +294,13 @@ interface CompanyUserFacadeInterface
     /**
      * Specification:
      * - Returns an array of CompanyUserTransfer without relations.
-     * - Uses FilterTransfer for pagination.
+     * - Uses CompanyUserCriteriaFilterTransfer for pagination.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getRawCompanyUsersByCriteria(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): array;
+    public function getRawCompanyUsersByCriteria(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer;
 }

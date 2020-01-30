@@ -604,11 +604,13 @@ class CompanyUserFacadeTest extends Test
         ]))->build();
 
         // Act
-        $companyUserTransfers = $this->tester->getFacade()
-            ->getRawCompanyUsersByCriteria($companyUserCriteriaFilterTransfer);
+        $foundCompanyUserTransfer = $this->tester->getFacade()
+            ->getRawCompanyUsersByCriteria($companyUserCriteriaFilterTransfer)
+            ->getCompanyUsers()
+            ->offsetGet(0);
 
         // Assert
-        $this->assertNotEmpty($companyUserTransfers);
-        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $companyUserTransfers[0]->getIdCompanyUser());
+        $this->assertNotEmpty($foundCompanyUserTransfer);
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 }
