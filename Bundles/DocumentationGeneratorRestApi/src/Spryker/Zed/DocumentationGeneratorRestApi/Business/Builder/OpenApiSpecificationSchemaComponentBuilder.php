@@ -227,6 +227,6 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      */
     protected function isScalarType(string $type): bool
     {
-        return !(class_exists($type) && is_a($type, AbstractTransfer::class));
+        return !(class_exists($type) && is_a($type, AbstractTransfer::class, true));
     }
 }
