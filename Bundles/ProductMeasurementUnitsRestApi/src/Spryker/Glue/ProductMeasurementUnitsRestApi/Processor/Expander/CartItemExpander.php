@@ -9,7 +9,6 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
 
 class CartItemExpander implements CartItemExpanderInterface
@@ -22,20 +21,11 @@ class CartItemExpander implements CartItemExpanderInterface
     protected $productStorageClient;
 
     /**
-     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface
-     */
-    protected $productMeasurementUnitStorageClient;
-
-    /**
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient
-     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
      */
-    public function __construct(
-        ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient,
-        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
-    ) {
+    public function __construct(ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient)
+    {
         $this->productStorageClient = $productStorageClient;
-        $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
     }
 
     /**
@@ -48,6 +38,13 @@ class CartItemExpander implements CartItemExpanderInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        return $cartItemRequestTransfer;
+        $salesUnitTransfer = $restCartItemsAttributesTransfer->getSalesUnit();
+        if (!$salesUnitTransfer) {
+            return $cartItemRequestTransfer;
+        }
+
+        return $cartItemRequestTransfer
+            ->setAmount($salesUnitTransfer->getAmount())
+            ->setIdProductMeasurementSalesUnit($salesUnitTransfer->getId());
     }
 }

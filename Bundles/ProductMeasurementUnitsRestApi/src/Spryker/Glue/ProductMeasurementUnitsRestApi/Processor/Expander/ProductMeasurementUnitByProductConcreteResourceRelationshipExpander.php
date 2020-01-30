@@ -69,7 +69,8 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
             $productConcreteSku = array_flip($productConcreteIds)[$idProductConcrete];
             $restProductMeasurementUnitsResources[$productConcreteSku] =
                 $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResource(
-                    $productMeasurementUnitTransfer
+                    $productMeasurementUnitTransfer,
+                    $restRequest->getMetadata()->getLocale()
                 );
         }
 

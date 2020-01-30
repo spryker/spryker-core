@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\CartItemExpander;
@@ -102,10 +103,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
      */
     public function createCartItemExpander(): CartItemExpanderInterface
     {
-        return new CartItemExpander(
-            $this->getProductStorageClient(),
-            $this->getProductMeasurementUnitStorageClient()
-        );
+        return new CartItemExpander($this->getProductStorageClient());
     }
 
     /**
@@ -135,7 +133,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
      */
     public function createProductMeasurementUnitMapper(): ProductMeasurementUnitMapperInterface
     {
-        return new ProductMeasurementUnitMapper();
+        return new ProductMeasurementUnitMapper($this->getGlossaryStorageClient());
     }
 
     /**
@@ -160,5 +158,13 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     public function getProductMeasurementUnitStorageClient(): ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitsRestApiDependencyProvider::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

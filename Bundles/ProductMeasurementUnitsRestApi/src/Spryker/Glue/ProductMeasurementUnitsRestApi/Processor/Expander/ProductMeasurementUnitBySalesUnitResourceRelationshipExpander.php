@@ -65,19 +65,25 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
             );
 
         foreach ($resources as $resource) {
-            $this->addProductMeasurementUnitResourceRelationships($productMeasurementUnitStorageTransfers, $resource);
+            $this->addProductMeasurementUnitResourceRelationships(
+                $productMeasurementUnitStorageTransfers,
+                $resource,
+                $restRequest->getMetadata()->getLocale()
+            );
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[] $productMeasurementUnitStorageTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param string $localeName
      *
      * @return void
      */
     protected function addProductMeasurementUnitResourceRelationships(
         array $productMeasurementUnitStorageTransfers,
-        RestResourceInterface $resource
+        RestResourceInterface $resource,
+        string $localeName
     ): void {
         foreach ($productMeasurementUnitStorageTransfers as $productMeasurementUnitStorageTransfer) {
             $measurementUnitCode = $this->getMeasurementUnitCode($resource);
@@ -85,7 +91,8 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
                 $productMeasurementUnitRestResource = $this->productMeasurementUnitRestResponseBuilder
                     ->createProductMeasurementUnitRestResource(
                         (new ProductMeasurementUnitTransfer())
-                            ->fromArray($productMeasurementUnitStorageTransfer->toArray(), true)
+                            ->fromArray($productMeasurementUnitStorageTransfer->toArray(), true),
+                        $localeName
                     );
 
                 $resource->addRelationship($productMeasurementUnitRestResource);

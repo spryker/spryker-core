@@ -69,7 +69,8 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
         }
 
         return $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResponse(
-            (new ProductMeasurementUnitTransfer())->fromArray($productMeasurementUnitStorageTransfers[0]->toArray(), true)
+            (new ProductMeasurementUnitTransfer())->fromArray($productMeasurementUnitStorageTransfers[0]->toArray(), true),
+            $restRequest->getMetadata()->getLocale()
         );
     }
 }

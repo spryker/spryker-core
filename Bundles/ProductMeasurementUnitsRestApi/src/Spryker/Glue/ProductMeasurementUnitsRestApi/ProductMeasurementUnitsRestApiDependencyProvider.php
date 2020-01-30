@@ -9,6 +9,7 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientBridge;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientBridge;
 
@@ -19,6 +20,7 @@ class ProductMeasurementUnitsRestApiDependencyProvider extends AbstractBundleDep
 {
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -30,6 +32,7 @@ class ProductMeasurementUnitsRestApiDependencyProvider extends AbstractBundleDep
         $container = parent::provideDependencies($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addProductMeasurementUnitStorageClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -60,6 +63,22 @@ class ProductMeasurementUnitsRestApiDependencyProvider extends AbstractBundleDep
         $container->set(static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE, function (Container $container) {
             return new ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientBridge(
                 $container->getLocator()->productMeasurementUnitStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new ProductMeasurementUnitsRestApiToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
             );
         });
 

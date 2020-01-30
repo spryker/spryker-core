@@ -15,11 +15,13 @@ interface ProductMeasurementUnitMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUniTransfer
      * @param \Generated\Shared\Transfer\RestProductMeasurementUnitsAttributesTransfer $restProductMeasurementUnitsAttributesTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestProductMeasurementUnitsAttributesTransfer
      */
     public function mapProductMeasurementUnitTransferToRestProductMeasurementUnitsAttributesTransfer(
         ProductMeasurementUnitTransfer $productMeasurementUniTransfer,
-        RestProductMeasurementUnitsAttributesTransfer $restProductMeasurementUnitsAttributesTransfer
+        RestProductMeasurementUnitsAttributesTransfer $restProductMeasurementUnitsAttributesTransfer,
+        string $localeName
     ): RestProductMeasurementUnitsAttributesTransfer;
 }

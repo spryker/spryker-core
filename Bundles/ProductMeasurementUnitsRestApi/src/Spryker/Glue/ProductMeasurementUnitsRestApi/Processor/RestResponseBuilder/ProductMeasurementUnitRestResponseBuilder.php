@@ -43,27 +43,36 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductMeasurementUnitRestResponse(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResponseInterface
-    {
+    public function createProductMeasurementUnitRestResponse(
+        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
+        string $localeName
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        return $restResponse->addResource($this->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer));
+        return $restResponse->addResource(
+            $this->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer, $localeName)
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createProductMeasurementUnitRestResource(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResourceInterface
-    {
+    public function createProductMeasurementUnitRestResource(
+        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
+        string $localeName
+    ): RestResourceInterface {
         $restProductMeasurementUnitsAttributesTransfer = $this->productMeasurementUnitMapper
             ->mapProductMeasurementUnitTransferToRestProductMeasurementUnitsAttributesTransfer(
                 $productMeasurementUnitTransfer,
-                new RestProductMeasurementUnitsAttributesTransfer()
+                new RestProductMeasurementUnitsAttributesTransfer(),
+                $localeName
             );
 
         $resourceId = (string)$productMeasurementUnitTransfer->getCode();
