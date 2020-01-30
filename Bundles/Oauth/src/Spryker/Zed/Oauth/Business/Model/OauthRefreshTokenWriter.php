@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
-use League\OAuth2\Server\Exception\OAuthServerException;
+use LogicException;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
@@ -73,7 +73,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
 
         try {
             $encryptedRefreshTokenTransfer = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
-        } catch (OAuthServerException $exception) {
+        } catch (Exception $exception) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
                 ->setError(static::REFRESH_TOKEN_INVALID_ERROR_MESSAGE);
@@ -162,7 +162,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
     /**
      * @param string $refreshToken
      *
-     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     * @throws \LogicException
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
      */
@@ -171,7 +171,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
         try {
             $refreshToken = $this->decrypt($refreshToken);
         } catch (Exception $e) {
-            throw new OAuthServerException('The refresh token is invalid.', 8, 'invalid_request', 401);
+            throw new LogicException('Cannot decrypt the refresh token');
         }
 
         $refreshTokenData = json_decode($refreshToken, true);
