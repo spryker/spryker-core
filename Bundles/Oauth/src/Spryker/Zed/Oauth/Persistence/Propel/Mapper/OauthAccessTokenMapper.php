@@ -41,7 +41,6 @@ class OauthAccessTokenMapper
         Collection $accessTokenEntities
     ): OauthAccessTokenCollectionTransfer {
         $oauthAccessTokenCollectionTransfer = new OauthAccessTokenCollectionTransfer();
-
         foreach ($accessTokenEntities as $accessTokenEntity) {
             $accessTokenTransfer = $this->mapOauthAccessTokenEntityToOauthAccessTokenDataTransfer(
                 $accessTokenEntity,
