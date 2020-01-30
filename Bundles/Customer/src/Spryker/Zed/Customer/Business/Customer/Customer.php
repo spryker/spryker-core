@@ -475,15 +475,19 @@ class Customer implements CustomerInterface
         }
 
         $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
-        if (!$customerEntity->isModified() || $customerResponseTransfer->getIsSuccess() !== true) {
+        if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
-
-        $customerEntity->save();
 
         if ($customerTransfer->getSendPasswordToken()) {
             $this->sendPasswordRestoreMail($customerTransfer);
         }
+
+        if (!$customerEntity->isModified()) {
+            return $customerResponseTransfer;
+        }
+
+        $customerEntity->save();
 
         return $customerResponseTransfer;
     }
