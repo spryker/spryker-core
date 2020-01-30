@@ -12,7 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Will be removed without replacement.
+ * @deprecated Use `SchedulerResumeConsole` instead.
+ * @see \Spryker\Zed\Scheduler\Communication\Console\SchedulerResumeConsole
  *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
