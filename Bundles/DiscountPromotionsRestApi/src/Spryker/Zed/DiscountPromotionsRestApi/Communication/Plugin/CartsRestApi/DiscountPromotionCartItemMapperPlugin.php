@@ -20,7 +20,7 @@ class DiscountPromotionCartItemMapperPlugin extends AbstractPlugin implements Ca
 {
     /**
      * {@inheritDoc}
-     * - Retrieves discount promotion id by CartItemRequestTransfer::$discountPromotionUuid data.
+     * - Retrieves discount promotion id by CartItemRequestTransfer::$discountPromotionUuid.
      * - Maps retrieved discount promotion id to the first item of PersistentCartChangeTransfer::$items.
      *
      * @api

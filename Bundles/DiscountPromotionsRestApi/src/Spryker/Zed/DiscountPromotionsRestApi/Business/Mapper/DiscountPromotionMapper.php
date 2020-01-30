@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DiscountPromotionsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionInterface;
 
@@ -41,8 +40,7 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
             return $persistentCartChangeTransfer;
         }
 
-        $itemTransfer = $this->getItemTransfer($persistentCartChangeTransfer);
-        if ($itemTransfer === null) {
+        if (!$persistentCartChangeTransfer->getItems()->offsetExists(0)) {
             return $persistentCartChangeTransfer;
         }
 
@@ -50,20 +48,14 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
             $cartItemRequestTransfer->getDiscountPromotionUuid()
         );
 
-        $itemTransfer->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
+        if ($discountPromotionTransfer === null) {
+            return $persistentCartChangeTransfer;
+        }
+
+        $persistentCartChangeTransfer->getItems()
+            ->offsetGet(0)
+            ->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
 
         return $persistentCartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
-    protected function getItemTransfer(PersistentCartChangeTransfer $persistentCartChangeTransfer): ?ItemTransfer
-    {
-        return $persistentCartChangeTransfer->getItems()
-            ->getIterator()
-            ->current();
     }
 }

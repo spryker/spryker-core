@@ -33,7 +33,7 @@
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="idPromotionalItem" type="int" restRequestParameter="yes"/>
+        <property name="idPromotionalItem" type="string" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="CartItemRequest">
