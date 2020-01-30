@@ -5,34 +5,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Setup\Communication\Console;
+namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
-use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
-use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `DeployPreparePropelConsole` from Propel module instead.
- * @see \Spryker\Zed\Propel\Communication\Console\DeployPreparePropelConsole
- * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
- * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class DeployPreparePropelConsole extends Console
 {
-    public const COMMAND_NAME = 'setup:deploy:prepare-propel';
+    public const COMMAND_NAME = 'propel:deploy:prepare';
     public const DESCRIPTION = 'Prepares Propel configuration on appserver';
 
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         parent::configure();
     }
@@ -41,14 +36,11 @@ class DeployPreparePropelConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->warning(sprintf('The console command `%s` is deprecated. Use `propel:deploy:prepare` instead', static::COMMAND_NAME));
-
         $dependingCommands = [
-            ConvertConfigConsole::COMMAND_NAME,
             SchemaCopyConsole::COMMAND_NAME,
             BuildModelConsole::COMMAND_NAME,
         ];
@@ -70,7 +62,7 @@ class DeployPreparePropelConsole extends Console
      *
      * @return int
      */
-    protected function runDependingCommand($command, array $arguments = [])
+    protected function runDependingCommand(string $command, array $arguments = []): int
     {
         $command = $this->getApplication()->find($command);
         $arguments['command'] = $command;
