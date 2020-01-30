@@ -429,4 +429,16 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
     public function getActiveShipmentCarriers(): array;
+
+    /**
+     * Specification:
+     * - Calculates shipment total using expenses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateShipmentTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 }
