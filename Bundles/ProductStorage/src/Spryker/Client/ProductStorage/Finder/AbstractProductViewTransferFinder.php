@@ -165,7 +165,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     {
         $cachedProductAbstractData = [];
         foreach ($productIds as $idProduct) {
-            if ($this->hasProductViewTransferCache($idProduct, $localeName)) {
+            if ($this->hasProductViewTransferCache($idProduct, $localeName, $selectedAttributes)) {
                 $cachedProductAbstractData[$idProduct] = $this->getProductViewTransferFromCache($idProduct, $localeName, $selectedAttributes);
             }
         }
