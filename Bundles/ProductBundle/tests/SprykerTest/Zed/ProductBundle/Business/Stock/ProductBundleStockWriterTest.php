@@ -62,7 +62,7 @@ class ProductBundleStockWriterTest extends Unit
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setSku($relatedProductSku);
-        $productConcreteTransfer->setIdProductConcrete($idProductBundle);
+        $productConcreteTransfer->setIdProductConcrete($idRelatedProductId);
 
         $updatedProductConcreteTransfer = $productStockWriteMock->updateStock($productConcreteTransfer);
 
@@ -71,12 +71,10 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertTrue($stockTransfer->getQuantity()->equals(7.5));
-        $this->assertTrue($relatedProductStock->divide($bundleQuantity, 10)->equals($stockTransfer->getQuantity()->toString()));
+        $this->assertTrue($stockTransfer->getQuantity()->equals(7));
 
         $stockTransfer = $stocks[1];
-        $this->assertTrue($stockTransfer->getQuantity()->equals(7.5));
-        $this->assertTrue($relatedProductStock->divide($bundleQuantity, 10)->equals($stockTransfer->getQuantity()));
+        $this->assertTrue($stockTransfer->getQuantity()->equals(7));
     }
 
     /**
