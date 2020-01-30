@@ -56,7 +56,6 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function createMerchantUserUpdater(): MerchantUserUpdaterInterface
     {
         return new MerchantUserUpdater(
-            $this->createMerchantUserCreator(),
             $this->getRepository(),
             $this->createUserWriter()
         );

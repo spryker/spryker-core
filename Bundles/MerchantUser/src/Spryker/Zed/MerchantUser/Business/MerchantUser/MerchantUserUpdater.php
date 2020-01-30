@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
-use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserResponseTransfer;
+use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\MerchantUser\Business\User\UserWriterInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
@@ -21,46 +22,41 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     protected $merchantUserRepository;
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface
-     */
-    protected $merchantUserCreator;
-
-    /**
      * @var \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface
      */
     protected $userWriter;
 
     /**
-     * @param \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface $merchantUserCreator
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\Business\User\UserWriterInterface $userWriter
      */
     public function __construct(
-        MerchantUserCreatorInterface $merchantUserCreator,
         MerchantUserRepositoryInterface $merchantUserRepository,
         UserWriterInterface $userWriter
     ) {
         $this->merchantUserRepository = $merchantUserRepository;
-        $this->merchantUserCreator = $merchantUserCreator;
         $this->userWriter = $userWriter;
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function handleMerchantPostUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    public function updateMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
         $merchantUserTransfer = $this->merchantUserRepository->findOne(
             (new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
         );
         if (!$merchantUserTransfer) {
-            return $this->merchantUserCreator->handleMerchantPostCreate($merchantTransfer);
+            throw new EntityNotFoundException(sprintf('Could not find Merchant Admin by Merchant id %d', $merchantTransfer->getIdMerchant()));
         }
 
         $this->userWriter->updateFromMerchant($merchantTransfer, $merchantUserTransfer);
+        $merchantUserTransfer->setMerchant($merchantTransfer);
 
-        return (new MerchantResponseTransfer())->setIsSuccess(true)->setMerchant($merchantTransfer);
+        return (new MerchantUserResponseTransfer())->setIsSuccessful(true)->setMerchantUser($merchantUserTransfer);
     }
 }

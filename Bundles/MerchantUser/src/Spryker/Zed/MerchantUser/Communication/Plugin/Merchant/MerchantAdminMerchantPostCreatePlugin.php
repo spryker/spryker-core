@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantUser\Communication\Plugin\Merchant;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -31,6 +33,27 @@ class MerchantAdminMerchantPostCreatePlugin extends AbstractPlugin implements Me
      */
     public function postCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        return $this->getFacade()->createMerchantAdmin($merchantTransfer);
+        $merchantUserResponseTransfer = $this->getFacade()->createMerchantAdmin($merchantTransfer);
+
+        return (new MerchantResponseTransfer())
+            ->setIsSuccess($merchantUserResponseTransfer->getIsSuccessful())
+            ->setErrors($this->convertMessageTransfersToMerchantErrorTransfers($merchantUserResponseTransfer->getErrors()))
+            ->setMerchant($merchantTransfer);
+    }
+
+    /**
+     * @param \ArrayObject $messageTransfers
+     *
+     * @return \ArrayObject
+     */
+    protected function convertMessageTransfersToMerchantErrorTransfers(ArrayObject $messageTransfers): ArrayObject
+    {
+        $result = new ArrayObject();
+        /** @var \Generated\Shared\Transfer\MessageTransfer $messageTransfer */
+        foreach ($messageTransfers as $messageTransfer) {
+            $result[] = (new MerchantErrorTransfer())->setMessage($messageTransfer->getMessage());
+        }
+
+        return $result;
     }
 }

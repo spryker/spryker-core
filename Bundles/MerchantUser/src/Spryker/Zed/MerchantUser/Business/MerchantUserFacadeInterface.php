@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantUser\Business;
 
-use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserResponseTransfer;
+use Generated\Shared\Transfer\MerchantUserTransfer;
 
 interface MerchantUserFacadeInterface
 {
@@ -24,9 +26,9 @@ interface MerchantUserFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function createMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function createMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
 
     /**
      * Specification:
@@ -38,7 +40,20 @@ interface MerchantUserFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function updateMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function updateMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds MerchantUser by provided criteria filter transfer.
+     * - Returns MerchantUserTransfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
+     */
+    public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer;
 }

@@ -10,8 +10,6 @@ namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 use ArrayObject;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
-use Generated\Shared\Transfer\MerchantResponseTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
@@ -101,46 +99,6 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
         $this->triggerPublishEvent($merchantProfileTransfer);
 
         return $merchantProfileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
-    public function handleMerchantPostUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
-    {
-        $merchantTransfer->requireMerchantProfile();
-        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
-
-        if ($merchantProfileTransfer->getIdMerchantProfile() === null) {
-            return $this->handleMerchantPostCreate($merchantTransfer);
-        }
-        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-
-        $merchantProfileTransfer = $this->update($merchantProfileTransfer);
-
-        return (new MerchantResponseTransfer())
-            ->setIsSuccess(true)
-            ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
-    public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
-    {
-        $merchantTransfer->requireMerchantProfile();
-
-        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile()->setFkMerchant($merchantTransfer->getIdMerchant());
-        $merchantProfileTransfer = $this->create($merchantProfileTransfer);
-        $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
-
-        return (new MerchantResponseTransfer())
-            ->setIsSuccess(true)
-            ->setMerchant($merchantTransfer);
     }
 
     /**

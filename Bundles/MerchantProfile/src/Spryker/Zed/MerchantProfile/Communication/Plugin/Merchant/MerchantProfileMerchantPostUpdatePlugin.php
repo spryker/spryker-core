@@ -30,6 +30,17 @@ class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements 
      */
     public function postUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        return $this->getFacade()->handleMerchantPostUpdate($merchantTransfer);
+        $merchantTransfer->requireMerchantProfile();
+
+        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
+        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+
+        $merchantProfileTransfer = $merchantProfileTransfer->getIdMerchantProfile()
+            ? $this->getFacade()->updateMerchantProfile($merchantProfileTransfer)
+            : $this->getFacade()->createMerchantProfile($merchantProfileTransfer);
+
+        return (new MerchantResponseTransfer())
+            ->setIsSuccess(true)
+            ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
     }
 }

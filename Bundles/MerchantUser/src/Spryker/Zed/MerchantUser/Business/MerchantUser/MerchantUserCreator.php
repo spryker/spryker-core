@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MerchantErrorTransfer;
-use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
@@ -85,20 +82,15 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    public function createMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
         $merchantUserTransfer = (new MerchantUserTransfer())
             ->setMerchant($merchantTransfer)
             ->setUser($this->resolveUserTransferByMerchant($merchantTransfer));
 
-        $merchantUserResponseTransfer = $this->create($merchantUserTransfer);
-
-        return (new MerchantResponseTransfer())
-            ->setIsSuccess($merchantUserResponseTransfer->getIsSuccessful())
-            ->setMerchant($merchantTransfer)
-            ->setErrors($this->convertMessageTransfersToMerchantErrorTransfers($merchantUserResponseTransfer->getErrors()));
+        return $this->create($merchantUserTransfer);
     }
 
     /**
@@ -195,21 +187,5 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $userTransfer = $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
 
         return $this->userFacade->updateUser($this->userMapper->mapMerchantTransferToUserTransfer($merchantTransfer, $userTransfer));
-    }
-
-    /**
-     * @param \ArrayObject $messageTransfers
-     *
-     * @return \ArrayObject
-     */
-    protected function convertMessageTransfersToMerchantErrorTransfers(ArrayObject $messageTransfers): ArrayObject
-    {
-        $result = new ArrayObject();
-        /** @var \Generated\Shared\Transfer\MessageTransfer $messageTransfer */
-        foreach ($messageTransfers as $messageTransfer) {
-            $result[] = (new MerchantErrorTransfer())->setMessage($messageTransfer->getMessage());
-        }
-
-        return $result;
     }
 }
