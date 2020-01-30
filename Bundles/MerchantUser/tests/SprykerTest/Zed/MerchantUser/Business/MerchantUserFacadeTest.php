@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeBridge;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeBridge;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 
 /**
@@ -55,15 +55,15 @@ class MerchantUserFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->authFacadeMock = $this->getMockBuilder(MerchantUserToAuthFacadeBridge::class)
+        $this->authFacadeMock = $this->getMockBuilder(MerchantUserToAuthFacadeInterface::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['requestPasswordReset'])
-            ->getMock();
+            ->getMockForAbstractClass();
 
-        $this->userFacadeMock = $this->getMockBuilder(MerchantUserToUserFacadeBridge::class)
+        $this->userFacadeMock = $this->getMockBuilder(MerchantUserToUserFacadeInterface::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['getUserById', 'updateUser'])
-            ->getMock();
+            ->getMockForAbstractClass();
     }
 
     /**
@@ -156,7 +156,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUserStatusChangedToApprovedOnMerchantStatusChange(): void
+    public function testUserStatusChangedToApprovedOnMerchantStatusChangedToApprove(): void
     {
         // Arrange
         $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_AUTH, $this->authFacadeMock);
@@ -173,16 +173,6 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransfer->setMerchantProfile($this->tester->haveMerchantProfile($merchantTransfer));
 
         $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
-
-        $authFacadeMock = $this->getMockBuilder(MerchantUserToAuthFacadeBridge::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['requestPasswordReset'])
-            ->getMock();
-
-        $userFacadeMock = $this->getMockBuilder(MerchantUserToUserFacadeBridge::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getUserById', 'updateUser'])
-            ->getMock();
 
         $this->userFacadeMock->expects($this->once())->method('getUserById')
             ->willReturn($userTransfer->setStatus(self::USER_STATUS_BLOCKED));
@@ -202,7 +192,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUserStatusChangedToDeniedOnMerchantStatusChange(): void
+    public function testUserStatusChangedToDeniedOnMerchantStatusChangeToBlocked(): void
     {
         // Arrange
         $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_AUTH, $this->authFacadeMock);
