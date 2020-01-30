@@ -72,7 +72,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
      */
     public function getProductViewTransfers(array $productIds, string $localeName, array $selectedAttributes = []): array
     {
-        $cachedProductViewTransfers = $this->getProductViewTransfersFromCache($productIds, $localeName);
+        $cachedProductViewTransfers = $this->getProductViewTransfersFromCache($productIds, $localeName, $selectedAttributes);
 
         $productIds = array_diff($productIds, array_keys($cachedProductViewTransfers));
         if (!$productIds) {
@@ -157,15 +157,16 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     /**
      * @param int[] $productIds
      * @param string $localeName
+     * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function getProductViewTransfersFromCache(array $productIds, string $localeName): array
+    protected function getProductViewTransfersFromCache(array $productIds, string $localeName, array $selectedAttributes = []): array
     {
         $cachedProductAbstractData = [];
         foreach ($productIds as $idProduct) {
             if ($this->hasProductViewTransferCache($idProduct, $localeName)) {
-                $cachedProductAbstractData[$idProduct] = $this->getProductViewTransferFromCache($idProduct, $localeName);
+                $cachedProductAbstractData[$idProduct] = $this->getProductViewTransferFromCache($idProduct, $localeName, $selectedAttributes);
             }
         }
 
