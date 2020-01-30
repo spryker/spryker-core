@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
-use Propel\Runtime\Exception\EntityNotFoundException;
+use InvalidArgumentException;
 use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
@@ -50,7 +50,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @throws \Propel\Runtime\Exception\EntityNotFoundException
+     * @throws \InvalidArgumentException
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
@@ -62,7 +62,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             (new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
         );
         if (!$merchantUserTransfer) {
-            throw new EntityNotFoundException(sprintf('Could not find Merchant Admin by Merchant id %d', $merchantTransfer->getIdMerchant()));
+            throw new InvalidArgumentException(sprintf('Could not find Merchant Admin by Merchant id %d', $merchantTransfer->getIdMerchant()));
         }
 
         $userTransfer = $this->userFacade->getUserById($merchantUserTransfer->getIdUser());
