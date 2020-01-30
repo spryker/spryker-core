@@ -2178,7 +2178,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
      */
-    protected function createGeneratedFileFinder(string $pattern): GeneratedFileFinderInterface
+    public function createGeneratedFileFinder(string $pattern): GeneratedFileFinderInterface
     {
         return new PatternFileFinder(
             $this->getFinder(),
