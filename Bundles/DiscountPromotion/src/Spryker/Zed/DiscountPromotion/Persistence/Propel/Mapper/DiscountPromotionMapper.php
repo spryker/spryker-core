@@ -24,4 +24,19 @@ class DiscountPromotionMapper
     ): DiscountPromotionTransfer {
         return $discountPromotionTransfer->fromArray($discountPromotionEntity->toArray(), true);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
+     *
+     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion
+     */
+    public function mapDiscountPromotionTransferToEntity(
+        DiscountPromotionTransfer $discountPromotionTransfer,
+        SpyDiscountPromotion $discountPromotionEntity
+    ): SpyDiscountPromotion {
+        $discountPromotionEntity->fromArray($discountPromotionTransfer->toArray());
+
+        return $discountPromotionEntity;
+    }
 }

@@ -8,22 +8,10 @@
 namespace Spryker\Glue\DiscountPromotionsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Glue\Kernel\Container;
 
 /**
  * @method \Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig getConfig()
  */
 class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    public function provideDependencies(Container $container): Container
-    {
-        $container = parent::provideDependencies($container);
-
-        return $container;
-    }
 }

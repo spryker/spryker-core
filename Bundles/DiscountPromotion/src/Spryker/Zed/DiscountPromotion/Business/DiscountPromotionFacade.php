@@ -49,7 +49,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     public function createPromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer)
     {
         return $this->getFactory()
-            ->createDiscountPromotionWriter()
+            ->createDiscountPromotionCreator()
             ->create($discountPromotionTransfer);
     }
 
@@ -65,7 +65,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     public function updatePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer)
     {
         return $this->getFactory()
-            ->createDiscountPromotionWriter()
+            ->createDiscountPromotionUpdater()
             ->update($discountPromotionTransfer);
     }
 
@@ -158,8 +158,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      */
     public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer
     {
-        return $this->getFactory()
-            ->createDiscountPromotionDataReader()
+        return $this->getRepository()
             ->findDiscountPromotionByUuid($uuid);
     }
 }

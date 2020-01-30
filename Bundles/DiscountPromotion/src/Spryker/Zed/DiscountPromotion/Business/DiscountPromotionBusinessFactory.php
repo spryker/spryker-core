@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business;
 
+use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreator;
+use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreatorInterface;
+use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdater;
+use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdaterInterface;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategy;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculator;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
-use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionWriter;
 use Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapper;
-use Spryker\Zed\DiscountPromotion\Business\Reader\DiscountPromotionReader as DiscountPromotionDataReader;
-use Spryker\Zed\DiscountPromotion\Business\Reader\DiscountPromotionReaderInterface;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -46,27 +47,11 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionWriterInterface
-     */
-    public function createDiscountPromotionWriter()
-    {
-        return new DiscountPromotionWriter($this->getQueryContainer(), $this->createDiscountPromotionMapper());
-    }
-
-    /**
      * @return \Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReaderInterface
      */
     public function createDiscountPromotionReader()
     {
         return new DiscountPromotionReader($this->getQueryContainer(), $this->createDiscountPromotionMapper());
-    }
-
-    /**
-     * @return \Spryker\Zed\DiscountPromotion\Business\Reader\DiscountPromotionReaderInterface
-     */
-    public function createDiscountPromotionDataReader(): DiscountPromotionReaderInterface
-    {
-        return new DiscountPromotionDataReader($this->getRepository());
     }
 
     /**
@@ -91,5 +76,21 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     protected function getAvailabilityFacade()
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_AVAILABILITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreatorInterface
+     */
+    public function createDiscountPromotionCreator(): DiscountPromotionCreatorInterface
+    {
+        return new DiscountPromotionCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdaterInterface
+     */
+    public function createDiscountPromotionUpdater(): DiscountPromotionUpdaterInterface
+    {
+        return new DiscountPromotionUpdater($this->getEntityManager());
     }
 }

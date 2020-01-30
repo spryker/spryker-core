@@ -11,7 +11,7 @@
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/transfer": "^3.18.0",
-    "spryker/uuid-behavior": "^1.1.0"
+    "spryker/uuid-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

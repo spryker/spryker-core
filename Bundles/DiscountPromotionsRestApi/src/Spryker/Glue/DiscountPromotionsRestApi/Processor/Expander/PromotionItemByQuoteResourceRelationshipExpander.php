@@ -8,6 +8,7 @@
 namespace Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
@@ -59,7 +60,7 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
 
                 $promotionalItemsResource = $this->restResourceBuilder->createRestResource(
                     DiscountPromotionsRestApiConfig::RESOURCE_PROMOTIONAL_ITEMS,
-                    (string)$promotionItemTransfer->getIdDiscountPromotion(),
+                    $this->findDiscountPromotionUuid($promotionItemTransfer),
                     $restPromotionalItemsAttributesTransfer
                 );
 
@@ -84,5 +85,25 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
         }
 
         return $payload->getPromotionItems();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
+     *
+     * @return string|null
+     */
+    protected function findDiscountPromotionUuid(PromotionItemTransfer $promotionItemTransfer): ?string
+    {
+        if ($promotionItemTransfer->getUuid() !== null) {
+            return $promotionItemTransfer->getUuid();
+        }
+
+        $discountTransfer = $promotionItemTransfer->getDiscount();
+        if ($discountTransfer !== null && $discountTransfer->getDiscountPromotion() !== null) {
+            return $discountTransfer->getDiscountPromotion()
+                ->getUuid();
+        }
+
+        return null;
     }
 }

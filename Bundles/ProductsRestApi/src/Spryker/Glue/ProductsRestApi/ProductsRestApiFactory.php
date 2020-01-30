@@ -16,8 +16,8 @@ use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstr
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractRestUrlResolverAttributesReaderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReader;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface;
-use Spryker\Glue\ProductsRestApi\Processor\Expander\AbstractProductsRelationshipExpander;
-use Spryker\Glue\ProductsRestApi\Processor\Expander\AbstractProductsRelationshipExpanderInterface;
+use Spryker\Glue\ProductsRestApi\Processor\Expander\ProductAbstractRelationshipExpander;
+use Spryker\Glue\ProductsRestApi\Processor\Expander\ProductAbstractRelationshipExpanderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Expander\ConcreteProductsRelationshipExpander;
 use Spryker\Glue\ProductsRestApi\Processor\Expander\ConcreteProductsRelationshipExpanderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapper;
@@ -151,10 +151,10 @@ class ProductsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductsRestApi\Processor\Expander\AbstractProductsRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductsRestApi\Processor\Expander\ProductAbstractRelationshipExpanderInterface
      */
-    public function createAbstractProductsRelationshipExpander(): AbstractProductsRelationshipExpanderInterface
+    public function createAbstractProductsRelationshipExpander(): ProductAbstractRelationshipExpanderInterface
     {
-        return new AbstractProductsRelationshipExpander($this->createAbstractProductsReader());
+        return new ProductAbstractRelationshipExpander($this->createAbstractProductsReader());
     }
 }
