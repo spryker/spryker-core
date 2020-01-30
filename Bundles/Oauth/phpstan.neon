@@ -3,4 +3,4 @@ parameters:
     	    - '#Method .+UserRepository::getUserEntityByUserCredentials\(\) should return .+UserEntityInterface but returns null.#'
     	    - '#Method .+ClientRepository::getClientEntity\(\) should return .+ClientEntityInterface but empty return statement found.#'
     	    - '#Method .+ScopeRepository::getScopeEntityByIdentifier\(\) should return .+ScopeEntityInterface but returns null.#'
-            - '#Doc Block \@throw annotation \`OauthRefreshTokenTransfer\` missing#'
+            - '#\`OauthRefreshTokenTransfer\` missing#'
