@@ -6,7 +6,7 @@
 >
 
     <transfer name="User">
-        <property name="username" dataBuilderRule="word"/>
+        <property name="username" dataBuilderRule="unique()->word"/>
         <property name="password" dataBuilderRule="password"/>
         <property name="firstName" dataBuilderRule="firstName"/>
         <property name="lastName" dataBuilderRule="lastName"/>
