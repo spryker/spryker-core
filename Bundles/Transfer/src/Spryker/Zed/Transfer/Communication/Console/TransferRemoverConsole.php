@@ -17,8 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TransferRemoverConsole extends Console
 {
-    protected const COMMAND_NAME = 'transfer:remove';
-    protected const COMMAND_DESCRIPTION = 'Remove all generated data transfer objects';
+    public const COMMAND_NAME = 'transfer:remove';
+    public const COMMAND_DESCRIPTION = 'Remove all generated data transfer objects';
 
     /**
      * @return void
