@@ -7,15 +7,24 @@
 
 namespace Spryker\Zed\Shipment\Business\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Shipment\ShipmentConfig;
 
 class ShipmentTotalCalculator implements ShipmentTotalCalculatorInterface
 {
     /**
-     * @see \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     * @var \Spryker\Zed\Shipment\ShipmentConfig
      */
-    protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+    protected $shipmentConfig;
+
+    /**
+     * @param \Spryker\Zed\Shipment\ShipmentConfig $shipmentConfig
+     */
+    public function __construct(ShipmentConfig $shipmentConfig)
+    {
+        $this->shipmentConfig = $shipmentConfig;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
@@ -26,24 +35,24 @@ class ShipmentTotalCalculator implements ShipmentTotalCalculatorInterface
     {
         $calculableObjectTransfer->requireTotals();
 
-        $quoteTransfer = $calculableObjectTransfer->getOriginalQuote();
+        $shipmentTotal = $this->getShipmentTotalSumPrice($calculableObjectTransfer->getExpenses());
 
         $calculableObjectTransfer
             ->getTotals()
-            ->setShipmentTotal($this->getShipmentTotalSumPrice($quoteTransfer));
+            ->setShipmentTotal($shipmentTotal);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
      *
      * @return int
      */
-    protected function getShipmentTotalSumPrice(QuoteTransfer $quoteTransfer): int
+    protected function getShipmentTotalSumPrice(ArrayObject $expenseTransfers): int
     {
         $shipmentTotal = 0;
 
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== static::SHIPMENT_EXPENSE_TYPE) {
+        foreach ($expenseTransfers as $expenseTransfer) {
+            if ($expenseTransfer->getType() !== $this->shipmentConfig->getShipmentExpenseType()) {
                 continue;
             }
 

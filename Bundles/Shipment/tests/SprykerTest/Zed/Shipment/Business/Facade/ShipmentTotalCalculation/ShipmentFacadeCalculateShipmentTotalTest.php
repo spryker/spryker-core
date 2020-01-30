@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Zed\Shipment\Business\Facade\ShipmentTotalCalculation;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -29,13 +29,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 class ShipmentFacadeCalculateShipmentTotalTest extends Test
 {
     /**
-     * @see \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
-     */
-    protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
-
-    protected const FAKE_EXPENSE_TYPE = 'FAKE_EXPENSE_TYPE';
-
-    /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
     protected $tester;
@@ -46,7 +39,7 @@ class ShipmentFacadeCalculateShipmentTotalTest extends Test
     public function testCalculateShipmentTotalCalculatesExpansesWithShipmentType(): void
     {
         // Arrange
-        $calculableObjectTransfer = $this->createCalculableObjectWithFakeExpenses();
+        $calculableObjectTransfer = $this->tester->createCalculableObjectWithFakeExpenses();
 
         // Act
         $this->tester->getFacade()->calculateShipmentTotal($calculableObjectTransfer);
@@ -62,7 +55,7 @@ class ShipmentFacadeCalculateShipmentTotalTest extends Test
     {
         // Arrange
         $calculableObjectTransfer = (new CalculableObjectTransfer())
-            ->setOriginalQuote(new QuoteTransfer())
+            ->setExpenses(new ArrayObject())
             ->setTotals(new TotalsTransfer());
 
         // Act
@@ -73,29 +66,18 @@ class ShipmentFacadeCalculateShipmentTotalTest extends Test
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     * @return void
      */
-    protected function createCalculableObjectWithFakeExpenses(): CalculableObjectTransfer
+    public function testCalculateShipmentTotalThrowsExceptionWithEmptyTotals(): void
     {
-        $quoteTransfer = (new QuoteTransfer())
-            ->addExpense(
-                (new ExpenseTransfer())
-                ->setType(static::SHIPMENT_EXPENSE_TYPE)
-                ->setSumPrice(100)
-            )
-            ->addExpense(
-                (new ExpenseTransfer())
-                ->setType(static::SHIPMENT_EXPENSE_TYPE)
-                ->setSumPrice(200)
-            )
-            ->addExpense(
-                (new ExpenseTransfer())
-                ->setType(static::FAKE_EXPENSE_TYPE)
-                ->setSumPrice(300)
-            );
+        // Arrange
+        $calculableObjectTransfer = $this->tester->createCalculableObjectWithFakeExpenses();
+        $calculableObjectTransfer->setTotals(null);
 
-        return (new CalculableObjectTransfer())
-            ->setOriginalQuote($quoteTransfer)
-            ->setTotals(new TotalsTransfer());
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->calculateShipmentTotal($calculableObjectTransfer);
     }
 }
