@@ -23,6 +23,7 @@
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>
         <property name="discount" type="Discount"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Item">
