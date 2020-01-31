@@ -133,7 +133,12 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
      */
     protected function createSelectedAttributesCacheKey(array $selectedAttributes = []): string
     {
-        return md5(implode('-', $selectedAttributes));
+        $selectedAttributesCacheKey = '';
+        array_walk_recursive($selectedAttributes, function ($value, $key) use (&$selectedAttributesCacheKey) {
+            $selectedAttributesCacheKey .= $key . '-' . $value;
+        });
+
+        return md5($selectedAttributesCacheKey);
     }
 
     /**
