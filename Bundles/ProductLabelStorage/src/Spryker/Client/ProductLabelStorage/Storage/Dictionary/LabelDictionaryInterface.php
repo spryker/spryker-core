@@ -16,7 +16,7 @@ interface LabelDictionaryInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabel($dictionaryKey, string $localeName, ?string $storeName = null);
+    public function findLabel($dictionaryKey, $localeName, ?string $storeName = null);
 
     /**
      * @param string $localeName
@@ -24,5 +24,5 @@ interface LabelDictionaryInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function getDictionary(string $localeName, ?string $storeName = null);
+    public function getDictionary($localeName, ?string $storeName = null);
 }

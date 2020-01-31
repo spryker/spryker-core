@@ -18,7 +18,7 @@ class LabelDeleter implements LabelDeleterInterface
 {
     use TransactionTrait;
 
-    protected const MESSAGE_PRODUCT_LABEL_NOT_FOUND = 'Missing product label';
+    protected const MESSAGE_PRODUCT_LABEL_NOT_FOUND = 'Product label not found';
 
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface
@@ -90,8 +90,7 @@ class LabelDeleter implements LabelDeleterInterface
     protected function assertProductLabel(ProductLabelTransfer $productLabelTransfer): void
     {
         $productLabelTransfer
-            ->requireIdProductLabel()
-            ->requireName();
+            ->requireIdProductLabel();
     }
 
     /**

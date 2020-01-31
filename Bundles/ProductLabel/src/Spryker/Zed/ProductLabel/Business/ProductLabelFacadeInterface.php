@@ -123,6 +123,12 @@ interface ProductLabelFacadeInterface
     /**
      * Specification:
      * - Removes the given product label from the database.
+     * - Expects product label id to be provided.
+     * - Removes provided product label from Persistence.
+     * - Removes assigned localized attributes in Persistence.
+     * - Removes relations between product label and abstract products.
+     * - Returns 'isSuccessful=true' if the product label was removed.
+     * - Returns 'isSuccessful=false' with error messages otherwise.
      *
      * @api
      *

@@ -23,7 +23,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
     {
         $this->getFactory()
             ->createProductLabelQuery()
-            ->filterByIdProductLabel($idProductLabel)
+            ->findByIdProductLabel($idProductLabel)
             ->delete();
     }
 
@@ -36,7 +36,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
     {
         $this->getFactory()
             ->createLocalizedAttributesQuery()
-            ->filterByFkProductLabel($idProductLabel)
+            ->findByFkProductLabel($idProductLabel)
             ->delete();
     }
 
@@ -49,7 +49,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
     {
         $this->getFactory()
             ->createProductRelationQuery()
-            ->filterByFkProductLabel($idProductLabel)
+            ->findByFkProductLabel($idProductLabel)
             ->delete();
     }
 }

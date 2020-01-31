@@ -54,7 +54,7 @@ class LabelDictionary implements LabelDictionaryInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabel($dictionaryKey, string $localeName, ?string $storeName = null)
+    public function findLabel($dictionaryKey, $localeName, ?string $storeName = null)
     {
         $dictionary = $this->getDictionary($localeName, $storeName);
 
@@ -71,7 +71,7 @@ class LabelDictionary implements LabelDictionaryInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function getDictionary(string $localeName, ?string $storeName = null)
+    public function getDictionary($localeName, ?string $storeName = null)
     {
         static $labelDictionary = [];
 
@@ -90,7 +90,7 @@ class LabelDictionary implements LabelDictionaryInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function initializeLabelDictionary(string $localeName, ?string $storeName = null)
+    protected function initializeLabelDictionary($localeName, ?string $storeName = null)
     {
         $labelDictionary = [];
 
@@ -130,7 +130,7 @@ class LabelDictionary implements LabelDictionaryInterface
      *
      * @return array|null
      */
-    protected function getStorageData(string $localeName, ?string $storeName = null)
+    protected function getStorageData($localeName, ?string $storeName = null)
     {
         if (ProductLabelStorageConfig::isCollectorCompatibilityMode()) {
             $productLabelConstantsClassName = '\Spryker\Shared\ProductLabel\ProductLabelConstants';

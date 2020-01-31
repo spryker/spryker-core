@@ -104,19 +104,22 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
 
         return $this->getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
             $productLabelIdsByProductAbstractIds,
-            $localeName
+            $localeName,
+            $storeName
         );
     }
 
     /**
      * @param int[][] $productLabelIdsByProductAbstractIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
     protected function getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
         array $productLabelIdsByProductAbstractIds,
-        string $localeName
+        string $localeName,
+        ?string $storeName = null
     ): array {
         $uniqueProductLabelIds = array_unique(array_merge(...$productLabelIdsByProductAbstractIds));
         $productLabelDictionaryItemTransfers = $this->getProductLabelDictionaryItemTransfersGroupedById(

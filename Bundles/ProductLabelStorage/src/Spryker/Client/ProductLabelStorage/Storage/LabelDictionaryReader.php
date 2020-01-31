@@ -55,8 +55,15 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByIdProductLabel($idProductLabel, string $localeName, ?string $storeName = null)
+    public function findLabelByIdProductLabel($idProductLabel, $localeName, ?string $storeName = null)
     {
+        if (!$storeName) {
+            trigger_error(
+                'Pass the $storeName parameter for the forward compatibility with next major version.',
+                E_USER_DEPRECATED
+            );
+        }
+
         return $this->dictionaryFactory
             ->createDictionaryByIdProductLabel()
             ->findLabel($idProductLabel, $localeName, $storeName);
@@ -65,14 +72,22 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     /**
      * @param string $labelName
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByLocalizedName($labelName, $localeName)
+    public function findLabelByLocalizedName($labelName, $localeName, ?string $storeName = null)
     {
+        if (!$storeName) {
+            trigger_error(
+                'Pass the $storeName parameter for the forward compatibility with next major version.',
+                E_USER_DEPRECATED
+            );
+        }
+
         return $this->dictionaryFactory
             ->createDictionaryByLocalizedName()
-            ->findLabel($labelName, $localeName);
+            ->findLabel($labelName, $localeName, $storeName);
     }
 
     /**

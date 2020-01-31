@@ -56,7 +56,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveProductLabelShouldDeleteFromDatabase(): void
+    public function testRemoveLabelShouldRemoveProductLabel(): void
     {
         //Arrange
         $productLabelTransfer = $this->tester->haveProductLabel();
@@ -71,7 +71,7 @@ class ProductLabelFacadeTest extends Unit
             ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())
             ->findOne();
 
-        $this->assertNull($deletedProductLabel, 'Product label record was not deleted from the database!');
+        $this->assertNull($deletedProductLabel, 'Product label record was not deleted');
     }
 
     /**
