@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface;
 
@@ -33,13 +32,7 @@ class MerchantAdminMerchantPostUpdatePlugin extends AbstractPlugin implements Me
      */
     public function postUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        $merchantUserTransfer = $this->getFacade()->findOne(
-            (new MerchantUserCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
-        );
-
-        $merchantUserResponseTransfer = $merchantUserTransfer
-            ? $this->getFacade()->updateMerchantAdmin($merchantTransfer)
-            : $this->getFacade()->createMerchantAdmin($merchantTransfer);
+        $merchantUserResponseTransfer = $this->getFacade()->updateMerchantAdmin($merchantTransfer);
 
         return (new MerchantResponseTransfer())
             ->setIsSuccess($merchantUserResponseTransfer->getIsSuccessful())
