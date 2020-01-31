@@ -8,11 +8,10 @@
 namespace SprykerTest\Zed\DiscountPromotionsRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CartItemRequestBuilder;
+use Generated\Shared\DataBuilder\PersistentCartChangeBuilder;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -38,49 +37,30 @@ class DiscountPromotionsRestApiFacadeTest extends Unit
     public function testMapCartItemRequestTransferToPersistentCartChangeTransferShouldSetUpIdDiscountPromotionInPersistentCartChangeTransfer(): void
     {
         // Arrange
-        $discountPromotionTransfer = $this->tester->getDiscountPromotionTransfer('001', 1);
-        $savedDiscountPromotionTransfer = $this->getDiscountPromotionFacade()
-            ->createPromotionDiscount($discountPromotionTransfer);
+        $savedDiscountPromotionTransfer = $this->tester->haveDiscountPromotion([
+            DiscountPromotionTransfer::FK_DISCOUNT => $this->tester->haveDiscount()->getIdDiscount(),
+        ]);
 
-        $cartItemRequestTransfer = $this->createCartItemRequestTransfer($savedDiscountPromotionTransfer);
-        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
+        $cartItemRequestTransfer = (new CartItemRequestBuilder([
+            CartItemRequestTransfer::DISCOUNT_PROMOTION_UUID => $savedDiscountPromotionTransfer->getUuid(),
+        ]))->build();
+        $persistentCartChangeTransfer = (new PersistentCartChangeBuilder())
+            ->withItem()
+            ->build();
 
         // Act
         $changedPersistentCartChangeTransfer = $this->tester->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer($cartItemRequestTransfer, $persistentCartChangeTransfer);
 
         // Assert
-        $this->assertNotNull($changedPersistentCartChangeTransfer->getItems()[0]->getIdDiscountPromotion());
-        $this->assertSame($changedPersistentCartChangeTransfer->getItems()[0]->getIdDiscountPromotion(), $savedDiscountPromotionTransfer->getIdDiscountPromotion());
-    }
-
-    /**
-     * @return \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface
-     */
-    protected function getDiscountPromotionFacade(): DiscountPromotionFacadeInterface
-    {
-        return $this->tester->getLocator()
-            ->discountPromotion()
-            ->facade();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
-     */
-    protected function createPersistentCartChangeTransfer(): PersistentCartChangeTransfer
-    {
-        return (new PersistentCartChangeTransfer())
-            ->addItem(new ItemTransfer());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
-     */
-    protected function createCartItemRequestTransfer(DiscountPromotionTransfer $discountPromotionTransfer): CartItemRequestTransfer
-    {
-        return (new CartItemRequestTransfer())
-            ->setDiscountPromotionUuid($discountPromotionTransfer->getUuid());
+        $this->assertNotNull(
+            $changedPersistentCartChangeTransfer->getItems()[0]->getIdDiscountPromotion(),
+            'Discount promotion id should be set for the first item in PersistentCartChangeTransfer.'
+        );
+        $this->assertSame(
+            $changedPersistentCartChangeTransfer->getItems()[0]->getIdDiscountPromotion(),
+            $savedDiscountPromotionTransfer->getIdDiscountPromotion(),
+            'Discount promotion id should be the same as the persisted in the database.'
+        );
     }
 }
