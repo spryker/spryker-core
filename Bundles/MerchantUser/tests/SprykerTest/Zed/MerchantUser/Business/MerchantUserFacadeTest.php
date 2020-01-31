@@ -156,11 +156,10 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUserStatusChangedToApprovedOnMerchantStatusChangedToApprove(): void
+    public function testHandleMerchantPostUpdateUserStatusChangedToApprovedOnMerchantStatusChangedToApprove(): void
     {
         // Arrange
-        $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_AUTH, $this->authFacadeMock);
-        $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_USER, $this->userFacadeMock);
+        $this->initializeFacadeMocks();
 
         $userTransfer = $this->tester->haveUser(
             [UserTransfer::USERNAME => 'test_user@example.com']
@@ -183,7 +182,8 @@ class MerchantUserFacadeTest extends Unit
         $this->authFacadeMock->expects($this->never())->method('requestPasswordReset');
 
         // Act
-        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostUpdate($merchantTransfer, $merchantTransfer);
+        $merchantResponseTransfer = $this->tester->getFacade()
+            ->handleMerchantPostUpdate($merchantTransfer, $merchantTransfer);
 
         // Assert
         $this->assertTrue($merchantResponseTransfer->getIsSuccess());
@@ -192,11 +192,10 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUserStatusChangedToDeniedOnMerchantStatusChangeToBlocked(): void
+    public function testHandleMerchantPostUpdateUserStatusChangedToDeniedOnMerchantStatusChangeToBlocked(): void
     {
         // Arrange
-        $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_AUTH, $this->authFacadeMock);
-        $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_USER, $this->userFacadeMock);
+        $this->initializeFacadeMocks();
 
         $userTransfer = $this->tester->haveUser(
             [UserTransfer::USERNAME => 'test_user@example.com']
@@ -221,9 +220,16 @@ class MerchantUserFacadeTest extends Unit
         $this->authFacadeMock->expects($this->once())->method('requestPasswordReset');
 
         // Act
-        $merchantResponseTransfer = $this->tester->getFacade()->handleMerchantPostUpdate($merchantTransfer, $merchantTransfer);
+        $merchantResponseTransfer = $this->tester->getFacade()
+            ->handleMerchantPostUpdate($merchantTransfer, $merchantTransfer);
 
         // Assert
         $this->assertTrue($merchantResponseTransfer->getIsSuccess());
+    }
+
+    protected function initializeFacadeMocks()
+    {
+        $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_AUTH, $this->authFacadeMock);
+        $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_USER, $this->userFacadeMock);
     }
 }
