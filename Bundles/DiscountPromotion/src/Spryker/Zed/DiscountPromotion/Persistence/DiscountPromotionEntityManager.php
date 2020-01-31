@@ -86,6 +86,7 @@ class DiscountPromotionEntityManager extends AbstractEntityManager implements Di
      */
     public function removeCollectorQueryString(SpyDiscountPromotion $discountPromotionEntity): void
     {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount|null $discountEntity */
         $discountEntity = $discountPromotionEntity->getDiscount();
         if (!$discountEntity) {
             return;

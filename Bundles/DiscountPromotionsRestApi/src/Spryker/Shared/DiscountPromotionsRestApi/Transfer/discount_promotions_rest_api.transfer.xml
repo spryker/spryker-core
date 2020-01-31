@@ -8,6 +8,7 @@
         <property name="abstractSku" type="string"/>
         <property name="maxQuantity" type="int"/>
         <property name="uuid" type="string"/>
+        <property name="discount" type="Discount"/>
     </transfer>
 
     <transfer name="DiscountPromotion">
@@ -16,6 +17,10 @@
         <property name="quantity" type="int"/>
         <property name="fkDiscount" type="int"/>
         <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="Discount">
+        <property name="discountPromotion" type="DiscountPromotion"/>
     </transfer>
 
     <transfer name="RestPromotionalItemsAttributes">
