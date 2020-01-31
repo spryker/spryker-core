@@ -23,9 +23,6 @@
 
     <transfer name="ProductMeasurementSalesUnit">
         <property name="code" type="string"/>
-    </transfer>
-
-    <transfer name="ProductMeasurementSalesUnit">
         <property name="idProductMeasurementSalesUnit" type="int"/>
         <property name="value" type="int"/>
     </transfer>
