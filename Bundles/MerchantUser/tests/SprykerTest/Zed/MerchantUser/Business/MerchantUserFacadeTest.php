@@ -227,7 +227,10 @@ class MerchantUserFacadeTest extends Unit
         $this->assertTrue($merchantResponseTransfer->getIsSuccess());
     }
 
-    protected function initializeFacadeMocks()
+    /**
+     * @return void
+     */
+    protected function initializeFacadeMocks(): void
     {
         $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_AUTH, $this->authFacadeMock);
         $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_USER, $this->userFacadeMock);
