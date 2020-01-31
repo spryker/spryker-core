@@ -39,7 +39,7 @@ class GroupAdder implements GroupAdderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function addUserToGroupByReference(MerchantUserTransfer $merchantUserTransfer, string $reference): MerchantUserResponseTransfer
+    public function addMerchantAdminToGroupByReference(MerchantUserTransfer $merchantUserTransfer, string $reference): MerchantUserResponseTransfer
     {
         $groupTransfer = $this->aclFacade->findGroup((new GroupCriteriaFilterTransfer())->setReference($reference));
 
@@ -53,13 +53,13 @@ class GroupAdder implements GroupAdderInterface
             }
 
             return (new MerchantUserResponseTransfer())
-                ->setIsSuccess(false)
+                ->setIsSuccessful(false)
                 ->setMerchantUser($merchantUserTransfer)
                 ->addError((new MessageTransfer())->setMessage(static::GROUP_NOT_FOUND_ERROR_MESSAGE));
         }
 
         $this->aclFacade->addUserToGroup($merchantUserTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
 
-        return (new MerchantUserResponseTransfer())->setIsSuccess(true);
+        return (new MerchantUserResponseTransfer())->setIsSuccessful(true);
     }
 }

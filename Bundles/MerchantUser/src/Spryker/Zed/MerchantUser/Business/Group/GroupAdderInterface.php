@@ -18,5 +18,5 @@ interface GroupAdderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function addUserToGroupByReference(MerchantUserTransfer $merchantUserTransfer, string $reference): MerchantUserResponseTransfer;
+    public function addMerchantAdminToGroupByReference(MerchantUserTransfer $merchantUserTransfer, string $reference): MerchantUserResponseTransfer;
 }

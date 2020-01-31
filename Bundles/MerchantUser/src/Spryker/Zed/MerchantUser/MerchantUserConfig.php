@@ -39,6 +39,14 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getMerchantAdminGroupReference(): string
+    {
+        return static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE;
+    }
+
+    /**
      * @return bool
      */
     public function canUserHaveManyMerchants(): bool

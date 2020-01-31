@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface;
 use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
@@ -56,9 +57,15 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected $userMapper;
 
     /**
+     * @var \Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface
+     */
+    protected $groupAdder;
+
+    /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface $userMapper
+     * @param \Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface $groupAdder
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
@@ -67,6 +74,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         MerchantUserToUtilTextServiceInterface $utilTextService,
         MerchantUserToUserFacadeInterface $userFacade,
         UserMapperInterface $userMapper,
+        GroupAdderInterface $groupAdder,
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
         MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserConfig $merchantUserConfig
@@ -77,6 +85,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $this->merchantUserConfig = $merchantUserConfig;
         $this->userFacade = $userFacade;
         $this->userMapper = $userMapper;
+        $this->groupAdder = $groupAdder;
     }
 
     /**
@@ -89,6 +98,15 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $merchantUserTransfer = (new MerchantUserTransfer())
             ->setMerchant($merchantTransfer)
             ->setUser($this->resolveUserTransferByMerchant($merchantTransfer));
+
+        $merchantUserResponseTransfer = $this->groupAdder->addMerchantAdminToGroupByReference(
+            $merchantUserTransfer,
+            $this->merchantUserConfig->getMerchantAdminGroupReference()
+        );
+
+        if (!$merchantUserResponseTransfer->getIsSuccessful()) {
+            return $merchantUserResponseTransfer;
+        }
 
         return $this->create($merchantUserTransfer);
     }

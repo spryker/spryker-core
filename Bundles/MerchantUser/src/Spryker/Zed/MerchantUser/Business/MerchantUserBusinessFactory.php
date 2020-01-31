@@ -8,12 +8,15 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantUser\Business\Group\GroupAdder;
+use Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
 use Spryker\Zed\MerchantUser\Business\User\UserMapper;
 use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
@@ -34,10 +37,19 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
             $this->getUtilTextService(),
             $this->getUserFacade(),
             $this->createUserMapper(),
+            $this->createGroupAdder(),
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface
+     */
+    public function createGroupAdder(): GroupAdderInterface
+    {
+        return new GroupAdder($this->getAclFacade());
     }
 
     /**
@@ -74,5 +86,13 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService(): MerchantUserToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(MerchantUserDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface
+     */
+    public function getAclFacade(): MerchantUserToAclFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_ACL);
     }
 }
