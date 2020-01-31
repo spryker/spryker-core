@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductMeasurementUnitsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
 class SalesUnitMapper implements SalesUnitMapperInterface
