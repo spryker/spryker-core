@@ -76,4 +76,8 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
 </transfers>

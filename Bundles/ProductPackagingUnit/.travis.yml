@@ -17,7 +17,7 @@ env:
         - APPLICATION_STORE=DE
 
 before_install:
-    - if [[ ${TRAVIS_PHP_VERSION} != "7.4" ]]; then phpenv config-rm xdebug.ini ; fi
+    - phpenv config-rm xdebug.ini
 
 install:
     - COMPOSER_MEMORY_LIMIT=-1 composer install --prefer-dist --no-interaction

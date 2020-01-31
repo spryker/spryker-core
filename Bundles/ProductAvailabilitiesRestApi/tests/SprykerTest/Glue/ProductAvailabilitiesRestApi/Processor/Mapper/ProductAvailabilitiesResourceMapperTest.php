@@ -8,12 +8,13 @@
 namespace SprykerTest\Glue\ProductAvailabilitiesRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer;
-use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
-use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapper;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapperInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapper;
@@ -51,7 +52,11 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $transfer = $this->getProductConcreteAvailabilityTransferWithAvailableProducts();
 
         /** @var \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer $attributesTransfer */
-        $attributesTransfer = $mapper->mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer($transfer);
+        $attributesTransfer = $mapper
+            ->mapProductConcreteAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(
+                $transfer,
+                new RestConcreteProductAvailabilityAttributesTransfer()
+            );
 
         $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertTrue($attributesTransfer->getAvailability());
@@ -68,7 +73,11 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $transfer = $this->getProductConcreteAvailabilityTransferWithUnavailableProducts();
 
         /** @var \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer $attributesTransfer */
-        $attributesTransfer = $mapper->mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer($transfer);
+        $attributesTransfer = $mapper
+            ->mapProductConcreteAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(
+                $transfer,
+                new RestConcreteProductAvailabilityAttributesTransfer()
+            );
 
         $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertFalse($attributesTransfer->getAvailability());
@@ -85,7 +94,11 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $transfer = $this->getProductAbstractAvailabilityTransferWithAvailableProducts();
 
         /** @var \Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer $attributesTransfer */
-        $attributesTransfer = $mapper->mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer($transfer);
+        $attributesTransfer = $mapper
+            ->mapProductAbstractAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(
+                $transfer,
+                new RestAbstractProductAvailabilityAttributesTransfer()
+            );
 
         $this->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertTrue($attributesTransfer->getAvailability());
@@ -101,7 +114,11 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $transfer = $this->getProductAbstractAvailabilityTransferWithUnavailableProducts();
 
         /** @var \Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer $attributesTransfer */
-        $attributesTransfer = $mapper->mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer($transfer);
+        $attributesTransfer = $mapper
+            ->mapProductAbstractAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(
+                $transfer,
+                new RestAbstractProductAvailabilityAttributesTransfer()
+            );
 
         $this->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertFalse($attributesTransfer->getAvailability());
@@ -110,57 +127,61 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
-    protected function getProductConcreteAvailabilityTransferWithAvailableProducts(): SpyAvailabilityEntityTransfer
+    protected function getProductConcreteAvailabilityTransferWithAvailableProducts(): ProductConcreteAvailabilityTransfer
     {
-        $spyAvailabilityEntityTransfer = new SpyAvailabilityEntityTransfer();
-        $spyAvailabilityEntityTransfer->setQuantity(static::PRODUCTS_AVAILABILITY_QUANTITY);
-        $spyAvailabilityEntityTransfer->setIsNeverOutOfStock(static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $spyAvailabilityEntityTransfer->setSku(static::PRODUCT_CONCRETE_SKU);
-        $spyAvailabilityEntityTransfer->setIdAvailability(static::PRODUCT_CONCRETE_AVAILABILITY_ID);
+        $productConcreteAvailabilityTransfer = new ProductConcreteAvailabilityTransfer();
+        $productConcreteAvailabilityTransfer->setAvailability(static::PRODUCTS_AVAILABILITY_QUANTITY);
+        $productConcreteAvailabilityTransfer
+            ->setIsNeverOutOfStock(static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
+        $productConcreteAvailabilityTransfer->setSku(static::PRODUCT_CONCRETE_SKU);
 
-        return $spyAvailabilityEntityTransfer;
+        return $productConcreteAvailabilityTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
-    protected function getProductConcreteAvailabilityTransferWithUnavailableProducts(): SpyAvailabilityEntityTransfer
+    protected function getProductConcreteAvailabilityTransferWithUnavailableProducts(): ProductConcreteAvailabilityTransfer
     {
-        $spyAvailabilityEntityTransfer = new SpyAvailabilityEntityTransfer();
-        $spyAvailabilityEntityTransfer->setQuantity(0);
-        $spyAvailabilityEntityTransfer->setIsNeverOutOfStock(static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $spyAvailabilityEntityTransfer->setSku(static::PRODUCT_CONCRETE_SKU);
-        $spyAvailabilityEntityTransfer->setIdAvailability(static::PRODUCT_CONCRETE_AVAILABILITY_ID);
+        $productConcreteAvailabilityTransfer = new ProductConcreteAvailabilityTransfer();
+        $productConcreteAvailabilityTransfer->setAvailability(0);
+        $productConcreteAvailabilityTransfer
+            ->setIsNeverOutOfStock(static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
+        $productConcreteAvailabilityTransfer->setSku(static::PRODUCT_CONCRETE_SKU);
 
-        return $spyAvailabilityEntityTransfer;
+        return $productConcreteAvailabilityTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    protected function getProductAbstractAvailabilityTransferWithAvailableProducts(): SpyAvailabilityAbstractEntityTransfer
+    protected function getProductAbstractAvailabilityTransferWithAvailableProducts(): ProductAbstractAvailabilityTransfer
     {
-        $spyAvailabilityAbstractEntityTransfer = new SpyAvailabilityAbstractEntityTransfer();
-        $spyAvailabilityAbstractEntityTransfer->setAbstractSku(static::PRODUCT_ABSTRACT_SKU);
-        $spyAvailabilityAbstractEntityTransfer->setQuantity(static::PRODUCTS_AVAILABILITY_QUANTITY);
-        $spyAvailabilityAbstractEntityTransfer->addSpyAvailabilities($this->getProductConcreteAvailabilityTransferWithAvailableProducts());
+        $productAbstractAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
+        $productAbstractAvailabilityTransfer->setSku(static::PRODUCT_ABSTRACT_SKU);
+        $productAbstractAvailabilityTransfer->setAvailability(static::PRODUCTS_AVAILABILITY_QUANTITY);
+        $productAbstractAvailabilityTransfer->addProductConcreteAvailability(
+            $this->getProductConcreteAvailabilityTransferWithAvailableProducts()
+        );
 
-        return $spyAvailabilityAbstractEntityTransfer;
+        return $productAbstractAvailabilityTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    protected function getProductAbstractAvailabilityTransferWithUnavailableProducts(): SpyAvailabilityAbstractEntityTransfer
+    protected function getProductAbstractAvailabilityTransferWithUnavailableProducts(): ProductAbstractAvailabilityTransfer
     {
-        $spyAvailabilityAbstractEntityTransfer = new SpyAvailabilityAbstractEntityTransfer();
-        $spyAvailabilityAbstractEntityTransfer->setAbstractSku(static::PRODUCT_ABSTRACT_SKU);
-        $spyAvailabilityAbstractEntityTransfer->setQuantity(0);
-        $spyAvailabilityAbstractEntityTransfer->addSpyAvailabilities($this->getProductConcreteAvailabilityTransferWithUnavailableProducts());
+        $productAbstractAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
+        $productAbstractAvailabilityTransfer->setSku(static::PRODUCT_ABSTRACT_SKU);
+        $productAbstractAvailabilityTransfer->setAvailability(0);
+        $productAbstractAvailabilityTransfer->addProductConcreteAvailability(
+            $this->getProductConcreteAvailabilityTransferWithUnavailableProducts()
+        );
 
-        return $spyAvailabilityAbstractEntityTransfer;
+        return $productAbstractAvailabilityTransfer;
     }
 
     /**
@@ -182,7 +203,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected function getResourceBuilder()
+    protected function getResourceBuilder(): RestResourceBuilderInterface
     {
         return $this->getMockBuilder(RestResourceBuilder::class)
             ->enableProxyingToOriginalMethods()

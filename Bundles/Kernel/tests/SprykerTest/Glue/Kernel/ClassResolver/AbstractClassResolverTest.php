@@ -65,7 +65,7 @@ class AbstractClassResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver
      */
-    private function getAbstractClassResolverMock(bool $classExists)
+    private function getAbstractClassResolverMock(bool $classExists): AbstractClassResolver
     {
         $abstractClassResolverMock = $this->getMockForAbstractClass(AbstractClassResolver::class, [], '', true, true, true, ['classExists']);
         $abstractClassResolverMock->method('classExists')->willReturn($classExists);

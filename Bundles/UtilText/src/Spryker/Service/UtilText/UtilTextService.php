@@ -51,6 +51,22 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
      *
      * @api
      *
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateRandomByteString(int $length = 32): string
+    {
+        return $this->getFactory()
+            ->createStringGenerator()
+            ->generateRandomByteString($length);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param mixed $value
      * @param string $algorithm
      *

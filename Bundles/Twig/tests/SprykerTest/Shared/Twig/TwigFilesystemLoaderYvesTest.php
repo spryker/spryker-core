@@ -30,7 +30,7 @@ class TwigFilesystemLoaderYvesTest extends Unit
     public const PATH_TO_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Yves/Bundle/Theme/default';
     public const PATH_TO_CORE = __DIR__ . '/Fixtures/vendor/spryker/bundle/src/CoreNamespace/Yves/Bundle/Theme/default';
     public const PATH_TO_CORE_NON_SPLIT = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Yves/Bundle/Theme/default';
-    public const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/*/*/src/CoreNamespace/Yves/Bundle/Theme/default';
+    public const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/spryker/3rd-party/src/CoreNamespace/Yves/Bundle/Theme/default';
 
     public const CONTENT_PROJECT_FILE = 'project yves file' . PHP_EOL;
     public const CONTENT_CORE_FILE = 'core yves file' . PHP_EOL;
@@ -90,7 +90,7 @@ class TwigFilesystemLoaderYvesTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Twig\TwigFilesystemLoader
      */
-    protected function getFilesystemLoaderForSplitBundleConverterTest()
+    protected function getFilesystemLoaderForSplitBundleConverterTest(): TwigFilesystemLoader
     {
         $mockBuilder = $this->getMockBuilder(TwigFilesystemLoader::class)
             ->setMethods(['isPathInSplit'])

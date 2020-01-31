@@ -48,6 +48,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testInstallsIndexes(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $this->tester->mockConfigMethod('getJsonSchemaDefinitionDirectories', $this->tester->getFixturesSchemaDirectory());
         $this->setupStoreClientDependency();
@@ -66,6 +68,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testGeneratesIndexMaps(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $this->tester->mockConfigMethod('getJsonSchemaDefinitionDirectories', $this->tester->getFixturesSchemaDirectory());
         $this->tester->mockConfigMethod('getClassTargetDirectory', $this->tester->getFixturesIndexMapDirectory());
@@ -82,6 +86,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCloseIndex(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $index = $this->tester->haveIndex('dummy_index_name');
 
@@ -102,6 +108,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCloseAllIndexes(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         /** @var \Elastica\Index $index */
         $index = $this->tester->haveIndex('dummy_index_name');
@@ -121,6 +129,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanOpenOneIndex(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         /** @var \Elastica\Index $index */
         $index = $this->tester->haveIndex('dummy_index_name');
@@ -140,6 +150,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanOpenAllIndexes(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         /** @var \Elastica\Index $index */
         $index = $this->tester->haveIndex('dummy_index_name');
@@ -160,6 +172,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanDeleteIndex(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $index = $this->tester->haveIndex('dummy_index_name');
         $searchContextTransfer = $this->tester->buildSearchContextTransferFromIndexName($index->getName());
@@ -176,6 +190,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanDeleteAllIndexes(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $index = $this->tester->haveIndex('dummy_index_name');
         $anotherIndex = $this->tester->haveIndex('another_dummy_index_name');
@@ -277,6 +293,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCopyIndexContentToAnotherIndex(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $documentContent = ['foo' => 'bar'];
         $documentId = 'dummy_document';

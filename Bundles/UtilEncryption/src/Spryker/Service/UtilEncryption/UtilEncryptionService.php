@@ -35,6 +35,22 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
      *
      * @api
      *
+     * @param string|null $encryptionMethod
+     *
+     * @return string
+     */
+    public function generateByteStringOpenSslEncryptInitVector(?string $encryptionMethod = null): string
+    {
+        return $this->getFactory()
+            ->createOpenSslEncryptInitVectorGenerator()
+            ->generateByteStringOpenSslEncryptInitVector($encryptionMethod);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $plainText
      * @param string $initVector
      * @param string $encryptionKey

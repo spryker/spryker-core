@@ -218,7 +218,7 @@ class PriceProductScheduleFallbackTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName)
+    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
             ->setMethods(['getFallbackPriceTypeList'])
@@ -233,7 +233,7 @@ class PriceProductScheduleFallbackTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected function getNotConfiguredConfigMock()
+    protected function getNotConfiguredConfigMock(): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
             ->setMethods(['getFallbackPriceTypeList'])
