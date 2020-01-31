@@ -37,7 +37,7 @@ class Installer implements InstallerInterface
     protected $userFacade;
 
     /**
-     * @var array|\Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
+     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
      */
     protected $aclInstallerPlugins;
 

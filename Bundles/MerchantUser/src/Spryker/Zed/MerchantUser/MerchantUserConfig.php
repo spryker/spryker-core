@@ -30,6 +30,14 @@ class MerchantUserConfig extends AbstractBundleConfig
     public const MERCHANT_PORTAL_ADMIN_GROUP = 'merchant_portal_admin_group';
 
     /**
+     * @return string
+     */
+    public function getUserCreationStatus(): string
+    {
+        return static::USER_CREATION_DEFAULT_STATUS;
+    }
+
+    /**
      * @return bool
      */
     public function canUserHaveManyMerchants(): bool

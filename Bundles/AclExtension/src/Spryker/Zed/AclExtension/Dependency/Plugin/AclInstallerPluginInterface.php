@@ -11,8 +11,6 @@ namespace Spryker\Zed\AclExtension\Dependency\Plugin;
  * Specification:
  * - Executed on install
  * - Use this plugin if default Roles or Groups are needed in project
- * - Use this plugin to assign Groups and Roles to existing users
- * - Do not use this plugin to create users
  * - The plugin methods are run in the following way: getGroups, getRoles.
  */
 interface AclInstallerPluginInterface
