@@ -55,4 +55,8 @@
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
     </transfer>
 
+    <transfer name="RestItemsAttributes">
+        <property name="salesUnit" type="SalesUnit"/>
+    </transfer>
+
 </transfers>

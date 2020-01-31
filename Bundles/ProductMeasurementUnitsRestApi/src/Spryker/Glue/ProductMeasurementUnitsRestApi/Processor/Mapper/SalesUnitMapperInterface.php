@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestSalesUnitsAttributesTransfer;
 
 interface SalesUnitMapperInterface
@@ -22,4 +24,15 @@ interface SalesUnitMapperInterface
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
         RestSalesUnitsAttributesTransfer $restSalesUnitsAttributesTransfer
     ): RestSalesUnitsAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer
+    ): RestItemsAttributesTransfer;
 }
