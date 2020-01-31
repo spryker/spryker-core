@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -96,19 +97,19 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderQuery()
             ->filterByCustomerReference($orderListRequestTransfer->getCustomerReference());
 
-        $filterTransfer = $orderListRequestTransfer->getFilter();
-        if ($filterTransfer) {
-            $orderListQuery->mergeWith(
-                (new PropelFilterCriteria($filterTransfer))->toCriteria()
-            );
+        $ordersCount = $orderListQuery->count();
+        if (!$ordersCount) {
+            return new OrderListTransfer();
         }
+
+        $orderListQuery = $this->applyFilterToQuery($orderListQuery, $orderListRequestTransfer->getFilter());
 
         $orderListTransfer = $this->getFactory()
             ->createSalesOrderMapper()
             ->mapSalesOrderEntitiesToOrderListTransfer($orderListQuery->find()->getArrayCopy(), new OrderListTransfer());
-        $orderListTransfer->setPagination(
-            $this->getPaginationTransferByOrderQuery($orderListRequestTransfer, $orderListQuery)
-        );
+
+        $paginationTransfer = $this->getPaginationTransfer($orderListRequestTransfer, $orderListQuery, $ordersCount);
+        $orderListTransfer->setPagination($paginationTransfer);
 
         return $orderListTransfer;
     }
@@ -116,24 +117,27 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     /**
      * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderListQuery
+     * @param int $ordersCount
      *
      * @return \Generated\Shared\Transfer\PaginationTransfer
      */
-    protected function getPaginationTransferByOrderQuery(
+    protected function getPaginationTransfer(
         OrderListRequestTransfer $orderListRequestTransfer,
-        SpySalesOrderQuery $orderListQuery
+        SpySalesOrderQuery $orderListQuery,
+        int $ordersCount
     ): PaginationTransfer {
         $paginationTransfer = $orderListRequestTransfer->getPagination();
         if (!$paginationTransfer) {
-            return (new PaginationTransfer())->setNbResults($orderListQuery->count());
+            return (new PaginationTransfer())->setNbResults($ordersCount);
         }
 
-        $page = $paginationTransfer
+        $paginationTransfer
             ->requirePage()
-            ->getPage();
+            ->requireMaxPerPage();
+
+        $page = $paginationTransfer->getPage();
 
         $maxPerPage = $paginationTransfer
-            ->requireMaxPerPage()
             ->getMaxPerPage();
 
         $paginationModel = $orderListQuery->paginate($page, $maxPerPage);
@@ -146,5 +150,22 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
         return $paginationTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderListQuery
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function applyFilterToQuery(SpySalesOrderQuery $orderListQuery, ?FilterTransfer $filterTransfer)
+    {
+        if ($filterTransfer) {
+            $orderListQuery->mergeWith(
+                (new PropelFilterCriteria($filterTransfer))->toCriteria()
+            );
+        }
+
+        return $orderListQuery;
     }
 }
