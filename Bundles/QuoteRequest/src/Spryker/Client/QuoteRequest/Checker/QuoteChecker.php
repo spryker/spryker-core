@@ -51,6 +51,8 @@ class QuoteChecker implements QuoteCheckerInterface
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
