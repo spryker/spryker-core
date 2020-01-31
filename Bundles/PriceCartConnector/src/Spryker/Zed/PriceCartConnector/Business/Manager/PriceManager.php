@@ -15,6 +15,7 @@ use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface;
 
 class PriceManager implements PriceManagerInterface
 {
@@ -46,18 +47,26 @@ class PriceManager implements PriceManagerInterface
     protected $priceProductFilter;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface $priceProductFilter
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
         PriceCartToPriceInterface $priceFacade,
-        PriceProductFilterInterface $priceProductFilter
+        PriceProductFilterInterface $priceProductFilter,
+        PriceCartConnectorToPriceProductServiceInterface $priceProductService
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
         $this->priceProductFilter = $priceProductFilter;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -75,8 +84,12 @@ class PriceManager implements PriceManagerInterface
         $priceProductFilterTransfers = $this->createPriceProductFilterTransfers($cartChangeTransfer);
         $priceProductTransfers = $this->getIndexedPriceProductTransfersByPriceProductFilterTransfers($priceProductFilterTransfers);
 
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductTransfer = $this->getPriceProductTransferBySku($priceProductTransfers, $itemTransfer->getSku());
+        foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
+            $priceProductTransfersForSku = $this->getPriceProductTransfersBySku($priceProductTransfers, $itemTransfer->getSku());
+            $priceProductTransfer = (count($priceProductTransfersForSku) === 1) ?
+                reset($priceProductTransfersForSku) :
+                $this->priceProductService->resolveProductPriceByPriceProductFilter($priceProductTransfersForSku, $priceProductFilterTransfers[$key]);
+
             $itemTransfer = $this->setOriginUnitPrices($itemTransfer, $priceProductTransfer, $priceMode);
 
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
@@ -97,7 +110,7 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
      */
     protected function getIndexedPriceProductTransfersByPriceProductFilterTransfers(array $priceProductFilterTransfers): array
     {
@@ -107,14 +120,14 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $priceProductTransfers
      * @param string $sku
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getPriceProductTransferBySku(array $priceProductTransfers, string $sku): PriceProductTransfer
+    protected function getPriceProductTransfersBySku(array $priceProductTransfers, string $sku): array
     {
         if (!isset($priceProductTransfers[$sku])) {
             throw new PriceMissingException(
@@ -131,13 +144,13 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
      */
     protected function indexPriceProductTransfersBySku(array $priceProductTransfers): array
     {
         $indexedPriceProductTransfers = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()] = $priceProductTransfer;
+            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
         }
 
         return $indexedPriceProductTransfers;
@@ -151,8 +164,8 @@ class PriceManager implements PriceManagerInterface
     protected function createPriceProductFilterTransfers(CartChangeTransfer $cartChangeTransfer): array
     {
         $priceProductFilterTransfers = [];
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductFilterTransfers[] = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
+        foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
+            $priceProductFilterTransfers[$key] = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
         }
 
         return $priceProductFilterTransfers;
