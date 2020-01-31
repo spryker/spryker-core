@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductMeasurementUnitsRestApi\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductMeasurementUnitsRestApi\Business\Mapper\SalesUnitMapper;
 use Spryker\Zed\ProductMeasurementUnitsRestApi\Business\Mapper\SalesUnitMapperInterface;
+use Spryker\Zed\ProductMeasurementUnitsRestApi\Dependency\Facade\ProductMeasurementUnitsRestApiToProductPackagingUnitFacadeInterface;
+use Spryker\Zed\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig getConfig()
@@ -21,6 +23,14 @@ class ProductMeasurementUnitsRestApiBusinessFactory extends AbstractBusinessFact
      */
     public function createSalesUnitMapper(): SalesUnitMapperInterface
     {
-        return new SalesUnitMapper();
+        return new SalesUnitMapper($this->getProductPackagingUnitFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnitsRestApi\Dependency\Facade\ProductMeasurementUnitsRestApiToProductPackagingUnitFacadeInterface
+     */
+    public function getProductPackagingUnitFacade(): ProductMeasurementUnitsRestApiToProductPackagingUnitFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitsRestApiDependencyProvider::FACADE_PRODUCT_PACKAGING_UNIT);
     }
 }

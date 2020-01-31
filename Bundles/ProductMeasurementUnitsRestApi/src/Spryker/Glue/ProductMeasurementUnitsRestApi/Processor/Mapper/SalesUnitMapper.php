@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
+use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestSalesUnitsAttributesTransfer;
 use Generated\Shared\Transfer\SalesUnitTransfer;
 
@@ -50,5 +51,27 @@ class SalesUnitMapper implements SalesUnitMapperInterface
             ->setAmount($itemTransfer->getAmount());
 
         return $restItemsAttributesTransfer->setSalesUnit($salesUnitTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestOrderItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+    ): RestOrderItemsAttributesTransfer {
+        $productMeasurementSalesUnitTransfer = $itemTransfer->getAmountSalesUnit();
+        if (!$productMeasurementSalesUnitTransfer) {
+            return $restOrderItemsAttributesTransfer;
+        }
+
+        $salesUnitTransfer = (new SalesUnitTransfer())
+            ->setId($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit())
+            ->setAmount($itemTransfer->getAmount());
+
+        return $restOrderItemsAttributesTransfer->setSalesUnit($salesUnitTransfer);
     }
 }

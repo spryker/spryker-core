@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
@@ -413,4 +414,16 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItemFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a product packaging unit by product sku.
+     *
+     * @api
+     *
+     * @param string $productSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function findProductPackagingUnitByProductSku(string $productSku): ?ProductPackagingUnitTransfer;
 }

@@ -10,9 +10,23 @@ namespace Spryker\Zed\ProductMeasurementUnitsRestApi\Business\Mapper;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Spryker\Zed\ProductMeasurementUnitsRestApi\Dependency\Facade\ProductMeasurementUnitsRestApiToProductPackagingUnitFacadeInterface;
 
 class SalesUnitMapper implements SalesUnitMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductMeasurementUnitsRestApi\Dependency\Facade\ProductMeasurementUnitsRestApiToProductPackagingUnitFacadeInterface
+     */
+    protected $productPackagingUnitFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductMeasurementUnitsRestApi\Dependency\Facade\ProductMeasurementUnitsRestApiToProductPackagingUnitFacadeInterface $productPackagingUnitFacade
+     */
+    public function __construct(ProductMeasurementUnitsRestApiToProductPackagingUnitFacadeInterface $productPackagingUnitFacade)
+    {
+        $this->productPackagingUnitFacade = $productPackagingUnitFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
@@ -25,6 +39,10 @@ class SalesUnitMapper implements SalesUnitMapperInterface
     ): PersistentCartChangeTransfer {
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku() !== $cartItemRequestTransfer->getSku()) {
+                continue;
+            }
+
+            if (!$this->productPackagingUnitFacade->findProductPackagingUnitByProductSku($itemTransfer->getSku())) {
                 continue;
             }
 

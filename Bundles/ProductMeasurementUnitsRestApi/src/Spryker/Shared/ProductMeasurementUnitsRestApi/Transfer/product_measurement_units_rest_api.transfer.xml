@@ -59,4 +59,8 @@
         <property name="salesUnit" type="SalesUnit"/>
     </transfer>
 
+    <transfer name="RestOrderItemsAttributes">
+        <property name="salesUnit" type="SalesUnit"/>
+    </transfer>
+
 </transfers>
