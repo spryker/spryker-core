@@ -235,7 +235,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Returns true if request reference is set, false otherwise.
+     * - Returns true if quote request reference is set and quote request version reference is empty, false otherwise.
      *
      * @api
      *
@@ -243,5 +243,5 @@ interface QuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestReferenceSet(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
 }

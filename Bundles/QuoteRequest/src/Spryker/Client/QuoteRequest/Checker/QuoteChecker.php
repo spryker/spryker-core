@@ -16,8 +16,8 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteRequestReferenceSet(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
     {
-        return (bool)$quoteTransfer->getQuoteRequestReference();
+        return $quoteTransfer->getQuoteRequestReference() && !$quoteTransfer->getQuoteRequestVersionReference();
     }
 }
