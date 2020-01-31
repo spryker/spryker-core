@@ -59,7 +59,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Acl\Business\Model\Acl\AclMapperInterface
+     * @return \Spryker\Zed\Acl\Business\Acl\AclMapperInterface
      */
     public function createAclMapper(): AclMapperInterface
     {
