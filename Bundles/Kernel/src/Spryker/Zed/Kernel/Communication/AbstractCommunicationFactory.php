@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
+use Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface;
+use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
@@ -21,6 +23,14 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private $facade;
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
+     */
+    public function createResolverCacheManager(): ResolverCacheFactoryInterface
+    {
+        return new ResolverCacheManager();
+    }
 
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade

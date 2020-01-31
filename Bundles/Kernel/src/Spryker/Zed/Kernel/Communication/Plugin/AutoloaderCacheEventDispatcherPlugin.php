@@ -10,7 +10,6 @@ namespace Spryker\Zed\Kernel\Communication\Plugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -44,7 +43,7 @@ class AutoloaderCacheEventDispatcherPlugin extends AbstractPlugin implements Eve
      */
     protected function persistClassResolverCache(): void
     {
-        $resolverCacheManager = new ResolverCacheManager();
+        $resolverCacheManager = $this->getFactory()->createResolverCacheManager();
 
         if (!$resolverCacheManager->useCache()) {
             return;
