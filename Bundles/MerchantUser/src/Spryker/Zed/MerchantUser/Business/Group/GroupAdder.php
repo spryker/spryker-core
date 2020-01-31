@@ -58,7 +58,7 @@ class GroupAdder implements GroupAdderInterface
                 ->addError((new MessageTransfer())->setMessage(static::GROUP_NOT_FOUND_ERROR_MESSAGE));
         }
 
-        $this->aclFacade->addUserToGroup($merchantUserTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
+        $this->aclFacade->addUserToGroup($merchantUserTransfer->getUser()->getIdUser(), $groupTransfer->getIdAclGroup());
 
         return (new MerchantUserResponseTransfer())->setIsSuccessful(true);
     }
