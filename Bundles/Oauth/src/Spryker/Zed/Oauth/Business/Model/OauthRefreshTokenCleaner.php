@@ -65,7 +65,7 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
     }
 
     /**
-     * @param \ArrayObject $oauthRefreshTokenTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
      *
      * @return void
      */
