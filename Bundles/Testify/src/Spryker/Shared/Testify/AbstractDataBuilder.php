@@ -16,14 +16,9 @@ use Spryker\Shared\Testify\Exception\RuleNotDefinedException;
 abstract class AbstractDataBuilder
 {
     /**
-     * @var \Faker\Generator[]
-     */
-    protected static $fakerInstances;
-
-    /**
      * @var \Faker\Generator
      */
-    protected $faker;
+    protected static $faker;
 
     /**
      * @var array
@@ -72,11 +67,9 @@ abstract class AbstractDataBuilder
         $this->seedData = $seed;
         $this->rules = $this->defaultRules;
 
-        if (!isset(static::$fakerInstances[get_called_class()])) {
-            static::$fakerInstances[get_called_class()] = Factory::create();
+        if (static::$faker === null) {
+            static::$faker = Factory::create();
         }
-
-        $this->faker = static::$fakerInstances[get_called_class()];
     }
 
     /**
@@ -271,7 +264,7 @@ abstract class AbstractDataBuilder
         }
 
         // @codingStandardsIgnoreStart
-        return eval("return \$this->faker->$rule;");
+        return eval("return \$static::\$faker->$rule;");
         // @codingStandardsIgnoreEnd
     }
 
