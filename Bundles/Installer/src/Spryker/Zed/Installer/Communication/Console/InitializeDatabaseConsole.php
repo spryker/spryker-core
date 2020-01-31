@@ -10,7 +10,6 @@ namespace Spryker\Zed\Installer\Communication\Console;
 use Exception;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -21,8 +20,6 @@ class InitializeDatabaseConsole extends Console
 {
     public const COMMAND_NAME = 'setup:init-db';
     public const DESCRIPTION = 'Fill the database with required data';
-    public const OPTION_PLUGIN = 'plugin';
-    public const OPTION_SHORTCUT_PLUGIN = 'p';
 
     /**
      * @return void
@@ -31,13 +28,6 @@ class InitializeDatabaseConsole extends Console
     {
         $this->setName(static::COMMAND_NAME)
             ->setDescription(static::DESCRIPTION);
-
-        $this->addOption(
-            static::OPTION_PLUGIN,
-            static::OPTION_SHORTCUT_PLUGIN,
-            InputOption::VALUE_IS_ARRAY + InputOption::VALUE_OPTIONAL,
-            'Name of plugin to be installed'
-        );
     }
 
     /**
@@ -52,9 +42,6 @@ class InitializeDatabaseConsole extends Console
 
         try {
             foreach ($installerPlugins as $plugin) {
-                if (!$this->needToInstall($input, get_class($plugin))) {
-                    continue;
-                }
                 $name = $this->getPluginNameFromClass(get_class($plugin));
 
                 $output->writeln('Installing DB data for ' . $name);
@@ -78,24 +65,6 @@ class InitializeDatabaseConsole extends Console
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param string $pluginName
-     *
-     * @return bool
-     */
-    protected function needToInstall(InputInterface $input, string $pluginName): bool
-    {
-        /** @var array $pluginsToInstall */
-        $pluginsToInstall = $input->getOption(static::OPTION_PLUGIN);
-
-        if (!$pluginsToInstall) {
-            return true;
-        }
-
-        return in_array($this->getPluginShortNameFromClass($pluginName), $pluginsToInstall);
-    }
-
-    /**
      * @param string $className
      *
      * @return mixed
@@ -105,17 +74,5 @@ class InitializeDatabaseConsole extends Console
         $pattern = '#^.+?\\\.+?\\\(.+?)\\\.+$#i';
 
         return preg_replace($pattern, '${1}', $className);
-    }
-
-    /**
-     * @param string $className
-     *
-     * @return string|null
-     */
-    public function getPluginShortNameFromClass(string $className): ?string
-    {
-        $path = explode('\\', $className);
-
-        return array_pop($path);
     }
 }

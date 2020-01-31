@@ -167,7 +167,7 @@ interface AclQueryContainerInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int $type
+     * @param string $type
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

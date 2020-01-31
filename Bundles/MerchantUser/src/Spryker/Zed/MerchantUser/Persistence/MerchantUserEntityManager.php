@@ -21,7 +21,7 @@ class MerchantUserEntityManager extends AbstractEntityManager implements Merchan
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
-    public function createMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer
+    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer
     {
         $merchantUserMapper = $this->getFactory()->createMerchantUserMapper();
         $merchantUserEntity = $merchantUserMapper->mapMerchantUserTransferToMerchantUserEntity($merchantUserTransfer, new SpyMerchantUser());

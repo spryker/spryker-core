@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MerchantUser;
 
+use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantUserConfig extends AbstractBundleConfig
@@ -15,7 +18,6 @@ class MerchantUserConfig extends AbstractBundleConfig
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
      */
     public const USER_CREATION_DEFAULT_STATUS = 'blocked';
-    public const USER_CREATION_DEFAULT_PASSWORD_LENGTH = 8;
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::VALIDATOR_WILDCARD
      */
@@ -27,6 +29,14 @@ class MerchantUserConfig extends AbstractBundleConfig
     public const MERCHANT_PORTAL_ADMIN_ROLE = 'merchant_portal_admin_role';
     public const MERCHANT_PORTAL_ADMIN_GROUP = 'merchant_portal_admin_group';
     public const MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
+
+    /**
+     * @return string
+     */
+    public function getUserCreationStatus(): string
+    {
+        return static::USER_CREATION_DEFAULT_STATUS;
+    }
 
     /**
      * @return bool
@@ -41,20 +51,18 @@ class MerchantUserConfig extends AbstractBundleConfig
      */
     public function getInstallRoles(): array
     {
-        return [
-            [
-                'name' => static::MERCHANT_PORTAL_ADMIN_ROLE,
-                'group' => [
-                    'name' => static::MERCHANT_PORTAL_ADMIN_GROUP,
-                ],
-                'rule' => [
-                    'bundle' => static::VALIDATOR_WILDCARD,
-                    'controller' => static::VALIDATOR_WILDCARD,
-                    'action' => static::VALIDATOR_WILDCARD,
-                    'type' => static::ALLOW,
-                ],
-            ],
-        ];
+        $roles[] = (new RoleTransfer())
+            ->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
+            ->setAclGroup((new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP))
+            ->addAclRule(
+                (new RuleTransfer())
+                    ->setBundle(static::VALIDATOR_WILDCARD)
+                    ->setController(static::VALIDATOR_WILDCARD)
+                    ->setAction(static::VALIDATOR_WILDCARD)
+                    ->setType(static::ALLOW)
+            );
+
+        return $roles;
     }
 
     /**
@@ -62,19 +70,10 @@ class MerchantUserConfig extends AbstractBundleConfig
      */
     public function getInstallGroups(): array
     {
-        return [
-            [
-                'name' => static::MERCHANT_PORTAL_ADMIN_GROUP,
-                'reference' => static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE,
-            ],
-        ];
-    }
+        $groups[] = (new GroupTransfer())
+            ->setName(static::MERCHANT_PORTAL_ADMIN_GROUP)
+            ->setReference(static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE);
 
-    /**
-     * @return array
-     */
-    public function getInstallUserGroups(): array
-    {
-        return [];
+        return $groups;
     }
 }
