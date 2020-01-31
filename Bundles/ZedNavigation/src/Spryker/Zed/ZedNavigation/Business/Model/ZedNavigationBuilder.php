@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ZedNavigation\Business\Model;
 
 use Generated\Shared\Transfer\NavigationItemTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface;
@@ -16,6 +17,7 @@ class ZedNavigationBuilder
 {
     public const MENU = 'menu';
     public const PATH = 'path';
+    public const PAGES = 'pages';
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface
@@ -83,9 +85,9 @@ class ZedNavigationBuilder
     protected function filterItems(array $navigationItems): array
     {
         foreach ($navigationItems as $itemKey => $item) {
-            if (!isset($item['bundle'], $item['controller'], $item['action'])) {
-                $navigationItems[$itemKey]['pages'] = $this->filterItems($item['pages']);
-                if (!$navigationItems[$itemKey]['pages']) {
+            if (!isset($item[RuleTransfer::BUNDLE], $item[RuleTransfer::CONTROLLER], $item[RuleTransfer::ACTION])) {
+                $navigationItems[$itemKey][static::PAGES] = $this->filterItems($item[static::PAGES]);
+                if (!$navigationItems[$itemKey][static::PAGES]) {
                     unset($navigationItems[$itemKey]);
                 }
 
@@ -93,9 +95,9 @@ class ZedNavigationBuilder
             }
 
             $itemTransfer = (new NavigationItemTransfer())
-                ->setModule($item['bundle'])
-                ->setController($item['controller'])
-                ->setAction($item['action']);
+                ->setModule($item[RuleTransfer::BUNDLE])
+                ->setController($item[RuleTransfer::CONTROLLER])
+                ->setAction($item[RuleTransfer::ACTION]);
 
             foreach ($this->navigationItemFilterPlugins as $plugin) {
                 if (!$plugin->isVisible($itemTransfer)) {

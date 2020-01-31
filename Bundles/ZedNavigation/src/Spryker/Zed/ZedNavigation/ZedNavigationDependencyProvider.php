@@ -74,7 +74,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addNavigationItemFilterPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_NAVIGATION_ITEM_FILTER_STACK, function (Container $container) {
+        $container->set(static::PLUGINS_NAVIGATION_ITEM_FILTER_STACK, function () {
             return $this->getNavigationItemFilterPlugins();
         });
 
