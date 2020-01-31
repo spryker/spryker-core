@@ -9,7 +9,7 @@ namespace Spryker\Zed\AclExtension\Dependency\Plugin;
 
 /**
  * Specification:
- * - Executed on install
+ * - Executed on install @see \Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole
  * - Use this plugin if default Roles or Groups are needed in project
  * - The plugin methods are run in the following way: getGroups, getRoles.
  */
