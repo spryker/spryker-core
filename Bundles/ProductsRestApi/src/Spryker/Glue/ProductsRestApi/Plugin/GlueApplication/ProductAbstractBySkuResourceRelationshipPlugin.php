@@ -32,7 +32,7 @@ class ProductAbstractBySkuResourceRelationshipPlugin extends AbstractPlugin impl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createAbstractProductsRelationshipExpander()
+            ->createProductAbstractRelationshipExpander()
             ->addResourceRelationshipsBySkuList($resources, $restRequest);
     }
 

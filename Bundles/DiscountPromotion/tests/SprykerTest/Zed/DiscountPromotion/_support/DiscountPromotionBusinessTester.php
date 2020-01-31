@@ -8,7 +8,12 @@
 namespace SprykerTest\Zed\DiscountPromotion;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\DiscountPromotionTransfer;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
+use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
+use Spryker\Zed\Stock\Business\StockFacadeInterface;
 
 /**
  * Inherited Methods
@@ -23,6 +28,7 @@ use Generated\Shared\Transfer\DiscountPromotionTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -31,41 +37,80 @@ class DiscountPromotionBusinessTester extends Actor
     use _generated\DiscountPromotionBusinessTesterActions;
 
     /**
-     * @param string $promotionItemSku
-     * @param int $promotionItemQuantity
-     *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     * @return \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
-    public function getDiscountPromotionTransfer(string $promotionItemSku, int $promotionItemQuantity): DiscountPromotionTransfer
+    public function getAvailabilityFacade(): AvailabilityFacadeInterface
     {
-        $discountGeneralTransfer = $this->haveDiscount();
-        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
-
-        return $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
+        return $this->getLocator()
+            ->availability()
+            ->facade();
     }
 
     /**
-     * @param array $discountPromotionAttributes
-     *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     * @return \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
-    public function mapDiscountPromotionAttributesToTransfer(array $discountPromotionAttributes): DiscountPromotionTransfer
+    public function getStockFacade(): StockFacadeInterface
     {
-        $discountPromotionTransfer = new DiscountPromotionTransfer();
-
-        return $discountPromotionTransfer->fromArray($discountPromotionAttributes);
+        return $this->getLocator()
+            ->stock()
+            ->facade();
     }
 
     /**
-     * @param string $promotionSku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     * @return void
      */
-    protected function createDiscountPromotionTransfer(string $promotionSku, int $quantity): DiscountPromotionTransfer
+    public function addStockForProduct(ProductConcreteTransfer $productConcreteTransfer, int $quantity): void
     {
-        return (new DiscountPromotionTransfer())
-            ->setAbstractSku($promotionSku)
-            ->setQuantity($quantity);
+        $availableStockTypes = $this->getStockFacade()
+            ->getAvailableStockTypes();
+
+        foreach ($availableStockTypes as $stockType) {
+            $stockProductTransfer = (new StockProductTransfer())
+                ->setSku($productConcreteTransfer->getSku())
+                ->setQuantity($quantity)
+                ->setStockType($stockType);
+
+            $this->getStockFacade()
+                ->createStockProduct($stockProductTransfer);
+        }
+    }
+
+    /**
+     * @param array $productAbstractOverride
+     * @param array $productConcreteOverride
+     * @param int $quantity
+     *
+     * @return void
+     */
+    public function prepareProductAvailability(
+        array $productAbstractOverride = [],
+        array $productConcreteOverride = [],
+        int $quantity = 1
+    ): void {
+        $productConcreteTransfer = $this->haveProduct($productConcreteOverride, $productAbstractOverride);
+
+        $this->addStockForProduct($productConcreteTransfer, $quantity);
+        $this->getAvailabilityFacade()
+            ->updateAvailability($productConcreteTransfer->getSku());
+    }
+
+    /**
+     * @param array $storeOverride
+     * @param array $quoteOverride
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function prepareQuoteWithStore(
+        array $storeOverride = [],
+        array $quoteOverride = []
+    ): QuoteTransfer {
+        $storeTransfer = $this->haveStore($storeOverride);
+
+        return (new QuoteBuilder($quoteOverride))
+            ->build()
+            ->setStore($storeTransfer);
     }
 }
