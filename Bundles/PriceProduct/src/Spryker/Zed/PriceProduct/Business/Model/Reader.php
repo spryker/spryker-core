@@ -556,13 +556,16 @@ class Reader implements ReaderInterface
      */
     protected function resolveProductPrices(array $priceProductTransfers, array $priceProductFilterTransfers): array
     {
-        $priceProductCriteriaTransfersBySku = $this
+        $priceProductCriteriaTransfers = $this
             ->priceProductCriteriaBuilder
-            ->buildCriteriaTransfersFromFilterTransfersIndexedBySku($priceProductFilterTransfers);
+            ->buildCriteriaTransfersFromFilterTransfers($priceProductFilterTransfers);
 
         $resolvedPriceProductTransfers = [];
-        foreach ($priceProductTransfers as $sku => $pricesBySku) {
-            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria($pricesBySku, $priceProductCriteriaTransfersBySku[$sku]);
+        foreach ($priceProductCriteriaTransfers as $priceProductCriteriaTransfer) {
+            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
+                $priceProductTransfers[$priceProductCriteriaTransfer->getSku()],
+                $priceProductCriteriaTransfer
+            );
 
             if ($this->isPriceProductHasValidMoneyValue($resolvedItemPrice, $priceProductFilterTransfers)) {
                 $resolvedPriceProductTransfers[] = $resolvedItemPrice;
