@@ -9,6 +9,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
@@ -23,6 +24,7 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
         'int' => self::VALUE_TYPE_INTEGER,
         'bool' => self::VALUE_TYPE_BOOLEAN,
         'float' => self::VALUE_TYPE_NUMBER,
+        'Spryker\DecimalObject\Decimal' => self::VALUE_TYPE_NUMBER,
     ];
 
     protected const KEY_TYPE = 'type';
@@ -184,7 +186,7 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      */
     public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
     {
-        if (!class_exists($metadataValue[static::KEY_TYPE])) {
+        if ($this->isScalarType($metadataValue[static::KEY_TYPE])) {
             return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE], $metadataValue[static::KEY_IS_NULLABLE]);
         }
         $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
@@ -200,7 +202,7 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      */
     public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
     {
-        if (!class_exists($metadataValue[static::KEY_TYPE])) {
+        if ($this->isScalarType($metadataValue[static::KEY_TYPE])) {
             return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE], $metadataValue[static::KEY_IS_NULLABLE]);
         }
         $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
@@ -216,5 +218,15 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     protected function mapScalarSchemaType(string $type): string
     {
         return static::DATA_TYPES_MAPPING_LIST[$type] ?? $type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isScalarType(string $type): bool
+    {
+        return !(class_exists($type) && is_a($type, AbstractTransfer::class, true));
     }
 }

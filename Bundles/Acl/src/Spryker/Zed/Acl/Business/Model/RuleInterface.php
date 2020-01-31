@@ -68,7 +68,7 @@ interface RuleInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int|string $type
+     * @param string $type
      *
      * @return bool
      */

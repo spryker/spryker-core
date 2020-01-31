@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantUser\Business;
 
-use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserResponseTransfer;
+use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -25,13 +27,13 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    public function createMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantPostCreator()
-            ->handleMerchantPostCreate($merchantTransfer);
+            ->createMerchantUserCreator()
+            ->createMerchantAdmin($merchantTransfer);
     }
 
     /**
@@ -39,15 +41,28 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
+    public function updateMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantPostUpdater()
-            ->handleMerchantPostUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
+            ->createMerchantUserUpdater()
+            ->updateMerchantAdmin($merchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
+     */
+    public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
+    {
+        return $this->getRepository()->findOne($merchantUserCriteriaFilterTransfer);
     }
 }

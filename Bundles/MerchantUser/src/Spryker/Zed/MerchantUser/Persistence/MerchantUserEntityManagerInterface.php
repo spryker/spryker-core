@@ -16,5 +16,5 @@ interface MerchantUserEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
-    public function createMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer;
+    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer;
 }

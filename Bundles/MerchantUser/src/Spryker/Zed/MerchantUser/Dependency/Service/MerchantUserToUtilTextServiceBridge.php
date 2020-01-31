@@ -23,17 +23,12 @@ class MerchantUserToUtilTextServiceBridge implements MerchantUserToUtilTextServi
     }
 
     /**
-     * Specification:
-     * - Generates random string for given length value.
-     *
-     * @api
-     *
      * @param int $length
      *
      * @return string
      */
-    public function generateRandomString($length)
+    public function generateRandomByteString(int $length = 32): string
     {
-        return $this->utilTextService->generateRandomString($length);
+        return $this->utilTextService->generateRandomByteString($length);
     }
 }
