@@ -91,14 +91,17 @@ class RestApiDocumentationPathGeneratorTest extends Unit
      */
     public function testAddGetPathShouldGenerateValidGetMethodDataForPathWithSuccessResponseType(?int $code, ?string $description): void
     {
+        //Arrange
         $pathMethodDataTransfer = $this->tester->getPathMethodDataTransferForGetMethod()
             ->addResponseSchema($this->tester->getResponseSchemaDataTransfer($code, $description));
         $errorSchemaDataTransfer = $this->tester->getErrorSchemaDataTransfer();
         $responseSchemaDataTransfer = $this->tester->getResponseSchemaDataTransfer(static::RESPONSE_CODE_OK);
         $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchemaDataTransfer, $responseSchemaDataTransfer);
 
+        //Act
         $paths = $this->pathGenerator->getPaths();
 
+        //Assert
         $this->assertArrayHasKey(static::TEST_PATH, $paths);
         $this->assertArraySubset($this->tester->getPathGeneratorExpectedGetPathData($code, $description), $paths[static::TEST_PATH]);
     }
