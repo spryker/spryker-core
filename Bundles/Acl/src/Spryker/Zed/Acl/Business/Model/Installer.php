@@ -138,9 +138,9 @@ class Installer implements InstallerInterface
      * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
-    protected function addRuleToRole(RuleTransfer $ruleTransfer, RoleTransfer $roleTransfer): void
+    protected function addRuleToRole(RuleTransfer $ruleTransfer, RoleTransfer $roleTransfer): RuleTransfer
     {
         $existsRoleRule = $this->rule->existsRoleRule(
             $roleTransfer->getIdAclRole(),
@@ -150,10 +150,11 @@ class Installer implements InstallerInterface
             $ruleTransfer->getType()
         );
         if ($existsRoleRule) {
-            return;
+            return $ruleTransfer;
         }
         $ruleTransfer->setFkAclRole($roleTransfer->getIdAclRole());
-        $this->rule->addRule($ruleTransfer);
+
+        return $this->rule->addRule($ruleTransfer);
     }
 
     /**

@@ -47,13 +47,14 @@ class AclConfigReader implements AclConfigReaderInterface
             if (!isset($result[$ruleData[static::ROLE_INDEX]])) {
                 continue;
             }
+            $roleTransfer = $result[$ruleData[static::ROLE_INDEX]];
 
             $rule = (new RuleTransfer())
                 ->setType($ruleData[RuleTransfer::TYPE])
                 ->setAction($ruleData[RuleTransfer::ACTION])
                 ->setBundle($ruleData[RuleTransfer::BUNDLE])
                 ->setController($ruleData[RuleTransfer::CONTROLLER]);
-            $result[$ruleData[static::ROLE_INDEX]]->addAclRule($rule);
+            $roleTransfer->addAclRule($rule);
         }
 
         return array_values($result);
