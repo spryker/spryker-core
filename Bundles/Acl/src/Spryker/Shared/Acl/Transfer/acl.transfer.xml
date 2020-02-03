@@ -42,7 +42,7 @@
     <transfer name="User">
         <property name="idUser" type="int"/>
         <property name="username" type="string"/>
-        <property name="aclGroups" type="Group[]" singular="group"/>
+        <property name="aclGroups" type="Group[]" singular="aclGroup"/>
     </transfer>
 
 </transfers>

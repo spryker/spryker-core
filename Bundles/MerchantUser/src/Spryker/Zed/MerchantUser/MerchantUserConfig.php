@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
@@ -46,30 +47,54 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\RoleTransfer[]
      */
     public function getInstallRoles(): array
     {
-        $roles[] = (new RoleTransfer())
-            ->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
-            ->setAclGroup((new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP))
-            ->addAclRule(
-                (new RuleTransfer())
-                    ->setBundle(static::VALIDATOR_WILDCARD)
-                    ->setController(static::VALIDATOR_WILDCARD)
-                    ->setAction(static::VALIDATOR_WILDCARD)
-                    ->setType(static::ALLOW)
-            );
-
-        return $roles;
+        return [
+            $this->getMerchantAdminRole(),
+        ];
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    protected function getMerchantAdminRole(): RoleTransfer
+    {
+        return (new RoleTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
+            ->setAclGroup($this->getMerchantAdminGroup())
+            ->setAclRules($this->getMerchantAdminRules());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\GroupTransfer
+     */
+    protected function getMerchantAdminGroup(): GroupTransfer
+    {
+        return (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP);
+    }
+
+    /**
+     * @return \ArrayObject
+     */
+    protected function getMerchantAdminRules(): ArrayObject
+    {
+        $rules = new ArrayObject();
+        $rules[] = (new RuleTransfer())
+            ->setBundle(static::VALIDATOR_WILDCARD)
+            ->setController(static::VALIDATOR_WILDCARD)
+            ->setAction(static::VALIDATOR_WILDCARD)
+            ->setType(static::ALLOW);
+
+        return $rules;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\GroupTransfer[]
      */
     public function getInstallGroups(): array
     {
-        $groups[] = (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP);
+        $groups[] = $this->getMerchantAdminGroup();
 
         return $groups;
     }

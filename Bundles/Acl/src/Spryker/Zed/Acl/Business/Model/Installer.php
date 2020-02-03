@@ -9,7 +9,7 @@ namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
-use Spryker\Zed\Acl\Business\Acl\AclMapperInterface;
+use Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
@@ -42,16 +42,16 @@ class Installer implements InstallerInterface
     protected $aclInstallerPlugins;
 
     /**
-     * @var \Spryker\Zed\Acl\Business\Acl\AclMapperInterface
+     * @var \Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface
      */
-    protected $aclMapper;
+    protected $aclConfigReader;
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Business\Model\RoleInterface $role
      * @param \Spryker\Zed\Acl\Business\Model\RuleInterface $rule
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $userFacade
-     * @param \Spryker\Zed\Acl\Business\Acl\AclMapperInterface $aclMapper
+     * @param \Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface $aclConfigReader
      * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[] $aclInstallerPlugins
      */
     public function __construct(
@@ -59,15 +59,15 @@ class Installer implements InstallerInterface
         RoleInterface $role,
         RuleInterface $rule,
         AclToUserInterface $userFacade,
-        AclMapperInterface $aclMapper,
+        AclConfigReaderInterface $aclConfigReader,
         array $aclInstallerPlugins
     ) {
         $this->group = $group;
         $this->role = $role;
         $this->rule = $rule;
         $this->userFacade = $userFacade;
+        $this->aclConfigReader = $aclConfigReader;
         $this->aclInstallerPlugins = $aclInstallerPlugins;
-        $this->aclMapper = $aclMapper;
     }
 
     /**
@@ -103,7 +103,8 @@ class Installer implements InstallerInterface
     protected function installRoles(): void
     {
         foreach ($this->getRoles() as $roleTransferToInstall) {
-            if (!$this->role->hasRoleName($roleTransferToInstall->getName())) {
+            $roleTransfer = $this->findRole($roleTransferToInstall);
+            if (!$roleTransfer) {
                 $group = $this->group->getByName($roleTransferToInstall->getAclGroup()->getName());
                 if (!$group->getIdAclGroup()) {
                     throw new GroupNotFoundException(sprintf('The group with name %s was not found', $roleTransferToInstall->getAclGroup()->getName()));
@@ -111,14 +112,26 @@ class Installer implements InstallerInterface
                 $group = $this->group->getByName($roleTransferToInstall->getAclGroup()->getName());
                 $roleTransfer = $this->role->addRole($roleTransferToInstall->getName());
                 $this->group->addRoleToGroup($roleTransfer->getIdAclRole(), $group->getIdAclGroup());
-            } else {
-                $roleTransfer = $this->role->getByName($roleTransferToInstall->getName());
             }
 
             foreach ($roleTransferToInstall->getAclRules() as $ruleTransfer) {
                 $this->addRuleToRole($ruleTransfer, $roleTransfer);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     */
+    protected function findRole(RoleTransfer $roleTransfer): ?RoleTransfer
+    {
+        if (!$this->role->hasRoleName($roleTransfer->getName())) {
+            return null;
+        }
+
+        return $this->role->getByName($roleTransfer->getName());
     }
 
     /**
@@ -151,7 +164,7 @@ class Installer implements InstallerInterface
      */
     protected function installUserGroupRelations(): void
     {
-        foreach ($this->aclMapper->getUserGroupRelations() as $userTransfer) {
+        foreach ($this->aclConfigReader->getUserGroupRelations() as $userTransfer) {
             foreach ($userTransfer->getAclGroups() as $groupTransfer) {
                 $foundGroupTransfer = $this->group->getByName($groupTransfer->getName());
                 if (!$foundGroupTransfer->getIdAclGroup()) {
@@ -175,7 +188,7 @@ class Installer implements InstallerInterface
      */
     protected function getRoles(): array
     {
-        $roleTransfers = $this->aclMapper->getRoles();
+        $roleTransfers = $this->aclConfigReader->getRoles();
 
         foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
             foreach ($aclInstallerPlugin->getRoles() as $roleTransfer) {
@@ -191,7 +204,7 @@ class Installer implements InstallerInterface
      */
     protected function getGroups(): array
     {
-        $groupTransfers = $this->aclMapper->getGroups();
+        $groupTransfers = $this->aclConfigReader->getGroups();
 
         foreach ($this->aclInstallerPlugins as $aclInstallerPlugin) {
             foreach ($aclInstallerPlugin->getGroups() as $groupTransfer) {

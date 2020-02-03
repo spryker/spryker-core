@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Acl\Business;
 
 use Spryker\Zed\Acl\AclDependencyProvider;
-use Spryker\Zed\Acl\Business\Acl\AclMapper;
-use Spryker\Zed\Acl\Business\Acl\AclMapperInterface;
+use Spryker\Zed\Acl\Business\Acl\AclConfigReader;
+use Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface;
 use Spryker\Zed\Acl\Business\Model\Group;
 use Spryker\Zed\Acl\Business\Model\Installer;
 use Spryker\Zed\Acl\Business\Model\Role;
@@ -59,11 +59,11 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Acl\Business\Acl\AclMapperInterface
+     * @return \Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface
      */
-    public function createAclMapper(): AclMapperInterface
+    public function createAclConfigReader(): AclConfigReaderInterface
     {
-        return new AclMapper($this->getConfig());
+        return new AclConfigReader($this->getConfig());
     }
 
     /**
@@ -84,7 +84,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->createRoleModel(),
             $this->createRuleModel(),
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
-            $this->createAclMapper(),
+            $this->createAclConfigReader(),
             $this->getAclInstallerPlugins()
         );
     }
@@ -102,6 +102,6 @@ class AclBusinessFactory extends AbstractBusinessFactory
      */
     public function getAclInstallerPlugins(): array
     {
-        return $this->getProvidedDependency(AclDependencyProvider::PLUGIN_ACL_INSTALLER_STACK);
+        return $this->getProvidedDependency(AclDependencyProvider::ACL_INSTALLER_PLUGINS);
     }
 }
