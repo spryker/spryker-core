@@ -17,4 +17,11 @@ interface ProductMeasurementUnitReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
     public function findProductMeasurementUnit(int $idProductMeasurementUnit): ?ProductMeasurementUnitTransfer;
+
+    /**
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getBulkProductMeasurementUnits(array $productMeasurementUnitIds): array;
 }

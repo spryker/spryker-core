@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductStorage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleBridge;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToProductClientBridge;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
