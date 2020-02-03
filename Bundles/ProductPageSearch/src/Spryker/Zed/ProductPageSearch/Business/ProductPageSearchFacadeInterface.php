@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
@@ -184,4 +185,21 @@ interface ProductPageSearchFacadeInterface
     public function expandProductPageLoadTransferWithPriceData(
         ProductPageLoadTransfer $productPageLoadTransfer
     ): ProductPageLoadTransfer;
+
+    /**
+     * Specification:
+     * - Returns an array of SynchronizationDataTransfer filtered by provided productIds.
+     * - Uses FilterTransfer for pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductIds(
+        FilterTransfer $filterTransfer,
+        array $productIds = []
+    ): array;
 }

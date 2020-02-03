@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageMapper;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ProductReplacementForStorageMapperInterface
 {
     /**
