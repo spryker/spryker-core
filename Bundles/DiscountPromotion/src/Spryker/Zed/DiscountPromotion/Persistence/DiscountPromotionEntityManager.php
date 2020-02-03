@@ -63,7 +63,7 @@ class DiscountPromotionEntityManager extends AbstractEntityManager implements Di
 
         /**
          * @deprecated Exists for Backward Compatibility reasons only. Saved original behavior (throwing an exception).
-         * Proper fix should be provided in GLUE- as technical debt.
+         * Proper fix should be provided in GLUE-10171 as technical debt.
          */
         if ($discountPromotionEntity === null) {
             $discountPromotionEntity->getDiscount();
