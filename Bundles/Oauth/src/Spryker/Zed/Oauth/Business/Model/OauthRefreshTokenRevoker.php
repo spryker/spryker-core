@@ -15,13 +15,12 @@ use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
-use LogicException;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
-class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
+class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 {
     use TransactionTrait;
     use CryptTrait;
@@ -72,9 +71,8 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
             ->getCustomer()
             ->requireCustomerReference();
 
-        try {
-            $encryptedRefreshTokenTransfer = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
-        } catch (Exception $exception) {
+        $encryptedRefreshTokenTransfer = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
+        if (!$encryptedRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
                 ->setError(static::REFRESH_TOKEN_INVALID_ERROR_MESSAGE);
@@ -86,7 +84,6 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
             ->setRevokedAt(null);
 
         $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($oauthTokenCriteriaFilterTransfer);
-
         if (!$oauthRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
@@ -134,7 +131,7 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
             $this->executeDeleteAccessTokensTransaction($oauthAccessTokenTransfers);
         });
 
-         return $revokeRefreshTokenResponseTransfer->setIsSuccessful(true);
+        return $revokeRefreshTokenResponseTransfer->setIsSuccessful(true);
     }
 
     /**
@@ -170,16 +167,14 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
     /**
      * @param string $refreshToken
      *
-     * @throws \LogicException
-     *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
      */
-    protected function decryptRefreshToken(string $refreshToken): OauthRefreshTokenTransfer
+    protected function decryptRefreshToken(string $refreshToken): ?OauthRefreshTokenTransfer
     {
         try {
             $refreshToken = $this->decrypt($refreshToken);
         } catch (Exception $e) {
-            throw new LogicException('Cannot decrypt the refresh token');
+            return null;
         }
 
         $refreshTokenData = json_decode($refreshToken, true);
