@@ -41,7 +41,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
             );
         }
 
-        $productLabelCollection = $this->getProductLabelsFromDictionary($idsProductLabel, $localeName);
+        $productLabelCollection = $this->getProductLabelsFromDictionary($idsProductLabel, $localeName, $storeName);
         $productLabelCollection = $this->sortCollection($productLabelCollection);
         $productLabelCollection = $this->extractExclusive($productLabelCollection);
 
@@ -114,10 +114,11 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     /**
      * @param int[] $idsProductLabel
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName)
+    protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName, ?string $storeName = null)
     {
         $dictionary = $this->dictionaryFactory
             ->createDictionaryByIdProductLabel()

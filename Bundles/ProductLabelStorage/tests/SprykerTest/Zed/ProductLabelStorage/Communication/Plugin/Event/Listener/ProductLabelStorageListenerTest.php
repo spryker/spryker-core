@@ -17,6 +17,7 @@ use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageBusinessFactory;
 use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryItemStorageUnpublishListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStoragePublishListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageUnpublishListener;
@@ -210,6 +211,39 @@ class ProductLabelStorageListenerTest extends Unit
         $data = $spyProductLabelDictionaryStorage->getData();
         $labelsCount = $this->tester->getProductLabelsCountByLocaleName($localeName);
         $this->assertSame($labelsCount - 1, count($data['items']));
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductLabelDictionaryItemStorageUnpublishListener(): void
+    {
+        //Arrange
+        $productLabelFacade = $this->getProductLabelFacade();
+        $productLabelStorageFacade = $this->getProductLabelStorageFacade();
+        $productLabelDictionaryStorageUnpublishListener = new ProductLabelDictionaryItemStorageUnpublishListener();
+        $productLabelDictionaryStorageUnpublishListener->setFacade($productLabelStorageFacade);
+
+        $this->productLabelTransfer = $this->tester->haveProductLabel();
+        $productLabelStorageFacade->publishLabelDictionary();
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setName($this->productLabelTransfer->getName()),
+        ];
+
+        // Act
+        $productLabelFacade->removeLabel($this->productLabelTransfer);
+        $productLabelDictionaryStorageUnpublishListener->handleBulk($eventTransfers, ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH);
+
+        // Assert
+        $productLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
+            ->find();
+
+        foreach ($productLabelDictionaryStorage as $productLabelDictionaryStorageItem) {
+            foreach ($productLabelDictionaryStorageItem->getData()['items'] as $item) {
+                $this->assertNotTrue($this->productLabelTransfer->getIdProductLabel() == $item['id_product_label']);
+            }
+        }
     }
 
     /**

@@ -123,7 +123,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     ): array {
         $uniqueProductLabelIds = array_unique(array_merge(...$productLabelIdsByProductAbstractIds));
         $productLabelDictionaryItemTransfers = $this->getProductLabelDictionaryItemTransfersGroupedById(
-            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName)
+            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName, $storeName)
         );
 
         $productLabelDictionaryItemTransfersByProductAbstractIds = [];

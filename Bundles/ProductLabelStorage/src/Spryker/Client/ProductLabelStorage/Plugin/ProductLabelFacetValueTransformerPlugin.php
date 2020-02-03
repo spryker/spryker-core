@@ -62,7 +62,7 @@ class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements 
     /**
      * @return string
      */
-    public function getStoreName()
+    protected function getStoreName()
     {
         return $this->getFactory()->getStore()->getStoreName();
     }

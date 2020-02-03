@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
@@ -17,10 +16,8 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  */
-class ProductLabelDictionaryStorageUnpublishItemListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductLabelDictionaryItemStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
-
     /**
      * @inheritDoc
      *
@@ -31,8 +28,6 @@ class ProductLabelDictionaryStorageUnpublishItemListener extends AbstractPlugin 
      */
     public function handleBulk(array $transfers, $eventName)
     {
-        $this->getTransactionHandler()->handleTransaction(function () {
-            $this->getFacade()->publishLabelDictionary();
-        });
+        $this->getFacade()->publishLabelDictionary();
     }
 }
