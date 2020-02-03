@@ -85,7 +85,7 @@ class DiscountPromotionBusinessTester extends Actor
      *
      * @return void
      */
-    public function prepareProductAvailability(
+    public function haveProductWithStock(
         array $productAbstractOverride = [],
         array $productConcreteOverride = [],
         int $quantity = 1

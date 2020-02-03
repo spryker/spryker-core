@@ -34,13 +34,7 @@ class DiscountPromotionDataHelper extends Module
             ->createPromotionDiscount($discountPromotionTransfer);
         $this->debugSection('DiscountPromotion Id', $discountPromotionTransfer->getIdDiscountPromotion());
 
-        $cleanupModule = $this->getDataCleanupHelper();
-        $cleanupModule->_addCleanup(function () use ($discountPromotionTransfer): void {
-            $this->debug('Deleting DiscountPromotion: ' . $discountPromotionTransfer->getIdDiscountPromotion());
-            $this->getDiscountPromotionQuery()
-                ->queryDiscountPromotionByIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion())
-                ->delete();
-        });
+        $this->cleanupDiscountPromotion($discountPromotionTransfer);
 
         return $discountPromotionTransfer;
     }
@@ -63,5 +57,21 @@ class DiscountPromotionDataHelper extends Module
         return $this->getLocator()
             ->discountPromotion()
             ->queryContainer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     *
+     * @return void
+     */
+    private function cleanupDiscountPromotion(DiscountPromotionTransfer $discountPromotionTransfer): void
+    {
+        $cleanupModule = $this->getDataCleanupHelper();
+        $cleanupModule->_addCleanup(function () use ($discountPromotionTransfer): void {
+            $this->debug('Deleting DiscountPromotion: ' . $discountPromotionTransfer->getIdDiscountPromotion());
+            $this->getDiscountPromotionQuery()
+                ->queryDiscountPromotionByIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion())
+                ->delete();
+        });
     }
 }
