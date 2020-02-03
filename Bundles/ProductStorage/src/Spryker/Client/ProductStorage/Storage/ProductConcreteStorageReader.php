@@ -9,8 +9,8 @@ namespace Spryker\Client\ProductStorage\Storage;
 
 use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToProductClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
@@ -49,6 +49,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $localeClient;
 
     /**
+     * @var \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToProductClientInterface
+     */
+    protected $productClient;
+
+    /**
      * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
@@ -72,6 +77,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
+     * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToProductClientInterface $productClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[] $productConcreteRestrictionFilterPlugins
@@ -80,6 +86,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         ProductStorageToLocaleInterface $localeClient,
+        ProductStorageToProductClientInterface $productClient,
         ProductStorageToUtilEncodingServiceInterface $utilEncodingService,
         array $productConcreteRestrictionPlugins = [],
         array $productConcreteRestrictionFilterPlugins = []
@@ -87,6 +94,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->localeClient = $localeClient;
+        $this->productClient = $productClient;
         $this->utilEncodingService = $utilEncodingService;
         $this->productConcreteRestrictionPlugins = $productConcreteRestrictionPlugins;
         $this->productConcreteRestrictionFilterPlugins = $productConcreteRestrictionFilterPlugins;
@@ -114,7 +122,22 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
-        return $this->getProductConcreteIds($mappingType, $identifiers, $localeName);
+        $storageKeys = $this->getStorageKeysByMapping($mappingType, $identifiers, $localeName);
+        $mappingData = $this->storageClient->getMulti($storageKeys);
+        $mappingData = array_filter($mappingData);
+
+        if (count($mappingData) === 0) {
+            return [];
+        }
+
+        $identifiersByStorageKey = $this->getIdentifiersIndexedByStorageKey($storageKeys);
+        $productConcreteIds = [];
+        foreach ($mappingData as $storageKey => $mappingDataItem) {
+            $decodedMappingDataItem = json_decode($mappingDataItem, true);
+            $productConcreteIds[$identifiersByStorageKey[$storageKey]] = $decodedMappingDataItem[static::KEY_ID] ?? null;
+        }
+
+        return $productConcreteIds;
     }
 
     /**
@@ -237,7 +260,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return [];
         }
 
-        //This was added for BC reason (if no bulk plugins were added)
+        // This was added for BC reason (if no bulk plugins were added)
         if (!$this->productConcreteRestrictionFilterPlugins) {
             $filteredIds = [];
             foreach ($productConcreteIds as $idProductConcrete) {
@@ -374,13 +397,9 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     protected function getBulkProductConcreteStorageDataForCollectorCompatibilityMode(array $productConcreteIds, string $localeName): array
     {
-        $clientLocatorClassName = Locator::class;
-        /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
-        $productClient = $clientLocatorClassName::getInstance()->product()->client();
-
         $collectorData = [];
         foreach ($productConcreteIds as $idProductConcrete) {
-            $productConcreteData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $localeName);
+            $productConcreteData = $this->productClient->getProductConcreteByIdAndLocale($idProductConcrete, $localeName);
 
             unset($productConcreteData[static::KEY_PRICES], $productConcreteData[static::KEY_IMAGE_SETS]);
             $productConcreteData = $this->changeKeys($productConcreteData);
@@ -389,33 +408,6 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         }
 
         return $collectorData;
-    }
-
-    /**
-     * @param string $mappingType
-     * @param string[] $identifiers
-     * @param string $localeName
-     *
-     * @return int[]
-     */
-    protected function getProductConcreteIds(string $mappingType, array $identifiers, string $localeName): array
-    {
-        $storageKeys = $this->getStorageKeysByMapping($mappingType, $identifiers, $localeName);
-        $mappingData = $this->storageClient->getMulti($storageKeys);
-        $mappingData = array_filter($mappingData);
-
-        if (count($mappingData) === 0) {
-            return [];
-        }
-
-        $identifiersByStorageKey = $this->getIdentifiersIndexedByStorageKey($storageKeys);
-        $productConcreteIds = [];
-        foreach ($mappingData as $storageKey => $mappingDataItem) {
-            $decodedMappingDataItem = json_decode($mappingDataItem, true);
-            $productConcreteIds[$identifiersByStorageKey[$storageKey]] = $decodedMappingDataItem[static::KEY_ID] ?? null;
-        }
-
-        return $productConcreteIds;
     }
 
     /**
@@ -556,12 +548,9 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         }
 
         if (ProductStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = Locator::class;
-            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
-            $productClient = $clientLocatorClassName::getInstance()->product()->client();
-            $collectorData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $localeName);
+            $collectorData = $this->productClient->getProductConcreteByIdAndLocale($idProductConcrete, $localeName);
 
-            unset($collectorData['prices'], $collectorData['imageSets']);
+            unset($collectorData[static::KEY_PRICES], $collectorData[static::KEY_IMAGE_SETS]);
             $collectorData = $this->changeKeys($collectorData);
 
             return $collectorData;

@@ -18,7 +18,7 @@ class SalesUnitsResourceRoutePlugin extends AbstractPlugin implements ResourceRo
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for sales-units resource.
+     * - Configures available actions for `sales-units` resource.
      *
      * @api
      *
@@ -28,8 +28,7 @@ class SalesUnitsResourceRoutePlugin extends AbstractPlugin implements ResourceRo
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        return $resourceRouteCollection
-            ->addGet('get', false);
+        return $resourceRouteCollection->addGet('get', false);
     }
 
     /**

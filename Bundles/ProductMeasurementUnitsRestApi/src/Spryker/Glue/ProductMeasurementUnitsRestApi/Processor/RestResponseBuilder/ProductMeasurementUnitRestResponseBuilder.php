@@ -66,7 +66,7 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
                 new RestProductMeasurementUnitsAttributesTransfer()
             );
 
-        $resourceId = (string)$productMeasurementUnitTransfer->getCode();
+        $resourceId = $productMeasurementUnitTransfer->getCode();
 
         return $this->restResourceBuilder->createRestResource(
             ProductMeasurementUnitsRestApiConfig::RESOURCE_PRODUCT_MEASUREMENT_UNITS,

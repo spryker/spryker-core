@@ -39,6 +39,8 @@ class SalesUnitsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createSalesUnitReader()->getSalesUnits($restRequest);
+        return $this->getFactory()
+            ->createSalesUnitReader()
+            ->getSalesUnits($restRequest);
     }
 }

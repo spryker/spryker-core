@@ -65,9 +65,10 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
 
+        $productConcreteIds = array_flip($productConcreteIds);
         $restSalesUnitsResources = [];
         foreach ($productMeasurementSalesUnitTransfers as $idProductConcrete => $productConcreteProductMeasurementSalesUnitTransfers) {
-            $productConcreteSku = array_flip($productConcreteIds)[$idProductConcrete];
+            $productConcreteSku = $productConcreteIds[$idProductConcrete];
             foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
                 $restSalesUnitsResources[$productConcreteSku][] =
                     $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(

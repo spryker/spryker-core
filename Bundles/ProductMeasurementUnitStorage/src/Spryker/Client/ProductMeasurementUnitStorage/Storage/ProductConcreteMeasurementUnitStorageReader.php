@@ -106,13 +106,22 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
                 continue;
             }
 
-            $arrayStorageKey = explode(':', $storageKey);
-            $idProductConcrete = $arrayStorageKey[count($arrayStorageKey) - 1];
+            $idProductConcrete = $this->getIdProductConcrete($storageKey);
             $productConcreteMeasurementUnitStorageTransfers[$idProductConcrete] =
                 $this->mapToProductConcreteMeasurementUnitStorage(json_decode($data, true));
         }
 
         return $productConcreteMeasurementUnitStorageTransfers;
+    }
+
+    /**
+     * @param string $storageKey
+     *
+     * @return int
+     */
+    protected function getIdProductConcrete(string $storageKey): int
+    {
+        return explode(':', $storageKey)[count(explode(':', $storageKey)) - 1];
     }
 
     /**

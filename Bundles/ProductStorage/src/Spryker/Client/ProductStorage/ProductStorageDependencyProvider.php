@@ -22,6 +22,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const STORE = 'STORE';
@@ -44,6 +45,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSynchronizationService($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addProductClient($container);
         $container = $this->addStore($container);
         $container = $this->addProductViewExpanderPlugins($container);
         $container = $this->addProductAbstractRestrictionPlugins($container);
@@ -109,6 +111,20 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new ProductStorageToLocaleBridge($container->getLocator()->locale()->client());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT, function (Container $container) {
+            return new ProductStorageToProductClientBridge($container->getLocator()->product()->client());
+        });
 
         return $container;
     }

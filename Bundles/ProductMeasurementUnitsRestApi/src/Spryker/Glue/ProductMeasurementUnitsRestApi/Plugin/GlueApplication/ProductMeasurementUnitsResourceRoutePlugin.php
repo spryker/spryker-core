@@ -17,7 +17,7 @@ class ProductMeasurementUnitsResourceRoutePlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for product-measurement-units resource.
+     * - Configures available actions for `product-measurement-units` resource.
      *
      * @api
      *
@@ -27,8 +27,7 @@ class ProductMeasurementUnitsResourceRoutePlugin extends AbstractPlugin implemen
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        return $resourceRouteCollection
-            ->addGet('get', false);
+        return $resourceRouteCollection->addGet('get', false);
     }
 
     /**
