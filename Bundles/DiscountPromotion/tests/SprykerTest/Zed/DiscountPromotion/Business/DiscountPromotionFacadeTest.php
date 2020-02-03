@@ -53,7 +53,7 @@ class DiscountPromotionFacadeTest extends Unit
         ]))->build();
 
         $quoteTransfer = $this->tester->prepareQuoteWithStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->tester->prepareProductAvailability(
+        $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
             $discountPromotionTransfer->getQuantity()
@@ -86,7 +86,7 @@ class DiscountPromotionFacadeTest extends Unit
         ]))->build();
 
         $quoteTransfer = $this->tester->prepareQuoteWithStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->tester->prepareProductAvailability(
+        $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
             $discountPromotionTransfer->getQuantity()
@@ -127,7 +127,7 @@ class DiscountPromotionFacadeTest extends Unit
         ]))->build();
 
         $quoteTransfer = $this->tester->prepareQuoteWithStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->tester->prepareProductAvailability(
+        $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
             0
@@ -160,7 +160,7 @@ class DiscountPromotionFacadeTest extends Unit
         ]))->build();
 
         $quoteTransfer = $this->tester->prepareQuoteWithStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->tester->prepareProductAvailability(
+        $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
             $promotionItemQuantity
@@ -362,7 +362,7 @@ class DiscountPromotionFacadeTest extends Unit
         ]))->build();
 
         $quoteTransfer = $this->tester->prepareQuoteWithStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->tester->prepareProductAvailability(
+        $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
             $discountPromotionTransfer->getQuantity()

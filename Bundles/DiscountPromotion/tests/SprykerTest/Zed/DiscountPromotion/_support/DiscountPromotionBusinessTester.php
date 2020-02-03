@@ -85,11 +85,12 @@ class DiscountPromotionBusinessTester extends Actor
      *
      * @return void
      */
-    public function prepareProductAvailability(
+    public function haveProductWithStock(
         array $productAbstractOverride = [],
         array $productConcreteOverride = [],
         int $quantity = 1
     ): void {
+
         $productConcreteTransfer = $this->haveProduct($productConcreteOverride, $productAbstractOverride);
 
         $this->addStockForProduct($productConcreteTransfer, $quantity);

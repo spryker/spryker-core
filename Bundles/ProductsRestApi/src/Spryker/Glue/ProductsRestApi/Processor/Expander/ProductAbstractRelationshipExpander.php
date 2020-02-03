@@ -60,7 +60,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      *
-     * @return array
+     * @return string[]
      */
     protected function getProductAbstractSkuList(array $resources): array
     {
