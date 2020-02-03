@@ -38,18 +38,6 @@ class PriceProductOfferQueryExpander implements PriceProductOfferQueryExpanderIn
      */
     public function buildPriceProductOfferDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
-        if ($priceProductCriteriaTransfer->getPriceDimension() && $productOfferReference = $priceProductCriteriaTransfer->getPriceDimension()->getProductOfferReference()) {
-            return $this->createQueryCriteriaTransfer([$productOfferReference]);
-        }
-
-        return null;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
-     */
-    public function buildUnconditionalPriceProductOfferDimensionQueryCriteria(): QueryCriteriaTransfer
-    {
         return (new QueryCriteriaTransfer())
             ->setWithColumns([
                 static::COL_PRODUCT_OFFER_REFERENCE => PriceProductDimensionTransfer::PRODUCT_OFFER_REFERENCE,
@@ -62,35 +50,8 @@ class PriceProductOfferQueryExpander implements PriceProductOfferQueryExpanderIn
             )
             ->addJoin(
                 (new QueryJoinTransfer())
-                    ->setLeft([static::COL_ID_PRODUCT_OFFER])
-                    ->setRight([SpyPriceProductOfferTableMap::COL_FK_PRODUCT_OFFER])
-                    ->setJoinType(Criteria::LEFT_JOIN)
-            );
-    }
-
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
-     */
-    protected function createQueryCriteriaTransfer(array $productOfferReferences): QueryCriteriaTransfer
-    {
-        return (new QueryCriteriaTransfer())
-            ->setWithColumns([
-                static::COL_PRODUCT_OFFER_REFERENCE => PriceProductDimensionTransfer::PRODUCT_OFFER_REFERENCE,
-            ])
-            ->addJoin(
-                (new QueryJoinTransfer())
-                    ->setLeft([static::COL_ID_PRICE_PRODUCT_STORE])
-                    ->setRight([SpyPriceProductOfferTableMap::COL_FK_PRICE_PRODUCT_STORE])
-                    ->setJoinType(Criteria::LEFT_JOIN)
-            )
-            ->addJoin(
-                (new QueryJoinTransfer())
-                    ->setLeft([static::COL_ID_PRODUCT_OFFER])
-                    ->setRight([SpyPriceProductOfferTableMap::COL_FK_PRODUCT_OFFER])
-                    ->setCondition(static::COL_PRODUCT_OFFER_REFERENCE
-                        . ' IN (' . implode(',', $productOfferReferences) . ')')
+                    ->setLeft([SpyPriceProductOfferTableMap::COL_FK_PRODUCT_OFFER])
+                    ->setRight([static::COL_ID_PRODUCT_OFFER])
                     ->setJoinType(Criteria::LEFT_JOIN)
             );
     }
