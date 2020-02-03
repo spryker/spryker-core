@@ -10,4 +10,8 @@
     <transfer name="MerchantCriteriaFilter">
     </transfer>
 
+    <transfer name="Merchant">
+        <property name="merchantProfile" type="MerchantProfile"/>
+    </transfer>
+
 </transfers>
