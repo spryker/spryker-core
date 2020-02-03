@@ -80,7 +80,7 @@ class DocumentationGeneratorRestApiTester extends Actor
     protected const SCHEMA_REF_REST_ERROR_MESSAGE = '#/components/schemas/RestErrorMessage';
     protected const SCHEMA_REF_REST_RESPONSE = '#/components/schemas/RestTestResponse';
     protected const SCHEMA_REF_REST_LINKS = '#/components/schemas/RestLinks';
-    protected const SCHEMA_REF_REST_RELATIONSHIPS = '#/components/schemas/RestRelationships';
+    protected const SCHEMA_REF_REST_RELATIONSHIPS_DATA = '#/components/schemas/RestRelationshipsData';
     protected const SCHEMA_REF_REST_TEST_ALTERNATIVE_RELATIONSHIPS = '#/components/schemas/RestTestAlternativeRelationships';
     protected const SCHEMA_REF_REST_TEST_ALTERNATIVE_RESPONSE_ATTRIBUTES = '#/components/schemas/RestTestAlternativeAttributes';
     protected const SCHEMA_REF_REST_TEST_ALTERNATIVE_RESPONSE_RESOURCE_DATA = '#/components/schemas/RestTestAlternativeResponseData';
@@ -770,9 +770,7 @@ class DocumentationGeneratorRestApiTester extends Actor
             static::SCHEMA_NAME_REST_TEST_ALTERNATIVE_RELATIONSHIPS => [
                 'properties' => [
                     'test-resource-with-relationship' => [
-                        'items' => [
-                            '$ref' => static::SCHEMA_REF_REST_RELATIONSHIPS,
-                        ],
+                        '$ref' => static::SCHEMA_REF_REST_RELATIONSHIPS_DATA,
                     ],
                 ],
             ],
