@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface CompanyUserStorageFacadeInterface
 {
     /**
@@ -48,4 +50,18 @@ interface CompanyUserStorageFacadeInterface
      * @return void
      */
     public function unpublishByCompanyUserIds(array $companyUserIds): void;
+
+    /**
+     * Specification:
+     * - Returns an array of SynchronizationDataTransfer filtered by provided companyUserIds.
+     * - Uses FilterTransfer for pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds = []): array;
 }

@@ -5,10 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+namespace Spryker\Client\Search\Dependency\Plugin;
+
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface as ExtensionQueryInterface;
 
 // @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface` instead.
 class_alias(
-    QueryInterface::class,
+    ExtensionQueryInterface::class,
     'Spryker\Client\Search\Dependency\Plugin\QueryInterface'
 );
+
+// This is done to support Composer's --classmap-authoritative option.
+// phpcs:ignore
+if (false) {
+    interface QueryInterface
+    {
+        /**
+         * @api
+         *
+         * @return mixed A query object.
+         */
+        public function getSearchQuery();
+    }
+}
