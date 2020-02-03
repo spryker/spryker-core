@@ -36,11 +36,7 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         PersistentCartChangeTransfer $persistentCartChangeTransfer
     ): PersistentCartChangeTransfer {
-        if ($cartItemRequestTransfer->getDiscountPromotionUuid() === null) {
-            return $persistentCartChangeTransfer;
-        }
-
-        if (!$persistentCartChangeTransfer->getItems()->offsetExists(0)) {
+        if ($cartItemRequestTransfer->getDiscountPromotionUuid() === null || !$persistentCartChangeTransfer->getItems()->offsetExists(0)) {
             return $persistentCartChangeTransfer;
         }
 
