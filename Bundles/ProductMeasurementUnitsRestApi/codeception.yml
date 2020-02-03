@@ -1,5 +1,6 @@
-namespace: ProductMeasurementUnitsRestApi
-actor: Tester
+namespace: SprykerTest
+include:
+    - tests/SprykerTest/Zed/ProductMeasurementUnitsRestApi
 paths:
     tests: tests
     log: tests/_output
@@ -12,8 +13,11 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-coverage:
-    enabled: true
-    whitelist:
-        include:
-            - 'src/*.php'
+
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+    config:
+        Codeception\Extension\Phantoman:
+            suites:
+                - Presentation
