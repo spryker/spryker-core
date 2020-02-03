@@ -335,6 +335,7 @@
     "spryker/merchant-relationship-sales-order-threshold-gui-extension": "*",
     "spryker/merchant-sales-order": "*",
     "spryker/merchant-search": "*",
+    "spryker/merchant-user": "*",
     "spryker/messenger": "*",
     "spryker/messenger-extension": "*",
     "spryker/module-finder": "*",
