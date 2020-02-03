@@ -135,7 +135,7 @@ interface OauthFacadeInterface
 
     /**
      * Specification:
-     *  - Revokes a refresh tokens by customer.
+     *  - Revokes all refresh tokens by customer.
      *
      * @api
      *

@@ -57,10 +57,26 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
      */
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void
     {
+        $oauthRefreshToken->requireRevokedAt()
+            ->requireIdentifier();
+
         $this->getFactory()
             ->createRefreshTokenQuery()
             ->filterByIdentifier($oauthRefreshToken->getIdentifier())
-            ->update([static::COLUMN_REVOKED_AT => (new DateTime())->format('Y-m-d H:i:s')]);
+            ->update([static::COLUMN_REVOKED_AT => $oauthRefreshToken->getRevokedAt()]);
+    }
+
+    /**
+     * @param array $identifierList
+     *
+     * @return void
+     */
+    public function revokeRefreshTokenByIdentifierList(array $identifierList): void
+    {
+        $this->getFactory()
+            ->createRefreshTokenQuery()
+            ->filterByIdentifier_In($identifierList)
+            ->update([static::COLUMN_REVOKED_AT => (new DateTime())->format("Y-m-d H:i:s")]);
     }
 
     /**
@@ -97,29 +113,25 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
     public function deleteAccessTokenByIdentifier(string $identifier): void
     {
         /** @var \Orm\Zed\Oauth\Persistence\SpyOauthAccessToken|null $authAccessTokenEntity */
-        $authAccessTokenEntity = $this->getFactory()
+        $oauthAccessTokenEntity = $this->getFactory()
             ->createAccessTokenQuery()
             ->findOneByIdentifier($identifier);
 
-        if ($authAccessTokenEntity) {
-            $authAccessTokenEntity->delete();
+        if ($oauthAccessTokenEntity) {
+            $oauthAccessTokenEntity->delete();
         }
     }
 
     /**
-     * @param string $identifier
+     * @param array $identifierList
      *
      * @return void
      */
-    public function deleteRefreshTokenByIdentifier(string $identifier): void
+    public function deleteAccessTokenByIdentifierList(array $identifierList): void
     {
-        /** @var \Orm\Zed\Oauth\Persistence\SpyOauthAccessToken|null $authAccessTokenEntity */
-        $oauthRefreshTokenEntity = $this->getFactory()
-            ->createRefreshTokenQuery()
-            ->findOneByIdentifier($identifier);
-
-        if ($oauthRefreshTokenEntity) {
-            $oauthRefreshTokenEntity->delete();
-        }
+        $this->getFactory()
+            ->createAccessTokenQuery()
+            ->filterByIdentifier_In($identifierList)
+            ->delete();
     }
 }

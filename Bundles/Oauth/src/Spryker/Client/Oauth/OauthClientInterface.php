@@ -57,7 +57,7 @@ interface OauthClientInterface
 
     /**
      *  Specification:
-     *  - Revokes refresh tokens of given customer.
+     *  - Revokes all refresh tokens of the given customer.
      *
      * @api
      *

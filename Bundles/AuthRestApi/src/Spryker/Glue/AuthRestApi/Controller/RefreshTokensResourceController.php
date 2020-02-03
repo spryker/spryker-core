@@ -87,6 +87,6 @@ class RefreshTokensResourceController extends AbstractController
             return $this->getFactory()->createRefreshTokenRevoker()->revokeConcreteRefreshToken($refreshTokenIdentifier, $restRequest);
         }
 
-        return $this->getFactory()->createRefreshTokenRevoker()->revokeCurrentCustomerRefreshTokens($restRequest);
+        return $this->getFactory()->createRefreshTokenRevoker()->revokeAllCurrentCustomerRefreshTokens($restRequest);
     }
 }

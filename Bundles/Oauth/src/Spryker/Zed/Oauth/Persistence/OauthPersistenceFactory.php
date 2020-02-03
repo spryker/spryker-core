@@ -57,7 +57,7 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthRefreshTokenMapper
      */
-    public function createOauthRefreshTokenMapper()
+    public function createOauthRefreshTokenMapper(): OauthRefreshTokenMapper
     {
         return new OauthRefreshTokenMapper();
     }
@@ -65,7 +65,7 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthAccessTokenMapper
      */
-    public function createOauthAccessTokenMapper()
+    public function createOauthAccessTokenMapper(): OauthAccessTokenMapper
     {
         return new OauthAccessTokenMapper();
     }

@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
 use LogicException;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
@@ -45,16 +46,16 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
     /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
-     * @param string|\Defuse\Crypto\Key $encryptionKey
+     * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
         OauthEntityManagerInterface $oauthEntityManager,
-        $encryptionKey
+        OauthConfig $oauthConfig
     ) {
         $this->oauthRepository = $oauthRepository;
         $this->oauthEntityManager = $oauthEntityManager;
-        $this->encryptionKey = $encryptionKey;
+        $this->encryptionKey = $oauthConfig->getEncryptionKey();
     }
 
     /**
@@ -122,13 +123,15 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
             ->findAccessTokens($oauthTokenCriteriaFilterTransfer)
             ->getOauthAccessTokens();
 
+        $oauthTokenCriteriaFilterTransfer->setRevokedAt(null);
+
         $oauthRefreshTokenTransfers = $this->oauthRepository
-            ->findRefreshTokens($oauthTokenCriteriaFilterTransfer->setRevokedAt(null))
+            ->findRefreshTokens($oauthTokenCriteriaFilterTransfer)
             ->getOauthRefreshTokens();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers, $oauthAccessTokenTransfers): void {
             $this->executeRevokeRefreshTokensTransaction($oauthRefreshTokenTransfers);
-            $this->executeRevokeAccessTokensTransaction($oauthAccessTokenTransfers);
+            $this->executeDeleteAccessTokensTransaction($oauthAccessTokenTransfers);
         });
 
          return $revokeRefreshTokenResponseTransfer->setIsSuccessful(true);
@@ -141,10 +144,12 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
      */
     protected function executeRevokeRefreshTokensTransaction(ArrayObject $oauthRefreshTokenTransfers): void
     {
+        $identifierList = [];
         foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
-            $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s"));
-            $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
+            $identifierList[] = $oauthRefreshTokenTransfer->getIdentifier();
         }
+
+        $this->oauthEntityManager->revokeRefreshTokenByIdentifierList($identifierList);
     }
 
     /**
@@ -152,11 +157,14 @@ class OauthRefreshTokenWriter implements OauthRefreshTokenWriterInterface
      *
      * @return void
      */
-    protected function executeRevokeAccessTokensTransaction(ArrayObject $oauthAccessTokenTransfers): void
+    protected function executeDeleteAccessTokensTransaction(ArrayObject $oauthAccessTokenTransfers): void
     {
+        $identifierList = [];
         foreach ($oauthAccessTokenTransfers as $oauthAccessTokenDataTransfer) {
-            $this->oauthEntityManager->deleteAccessTokenByIdentifier($oauthAccessTokenDataTransfer->getIdentifier());
+            $identifierList[] = $oauthAccessTokenDataTransfer->getIdentifier();
         }
+
+        $this->oauthEntityManager->deleteAccessTokenByIdentifierList($identifierList);
     }
 
     /**
