@@ -24,9 +24,7 @@ class OauthRefreshTokenMapper
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer,
         SpyOauthRefreshToken $oauthRefreshTokenEntity
     ): SpyOauthRefreshToken {
-        $oauthRefreshTokenEntity->setIdentifier($oauthRefreshTokenTransfer->getIdentifier());
-        $oauthRefreshTokenEntity->setExpiresAt($oauthRefreshTokenTransfer->getExpiresAt());
-        $oauthRefreshTokenEntity->setUserIdentifier($oauthRefreshTokenTransfer->getUserIdentifier());
+        $oauthRefreshTokenEntity->fromArray($oauthRefreshTokenTransfer->toArray());
         $oauthRefreshTokenEntity->setFkOauthClient($oauthRefreshTokenTransfer->getIdOauthClient());
 
         return $oauthRefreshTokenEntity;

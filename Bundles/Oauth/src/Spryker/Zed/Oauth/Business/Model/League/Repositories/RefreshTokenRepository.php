@@ -69,7 +69,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
             ->setUserIdentifier($userIdentifier)
             ->setExpiresAt($refreshTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
             ->setIdOauthClient($refreshTokenEntity->getAccessToken()->getClient()->getIdentifier())
-            ->setScopes($refreshTokenEntity->getAccessToken()->getScopes());
+            ->setScopes(json_encode($refreshTokenEntity->getAccessToken()->getScopes()));
 
         $this->oauthEntityManager->saveRefreshToken($refreshTokenTransfer);
     }

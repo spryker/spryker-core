@@ -91,7 +91,7 @@
         <property name="identifier" type="string"/>
         <property name="accessTokenIdentifier" type="string"/>
         <property name="idOauthClient" type="string"/>
-        <property name="scopes" type="array" singular="oauthScopes"/>
+        <property name="scopes" type="string"/>
         <property name="userIdentifier" type="string"/>
         <property name="expiresAt" type="string"/>
         <property name="revokedAt" type="string"/>
