@@ -228,7 +228,7 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelStorageFacade->publishLabelDictionary();
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setName($this->productLabelTransfer->getName()),
+            (new EventEntityTransfer())->setId($this->productLabelTransfer->getIdProductLabel()),
         ];
 
         // Act
@@ -241,7 +241,10 @@ class ProductLabelStorageListenerTest extends Unit
 
         foreach ($productLabelDictionaryStorage as $productLabelDictionaryStorageItem) {
             foreach ($productLabelDictionaryStorageItem->getData()['items'] as $item) {
-                $this->assertNotTrue($this->productLabelTransfer->getIdProductLabel() == $item['id_product_label']);
+                $this->assertNotTrue(
+                    $this->productLabelTransfer->getIdProductLabel() == $item['id_product_label'],
+                    'Product label item should be deleted from dictionary'
+                );
             }
         }
     }
