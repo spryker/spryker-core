@@ -183,7 +183,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
         $productOfferStorageDeleter = $this->getMockBuilder(ProductOfferStorageDeleterInterface::class)->getMock();
         $productOfferStorageDeleter->expects($this->exactly(2))
-            ->method('deleteByProductOfferReferences')
+            ->method('deleteCollectionByProductOfferReferences')
             ->withConsecutive(
                 [[$productOfferTransfer->getProductOfferReference()], 'AT'],
                 [[$productOfferTransfer->getProductOfferReference()], 'US']
