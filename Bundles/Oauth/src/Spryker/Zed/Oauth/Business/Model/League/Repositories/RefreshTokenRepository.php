@@ -103,6 +103,9 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function isRefreshTokenRevoked($identifier)
     {
-        return $this->oauthRepository->isRefreshTokenRevoked((new OauthRefreshTokenTransfer())->setIdentifier($identifier));
+        $oauthRefreshToken = (new OauthRefreshTokenTransfer())
+            ->setIdentifier($identifier);
+
+        return $this->oauthRepository->isRefreshTokenRevoked($oauthRefreshToken);
     }
 }

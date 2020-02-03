@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
@@ -45,16 +44,16 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
-     * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
+     * @param string|\Defuse\Crypto\Key $encryptionKey
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
         OauthEntityManagerInterface $oauthEntityManager,
-        OauthConfig $oauthConfig
+        $encryptionKey
     ) {
         $this->oauthRepository = $oauthRepository;
         $this->oauthEntityManager = $oauthEntityManager;
-        $this->encryptionKey = $oauthConfig->getEncryptionKey();
+        $this->encryptionKey = $encryptionKey;
     }
 
     /**
