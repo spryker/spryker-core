@@ -31,5 +31,5 @@ interface PriceProductCriteriaBuilderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
      */
-    public function buildCriteriaTransfersFromFilterTransfersIndexedBySku(array $priceProductFilterTransfer): array;
+    public function buildCriteriaTransfersFromFilterTransfers(array $priceProductFilterTransfer): array;
 }
