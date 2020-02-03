@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
+use Generated\Shared\Transfer\RestProductMeasurementUnitsAttributesTransfer;
 use Generated\Shared\Transfer\RestSalesUnitsAttributesTransfer;
 use Generated\Shared\Transfer\SalesUnitTransfer;
 
@@ -68,10 +69,16 @@ class SalesUnitMapper implements SalesUnitMapperInterface
             return $restOrderItemsAttributesTransfer;
         }
 
-        $salesUnitTransfer = (new SalesUnitTransfer())
-            ->setId($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit())
-            ->setAmount($itemTransfer->getAmount());
+        $productMeasurementUnitTransfer = $productMeasurementSalesUnitTransfer->getProductMeasurementUnit();
+        $restSalesUnitsAttributesTransfer = (new RestSalesUnitsAttributesTransfer())
+            ->fromArray($productMeasurementSalesUnitTransfer->toArray(), true)
+            ->setMeasurementUnitCode($productMeasurementUnitTransfer->getCode());
+        $restProductMeasurementUnitsAttributesTransfer = (new RestProductMeasurementUnitsAttributesTransfer())
+            ->fromArray($productMeasurementUnitTransfer->toArray(), true)
+            ->setMeasurementUnitCode($productMeasurementUnitTransfer->getCode());
 
-        return $restOrderItemsAttributesTransfer->setSalesUnit($salesUnitTransfer);
+        return $restOrderItemsAttributesTransfer
+            ->setSalesUnit($restSalesUnitsAttributesTransfer)
+            ->setMeasurementUnit($restProductMeasurementUnitsAttributesTransfer);
     }
 }
