@@ -122,7 +122,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     {
         $dictionary = $this->dictionaryFactory
             ->createDictionaryByIdProductLabel()
-            ->getDictionary($localeName);
+            ->getDictionary($localeName, $storeName);
 
         $productLabelCollection = [];
 
