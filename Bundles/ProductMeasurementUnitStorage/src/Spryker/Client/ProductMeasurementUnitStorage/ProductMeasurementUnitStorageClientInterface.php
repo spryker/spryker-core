@@ -76,7 +76,9 @@ interface ProductMeasurementUnitStorageClientInterface
     public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer;
 
     /**
-     * - Finds a product base units within Storage with a given product IDs.
+     * Specification:
+     * - Searches for product base units within Storage with given product IDs.
+     * - Returns found product base units.
      *
      * @api
      *
@@ -87,7 +89,9 @@ interface ProductMeasurementUnitStorageClientInterface
     public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * - Finds a product sales units within Storage with a given product IDs.
+     * Specification:
+     * - Searches for product sales units within Storage with given product IDs.
+     * - Returns found product sales units.
      *
      * @api
      *
@@ -98,7 +102,9 @@ interface ProductMeasurementUnitStorageClientInterface
     public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Searches for product measurement unit storage transfers using a given mapping type and identifiers.
+     * - Returns found product measurement unit storage transfers.
      *
      * @api
      *

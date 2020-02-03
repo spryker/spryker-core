@@ -25,4 +25,11 @@ interface ProductMeasurementUnitStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array;
+
+    /**
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
+     */
+    public function getBulkProductMeasurementUnitStorageDataByProductMeasurementIds(array $productMeasurementUnitIds): array;
 }

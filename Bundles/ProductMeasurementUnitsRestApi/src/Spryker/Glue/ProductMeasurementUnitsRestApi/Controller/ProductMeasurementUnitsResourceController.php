@@ -28,6 +28,7 @@ class ProductMeasurementUnitsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Resource id has not been specified."
+     *              "404": "Product measurement unit not found."
      *          }
      *     }
      * })
@@ -38,6 +39,8 @@ class ProductMeasurementUnitsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createProductMeasurementUnitReader()->getProductMeasurementUnit($restRequest);
+        return $this->getFactory()
+            ->createProductMeasurementUnitReader()
+            ->getProductMeasurementUnit($restRequest);
     }
 }

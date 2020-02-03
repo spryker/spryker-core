@@ -64,9 +64,10 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
         $productMeasurementUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementBaseUnitsByProductConcreteIds($productConcreteIds);
 
+        $productConcreteIds = array_flip($productConcreteIds);
         $restProductMeasurementUnitsResources = [];
         foreach ($productMeasurementUnitTransfers as $idProductConcrete => $productMeasurementUnitTransfer) {
-            $productConcreteSku = array_flip($productConcreteIds)[$idProductConcrete];
+            $productConcreteSku = $productConcreteIds[$idProductConcrete];
             $restProductMeasurementUnitsResources[$productConcreteSku] =
                 $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResource(
                     $productMeasurementUnitTransfer,

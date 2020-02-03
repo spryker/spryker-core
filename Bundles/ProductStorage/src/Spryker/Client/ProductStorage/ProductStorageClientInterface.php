@@ -334,7 +334,7 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves a current Store specific product concrete ids from Storage using specified mapping.
+     * - Retrieves a current Store specific product concrete ids from Storage using specified mapping type.
      *
      * @api
      *

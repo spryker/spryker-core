@@ -19,7 +19,7 @@ class ProductMeasurementUnitsBySalesUnitResourceRelationshipPlugin extends Abstr
 {
     /**
      * {@inheritDoc}
-     * - Adds product-measurement-units resource as relationship by sales unit.
+     * - Adds `product-measurement-units` resource as a relationship by sales unit.
      *
      * @api
      *

@@ -78,9 +78,11 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
         $productMeasurementUnitIds = [];
         foreach ($mappings as $mapping) {
             $decodedMapping = $this->utilEncodingService->decodeJson($mapping, true);
-            if ($decodedMapping) {
-                $productMeasurementUnitIds[] = $decodedMapping[static::KEY_ID];
+            if (!$decodedMapping) {
+                continue;
             }
+
+            $productMeasurementUnitIds[] = $decodedMapping[static::KEY_ID];
         }
 
         if (!$productMeasurementUnitIds) {
