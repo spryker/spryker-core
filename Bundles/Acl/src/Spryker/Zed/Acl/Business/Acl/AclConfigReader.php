@@ -36,28 +36,28 @@ class AclConfigReader implements AclConfigReaderInterface
      */
     public function getRoles(): array
     {
-        $result = [];
+        $roleTransfers = [];
         foreach ($this->aclConfig->getInstallerRoles() as $roleData) {
-            $group = (new GroupTransfer())->setName($roleData[static::GROUP_INDEX]);
-            $result[$roleData[RoleTransfer::NAME]] = (new RoleTransfer())
+            $groupTransfer = (new GroupTransfer())->setName($roleData[static::GROUP_INDEX]);
+            $roleTransfers[$roleData[RoleTransfer::NAME]] = (new RoleTransfer())
                 ->setName($roleData[RoleTransfer::NAME])
-                ->setAclGroup($group);
+                ->setAclGroup($groupTransfer);
         }
         foreach ($this->aclConfig->getInstallerRules() as $ruleData) {
-            if (!isset($result[$ruleData[static::ROLE_INDEX]])) {
+            if (!isset($roleTransfers[$ruleData[static::ROLE_INDEX]])) {
                 continue;
             }
-            $roleTransfer = $result[$ruleData[static::ROLE_INDEX]];
+            $roleTransfer = $roleTransfers[$ruleData[static::ROLE_INDEX]];
 
-            $rule = (new RuleTransfer())
+            $ruleTransfer = (new RuleTransfer())
                 ->setType($ruleData[RuleTransfer::TYPE])
                 ->setAction($ruleData[RuleTransfer::ACTION])
                 ->setBundle($ruleData[RuleTransfer::BUNDLE])
                 ->setController($ruleData[RuleTransfer::CONTROLLER]);
-            $roleTransfer->addAclRule($rule);
+            $roleTransfer->addAclRule($ruleTransfer);
         }
 
-        return array_values($result);
+        return array_values($roleTransfers);
     }
 
     /**
@@ -65,12 +65,12 @@ class AclConfigReader implements AclConfigReaderInterface
      */
     public function getGroups(): array
     {
-        $result = [];
+        $groupTransfers = [];
         foreach ($this->aclConfig->getInstallerGroups() as $groupData) {
-            $result[] = (new GroupTransfer())->setName($groupData[GroupTransfer::NAME]);
+            $groupTransfers[] = (new GroupTransfer())->setName($groupData[GroupTransfer::NAME]);
         }
 
-        return $result;
+        return $groupTransfers;
     }
 
     /**
@@ -78,14 +78,14 @@ class AclConfigReader implements AclConfigReaderInterface
      */
     public function getUserGroupRelations(): array
     {
-        $result = [];
+        $userTransfers = [];
         foreach ($this->aclConfig->getInstallerUsers() as $username => $userData) {
-            $group = (new GroupTransfer())->setName($userData[static::GROUP_INDEX]);
-            $result[] = (new UserTransfer())
+            $groupTransfer = (new GroupTransfer())->setName($userData[static::GROUP_INDEX]);
+            $userTransfers[] = (new UserTransfer())
                 ->setUsername($username)
-                ->addAclGroup($group);
+                ->addAclGroup($groupTransfer);
         }
 
-        return $result;
+        return $userTransfers;
     }
 }

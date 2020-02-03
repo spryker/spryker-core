@@ -105,13 +105,12 @@ class Installer implements InstallerInterface
         foreach ($this->getRoles() as $roleTransferToInstall) {
             $roleTransfer = $this->findRole($roleTransferToInstall);
             if (!$roleTransfer) {
-                $group = $this->group->getByName($roleTransferToInstall->getAclGroup()->getName());
-                if (!$group->getIdAclGroup()) {
+                $groupTransfer = $this->group->getByName($roleTransferToInstall->getAclGroup()->getName());
+                if (!$groupTransfer->getIdAclGroup()) {
                     throw new GroupNotFoundException(sprintf('The group with name %s was not found', $roleTransferToInstall->getAclGroup()->getName()));
                 }
-                $group = $this->group->getByName($roleTransferToInstall->getAclGroup()->getName());
                 $roleTransfer = $this->role->addRole($roleTransferToInstall->getName());
-                $this->group->addRoleToGroup($roleTransfer->getIdAclRole(), $group->getIdAclGroup());
+                $this->group->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
             }
 
             foreach ($roleTransferToInstall->getAclRules() as $ruleTransfer) {
