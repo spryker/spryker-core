@@ -12,5 +12,5 @@ interface OauthRefreshTokenCleanerInterface
     /**
      * @return void
      */
-    public function cleanExpiredRefreshTokens(): void;
+    public function deleteExpiredRefreshTokens(): void;
 }

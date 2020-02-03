@@ -40,6 +40,6 @@ class OauthTokenConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->cleanExpiredRefreshTokens();
+        $this->getFacade()->deleteExpiredRefreshTokens();
     }
 }

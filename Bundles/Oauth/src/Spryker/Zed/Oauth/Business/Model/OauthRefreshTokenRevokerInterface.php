@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oauth\Business\Model;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
-interface OauthRefreshTokenWriterInterface
+interface OauthRefreshTokenRevokerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer

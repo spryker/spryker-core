@@ -305,7 +305,7 @@ class OauthFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCleanExpiredRefreshTokens(string $interval, int $matches): void
+    public function testdeleteExpiredRefreshTokens(string $interval, int $matches): void
     {
         // Arrange
         $this->tester->deleteAllOauthRefreshTokens();
@@ -315,7 +315,7 @@ class OauthFacadeTest extends Unit
         $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
 
         // Act
-        $this->getOauthFacade()->cleanExpiredRefreshTokens();
+        $this->getOauthFacade()->deleteExpiredRefreshTokens();
 
         // Assert
         $this->assertEquals($matches, $this->tester->getOauthRefreshTokensCount());

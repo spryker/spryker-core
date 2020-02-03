@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class OauthRepository extends AbstractRepository implements OauthRepositoryInterface
 {
-    public const CUSTOMER_REFERENCE_PATTERN = '%"customer_reference":"';
+    public const CUSTOMER_REFERENCE_PATTERN = '%%"customer_reference":"%s"%%';
 
     /**
      * @param string $identifier
@@ -182,7 +182,7 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     ): ModelCriteria {
         if ($oauthTokenCriteriaFilterTransfer->getCustomerReference()) {
             $oauthRefreshTokenQuery->filterByUserIdentifier_Like(
-                static::CUSTOMER_REFERENCE_PATTERN . $oauthTokenCriteriaFilterTransfer->getCustomerReference() . '"%'
+                sprintf(static::CUSTOMER_REFERENCE_PATTERN, $oauthTokenCriteriaFilterTransfer->getCustomerReference())
             );
         }
 
@@ -209,7 +209,7 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     ): ModelCriteria {
         if ($oauthTokenCriteriaFilterTransfer->getCustomerReference()) {
             $oauthAccessTokenQuery->filterByUserIdentifier_Like(
-                static::CUSTOMER_REFERENCE_PATTERN . $oauthTokenCriteriaFilterTransfer->getCustomerReference() . '"%'
+                sprintf(static::CUSTOMER_REFERENCE_PATTERN, $oauthTokenCriteriaFilterTransfer->getCustomerReference())
             );
         }
 

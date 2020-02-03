@@ -135,7 +135,7 @@ interface OauthFacadeInterface
 
     /**
      * Specification:
-     *  - Revokes a refresh tokens by customer.
+     *  - Revokes all refresh tokens by customer.
      *
      * @api
      *
@@ -153,5 +153,5 @@ interface OauthFacadeInterface
      *
      * @return void
      */
-    public function cleanExpiredRefreshTokens(): void;
+    public function deleteExpiredRefreshTokens(): void;
 }

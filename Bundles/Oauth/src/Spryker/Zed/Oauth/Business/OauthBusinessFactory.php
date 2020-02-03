@@ -37,8 +37,8 @@ use Spryker\Zed\Oauth\Business\Model\OauthClientWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriterInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleaner;
 use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleanerInterface;
-use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenWriter;
-use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenWriterInterface;
+use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenRevoker;
+use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenRevokerInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReader;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriter;
@@ -218,14 +218,14 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenWriterInterface
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenRevokerInterface
      */
-    public function createOauthRefreshTokenWriter(): OauthRefreshTokenWriterInterface
+    public function createOauthRefreshTokenRevoker(): OauthRefreshTokenRevokerInterface
     {
-        return new OauthRefreshTokenWriter(
+        return new OauthRefreshTokenRevoker(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getConfig()->getEncryptionKey()
+            $this->getConfig()
         );
     }
 
