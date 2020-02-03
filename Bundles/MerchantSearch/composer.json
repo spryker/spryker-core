@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-search",
+  "type": "library",
   "description": "MerchantSearch module",
   "license": "proprietary",
   "require": {
