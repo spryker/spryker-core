@@ -90,7 +90,6 @@ class DiscountPromotionBusinessTester extends Actor
         array $productConcreteOverride = [],
         int $quantity = 1
     ): void {
-
         $productConcreteTransfer = $this->haveProduct($productConcreteOverride, $productAbstractOverride);
 
         $this->addStockForProduct($productConcreteTransfer, $quantity);
