@@ -187,7 +187,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
         $productOfferStorageDeleter = $this->getMockBuilder(ProductConcreteOffersStorageDeleterInterface::class)->getMock();
         $productOfferStorageDeleter->expects($this->exactly(2))
-            ->method('deleteByProductSkus')
+            ->method('deleteCollectionByProductSkus')
             ->withConsecutive(
                 [[$productOfferTransfer->getConcreteSku()], 'AT'],
                 [[$productOfferTransfer->getConcreteSku()], 'US']
