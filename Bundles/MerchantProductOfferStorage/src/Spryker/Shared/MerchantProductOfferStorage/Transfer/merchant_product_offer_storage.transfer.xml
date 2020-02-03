@@ -51,6 +51,7 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
     </transfer>
 
 </transfers>
