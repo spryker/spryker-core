@@ -61,8 +61,12 @@ class DiscountPromotionEntityManager extends AbstractEntityManager implements Di
             ->createDiscountPromotionQuery()
             ->findOneByIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
 
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only. Saved original behavior (throwing an exception).
+         * Proper fix should be provided in GLUE- as technical debt.
+         */
         if ($discountPromotionEntity === null) {
-            return $discountPromotionTransfer;
+            $discountPromotionEntity->getDiscount();
         }
 
         $mapper = $this->getFactory()
