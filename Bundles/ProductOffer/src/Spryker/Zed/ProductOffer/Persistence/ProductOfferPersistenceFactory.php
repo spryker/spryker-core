@@ -11,7 +11,6 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapper;
-use Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapperInterface;
 use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
 
 /**
@@ -30,9 +29,9 @@ class ProductOfferPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapperInterface
+     * @return \Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapper
      */
-    public function createPropelProductOfferMapper(): ProductOfferMapperInterface
+    public function createPropelProductOfferMapper(): ProductOfferMapper
     {
         return new ProductOfferMapper();
     }

@@ -29,7 +29,8 @@ class ProductBundleMapper
                 true
             )
                 ->setIdProductConcrete($productBundleEntity->getFkBundledProduct())
-                ->setIdProductBundle($productBundleEntity->getFkProduct());
+                ->setIdProductBundle($productBundleEntity->getFkProduct())
+                ->setQuantity($productBundleEntity->getQuantity());
         }
 
         return $productForBundleTransfers;
@@ -62,6 +63,7 @@ class ProductBundleMapper
         $productForBundleTransfers = [];
         foreach ($productBundleEntities as $productBundleEntity) {
             $productForBundleTransfers[] = (new ProductBundleTransfer())
+                ->setBundledProducts(new ArrayObject($this->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities)))
                 ->setIdProductConcreteBundle($productBundleEntity->getFkProduct());
         }
 

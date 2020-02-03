@@ -37,4 +37,12 @@ class ProductOptionToPriceFacadeBridge implements ProductOptionToPriceFacadeInte
     {
         return $this->priceFacade->getNetPriceModeIdentifier();
     }
+
+    /**
+     * @return string
+     */
+    public function getDefaultPriceMode()
+    {
+        return $this->priceFacade->getDefaultPriceMode();
+    }
 }

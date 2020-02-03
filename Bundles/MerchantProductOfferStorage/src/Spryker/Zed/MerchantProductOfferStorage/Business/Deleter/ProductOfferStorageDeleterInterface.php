@@ -14,23 +14,13 @@ interface ProductOfferStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteProductOfferStorageCollectionByProductOfferReferenceEvents(array $eventTransfers): void;
+    public function deleteCollectionByProductOfferReferenceEvents(array $eventTransfers): void;
 
     /**
      * @param string[] $productOfferReferences
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function deleteProductOfferStorageCollectionByProductOfferReferences(array $productOfferReferences): void;
-
-    /**
-     * @param string[] $productOfferReferences
-     * @param string $storeName
-     *
-     * @return void
-     */
-    public function deleteProductOfferStorageCollectionByProductOfferReferencesAndStore(
-        array $productOfferReferences,
-        string $storeName
-    ): void;
+    public function deleteCollectionByProductOfferReferences(array $productOfferReferences, ?string $storeName = null): void;
 }

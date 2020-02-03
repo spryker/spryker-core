@@ -19,6 +19,11 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
     /**
+     * @var array
+     */
+    public static $storeNames = [];
+
+    /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
      */
     public const STATUS_APPROVED = 'approved';
@@ -49,6 +54,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $storeFacade;
 
     /**
+     * @var string[]
+     */
+    protected $storeNamesList;
+
+    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
@@ -74,7 +84,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
-    public function writeProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void
+    public function writeCollectionByProductSkuEvents(array $eventTransfers): void
     {
         $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
@@ -82,7 +92,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
             return;
         }
 
-        $this->writeProductConcreteProductOffersStorageCollectionByProductSkus($productSkus);
+        $this->writeCollectionByProductSkus($productSkus);
     }
 
     /**
@@ -90,31 +100,27 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
-    protected function writeProductConcreteProductOffersStorageCollectionByProductSkus(array $productConcreteSkus): void
+    protected function writeCollectionByProductSkus(array $productConcreteSkus): void
     {
         $productConcreteSkus = array_unique($productConcreteSkus);
-        $flippedProductConcreteSkus = array_flip($productConcreteSkus);
 
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productConcreteSkus);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productOfferCollectionTransfer);
 
-        $productConcreteSkusToRemove = $this->prepareProductConcreteSkusToRemoveList($productConcreteSkus);
-
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
+            $storeNamesToRemove = $this->getStoreNamesList();
+            $productOfferReferenceList = [];
             foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferReferenceList) {
-                $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage(
-                    $concreteSku,
-                    $productOfferReferenceList,
-                    $storeName
-                );
+                $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage($concreteSku, $productOfferReferenceList, $storeName);
+                $storeNamesToRemove = array_diff($storeNamesToRemove, [$storeName]);
+            }
 
-                unset($productConcreteSkusToRemove[$storeName][$flippedProductConcreteSkus[$concreteSku]]);
+            if ($storeNamesToRemove && $productOfferReferenceList) {
+                $this->deleteProductConcreteProductOffersStorage($storeNamesToRemove, $concreteSku);
             }
         }
-
-        $this->deleteProductConcreteProductOffersStorage($productConcreteSkusToRemove);
     }
 
     /**
@@ -153,32 +159,34 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param array $productConcreteSkusToRemove
+     * @param string[] $storeNamesToRemove
+     * @param string $productSku
      *
      * @return void
      */
-    protected function deleteProductConcreteProductOffersStorage(array $productConcreteSkusToRemove): void
+    protected function deleteProductConcreteProductOffersStorage(array $storeNamesToRemove, string $productSku): void
     {
-        foreach ($productConcreteSkusToRemove as $storeName => $productSkus) {
-            $this->productConcreteOffersStorageDeleter->deleteProductConcreteProductOffersStorageByProductSkusAndStore(
-                $productSkus,
+        foreach ($storeNamesToRemove as $storeName) {
+            $this->productConcreteOffersStorageDeleter->deleteCollectionByProductSkus(
+                [$productSku],
                 $storeName
             );
         }
     }
 
     /**
-     * @param string[] $productConcreteSkus
-     *
-     * @return array
+     * @return string[]
      */
-    protected function prepareProductConcreteSkusToRemoveList(array $productConcreteSkus): array
+    protected function getStoreNamesList(): array
     {
-        $productConcreteSkusToRemove = [];
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $productConcreteSkusToRemove[$storeTransfer->getName()] = $productConcreteSkus;
+        if ($this->storeNamesList) {
+            return $this->storeNamesList;
         }
 
-        return $productConcreteSkusToRemove;
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $this->storeNamesList[] = $storeTransfer->getName();
+        }
+
+        return $this->storeNamesList;
     }
 }
