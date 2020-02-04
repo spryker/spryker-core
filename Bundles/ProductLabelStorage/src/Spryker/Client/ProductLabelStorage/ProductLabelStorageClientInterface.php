@@ -62,7 +62,7 @@ interface ProductLabelStorageClientInterface
     /**
      * Specification:
      * - Retrieves label for given label name, locale and store name.
-     * - Forward compatibility (from the next major): only labels assigned with passed $storeName will be returned.
+     * - Forward compatibility (from the next major): only label assigned with passed $storeName will be returned.
      *
      * @api
      *
