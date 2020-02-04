@@ -122,7 +122,9 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      */
     protected function getIdProductConcrete(string $storageKey): int
     {
-        return explode(':', $storageKey)[count(explode(':', $storageKey)) - 1];
+        $storageKeyArray = explode(':', $storageKey);
+
+        return end($storageKeyArray);
     }
 
     /**
