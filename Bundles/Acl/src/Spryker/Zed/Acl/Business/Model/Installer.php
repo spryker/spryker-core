@@ -97,8 +97,6 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
-     *
      * @return void
      */
     protected function installRoles(): void
@@ -111,18 +109,32 @@ class Installer implements InstallerInterface
 
             $existingRoleTransfer = $this->role->findRoleByName($roleTransfer->getName());
             if (!$existingRoleTransfer) {
-                $groupTransfer = $this->group->getByName($roleTransfer->getAclGroup()->getName());
-                if (!$groupTransfer->getIdAclGroup()) {
-                    throw new GroupNotFoundException(sprintf('The group with name %s was not found', $roleTransfer->getAclGroup()->getName()));
-                }
-                $existingRoleTransfer = $this->role->addRole($roleTransfer->getName());
-                $this->group->addRoleToGroup($existingRoleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+                $existingRoleTransfer = $this->createRole($roleTransfer);
             }
 
             foreach ($roleTransfer->getAclRules() as $ruleTransfer) {
                 $this->addRuleToRole($ruleTransfer, $existingRoleTransfer);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     *
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    protected function createRole(RoleTransfer $roleTransfer): RoleTransfer
+    {
+        $groupTransfer = $this->group->getByName($roleTransfer->getAclGroup()->getName());
+        if (!$groupTransfer->getIdAclGroup()) {
+            throw new GroupNotFoundException(sprintf('The group with name %s was not found', $roleTransfer->getAclGroup()->getName()));
+        }
+        $existingRoleTransfer = $this->role->addRole($roleTransfer->getName());
+        $this->group->addRoleToGroup($existingRoleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+
+        return $existingRoleTransfer;
     }
 
     /**
