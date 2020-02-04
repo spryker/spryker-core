@@ -131,10 +131,10 @@ class Installer implements InstallerInterface
         if (!$groupTransfer->getIdAclGroup()) {
             throw new GroupNotFoundException(sprintf('The group with name %s was not found', $roleTransfer->getAclGroup()->getName()));
         }
-        $existingRoleTransfer = $this->role->addRole($roleTransfer->getName());
-        $this->group->addRoleToGroup($existingRoleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+        $roleTransfer = $this->role->addRole($roleTransfer->getName());
+        $this->group->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
 
-        return $existingRoleTransfer;
+        return $roleTransfer;
     }
 
     /**
