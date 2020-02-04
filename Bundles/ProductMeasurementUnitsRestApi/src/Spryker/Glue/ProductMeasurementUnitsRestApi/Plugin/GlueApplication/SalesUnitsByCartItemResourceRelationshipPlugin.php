@@ -19,7 +19,7 @@ class SalesUnitsByCartItemResourceRelationshipPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Adds sales-units resource as relationship by item.
+     * - Adds `sales-units` resource as relationship by item.
      *
      * @api
      *
