@@ -21,8 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PriceProductOfferDimensionExpanderStrategyPlugin extends AbstractPlugin implements PriceProductDimensionExpanderStrategyPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns true if strategy can be used for the transfer.
+     * {@inheritDoc}
+     *  - Returns true if price product dimension is offer.
      *
      * @api
      *
@@ -36,7 +36,7 @@ class PriceProductOfferDimensionExpanderStrategyPlugin extends AbstractPlugin im
     }
 
     /**
-     * Specification:
+     * {@inheritDoc}
      *  - Returns expanded transfer with offer dimension type.
      *
      * @api

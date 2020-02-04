@@ -29,7 +29,7 @@ class PriceProductOfferHelper extends Module
      */
     public function havePriceProductOffer(array $seedData = []): PriceProductOfferTransfer
     {
-        $priceProductOfferTransfer = $this->setPriceProductOfferDependencies($seedData);
+        $priceProductOfferTransfer = $this->createPriceProductOfferDependencies($seedData);
 
         $priceProductOfferEntity = new SpyPriceProductOffer();
         $priceProductOfferEntity->fromArray($priceProductOfferTransfer->toArray());
@@ -50,7 +50,7 @@ class PriceProductOfferHelper extends Module
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferTransfer
      */
-    protected function setPriceProductOfferDependencies(array $seedData): PriceProductOfferTransfer
+    protected function createPriceProductOfferDependencies(array $seedData): PriceProductOfferTransfer
     {
         $priceProductOfferTransfer = (new PriceProductOfferTransfer())->fromArray($seedData, true);
 

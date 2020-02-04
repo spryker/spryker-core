@@ -19,10 +19,11 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCrite
  * @method \Spryker\Zed\PriceProductOffer\Communication\PriceProductOfferCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
-class PriceProductOfferQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface
+class PriceProductOfferDimensionQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Builds an expander for price offer product.
      *
      * @api
      *
@@ -37,6 +38,7 @@ class PriceProductOfferQueryCriteriaPlugin extends AbstractPlugin implements Pri
 
     /**
      * {@inheritDoc}
+     * - Builds an expander for price offer product.
      *
      * @api
      *
@@ -49,6 +51,7 @@ class PriceProductOfferQueryCriteriaPlugin extends AbstractPlugin implements Pri
 
     /**
      * {@inheritDoc}
+     * - Returns product offer dimension.
      *
      * @api
      *
