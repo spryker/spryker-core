@@ -23,7 +23,7 @@ class PriceProductOfferPriceDimensionQueryCriteriaPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritDoc}
-     * - Builds an expander for price offer product.
+     * - Builds price dimension query criteria for product offer prices.
      *
      * @api
      *
@@ -38,7 +38,7 @@ class PriceProductOfferPriceDimensionQueryCriteriaPlugin extends AbstractPlugin 
 
     /**
      * {@inheritDoc}
-     * - Builds an expander for price offer product.
+     * - Builds price dimension query criteria for product offer prices.
      *
      * @api
      *
