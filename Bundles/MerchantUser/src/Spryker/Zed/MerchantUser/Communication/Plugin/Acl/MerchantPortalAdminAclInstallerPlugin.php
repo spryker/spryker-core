@@ -18,6 +18,7 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
 {
     /**
      * {@inheritDoc}
+     * - Returns Roles required for MerchantUser module.
      *
      * @api
      *
@@ -30,6 +31,7 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
 
     /**
      * {@inheritDoc}
+     * - Returns Groups required for MerchantUser module.
      *
      * @api
      *

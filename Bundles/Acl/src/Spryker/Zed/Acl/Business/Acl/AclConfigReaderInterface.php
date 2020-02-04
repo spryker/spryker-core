@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Acl\Business\Acl;
 
-interface AclMapperInterface
+interface AclConfigReaderInterface
 {
     /**
      * @return \Generated\Shared\Transfer\RoleTransfer[]

@@ -21,14 +21,14 @@ class MerchantUserConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::VALIDATOR_WILDCARD
      */
-    public const VALIDATOR_WILDCARD = '*';
+    protected const VALIDATOR_WILDCARD = '*';
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::ALLOW
      */
-    public const ALLOW = 'allow';
-    public const MERCHANT_PORTAL_ADMIN_ROLE = 'merchant_portal_admin_role';
-    public const MERCHANT_PORTAL_ADMIN_GROUP = 'merchant_portal_admin_group';
-    public const MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
+    protected const ALLOW = 'allow';
+    protected const MERCHANT_PORTAL_ADMIN_ROLE = 'merchant_portal_admin_role';
+    protected const MERCHANT_PORTAL_ADMIN_GROUP = 'merchant_portal_admin_group';
+    protected const MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
 
     /**
      * @return string
@@ -55,33 +55,35 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\RoleTransfer[]
      */
     public function getInstallRoles(): array
     {
-        $roles[] = (new RoleTransfer())
-            ->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
-            ->setAclGroup((new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP))
-            ->addAclRule(
-                (new RuleTransfer())
-                    ->setBundle(static::VALIDATOR_WILDCARD)
-                    ->setController(static::VALIDATOR_WILDCARD)
-                    ->setAction(static::VALIDATOR_WILDCARD)
-                    ->setType(static::ALLOW)
-            );
-
-        return $roles;
+        return [
+            (new RoleTransfer())
+                ->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
+                ->setAclGroup(
+                    (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP)
+                )
+                ->addAclRule(
+                    (new RuleTransfer())
+                        ->setBundle(static::VALIDATOR_WILDCARD)
+                        ->setController(static::VALIDATOR_WILDCARD)
+                        ->setAction(static::VALIDATOR_WILDCARD)
+                        ->setType(static::ALLOW)
+                ),
+        ];
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\GroupTransfer[]
      */
     public function getInstallGroups(): array
     {
-        $groups[] = (new GroupTransfer())
-            ->setName(static::MERCHANT_PORTAL_ADMIN_GROUP)
-            ->setReference(static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE);
-
-        return $groups;
+        return [
+            (new GroupTransfer())
+                ->setName(static::MERCHANT_PORTAL_ADMIN_GROUP)
+                ->setReference(static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE),
+        ];
     }
 }
