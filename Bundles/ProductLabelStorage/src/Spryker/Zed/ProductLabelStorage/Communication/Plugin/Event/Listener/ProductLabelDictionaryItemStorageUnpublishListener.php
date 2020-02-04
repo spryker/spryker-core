@@ -7,40 +7,30 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryItemStorageUnpublishListener instead.
- *
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  */
-class ProductLabelDictionaryStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductLabelDictionaryItemStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
+     * - Unpublishes removed product labels from Storage
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $transfers, $eventName)
     {
-        $this->preventTransaction();
-        $productLabelsCount = SpyProductLabelQuery::create()->count();
-
-        if ($productLabelsCount === 0) {
-            $this->getFacade()->unpublishLabelDictionary();
-        }
+        $this->getFacade()->publishLabelDictionary();
     }
 }
