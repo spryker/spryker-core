@@ -19,7 +19,7 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCrite
  * @method \Spryker\Zed\PriceProductOffer\Communication\PriceProductOfferCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
-class PriceProductOfferDimensionQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface
+class PriceProductOfferPriceDimensionQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface
 {
     /**
      * {@inheritDoc}

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOffer\Persistence\Propel\PriceDimensionQueryExpander;
+namespace Spryker\Zed\PriceProductOffer\Persistence\Propel\PriceDimensionQueryBuilder;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
@@ -16,7 +16,7 @@ use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
-class PriceProductOfferQueryExpander implements PriceProductOfferQueryExpanderInterface
+class PriceProductOfferQueryBuilder implements PriceProductOfferQueryBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer

@@ -30,7 +30,6 @@ use Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig;
 class PriceProductOfferDataImportPluginTest extends Unit
 {
     protected const PRODUCT_OFFER_REFERENCE = 'offer-1';
-    protected const CONCRETE_SKU = '052_30614390';
 
     /**
      * @var \SprykerTest\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportCommunicationTester
@@ -42,9 +41,11 @@ class PriceProductOfferDataImportPluginTest extends Unit
      */
     public function testPriceProductOfferDataImportFacade(): void
     {
+        $productConcreteTransfer = $this->tester->haveProduct();
+
         $this->tester->haveProductOffer([
             ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE,
-            ProductOfferTransfer::CONCRETE_SKU => static::CONCRETE_SKU,
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
         ]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
