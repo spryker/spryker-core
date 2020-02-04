@@ -21,15 +21,16 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, ?string $storeName = null)
     {
         return $this
             ->getFactory()
             ->createProductAbstractLabelStorageReader()
-            ->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
+            ->findLabelsByIdProductAbstract($idProductAbstract, $localeName, $storeName);
     }
 
     /**
@@ -39,14 +40,18 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
-    {
+    public function getProductLabelsByProductAbstractIds(
+        array $productAbstractIds,
+        string $localeName,
+        ?string $storeName = null
+    ): array {
         return $this->getFactory()
             ->createProductAbstractLabelStorageReader()
-            ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName);
+            ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName, $storeName);
     }
 
     /**
@@ -56,15 +61,16 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @param array $idProductLabels
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName)
+    public function findLabels(array $idProductLabels, $localeName, ?string $storeName = null)
     {
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
-            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName);
+            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName, $storeName);
     }
 
     /**
@@ -74,14 +80,15 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @param string $labelName
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByName($labelName, $localeName)
+    public function findLabelByName($labelName, $localeName, ?string $storeName = null)
     {
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
-            ->findLabelByName($labelName, $localeName);
+            ->findLabelByName($labelName, $localeName, $storeName);
     }
 }

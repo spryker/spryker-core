@@ -15,6 +15,7 @@ use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductLabelProductAbstractRelationsBuilder;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
@@ -50,6 +51,27 @@ class ProductLabelFacadeTest extends Unit
         $productLabelTransfer = $productLabelFacade->findLabelById($productLabelTransfer->getIdProductLabel());
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\ProductLabelTransfer', $productLabelTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveLabelShouldRemoveProductLabel(): void
+    {
+        //Arrange
+        $productLabelTransfer = $this->tester->haveProductLabel();
+
+        //Act
+        $productLabelResponseTransfer = $this->getProductLabelFacade()->removeLabel($productLabelTransfer);
+
+        //Assert
+        $this->assertTrue($productLabelResponseTransfer->getIsSuccessful(), 'Response transfer does not match the expected result');
+
+        $deletedProductLabel = SpyProductLabelQuery::create()
+            ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())
+            ->findOne();
+
+        $this->assertNull($deletedProductLabel, 'Product label record was not deleted');
     }
 
     /**

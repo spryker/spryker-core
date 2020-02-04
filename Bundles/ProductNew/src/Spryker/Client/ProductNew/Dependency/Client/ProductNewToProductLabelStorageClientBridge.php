@@ -25,11 +25,12 @@ class ProductNewToProductLabelStorageClientBridge implements ProductNewToProduct
     /**
      * @param string $labelName
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByName($labelName, $localeName)
+    public function findLabelByName($labelName, $localeName, ?string $storeName = null)
     {
-        return $this->productLabelStorageClient->findLabelByName($labelName, $localeName);
+        return $this->productLabelStorageClient->findLabelByName($labelName, $localeName, $storeName);
     }
 }
