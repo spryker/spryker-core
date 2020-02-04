@@ -10,8 +10,6 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
-use Generated\Shared\Transfer\MerchantResponseTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantProfileFacadeInterface
 {
@@ -44,34 +42,6 @@ interface MerchantProfileFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
     public function updateMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
-
-    /**
-     * Specification:
-     * - Creates a new merchant profile entity.
-     * - Persists the entity to DB.
-     * - Returns MerchantResponseTransfer.isSuccessful = true.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
-    public function handleMerchantPostCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
-
-    /**
-     * Specification:
-     * - Updates merchant profile according to merchant data.
-     * - Returns MerchantResponseTransfer.isSuccessful = true.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
-    public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer;
 
     /**
      * Specification:

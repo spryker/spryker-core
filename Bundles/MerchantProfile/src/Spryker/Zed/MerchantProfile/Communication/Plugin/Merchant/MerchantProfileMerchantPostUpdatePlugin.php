@@ -24,13 +24,21 @@ class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function postUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer
+    public function postUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        return $this->getFacade()->handleMerchantPostUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
+        $merchantTransfer->requireMerchantProfile();
+
+        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
+        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+
+        $merchantProfileTransfer = $this->getFacade()->updateMerchantProfile($merchantProfileTransfer);
+
+        return (new MerchantResponseTransfer())
+            ->setIsSuccess(true)
+            ->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
     }
 }

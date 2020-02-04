@@ -5,8 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/kernel": "^3.33.0",
     "spryker/auth": "^1.0.0 || ^2.0.0 || ^3.0.0",
-    "spryker/kernel": "^3.0.0",
     "spryker/merchant": "^2.0.0",
     "spryker/merchant-extension": "^1.1.0",
     "spryker/user": "^3.3.0",

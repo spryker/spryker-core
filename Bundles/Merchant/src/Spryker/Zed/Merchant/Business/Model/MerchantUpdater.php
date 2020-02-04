@@ -123,35 +123,33 @@ class MerchantUpdater implements MerchantUpdaterInterface
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $originalMerchantTransfer = $this->merchantRepository->findOne((new MerchantCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
-        $updatedMerchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $updatedMerchantTransfer = $this->executeMerchantPostUpdatePlugins($originalMerchantTransfer, $updatedMerchantTransfer);
+        $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
+        $merchantTransfer = $this->executeMerchantPostUpdatePlugins($merchantTransfer);
 
-        return $updatedMerchantTransfer;
+        return $merchantTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function executeMerchantPostUpdatePlugins(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantTransfer
+    protected function executeMerchantPostUpdatePlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         foreach ($this->merchantPostUpdatePlugins as $merchantPostUpdatePlugin) {
-            $merchantResponseTransfer = $merchantPostUpdatePlugin->postUpdate($originalMerchantTransfer, $updatedMerchantTransfer);
+            $merchantResponseTransfer = $merchantPostUpdatePlugin->postUpdate($merchantTransfer);
             if (!$merchantResponseTransfer->getIsSuccess()) {
                 throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));
             }
         }
 
         foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
-            $updatedMerchantTransfer = $merchantPostSavePlugin->execute($updatedMerchantTransfer);
+            $merchantTransfer = $merchantPostSavePlugin->execute($merchantTransfer);
         }
 
-        return $updatedMerchantTransfer;
+        return $merchantTransfer;
     }
 
     /**

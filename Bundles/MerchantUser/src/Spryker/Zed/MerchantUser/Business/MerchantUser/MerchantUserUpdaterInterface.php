@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
-use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 
 interface MerchantUserUpdaterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $originalMerchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $updatedMerchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function handleMerchantPostUpdate(MerchantTransfer $originalMerchantTransfer, MerchantTransfer $updatedMerchantTransfer): MerchantResponseTransfer;
+    public function updateMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer;
 }
