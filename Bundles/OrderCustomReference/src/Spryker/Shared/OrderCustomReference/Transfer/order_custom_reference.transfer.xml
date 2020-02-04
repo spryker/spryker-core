@@ -6,7 +6,6 @@
     <transfer name="Quote">
         <property name="orderCustomReference" type="string"/>
         <property name="idQuote" type="int"/>
-        <property name="orderReference" type="string"/>
         <property name="customer" type="Customer"/>
     </transfer>
 

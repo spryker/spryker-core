@@ -51,7 +51,7 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
     protected function createQuoteUpdateRequestTransfer(QuoteTransfer $quoteTransfer): QuoteUpdateRequestTransfer
     {
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
-            ->setOrderCustomReference($quoteTransfer->getOrderReference());
+            ->setOrderCustomReference($quoteTransfer->getOrderCustomReference());
 
         return (new QuoteUpdateRequestTransfer())
             ->setIdQuote($quoteTransfer->getIdQuote())
