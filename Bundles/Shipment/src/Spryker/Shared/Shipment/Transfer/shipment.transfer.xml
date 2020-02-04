@@ -189,6 +189,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalQuote" type="Quote"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
     </transfer>
 
     <transfer name="Mail">

@@ -9,23 +9,10 @@ namespace Spryker\Zed\Shipment\Business\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Zed\Shipment\ShipmentConfig;
+use Spryker\Shared\Shipment\ShipmentConfig as SharedShipmentConfig;
 
 class ShipmentTotalCalculator implements ShipmentTotalCalculatorInterface
 {
-    /**
-     * @var \Spryker\Zed\Shipment\ShipmentConfig
-     */
-    protected $shipmentConfig;
-
-    /**
-     * @param \Spryker\Zed\Shipment\ShipmentConfig $shipmentConfig
-     */
-    public function __construct(ShipmentConfig $shipmentConfig)
-    {
-        $this->shipmentConfig = $shipmentConfig;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -52,7 +39,7 @@ class ShipmentTotalCalculator implements ShipmentTotalCalculatorInterface
         $shipmentTotal = 0;
 
         foreach ($expenseTransfers as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== $this->shipmentConfig->getShipmentExpenseType()) {
+            if ($expenseTransfer->getType() !== SharedShipmentConfig::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 
