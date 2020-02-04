@@ -108,28 +108,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
      */
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+        $shoppingListTransfer = $this->getNotExpandedShoppingList($shoppingListTransfer);
+        $shoppingListItemCollectionTransfer = (new ShoppingListItemCollectionTransfer())
+            ->setItems($shoppingListTransfer->getItems());
 
-        if ($shoppingListTransfer === null || !$this->checkReadPermission($shoppingListTransfer)) {
-            $messageTransfer = $this->getShoppingListOverviewErrorMessageTransfer($shoppingListTransfer);
-            $this->messengerFacade->addErrorMessage($messageTransfer);
-
-            return new ShoppingListTransfer();
-        }
-
-        $shoppingListCompanyBusinessUnits = $this->shoppingListRepository
-            ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer)
-            ->getShoppingListCompanyBusinessUnits();
-
-        $shoppingListCompanyUsers = $this->shoppingListRepository
-            ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer)
-            ->getShoppingListCompanyUsers();
-
-        $shoppingListTransfer
-            ->setSharedCompanyUsers($shoppingListCompanyUsers)
-            ->setSharedCompanyBusinessUnits($shoppingListCompanyBusinessUnits);
-
-        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
         $shoppingListItemCollectionTransfer = $this->expandProducts($shoppingListItemCollectionTransfer);
         $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
 
@@ -149,7 +131,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListOverviewResponseTransfer = (new ShoppingListOverviewResponseTransfer())
             ->setShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
-        $shoppingListTransfer = $this->getShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
+        $shoppingListTransfer = $this->getNotExpandedShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         if (!$shoppingListTransfer->getIdShoppingList()) {
             $shoppingListOverviewResponseTransfer->setIsSuccess(false);
@@ -355,6 +337,40 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected function getCustomerShoppingListCollectionByReference(string $customerReference): ShoppingListCollectionTransfer
     {
         return $this->shoppingListRepository->findCustomerShoppingLists($customerReference);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function getNotExpandedShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+
+        if ($shoppingListTransfer === null || !$this->checkReadPermission($shoppingListTransfer)) {
+            $messageTransfer = $this->getShoppingListOverviewErrorMessageTransfer($shoppingListTransfer);
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+
+            return new ShoppingListTransfer();
+        }
+
+        $shoppingListCompanyBusinessUnits = $this->shoppingListRepository
+            ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer)
+            ->getShoppingListCompanyBusinessUnits();
+
+        $shoppingListCompanyUsers = $this->shoppingListRepository
+            ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer)
+            ->getShoppingListCompanyUsers();
+
+        $shoppingListTransfer
+            ->setSharedCompanyUsers($shoppingListCompanyUsers)
+            ->setSharedCompanyBusinessUnits($shoppingListCompanyBusinessUnits);
+
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+        $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
+
+        return $shoppingListTransfer;
     }
 
     /**
