@@ -19,7 +19,7 @@ class SalesUnitRestOrderItemsAttributesMapperPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritDoc}
-     * - Maps ItemTransfer sales unit id and sales unit amount to RestOrderItemsAttributesTransfer.
+     * - Maps ItemTransfer::$amountSalesUnit to RestOrderItemsAttributesTransfer::$salesUnit.
      *
      * @api
      *

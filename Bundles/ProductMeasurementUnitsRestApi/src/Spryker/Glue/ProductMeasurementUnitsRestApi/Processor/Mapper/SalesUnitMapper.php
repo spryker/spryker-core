@@ -9,11 +9,12 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\RestCartItemsSalesUnitAttributesTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
-use Generated\Shared\Transfer\RestProductMeasurementUnitsAttributesTransfer;
+use Generated\Shared\Transfer\RestOrdersProductMeasurementUnitsAttributesTransfer;
+use Generated\Shared\Transfer\RestOrdersSalesUnitAttributesTransfer;
 use Generated\Shared\Transfer\RestSalesUnitsAttributesTransfer;
-use Generated\Shared\Transfer\SalesUnitTransfer;
 
 class SalesUnitMapper implements SalesUnitMapperInterface
 {
@@ -47,11 +48,11 @@ class SalesUnitMapper implements SalesUnitMapperInterface
             return $restItemsAttributesTransfer;
         }
 
-        $salesUnitTransfer = (new SalesUnitTransfer())
+        $restCartItemsSalesUnitAttributesTransfer = (new RestCartItemsSalesUnitAttributesTransfer())
             ->setId($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit())
             ->setAmount($itemTransfer->getAmount());
 
-        return $restItemsAttributesTransfer->setSalesUnit($salesUnitTransfer);
+        return $restItemsAttributesTransfer->setSalesUnit($restCartItemsSalesUnitAttributesTransfer);
     }
 
     /**
@@ -70,15 +71,13 @@ class SalesUnitMapper implements SalesUnitMapperInterface
         }
 
         $productMeasurementUnitTransfer = $productMeasurementSalesUnitTransfer->getProductMeasurementUnit();
-        $restSalesUnitsAttributesTransfer = (new RestSalesUnitsAttributesTransfer())
-            ->fromArray($productMeasurementSalesUnitTransfer->toArray(), true)
-            ->setMeasurementUnitCode($productMeasurementUnitTransfer->getCode());
-        $restProductMeasurementUnitsAttributesTransfer = (new RestProductMeasurementUnitsAttributesTransfer())
-            ->fromArray($productMeasurementUnitTransfer->toArray(), true)
-            ->setMeasurementUnitCode($productMeasurementUnitTransfer->getCode());
+        $restOrdersSalesUnitAttributesTransfer = (new RestOrdersSalesUnitAttributesTransfer())
+            ->fromArray($productMeasurementSalesUnitTransfer->toArray(), true);
+        $restProductMeasurementUnitsAttributesTransfer = (new RestOrdersProductMeasurementUnitsAttributesTransfer())
+            ->fromArray($productMeasurementUnitTransfer->toArray(), true);
+        $restOrdersSalesUnitAttributesTransfer->setProductMeasurementUnit($restProductMeasurementUnitsAttributesTransfer);
 
         return $restOrderItemsAttributesTransfer
-            ->setSalesUnit($restSalesUnitsAttributesTransfer)
-            ->setMeasurementUnit($restProductMeasurementUnitsAttributesTransfer);
+            ->setSalesUnit($restOrdersSalesUnitAttributesTransfer);
     }
 }

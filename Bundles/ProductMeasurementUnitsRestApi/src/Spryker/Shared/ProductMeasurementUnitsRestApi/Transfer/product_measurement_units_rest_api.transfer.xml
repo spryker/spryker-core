@@ -34,12 +34,23 @@
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="salesUnit" type="SalesUnit"/>
+        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes"/>
     </transfer>
 
-    <transfer name="SalesUnit">
+    <transfer name="RestCartItemsSalesUnitAttributes">
         <property name="id" type="int"/>
         <property name="amount" type="decimal"/>
+    </transfer>
+
+    <transfer name="RestOrdersProductMeasurementUnitsAttributes">
+        <property name="name" type="string"/>
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrdersSalesUnitAttributes">
+        <property name="conversion" type="int"/>
+        <property name="precision" type="int"/>
+        <property name="productMeasurementUnit" type="RestOrdersProductMeasurementUnitsAttributes"/>
     </transfer>
 
     <transfer name="PersistentCartChange">
@@ -57,8 +68,7 @@
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
-        <property name="salesUnit" type="RestSalesUnitsAttributes"/>
-        <property name="measurementUnit" type="RestProductMeasurementUnitsAttributes"/>
+        <property name="salesUnit" type="RestOrdersSalesUnitAttributes"/>
     </transfer>
 
 </transfers>
