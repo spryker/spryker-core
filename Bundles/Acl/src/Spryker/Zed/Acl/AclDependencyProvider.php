@@ -113,7 +113,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
      */
-    public function getAclInstallerPlugins(): array
+    protected function getAclInstallerPlugins(): array
     {
         return [];
     }

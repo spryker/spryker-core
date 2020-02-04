@@ -15,8 +15,8 @@ use Spryker\Zed\Acl\AclConfig;
 
 class AclConfigReader implements AclConfigReaderInterface
 {
-    protected const GROUP_INDEX = 'group';
-    protected const ROLE_INDEX = 'role';
+    protected const GROUP_KEY = 'group';
+    protected const ROLE_KEY = 'role';
 
     /**
      * @var \Spryker\Zed\Acl\AclConfig
@@ -38,23 +38,19 @@ class AclConfigReader implements AclConfigReaderInterface
     {
         $roleTransfers = [];
         foreach ($this->aclConfig->getInstallerRoles() as $roleData) {
-            $groupTransfer = (new GroupTransfer())->setName($roleData[static::GROUP_INDEX]);
+            $groupTransfer = (new GroupTransfer())->setName($roleData[static::GROUP_KEY]);
             $roleTransfers[$roleData[RoleTransfer::NAME]] = (new RoleTransfer())
                 ->setName($roleData[RoleTransfer::NAME])
                 ->setAclGroup($groupTransfer);
         }
         foreach ($this->aclConfig->getInstallerRules() as $ruleData) {
-            if (!isset($roleTransfers[$ruleData[static::ROLE_INDEX]])) {
+            if (!isset($roleTransfers[$ruleData[static::ROLE_KEY]])) {
                 continue;
             }
-            $roleTransfer = $roleTransfers[$ruleData[static::ROLE_INDEX]];
-
-            $ruleTransfer = (new RuleTransfer())
-                ->setType($ruleData[RuleTransfer::TYPE])
-                ->setAction($ruleData[RuleTransfer::ACTION])
-                ->setBundle($ruleData[RuleTransfer::BUNDLE])
-                ->setController($ruleData[RuleTransfer::CONTROLLER]);
-            $roleTransfer->addAclRule($ruleTransfer);
+            $roleTransfer = $roleTransfers[$ruleData[static::ROLE_KEY]];
+            $roleTransfer->addAclRule(
+                (new RuleTransfer())->fromArray($ruleData, true)
+            );
         }
 
         return array_values($roleTransfers);
@@ -80,7 +76,7 @@ class AclConfigReader implements AclConfigReaderInterface
     {
         $userTransfers = [];
         foreach ($this->aclConfig->getInstallerUsers() as $username => $userData) {
-            $groupTransfer = (new GroupTransfer())->setName($userData[static::GROUP_INDEX]);
+            $groupTransfer = (new GroupTransfer())->setName($userData[static::GROUP_KEY]);
             $userTransfers[] = (new UserTransfer())
                 ->setUsername($username)
                 ->addAclGroup($groupTransfer);

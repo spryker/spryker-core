@@ -9,15 +9,14 @@ namespace Spryker\Zed\AclExtension\Dependency\Plugin;
 
 /**
  * Specification:
- * - Executed on install @see \Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole
- * - Use this plugin if default Roles or Groups are needed in project
- * - The plugin methods are run in the following way: getGroups, getRoles.
+ * - Executed by AclFacade::install().
+ * - Provides required for project ACL Roles and Groups.
  */
 interface AclInstallerPluginInterface
 {
     /**
      * Specification:
-     * - Returns Roles with Rules to create on install
+     * - Returns Roles with Rules to create on install.
      *
      * @api
      *
@@ -27,7 +26,7 @@ interface AclInstallerPluginInterface
 
     /**
      * Specification:
-     * - Returns Groups to create on install
+     * - Returns Groups to create on install.
      *
      * @api
      *

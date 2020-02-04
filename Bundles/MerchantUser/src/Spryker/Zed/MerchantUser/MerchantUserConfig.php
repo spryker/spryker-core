@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantUser;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
@@ -22,13 +21,13 @@ class MerchantUserConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::VALIDATOR_WILDCARD
      */
-    public const VALIDATOR_WILDCARD = '*';
+    protected const VALIDATOR_WILDCARD = '*';
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::ALLOW
      */
-    public const ALLOW = 'allow';
-    public const MERCHANT_PORTAL_ADMIN_ROLE = 'merchant_portal_admin_role';
-    public const MERCHANT_PORTAL_ADMIN_GROUP = 'merchant_portal_admin_group';
+    protected const ALLOW = 'allow';
+    protected const MERCHANT_PORTAL_ADMIN_ROLE = 'merchant_portal_admin_role';
+    protected const MERCHANT_PORTAL_ADMIN_GROUP = 'merchant_portal_admin_group';
 
     /**
      * @return string
@@ -52,41 +51,19 @@ class MerchantUserConfig extends AbstractBundleConfig
     public function getInstallRoles(): array
     {
         return [
-            $this->getMerchantAdminRole(),
+            (new RoleTransfer())
+                ->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
+                ->setAclGroup(
+                    (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP)
+                )
+                ->addAclRule(
+                    (new RuleTransfer())
+                        ->setBundle(static::VALIDATOR_WILDCARD)
+                        ->setController(static::VALIDATOR_WILDCARD)
+                        ->setAction(static::VALIDATOR_WILDCARD)
+                        ->setType(static::ALLOW)
+                ),
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RoleTransfer
-     */
-    protected function getMerchantAdminRole(): RoleTransfer
-    {
-        return (new RoleTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
-            ->setAclGroup($this->getMerchantAdminGroup())
-            ->setAclRules($this->getMerchantAdminRules());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\GroupTransfer
-     */
-    protected function getMerchantAdminGroup(): GroupTransfer
-    {
-        return (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP);
-    }
-
-    /**
-     * @return \ArrayObject
-     */
-    protected function getMerchantAdminRules(): ArrayObject
-    {
-        $rules = new ArrayObject();
-        $rules[] = (new RuleTransfer())
-            ->setBundle(static::VALIDATOR_WILDCARD)
-            ->setController(static::VALIDATOR_WILDCARD)
-            ->setAction(static::VALIDATOR_WILDCARD)
-            ->setType(static::ALLOW);
-
-        return $rules;
     }
 
     /**
@@ -94,8 +71,8 @@ class MerchantUserConfig extends AbstractBundleConfig
      */
     public function getInstallGroups(): array
     {
-        $groups[] = $this->getMerchantAdminGroup();
-
-        return $groups;
+        return [
+            (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP),
+        ];
     }
 }

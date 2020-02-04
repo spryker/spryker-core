@@ -75,7 +75,7 @@ class Installer implements InstallerInterface
      *
      * @return void
      */
-    public function install()
+    public function install(): void
     {
         $this->installGroups();
         $this->installRoles();
@@ -88,6 +88,7 @@ class Installer implements InstallerInterface
     protected function installGroups(): void
     {
         foreach ($this->getGroups() as $groupTransfer) {
+            $groupTransfer->requireName();
             if ($this->group->hasGroupName($groupTransfer->getName())) {
                 continue;
             }
@@ -102,35 +103,26 @@ class Installer implements InstallerInterface
      */
     protected function installRoles(): void
     {
-        foreach ($this->getRoles() as $roleTransferToInstall) {
-            $roleTransfer = $this->findRole($roleTransferToInstall);
-            if (!$roleTransfer) {
-                $groupTransfer = $this->group->getByName($roleTransferToInstall->getAclGroup()->getName());
+        foreach ($this->getRoles() as $roleTransfer) {
+            $roleTransfer->requireName()
+                ->requireAclGroup()
+                ->getAclGroup()
+                    ->requireName();
+
+            $existingRoleTransfer = $this->role->findRoleByName($roleTransfer->getName());
+            if (!$existingRoleTransfer) {
+                $groupTransfer = $this->group->getByName($roleTransfer->getAclGroup()->getName());
                 if (!$groupTransfer->getIdAclGroup()) {
-                    throw new GroupNotFoundException(sprintf('The group with name %s was not found', $roleTransferToInstall->getAclGroup()->getName()));
+                    throw new GroupNotFoundException(sprintf('The group with name %s was not found', $roleTransfer->getAclGroup()->getName()));
                 }
-                $roleTransfer = $this->role->addRole($roleTransferToInstall->getName());
-                $this->group->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+                $existingRoleTransfer = $this->role->addRole($roleTransfer->getName());
+                $this->group->addRoleToGroup($existingRoleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
             }
 
-            foreach ($roleTransferToInstall->getAclRules() as $ruleTransfer) {
-                $this->addRuleToRole($ruleTransfer, $roleTransfer);
+            foreach ($roleTransfer->getAclRules() as $ruleTransfer) {
+                $this->addRuleToRole($ruleTransfer, $existingRoleTransfer);
             }
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
-     *
-     * @return \Generated\Shared\Transfer\RoleTransfer|null
-     */
-    protected function findRole(RoleTransfer $roleTransfer): ?RoleTransfer
-    {
-        if (!$this->role->hasRoleName($roleTransfer->getName())) {
-            return null;
-        }
-
-        return $this->role->getByName($roleTransfer->getName());
     }
 
     /**
@@ -141,6 +133,11 @@ class Installer implements InstallerInterface
      */
     protected function addRuleToRole(RuleTransfer $ruleTransfer, RoleTransfer $roleTransfer): RuleTransfer
     {
+        $ruleTransfer->requireAction()
+            ->requireBundle()
+            ->requireController()
+            ->requireType();
+
         $existsRoleRule = $this->rule->existsRoleRule(
             $roleTransfer->getIdAclRole(),
             $ruleTransfer->getBundle(),
@@ -166,19 +163,19 @@ class Installer implements InstallerInterface
     {
         foreach ($this->aclConfigReader->getUserGroupRelations() as $userTransfer) {
             foreach ($userTransfer->getAclGroups() as $groupTransfer) {
-                $foundGroupTransfer = $this->group->getByName($groupTransfer->getName());
-                if (!$foundGroupTransfer->getIdAclGroup()) {
+                $existingGroupTransfer = $this->group->getByName($groupTransfer->getName());
+                if (!$existingGroupTransfer->getIdAclGroup()) {
                     throw new GroupNotFoundException(sprintf('The group with name %s was not found', $groupTransfer->getName()));
                 }
-                $foundUserTransfer = $this->userFacade->getUserByUsername($userTransfer->getUsername());
-                if (!$foundUserTransfer->getIdUser()) {
-                    throw new UserNotFoundException(sprintf('The group with name %s was not found', $userTransfer->getUsername()));
+                $existingUserTransfer = $this->userFacade->getUserByUsername($userTransfer->getUsername());
+                if (!$existingUserTransfer->getIdUser()) {
+                    throw new UserNotFoundException(sprintf('The user with username %s was not found', $userTransfer->getUsername()));
                 }
 
-                if ($this->group->hasUser($foundGroupTransfer->getIdAclGroup(), $foundUserTransfer->getIdUser())) {
+                if ($this->group->hasUser($existingGroupTransfer->getIdAclGroup(), $existingUserTransfer->getIdUser())) {
                     continue;
                 }
-                $this->group->addUser($foundGroupTransfer->getIdAclGroup(), $foundUserTransfer->getIdUser());
+                $this->group->addUser($existingGroupTransfer->getIdAclGroup(), $existingUserTransfer->getIdUser());
             }
         }
     }
