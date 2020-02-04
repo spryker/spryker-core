@@ -64,7 +64,7 @@
     </transfer>
 
     <transfer name="RestItemsAttributes">
-        <property name="salesUnit" type="SalesUnit"/>
+        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes"/>
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
