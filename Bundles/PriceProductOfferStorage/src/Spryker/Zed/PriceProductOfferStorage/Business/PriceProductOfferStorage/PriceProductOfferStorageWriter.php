@@ -164,6 +164,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                     ->endUse()
                 ->endUse()
             ->endUse()
+            ->filterByConcreteSku_In($productSkus)
             ->select([
                 SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER,
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
@@ -174,7 +175,6 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                 SpyPriceProductStoreTableMap::COL_GROSS_PRICE,
                 SpyPriceProductStoreTableMap::COL_NET_PRICE,
             ])
-            ->filterByConcreteSku_In($productSkus)
             ->find()
             ->toArray();
 

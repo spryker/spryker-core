@@ -54,14 +54,14 @@ class PriceProductOfferHelper extends Module
     {
         $priceProductOfferTransfer = (new PriceProductOfferTransfer())->fromArray($seedData, true);
 
-        if (!$priceProductOfferTransfer->getFkPriceProductStore()) {
-            $priceProductTransfer = $this->getPriceProductDataHelper()->havePriceProduct($seedData);
-            $priceProductOfferTransfer->setFkPriceProductStore($priceProductTransfer->getMoneyValue()->getIdEntity());
-        }
-
         if (!$priceProductOfferTransfer->getFkProductOffer()) {
             $productOfferTransfer = $this->getProductOfferHelper()->haveProductOffer();
             $priceProductOfferTransfer->setFkProductOffer($productOfferTransfer->getIdProductOffer());
+        }
+
+        if (!$priceProductOfferTransfer->getFkPriceProductStore()) {
+            $priceProductTransfer = $this->getPriceProductDataHelper()->havePriceProduct($seedData);
+            $priceProductOfferTransfer->setFkPriceProductStore($priceProductTransfer->getMoneyValue()->getIdEntity());
         }
 
         return $priceProductOfferTransfer;
