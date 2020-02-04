@@ -38,13 +38,13 @@ class CartItemExpander implements CartItemExpanderInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        $salesUnitTransfer = $restCartItemsAttributesTransfer->getSalesUnit();
-        if (!$salesUnitTransfer) {
+        $restCartItemsSalesUnitAttributesTransfer = $restCartItemsAttributesTransfer->getSalesUnit();
+        if (!$restCartItemsSalesUnitAttributesTransfer) {
             return $cartItemRequestTransfer;
         }
 
         return $cartItemRequestTransfer
-            ->setAmount($salesUnitTransfer->getAmount())
-            ->setIdProductMeasurementSalesUnit($salesUnitTransfer->getId());
+            ->setAmount($restCartItemsSalesUnitAttributesTransfer->getAmount())
+            ->setIdProductMeasurementSalesUnit($restCartItemsSalesUnitAttributesTransfer->getId());
     }
 }
