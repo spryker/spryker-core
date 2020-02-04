@@ -27,6 +27,7 @@ interface MerchantFacadeInterface
      *   - email
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
+     * - Calls a stack of `MerchantPostCreatePluginInterface` after merchant is created.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
      * - Returns MerchantResponseTransfer.isSuccessful=true and MerchantResponseTransfer.merchant.idMerchant is set from newly created entity.
      *
@@ -50,6 +51,7 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
+     * - Calls a stack of `MerchantPostUpdatePluginInterface` after merchant is updated.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant not found.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
      * - Persists the entity to DB.
