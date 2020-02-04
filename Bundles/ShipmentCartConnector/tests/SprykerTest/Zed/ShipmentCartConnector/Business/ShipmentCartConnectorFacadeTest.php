@@ -11,9 +11,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -103,6 +105,32 @@ class ShipmentCartConnectorFacadeTest extends Unit
             $this->assertNotEmpty($price);
             $this->assertNotEquals(-1, $price);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateShipmentPriceWithShipmentMethodSourcePrices(): void
+    {
+        $sourcePrice = 322;
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+
+        $shipmentMethodTransfer->setCurrencyIsoCode(static::CURRENCY_ISO_CODE);
+        $shipmentMethodTransfer->setSourcePrice((new MoneyValueBuilder([MoneyValueTransfer::GROSS_AMOUNT => $sourcePrice]))->build());
+
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
+
+        $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
+
+        $this->assertSame(
+            $sourcePrice,
+            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice()
+        );
     }
 
     /**
