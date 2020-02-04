@@ -30,6 +30,6 @@ class PriceProductOfferWriterStep extends PublishAwareStep implements DataImport
 
         $priceProductOfferEntity->save();
 
-        $this->addPublishEvents(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH, $priceProductOfferEntity->getIdPriceProductOffer());
+        $this->addPublishEvents(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH, (int)$priceProductOfferEntity->getIdPriceProductOffer());
     }
 }
