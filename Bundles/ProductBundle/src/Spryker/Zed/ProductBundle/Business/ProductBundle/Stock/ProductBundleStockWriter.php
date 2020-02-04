@@ -208,7 +208,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             }
 
             $bundleTotalStockPerWarehouse[$idStock] = [
-                static::QUANTITY => $bundleStock,
+                static::QUANTITY => $bundleStock->floor(),
                 static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }

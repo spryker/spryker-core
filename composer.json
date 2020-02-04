@@ -43,10 +43,12 @@
     "spryker/availability": "*",
     "spryker/availability-cart-connector": "*",
     "spryker/availability-data-feed": "*",
+    "spryker/availability-extension": "*",
     "spryker/availability-gui": "*",
     "spryker/availability-notification": "*",
     "spryker/availability-offer-connector": "*",
     "spryker/availability-storage": "*",
+    "spryker/availability-storage-extension": "*",
     "spryker/barcode": "*",
     "spryker/barcode-extension": "*",
     "spryker/business-on-behalf": "*",
@@ -333,6 +335,7 @@
     "spryker/merchant-relationship-sales-order-threshold-gui": "*",
     "spryker/merchant-relationship-sales-order-threshold-gui-extension": "*",
     "spryker/merchant-sales-order": "*",
+    "spryker/merchant-user": "*",
     "spryker/messenger": "*",
     "spryker/messenger-extension": "*",
     "spryker/module-finder": "*",
@@ -464,6 +467,8 @@
     "spryker/product-merchant-connector": "*",
     "spryker/product-new": "*",
     "spryker/product-offer": "*",
+    "spryker/product-offer-availability": "*",
+    "spryker/product-offer-availability-storage": "*",
     "spryker/product-offer-stock": "*",
     "spryker/product-offer-stock-data-import": "*",
     "spryker/product-offer-validity": "*",
@@ -646,10 +651,6 @@
     "spryker/wishlists-rest-api": "*",
     "spryker/zed-navigation": "*",
     "spryker/zed-request": "*",
-    "spryker/zend": "*",
-    "spryker/availability-extension": "*",
-    "spryker/availability-storage-extension": "*",
-    "spryker/product-offer-availability": "*",
-    "spryker-shop/cart-page-extension": "*"
+    "spryker/zend": "*"
   }
 }

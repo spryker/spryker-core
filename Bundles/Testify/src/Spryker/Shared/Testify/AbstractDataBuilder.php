@@ -18,7 +18,7 @@ abstract class AbstractDataBuilder
     /**
      * @var \Faker\Generator
      */
-    protected $faker;
+    protected static $faker;
 
     /**
      * @var array
@@ -66,7 +66,10 @@ abstract class AbstractDataBuilder
     {
         $this->seedData = $seed;
         $this->rules = $this->defaultRules;
-        $this->faker = Factory::create();
+
+        if (static::$faker === null) {
+            static::$faker = Factory::create();
+        }
     }
 
     /**
@@ -261,7 +264,7 @@ abstract class AbstractDataBuilder
         }
 
         // @codingStandardsIgnoreStart
-        return eval("return \$this->faker->$rule;");
+        return eval("return static::\$faker->$rule;");
         // @codingStandardsIgnoreEnd
     }
 
