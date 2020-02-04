@@ -14,12 +14,12 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDataSetInterface;
 
-class ProductOfferReferenceToIdProductOfferAndConcreteSkuStep implements DataImportStepInterface
+class ProductOfferReferenceToProductOfferDataStep implements DataImportStepInterface
 {
     /**
      * @var array
      */
-    protected $productOffer = [];
+    protected $productOfferDataCache = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -32,20 +32,19 @@ class ProductOfferReferenceToIdProductOfferAndConcreteSkuStep implements DataImp
     {
         $productOfferReferenceKey = $dataSet[PriceProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE];
 
-        if (!isset($this->productOffer[$productOfferReferenceKey])) {
+        if (!isset($this->productOfferDataCache[$productOfferReferenceKey])) {
             $productOfferQuery = SpyProductOfferQuery::create();
             $productOfferQuery->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, SpyProductOfferTableMap::COL_CONCRETE_SKU]);
-            /** @var int $idProductOffer */
-            $productOffer = $productOfferQuery->findOneByProductOfferReference($productOfferReferenceKey);
 
-            if (!$productOffer) {
+            $productOfferEntity = $productOfferQuery->findOneByProductOfferReference($productOfferReferenceKey);
+            if (!$productOfferEntity) {
                 throw new EntityNotFoundException(sprintf('Could not find product offer by product offer reference "%s"', $productOfferReferenceKey));
             }
 
-            $this->productOffer[$productOfferReferenceKey] = $productOffer;
+            $this->productOfferDataCache[$productOfferReferenceKey] = $productOfferEntity;
         }
 
-        $dataSet[PriceProductOfferDataSetInterface::FK_PRODUCT_OFFER] = $this->productOffer[$productOfferReferenceKey][SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER];
-        $dataSet[PriceProductOfferDataSetInterface::CONCRETE_SKU] = $this->productOffer[$productOfferReferenceKey][SpyProductOfferTableMap::COL_CONCRETE_SKU];
+        $dataSet[PriceProductOfferDataSetInterface::FK_PRODUCT_OFFER] = $this->productOfferDataCache[$productOfferReferenceKey][SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER];
+        $dataSet[PriceProductOfferDataSetInterface::CONCRETE_SKU] = $this->productOfferDataCache[$productOfferReferenceKey][SpyProductOfferTableMap::COL_CONCRETE_SKU];
     }
 }

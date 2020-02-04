@@ -9,11 +9,10 @@ namespace Spryker\Zed\PriceProductOfferDataImport\Business\Step;
 
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDataSetInterface;
 
-class PriceProductWriterStep extends PublishAwareStep implements DataImportStepInterface
+class PriceProductWriterStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -22,12 +21,15 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $priceProductQuery = SpyPriceProductQuery::create();
-        $priceProductQuery->filterByFkPriceType($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_TYPE]);
-        $priceProductQuery->filterByFkProduct($dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE]);
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $productPriceEntity */
+        $productPriceEntity = SpyPriceProductQuery::create()
+            ->filterByFkPriceType($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_TYPE])
+            ->filterByFkProduct($dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE])
+            ->findOneOrCreate();
 
-        $productPriceEntity = $priceProductQuery->findOneOrCreate();
-        $productPriceEntity->save();
+        if ($productPriceEntity->isNew()) {
+            $productPriceEntity->save();
+        }
 
         $dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT] = $productPriceEntity->getIdPriceProduct();
     }

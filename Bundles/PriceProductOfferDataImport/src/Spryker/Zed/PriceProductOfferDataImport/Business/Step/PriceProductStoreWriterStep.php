@@ -9,11 +9,10 @@ namespace Spryker\Zed\PriceProductOfferDataImport\Business\Step;
 
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDataSetInterface;
 
-class PriceProductStoreWriterStep extends PublishAwareStep implements DataImportStepInterface
+class PriceProductStoreWriterStep implements DataImportStepInterface
 {
     /**
      * @var string[]
@@ -27,7 +26,7 @@ class PriceProductStoreWriterStep extends PublishAwareStep implements DataImport
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT_STORE] = $this->getIdPriceProductStoreEntity($dataSet);
+        $dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT_STORE] = $this->getIdPriceProductStore($dataSet);
     }
 
     /**
@@ -35,7 +34,7 @@ class PriceProductStoreWriterStep extends PublishAwareStep implements DataImport
      *
      * @return string
      */
-    protected function getIdPriceProductStoreEntity(DataSetInterface $dataSet): string
+    protected function getIdPriceProductStore(DataSetInterface $dataSet): string
     {
         $cacheIndex = $this->buildCacheIndex($dataSet);
         if (isset($this->idPriceProductStoreCache[$cacheIndex])) {
