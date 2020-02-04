@@ -11,26 +11,13 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class PriceProductOfferQueryExpander implements PriceProductOfferQueryExpanderInterface
 {
-    /**
-     * @uses \Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE
-     */
-    public const COL_ID_PRICE_PRODUCT_STORE = 'spy_price_product_store.id_price_product_store';
-
-    /**
-     * @uses \Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER
-     */
-    public const COL_ID_PRODUCT_OFFER = 'spy_product_offer.id_product_offer';
-
-    /**
-     * @uses \Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE
-     */
-    public const COL_PRODUCT_OFFER_REFERENCE = 'spy_product_offer.product_offer_reference';
-
     /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -56,18 +43,18 @@ class PriceProductOfferQueryExpander implements PriceProductOfferQueryExpanderIn
     {
         return (new QueryCriteriaTransfer())
             ->setWithColumns([
-                static::COL_PRODUCT_OFFER_REFERENCE => PriceProductDimensionTransfer::PRODUCT_OFFER_REFERENCE,
+                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => PriceProductDimensionTransfer::PRODUCT_OFFER_REFERENCE,
             ])
             ->addJoin(
                 (new QueryJoinTransfer())
-                    ->setLeft([static::COL_ID_PRICE_PRODUCT_STORE])
+                    ->setLeft([SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE])
                     ->setRight([SpyPriceProductOfferTableMap::COL_FK_PRICE_PRODUCT_STORE])
                     ->setJoinType(Criteria::LEFT_JOIN)
             )
             ->addJoin(
                 (new QueryJoinTransfer())
                     ->setLeft([SpyPriceProductOfferTableMap::COL_FK_PRODUCT_OFFER])
-                    ->setRight([static::COL_ID_PRODUCT_OFFER])
+                    ->setRight([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER])
                     ->setJoinType(Criteria::LEFT_JOIN)
             );
     }

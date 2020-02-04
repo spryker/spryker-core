@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\PriceProductOfferDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
 use Spryker\Zed\PriceProductOfferDataImport\Communication\Plugin\PriceProductOfferDataImportPlugin;
 use Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig;
@@ -28,6 +29,9 @@ use Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig;
  */
 class PriceProductOfferDataImportPluginTest extends Unit
 {
+    protected const PRODUCT_OFFER_REFERENCE = 'offer-1';
+    protected const CONCRETE_SKU = '052_30614390';
+
     /**
      * @var \SprykerTest\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportCommunicationTester
      */
@@ -38,6 +42,11 @@ class PriceProductOfferDataImportPluginTest extends Unit
      */
     public function testPriceProductOfferDataImportFacade(): void
     {
+        $this->tester->haveProductOffer([
+            ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE,
+            ProductOfferTransfer::CONCRETE_SKU => static::CONCRETE_SKU,
+        ]);
+
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/price_product_offer.csv');
 

@@ -37,7 +37,7 @@ class PriceProductOfferDimensionExpanderStrategyPlugin extends AbstractPlugin im
 
     /**
      * Specification:
-     *  - Returns expanded transfer.
+     *  - Returns expanded transfer with offer dimension type.
      *
      * @api
      *
