@@ -15,6 +15,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/discount": "*",
+    "spryker/discount-promotion": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

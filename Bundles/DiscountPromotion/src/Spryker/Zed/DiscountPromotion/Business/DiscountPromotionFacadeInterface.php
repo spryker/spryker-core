@@ -115,7 +115,7 @@ interface DiscountPromotionFacadeInterface
 
     /**
      * Specification:
-     *  - Reads discount promotion from persistence by given UUID.
+     *  - Retrieves discount promotion from persistence by given UUID.
      *
      * @api
      *

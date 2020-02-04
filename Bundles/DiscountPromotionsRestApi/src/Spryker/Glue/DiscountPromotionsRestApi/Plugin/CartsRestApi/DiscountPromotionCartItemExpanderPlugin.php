@@ -19,7 +19,7 @@ class DiscountPromotionCartItemExpanderPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
-     * - Expands CartItemRequestTransfer with discount promotion uuid data retrieved from RestCartItemsAttributesTransfer::$idPromotionalItem.
+     * - Expands `CartItemRequestTransfer` with discount promotion UUID data retrieved from `RestCartItemsAttributesTransfer::$idPromotionalItem`.
      *
      * @api
      *
