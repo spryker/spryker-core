@@ -221,10 +221,9 @@ class ProductLabelStorageListenerTest extends Unit
         //Arrange
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelStorageFacade = $this->getProductLabelStorageFacade();
-        $productLabelDictionaryStorageUnpublishListener = new ProductLabelDictionaryItemStorageUnpublishListener();
-        $productLabelDictionaryStorageUnpublishListener->setFacade($productLabelStorageFacade);
+        $productLabelDictionaryItemStorageUnpublishListener = new ProductLabelDictionaryItemStorageUnpublishListener();
+        $productLabelDictionaryItemStorageUnpublishListener->setFacade($productLabelStorageFacade);
 
-        $this->productLabelTransfer = $this->tester->haveProductLabel();
         $productLabelStorageFacade->publishLabelDictionary();
 
         $eventTransfers = [
@@ -233,7 +232,7 @@ class ProductLabelStorageListenerTest extends Unit
 
         // Act
         $productLabelFacade->removeLabel($this->productLabelTransfer);
-        $productLabelDictionaryStorageUnpublishListener->handleBulk($eventTransfers, ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH);
+        $productLabelDictionaryItemStorageUnpublishListener->handleBulk($eventTransfers, ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH);
 
         // Assert
         $productLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
@@ -241,7 +240,7 @@ class ProductLabelStorageListenerTest extends Unit
 
         foreach ($productLabelDictionaryStorage as $productLabelDictionaryStorageItem) {
             foreach ($productLabelDictionaryStorageItem->getData()['items'] as $item) {
-                $this->assertNotTrue(
+                $this->assertFalse(
                     $this->productLabelTransfer->getIdProductLabel() == $item['id_product_label'],
                     'Product label item should be deleted from dictionary'
                 );

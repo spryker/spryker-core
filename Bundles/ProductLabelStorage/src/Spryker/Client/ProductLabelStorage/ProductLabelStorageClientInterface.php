@@ -12,7 +12,7 @@ interface ProductLabelStorageClientInterface
     /**
      * Specification:
      * - Retrieves labels collection for given abstract product ID, locale and store name.
-     * - Forward compatibility (from the next major)
+     * - Forward compatibility (from the next major): only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -28,7 +28,7 @@ interface ProductLabelStorageClientInterface
      * Specification:
      * - Retrieves product labels by abstract product IDs and by locale.
      * - Returns array of ProductLabelDictionaryItemTransfers indexed by id of product abstract.
-     * - Forward compatibility (from the next major)
+     * - Forward compatibility (from the next major): only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -47,7 +47,7 @@ interface ProductLabelStorageClientInterface
     /**
      * Specification:
      * - Retrieves labels collection for the given list of labels IDs, locale and store name.
-     * - Forward compatibility (from the next major)
+     * - Forward compatibility (from the next major): only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -62,7 +62,7 @@ interface ProductLabelStorageClientInterface
     /**
      * Specification:
      * - Retrieves label for given label name, locale and store name.
-     * - Forward compatibility (from the next major)
+     * - Forward compatibility (from the next major): only labels assigned with passed $storeName will be returned.
      *
      * @api
      *

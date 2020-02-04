@@ -19,12 +19,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductLabelDictionaryItemStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     * - Unpublishes removed product labels from Storage
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
+     *
+     * @return void
      */
     public function handleBulk(array $transfers, $eventName)
     {
