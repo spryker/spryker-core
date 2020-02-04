@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLo
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 /**
@@ -31,29 +30,11 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        $merchantProductAbstractData = $this->getRepository()
-            ->getMerchantDataByProductAbstractIds($productPageLoadTransfer->getProductAbstractIds());
-
-        $groupedMerchantNamesByIdProductAbstract = $this->groupMerchantNamesByIdProductAbstract($merchantProductAbstractData);
-
-        $payloadTransfers = $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $groupedMerchantNamesByIdProductAbstract);
+        $merchantNames = $this->getFacade()
+            ->getMerchantNamesByProductAbstractIds($productPageLoadTransfer->getProductAbstractIds());
+        $payloadTransfers = $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $merchantNames);
 
         return $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);
-    }
-
-    /**
-     * @param array $merchantProductAbstractData
-     *
-     * @return array
-     */
-    protected function groupMerchantNamesByIdProductAbstract(array $merchantProductAbstractData): array
-    {
-        $productAbstractIdMerchantNamesMap = [];
-        foreach ($merchantProductAbstractData as $row) {
-            $productAbstractIdMerchantNamesMap[$row[MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID]][] = $row[MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME];
-        }
-
-        return $productAbstractIdMerchantNamesMap;
     }
 
     /**

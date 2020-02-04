@@ -56,4 +56,16 @@ interface MerchantProductOfferSearchFacadeInterface
      * @return void
      */
     public function writeCollectionByIdProductOfferEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Returns a list of merchant names grouped by product abstract ids.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return string[][]
+     */
+    public function getMerchantNamesByProductAbstractIds(array $productAbstractIds): array;
 }
