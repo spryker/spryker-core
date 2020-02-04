@@ -25,4 +25,12 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
     {
         return $this->getFactory()->createPriceProductOfferQueryExpander()->buildPriceProductOfferDimensionQueryCriteria($priceProductCriteriaTransfer);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceProductOfferDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getFactory()->createPriceProductOfferQueryExpander()->buildUnconditionalPriceProductOfferDimensionQueryCriteria();
+    }
 }

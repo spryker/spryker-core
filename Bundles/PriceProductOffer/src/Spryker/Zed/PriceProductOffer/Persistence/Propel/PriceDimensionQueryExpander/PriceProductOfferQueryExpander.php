@@ -38,6 +38,22 @@ class PriceProductOfferQueryExpander implements PriceProductOfferQueryExpanderIn
      */
     public function buildPriceProductOfferDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
+        return $this->createQueryCriteriaTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceProductOfferDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->createQueryCriteriaTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    protected function createQueryCriteriaTransfer(): QueryCriteriaTransfer
+    {
         return (new QueryCriteriaTransfer())
             ->setWithColumns([
                 static::COL_PRODUCT_OFFER_REFERENCE => PriceProductDimensionTransfer::PRODUCT_OFFER_REFERENCE,

@@ -6,11 +6,11 @@
           package="src.Orm.Zed.PriceProductOffer.Persistence"
 >
   <table name="spy_price_product_offer" identifierQuoting="true" class="SpyPriceProductOffer">
-    <column name="id_price_product_offer" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="id_price_product_offer" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="fk_product_offer" type="INTEGER" required="true"/>
-    <column name="fk_price_product_store" type="INTEGER" required="true"/>
+    <column name="fk_price_product_store" type="BIGINT" required="true"/>
 
-    <foreign-key name="spy_price_product_offer-fk_product_offer" foreignTable="spy_product_offer">
+    <foreign-key name="spy_price_product_offer-fk_product_offer" onDelete="CASCADE" foreignTable="spy_product_offer">
       <reference foreign="id_product_offer" local="fk_product_offer"/>
     </foreign-key>
 

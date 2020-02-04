@@ -18,4 +18,9 @@ interface PriceProductOfferQueryExpanderInterface
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
     public function buildPriceProductOfferDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceProductOfferDimensionQueryCriteria(): QueryCriteriaTransfer;
 }

@@ -40,6 +40,18 @@ class PriceProductOfferQueryCriteriaPlugin extends AbstractPlugin implements Pri
      *
      * @api
      *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getRepository()->buildUnconditionalPriceProductOfferDimensionQueryCriteria();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getDimensionName(): string
