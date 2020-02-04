@@ -8,7 +8,25 @@
 namespace Spryker\Client\OrderCustomReference;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface;
+use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetter;
+use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetterInterface;
 
 class OrderCustomReferenceFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetterInterface
+     */
+    public function createOrderCustomReferenceSetter(): OrderCustomReferenceSetterInterface
+    {
+        return new OrderCustomReferenceSetter($this->getPersistentCartClient());
+    }
+
+    /**
+     * @return \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface
+     */
+    public function getPersistentCartClient(): OrderCustomReferenceToPersistentCartClientInterface
+    {
+        return $this->getProvidedDependency(OrderCustomReferenceDependencyProvider::CLIENT_PERSISTENT_CART);
+    }
 }

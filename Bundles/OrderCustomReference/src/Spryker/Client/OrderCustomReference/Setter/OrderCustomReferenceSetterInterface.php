@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\OrderCustomReference;
+namespace Spryker\Client\OrderCustomReference\Setter;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface OrderCustomReferenceClientInterface
+interface OrderCustomReferenceSetterInterface
 {
     /**
-     * Specification:
-     * - Updates `QuoteTransfer::$orderCustomReference`.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

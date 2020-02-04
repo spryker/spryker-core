@@ -9,9 +9,12 @@ namespace Spryker\Client\OrderCustomReference;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientBridge;
 
 class OrderCustomReferenceDependencyProvider extends AbstractDependencyProvider
 {
+    public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
@@ -20,6 +23,21 @@ class OrderCustomReferenceDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addPersistentCartClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPersistentCartClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
+            return new OrderCustomReferenceToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
+        });
 
         return $container;
     }

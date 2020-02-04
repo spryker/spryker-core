@@ -5,10 +5,27 @@
 
     <transfer name="Quote">
         <property name="orderCustomReference" type="string"/>
+        <property name="idQuote" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="orderCustomReference" type="string"/>
     </transfer>
 
     <transfer name="Order">
         <property name="orderCustomReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequest">
+        <property name="idQuote" type="int"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+    </transfer>
+
+    <transfer name="QuoteResponse">
     </transfer>
 
 </transfers>
