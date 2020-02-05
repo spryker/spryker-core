@@ -150,11 +150,13 @@ class MerchantForm extends AbstractType
         $builder
             ->add(static::FIELD_MERCHANT_REFERENCE, TextType::class, [
                 'label' => static::LABEL_MERCHANT_REFERENCE,
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new Length([
                         'max' => 255,
                     ]),
+                    new Required(),
+                    new NotBlank(),
                     new UniqueMerchantReference([
                         UniqueMerchantReference::OPTION_CURRENT_MERCHANT_ID => $currentMerchantId,
                         UniqueMerchantReference::OPTION_MERCHANT_FACADE => $this->getFactory()->getMerchantFacade(),
