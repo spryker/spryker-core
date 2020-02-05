@@ -28,6 +28,7 @@
   },
   "replace": {
     "spryker/acl": "*",
+    "spryker/acl-extension": "*",
     "spryker/agent": "*",
     "spryker/agent-gui": "*",
     "spryker/alternative-products-rest-api": "*",
