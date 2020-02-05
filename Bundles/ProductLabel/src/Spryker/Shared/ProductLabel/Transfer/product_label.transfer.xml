@@ -16,6 +16,7 @@
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
         <property name="position" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
         <property
             name="localizedAttributesCollection"
             singular="localizedAttributes"
@@ -60,10 +61,6 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-    </transfer>
-
-    <transfer name="ProductLabel">
-        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="StoreRelation">
