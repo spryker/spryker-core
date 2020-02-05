@@ -60,19 +60,27 @@ class MerchantUserConfig extends AbstractBundleConfig
     public function getInstallRoles(): array
     {
         return [
-            (new RoleTransfer())
-                ->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
-                ->setAclGroup(
-                    (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP)
-                )
-                ->addAclRule(
-                    (new RuleTransfer())
-                        ->setBundle(static::VALIDATOR_WILDCARD)
-                        ->setController(static::VALIDATOR_WILDCARD)
-                        ->setAction(static::VALIDATOR_WILDCARD)
-                        ->setType(static::ALLOW)
-                ),
+            $this->getMerchantAdminRole(),
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    public function getMerchantAdminRole(): RoleTransfer
+    {
+        return (new RoleTransfer())
+            ->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
+            ->setAclGroup(
+                (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP)
+            )
+            ->addAclRule(
+                (new RuleTransfer())
+                    ->setBundle(static::VALIDATOR_WILDCARD)
+                    ->setController(static::VALIDATOR_WILDCARD)
+                    ->setAction(static::VALIDATOR_WILDCARD)
+                    ->setType(static::ALLOW)
+            );
     }
 
     /**
