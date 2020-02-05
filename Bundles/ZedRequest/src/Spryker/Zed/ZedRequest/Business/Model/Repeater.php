@@ -93,12 +93,6 @@ class Repeater implements RepeaterInterface
      */
     protected function setFlashInFile(array $repeatData, $fileName)
     {
-        try {
-            $fileName = $this->checkFileName($fileName);
-        } catch (ActionPathHasForbiddenSymbolsException $e) {
-            return;
-        }
-
         $filePath = $this->getFilePath($fileName);
         $string = serialize($repeatData);
 
@@ -133,53 +127,25 @@ class Repeater implements RepeaterInterface
     /**
      * @param string $fileName
      *
-     * @return string
-     */
-    protected function getFilePath($fileName)
-    {
-        return $this->getConfig()->getPathToYvesRequestRepeatData($fileName);
-    }
-
-    /**
-     * @param string $fileName
-     *
      * @throws \Spryker\Zed\ZedRequest\Business\Exception\ActionPathHasForbiddenSymbolsException
      *
      * @return string
      */
-    protected function checkFileName(string $fileName): string
-    {
-        if ($fileName === static::FILE_NAME_PREFIX_LAST_YVES_REQUEST . '.' . static::FILE_NAME_LOG_EXTENSION) {
-            return $fileName;
-        }
-
-        if ($this->isFileNameValid($fileName)) {
-            $actionPath = str_replace(static::FILE_NAME_PREFIX_LAST_YVES_REQUEST . '_', '', $fileName);
-            $actionPath = str_replace('.' . static::FILE_NAME_LOG_EXTENSION, '', $actionPath);
-            $invalidFileNameParts = explode('_', $actionPath);
-
-            throw new ActionPathHasForbiddenSymbolsException(
-                sprintf(
-                    'The path %s to the action you are trying to invoke has forbidden symbols.',
-                    implode('\\', $invalidFileNameParts)
-                )
-            );
-        }
-
-        return $fileName;
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return bool
-     */
-    protected function isFileNameValid(string $fileName): bool
+    protected function getFilePath($fileName)
     {
         if (preg_match(static::FILE_NAME_REG_EXP, $fileName)) {
-            return true;
+            return $this->getConfig()->getPathToYvesRequestRepeatData($fileName);
         }
 
-        return false;
+        $actionPath = str_replace(sprintf('%s_', static::FILE_NAME_PREFIX_LAST_YVES_REQUEST), '', $fileName);
+        $actionPath = str_replace(sprintf('.%s', static::FILE_NAME_LOG_EXTENSION), '', $actionPath);
+        $invalidFileNameParts = explode('_', $actionPath);
+
+        throw new ActionPathHasForbiddenSymbolsException(
+            sprintf(
+                'The path %s to the action you are trying to invoke has forbidden symbols.',
+                implode('\\', $invalidFileNameParts)
+            )
+        );
     }
 }

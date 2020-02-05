@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ZedRequest\Business\Model;
 
 use Codeception\TestCase\Test;
+use Spryker\Zed\ZedRequest\Business\Exception\ActionPathHasForbiddenSymbolsException;
 use Spryker\Zed\ZedRequest\Business\Model\Repeater;
 
 /**
@@ -38,6 +39,24 @@ class RepeaterTest extends Test
 
         $this->assertFileExists($this->tester->getDefaultFileName());
         $this->assertFileExists($this->tester->getFileNameWithBundleControllerAction());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetRepeatedDataWritesWrongDataToFiles(): void
+    {
+        // Arrange
+        $requestMock = $this->tester->getTransferRequest();
+        $httpRequest = $this->tester->getHttpRequestWithForbiddenSymbolsInMvcPartsNames();
+
+        $repeater = new Repeater();
+
+        // Assert
+        $this->expectException(ActionPathHasForbiddenSymbolsException::class);
+
+        // Act
+        $repeater->setRepeatData($requestMock, $httpRequest);
     }
 
     /**
