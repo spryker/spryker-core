@@ -19,7 +19,7 @@ class SalesUnitCartItemExpanderPlugin extends AbstractPlugin implements CartItem
 {
     /**
      * {@inheritDoc}
-     * - Expands CartItemRequestTransfer with `amount` and `idProductMeasurementSalesUnit`.
+     * - Expands `CartItemRequestTransfer` with `amount` and `idProductMeasurementSalesUnit`.
      *
      * @api
      *
