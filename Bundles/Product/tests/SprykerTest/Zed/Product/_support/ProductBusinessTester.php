@@ -198,6 +198,20 @@ class ProductBusinessTester extends Actor
     }
 
     /**
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function createProductConcrete(bool $isActive): ProductConcreteTransfer
+    {
+        $productConcreteOverride = [
+            ProductConcreteTransfer::IS_ACTIVE => $isActive,
+        ];
+
+        return $this->haveFullProduct($productConcreteOverride);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

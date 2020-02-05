@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\ProductFacade;
 
@@ -194,5 +195,43 @@ class ProductFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $productUrls);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckShoppingListItemProductIsActiveShouldReturnTrue(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = new ShoppingListItemTransfer();
+        $productConcreteTransfer = $this->tester->createProductConcrete(true);
+        $shoppingListItemTransfer->setSku($productConcreteTransfer->getSku());
+
+        // Act
+        $isActive = $this->productFacade
+            ->checkShoppingListItemProductIsActive($shoppingListItemTransfer)
+            ->getIsSuccess();
+
+        // Assert
+        $this->assertTrue($isActive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckShoppingListItemProductIsActiveShouldReturnFalse(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = new ShoppingListItemTransfer();
+        $productConcreteTransfer = $this->tester->createProductConcrete(false);
+        $shoppingListItemTransfer->setSku($productConcreteTransfer->getSku());
+
+        // Act
+        $isActive = $this->productFacade
+            ->checkShoppingListItemProductIsActive($shoppingListItemTransfer)
+            ->getIsSuccess();
+
+        // Assert
+        $this->assertFalse($isActive);
     }
 }
