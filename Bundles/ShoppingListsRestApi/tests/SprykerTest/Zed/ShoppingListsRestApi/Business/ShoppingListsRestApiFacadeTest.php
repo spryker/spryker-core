@@ -528,7 +528,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiBusinessFactory
      */
-    protected function getMockShoppingListsRestApiBusinessFactory(): MockObject
+    protected function getMockShoppingListsRestApiBusinessFactory(): ShoppingListsRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             ShoppingListsRestApiBusinessFactory::class,
@@ -546,7 +546,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShoppingList\Business\ShoppingListFacade
      */
-    protected function getMockShoppingListFacade(): MockObject
+    protected function getMockShoppingListFacade(): ShoppingListFacade
     {
         $mockShoppingListFacade = $this->createPartialMock(
             ShoppingListFacade::class,
@@ -590,9 +590,9 @@ class ShoppingListsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyUser\Business\CompanyUserFacade
      */
-    protected function getMockCompanyUserFacade(): MockObject
+    protected function getMockCompanyUserFacade(): CompanyUserFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             CompanyUserFacade::class,

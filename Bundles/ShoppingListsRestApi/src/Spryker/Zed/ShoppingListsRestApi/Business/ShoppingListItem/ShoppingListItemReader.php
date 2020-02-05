@@ -62,7 +62,7 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
             );
         }
 
-        $shoppingListItemTransfer = $this->scanForShoppingListItem(
+        $shoppingListItemTransfer = $this->findShoppingListItemTransfer(
             $shoppingListResponseTransfer->getShoppingList()->getItems(),
             $restShoppingListItemRequestTransfer->getShoppingListItem()->getUuid()
         );
@@ -86,13 +86,13 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
      */
-    protected function scanForShoppingListItem(
+    protected function findShoppingListItemTransfer(
         ArrayObject $shoppingListItems,
         string $uuidShoppingListItem
     ): ?ShoppingListItemTransfer {
         foreach ($shoppingListItems as $itemTransfer) {
             if ($itemTransfer->getUuid() === $uuidShoppingListItem) {
-                return (new ShoppingListItemTransfer())->fromArray($itemTransfer->toArray());
+                return (new ShoppingListItemTransfer())->fromArray($itemTransfer->modifiedToArray());
             }
         }
 

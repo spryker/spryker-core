@@ -357,7 +357,6 @@ interface ShoppingListFacadeInterface
      * - Finds shopping list by uuid.
      * - Requires uuid field to be set in ShoppingListTransfer.
      * - Requires idCompanyUser field to be set in ShoppingListTransfer.
-     * - Uuid is not a required field and could be missing.
      *
      * @api
      *
