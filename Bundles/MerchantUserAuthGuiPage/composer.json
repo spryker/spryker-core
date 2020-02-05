@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-user-auth-gui-page",
+  "type": "library",
   "description": "MerchantUserAuthGuiPage module",
   "license": "proprietary",
   "require": {
@@ -18,14 +19,14 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     }
-  },
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
   },
   "config": {
     "sort-packages": true
