@@ -33,6 +33,7 @@
     <transfer name="SynchronizationData">
         <property name="locale" type="string"/>
         <property name="reference" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="StorageProductLabel">

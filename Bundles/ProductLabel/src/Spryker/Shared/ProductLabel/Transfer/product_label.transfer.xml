@@ -62,4 +62,18 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ProductLabel">
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+    </transfer>
+
 </transfers>
