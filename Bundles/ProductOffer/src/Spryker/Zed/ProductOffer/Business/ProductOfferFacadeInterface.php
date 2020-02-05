@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOffer\Business;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferFacadeInterface
@@ -51,4 +52,19 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function create(ProductOfferTransfer $productOfferCriteriaFilter): ProductOfferTransfer;
+
+    /**
+     * Specification:
+     * - Returns ProductOfferResponseTransfer.isSuccessful=false if $productOfferTransfer.idProductOffer is not given
+     * - Returns ProductOfferResponseTransfer.isSuccessful=false if no offer is found with $productOfferTransfer.idProductOffer
+     * - Persists product offer entity with modified fields from ProductOfferTransfer
+     * - Returns new product offer entity in ProductOfferResponseTransfer.productOffer and isSuccessful=true
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
 }

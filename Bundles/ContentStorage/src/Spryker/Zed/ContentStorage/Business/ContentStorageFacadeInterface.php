@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ContentStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ContentStorageFacadeInterface
 {
     /**
@@ -22,4 +24,17 @@ interface ContentStorageFacadeInterface
      * @return void
      */
     public function publish(array $contentIds): void;
+
+    /**
+     * Specification:
+     * - Returns an array of ContentTransfer.
+     * - Uses FilterTransfer for pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function getContentTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

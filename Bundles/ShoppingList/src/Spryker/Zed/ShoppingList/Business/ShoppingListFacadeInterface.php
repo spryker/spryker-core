@@ -169,7 +169,9 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Get shopping list detail information.
+     * - Gets shopping list detail information.
+     * - Expands shopping list items with currency iso code and price mode data.
+     * - Executes ItemExpanderPluginInterface plugin stack.
      *
      * @api
      *

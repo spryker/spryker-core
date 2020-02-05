@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOffer\Business;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -59,5 +60,21 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         return $this->getEntityManager()->createProductOffer($productOfferTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductOfferWriter()
+            ->update($productOfferTransfer);
     }
 }

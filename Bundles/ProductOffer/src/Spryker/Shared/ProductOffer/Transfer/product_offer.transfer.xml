@@ -17,6 +17,25 @@
         <property name="idProductOffer" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="approvalStatus" type="string"/>
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="ProductOfferStore">
+        <property name="idProductOfferStore" type="int"/>
+        <property name="fkProductOffer" type="string"/>
+        <property name="fkStore" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferResponse">
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="errors" type="ProductOfferError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferError">
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
@@ -24,10 +43,14 @@
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
+        <property name="idProductOffer" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
+        <property name="isActive" type="bool"/>
+        <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
+        <property name="isActiveConcreteProduct" type="bool"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
@@ -45,5 +68,10 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 </transfers>

@@ -1,6 +1,4 @@
 namespace: SprykerTest\Zed\Transfer
-actor: Tester
-
 paths:
     tests: .
     data: ../../../_data
