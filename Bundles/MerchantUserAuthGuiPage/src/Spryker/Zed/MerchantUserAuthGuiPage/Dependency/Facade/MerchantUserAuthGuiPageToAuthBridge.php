@@ -12,7 +12,7 @@ class MerchantUserAuthGuiPageToAuthBridge implements MerchantUserAuthGuiPageToAu
     /**
      * @var \Spryker\Zed\Auth\Business\AuthFacadeInterface
      */
-    private $authFacade;
+    protected $authFacade;
 
     /**
      * @param \Spryker\Zed\Auth\Business\AuthFacadeInterface $authFacade
