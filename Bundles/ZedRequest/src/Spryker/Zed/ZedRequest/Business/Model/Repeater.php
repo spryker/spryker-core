@@ -11,6 +11,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
+use Spryker\Zed\ZedRequest\Business\Exception\ActionPathHasForbiddenSymbolsException;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
@@ -25,6 +26,10 @@ class Repeater implements RepeaterInterface
      * and file name for last yves request log data.
      */
     use BundleConfigResolverAwareTrait;
+
+    protected const FILE_NAME_PREFIX_LAST_YVES_REQUEST = 'last_yves_request';
+    protected const FILE_NAME_LOG_EXTENSION = 'log';
+    protected const FILE_NAME_REG_EXP = '/^[a-z_-]+\.[a-z]+$/';
 
     /**
      * @var bool
@@ -88,6 +93,12 @@ class Repeater implements RepeaterInterface
      */
     protected function setFlashInFile(array $repeatData, $fileName)
     {
+        try {
+            $fileName = $this->checkFileName($fileName);
+        } catch (ActionPathHasForbiddenSymbolsException $e) {
+            return;
+        }
+
         $filePath = $this->getFilePath($fileName);
         $string = serialize($repeatData);
 
@@ -127,5 +138,48 @@ class Repeater implements RepeaterInterface
     protected function getFilePath($fileName)
     {
         return $this->getConfig()->getPathToYvesRequestRepeatData($fileName);
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @throws \Spryker\Zed\ZedRequest\Business\Exception\ActionPathHasForbiddenSymbolsException
+     *
+     * @return string
+     */
+    protected function checkFileName(string $fileName): string
+    {
+        if ($fileName === static::FILE_NAME_PREFIX_LAST_YVES_REQUEST . '.' . static::FILE_NAME_LOG_EXTENSION) {
+            return $fileName;
+        }
+
+        if ($this->isFileNameValid($fileName)) {
+            $actionPath = str_replace(static::FILE_NAME_PREFIX_LAST_YVES_REQUEST . '_', '', $fileName);
+            $actionPath = str_replace('.' . static::FILE_NAME_LOG_EXTENSION, '', $actionPath);
+            $invalidFileNameParts = explode('_', $actionPath);
+
+            throw new ActionPathHasForbiddenSymbolsException(
+                sprintf(
+                    'The path %s to the action you are trying to invoke has forbidden symbols.',
+                    implode('\\', $invalidFileNameParts)
+                )
+            );
+        }
+
+        return $fileName;
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return bool
+     */
+    protected function isFileNameValid(string $fileName): bool
+    {
+        if (preg_match(static::FILE_NAME_REG_EXP, $fileName)) {
+            return true;
+        }
+
+        return false;
     }
 }
