@@ -12,6 +12,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="idMerchant" type="int"/>
         <property name="merchantSku" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
@@ -20,6 +21,7 @@
         <property name="isActive" type="bool"/>
         <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
         <property name="isActiveConcreteProduct" type="bool"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -28,6 +30,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="concreteSku" type="string"/>
         <property name="merchantSku" type="string"/>
+        <property name="merchantReference" type="string"/>
         <property name="stores" type="Store[]" singular="store"/>
     </transfer>
 
@@ -47,6 +50,12 @@
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="sku" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="Store">

@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event
 
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
@@ -18,6 +20,7 @@ use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorage
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductOfferStoragePublishListener;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface;
 
 /**
  * Auto-generated group annotations
@@ -38,6 +41,10 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
      */
     protected const STATUS_DECLINED = 'declined';
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     */
+    protected const STATUS_APPROVED = 'approved';
 
     /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductOfferStoragePublishListener
@@ -180,6 +187,21 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             ->method('saveProductOfferStorage')
             ->with($productOfferTransfer);
 
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference()])
+            ->setIsActive(true)
+            ->setIsActiveConcreteProduct(true)
+            ->addApprovalStatus(static::STATUS_APPROVED);
+
+        $productOfferCollectionTransfer = (new ProductOfferCollectionTransfer())->addProductOffer($productOfferTransfer);
+
+        /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageRepository */
+        $merchantProductOfferStorageRepository = $this->getMockBuilder(MerchantProductOfferStorageRepositoryInterface::class)->getMock();
+        $merchantProductOfferStorageRepository->expects($this->once())
+            ->method('getActiveProductOffersByFilterCriteria')
+            ->with($productOfferCriteriaFilterTransfer)
+            ->willReturn($productOfferCollectionTransfer);
+
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
         $productOfferStorageDeleter = $this->getMockBuilder(ProductOfferStorageDeleterInterface::class)->getMock();
         $productOfferStorageDeleter->expects($this->exactly(2))
@@ -191,8 +213,8 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
 
         $productOfferStorageWriter = new ProductOfferStorageWriter(
             $this->getMerchantProductOfferStorageToEventBehaviorFacadeInterfaceMock($productOfferTransfer),
-            $this->getMerchantProductOfferStorageToProductOfferFacadeInterfaceMock($productOfferCollectionTransfer),
             $merchantProductOfferStorageEntityManager,
+            $merchantProductOfferStorageRepository,
             $productOfferStorageDeleter,
             $this->getMerchantProductOfferStorageToStoreFacadeInterfaceMock()
         );

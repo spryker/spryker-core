@@ -9,6 +9,9 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
+use Orm\Zed\Store\Persistence\SpyStore;
 
 interface ProductOfferStorageMapperInterface
 {
@@ -22,4 +25,26 @@ interface ProductOfferStorageMapperInterface
         ProductOfferTransfer $productOfferTransfer,
         ProductOfferStorageTransfer $productOfferStorageTransfer
     ): ProductOfferStorageTransfer;
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $productOfferEntity
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function mapProductOfferEntityToProductOfferTransfer(
+        SpyProductOffer $productOfferEntity,
+        ProductOfferTransfer $productOfferTransfer
+    ): ProductOfferTransfer;
+
+    /**
+     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function mapStoreEntityToStoreTransfer(
+        SpyStore $storeEntity,
+        StoreTransfer $storeTransfer
+    ): StoreTransfer;
 }

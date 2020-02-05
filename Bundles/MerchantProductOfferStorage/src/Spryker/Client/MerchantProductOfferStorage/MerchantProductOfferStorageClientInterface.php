@@ -8,8 +8,8 @@
 namespace Spryker\Client\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface MerchantProductOfferStorageClientInterface
 {
@@ -20,11 +20,11 @@ interface MerchantProductOfferStorageClientInterface
      *
      * @api
      *
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer;
+    public function getProductOfferStorageCollection(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ProductOfferStorageCollectionTransfer;
 
     /**
      * Specification:
@@ -35,11 +35,11 @@ interface MerchantProductOfferStorageClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return string|null
      */
-    public function findProductConcreteDefaultProductOffer(ProductViewTransfer $productViewTransfer): ?string;
+    public function findProductConcreteDefaultProductOffer(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string;
 
     /**
      * Specification:

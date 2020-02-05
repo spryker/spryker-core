@@ -7,10 +7,9 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferProviderPluginInterface;
-use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
 class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProductOfferInterface
 {
@@ -35,27 +34,22 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return string|null
      */
-    public function findProductOfferReference(ProductViewTransfer $productViewTransfer): ?string
+    public function findProductOfferReference(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string
     {
-        if (!$productViewTransfer->getIdProductConcrete()) {
-            return null;
-        }
-        $productOfferReferences = $this->productOfferStorageReader->getProductOfferReferences($productViewTransfer->getSku());
+        $productOfferReferences = $this->productOfferStorageReader->getProductOfferReferences($productOfferStorageCriteriaTransfer->getSku());
 
         if (!$productOfferReferences) {
             return null;
         }
 
-        $selectedAttributes = $productViewTransfer->getSelectedAttributes();
-
-        if (isset($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE])
-            && in_array($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE], $productOfferReferences)
+        if ($productOfferStorageCriteriaTransfer->getProductOfferReference()
+            && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productOfferReferences)
         ) {
-            return $selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE];
+            return $productOfferStorageCriteriaTransfer->getProductOfferReference();
         }
 
         return $this->defaultProductOfferPlugin->provideDefaultProductOfferReference($productOfferReferences);

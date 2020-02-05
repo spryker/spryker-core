@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface;
 
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 {
@@ -29,14 +29,14 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $eventBehaviorFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface
-     */
-    protected $productOfferFacade;
-
-    /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface
      */
     protected $merchantProductOfferStorageEntityManager;
+
+    /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface
+     */
+    protected $merchantProductOfferStorageRepository;
 
     /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface
@@ -55,21 +55,21 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 
     /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface $productOfferStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
+        MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository,
         ProductOfferStorageDeleterInterface $productOfferStorageDeleter,
         MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->productOfferFacade = $productOfferFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
+        $this->merchantProductOfferStorageRepository = $merchantProductOfferStorageRepository;
         $this->productOfferStorageDeleter = $productOfferStorageDeleter;
         $this->storeFacade = $storeFacade;
     }
@@ -98,7 +98,8 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected function writeByProductOfferReferences(array $productOfferReferences): void
     {
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
-        $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
+            ->getActiveProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
