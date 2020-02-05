@@ -109,6 +109,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer = $this->getNotExpandedShoppingList($shoppingListTransfer);
+
+        if (!$shoppingListTransfer->getIdShoppingList()) {
+            return $shoppingListTransfer;
+        }
+
         $shoppingListItemCollectionTransfer = (new ShoppingListItemCollectionTransfer())
             ->setItems($shoppingListTransfer->getItems());
 
@@ -367,7 +372,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
             ->setSharedCompanyUsers($shoppingListCompanyUsers)
             ->setSharedCompanyBusinessUnits($shoppingListCompanyBusinessUnits);
 
-        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository
+            ->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+
         $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
 
         return $shoppingListTransfer;
