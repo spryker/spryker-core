@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpander;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderWriter\MerchantSalesOrderWriter;
 use Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderWriter\MerchantSalesOrderWriterInterface;
 
@@ -27,5 +29,13 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpanderInterface
+     */
+    public function createOrderItemExpander(): OrderItemExpanderInterface
+    {
+        return new OrderItemExpander();
     }
 }

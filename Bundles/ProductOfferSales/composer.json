@@ -1,20 +1,15 @@
 {
-  "name": "spryker/merchant-sales-order",
+  "name": "spryker/product-offer-sales",
   "type": "library",
-  "description": "MerchantSalesOrder module",
+  "description": "ProductOfferSales module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.33.0",
-    "spryker/sales": "^11.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/sales-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/merchant": "*",
-    "spryker/oms": "*",
-    "spryker/product-offer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
