@@ -19,7 +19,7 @@ class SalesUnitsRestCartItemsAttributesMapperPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritDoc}
-     * - Maps ItemTransfer::$amountSalesUnit to RestItemsAttributesTransfer::$salesUnit.
+     * - Maps `ItemTransfer::$amountSalesUnit` to `RestItemsAttributesTransfer::$salesUnit`.
      *
      * @api
      *
