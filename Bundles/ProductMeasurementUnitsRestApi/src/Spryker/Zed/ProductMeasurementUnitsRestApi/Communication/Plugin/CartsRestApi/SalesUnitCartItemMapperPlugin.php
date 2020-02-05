@@ -20,7 +20,7 @@ class SalesUnitCartItemMapperPlugin extends AbstractPlugin implements CartItemMa
 {
     /**
      * {@inheritDoc}
-     * - Maps CartItemRequestTransfer::$idProductMeasurementSalesUnit, CartItemRequestTransfer::$amount to PersistentCartChangeTransfer::$items.
+     * - Maps `CartItemRequestTransfer::$idProductMeasurementSalesUnit`, `CartItemRequestTransfer::$amount` to `PersistentCartChangeTransfer::$items`.
      *
      * @api
      *

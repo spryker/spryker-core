@@ -417,7 +417,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a product packaging unit by product sku.
+     * - Retrieves a product packaging unit by product SKU.
      *
      * @api
      *

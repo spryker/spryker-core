@@ -29,7 +29,7 @@ class ProductMeasurementUnitsRestApiToGlossaryStorageClientBridge implements Pro
      *
      * @return string
      */
-    public function translate(string $id, string $localeName, array $parameters = []): string
+    public function translate(string $id, string $localeName, array $parameters = [])
     {
         return $this->glossaryStorageClient->translate($id, $localeName, $parameters);
     }

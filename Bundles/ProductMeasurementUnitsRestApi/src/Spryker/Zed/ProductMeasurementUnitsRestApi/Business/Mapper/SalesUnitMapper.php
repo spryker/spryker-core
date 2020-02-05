@@ -52,11 +52,11 @@ class SalesUnitMapper implements SalesUnitMapperInterface
             }
 
             $itemTransfer->setAmount($cartItemRequestTransfer->getAmount());
-            $amount = $cartItemRequestTransfer->getAmount() ? $cartItemRequestTransfer->getAmount()->toInt() : null;
+            $amount = $cartItemRequestTransfer->getAmount();
             $itemTransfer->setAmountSalesUnit(
                 (new ProductMeasurementSalesUnitTransfer())
                     ->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit)
-                    ->setValue($amount)
+                    ->setValue($amount ? $amount->toInt() : $amount)
             );
 
             break;

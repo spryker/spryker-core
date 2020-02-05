@@ -14,7 +14,7 @@ interface ProductMeasurementUnitsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Maps CartItemRequestTransfer::$idProductMeasurementSalesUnit, CartItemRequestTransfer::$amount to PersistentCartChangeTransfer::$items.
+     * - Maps `CartItemRequestTransfer::$idProductMeasurementSalesUnit`, `CartItemRequestTransfer::$amount` to `PersistentCartChangeTransfer::$items`.
      *
      * @api
      *
