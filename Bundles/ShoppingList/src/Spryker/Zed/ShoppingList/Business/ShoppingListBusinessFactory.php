@@ -24,13 +24,16 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriterInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleter;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleterInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdder;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidator;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemBulkOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidator;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
@@ -144,41 +147,46 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemBulkOperationValidatorInterface
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface
      */
-    public function createShoppingListAddOperationValidator(): ShoppingListItemBulkOperationValidatorInterface
+    public function createShoppingListAddOperationValidator(): ShoppingListItemAddOperationValidatorInterface
     {
         return new ShoppingListItemAddOperationValidator(
             $this->getProductFacade(),
-            $this->getRepository(),
-            $this->getMessengerFacade(),
+            $this->createMessageAdder(),
             $this->createShoppingListResolver(),
             $this->createShoppingListItemPluginExecutor()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface
      */
-    public function createShoppingListUpdateOperationValidator(): ShoppingListItemOperationValidatorInterface
+    public function createShoppingListUpdateOperationValidator(): ShoppingListItemUpdateOperationValidatorInterface
     {
         return new ShoppingListItemUpdateOperationValidator(
-            $this->getProductFacade(),
             $this->getRepository(),
-            $this->getMessengerFacade()
+            $this->createMessageAdder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface
      */
-    public function createShoppingListDeleteOperationValidator(): ShoppingListItemOperationValidatorInterface
+    public function createShoppingListDeleteOperationValidator(): ShoppingListItemDeleteOperationValidatorInterface
     {
         return new ShoppingListItemDeleteOperationValidator(
-            $this->getProductFacade(),
             $this->getRepository(),
-            $this->getMessengerFacade()
+            $this->createMessageAdder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface
+     */
+    public function createMessageAdder(): MessageAdderInterface
+    {
+        return new MessageAdder($this->getMessengerFacade());
     }
 
     /**

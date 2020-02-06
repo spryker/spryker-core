@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
-interface ShoppingListItemOperationValidatorInterface
+interface ShoppingListItemDeleteOperationValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
