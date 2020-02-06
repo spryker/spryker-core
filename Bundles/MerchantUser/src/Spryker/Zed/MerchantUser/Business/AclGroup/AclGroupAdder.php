@@ -10,16 +10,11 @@ namespace Spryker\Zed\MerchantUser\Business\AclGroup;
 use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Shared\Log\LoggerTrait;
+use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface;
 
 class AclGroupAdder implements AclGroupAdderInterface
 {
-    use LoggerTrait;
-
-    protected const GROUP_NOT_FOUND_ERROR_MESSAGE = 'The group was not found.';
-
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface
      */
@@ -37,6 +32,8 @@ class AclGroupAdder implements AclGroupAdderInterface
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      * @param string $reference
      *
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
+     *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
     public function addMerchantAdminToGroupByReference(MerchantUserTransfer $merchantUserTransfer, string $reference): MerchantUserResponseTransfer
@@ -44,18 +41,11 @@ class AclGroupAdder implements AclGroupAdderInterface
         $groupTransfer = $this->aclFacade->findGroup((new GroupCriteriaFilterTransfer())->setReference($reference));
 
         if (!$groupTransfer) {
-            if ($this->getLogger()) {
-                $this->getLogger()->error(sprintf(
-                    'The group with %s reference was not found. Try run a "%s" command',
-                    $reference,
-                    'vendor/bin/console setup:init-db'
-                ));
-            }
-
-            return (new MerchantUserResponseTransfer())
-                ->setIsSuccessful(false)
-                ->setMerchantUser($merchantUserTransfer)
-                ->addError((new MessageTransfer())->setMessage(static::GROUP_NOT_FOUND_ERROR_MESSAGE));
+            throw new EntityNotFoundException(sprintf(
+                'The group with %s reference was not found. Try run a "%s" command',
+                $reference,
+                'vendor/bin/console setup:init-db'
+            ));
         }
 
         $this->aclFacade->addUserToGroup($merchantUserTransfer->getUser()->getIdUser(), $groupTransfer->getIdAclGroup());
