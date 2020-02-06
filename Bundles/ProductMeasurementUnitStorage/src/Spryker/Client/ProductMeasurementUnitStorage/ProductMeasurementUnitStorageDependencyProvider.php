@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientBridge;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceBridge;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependencyProvider
@@ -18,6 +19,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const STORE = 'STORE';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -29,6 +31,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addStore($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -57,6 +60,20 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
         $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductMeasurementUnitStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductMeasurementUnitStorageToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        });
 
         return $container;
     }

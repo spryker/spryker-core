@@ -370,8 +370,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * Specification:
-     * - Retrieves a current Store specific product abstract ids from Storage using specified mapping.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -389,5 +388,26 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createProductAbstractStorageReader()
             ->getBulkProductAbstractIdsByMapping($mappingType, $identifiers, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getProductConcreteIdsByMapping($mappingType, $identifiers, $localeName);
     }
 }

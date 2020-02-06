@@ -53,6 +53,36 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
     }
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array
+    {
+        if (!$productConcreteIds) {
+            return [];
+        }
+
+        $productConcreteMeasurementUnitStorageTransfers = $this->productConcreteMeasurementUnitStorageReader
+            ->getBulkProductConcreteMeasurementUnitStorage($productConcreteIds);
+
+        if (!$productConcreteMeasurementUnitStorageTransfers) {
+            return [];
+        }
+
+        $productMeasurementUnitIds = [];
+        foreach ($productConcreteMeasurementUnitStorageTransfers as $idProductConcrete => $productConcreteMeasurementUnitStorageTransfer) {
+            $productMeasurementUnitIds[$idProductConcrete] = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementUnit();
+        }
+
+        if (!$productMeasurementUnitIds) {
+            return [];
+        }
+
+        return $this->productMeasurementUnitReader->getBulkProductMeasurementUnits($productMeasurementUnitIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
