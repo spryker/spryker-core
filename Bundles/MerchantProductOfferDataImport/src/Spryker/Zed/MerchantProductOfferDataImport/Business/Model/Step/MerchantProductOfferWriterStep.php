@@ -55,7 +55,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
         $productOfferEntity = SpyProductOfferQuery::create()
             ->filterByProductOfferReference($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE])
             ->findOneOrCreate();
-        $productOfferEntity->setFkMerchant($dataSet[MerchantProductOfferDataSetInterface::FK_MERCHANT]);
+        $productOfferEntity->setFkMerchant($dataSet[MerchantProductOfferDataSetInterface::ID_MERCHANT]);
         $productOfferEntity->setConcreteSku($dataSet[MerchantProductOfferDataSetInterface::CONCRETE_SKU]);
         $productOfferEntity->setMerchantSku($dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU]);
         $productOfferEntity->setIsActive($dataSet[MerchantProductOfferDataSetInterface::IS_ACTIVE]);
