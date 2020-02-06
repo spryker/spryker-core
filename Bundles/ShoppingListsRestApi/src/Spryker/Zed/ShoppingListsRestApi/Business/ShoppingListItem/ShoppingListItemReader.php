@@ -81,18 +81,18 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
     }
 
     /**
-     * @param \ArrayObject $shoppingListItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
      * @param string $uuidShoppingListItem
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
      */
     protected function findShoppingListItemTransfer(
-        ArrayObject $shoppingListItems,
+        ArrayObject $shoppingListItemTransfers,
         string $uuidShoppingListItem
     ): ?ShoppingListItemTransfer {
-        foreach ($shoppingListItems as $itemTransfer) {
-            if ($itemTransfer->getUuid() === $uuidShoppingListItem) {
-                return (new ShoppingListItemTransfer())->fromArray($itemTransfer->modifiedToArray());
+        foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            if ($shoppingListItemTransfer->getUuid() === $uuidShoppingListItem) {
+                return (new ShoppingListItemTransfer())->fromArray($shoppingListItemTransfer->modifiedToArray());
             }
         }
 

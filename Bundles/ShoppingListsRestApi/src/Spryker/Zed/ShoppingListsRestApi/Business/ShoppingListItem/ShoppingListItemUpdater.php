@@ -52,6 +52,7 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
     public function updateShoppingListItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
+        //TODO rename request transfer (remove Rest prefix)
         $shoppingListItemResponseTransfer = $this->shoppingListItemReader->findShoppingListItem(
             $restShoppingListItemRequestTransfer
         );
