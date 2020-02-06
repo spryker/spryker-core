@@ -90,7 +90,7 @@ class Installer implements InstallerInterface
         foreach ($this->getGroups() as $groupTransfer) {
             $groupTransfer->requireName();
             if ($this->group->hasGroupName($groupTransfer->getName())) {
-                $groupTransfer->setIdAclGroup($this->group->getByName($groupTransfer->getName())->getIdAclGroup());
+                continue;
             }
             $this->group->save($groupTransfer);
         }

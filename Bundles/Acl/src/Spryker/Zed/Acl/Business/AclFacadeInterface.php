@@ -65,7 +65,7 @@ interface AclFacadeInterface
 
     /**
      * Specification:
-     * - Returns group transfer by criteria filter if found.
+     * - Returns group transfer by criteria filter.
      * - Returns NULL otherwise.
      *
      * @api

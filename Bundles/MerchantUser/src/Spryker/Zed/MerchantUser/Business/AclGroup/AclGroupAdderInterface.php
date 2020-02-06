@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantUser\Business\Group;
+namespace Spryker\Zed\MerchantUser\Business\AclGroup;
 
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
-interface GroupAdderInterface
+interface AclGroupAdderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer

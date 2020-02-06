@@ -11,12 +11,9 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\GroupBuilder;
 use Generated\Shared\Transfer\GroupTransfer;
 use Orm\Zed\Acl\Persistence\SpyAclGroup;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class AclHelper extends Module
 {
-    use DataCleanupHelperTrait;
-
     /**
      * @param array $seedData
      *
@@ -29,10 +26,6 @@ class AclHelper extends Module
         $aclGroupEntity->fromArray($groupTransfer->toArray());
 
         $aclGroupEntity->save();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($aclGroupEntity) {
-            $aclGroupEntity->delete();
-        });
 
         $groupTransfer->fromArray($aclGroupEntity->toArray(), true);
 

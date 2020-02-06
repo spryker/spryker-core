@@ -8,8 +8,8 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantUser\Business\Group\GroupAdder;
-use Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface;
+use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
+use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
@@ -37,7 +37,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
             $this->getUtilTextService(),
             $this->getUserFacade(),
             $this->createUserMapper(),
-            $this->createGroupAdder(),
+            $this->createAclGroupAdder(),
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig()
@@ -45,11 +45,11 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface
+     * @return \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface
      */
-    public function createGroupAdder(): GroupAdderInterface
+    public function createAclGroupAdder(): AclGroupAdderInterface
     {
-        return new GroupAdder($this->getAclFacade());
+        return new AclGroupAdder($this->getAclFacade());
     }
 
     /**
