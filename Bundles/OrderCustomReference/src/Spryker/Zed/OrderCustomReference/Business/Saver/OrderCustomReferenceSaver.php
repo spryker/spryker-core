@@ -7,20 +7,30 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business\Saver;
 
+use Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface;
 use Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface;
 
 class OrderCustomReferenceSaver implements OrderCustomReferenceSaverInterface
 {
+    /**
+     * @var \Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface
+     */
+    protected $orderCustomReferenceValidator;
+
     /**
      * @var \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface
      */
     protected $orderCustomReferenceEntityManager;
 
     /**
+     * @param \Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface $orderCustomReferenceValidator
      * @param \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager
      */
-    public function __construct(OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager)
-    {
+    public function __construct(
+        OrderCustomReferenceValidatorInterface $orderCustomReferenceValidator,
+        OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager
+    ) {
+        $this->orderCustomReferenceValidator = $orderCustomReferenceValidator;
         $this->orderCustomReferenceEntityManager = $orderCustomReferenceEntityManager;
     }
 
@@ -32,6 +42,13 @@ class OrderCustomReferenceSaver implements OrderCustomReferenceSaverInterface
      */
     public function saveOrderCustomReference(string $orderCustomReference, int $idSalesOrder): void
     {
+        $isOrderCustomReferenceLengthValid = $this->orderCustomReferenceValidator
+            ->isOrderCustomReferenceLengthValid($orderCustomReference);
+
+        if (!$isOrderCustomReferenceLengthValid) {
+            return;
+        }
+
         $this->orderCustomReferenceEntityManager->saveOrderCustomReference($orderCustomReference, $idSalesOrder);
     }
 }

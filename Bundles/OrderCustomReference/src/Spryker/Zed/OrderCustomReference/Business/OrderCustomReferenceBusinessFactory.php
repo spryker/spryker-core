@@ -12,6 +12,8 @@ use Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProvider;
 use Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProviderInterface;
 use Spryker\Zed\OrderCustomReference\Business\Saver\OrderCustomReferenceSaver;
 use Spryker\Zed\OrderCustomReference\Business\Saver\OrderCustomReferenceSaverInterface;
+use Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidator;
+use Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface;
 
 /**
  * @method \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface getEntityManager()
@@ -24,7 +26,18 @@ class OrderCustomReferenceBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderCustomReferenceSaver(): OrderCustomReferenceSaverInterface
     {
-        return new OrderCustomReferenceSaver($this->getEntityManager());
+        return new OrderCustomReferenceSaver(
+            $this->createOrderCustomReferenceValidator(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface
+     */
+    public function createOrderCustomReferenceValidator(): OrderCustomReferenceValidatorInterface
+    {
+        return new OrderCustomReferenceValidator();
     }
 
     /**
