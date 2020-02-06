@@ -24,4 +24,10 @@
     <transfer name="CompanyUserCollection">
         <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
     </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+    </transfer>
+
+    <transfer name="Company">
+    </transfer>
 </transfers>
