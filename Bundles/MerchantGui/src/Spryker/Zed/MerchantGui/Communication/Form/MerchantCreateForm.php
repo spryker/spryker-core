@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
  */
-class MerchantForm extends AbstractType
+class MerchantCreateForm extends AbstractType
 {
     public const OPTION_CURRENT_ID = 'current_id';
 

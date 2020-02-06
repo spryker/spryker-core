@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductOfferSales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOfferSales\Business\Expander\OrderItemExpander;
-use Spryker\Zed\ProductOfferSales\Business\Expander\OrderItemExpanderInterface;
+use Spryker\Zed\ProductOfferSales\Business\OrderItem\OrderItemExpander;
+use Spryker\Zed\ProductOfferSales\Business\OrderItem\OrderItemExpanderInterface;
 
 /**
  * @method \Spryker\Zed\ProductOfferSales\ProductOfferSalesConfig getConfig()
@@ -17,7 +17,7 @@ use Spryker\Zed\ProductOfferSales\Business\Expander\OrderItemExpanderInterface;
 class ProductOfferSalesBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductOfferSales\Business\Expander\OrderItemExpanderInterface
+     * @return \Spryker\Zed\ProductOfferSales\Business\OrderItem\OrderItemExpanderInterface
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {

@@ -12,7 +12,7 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantUpdateFormDataProvider;
-use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
 use Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs;
@@ -46,9 +46,9 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getMerchantForm(?MerchantTransfer $data = null, array $options = []): FormInterface
+    public function getMerchantCreateForm(?MerchantTransfer $data = null, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(MerchantForm::class, $data, $options);
+        return $this->getFormFactory()->create(MerchantCreateForm::class, $data, $options);
     }
 
     /**
