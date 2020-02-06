@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OrderCustomReference\Business;
+namespace Spryker\Zed\OrderCustomReference\Business\Provider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface OrderCustomReferenceFacadeInterface
+interface QuoteFieldsProviderInterface
 {
     /**
-     * Specification:
-     * - Returns order custom reference related Quote fields allowed for saving.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string[]

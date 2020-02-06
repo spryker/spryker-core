@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +15,19 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class OrderCustomReferenceFacade extends AbstractFacade implements OrderCustomReferenceFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string[]
+     */
+    public function getOrderCustomReferenceQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
+    {
+        return $this->getFactory()
+            ->createQuoteFieldsProvider()
+            ->getOrderCustomReferenceQuoteFieldsAllowedForSaving($quoteTransfer);
+    }
 }

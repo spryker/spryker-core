@@ -19,6 +19,7 @@ class OrderCustomReferenceQuoteFieldsAllowedForSavingProviderPlugin extends Abst
 {
     /**
      * {@inheritDoc}
+     * - Returns order custom reference related Quote fields allowed for saving.
      *
      * @api
      *
@@ -28,6 +29,6 @@ class OrderCustomReferenceQuoteFieldsAllowedForSavingProviderPlugin extends Abst
      */
     public function execute(QuoteTransfer $quoteTransfer): array
     {
-        return [];
+        return $this->getFacade()->getOrderCustomReferenceQuoteFieldsAllowedForSaving($quoteTransfer);
     }
 }
