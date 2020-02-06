@@ -1,3 +1,7 @@
+{% if messageType is not defined %}
+{% set messageType = 'error' %}
+{% endif %}
+
 {% if message is defined and message is not empty %}
     <div class="form-group has-{{ messageType }}">
         <span class="help-block">
