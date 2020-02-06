@@ -99,7 +99,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
             ->setMerchant($merchantTransfer)
             ->setUser($this->resolveUserTransferByMerchant($merchantTransfer));
 
-        $this->aclGroupAdder->addMerchantAdminToGroupByReference(
+        $merchantUserTransfer = $this->aclGroupAdder->addMerchantAdminToGroupByReference(
             $merchantUserTransfer,
             $this->merchantUserConfig->getMerchantAdminGroupReference()
         );
