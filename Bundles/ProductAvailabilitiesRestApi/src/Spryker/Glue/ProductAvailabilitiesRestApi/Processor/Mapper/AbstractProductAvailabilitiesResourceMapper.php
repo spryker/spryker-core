@@ -35,7 +35,8 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
      */
     protected function isProductAbstractAvailable(ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer): bool
     {
-        if ($productAbstractAvailabilityTransfer->getAvailability() !== null
+        if (
+            $productAbstractAvailabilityTransfer->getAvailability() !== null
             && $productAbstractAvailabilityTransfer->getAvailability()->greaterThan(0)
         ) {
             return true;
