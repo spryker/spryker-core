@@ -154,7 +154,7 @@ class DataImporter implements
                 $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
             } catch (Exception $dataImportException) {
                 if ($dataImportException instanceof TransactionRolledBackAwareExceptionInterface) {
-                    $dataImporterReportTransfer = $this->rollbackDataImporterReportInfo($dataImporterReportTransfer, $dataImportException);
+                    $dataImporterReportTransfer = $this->recalculateImportedDataSetCount($dataImporterReportTransfer, $dataImportException);
                 }
                 $exceptionMessage = $this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1);
 
@@ -184,7 +184,7 @@ class DataImporter implements
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    protected function rollbackDataImporterReportInfo(
+    protected function recalculateImportedDataSetCount(
         DataImporterReportTransfer $dataImporterReportTransfer,
         TransactionRolledBackAwareExceptionInterface $exception
     ): DataImporterReportTransfer {
