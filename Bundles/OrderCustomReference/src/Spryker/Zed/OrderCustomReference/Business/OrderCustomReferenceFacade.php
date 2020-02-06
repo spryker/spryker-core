@@ -11,10 +11,28 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\OrderCustomReference\Business\OrderCustomReferenceBusinessFactory getFactory()
  */
 class OrderCustomReferenceFacade extends AbstractFacade implements OrderCustomReferenceFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $orderCustomReference
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function saveOrderCustomReference(string $orderCustomReference, int $idSalesOrder): void
+    {
+        $this->getFactory()
+            ->createOrderCustomReferenceSaver()
+            ->saveOrderCustomReference($orderCustomReference, $idSalesOrder);
+    }
+
     /**
      * {@inheritDoc}
      *

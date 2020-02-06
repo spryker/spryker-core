@@ -13,6 +13,19 @@ interface OrderCustomReferenceFacadeInterface
 {
     /**
      * Specification:
+     * - Persists `orderCustomReference` in `spy_sales_order` schema.
+     *
+     * @api
+     *
+     * @param string $orderCustomReference
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function saveOrderCustomReference(string $orderCustomReference, int $idSalesOrder): void;
+
+    /**
+     * Specification:
      * - Returns order custom reference related Quote fields allowed for saving.
      *
      * @api

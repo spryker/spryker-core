@@ -10,12 +10,23 @@ namespace Spryker\Zed\OrderCustomReference\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProvider;
 use Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProviderInterface;
+use Spryker\Zed\OrderCustomReference\Business\Saver\OrderCustomReferenceSaver;
+use Spryker\Zed\OrderCustomReference\Business\Saver\OrderCustomReferenceSaverInterface;
 
 /**
+ * @method \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig getConfig()
  */
 class OrderCustomReferenceBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\OrderCustomReference\Business\Saver\OrderCustomReferenceSaverInterface
+     */
+    public function createOrderCustomReferenceSaver(): OrderCustomReferenceSaverInterface
+    {
+        return new OrderCustomReferenceSaver($this->getEntityManager());
+    }
+
     /**
      * @return \Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProviderInterface
      */

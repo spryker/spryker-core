@@ -20,6 +20,7 @@ class OrderCustomReferenceOrderPostSavePlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
+     * - Persists `orderCustomReference` in `spy_sales_order` schema.
      *
      * @api
      *
@@ -30,6 +31,11 @@ class OrderCustomReferenceOrderPostSavePlugin extends AbstractPlugin implements 
      */
     public function execute(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer
     {
+        $this->getFacade()->saveOrderCustomReference(
+            $quoteTransfer->getOrderCustomReference(),
+            $saveOrderTransfer->getIdSalesOrder()
+        );
+
         return $saveOrderTransfer;
     }
 }
