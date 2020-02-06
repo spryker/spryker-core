@@ -366,6 +366,7 @@
     "spryker/oms": "*",
     "spryker/oms-discount-connector": "*",
     "spryker/oms-extension": "*",
+    "spryker/order-custom-reference": "*",
     "spryker/order-payments-rest-api": "*",
     "spryker/order-payments-rest-api-extension": "*",
     "spryker/orders-rest-api": "*",
