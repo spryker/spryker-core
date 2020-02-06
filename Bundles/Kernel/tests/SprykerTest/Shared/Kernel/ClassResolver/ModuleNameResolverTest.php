@@ -27,10 +27,10 @@ class ModuleNameResolverTest extends Unit
      */
     public function testResolveShouldRemoveStoreName(): void
     {
-        $bundleNameResolver = $this->getModuleNameResolver('DE');
-        $resolvedBundleName = $bundleNameResolver->resolve('CartDE');
+        $moduleNameResolver = $this->getModuleNameResolver('DE');
+        $resolvedModuleName = $moduleNameResolver->resolve('CartDE');
 
-        $this->assertSame('Cart', $resolvedBundleName);
+        $this->assertSame('Cart', $resolvedModuleName);
     }
 
     /**
@@ -42,7 +42,7 @@ class ModuleNameResolverTest extends Unit
     {
         $mock = $this
             ->getMockBuilder(ModuleNameResolver::class)
-            ->setMethods(['getStoreName'])
+            ->onlyMethods(['getStoreName'])
             ->getMock();
 
         $mock

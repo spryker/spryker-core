@@ -30,8 +30,7 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
     public function useCache()
     {
         if ($this->useCache === null) {
-            $this->useCache = Config::hasValue(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED)
-                && Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED, false);
+            $this->useCache = Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED, false);
         }
 
         return $this->useCache;
