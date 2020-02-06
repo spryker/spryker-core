@@ -125,7 +125,8 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     {
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
-        if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalRequestTransfer->getRequesterCompanyUserId())
+        if (
+            !$this->isQuoteOwner($quoteTransfer, $quoteApprovalRequestTransfer->getRequesterCompanyUserId())
             && !$this->isRemoveRequestSentByApprover($quoteApprovalRequestTransfer)
         ) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_DO_NOT_HAVE_PERMISSION_TO_CANCEL_APPROVAL_REQUEST);

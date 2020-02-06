@@ -687,7 +687,8 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $this->reservation->updateReservationQuantity($orderItem->getSku());
             }
 
-            if ($sourceState !== $targetState->getName()
+            if (
+                $sourceState !== $targetState->getName()
                 && $targetState->hasOnEnterEvent()
             ) {
                 $event = $targetState->getOnEnterEvent();
