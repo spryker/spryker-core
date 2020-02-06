@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Form;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class MerchantUpdateForm extends MerchantForm
+class MerchantUpdateForm extends MerchantCreateForm
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
