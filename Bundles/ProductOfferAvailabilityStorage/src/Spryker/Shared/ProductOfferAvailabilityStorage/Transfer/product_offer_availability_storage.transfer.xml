@@ -55,4 +55,7 @@
         <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>
 
+    <transfer name="ProductOffer">
+    </transfer>
+
 </transfers>
