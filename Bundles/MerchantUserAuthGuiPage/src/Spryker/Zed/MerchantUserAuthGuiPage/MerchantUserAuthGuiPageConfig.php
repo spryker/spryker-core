@@ -16,7 +16,7 @@ class MerchantUserAuthGuiPageConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getDefaultUrlRedirect(): string
+    public function getDefaultTargetPath(): string
     {
         return static::MERCHANT_USER_DEFAULT_URL_REDIRECT;
     }

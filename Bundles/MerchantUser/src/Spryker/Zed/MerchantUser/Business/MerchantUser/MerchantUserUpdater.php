@@ -87,7 +87,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
         }
 
         $userTransfer = $this->userFacade->getUserById($merchantUserTransfer->getIdUser());
-        $originalUserTransfer = clone $userTransfer;
+        $originalUserTransfer = (new UserTransfer())->fromArray($userTransfer->toArray());
         $userTransfer = $this->userMapper->mapMerchantTransferToUserTransfer($merchantTransfer, $userTransfer);
 
         $userTransfer = $this->setUserStatusByMerchantStatus($userTransfer, $merchantTransfer);

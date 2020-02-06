@@ -32,7 +32,7 @@ class LoginController extends AbstractController
         }
 
         if ($authFacade->isAuthenticated($token)) {
-            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultUrlRedirect());
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultTargetPath());
         }
 
         $form = $this->getFactory()->createLoginForm()->handleRequest($request);
@@ -43,7 +43,7 @@ class LoginController extends AbstractController
             $isLoggedIn = $authFacade->login($formData[LoginForm::FIELD_USERNAME], $formData[LoginForm::FIELD_PASSWORD]);
 
             if ($isLoggedIn) {
-                return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultUrlRedirect());
+                return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultTargetPath());
             }
 
             $this->addErrorMessage('Authentication failed!');

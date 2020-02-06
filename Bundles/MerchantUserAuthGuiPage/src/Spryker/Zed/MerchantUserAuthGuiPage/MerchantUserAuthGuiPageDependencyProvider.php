@@ -25,7 +25,7 @@ class MerchantUserAuthGuiPageDependencyProvider extends AbstractBundleDependency
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container = $this->addFacadeAuth($container);
+        $container = $this->addAuthFacade($container);
 
         return $container;
     }
@@ -35,7 +35,7 @@ class MerchantUserAuthGuiPageDependencyProvider extends AbstractBundleDependency
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeAuth(Container $container): Container
+    protected function addAuthFacade(Container $container): Container
     {
         $container->set(static::FACADE_AUTH, function (Container $container) {
             return new MerchantUserAuthGuiPageToAuthBridge($container->getLocator()->auth()->facade());
