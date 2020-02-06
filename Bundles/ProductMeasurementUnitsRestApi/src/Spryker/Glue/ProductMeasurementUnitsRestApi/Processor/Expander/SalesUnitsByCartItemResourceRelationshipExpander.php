@@ -13,9 +13,10 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasure
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilderInterface;
 
-class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUnitByProductConcreteResourceRelationshipExpanderInterface
+class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCartItemResourceRelationshipExpanderInterface
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    protected const ATTRIBUTE_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilderInterface
@@ -65,8 +66,8 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
 
-        $productConcreteSkus = array_flip($productConcreteIds);
         $restSalesUnitsResources = [];
+        $productConcreteSkus = array_flip($productConcreteIds);
         foreach ($productMeasurementSalesUnitTransfers as $idProductConcrete => $productConcreteProductMeasurementSalesUnitTransfers) {
             $productConcreteSku = $productConcreteSkus[$idProductConcrete];
             foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
@@ -92,12 +93,14 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         array $restSalesUnitsResources,
         RestResourceInterface $resource
     ): void {
-        if (!isset($restSalesUnitsResources[$resource->getId()])) {
-            return;
-        }
+        foreach ($restSalesUnitsResources as $productConcreteSku => $productConcreteRestSalesUnitsResources) {
+            if ($productConcreteSku !== $resource->getAttributes()->offsetGet(static::ATTRIBUTE_SKU)) {
+                continue;
+            }
 
-        foreach ($restSalesUnitsResources[$resource->getId()] as $restSalesUnitsResource) {
-            $resource->addRelationship($restSalesUnitsResource);
+            foreach ($productConcreteRestSalesUnitsResources as $productConcreteRestSalesUnitsResource) {
+                $resource->addRelationship($productConcreteRestSalesUnitsResource);
+            }
         }
     }
 
@@ -110,7 +113,7 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
     {
         $skus = [];
         foreach ($resources as $resource) {
-            $skus[] = $resource->getId();
+            $skus[] = $resource->getAttributes()->offsetGet(static::ATTRIBUTE_SKU);
         }
 
         return $skus;

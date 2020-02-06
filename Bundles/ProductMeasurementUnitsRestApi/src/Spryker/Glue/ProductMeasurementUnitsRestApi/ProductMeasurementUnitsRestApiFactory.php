@@ -8,14 +8,19 @@
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\CartItemExpander;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\CartItemExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitsByCartItemResourceRelationshipExpander;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitsByCartItemResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapper;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\SalesUnitMapper;
@@ -96,6 +101,26 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitsByCartItemResourceRelationshipExpanderInterface
+     */
+    public function createSalesUnitsByCartItemResourceRelationshipExpander(): SalesUnitsByCartItemResourceRelationshipExpanderInterface
+    {
+        return new SalesUnitsByCartItemResourceRelationshipExpander(
+            $this->createSalesUnitRestResponseBuilder(),
+            $this->getProductStorageClient(),
+            $this->getProductMeasurementUnitStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\CartItemExpanderInterface
+     */
+    public function createCartItemExpander(): CartItemExpanderInterface
+    {
+        return new CartItemExpander($this->getProductStorageClient());
+    }
+
+    /**
      * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface
      */
     public function createProductMeasurementUnitRestResponseBuilder(): ProductMeasurementUnitRestResponseBuilderInterface
@@ -122,7 +147,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
      */
     public function createProductMeasurementUnitMapper(): ProductMeasurementUnitMapperInterface
     {
-        return new ProductMeasurementUnitMapper();
+        return new ProductMeasurementUnitMapper($this->getGlossaryStorageClient());
     }
 
     /**
@@ -147,5 +172,13 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     public function getProductMeasurementUnitStorageClient(): ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitsRestApiDependencyProvider::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

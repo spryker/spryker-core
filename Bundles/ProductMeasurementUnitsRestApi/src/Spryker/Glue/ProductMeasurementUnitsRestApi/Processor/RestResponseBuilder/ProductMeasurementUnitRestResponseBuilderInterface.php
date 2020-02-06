@@ -15,17 +15,25 @@ interface ProductMeasurementUnitRestResponseBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductMeasurementUnitRestResponse(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResponseInterface;
+    public function createProductMeasurementUnitRestResponse(
+        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
+        string $localeName
+    ): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createProductMeasurementUnitRestResource(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResourceInterface;
+    public function createProductMeasurementUnitRestResource(
+        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
+        string $localeName
+    ): RestResourceInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
