@@ -15,12 +15,26 @@ use Spryker\Shared\Kernel\KernelConstants;
 class ResolverCacheManager implements ResolverCacheFactoryInterface
 {
     /**
+     * @var bool|null
+     */
+    protected $useCache;
+
+    /**
+     * @var \Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface|null
+     */
+    protected $cacheProvider;
+
+    /**
      * @return bool
      */
     public function useCache()
     {
-        return Config::hasValue(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED)
-            && Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED, false);
+        if ($this->useCache === null) {
+            $this->useCache = Config::hasValue(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED)
+                && Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED, false);
+        }
+
+        return $this->useCache;
     }
 
     /**
@@ -60,14 +74,18 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
      */
     public function createClassResolverCacheProvider()
     {
-        $this->assertConfig();
+        if ($this->cacheProvider === null) {
+            $this->assertConfig();
 
-        $className = Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER);
+            $className = Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER);
 
-        $cacheProvider = new $className();
+            $cacheProvider = new $className();
 
-        $this->assertProviderInterface($cacheProvider);
+            $this->assertProviderInterface($cacheProvider);
 
-        return $cacheProvider;
+            $this->cacheProvider = $cacheProvider;
+        }
+
+        return $this->cacheProvider;
     }
 }
