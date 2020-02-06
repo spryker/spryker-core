@@ -171,4 +171,7 @@
     <transfer name="Money">
     </transfer>
 
+    <transfer name="Category">
+    </transfer>
+
 </transfers>

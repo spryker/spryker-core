@@ -20,4 +20,17 @@
         <id-method-parameter value="spy_product_offer_pk_seq"/>
     </table>
 
+    <table name="spy_product_offer_store" isCrossRef="true">
+        <column name="fk_product_offer" required="true" type="INTEGER" primaryKey="true"/>
+        <column name="fk_store" required="true" type="INTEGER" primaryKey="true"/>
+
+        <foreign-key name="spy_product_offer_store-fk_product_offer" foreignTable="spy_product_offer">
+            <reference local="fk_product_offer" foreign="id_product_offer"/>
+        </foreign-key>
+
+        <foreign-key name="spy_product_offer_store_store-fk_store" foreignTable="spy_store">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+    </table>
+
 </database>
