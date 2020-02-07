@@ -86,18 +86,16 @@ class ZedNavigationBuilder
     {
         $filteredNavigationItems = [];
         foreach ($navigationItems as $itemKey => $item) {
-            if ($this->hasSubPages($item)) {
-                $filteredSubPages = $this->filterItems($item[static::PAGES]);
-                if ($filteredSubPages) {
-                    $item[static::PAGES] = $filteredSubPages;
-                    $filteredNavigationItems[$itemKey] = $item;
-                }
-
-                continue;
+            if (!$this->isLeaf($item) && $this->isPageVisible($item)) {
+                $filteredNavigationItems[$itemKey] = $item;
             }
 
-            if ($this->isPageVisible($item)) {
-                $filteredNavigationItems[$itemKey] = $item;
+            if ($this->isLeaf($item)) {
+                $filteredPages = $this->filterItems($item[static::PAGES]);
+                if ($filteredPages) {
+                    $item[static::PAGES] = $filteredPages;
+                    $filteredNavigationItems[$itemKey] = $item;
+                }
             }
         }
 
@@ -130,7 +128,7 @@ class ZedNavigationBuilder
      *
      * @return bool
      */
-    protected function hasSubPages(array $section): bool
+    protected function isLeaf(array $section): bool
     {
         return !isset($section[RuleTransfer::BUNDLE], $section[RuleTransfer::CONTROLLER], $section[RuleTransfer::ACTION]);
     }
