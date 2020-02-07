@@ -119,7 +119,7 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
         foreach ($tableXmlElement->children() as $tagName => $childXmlElement) {
             $nameAttribute = (string)$childXmlElement->attributes()['name'];
             if ($this->isFkIndex($tagName, $nameAttribute)
-                && $this->isFkIndexMustBeRemoved($nameAttribute, $fkFieldNames)
+                && $this->isFkIndexInFkFieldNameList($nameAttribute, $fkFieldNames)
             ) {
                 $elementsToRemove[] = $childXmlElement;
             }
@@ -147,7 +147,7 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
      *
      * @return bool
      */
-    protected function isFkIndexMustBeRemoved(string $nameAttribute, array $fkFieldNames): bool
+    protected function isFkIndexInFkFieldNameList(string $nameAttribute, array $fkFieldNames): bool
     {
         $fieldName = mb_substr($nameAttribute, strpos($nameAttribute, 'fk_'));
 
