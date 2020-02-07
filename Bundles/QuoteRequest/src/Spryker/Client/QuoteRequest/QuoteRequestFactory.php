@@ -65,14 +65,6 @@ class QuoteRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteRequest\Checker\QuoteCheckerInterface
-     */
-    public function createQuoteChecker(): QuoteCheckerInterface
-    {
-        return new QuoteChecker();
-    }
-
-    /**
      * @return \Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface
      */
     public function createQuoteRequestStatus(): QuoteRequestStatusInterface
@@ -86,6 +78,14 @@ class QuoteRequestFactory extends AbstractFactory
     public function createQuoteRequestStub(): QuoteRequestStubInterface
     {
         return new QuoteRequestStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequest\Checker\QuoteCheckerInterface
+     */
+    public function createQuoteChecker(): QuoteCheckerInterface
+    {
+        return new QuoteChecker();
     }
 
     /**

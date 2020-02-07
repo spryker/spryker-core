@@ -23,6 +23,16 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
+    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getQuoteRequestReference() && !$quoteTransfer->getQuoteRequestVersionReference();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
     public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getQuoteRequestVersionReference() && $this->isShipmentSourcePriceSet($quoteTransfer);
