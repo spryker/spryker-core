@@ -60,8 +60,10 @@ class InvitationUpdater implements InvitationUpdaterInterface
             ->setCompanyUserInvitation($companyUserInvitationTransfer)
             ->setIsSuccess(false);
 
-        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationUpdateStatusRequestTransfer->getIdCompanyUser())
-            || !$this->repository->findCompanyUserInvitationById($companyUserInvitationTransfer)) {
+        if (
+            !$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationUpdateStatusRequestTransfer->getIdCompanyUser())
+            || !$this->repository->findCompanyUserInvitationById($companyUserInvitationTransfer)
+        ) {
             return $companyUserInvitationUpdateStatusResponseTransfer;
         }
 

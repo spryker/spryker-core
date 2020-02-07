@@ -41,7 +41,8 @@ class ProductDiscontinuedStorageListener extends AbstractPlugin implements Event
             return;
         }
 
-        if ($eventName === ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_DELETE
+        if (
+            $eventName === ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_DELETE
             || $eventName === ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH
         ) {
             $this->getFacade()->unpublish($productDiscontinuedIds);
