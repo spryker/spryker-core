@@ -131,7 +131,8 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
      */
     protected function assertProductListTransferRequiredType($productListStorageTransfer): void
     {
-        if (!$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer
+        if (
+            !$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer
             && !$productListStorageTransfer instanceof ProductConcreteProductListStorageTransfer
         ) {
             $expectedType = implode(' or ', [ProductAbstractProductListStorageTransfer::class, ProductConcreteProductListStorageTransfer::class]);

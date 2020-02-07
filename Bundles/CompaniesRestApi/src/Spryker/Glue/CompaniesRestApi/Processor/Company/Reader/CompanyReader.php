@@ -95,8 +95,10 @@ class CompanyReader implements CompanyReaderInterface
             (new CompanyTransfer())->setUuid($restRequest->getResource()->getId())
         );
 
-        if (!$companyResponseTransfer->getIsSuccessful()
-         || !$this->isCurrentCompanyUserInCompany($restRequest, $companyResponseTransfer->getCompanyTransfer())) {
+        if (
+            !$companyResponseTransfer->getIsSuccessful()
+            || !$this->isCurrentCompanyUserInCompany($restRequest, $companyResponseTransfer->getCompanyTransfer())
+        ) {
             return $this->companyRestResponseBuilder->createCompanyNotFoundError();
         }
 

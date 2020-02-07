@@ -228,8 +228,10 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
         $availabilityTransfer = $this->findAvailabilityBySku($itemTransfer->getSku(), $storeTransfer);
 
-        if ($availabilityTransfer && $this->isUserRequestedMoreItemsThanInStock($itemTransfer, $availabilityTransfer)
-            && $this->isAllBundleItemsUnavailable($unavailableBundleItems, $bundledProducts)) {
+        if (
+            $availabilityTransfer && $this->isUserRequestedMoreItemsThanInStock($itemTransfer, $availabilityTransfer)
+            && $this->isAllBundleItemsUnavailable($unavailableBundleItems, $bundledProducts)
+        ) {
             $bundleAvailabilityErrorMessage = $this->createItemIsNotAvailableMessageTransfer(
                 $availabilityTransfer->getAvailability(),
                 $itemTransfer->getSku()

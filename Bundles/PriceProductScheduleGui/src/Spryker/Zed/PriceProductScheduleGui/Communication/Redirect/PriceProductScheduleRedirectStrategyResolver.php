@@ -63,11 +63,13 @@ class PriceProductScheduleRedirectStrategyResolver implements PriceProductSchedu
      */
     protected function validateContainer(): void
     {
-        if (isset(
-            $this->priceProductScheduleStrategyContainer[static::KEY_ABSTRACT_PRODUCT],
-            $this->priceProductScheduleStrategyContainer[static::KEY_CONCRETE_PRODUCT],
-            $this->priceProductScheduleStrategyContainer[static::KEY_SCHEDULE_LIST]
-        )) {
+        if (
+            isset(
+                $this->priceProductScheduleStrategyContainer[static::KEY_ABSTRACT_PRODUCT],
+                $this->priceProductScheduleStrategyContainer[static::KEY_CONCRETE_PRODUCT],
+                $this->priceProductScheduleStrategyContainer[static::KEY_SCHEDULE_LIST]
+            )
+        ) {
             return;
         }
 

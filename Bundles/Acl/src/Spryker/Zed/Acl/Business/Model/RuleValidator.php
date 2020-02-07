@@ -145,7 +145,8 @@ class RuleValidator implements RuleValidatorInterface
      */
     public function assert(RuleTransfer $rule, $bundle, $controller, $action)
     {
-        if (($rule->getBundle() === $bundle || $rule->getBundle() === AclConstants::VALIDATOR_WILDCARD) &&
+        if (
+            ($rule->getBundle() === $bundle || $rule->getBundle() === AclConstants::VALIDATOR_WILDCARD) &&
             ($rule->getController() === $controller || $rule->getController() === AclConstants::VALIDATOR_WILDCARD) &&
             ($rule->getAction() === $action || $rule->getAction() === AclConstants::VALIDATOR_WILDCARD)
         ) {
