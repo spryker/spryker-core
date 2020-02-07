@@ -28,6 +28,7 @@ class MerchantUserConfig extends AbstractBundleConfig
     protected const ALLOW = 'allow';
     protected const MERCHANT_PORTAL_ADMIN_ROLE = 'merchant_portal_admin_role';
     protected const MERCHANT_PORTAL_ADMIN_GROUP = 'merchant_portal_admin_group';
+    protected const MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
 
     /**
      * @return string
@@ -35,6 +36,14 @@ class MerchantUserConfig extends AbstractBundleConfig
     public function getUserCreationStatus(): string
     {
         return static::USER_CREATION_DEFAULT_STATUS;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMerchantAdminGroupReference(): string
+    {
+        return static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE;
     }
 
     /**
@@ -80,7 +89,9 @@ class MerchantUserConfig extends AbstractBundleConfig
     public function getInstallGroups(): array
     {
         return [
-            (new GroupTransfer())->setName(static::MERCHANT_PORTAL_ADMIN_GROUP),
+            (new GroupTransfer())
+                ->setName(static::MERCHANT_PORTAL_ADMIN_GROUP)
+                ->setReference(static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE),
         ];
     }
 }

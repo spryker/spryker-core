@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Acl\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
@@ -47,6 +48,11 @@ class AclTest extends Unit
      * @var \Generated\Shared\Transfer\RolesTransfer
      */
     protected $rolesTransfer;
+
+    /**
+     * @var \SprykerTest\Zed\Acl\AclBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -140,6 +146,38 @@ class AclTest extends Unit
         $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $transfer);
         $this->assertNotNull($transfer->getIdAclGroup());
         $this->assertEquals($data['name'], $transfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindGroupReturnsTransferWithCorrectData(): void
+    {
+        // Arrange
+        $groupTransfer = $this->tester->haveGroup();
+        $groupCriteriaFilterTransfer = (new GroupCriteriaFilterTransfer())->setReference($groupTransfer->getReference());
+
+        //Act
+        $foundGroupTransfer = $this->facade->findGroup($groupCriteriaFilterTransfer);
+
+        //Assert
+        $this->assertEquals($groupTransfer->getReference(), $foundGroupTransfer->getReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindGroupReturnsNullWithIncorrectData(): void
+    {
+        // Arrange
+        $groupTransfer = $this->tester->haveGroup();
+        $groupCriteriaFilterTransfer = (new GroupCriteriaFilterTransfer())->setReference($groupTransfer->getReference() . 'test');
+
+        //Act
+        $foundGroupTransfer = $this->facade->findGroup($groupCriteriaFilterTransfer);
+
+        //Assert
+        $this->assertNull($foundGroupTransfer);
     }
 
     /**

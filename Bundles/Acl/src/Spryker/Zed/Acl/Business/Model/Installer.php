@@ -92,7 +92,7 @@ class Installer implements InstallerInterface
             if ($this->group->hasGroupName($groupTransfer->getName())) {
                 continue;
             }
-            $this->group->addGroup($groupTransfer->getName());
+            $this->group->save($groupTransfer);
         }
     }
 

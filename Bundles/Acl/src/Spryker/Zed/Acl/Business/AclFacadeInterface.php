@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Acl\Business;
 
+use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
@@ -61,6 +62,19 @@ interface AclFacadeInterface
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getGroupByName($name);
+
+    /**
+     * Specification:
+     * - Returns group transfer by criteria filter.
+     * - Returns NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\GroupTransfer|null
+     */
+    public function findGroup(GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer): ?GroupTransfer;
 
     /**
      * @api

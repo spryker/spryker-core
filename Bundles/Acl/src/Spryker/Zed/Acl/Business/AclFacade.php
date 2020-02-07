@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Acl\Business;
 
+use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
@@ -16,6 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Acl\Business\AclBusinessFactory getFactory()
+ * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
  */
 class AclFacade extends AbstractFacade implements AclFacadeInterface
 {
@@ -99,6 +101,20 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
         return $this->getFactory()
             ->createGroupModel()
             ->getByName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\GroupTransfer|null
+     */
+    public function findGroup(GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer): ?GroupTransfer
+    {
+        return $this->getRepository()->findGroup($groupCriteriaFilterTransfer);
     }
 
     /**

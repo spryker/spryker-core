@@ -45,4 +45,7 @@
         <property name="aclGroups" type="Group[]" singular="aclGroup"/>
     </transfer>
 
+    <transfer name="GroupCriteriaFilter">
+    </transfer>
+
 </transfers>
