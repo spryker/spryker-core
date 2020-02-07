@@ -189,8 +189,6 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated use getOffsetPaginatedCustomerOrderList() instead
-     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
      *

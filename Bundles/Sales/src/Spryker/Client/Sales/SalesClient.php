@@ -70,8 +70,6 @@ class SalesClient extends AbstractClient implements SalesClientInterface
      *
      * @api
      *
-     * @deprecated use getOffsetPaginatedCustomerOrderList() instead.
-     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer

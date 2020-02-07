@@ -108,48 +108,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderMapper()
             ->mapSalesOrderEntitiesToOrderListTransfer($orderListQuery->find()->getArrayCopy(), new OrderListTransfer());
 
-        $paginationTransfer = $this->getPaginationTransfer($orderListRequestTransfer, $orderListQuery, $ordersCount);
-        $orderListTransfer->setPagination($paginationTransfer);
+        $orderListTransfer->setPagination((new PaginationTransfer())->setNbResults($ordersCount));
 
         return $orderListTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderListQuery
-     * @param int $ordersCount
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
-    protected function getPaginationTransfer(
-        OrderListRequestTransfer $orderListRequestTransfer,
-        SpySalesOrderQuery $orderListQuery,
-        int $ordersCount
-    ): PaginationTransfer {
-        $paginationTransfer = $orderListRequestTransfer->getPagination();
-        if (!$paginationTransfer) {
-            return (new PaginationTransfer())->setNbResults($ordersCount);
-        }
-
-        $paginationTransfer
-            ->requirePage()
-            ->requireMaxPerPage();
-
-        $page = $paginationTransfer->getPage();
-
-        $maxPerPage = $paginationTransfer
-            ->getMaxPerPage();
-
-        $paginationModel = $orderListQuery->paginate($page, $maxPerPage);
-        $paginationTransfer->setNbResults($paginationModel->getNbResults());
-        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-        $paginationTransfer->setLastPage($paginationModel->getLastPage());
-        $paginationTransfer->setNextPage($paginationModel->getNextPage());
-        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-        return $paginationTransfer;
     }
 
     /**
@@ -158,7 +119,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    protected function applyFilterToQuery(SpySalesOrderQuery $orderListQuery, ?FilterTransfer $filterTransfer)
+    protected function applyFilterToQuery(SpySalesOrderQuery $orderListQuery, ?FilterTransfer $filterTransfer): SpySalesOrderQuery
     {
         if ($filterTransfer) {
             $orderListQuery->mergeWith(

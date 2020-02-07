@@ -35,8 +35,6 @@ interface SalesStubInterface
     public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer;
 
     /**
-     * @deprecated use getOffsetPaginatedCustomerOrderList() instead
-     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer

@@ -16,9 +16,6 @@ use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterfac
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-/**
- * @deprecated use \Spryker\Zed\Sales\Business\Model\Customer\OffsetPaginatedCustomerOrderListReader instead
- */
 class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
 {
     /**

@@ -67,11 +67,9 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
      */
     public function createOrderRestResponse(OrderTransfer $orderTransfer): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $orderRestResource = $this->createOrderRestResource($orderTransfer);
 
-        return $restResponse->addResource($orderRestResource);
+        return $this->restResourceBuilder->createRestResponse()->addResource($orderRestResource);
     }
 
     /**
