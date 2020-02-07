@@ -75,7 +75,8 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
             }
 
             $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
-            if ($expenseShipmentKey === $itemShipmentKey
+            if (
+                $expenseShipmentKey === $itemShipmentKey
                 && $expenseTransfer->getType() === ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE
             ) {
                 return $expenseTransfer;

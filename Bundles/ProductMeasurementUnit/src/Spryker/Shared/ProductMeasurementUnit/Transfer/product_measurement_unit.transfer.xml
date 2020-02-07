@@ -78,4 +78,7 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="ProductAbstract">
+    </transfer>
+
 </transfers>

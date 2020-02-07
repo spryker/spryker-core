@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\ProductOfferStockDataImport\Communication;
+namespace Spryker\Zed\ProductOfferStockDataImport\Communication\Plugin;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -15,6 +15,7 @@ use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
 
 /**
  * @method \Spryker\Zed\ProductOfferStockDataImport\Business\ProductOfferStockDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig getConfig()
  */
 class ProductOfferStockDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

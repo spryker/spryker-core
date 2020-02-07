@@ -226,4 +226,10 @@
         <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
+    <transfer name="CheckoutError">
+    </transfer>
+
+    <transfer name="Message">
+    </transfer>
+
 </transfers>
