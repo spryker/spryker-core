@@ -36,7 +36,8 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productViewTransfer->requireAttributeMap();
 
-        if (count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
+        if (
+            count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
             count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0
         ) {
             return $this->getFirstProductVariant($productViewTransfer, $locale);

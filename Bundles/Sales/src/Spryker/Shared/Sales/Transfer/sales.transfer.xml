@@ -327,4 +327,10 @@
     <transfer name="Money">
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
 </transfers>

@@ -95,5 +95,11 @@
     <transfer name="Payment">
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
+    <transfer name="Totals">
+    </transfer>
+
 </transfers>
 

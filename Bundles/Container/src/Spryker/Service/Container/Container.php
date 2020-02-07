@@ -256,7 +256,8 @@ class Container implements ContainerInterface, ArrayAccess
             throw new NotFoundException(sprintf('The requested service "%s" was not found in the container!', $id));
         }
 
-        if (isset($this->raw[$id])
+        if (
+            isset($this->raw[$id])
             || !is_object($this->services[$id])
             || isset($this->protectedServices[$this->services[$id]])
             || !method_exists($this->services[$id], '__invoke')
