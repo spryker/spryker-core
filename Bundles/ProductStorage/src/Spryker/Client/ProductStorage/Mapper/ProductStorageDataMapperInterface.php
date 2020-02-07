@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductStorage\Mapper;
 
-use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 
 interface ProductStorageDataMapperInterface
 {
@@ -15,9 +15,9 @@ interface ProductStorageDataMapperInterface
      * @param string $locale
      * @param array $productStorageData
      * @param array $selectedAttributes
-     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer|null $productOfferStorageCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [], ?ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer = null);
+    public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [], ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null);
 }

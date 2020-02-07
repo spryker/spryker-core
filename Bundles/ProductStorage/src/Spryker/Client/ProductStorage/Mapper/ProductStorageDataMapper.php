@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductStorage\Mapper;
 
-use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
@@ -49,11 +49,11 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
      * @param string $locale
      * @param array $productStorageData
      * @param array $selectedAttributes
-     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer|null $productOfferStorageCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [], ?ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer = null)
+    public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [], ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null)
     {
         $productStorageData = $this->filterAbstractProductVariantsData($productStorageData);
         $productViewTransfer = $this->createProductViewTransfer($productStorageData);
@@ -61,7 +61,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
 
         foreach ($this->productStorageExpanderPlugins as $productViewExpanderPlugin) {
             if ($productViewExpanderPlugin instanceof ProductViewExpanderByCriteriaPluginInterface) {
-                $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $locale, $productOfferStorageCriteriaTransfer);
+                $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $locale, $productStorageCriteriaTransfer);
 
                 continue;
             }

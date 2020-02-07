@@ -32,7 +32,7 @@ class ShopContextProvider implements ShopContextProviderInterface
         $shopContextTransfer = new ShopContextTransfer();
 
         foreach ($this->shopContextExpanderPlugins as $shopContextExpanderPlugin) {
-            $shopContextExpanderPlugin->expand($shopContextTransfer);
+            $shopContextTransfer = $shopContextExpanderPlugin->expand($shopContextTransfer);
         }
 
         return $shopContextTransfer;

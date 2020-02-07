@@ -12,7 +12,6 @@ use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependencyProvider;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\Propel\Mapper\ProductOfferStorageMapper;
-use Spryker\Zed\MerchantProductOfferStorage\Persistence\Propel\Mapper\ProductOfferStorageMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface getEntityManager()
@@ -38,9 +37,9 @@ class MerchantProductOfferStoragePersistenceFactory extends AbstractPersistenceF
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProductOfferStorage\Persistence\Propel\Mapper\ProductOfferStorageMapperInterface
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Persistence\Propel\Mapper\ProductOfferStorageMapper
      */
-    public function createProductOfferStorageMapper(): ProductOfferStorageMapperInterface
+    public function createProductOfferStorageMapper(): ProductOfferStorageMapper
     {
         return new ProductOfferStorageMapper();
     }

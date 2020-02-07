@@ -9,7 +9,7 @@
     <transfer name="ProductConcrete">
     </transfer>
 
-    <transfer name="ProductOfferStorageCriteria">
+    <transfer name="ProductStorageCriteria">
     </transfer>
 
 </transfers>

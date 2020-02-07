@@ -15,7 +15,7 @@ interface MerchantProductOfferStorageClientInterface
 {
     /**
      * Specification:
-     * - Retrieves content by key through a storage client dependency.
+     * - Retrieves content according provided criteria through a storage client dependency.
      * - Returns the product offer collection.
      *
      * @api
@@ -28,7 +28,8 @@ interface MerchantProductOfferStorageClientInterface
 
     /**
      * Specification:
-     * - Checks selected attribute.
+     * - Retrieves product offer references according provided criteria.
+     * - Returns null if product offer references does not exist.
      * - Validates checked product offer reference attribute.
      * - Resolves default product offer reference by plugin.
      * - Returns the product offer reference.

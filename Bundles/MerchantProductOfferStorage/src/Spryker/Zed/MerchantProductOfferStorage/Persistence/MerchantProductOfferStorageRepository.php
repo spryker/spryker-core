@@ -33,16 +33,30 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery()
             ->joinWithSpyMerchant()
-            ->filterByProductOfferReference_In($productOfferCriteriaFilterTransfer->getProductOfferReferences())
-            ->filterByIsActive($productOfferCriteriaFilterTransfer->getIsActive())
-            ->filterByApprovalStatus_In($productOfferCriteriaFilterTransfer->getApprovalStatuses());
+            ->useSpyProductOfferStoreQuery()
+                ->joinWithSpyStore()
+            ->endUse();
 
-        $productOfferQuery->addJoin(
-            SpyProductOfferTableMap::COL_CONCRETE_SKU,
-            SpyProductTableMap::COL_SKU,
-            Criteria::INNER_JOIN
-        );
-        $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, true);
+        if ($productOfferCriteriaFilterTransfer->getProductOfferReferences()) {
+            $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilterTransfer->getProductOfferReferences());
+        }
+
+        if ($productOfferCriteriaFilterTransfer->getIsActive() !== null) {
+            $productOfferQuery->filterByIsActive($productOfferCriteriaFilterTransfer->getIsActive());
+        }
+
+        if ($productOfferCriteriaFilterTransfer->getApprovalStatuses()) {
+            $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilterTransfer->getApprovalStatuses());
+        }
+
+        if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null) {
+            $productOfferQuery->addJoin(
+                SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                SpyProductTableMap::COL_SKU,
+                Criteria::INNER_JOIN
+            );
+            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, true);
+        }
 
         $productOfferEntities = $productOfferQuery->find();
 
