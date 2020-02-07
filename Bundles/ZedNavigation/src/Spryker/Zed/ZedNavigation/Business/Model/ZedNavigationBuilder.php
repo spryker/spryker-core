@@ -79,34 +79,59 @@ class ZedNavigationBuilder
 
     /**
      * @param array $navigationItems
-
+     *
      * @return array
      */
     protected function filterItems(array $navigationItems): array
     {
+        $filteredNavigationItems = [];
         foreach ($navigationItems as $itemKey => $item) {
-            if (!isset($item[RuleTransfer::BUNDLE], $item[RuleTransfer::CONTROLLER], $item[RuleTransfer::ACTION])) {
-                $navigationItems[$itemKey][static::PAGES] = $this->filterItems($item[static::PAGES]);
-                if (!$navigationItems[$itemKey][static::PAGES]) {
-                    unset($navigationItems[$itemKey]);
+            if ($this->hasSubPages($item)) {
+                $filteredSubPages = $this->filterItems($item[static::PAGES]);
+                if ($filteredSubPages) {
+                    $item[static::PAGES] = $filteredSubPages;
+                    $filteredNavigationItems[$itemKey] = $item;
                 }
 
                 continue;
             }
 
-            $itemTransfer = (new NavigationItemTransfer())
-                ->setModule($item[RuleTransfer::BUNDLE])
-                ->setController($item[RuleTransfer::CONTROLLER])
-                ->setAction($item[RuleTransfer::ACTION]);
-
-            foreach ($this->navigationItemFilterPlugins as $plugin) {
-                if (!$plugin->isVisible($itemTransfer)) {
-                    unset($navigationItems[$itemKey]);
-                    break;
-                }
+            if ($this->isPageVisible($item)) {
+                $filteredNavigationItems[$itemKey] = $item;
             }
         }
 
-        return $navigationItems;
+        return $filteredNavigationItems;
+    }
+
+    /**
+     * @param array $page
+     *
+     * @return bool
+     */
+    protected function isPageVisible(array $page): bool
+    {
+        $itemTransfer = (new NavigationItemTransfer())
+            ->setModule($page[RuleTransfer::BUNDLE])
+            ->setController($page[RuleTransfer::CONTROLLER])
+            ->setAction($page[RuleTransfer::ACTION]);
+
+        foreach ($this->navigationItemFilterPlugins as $plugin) {
+            if (!$plugin->isVisible($itemTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array $section
+     *
+     * @return bool
+     */
+    protected function hasSubPages(array $section): bool
+    {
+        return !isset($section[RuleTransfer::BUNDLE], $section[RuleTransfer::CONTROLLER], $section[RuleTransfer::ACTION]);
     }
 }
