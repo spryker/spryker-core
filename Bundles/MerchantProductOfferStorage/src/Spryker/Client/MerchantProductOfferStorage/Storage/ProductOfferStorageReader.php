@@ -98,7 +98,8 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                     continue;
                 }
 
-                if ($productOfferStorageTransfer->getMerchantReference()
+                if (
+                    $productOfferStorageTransfer->getMerchantReference()
                     && $productOfferStorageTransfer->getMerchantReference() !== $productOfferStorageCriteriaTransfer->getMerchantReference()
                     && $productOfferStorageCriteriaTransfer->getMerchantReference() !== null
                 ) {

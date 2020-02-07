@@ -46,7 +46,8 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
             return null;
         }
 
-        if ($productOfferStorageCriteriaTransfer->getProductOfferReference()
+        if (
+            $productOfferStorageCriteriaTransfer->getProductOfferReference()
             && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productOfferReferences)
         ) {
             return $productOfferStorageCriteriaTransfer->getProductOfferReference();
