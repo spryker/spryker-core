@@ -84,7 +84,8 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
      */
     protected function findProductConcreteSkus(?AbstractTransfer $attributes): ?array
     {
-        if ($attributes
+        if (
+            $attributes
             && $attributes instanceof AbstractProductsRestAttributesTransfer
             && !empty($attributes->getAttributeMap()[static::KEY_PRODUCT_CONCRETE_IDS])
         ) {
@@ -101,7 +102,8 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
      */
     protected function findSku(?AbstractTransfer $attributes): ?string
     {
-        if ($attributes
+        if (
+            $attributes
             && $attributes->offsetExists(static::KEY_SKU)
             && $attributes->offsetGet(static::KEY_SKU)
         ) {

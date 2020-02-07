@@ -142,8 +142,10 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         $processedErrorMessages = [];
 
         foreach ($availabilityErrorMessages as $availabilityErrorMessage) {
-            if (!$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)
-            || $this->isAvailabilityErrorMessage($availabilityErrorMessage)) {
+            if (
+                !$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)
+                || $this->isAvailabilityErrorMessage($availabilityErrorMessage)
+            ) {
                 $processedErrorMessages[] = $availabilityErrorMessage;
             }
         }
