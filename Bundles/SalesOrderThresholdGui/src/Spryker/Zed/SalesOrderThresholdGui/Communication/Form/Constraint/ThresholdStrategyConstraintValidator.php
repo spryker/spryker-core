@@ -68,7 +68,8 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
         SalesOrderThresholdFormExpanderPluginInterface $salesOrderThresholdFormExpanderPlugin,
         array $formData
     ): bool {
-        if (!$salesOrderThresholdFormExpanderPlugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
+        if (
+            !$salesOrderThresholdFormExpanderPlugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
             || $salesOrderThresholdFormExpanderPlugin->getThresholdKey() !== $formData[AbstractGlobalThresholdType::FIELD_STRATEGY]
             || !$salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames()
         ) {
