@@ -161,8 +161,8 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshTokensByCustomerReference(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
+        return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeRefreshTokensByCustomerReference($revokeRefreshTokenRequestTransfer);
     }
 }

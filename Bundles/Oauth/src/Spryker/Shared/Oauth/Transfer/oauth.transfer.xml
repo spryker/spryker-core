@@ -114,7 +114,7 @@
 
     <transfer name="RevokeRefreshTokenRequest">
         <property name="refreshToken" type="string"/>
-        <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="RevokeRefreshTokenResponse">

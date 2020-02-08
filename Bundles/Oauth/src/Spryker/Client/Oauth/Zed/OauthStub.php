@@ -78,7 +78,7 @@ class OauthStub implements OauthStubInterface
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshTokensByCustomerReference(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer $revokeRefreshTokenRequestTransfer */
         $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-refresh-tokens', $revokeRefreshTokenRequestTransfer);

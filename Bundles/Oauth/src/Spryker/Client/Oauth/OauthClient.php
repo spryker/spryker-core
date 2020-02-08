@@ -71,8 +71,8 @@ class OauthClient extends AbstractClient implements OauthClientInterface
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshTokensByCustomerReference(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        return $this->getFactory()->createOauthStub()->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
+        return $this->getFactory()->createOauthStub()->revokeRefreshTokensByCustomerReference($revokeRefreshTokenRequestTransfer);
     }
 }

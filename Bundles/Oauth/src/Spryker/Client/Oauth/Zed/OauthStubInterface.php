@@ -42,5 +42,5 @@ interface OauthStubInterface
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
+    public function revokeRefreshTokensByCustomerReference(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
 }

@@ -55,11 +55,9 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
      */
     public function revokeRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
-
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
             ->setRefreshToken($refreshTokenIdentifier)
-            ->setCustomer($customer);
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         $this->oauthClient->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
 
@@ -73,15 +71,11 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
      */
     public function revokeCustomerRefreshTokens(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
-
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
-            ->setCustomer($customer);
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
-        $this->oauthClient->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
+        $this->oauthClient->revokeRefreshTokensByCustomerReference($revokeRefreshTokenRequestTransfer);
 
-        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        return $this->restResourceBuilder->createRestResponse()->setStatus(Response::HTTP_NO_CONTENT);
     }
 }

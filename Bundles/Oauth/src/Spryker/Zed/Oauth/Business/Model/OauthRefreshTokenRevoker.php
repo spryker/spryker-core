@@ -66,8 +66,6 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
         $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
 
         $revokeRefreshTokenRequestTransfer->requireRefreshToken()
-            ->requireCustomer()
-            ->getCustomer()
             ->requireCustomerReference();
 
         $encryptedRefreshTokenTransfer = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
@@ -79,7 +77,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
         $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())
             ->setIdentifier($encryptedRefreshTokenTransfer->getIdentifier())
-            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference())
+            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setRevokedAt(null);
 
         $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($oauthTokenCriteriaFilterTransfer);
@@ -104,16 +102,14 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshTokensByCustomerReference(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
         $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
 
-        $revokeRefreshTokenRequestTransfer->requireCustomer()
-            ->getCustomer()
-            ->requireCustomerReference();
+        $revokeRefreshTokenRequestTransfer->requireCustomerReference();
 
         $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())
-            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomer()->getCustomerReference());
+            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference());
 
         $oauthAccessTokenTransfers = $this->oauthRepository
             ->findAccessTokens($oauthTokenCriteriaFilterTransfer)
