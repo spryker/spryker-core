@@ -121,17 +121,4 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
             $oauthAccessTokenEntity->delete();
         }
     }
-
-    /**
-     * @param array $identifierList
-     *
-     * @return void
-     */
-    public function deleteAccessTokenByIdentifierList(array $identifierList): void
-    {
-        $this->getFactory()
-            ->createAccessTokenQuery()
-            ->filterByIdentifier_In($identifierList)
-            ->delete();
-    }
 }

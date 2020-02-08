@@ -45,7 +45,7 @@ interface OauthClientInterface
 
     /**
      * Specification:
-     *  - Revokes refresh token by identifier.
+     *  - Revokes refresh token by identifier and customer reference.
      *
      * @api
      *
@@ -57,7 +57,7 @@ interface OauthClientInterface
 
     /**
      *  Specification:
-     *  - Revokes all refresh tokens for the given customer.
+     *  - Revokes all refresh tokens for the given customer reference.
      *
      * @api
      *
@@ -65,5 +65,5 @@ interface OauthClientInterface
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomerReference(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
+    public function revokeRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
 }

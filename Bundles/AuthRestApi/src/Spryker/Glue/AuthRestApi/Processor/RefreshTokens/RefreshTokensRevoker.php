@@ -74,7 +74,7 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
-        $this->oauthClient->revokeRefreshTokensByCustomerReference($revokeRefreshTokenRequestTransfer);
+        $this->oauthClient->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
 
         return $this->restResourceBuilder->createRestResponse()->setStatus(Response::HTTP_NO_CONTENT);
     }

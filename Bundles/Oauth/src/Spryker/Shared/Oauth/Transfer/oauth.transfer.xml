@@ -80,7 +80,6 @@
     </transfer>
 
     <transfer name="OauthAccessTokenData">
-        <property name="identifier" type="string"/>
         <property name="oauthAccessTokenId" type="string"/>
         <property name="oauthClientId" type="string"/>
         <property name="oauthScopes" type="array" singular="oauthScopes"/>

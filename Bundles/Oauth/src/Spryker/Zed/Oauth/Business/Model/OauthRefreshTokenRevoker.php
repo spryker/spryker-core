@@ -68,15 +68,15 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
         $revokeRefreshTokenRequestTransfer->requireRefreshToken()
             ->requireCustomerReference();
 
-        $encryptedRefreshTokenTransfer = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
-        if (!$encryptedRefreshTokenTransfer) {
+        $decryptedRefreshTokenTransfer = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
+        if (!$decryptedRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
                 ->setError(static::REFRESH_TOKEN_INVALID_ERROR_MESSAGE);
         }
 
         $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())
-            ->setIdentifier($encryptedRefreshTokenTransfer->getIdentifier())
+            ->setIdentifier($decryptedRefreshTokenTransfer->getIdentifier())
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setRevokedAt(null);
 
@@ -88,11 +88,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
         }
 
         $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s"));
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfer, $encryptedRefreshTokenTransfer): void {
-            $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
-            $this->oauthEntityManager->deleteAccessTokenByIdentifier($encryptedRefreshTokenTransfer->getAccessTokenIdentifier());
-        });
+        $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
 
         return $revokeRefreshTokenResponseTransfer->setIsSuccessful(true);
     }
@@ -102,31 +98,23 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomerReference(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
-
         $revokeRefreshTokenRequestTransfer->requireCustomerReference();
 
         $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())
-            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference());
-
-        $oauthAccessTokenTransfers = $this->oauthRepository
-            ->findAccessTokens($oauthTokenCriteriaFilterTransfer)
-            ->getOauthAccessTokens();
-
-        $oauthTokenCriteriaFilterTransfer->setRevokedAt(null);
+            ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
+            ->setRevokedAt(null);
 
         $oauthRefreshTokenTransfers = $this->oauthRepository
             ->findRefreshTokens($oauthTokenCriteriaFilterTransfer)
             ->getOauthRefreshTokens();
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers, $oauthAccessTokenTransfers): void {
+        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers): void {
             $this->executeRevokeRefreshTokensTransaction($oauthRefreshTokenTransfers);
-            $this->executeDeleteAccessTokensTransaction($oauthAccessTokenTransfers);
         });
 
-        return $revokeRefreshTokenResponseTransfer->setIsSuccessful(true);
+        return (new RevokeRefreshTokenResponseTransfer())->setIsSuccessful(true);
     }
 
     /**
@@ -142,21 +130,6 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
         }
 
         $this->oauthEntityManager->revokeRefreshTokenByIdentifierList($identifierList);
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthAccessTokenDataTransfer[] $oauthAccessTokenTransfers
-     *
-     * @return void
-     */
-    protected function executeDeleteAccessTokensTransaction(ArrayObject $oauthAccessTokenTransfers): void
-    {
-        $identifierList = [];
-        foreach ($oauthAccessTokenTransfers as $oauthAccessTokenDataTransfer) {
-            $identifierList[] = $oauthAccessTokenDataTransfer->getIdentifier();
-        }
-
-        $this->oauthEntityManager->deleteAccessTokenByIdentifierList($identifierList);
     }
 
     /**

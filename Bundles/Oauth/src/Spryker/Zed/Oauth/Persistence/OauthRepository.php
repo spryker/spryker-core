@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
-use Generated\Shared\Transfer\OauthAccessTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
-use Orm\Zed\Oauth\Persistence\SpyOauthAccessTokenQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -123,23 +121,6 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthAccessTokenCollectionTransfer
-     */
-    public function findAccessTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthAccessTokenCollectionTransfer
-    {
-        $oauthAccessTokenQuery = $this->getFactory()->createAccessTokenQuery();
-        $oauthAccessTokenQuery = $this->applyAccessTokenFilters($oauthAccessTokenQuery, $oauthTokenCriteriaFilterTransfer);
-
-        $oauthAccessTokensCollection = $oauthAccessTokenQuery->find();
-
-        return $this->getFactory()
-            ->createOauthAccessTokenMapper()
-            ->mapOauthAccessTokenEntityCollectionToOauthAccessTokenTransferCollection($oauthAccessTokensCollection);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return bool
@@ -178,28 +159,5 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
         }
 
         return $oauthRefreshTokenQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\Oauth\Persistence\SpyOauthAccessTokenQuery $oauthAccessTokenQuery
-     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function applyAccessTokenFilters(
-        SpyOauthAccessTokenQuery $oauthAccessTokenQuery,
-        OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-    ): ModelCriteria {
-        if ($oauthTokenCriteriaFilterTransfer->getCustomerReference()) {
-            $oauthAccessTokenQuery->filterByUserIdentifier_Like(
-                sprintf(static::CUSTOMER_REFERENCE_PATTERN, $oauthTokenCriteriaFilterTransfer->getCustomerReference())
-            );
-        }
-
-        if ($oauthTokenCriteriaFilterTransfer->getIdentifier()) {
-            $oauthAccessTokenQuery->filterByIdentifier($oauthTokenCriteriaFilterTransfer->getIdentifier());
-        }
-
-        return $oauthAccessTokenQuery;
     }
 }
