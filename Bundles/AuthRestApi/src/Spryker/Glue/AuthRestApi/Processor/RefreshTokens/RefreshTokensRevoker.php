@@ -53,19 +53,17 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function revokeConcreteRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface
+    public function revokeRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
 
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
             ->setRefreshToken($refreshTokenIdentifier)
             ->setCustomer($customer);
 
-        $this->oauthClient->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
+        $this->oauthClient->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
 
-        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        return $this->restResourceBuilder->createRestResponse()->setStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -73,7 +71,7 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function revokeAllCurrentCustomerRefreshTokens(RestRequestInterface $restRequest): RestResponseInterface
+    public function revokeCustomerRefreshTokens(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 

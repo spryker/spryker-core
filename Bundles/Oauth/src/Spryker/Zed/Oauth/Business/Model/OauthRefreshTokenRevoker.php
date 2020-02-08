@@ -61,7 +61,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
         $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
 

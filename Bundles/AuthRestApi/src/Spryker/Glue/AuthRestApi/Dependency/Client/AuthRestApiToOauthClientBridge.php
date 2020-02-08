@@ -54,9 +54,9 @@ class AuthRestApiToOauthClientBridge implements AuthRestApiToOauthClientInterfac
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        return $this->oauthClient->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
+        return $this->oauthClient->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
     }
 
     /**
