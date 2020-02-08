@@ -12,7 +12,6 @@ use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthScopeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthAccessTokenMapper;
 use Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthRefreshTokenMapper;
 
 /**
@@ -60,13 +59,5 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
     public function createOauthRefreshTokenMapper(): OauthRefreshTokenMapper
     {
         return new OauthRefreshTokenMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthAccessTokenMapper
-     */
-    public function createOauthAccessTokenMapper(): OauthAccessTokenMapper
-    {
-        return new OauthAccessTokenMapper();
     }
 }

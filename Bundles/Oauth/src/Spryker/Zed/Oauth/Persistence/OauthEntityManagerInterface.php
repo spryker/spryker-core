@@ -55,11 +55,4 @@ interface OauthEntityManagerInterface
      * @return void
      */
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void;
-
-    /**
-     * @param array $identifierList
-     *
-     * @return void
-     */
-    public function revokeRefreshTokenByIdentifierList(array $identifierList): void;
 }

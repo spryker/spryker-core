@@ -123,7 +123,7 @@ interface OauthFacadeInterface
 
     /**
      * Specification:
-     *  - Revokes concrete refresh token.
+     *  - Revokes concrete refresh token by identifier and customer reference.
      *
      * @api
      *

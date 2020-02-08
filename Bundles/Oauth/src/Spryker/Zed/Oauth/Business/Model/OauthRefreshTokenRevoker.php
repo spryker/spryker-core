@@ -8,16 +8,15 @@
 namespace Spryker\Zed\Oauth\Business\Model;
 
 use ArrayObject;
-use DateTime;
 use Exception;
-use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
+use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
+use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Oauth\OauthConfig;
-use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
 class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
@@ -33,27 +32,27 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected const KEY_EXPIRE_TIME = 'expire_time';
 
     /**
-     * @var \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface
-     */
-    protected $oauthEntityManager;
-
-    /**
      * @var \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface
      */
     protected $oauthRepository;
 
     /**
+     * @var \League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface
+     */
+    protected $refreshTokenRepository;
+
+    /**
+     * @param \League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
-     * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      */
     public function __construct(
+        RefreshTokenRepositoryInterface $refreshTokenRepository,
         OauthRepositoryInterface $oauthRepository,
-        OauthEntityManagerInterface $oauthEntityManager,
         OauthConfig $oauthConfig
     ) {
+        $this->refreshTokenRepository = $refreshTokenRepository;
         $this->oauthRepository = $oauthRepository;
-        $this->oauthEntityManager = $oauthEntityManager;
         $this->encryptionKey = $oauthConfig->getEncryptionKey();
     }
 
@@ -69,15 +68,15 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
         $revokeRefreshTokenRequestTransfer->requireRefreshToken()
             ->requireCustomerReference();
 
-        $decryptedRefreshTokenTransfer = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
-        if (!$decryptedRefreshTokenTransfer) {
+        $decryptedRefreshToken = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
+        if (!$decryptedRefreshToken) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
                 ->setError(static::REFRESH_TOKEN_INVALID_ERROR_MESSAGE);
         }
 
         $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())
-            ->setIdentifier($decryptedRefreshTokenTransfer->getIdentifier())
+            ->setIdentifier($decryptedRefreshToken)
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setRevokedAt(null);
 
@@ -88,8 +87,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
                 ->setError(static::REFRESH_TOKEN_NOT_FOUND_ERROR_MESSAGE);
         }
 
-        $oauthRefreshTokenTransfer->setRevokedAt((new DateTime())->format("Y-m-d H:i:s"));
-        $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
+        $this->refreshTokenRepository->revokeRefreshToken($oauthRefreshTokenTransfer->getIdentifier());
 
         return $revokeRefreshTokenResponseTransfer->setIsSuccessful(true);
     }
@@ -125,20 +123,17 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      */
     protected function executeRevokeRefreshTokensTransaction(ArrayObject $oauthRefreshTokenTransfers): void
     {
-        $identifierList = [];
         foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
-            $identifierList[] = $oauthRefreshTokenTransfer->getIdentifier();
+            $this->refreshTokenRepository->revokeRefreshToken($oauthRefreshTokenTransfer->getIdentifier());
         }
-
-        $this->oauthEntityManager->revokeRefreshTokenByIdentifierList($identifierList);
     }
 
     /**
      * @param string $refreshToken
      *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
+     * @return string|null
      */
-    protected function decryptRefreshToken(string $refreshToken): ?OauthRefreshTokenTransfer
+    protected function decryptRefreshToken(string $refreshToken): ?string
     {
         try {
             $refreshToken = $this->decrypt($refreshToken);
@@ -146,13 +141,8 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             return null;
         }
 
-        $refreshTokenData = json_decode($refreshToken, true);
+        $refreshTokenData = (new UtilEncodingService())->decodeJson($refreshToken, true);
 
-        $refreshTokenTransfer = (new OauthRefreshTokenTransfer())
-            ->setExpiresAt($refreshTokenData[static::KEY_EXPIRE_TIME])
-            ->setIdentifier($refreshTokenData[static::KEY_REFRESH_TOKEN_ID])
-            ->setAccessTokenIdentifier($refreshTokenData[static::KEY_ACCESS_TOKEN_ID]);
-
-        return $refreshTokenTransfer;
+        return $refreshTokenData[static::KEY_REFRESH_TOKEN_ID];
     }
 }
