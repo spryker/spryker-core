@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class OauthEntityManager extends AbstractEntityManager implements OauthEntityManagerInterface
 {
-    public const COLUMN_REVOKED_AT = 'RevokedAt';
+    protected const COLUMN_REVOKED_AT = 'RevokedAt';
 
     /**
      * @param \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer
@@ -57,9 +57,6 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
      */
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void
     {
-        $oauthRefreshToken->requireRevokedAt()
-            ->requireIdentifier();
-
         $this->getFactory()
             ->createRefreshTokenQuery()
             ->filterByIdentifier($oauthRefreshToken->getIdentifier())
@@ -67,7 +64,7 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
     }
 
     /**
-     * @param array $identifierList
+     * @param string[] $identifierList
      *
      * @return void
      */

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -113,11 +112,11 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
         $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
         $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
 
-        $oauthRefreshTokensCollection = $oauthRefreshTokenQuery->find();
+        $oauthRefreshTokenCollection = $oauthRefreshTokenQuery->find();
 
         return $this->getFactory()
             ->createOauthRefreshTokenMapper()
-            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($oauthRefreshTokensCollection);
+            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($oauthRefreshTokenCollection);
     }
 
     /**
@@ -138,12 +137,12 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
      * @param \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery
      */
     protected function applyRefreshTokenFilters(
         SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery,
         OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-    ): ModelCriteria {
+    ): SpyOauthRefreshTokenQuery {
         if ($oauthTokenCriteriaFilterTransfer->getCustomerReference()) {
             $oauthRefreshTokenQuery->filterByUserIdentifier_Like(
                 sprintf(static::CUSTOMER_REFERENCE_PATTERN, $oauthTokenCriteriaFilterTransfer->getCustomerReference())
