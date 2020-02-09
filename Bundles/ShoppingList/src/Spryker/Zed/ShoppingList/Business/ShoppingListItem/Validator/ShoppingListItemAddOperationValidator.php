@@ -15,20 +15,12 @@ use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
-use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 
 //TODO change return of validate methods
 class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperationValidatorInterface
 {
     use PermissionAwareTrait;
 
-    protected const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND = 'customer.account.shopping_list_item.error.product_not_found';
-
-    protected const MAX_QUANTITY = 2147483647; // 32 bit integer
-    protected const GLOSSARY_PARAM_SKU = '%sku%';
-
-    protected const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list.error.not_found';
-    protected const ERROR_SHOPPING_LIST_ITEM_NOT_FOUND = 'customer.account.shopping_list_item.error.not_found';
     protected const ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'customer.account.shopping_list.error.write_permission_required';
     protected const ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID = 'customer.account.shopping_list_item.error.quantity_not_valid';
 
@@ -43,9 +35,9 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     protected $pluginExecutor;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface
      */
-    protected $productFacade;
+    protected $shoppingListItemValidator;
 
     /**
      * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface
@@ -53,21 +45,29 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     protected $messageAdder;
 
     /**
-     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface
+     */
+    protected $permissionValidator;
+
+    /**
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface $shoppingListItemValidator
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface $messageAdder
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface $permissionValidator
      */
     public function __construct(
-        ShoppingListToProductFacadeInterface $productFacade,
+        ShoppingListItemValidatorInterface $shoppingListItemValidator,
         MessageAdderInterface $messageAdder,
         ShoppingListResolverInterface $shoppingListResolver,
-        ShoppingListItemPluginExecutorInterface $pluginExecutor
+        ShoppingListItemPluginExecutorInterface $pluginExecutor,
+        PermissionValidatorInterface $permissionValidator
     ) {
         $this->shoppingListResolver = $shoppingListResolver;
         $this->pluginExecutor = $pluginExecutor;
-        $this->productFacade = $productFacade;
+        $this->shoppingListItemValidator = $shoppingListItemValidator;
         $this->messageAdder = $messageAdder;
+        $this->permissionValidator = $permissionValidator;
     }
 
     /**
@@ -112,12 +112,27 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
         ShoppingListTransfer $shoppingListTransfer,
         ShoppingListResponseTransfer $shoppingListResponseTransfer
     ): bool {
-        $shoppingListTransfer = $this->sanitizeItems(
-            $this->resolveShoppingList($shoppingListTransfer)
-        );
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
+        }
 
-        if (!$this->isApplicableForAddItems($shoppingListTransfer, $shoppingListResponseTransfer)) {
+        if (!$this->permissionValidator->checkWritePermission($shoppingListTransfer)) {
+            $shoppingListResponseTransfer
+                ->addError(static::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
+                ->setIsSuccess(false);
+
             return false;
+        }
+
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
+            if (!$this->validateShoppingListItemToBeAdded($shoppingListItemTransfer, $shoppingListItemResponseTransfer)) {
+                $shoppingListResponseTransfer
+                    ->setErrors($shoppingListItemResponseTransfer->getErrors())
+                    ->setIsSuccess(false);
+
+                return false;
+            }
         }
 
         $shoppingListResponseTransfer->setShoppingList($shoppingListTransfer);
@@ -135,33 +150,9 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): bool {
-        return $this->validateShoppingListItemQuantity($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
-            && $this->validateShoppingListItemSku($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
+        return $this->shoppingListItemValidator->validateShoppingListItemQuantity($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
+            && $this->shoppingListItemValidator->validateShoppingListItemSku($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
             && $this->performShoppingListItemAddPreCheckPlugins($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return bool
-     */
-    protected function validateShoppingListItemSku(
-        ShoppingListItemTransfer $shoppingListItemTransfer,
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
-        $shoppingListItemTransfer->requireSku();
-
-        if (!$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
-            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
-            $shoppingListItemResponseTransfer
-                ->addError(static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND)
-                ->setIsSuccess(false);
-
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -179,82 +170,15 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
         );
         $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
 
-        return $this->validatePermissionForPerformingOperation(
-            $shoppingListItemTransfer,
+        $isPermissionValid = $this->permissionValidator->validatePermissionForPerformingOperation(
             $shoppingListTransfer,
             $shoppingListItemResponseTransfer
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return bool
-     */
-    protected function validateShoppingListItemQuantity(
-        ShoppingListItemTransfer $shoppingListItemTransfer,
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
-        $shoppingListItemTransfer->requireQuantity();
-
-        $quantity = $shoppingListItemTransfer->getQuantity();
-        if ($quantity <= 0 || $quantity > static::MAX_QUANTITY) {
+        if (!$isPermissionValid) {
             $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
-            $shoppingListItemResponseTransfer
-                ->addError(static::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID)
-                ->setIsSuccess(false);
-
-            return false;
         }
 
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return bool
-     */
-    protected function validatePermissionForPerformingOperation(
-        ShoppingListItemTransfer $shoppingListItemTransfer,
-        ShoppingListTransfer $shoppingListTransfer,
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
-        if ($this->checkWritePermission($shoppingListTransfer)) {
-            return true;
-        }
-
-        $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
-        $shoppingListItemResponseTransfer
-            ->addError(static::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
-            ->setIsSuccess(false);
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return bool
-     */
-    protected function checkWritePermission(ShoppingListTransfer $shoppingListTransfer): bool
-    {
-        if (!$shoppingListTransfer->getIdShoppingList()) {
-            return true;
-        }
-
-        if (!$shoppingListTransfer->getIdCompanyUser()) {
-            return false;
-        }
-
-        return $this->can(
-            'WriteShoppingListPermissionPlugin',
-            $shoppingListTransfer->getIdCompanyUser(),
-            $shoppingListTransfer->getIdShoppingList()
-        );
+        return $isPermissionValid;
     }
 
     /**
@@ -281,52 +205,6 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
         $shoppingListItemResponseTransfer->setIsSuccess(false);
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
-     *
-     * @return bool
-     */
-    protected function isApplicableForAddItems(
-        ShoppingListTransfer $shoppingListTransfer,
-        ShoppingListResponseTransfer $shoppingListResponseTransfer
-    ): bool {
-        if (!$this->checkWritePermission($shoppingListTransfer)) {
-            $shoppingListResponseTransfer
-                ->addError(static::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
-                ->setIsSuccess(false);
-
-            return false;
-        }
-
-        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
-            if (!$this->validateShoppingListItemToBeAdded($shoppingListItemTransfer, $shoppingListItemResponseTransfer)) {
-                $shoppingListResponseTransfer
-                    ->setErrors($shoppingListItemResponseTransfer->getErrors())
-                    ->setIsSuccess(false);
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
-     */
-    protected function sanitizeItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
-    {
-        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
-        }
-
-        return $shoppingListTransfer;
     }
 
     /**

@@ -28,12 +28,16 @@ use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdder;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidator;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidator;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidator;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
@@ -152,10 +156,11 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListAddOperationValidator(): ShoppingListItemAddOperationValidatorInterface
     {
         return new ShoppingListItemAddOperationValidator(
-            $this->getProductFacade(),
+            $this->createShoppingListItemValidator(),
             $this->createMessageAdder(),
             $this->createShoppingListResolver(),
-            $this->createShoppingListItemPluginExecutor()
+            $this->createShoppingListItemPluginExecutor(),
+            $this->createPermissionValidator()
         );
     }
 
@@ -165,8 +170,9 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListUpdateOperationValidator(): ShoppingListItemUpdateOperationValidatorInterface
     {
         return new ShoppingListItemUpdateOperationValidator(
-            $this->getRepository(),
-            $this->createMessageAdder()
+            $this->createShoppingListItemValidator(),
+            $this->createMessageAdder(),
+            $this->createPermissionValidator()
         );
     }
 
@@ -176,9 +182,30 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListDeleteOperationValidator(): ShoppingListItemDeleteOperationValidatorInterface
     {
         return new ShoppingListItemDeleteOperationValidator(
-            $this->getRepository(),
-            $this->createMessageAdder()
+            $this->createShoppingListItemValidator(),
+            $this->createMessageAdder(),
+            $this->createPermissionValidator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface
+     */
+    public function createShoppingListItemValidator(): ShoppingListItemValidatorInterface
+    {
+        return new ShoppingListItemValidator(
+            $this->getRepository(),
+            $this->createPermissionValidator(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface
+     */
+    public function createPermissionValidator(): PermissionValidatorInterface
+    {
+        return new PermissionValidator();
     }
 
     /**
