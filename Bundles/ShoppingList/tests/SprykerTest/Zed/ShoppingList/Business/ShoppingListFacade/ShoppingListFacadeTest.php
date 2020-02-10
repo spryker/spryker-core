@@ -893,19 +893,19 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListFacade = $this->tester->getFacade();
         $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
             ->setCompanyUserTransfer($this->ownerCompanyUserTransfer);
-        $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingListTransfer = $this->tester->createShoppingList($customerTransfer->getCompanyUserTransfer());
         $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
+                ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
             ])
         );
         $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->productTwo->getSku(),
+                ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
             ])
         );
 
@@ -993,5 +993,43 @@ class ShoppingListFacadeTest extends Unit
         // Assert
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to add items to shopping list.');
         $this->assertCount(0, $shoppingListItemCollectionTransfer->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckShoppingListItemProductConcreteIsActiveShouldReturnTrue(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = new ShoppingListItemTransfer();
+        $productConcreteTransfer = $this->tester->createProductConcrete(true);
+        $shoppingListItemTransfer->setSku($productConcreteTransfer->getSku());
+
+        // Act
+        $isActive = $this->tester->getFacade()
+            ->checkShoppingListItemProductIsActive($shoppingListItemTransfer)
+            ->getIsSuccess();
+
+        // Assert
+        $this->assertTrue($isActive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckShoppingListItemProductConcreteIsActiveShouldReturnFalse(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = new ShoppingListItemTransfer();
+        $productConcreteTransfer = $this->tester->createProductConcrete(false);
+        $shoppingListItemTransfer->setSku($productConcreteTransfer->getSku());
+
+        // Act
+        $isActive = $this->tester->getFacade()
+            ->checkShoppingListItemProductIsActive($shoppingListItemTransfer)
+            ->getIsSuccess();
+
+        // Assert
+        $this->assertFalse($isActive);
     }
 }

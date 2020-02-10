@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -17,12 +20,15 @@ use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExe
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 {
     use TransactionTrait;
+
+    protected const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE = 'customer.account.shopping_list_item.error.product_not_active';
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
@@ -55,12 +61,18 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected $pluginExecutor;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface $addOperationValidator
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface $updateOperationValidator
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface $deleteOperationValidator
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
@@ -68,7 +80,8 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         ShoppingListItemAddOperationValidatorInterface $addOperationValidator,
         ShoppingListItemUpdateOperationValidatorInterface $updateOperationValidator,
         ShoppingListItemDeleteOperationValidatorInterface $deleteOperationValidator,
-        ShoppingListItemPluginExecutorInterface $pluginExecutor
+        ShoppingListItemPluginExecutorInterface $pluginExecutor,
+        ShoppingListToProductFacadeInterface $productFacade
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->shoppingListRepository = $shoppingListRepository;
@@ -76,6 +89,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $this->updateOperationValidator = $updateOperationValidator;
         $this->deleteOperationValidator = $deleteOperationValidator;
         $this->pluginExecutor = $pluginExecutor;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -267,6 +281,29 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
             return $this->deleteShoppingListItemTransaction($shoppingListItemTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItemProductIsActive(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer {
+        $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($shoppingListItemTransfer->getSku());
+        $shoppingListPreAddItemCheckResponseTransfer = new ShoppingListPreAddItemCheckResponseTransfer();
+        if ($this->productFacade->isProductConcreteActive($productConcreteTransfer)) {
+            return $shoppingListPreAddItemCheckResponseTransfer
+                ->setIsSuccess(true);
+        }
+
+        return $shoppingListPreAddItemCheckResponseTransfer
+            ->setIsSuccess(false)
+            ->addMessage(
+                (new MessageTransfer())
+                    ->setValue(static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE)
+            );
     }
 
     /**

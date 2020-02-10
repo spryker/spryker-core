@@ -106,7 +106,8 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->createShoppingListAddOperationValidator(),
             $this->createShoppingListUpdateOperationValidator(),
             $this->createShoppingListDeleteOperationValidator(),
-            $this->createShoppingListItemPluginExecutor()
+            $this->createShoppingListItemPluginExecutor(),
+            $this->getProductFacade()
         );
     }
 

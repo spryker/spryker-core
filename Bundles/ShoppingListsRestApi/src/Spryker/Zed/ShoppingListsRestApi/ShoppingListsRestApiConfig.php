@@ -33,7 +33,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list.error.not_found';
 
     /**
-     * @see \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidator::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED
+     * @see \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidator::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED
      */
     public const ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'customer.account.shopping_list.error.write_permission_required';
 
