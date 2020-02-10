@@ -109,7 +109,8 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
      */
     protected function resetUserPassword(UserTransfer $originalUserTransfer, UserTransfer $updatedUserTransfer): void
     {
-        if ($updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
+        if (
+            $updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
             && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
         ) {
             $this->authFacade->requestPasswordReset($updatedUserTransfer->getUsername());
