@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Communication\Plugin\ShoppingList;
+namespace Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
@@ -13,16 +13,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface;
 
 /**
- * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
- * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
- * @method \Spryker\Zed\Product\ProductConfig getConfig()
- * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
  */
-class ProductShoppingListAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
+class ProductConcreteStatusShoppingListAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
 {
     /**
      * {@inheritDoc}
-     *  - Checks if the concrete product within the shopping list item is active.
+     *  - Checks if the product concrete within the shopping list item is active.
      *
      * @api
      *
