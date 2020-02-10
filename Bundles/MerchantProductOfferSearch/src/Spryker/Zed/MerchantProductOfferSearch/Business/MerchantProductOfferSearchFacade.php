@@ -78,4 +78,20 @@ class MerchantProductOfferSearchFacade extends AbstractFacade implements Merchan
             ->createMerchantProductOfferSearchReader()
             ->getMerchantNamesByProductAbstractIds($productAbstractIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return string[][]
+     */
+    public function getMerchantReferencesByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createMerchantProductOfferSearchReader()
+            ->getMerchantReferencesByProductAbstractIds($productAbstractIds);
+    }
 }

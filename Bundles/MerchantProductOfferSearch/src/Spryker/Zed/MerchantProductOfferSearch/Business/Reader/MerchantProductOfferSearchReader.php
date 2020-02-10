@@ -39,6 +39,19 @@ class MerchantProductOfferSearchReader implements MerchantProductOfferSearchRead
     }
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return string[][]
+     */
+    public function getMerchantReferencesByProductAbstractIds(array $productAbstractIds): array
+    {
+        $merchantProductAbstractData = $this->merchantProductOfferSearchRepository
+            ->getMerchantDataByProductAbstractIds($productAbstractIds);
+
+        return $this->mapMerchantReferencesByIdProductAbstract($merchantProductAbstractData);
+    }
+
+    /**
      * @param array $merchantProductAbstractData
      *
      * @return string[][]
@@ -54,5 +67,23 @@ class MerchantProductOfferSearchReader implements MerchantProductOfferSearchRead
         }
 
         return $mappedMerchantNamesByProductAbstractIds;
+    }
+
+    /**
+     * @param array $merchantProductAbstractData
+     *
+     * @return string[][]
+     */
+    protected function mapMerchantReferencesByIdProductAbstract(array $merchantProductAbstractData): array
+    {
+        $mappedMerchantReferencesByProductAbstractIds = [];
+
+        foreach ($merchantProductAbstractData as $merchantProductAbstract) {
+            $idProductAbstract = $merchantProductAbstract[MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID];
+            $merchantReference = $merchantProductAbstract[MerchantProductOfferSearchRepository::KEY_MERCHANT_REFERENCE];
+            $mappedMerchantReferencesByProductAbstractIds[$idProductAbstract][] = $merchantReference;
+        }
+
+        return $mappedMerchantReferencesByProductAbstractIds;
     }
 }

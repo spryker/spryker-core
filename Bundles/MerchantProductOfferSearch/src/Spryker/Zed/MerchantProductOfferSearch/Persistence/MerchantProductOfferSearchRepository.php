@@ -22,6 +22,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
 {
     public const KEY_ABSTRACT_PRODUCT_ID = 'id';
     public const KEY_MERCHANT_NAME = 'name';
+    public const KEY_MERCHANT_REFERENCE = 'reference';
 
     /**
      * @param int[] $productAbstractIds
@@ -42,8 +43,9 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addAnd($productOfferPropelQuery->getNewCriterion(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $productAbstractIds, Criteria::IN));
 
         return $productOfferPropelQuery
-            ->select([static::KEY_ABSTRACT_PRODUCT_ID, static::KEY_MERCHANT_NAME])
+            ->select([static::KEY_ABSTRACT_PRODUCT_ID, static::KEY_MERCHANT_NAME, static::KEY_MERCHANT_REFERENCE])
             ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_MERCHANT_NAME)
+            ->withColumn(SpyMerchantTableMap::COL_MERCHANT_REFERENCE, static::KEY_MERCHANT_REFERENCE)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
             ->find()
             ->getData();

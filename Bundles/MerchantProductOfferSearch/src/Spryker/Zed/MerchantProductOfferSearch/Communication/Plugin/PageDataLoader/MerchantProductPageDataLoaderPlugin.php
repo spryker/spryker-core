@@ -30,9 +30,16 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
+        $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
+
         $merchantNames = $this->getFacade()
-            ->getMerchantNamesByProductAbstractIds($productPageLoadTransfer->getProductAbstractIds());
-        $payloadTransfers = $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $merchantNames);
+            ->getMerchantNamesByProductAbstractIds($productAbstractIds);
+
+        $merchantReferences = $this->getFacade()
+            ->getMerchantReferencesByProductAbstractIds($productAbstractIds);
+
+        $payloadTransfers = $this->setMerchantNamesToPayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $merchantNames);
+        $payloadTransfers = $this->setMerchantReferencesToPayloadTransfers($payloadTransfers, $merchantReferences);
 
         return $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);
     }
@@ -43,11 +50,27 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductPayloadTransfer[]
      */
-    protected function updatePayloadTransfers(array $payloadTransfers, array $groupedMerchantNamesByIdProductAbstract): array
+    protected function setMerchantNamesToPayloadTransfers(array $payloadTransfers, array $groupedMerchantNamesByIdProductAbstract): array
     {
         foreach ($payloadTransfers as $payloadTransfer) {
             $merchantNames = $groupedMerchantNamesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()] ?? [];
             $payloadTransfer->setMerchantNames($merchantNames);
+        }
+
+        return $payloadTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
+     * @param array $groupedMerchantReferencesByIdProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[]
+     */
+    protected function setMerchantReferencesToPayloadTransfers(array $payloadTransfers, array $groupedMerchantReferencesByIdProductAbstract): array
+    {
+        foreach ($payloadTransfers as $payloadTransfer) {
+            $merchantReferences = $groupedMerchantReferencesByIdProductAbstract[$payloadTransfer->getIdProductAbstract()] ?? [];
+            $payloadTransfer->setMerchantReferences($merchantReferences);
         }
 
         return $payloadTransfers;
