@@ -118,7 +118,8 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
         $elementsToRemove = [];
         foreach ($tableXmlElement->children() as $tagName => $childXmlElement) {
             $nameAttribute = (string)$childXmlElement->attributes()['name'];
-            if ($this->isFkIndex($tagName, $nameAttribute)
+            if (
+                $this->isFkIndex($tagName, $nameAttribute)
                 && $this->isFkIndexInFkFieldNameList($nameAttribute, $fkFieldNames)
             ) {
                 $elementsToRemove[] = $childXmlElement;
