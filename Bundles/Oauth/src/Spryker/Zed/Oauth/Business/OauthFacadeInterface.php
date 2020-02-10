@@ -146,8 +146,8 @@ interface OauthFacadeInterface
     public function revokeRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
 
     /**
-     *  Specification:
-     *  - Deletes a refresh tokens that were expired.
+     * Specification:
+     *  - Deletes refresh tokens where expires_at column less than NOW() + OauthConfig::getRefreshTokenRetentionInterval().
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class OauthTokenConsole extends Console
 {
     public const COMMAND_NAME = 'oauth:refresh-token:clean';
-    public const DESCRIPTION = 'Clean up old refresh tokens in the database';
+    public const DESCRIPTION = 'Clean up old refresh tokens in the database.';
 
     /**
      * @return void

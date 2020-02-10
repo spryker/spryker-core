@@ -68,12 +68,15 @@ class OauthConfig extends AbstractSharedConfig
     }
 
     /**
-     * Interval for how long the expired tokens will be stored in the system
+     * Specification:
+     *  - Interval for how long the expired tokens will be stored in the system.
      *
-     * @return \DateInterval
+     * @api
+     *
+     * @return \DateInterval|null
      */
-    public function getRefreshTokenRetentionInterval(): DateInterval
+    public function getRefreshTokenRetentionInterval(): ?DateInterval
     {
-        return new DateInterval('PT0M');
+        return null;
     }
 }

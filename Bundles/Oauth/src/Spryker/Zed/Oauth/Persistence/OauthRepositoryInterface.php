@@ -59,11 +59,4 @@ interface OauthRepositoryInterface
      * @return bool
      */
     public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
-
-    /**
-     * @param string $expiredAt
-     *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
-     */
-    public function getExpiredRefreshTokens(string $expiredAt): OauthRefreshTokenCollectionTransfer;
 }

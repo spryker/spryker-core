@@ -44,9 +44,9 @@ class OauthConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return \DateInterval
+     * @return \DateInterval|null
      */
-    public function getRefreshTokenRetentionInterval(): DateInterval
+    public function getRefreshTokenRetentionInterval(): ?DateInterval
     {
         return $this->getSharedConfig()->getRefreshTokenRetentionInterval();
     }

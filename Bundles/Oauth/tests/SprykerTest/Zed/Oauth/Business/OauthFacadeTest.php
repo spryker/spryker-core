@@ -19,10 +19,9 @@ use Generated\Shared\Transfer\OauthUserTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Oauth\OauthConstants;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
 use Spryker\Zed\Oauth\Business\OauthBusinessFactory;
-use Spryker\Zed\Oauth\Business\OauthFacade;
-use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
@@ -52,11 +51,6 @@ class OauthFacadeTest extends Unit
     protected $customerTransfer;
 
     /**
-     * @var \Spryker\Zed\Oauth\OauthConfig|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $oauthConfigMock;
-
-    /**
      * @return void
      */
     public function setUp(): void
@@ -64,7 +58,6 @@ class OauthFacadeTest extends Unit
         parent::setUp();
 
         $this->customerTransfer = $this->tester->haveCustomer();
-        $this->setUpOauthConfigMock();
     }
 
     /**
@@ -308,17 +301,18 @@ class OauthFacadeTest extends Unit
      *
      * @return void
      */
-    public function testdeleteExpiredRefreshTokens(string $interval, int $matches): void
+    public function testDeleteExpiredRefreshTokens(string $interval, int $matches): void
     {
         // Arrange
         $this->tester->deleteAllOauthRefreshTokens();
-        $this->oauthConfigMock->method('getRefreshTokenRetentionInterval')->willReturn(new DateInterval($interval));
+        $oauthConfigMock = $this->getOauthConfigMock();
+        $oauthConfigMock->method('getRefreshTokenRetentionInterval')->willReturn(new DateInterval($interval));
         $this->setUserProviderPluginMock();
-        $oauthRequestTransfer = $this->createOauthRequestTransfer();
-        $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+        $customerTransfer = $this->tester->createCustomerTransfer();
+        $this->tester->haveAuthorizationToGlue($customerTransfer);
 
         // Act
-        $this->getOauthFacade()->deleteExpiredRefreshTokens();
+        $this->getOauthFacade($oauthConfigMock)->deleteExpiredRefreshTokens();
 
         // Assert
         $this->assertEquals($matches, $this->tester->getOauthRefreshTokensCount());
@@ -405,33 +399,39 @@ class OauthFacadeTest extends Unit
     }
 
     /**
-     * @return void
+     * @return \Spryker\Zed\Oauth\OauthConfig
      */
-    protected function setUpOauthConfigMock(): void
+    protected function getOauthConfigMock(): OauthConfig
     {
-        $this->oauthConfigMock = $this->createMock(OauthConfig::class);
-        $this->oauthConfigMock
+        $oauthConfigMock = $this->createMock(OauthConfig::class);
+        $oauthConfigMock
             ->method('getPrivateKeyPath')->willReturn(Config::getInstance()->get(OauthConstants::PRIVATE_KEY_PATH));
-        $this->oauthConfigMock
+        $oauthConfigMock
             ->method('getPublicKeyPath')->willReturn(Config::getInstance()->get(OauthConstants::PUBLIC_KEY_PATH));
-        $this->oauthConfigMock
+        $oauthConfigMock
             ->method('getAccessTokenTTL')->willReturn('PT8H');
-        $this->oauthConfigMock
+        $oauthConfigMock
             ->method('getRefreshTokenTTL')->willReturn('P1M');
+
+        return $oauthConfigMock;
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\OauthFacadeInterface
+     * @param \Spryker\Zed\Oauth\OauthConfig|null $oauthConfigMock
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function getOauthFacade(): OauthFacadeInterface
+    protected function getOauthFacade(?OauthConfig $oauthConfigMock = null): AbstractFacade
     {
-        $businessFactory = (new OauthBusinessFactory())
-            ->setConfig($this->oauthConfigMock);
+        if (!$oauthConfigMock) {
+            return $this->tester->getFacade();
+        }
 
-        $facade = (new OauthFacade())
-            ->setFactory($businessFactory);
+        $oauthBusinessFactory = new OauthBusinessFactory();
+        $oauthBusinessFactory->setConfig($oauthConfigMock);
 
-        return $facade;
+        return $this->tester->getFacade()
+            ->setFactory($oauthBusinessFactory);
     }
 
     /**

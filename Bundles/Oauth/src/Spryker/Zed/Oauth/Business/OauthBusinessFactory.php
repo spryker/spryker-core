@@ -235,7 +235,6 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function createOauthRefreshTokenCleaner(): OauthRefreshTokenCleanerInterface
     {
         return new OauthRefreshTokenCleaner(
-            $this->getRepository(),
             $this->getEntityManager(),
             $this->getConfig()
         );

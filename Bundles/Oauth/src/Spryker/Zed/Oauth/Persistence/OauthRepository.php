@@ -135,23 +135,6 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     }
 
     /**
-     * @param string $expiredAt
-     *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
-     */
-    public function getExpiredRefreshTokens(string $expiredAt): OauthRefreshTokenCollectionTransfer
-    {
-        $authRefreshTokensCollection = $this->getFactory()
-            ->createRefreshTokenQuery()
-            ->filterByExpiresAt($expiredAt, Criteria::LESS_EQUAL)
-            ->find();
-
-        return $this->getFactory()
-            ->createOauthRefreshTokenMapper()
-            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($authRefreshTokensCollection);
-    }
-
-    /**
      * @param \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
