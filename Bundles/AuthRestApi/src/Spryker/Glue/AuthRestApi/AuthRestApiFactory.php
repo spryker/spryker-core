@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\AuthRestApi;
 
-use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceInterface;
@@ -63,7 +62,6 @@ class AuthRestApiFactory extends AbstractFactory
     {
         return new RefreshTokensRevoker(
             $this->getOauthClient(),
-            $this->getCustomerClient(),
             $this->getResourceBuilder()
         );
     }
@@ -112,14 +110,6 @@ class AuthRestApiFactory extends AbstractFactory
     public function getOauthClient(): AuthRestApiToOauthClientInterface
     {
         return $this->getProvidedDependency(AuthRestApiDependencyProvider::CLIENT_OAUTH);
-    }
-
-    /**
-     * @return \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface
-     */
-    public function getCustomerClient(): AuthRestApiToCustomerClientInterface
-    {
-        return $this->getProvidedDependency(AuthRestApiDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**

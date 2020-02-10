@@ -8,7 +8,6 @@
 namespace Spryker\Glue\AuthRestApi\Processor\RefreshTokens;
 
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
-use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -23,27 +22,19 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
     protected $oauthClient;
 
     /**
-     * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface
-     */
-    protected $customerClient;
-
-    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
      * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
-     * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         AuthRestApiToOauthClientInterface $oauthClient,
-        AuthRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->oauthClient = $oauthClient;
-        $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
