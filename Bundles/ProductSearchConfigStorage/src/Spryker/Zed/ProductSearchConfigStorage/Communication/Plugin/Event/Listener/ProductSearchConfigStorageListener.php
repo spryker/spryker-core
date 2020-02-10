@@ -38,7 +38,8 @@ class ProductSearchConfigStorageListener extends AbstractPlugin implements Event
         $this->preventTransaction();
         $productSearchAttributesCount = SpyProductSearchAttributeQuery::create()->count();
 
-        if (($eventName === ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE || $eventName === ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH)
+        if (
+            ($eventName === ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE || $eventName === ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH)
             && $productSearchAttributesCount === 0
         ) {
             $this->getFacade()->unpublish();

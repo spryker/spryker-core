@@ -49,7 +49,8 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     {
         $productOfferResponseTransfer = $this->createProductOfferResponseTransfer();
 
-        if (!$productOfferTransfer->getIdProductOffer()
+        if (
+            !$productOfferTransfer->getIdProductOffer()
             || !$this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer()))
         ) {
             return $this->addProductOfferError($productOfferResponseTransfer, static::ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND);

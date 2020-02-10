@@ -83,6 +83,7 @@ class UrlCollector extends AbstractStoragePropelCollector
             $resourceArguments = $this->findResourceArguments($url);
             if (isset($localeUrls[$resourceArguments[static::RESOURCE_TYPE]])) {
                 $localeUrls[$resourceArguments[static::RESOURCE_TYPE]][] = $resourceArguments[static::RESOURCE_VALUE];
+
                 continue;
             }
 
@@ -368,8 +369,10 @@ class UrlCollector extends AbstractStoragePropelCollector
         /** @var string[] $oldUrl */
         $oldUrl = $storeReader->read($touchKeyPointer);
 
-        if (isset($oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY])
-            && !empty($oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY])) {
+        if (
+            isset($oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY])
+            && !empty($oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY])
+        ) {
             $storeWriter->delete([
                 $oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY] => true,
             ]);

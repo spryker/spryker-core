@@ -277,8 +277,10 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected function getBundleOptions(ItemTransfer $itemTransfer, ArrayObject $items)
     {
         foreach ($items as $cartItemTransfer) {
-            if ($itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
-                && count($cartItemTransfer->getProductOptions()) > 0) {
+            if (
+                $itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
+                && count($cartItemTransfer->getProductOptions()) > 0
+            ) {
                 return (array)$cartItemTransfer->getProductOptions();
             }
         }

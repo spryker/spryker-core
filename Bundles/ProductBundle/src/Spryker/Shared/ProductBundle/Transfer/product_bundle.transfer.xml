@@ -181,4 +181,7 @@
     <transfer name="ProductAbstract">
     </transfer>
 
+    <transfer name="ProductImage">
+    </transfer>
+
 </transfers>
