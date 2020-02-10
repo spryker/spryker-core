@@ -143,13 +143,13 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeConcreteRefreshToken($refreshToken);
+        return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
     }
 
     /**
@@ -157,13 +157,13 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeRefreshTokensByCustomer($refreshToken);
+        return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
     }
 
     /**

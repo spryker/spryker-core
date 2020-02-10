@@ -8,7 +8,6 @@
 namespace Spryker\Glue\AuthRestApi\Processor\RefreshTokens;
 
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
-use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -23,27 +22,19 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
     protected $oauthClient;
 
     /**
-     * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface
-     */
-    protected $customerClient;
-
-    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
      * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
-     * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         AuthRestApiToOauthClientInterface $oauthClient,
-        AuthRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->oauthClient = $oauthClient;
-        $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -53,19 +44,15 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function revokeConcreteRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface
+    public function revokeRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
-
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
             ->setRefreshToken($refreshTokenIdentifier)
-            ->setCustomer($customer);
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
-        $this->oauthClient->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
+        $this->oauthClient->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
 
-        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        return $this->restResourceBuilder->createRestResponse()->setStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -73,17 +60,13 @@ class RefreshTokensRevoker implements RefreshTokensRevokerInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function revokeAllCurrentCustomerRefreshTokens(RestRequestInterface $restRequest): RestResponseInterface
+    public function revokeCustomerRefreshTokens(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $customer = $this->customerClient->getCustomerById($restRequest->getRestUser()->getSurrogateIdentifier());
-
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestTransfer())
-            ->setCustomer($customer);
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
-        $this->oauthClient->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
+        $this->oauthClient->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
 
-        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        return $this->restResourceBuilder->createRestResponse()->setStatus(Response::HTTP_NO_CONTENT);
     }
 }

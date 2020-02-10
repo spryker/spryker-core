@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
-use Generated\Shared\Transfer\OauthAccessTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
@@ -53,13 +52,6 @@ interface OauthRepositoryInterface
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
     public function findRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthAccessTokenCollectionTransfer
-     */
-    public function findAccessTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthAccessTokenCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer

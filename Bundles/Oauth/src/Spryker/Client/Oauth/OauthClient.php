@@ -53,13 +53,13 @@ class OauthClient extends AbstractClient implements OauthClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        return $this->getFactory()->createOauthStub()->revokeConcreteRefreshToken($refreshToken);
+        return $this->getFactory()->createOauthStub()->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
     }
 
     /**
@@ -67,12 +67,12 @@ class OauthClient extends AbstractClient implements OauthClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        return $this->getFactory()->createOauthStub()->revokeRefreshTokensByCustomer($refreshToken);
+        return $this->getFactory()->createOauthStub()->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
     }
 }

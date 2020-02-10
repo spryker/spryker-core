@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\AuthRestApi;
 
-use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToCustomerClientBridge;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientBridge;
 use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceBridge;
 use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceBridge;
@@ -20,7 +19,6 @@ use Spryker\Glue\Kernel\Container;
 class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -36,7 +34,6 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
         $container = $this->addOauthClient($container);
-        $container = $this->addCustomerClient($container);
         $container = $this->addOauthService($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addRestUserExpanderPlugins($container);
@@ -54,20 +51,6 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_OAUTH] = function (Container $container) {
             return new AuthRestApiToOauthClientBridge($container->getLocator()->oauth()->client());
         };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCustomerClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
-            return new AuthRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
-        });
 
         return $container;
     }

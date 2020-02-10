@@ -18,12 +18,12 @@ interface RefreshTokensRevokerInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function revokeConcreteRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface;
+    public function revokeRefreshToken(string $refreshTokenIdentifier, RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function revokeAllCurrentCustomerRefreshTokens(RestRequestInterface $restRequest): RestResponseInterface;
+    public function revokeCustomerRefreshTokens(RestRequestInterface $restRequest): RestResponseInterface;
 }

@@ -57,16 +57,16 @@ class OauthStub implements OauthStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\Oauth\Communication\Controller\GatewayController::revokeConcreteRefreshTokenAction()
+     * @uses \Spryker\Zed\Oauth\Communication\Controller\GatewayController::revokeRefreshTokenAction()
      *
-     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeConcreteRefreshToken(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer $revokeRefreshTokenRequestTransfer */
-        $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-concrete-refresh-token', $refreshToken);
+        $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-refresh-token', $revokeRefreshTokenRequestTransfer);
 
         return $revokeRefreshTokenRequestTransfer;
     }
@@ -74,14 +74,14 @@ class OauthStub implements OauthStubInterface
     /**
      * @uses \Spryker\Zed\Oauth\Communication\Controller\GatewayController::revokeRefreshTokensAction()
      *
-     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $refreshToken
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensByCustomer(RevokeRefreshTokenRequestTransfer $refreshToken): RevokeRefreshTokenResponseTransfer
+    public function revokeRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer $revokeRefreshTokenRequestTransfer */
-        $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-refresh-tokens', $refreshToken);
+        $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-refresh-tokens', $revokeRefreshTokenRequestTransfer);
 
         return $revokeRefreshTokenRequestTransfer;
     }

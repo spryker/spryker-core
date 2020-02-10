@@ -7,4 +7,7 @@
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
     </transfer>
 
+    <transfer name="Payment">
+    </transfer>
+
 </transfers>

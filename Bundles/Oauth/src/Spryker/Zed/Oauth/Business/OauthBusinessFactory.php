@@ -223,9 +223,9 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function createOauthRefreshTokenRevoker(): OauthRefreshTokenRevokerInterface
     {
         return new OauthRefreshTokenRevoker(
+            $this->createRepositoryBuilder()->createRefreshTokenRepository(),
             $this->getRepository(),
-            $this->getEntityManager(),
-            $this->getConfig()->getEncryptionKey()
+            $this->getConfig()
         );
     }
 

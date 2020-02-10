@@ -84,9 +84,9 @@ class RefreshTokensResourceController extends AbstractController
         $refreshTokenIdentifier = $restRequest->getResource()->getId();
 
         if ($refreshTokenIdentifier !== null) {
-            return $this->getFactory()->createRefreshTokenRevoker()->revokeConcreteRefreshToken($refreshTokenIdentifier, $restRequest);
+            return $this->getFactory()->createRefreshTokenRevoker()->revokeRefreshToken($refreshTokenIdentifier, $restRequest);
         }
 
-        return $this->getFactory()->createRefreshTokenRevoker()->revokeAllCurrentCustomerRefreshTokens($restRequest);
+        return $this->getFactory()->createRefreshTokenRevoker()->revokeCustomerRefreshTokens($restRequest);
     }
 }

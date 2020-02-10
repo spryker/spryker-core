@@ -50,25 +50,11 @@ interface OauthEntityManagerInterface
     public function deleteAccessTokenByIdentifier(string $identifier): void;
 
     /**
-     * @param array $identifierList
-     *
-     * @return void
-     */
-    public function deleteAccessTokenByIdentifierList(array $identifierList): void;
-
-    /**
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshToken
      *
      * @return void
      */
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void;
-
-    /**
-     * @param array $identifierList
-     *
-     * @return void
-     */
-    public function revokeRefreshTokenByIdentifierList(array $identifierList): void;
 
     /**
      * @param array $identifierList

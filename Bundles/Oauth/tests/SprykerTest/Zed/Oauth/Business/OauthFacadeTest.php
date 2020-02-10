@@ -235,22 +235,20 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRevokeConcreteRefreshTokenShouldSuccessWithValidToken(): void
+    public function testRevokeRefreshTokenShouldSuccessWithValidToken(): void
     {
         // Arrange
-        $this->createTestClient();
         $this->setUserProviderPluginMock();
-        $this->setGrantTypeConfigurationProviderPluginMock();
-        $oauthRequestTransfer = $this->createOauthRequestTransfer();
-        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+        $customerTransfer = $this->tester->createCustomerTransfer();
+        $oauthResponseTransfer = $this->tester->haveAuthorizationToGlue($customerTransfer);
 
         $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
-            $oauthResponseTransfer->getRefreshToken(),
-            $this->customerTransfer->setCustomerReference($oauthResponseTransfer->getCustomerReference())
+            $oauthResponseTransfer->getCustomerReference(),
+            $oauthResponseTransfer->getRefreshToken()
         );
 
         // Act
-        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
+        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
 
         // Assert
         $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());
@@ -259,13 +257,16 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRevokeConcreteRefreshTokenShouldFailedWithInvalidToken(): void
+    public function testRevokeRefreshTokenShouldFailedWithInvalidToken(): void
     {
         // Arrange
-        $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer('test');
+        $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
+            $this->tester->haveCustomer()->getCustomerReference(),
+            'test'
+        );
 
         // Act
-        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeConcreteRefreshToken($revokeRefreshTokenRequestTransfer);
+        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
 
         // Assert
         $this->assertFalse($revokerRefreshTokenResponseTransfer->getIsSuccessful());
@@ -274,13 +275,15 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRevokeRefreshTokensByCustomerShouldSuccessWithValidCustomer(): void
+    public function testRevokeRefreshTokensShouldSuccessWithValidCustomer(): void
     {
         // Arrange
-        $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer();
+        $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
+            $this->tester->haveCustomer()->getCustomerReference()
+        );
 
         // Act
-        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshTokensByCustomer($revokeRefreshTokenRequestTransfer);
+        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
 
         // Assert
         $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());
