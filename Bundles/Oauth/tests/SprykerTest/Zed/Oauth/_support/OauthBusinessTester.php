@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Oauth;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\RevokeRefreshTokenRequestBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 
 /**
@@ -30,20 +32,31 @@ class OauthBusinessTester extends Actor
 {
     use _generated\OauthBusinessTesterActions;
 
+    protected const TEST_PASSWORD = 'Test password';
+
     /**
+     * @param string $customerReference
      * @param string|null $refreshToken
-     * @param string|null $customerReference
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer
      */
-    public function createRevokeRefreshTokenRequestTransfer(?string $refreshToken = null, ?string $customerReference = null): RevokeRefreshTokenRequestTransfer
+    public function createRevokeRefreshTokenRequestTransfer(string $customerReference, ?string $refreshToken = null): RevokeRefreshTokenRequestTransfer
     {
-        $revokeRefreshTokenRequestTransfer = new RevokeRefreshTokenRequestTransfer();
-        if ($refreshToken) {
-            $revokeRefreshTokenRequestTransfer->setRefreshToken($refreshToken);
-        }
-        $revokeRefreshTokenRequestTransfer->setCustomerReference($customerReference ?? $this->haveCustomer()->getCustomerReference());
+        $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestBuilder())
+            ->seed(['refreshToken' => $refreshToken, 'customerReference' => $customerReference])
+            ->build();
 
         return $revokeRefreshTokenRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function createCustomerTransfer(): CustomerTransfer
+    {
+        return $this->haveCustomer([
+            CustomerTransfer::PASSWORD => static::TEST_PASSWORD,
+            CustomerTransfer::NEW_PASSWORD => static::TEST_PASSWORD,
+        ]);
     }
 }

@@ -109,9 +109,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->findRefreshTokens($oauthTokenCriteriaFilterTransfer)
             ->getOauthRefreshTokens();
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers): void {
-            $this->executeRevokeRefreshTokensTransaction($oauthRefreshTokenTransfers);
-        });
+        $this->executeRevokeRefreshTokensTransaction($oauthRefreshTokenTransfers);
 
         return (new RevokeRefreshTokenResponseTransfer())->setIsSuccessful(true);
     }
@@ -123,9 +121,11 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      */
     protected function executeRevokeRefreshTokensTransaction(ArrayObject $oauthRefreshTokenTransfers): void
     {
-        foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
-            $this->refreshTokenRepository->revokeRefreshToken($oauthRefreshTokenTransfer->getIdentifier());
-        }
+        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers): void {
+            foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
+                $this->refreshTokenRepository->revokeRefreshToken($oauthRefreshTokenTransfer->getIdentifier());
+            }
+        });
     }
 
     /**

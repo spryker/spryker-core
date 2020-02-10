@@ -57,6 +57,7 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
      */
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void
     {
+        $oauthRefreshToken->requireIdentifier();
         $this->getFactory()
             ->createRefreshTokenQuery()
             ->filterByIdentifier($oauthRefreshToken->getIdentifier())

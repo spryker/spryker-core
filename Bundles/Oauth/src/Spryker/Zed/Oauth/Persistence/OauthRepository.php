@@ -87,6 +87,8 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
      */
     public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
     {
+        $oauthTokenCriteriaFilterTransfer->requireIdentifier();
+
         $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
         $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
 

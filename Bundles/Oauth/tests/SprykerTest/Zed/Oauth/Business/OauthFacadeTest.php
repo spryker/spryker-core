@@ -226,15 +226,13 @@ class OauthFacadeTest extends Unit
     public function testRevokeRefreshTokenShouldSuccessWithValidToken(): void
     {
         // Arrange
-        $this->createTestClient();
         $this->setUserProviderPluginMock();
-        $this->setGrantTypeConfigurationProviderPluginMock();
-        $oauthRequestTransfer = $this->createOauthRequestTransfer();
-        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+        $customerTransfer = $this->tester->createCustomerTransfer();
+        $oauthResponseTransfer = $this->tester->haveAuthorizationToGlue($customerTransfer);
 
         $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
-            $oauthResponseTransfer->getRefreshToken(),
-            $oauthResponseTransfer->getCustomerReference()
+            $oauthResponseTransfer->getCustomerReference(),
+            $oauthResponseTransfer->getRefreshToken()
         );
 
         // Act
@@ -250,7 +248,10 @@ class OauthFacadeTest extends Unit
     public function testRevokeRefreshTokenShouldFailedWithInvalidToken(): void
     {
         // Arrange
-        $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer('test');
+        $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
+            $this->tester->haveCustomer()->getCustomerReference(),
+            'test'
+        );
 
         // Act
         $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
@@ -265,7 +266,9 @@ class OauthFacadeTest extends Unit
     public function testRevokeRefreshTokensShouldSuccessWithValidCustomer(): void
     {
         // Arrange
-        $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer();
+        $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
+            $this->tester->haveCustomer()->getCustomerReference()
+        );
 
         // Act
         $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
