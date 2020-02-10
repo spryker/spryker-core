@@ -14,7 +14,7 @@ interface ProductOfferSalesFacadeInterface
 {
     /**
      * Specification:
-     * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer::getProductOfferReference() if exists.
+     * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer::getProductOfferReference().
      *
      * @api
      *

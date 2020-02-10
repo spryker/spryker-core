@@ -26,6 +26,7 @@ class MerchantUpdateForm extends MerchantCreateForm
                 'attr' => [
                     'readonly' => 'readonly',
                 ],
+                'disabled' => true
             ]);
 
         return $this;

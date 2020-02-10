@@ -32,6 +32,6 @@ class ProductOfferSalesFacade extends AbstractFacade implements ProductOfferSale
     ): SpySalesOrderItemEntityTransfer {
         return $this->getFactory()
             ->createOrderItemExpander()
-            ->expandOrderItemWithProductOffer($salesOrderItemEntityTransfer, $itemTransfer);
+            ->expandWithProductOffer($salesOrderItemEntityTransfer, $itemTransfer);
     }
 }
