@@ -103,8 +103,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $merchantUserTransfer->requireMerchant()->getMerchant()->requireEmail();
         $merchantUserTransfer->requireUser()->getUser()->requireIdUser();
 
-        if (
-            !$this->merchantUserConfig->canUserHaveManyMerchants()
+        if (!$this->merchantUserConfig->canUserHaveManyMerchants()
             && $this->hasUserAnotherMerchant($merchantUserTransfer->getUser(), $merchantUserTransfer->getMerchant())
         ) {
             $merchantUserResponseTransfer = $this->createMerchantUserResponseTransfer($merchantUserTransfer);
