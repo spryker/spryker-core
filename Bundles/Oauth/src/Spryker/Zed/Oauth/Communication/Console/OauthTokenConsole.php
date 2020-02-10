@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Communication\Console;
 
+use Exception;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class OauthTokenConsole extends Console
 {
     public const COMMAND_NAME = 'oauth:refresh-token:clean';
-    public const DESCRIPTION = 'Clean up old refresh tokens in the database.';
+    public const DESCRIPTION = 'Clean up expired refresh tokens in the database.';
 
     /**
      * @return void
@@ -40,6 +41,21 @@ class OauthTokenConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->deleteExpiredRefreshTokens();
+        $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
+        $output->writeln('<fg=yellow>Cleaning up expired refresh tokens in the database<fg=yellow>');
+        $output->writeln('');
+
+        try {
+            $deleteCount = $this->getFacade()->deleteExpiredRefreshTokens();
+        } catch (Exception $exception) {
+            $this->error('Error happened during deleting expired refresh tokens.');
+            $this->error($exception->getMessage());
+
+            return static::CODE_ERROR;
+        }
+
+        $output->writeln("<fg=white>Removed $deleteCount expired refresh tokens </fg=white>");
+        $output->writeln('');
+        $output->writeln('<fg=green>Finished. All Done.</fg=green>');
     }
 }

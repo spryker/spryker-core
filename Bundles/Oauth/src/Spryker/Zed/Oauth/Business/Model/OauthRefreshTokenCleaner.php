@@ -39,19 +39,19 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
     }
 
     /**
-     * @return void
+     * @return int|null
      */
-    public function deleteExpiredRefreshTokens(): void
+    public function deleteExpiredRefreshTokens(): ?int
     {
         $refreshTokenRetentionInterval = $this->oauthConfig->getRefreshTokenRetentionInterval();
         if ($refreshTokenRetentionInterval === null) {
-            return;
+            return null;
         }
 
         $expiredAt = (new DateTime())
             ->add($refreshTokenRetentionInterval)
             ->format('Y-m-d H:i:s');
 
-        $this->oauthEntityManager->deleteExpiredRefreshTokens($expiredAt);
+        return $this->oauthEntityManager->deleteExpiredRefreshTokens($expiredAt);
     }
 }

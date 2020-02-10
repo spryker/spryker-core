@@ -111,11 +111,11 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
     /**
      * @param string $expiresAt
      *
-     * @return void
+     * @return int
      */
-    public function deleteExpiredRefreshTokens(string $expiresAt): void
+    public function deleteExpiredRefreshTokens(string $expiresAt): int
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createRefreshTokenQuery()
             ->filterByExpiresAt($expiresAt, Criteria::LESS_EQUAL)
             ->delete();

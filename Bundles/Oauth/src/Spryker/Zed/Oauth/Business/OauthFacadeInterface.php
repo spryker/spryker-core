@@ -151,7 +151,7 @@ interface OauthFacadeInterface
      *
      * @api
      *
-     * @return void
+     * @return int|null
      */
-    public function deleteExpiredRefreshTokens(): void;
+    public function deleteExpiredRefreshTokens(): ?int;
 }

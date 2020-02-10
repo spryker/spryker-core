@@ -59,7 +59,7 @@ interface OauthEntityManagerInterface
     /**
      * @param string $expiresAt
      *
-     * @return void
+     * @return int
      */
-    public function deleteExpiredRefreshTokens(string $expiresAt): void;
+    public function deleteExpiredRefreshTokens(string $expiresAt): int;
 }

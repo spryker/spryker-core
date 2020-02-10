@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oauth\Business\Model;
 interface OauthRefreshTokenCleanerInterface
 {
     /**
-     * @return void
+     * @return int|null
      */
-    public function deleteExpiredRefreshTokens(): void;
+    public function deleteExpiredRefreshTokens(): ?int;
 }
