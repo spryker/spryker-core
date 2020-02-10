@@ -69,6 +69,7 @@ class MerchantRelationshipBusinessTester extends Actor
             foreach ($assigneeCompanyBusinessUnitKeys as $businessUnitKey) {
                 if ($companyBusinessUnitOwnerKey === $businessUnitKey) {
                     $assigneeCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitOwner);
+
                     continue;
                 }
 
