@@ -84,15 +84,15 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     {
         $productOfferStorageCollection = new ProductOfferStorageCollectionTransfer();
 
-        $concreteProductOffers = $this->getProductOfferReferences($productOfferStorageCriteriaTransfer->getSku());
+        $concreteProductOfferReferences = $this->getProductOfferReferences($productOfferStorageCriteriaTransfer->getSku());
 
-        if ($concreteProductOffers) {
-            foreach ($concreteProductOffers as $key => $concreteProductOffer) {
+        if ($concreteProductOfferReferences) {
+            foreach ($concreteProductOfferReferences as $key => $concreteProductOfferReference) {
                 if ($key === '_timestamp') {
                     continue;
                 }
 
-                $productOfferStorageTransfer = $this->findProductOfferStorageByReference($concreteProductOffer);
+                $productOfferStorageTransfer = $this->findProductOfferStorageByReference($concreteProductOfferReference);
 
                 if ($productOfferStorageTransfer === null) {
                     continue;

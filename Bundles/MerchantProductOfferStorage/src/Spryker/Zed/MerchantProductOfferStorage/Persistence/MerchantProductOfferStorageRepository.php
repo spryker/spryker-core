@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -37,6 +38,31 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
                 ->joinWithSpyStore()
             ->endUse();
 
+        $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilterTransfer);
+
+        $productOfferEntities = $productOfferQuery->find();
+
+        $productOfferStorageMapper = $this->getFactory()->createProductOfferStorageMapper();
+        foreach ($productOfferEntities as $productOfferEntity) {
+            $productOfferTransfer = $productOfferStorageMapper->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
+
+            $productOfferTransfer->setStores($this->getStoresByProductOfferEntity($productOfferEntity));
+            $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
+        }
+
+        return $productOfferCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function applyFilters(
+        SpyProductOfferQuery $productOfferQuery,
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): SpyProductOfferQuery {
         if ($productOfferCriteriaFilterTransfer->getProductOfferReferences()) {
             $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilterTransfer->getProductOfferReferences());
         }
@@ -58,17 +84,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
             $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, true);
         }
 
-        $productOfferEntities = $productOfferQuery->find();
-
-        $productOfferStorageMapper = $this->getFactory()->createProductOfferStorageMapper();
-        foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = $productOfferStorageMapper->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
-
-            $productOfferTransfer->setStores($this->getStoresByProductOfferEntity($productOfferEntity));
-            $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
-        }
-
-        return $productOfferCollectionTransfer;
+        return $productOfferQuery;
     }
 
     /**
