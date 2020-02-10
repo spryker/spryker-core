@@ -27,6 +27,8 @@ class MerchantSearchStub implements MerchantSearchStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\MerchantSearch\Communication\Controller\GatewayController::getActiveMerchantsAction()
+     *
      * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer

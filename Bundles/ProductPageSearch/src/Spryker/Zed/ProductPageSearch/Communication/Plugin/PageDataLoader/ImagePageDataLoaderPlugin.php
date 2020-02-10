@@ -122,7 +122,9 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
                 continue;
             }
 
-            $imageSets[$productAbstractId][$localeId] = $defaultProductImageSets[$productAbstractId];
+            if (isset($defaultProductImageSets[$productAbstractId])) {
+                $imageSets[$productAbstractId][$localeId] = $defaultProductImageSets[$productAbstractId];
+            }
         }
 
         return $imageSets;

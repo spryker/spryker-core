@@ -14,4 +14,8 @@
         <property name="merchantProfile" type="MerchantProfile"/>
     </transfer>
 
+    <transfer name="MerchantProfile">
+        <property name="isActive" type="bool"/>
+    </transfer>
+
 </transfers>

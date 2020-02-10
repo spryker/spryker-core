@@ -80,7 +80,8 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             $idLocale = $productAbstractLocalizedEntity->getFkLocale();
             $idAbstractAttributes = $productAbstractLocalizedEntity->getIdAbstractAttributes();
 
-            if (!isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale]) &&
+            if (
+                !isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale]) &&
                 !isset($defaultProductAbstractImageSetsBulk[$idProductAbstract])
             ) {
                 continue;

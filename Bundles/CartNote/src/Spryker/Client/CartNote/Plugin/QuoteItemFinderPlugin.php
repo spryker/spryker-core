@@ -29,8 +29,10 @@ class QuoteItemFinderPlugin extends AbstractPlugin implements QuoteItemFinderPlu
     {
         $quoteTransferCollection = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
+            if (
+                ($itemTransfer->getSku() === $sku && $groupKey === null) ||
+                $itemTransfer->getGroupKey() === $groupKey
+            ) {
                 $quoteTransferCollection[] = $itemTransfer;
             }
         }

@@ -9,23 +9,11 @@ namespace Spryker\Client\MerchantSearch;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface;
-use Spryker\Client\MerchantSearch\MerchantReader\MerchantReader;
-use Spryker\Client\MerchantSearch\MerchantReader\MerchantReaderInterface;
 use Spryker\Client\MerchantSearch\Zed\MerchantSearchStub;
 use Spryker\Client\MerchantSearch\Zed\MerchantSearchStubInterface;
 
 class MerchantSearchFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Client\MerchantSearch\MerchantReader\MerchantReaderInterface
-     */
-    public function createMerchantReader(): MerchantReaderInterface
-    {
-        return new MerchantReader(
-            $this->createMerchantSearchStub()
-        );
-    }
-
     /**
      * @return \Spryker\Client\MerchantSearch\Zed\MerchantSearchStubInterface
      */
