@@ -44,6 +44,7 @@
         <property name="itemsReference" type="string"/>
         <property name="itemsType" type="string"/>
         <property name="isNullable" type="bool"/>
+        <property name="oneOf" type="string[]"/>
     </transfer>
 
     <transfer name="SecurityScheme">
@@ -95,6 +96,7 @@
         <property name="type" type="string"/>
         <property name="schemaReference" type="string"/>
         <property name="itemsSchemaReference" type="string"/>
+        <property name="oneOf" type="string[]"/>
         <property name="itemsType" type="string"/>
         <property name="isNullable" type="bool"/>
     </transfer>

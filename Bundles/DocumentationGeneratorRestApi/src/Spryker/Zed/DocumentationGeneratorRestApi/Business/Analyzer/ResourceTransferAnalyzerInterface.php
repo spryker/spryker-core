@@ -87,4 +87,11 @@ interface ResourceTransferAnalyzerInterface
      * @return string
      */
     public function createResourceRelationshipSchemaNameFromTransferClassName(string $transferClassName): string;
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    public function createIncludedSchemaNameFromTransferClassName(string $transferClassName): string;
 }

@@ -195,6 +195,26 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     }
 
     /**
+     * @param string $resourceRelationship
+     * @param string $SCHEMA_NAME_RELATIONSHIPS_DATA
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    public function createOneOfArrayTransfer(string $resourceRelationship, string $SCHEMA_NAME_RELATIONSHIPS_DATA): SchemaPropertyTransfer
+    {
+        $schema = new SchemaPropertyTransfer();
+        $schema->setName($SCHEMA_NAME_RELATIONSHIPS_DATA)
+            ->setType(static::VALUE_TYPE_ARRAY);
+
+        // TODO: replace this with the real schema.
+        $schema->addOneOf(
+            sprintf(static::PATTERN_SCHEMA_REFERENCE, $resourceRelationship)
+        );
+
+        return $schema;
+    }
+
+    /**
      * @param string $metadataKey
      * @param array $metadataValue
      *
