@@ -40,6 +40,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 
             if (!isset($calculatedOrderItems[$key])) {
                 $calculatedOrderItems[$key] = clone $itemTransfer;
+
                 continue;
             }
 
@@ -92,6 +93,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 
             if (!isset($uniqueItemTransfers[$key])) {
                 $uniqueItemTransfers[$key] = clone $itemTransfer;
+
                 continue;
             }
 

@@ -259,6 +259,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                         static::KEY_ID => $this->getResourceIdFromResourceType($parentPlugin->getResourceType()),
                         static::KEY_PARENT => $this->getParentResource($parentPlugin, $pluginsStack),
                     ];
+
                     break;
                 }
             }

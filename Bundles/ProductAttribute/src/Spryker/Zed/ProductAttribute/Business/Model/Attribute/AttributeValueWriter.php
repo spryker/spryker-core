@@ -47,6 +47,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
             foreach ($productManagementAttributeTransfer->getValues() as $attributeValueTransfer) {
                 if (isset($existingAttributeValues[$attributeValueTransfer->getValue()])) {
                     unset($existingAttributeValues[$attributeValueTransfer->getValue()]);
+
                     continue;
                 }
 

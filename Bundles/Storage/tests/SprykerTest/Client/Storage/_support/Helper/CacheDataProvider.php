@@ -54,62 +54,63 @@ class CacheDataProvider
                     'kv:key2' => StorageClient::KEY_NEW,
                     'kv:key3' => StorageClient::KEY_NEW,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_USED_KEYS:
                 $cacheData = [
                     'kv:key1' => StorageClient::KEY_USED,
                     'kv:key2' => StorageClient::KEY_USED,
                     'kv:key3' => StorageClient::KEY_USED,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_UNUSED_KEYS:
                 $cacheData = [
                     'kv:key1' => StorageClient::KEY_INIT,
                     'kv:key2' => StorageClient::KEY_INIT,
                     'kv:key3' => StorageClient::KEY_INIT,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_NEW_AND_USED_KEYS:
                 $cacheData = [
                     'kv:key1' => StorageClient::KEY_NEW,
                     'kv:key2' => StorageClient::KEY_USED,
                     'kv:key3' => StorageClient::KEY_USED,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS:
                 $cacheData = [
                     'kv:key1' => StorageClient::KEY_NEW,
                     'kv:key2' => StorageClient::KEY_USED,
                     'kv:key3' => StorageClient::KEY_INIT,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_NO_KEYS:
                 $cacheData = [];
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS:
                 $cacheData = self::generateOverLimitCacheInput(self::TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS);
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS:
                 $cacheData = self::generateOverLimitCacheInput(self::TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS);
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS:
                 $cacheData = self::generateOverLimitCacheInput(self::TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS);
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS:
                 $cacheData = self::generateOverLimitCacheInput(self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS);
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS:
                 $cacheData = self::generateOverLimitCacheInput(self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS);
+
                 break;
         }
 
@@ -132,37 +133,38 @@ class CacheDataProvider
                     'kv:key2' => StorageClient::KEY_NEW,
                     'kv:key3' => StorageClient::KEY_NEW,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_USED_KEYS:
                 $expectedOutput = [
                     'kv:key1' => StorageClient::KEY_USED,
                     'kv:key2' => StorageClient::KEY_USED,
                     'kv:key3' => StorageClient::KEY_USED,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_UNUSED_KEYS:
                 $expectedOutput = [];
-                break;
 
+                break;
             case self::TEST_TYPE_NEW_AND_USED_KEYS:
                 $expectedOutput = [
                     'kv:key1' => StorageClient::KEY_NEW,
                     'kv:key2' => StorageClient::KEY_USED,
                     'kv:key3' => StorageClient::KEY_USED,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS:
                 $expectedOutput = [
                     'kv:key1' => StorageClient::KEY_NEW,
                     'kv:key2' => StorageClient::KEY_USED,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_NO_KEYS:
                 $expectedOutput = [];
+
                 break;
         }
 
@@ -185,62 +187,63 @@ class CacheDataProvider
                     'kv:key2' => StorageClient::KEY_NEW,
                     'kv:key3' => StorageClient::KEY_NEW,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_USED_KEYS:
                 $expectedOutput = [
                     'kv:key1' => StorageClient::KEY_USED,
                     'kv:key2' => StorageClient::KEY_USED,
                     'kv:key3' => StorageClient::KEY_USED,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_UNUSED_KEYS:
                 $expectedOutput = [
                     'kv:key1' => StorageClient::KEY_INIT,
                     'kv:key2' => StorageClient::KEY_INIT,
                     'kv:key3' => StorageClient::KEY_INIT,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_NEW_AND_USED_KEYS:
                 $expectedOutput = [
                     'kv:key1' => StorageClient::KEY_NEW,
                     'kv:key2' => StorageClient::KEY_USED,
                     'kv:key3' => StorageClient::KEY_USED,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS:
                 $expectedOutput = [
                     'kv:key1' => StorageClient::KEY_NEW,
                     'kv:key2' => StorageClient::KEY_USED,
                     'kv:key3' => StorageClient::KEY_INIT,
                 ];
-                break;
 
+                break;
             case self::TEST_TYPE_NO_KEYS:
                 $expectedOutput = [];
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS:
                 $expectedOutput = self::generateOverLimitCacheOutput(self::TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS);
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS:
                 $expectedOutput = self::generateOverLimitCacheOutput(self::TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS);
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS:
                 $expectedOutput = self::generateOverLimitCacheOutput(self::TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS);
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS:
                 $expectedOutput = self::generateOverLimitCacheOutput(self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS);
-                break;
 
+                break;
             case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS:
                 $expectedOutput = self::generateOverLimitCacheOutput(self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS);
+
                 break;
         }
 
@@ -263,32 +266,33 @@ class CacheDataProvider
             switch ($testType) {
                 case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS:
                     $value = StorageClient::KEY_NEW;
-                    break;
 
+                    break;
                 case self::TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS:
                     $value = StorageClient::KEY_USED;
-                    break;
 
+                    break;
                 case self::TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS:
                     $value = StorageClient::KEY_INIT;
-                    break;
 
+                    break;
                 case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS:
                     // Dividing dataset into two halves: used keys then new keys
                     $halfDataset = ceil($cacheSize / 2);
                     $value = $i < $halfDataset ? StorageClient::KEY_USED : StorageClient::KEY_NEW;
-                    break;
 
+                    break;
                 case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS:
                     // Dividing dataset into three thirds: unused keys then used keys then new keys
                     $firstThirdDataset = ceil($cacheSize / 3);
                     $secondThirdDataset = $firstThirdDataset * 2;
                     $value = $i < $firstThirdDataset ? StorageClient::KEY_INIT :
                         ($i < $secondThirdDataset ? StorageClient::KEY_USED : StorageClient::KEY_NEW);
-                    break;
 
+                    break;
                 default:
                     $value = StorageClient::KEY_NEW;
+
                     break;
             }
 
@@ -313,22 +317,22 @@ class CacheDataProvider
             switch ($testType) {
                 case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS:
                     $value = StorageClient::KEY_NEW;
-                    break;
 
+                    break;
                 case self::TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS:
                     $value = StorageClient::KEY_USED;
-                    break;
 
+                    break;
                 case self::TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS:
                     $key = 'kv:key' . ($i + self::OVER_LIMIT_SIZE + 1);
                     $value = StorageClient::KEY_INIT;
-                    break;
 
+                    break;
                 case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS:
                     $halfDataset = ceil($cacheSize / 2);
                     $value = $i < $halfDataset ? StorageClient::KEY_USED : StorageClient::KEY_NEW;
-                    break;
 
+                    break;
                 case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS:
                     $thirdDataset = ceil($cacheSize / 3);
                     if ($thirdDataset <= self::OVER_LIMIT_SIZE) {
@@ -342,10 +346,11 @@ class CacheDataProvider
                         $value = $i < $inLimitUnusedKeysSize ? StorageClient::KEY_INIT :
                             ($i < $inLimitUnusedKeysSize + $thirdDataset ? StorageClient::KEY_USED : StorageClient::KEY_NEW);
                     }
-                    break;
 
+                    break;
                 default:
                     $value = StorageClient::KEY_NEW;
+
                     break;
             }
 
