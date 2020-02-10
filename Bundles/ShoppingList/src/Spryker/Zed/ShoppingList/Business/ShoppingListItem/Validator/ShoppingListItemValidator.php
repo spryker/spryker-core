@@ -31,7 +31,7 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
     protected $shoppingListRepository;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface
      */
     protected $permissionValidator;
 
@@ -42,12 +42,12 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
 
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface $permissionValidator
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface $permissionValidator
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
-        PermissionValidatorInterface $permissionValidator,
+        ShoppingListItemPermissionValidatorInterface $permissionValidator,
         ShoppingListToProductFacadeInterface $productFacade
     ) {
         $this->shoppingListRepository = $shoppingListRepository;
@@ -59,12 +59,12 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function checkShoppingListItemParent(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
+    ): ShoppingListItemResponseTransfer {
         $shoppingListItemTransfer->requireFkShoppingList();
 
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById(
@@ -76,7 +76,7 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
                 ->addError(static::ERROR_SHOPPING_LIST_NOT_FOUND)
                 ->setIsSuccess(false);
 
-            return false;
+            return $shoppingListItemResponseTransfer;
         }
 
         if (!$this->findShoppingListItemById($shoppingListItemTransfer, $shoppingListTransfer)) {
@@ -84,7 +84,7 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
                 ->addError(static::ERROR_SHOPPING_LIST_ITEM_NOT_FOUND)
                 ->setIsSuccess(false);
 
-            return false;
+            return $shoppingListItemResponseTransfer;
         }
 
         $shoppingListTransfer->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser());
@@ -99,12 +99,12 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validateShoppingListItemQuantity(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
+    ): ShoppingListItemResponseTransfer {
         $shoppingListItemTransfer->requireQuantity();
 
         $quantity = $shoppingListItemTransfer->getQuantity();
@@ -113,22 +113,22 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
                 ->addError(static::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID)
                 ->setIsSuccess(false);
 
-            return false;
+            return $shoppingListItemResponseTransfer;
         }
 
-        return true;
+        return $shoppingListItemResponseTransfer->setIsSuccess(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validateShoppingListItemSku(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
+    ): ShoppingListItemResponseTransfer {
         $shoppingListItemTransfer->requireSku();
 
         if (!$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
@@ -136,10 +136,10 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
                 ->addError(static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND)
                 ->setIsSuccess(false);
 
-            return false;
+            return $shoppingListItemResponseTransfer;
         }
 
-        return true;
+        return $shoppingListItemResponseTransfer->setIsSuccess(true);
     }
 
     /**

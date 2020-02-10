@@ -16,32 +16,32 @@ interface ShoppingListItemValidatorInterface
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function checkShoppingListItemParent(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool;
+    ): ShoppingListItemResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validateShoppingListItemQuantity(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool;
+    ): ShoppingListItemResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validateShoppingListItemSku(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool;
+    ): ShoppingListItemResponseTransfer;
 }

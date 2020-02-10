@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 
-class PermissionValidator implements PermissionValidatorInterface
+class ShoppingListItemPermissionValidator implements ShoppingListItemPermissionValidatorInterface
 {
     use PermissionAwareTrait;
 
@@ -21,21 +21,19 @@ class PermissionValidator implements PermissionValidatorInterface
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validatePermissionForPerformingOperation(
         ShoppingListTransfer $shoppingListTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
+    ): ShoppingListItemResponseTransfer {
         if ($this->checkWritePermission($shoppingListTransfer)) {
-            return true;
+            return $shoppingListItemResponseTransfer->setIsSuccess(true);
         }
 
-        $shoppingListItemResponseTransfer
+        return $shoppingListItemResponseTransfer
             ->addError(static::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
             ->setIsSuccess(false);
-
-        return false;
     }
 
     /**

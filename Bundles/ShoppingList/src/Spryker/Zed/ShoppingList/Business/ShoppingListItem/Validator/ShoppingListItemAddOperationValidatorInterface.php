@@ -18,23 +18,23 @@ interface ShoppingListItemAddOperationValidatorInterface
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validateRequest(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool;
+    ): ShoppingListItemResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function validateBulkRequest(
         ShoppingListTransfer $shoppingListTransfer,
         ShoppingListResponseTransfer $shoppingListResponseTransfer
-    ): bool;
+    ): ShoppingListResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer

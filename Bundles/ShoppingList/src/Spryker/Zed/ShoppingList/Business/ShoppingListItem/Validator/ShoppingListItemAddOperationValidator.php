@@ -16,7 +16,6 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 
-//TODO change return of validate methods
 class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperationValidatorInterface
 {
     use PermissionAwareTrait;
@@ -45,7 +44,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     protected $messageAdder;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface
      */
     protected $permissionValidator;
 
@@ -54,14 +53,14 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface $messageAdder
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface $permissionValidator
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface $permissionValidator
      */
     public function __construct(
         ShoppingListItemValidatorInterface $shoppingListItemValidator,
         MessageAdderInterface $messageAdder,
         ShoppingListResolverInterface $shoppingListResolver,
         ShoppingListItemPluginExecutorInterface $pluginExecutor,
-        PermissionValidatorInterface $permissionValidator
+        ShoppingListItemPermissionValidatorInterface $permissionValidator
     ) {
         $this->shoppingListResolver = $shoppingListResolver;
         $this->pluginExecutor = $pluginExecutor;
@@ -92,26 +91,43 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validateRequest(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
-        return $this->validateShoppingListItemToBeAdded($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
-            && $this->resolveShoppingListItemParent($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
+    ): ShoppingListItemResponseTransfer {
+        $validatedShoppingListItemResponseTransfer = $this->validateShoppingListItemToBeAdded(
+            $shoppingListItemTransfer,
+            $shoppingListItemResponseTransfer
+        );
+        if (!$validatedShoppingListItemResponseTransfer->getIsSuccess()) {
+            return $validatedShoppingListItemResponseTransfer;
+        }
+
+        $shoppingListItemResponseTransferWithResolvedItemParent = $this->resolveShoppingListItemParent(
+            $shoppingListItemTransfer,
+            $shoppingListItemResponseTransfer
+        );
+        if (!$shoppingListItemResponseTransferWithResolvedItemParent->getIsSuccess()) {
+            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
+
+            return $shoppingListItemResponseTransferWithResolvedItemParent;
+        }
+
+        return $shoppingListItemResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function validateBulkRequest(
         ShoppingListTransfer $shoppingListTransfer,
         ShoppingListResponseTransfer $shoppingListResponseTransfer
-    ): bool {
+    ): ShoppingListResponseTransfer {
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
         }
@@ -121,90 +137,109 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
                 ->addError(static::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
                 ->setIsSuccess(false);
 
-            return false;
+            return $shoppingListResponseTransfer;
         }
 
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
-            if (!$this->validateShoppingListItemToBeAdded($shoppingListItemTransfer, $shoppingListItemResponseTransfer)) {
+            if (!$this->validateShoppingListItemToBeAdded($shoppingListItemTransfer, $shoppingListItemResponseTransfer)->getIsSuccess()) {
                 $shoppingListResponseTransfer
                     ->setErrors($shoppingListItemResponseTransfer->getErrors())
                     ->setIsSuccess(false);
 
-                return false;
+                return $shoppingListResponseTransfer;
             }
         }
 
         $shoppingListResponseTransfer->setShoppingList($shoppingListTransfer);
 
-        return true;
+        return $shoppingListResponseTransfer->setIsSuccess(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     protected function validateShoppingListItemToBeAdded(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
-        return $this->shoppingListItemValidator->validateShoppingListItemQuantity($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
-            && $this->shoppingListItemValidator->validateShoppingListItemSku($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
-            && $this->performShoppingListItemAddPreCheckPlugins($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
+    ): ShoppingListItemResponseTransfer {
+        $shoppingListItemResponseTransferWithValidatedQuantity = $this->shoppingListItemValidator
+            ->validateShoppingListItemQuantity($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
+        if (!$shoppingListItemResponseTransferWithValidatedQuantity->getIsSuccess()) {
+            return $shoppingListItemResponseTransferWithValidatedQuantity;
+        }
+
+        $shoppingListItemResponseTransferWithValidatedSku = $this->shoppingListItemValidator
+            ->validateShoppingListItemSku($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
+        if (!$shoppingListItemResponseTransferWithValidatedSku->getIsSuccess()) {
+            return $shoppingListItemResponseTransferWithValidatedSku;
+        }
+
+        $shoppingListItemResponseTransferWithPerformedItemAddPreCheckPlugins = $this->performShoppingListItemAddPreCheckPlugins(
+            $shoppingListItemTransfer,
+            $shoppingListItemResponseTransfer
+        );
+        if (!$shoppingListItemResponseTransferWithPerformedItemAddPreCheckPlugins->getIsSuccess()) {
+            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
+
+            return $shoppingListItemResponseTransferWithPerformedItemAddPreCheckPlugins;
+        }
+
+        return $shoppingListItemResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     protected function resolveShoppingListItemParent(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
+    ): ShoppingListItemResponseTransfer {
         $shoppingListTransfer = $this->resolveShoppingList(
             $this->createShoppingListTransfer($shoppingListItemTransfer)
         );
         $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
 
-        $isPermissionValid = $this->permissionValidator->validatePermissionForPerformingOperation(
-            $shoppingListTransfer,
-            $shoppingListItemResponseTransfer
-        );
-        if (!$isPermissionValid) {
+        $shoppingListItemResponseTransferWithValidatedPermission = $this->permissionValidator
+            ->validatePermissionForPerformingOperation($shoppingListTransfer, $shoppingListItemResponseTransfer);
+        if (!$shoppingListItemResponseTransferWithValidatedPermission->getIsSuccess()) {
             $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
+
+            return $shoppingListItemResponseTransferWithValidatedPermission;
         }
 
-        return $isPermissionValid;
+        return $shoppingListItemResponseTransfer->setIsSuccess(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     protected function performShoppingListItemAddPreCheckPlugins(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
+    ): ShoppingListItemResponseTransfer {
         $shoppingListPreAddItemCheckResponseTransfer = $this->pluginExecutor->executeAddShoppingListItemPreCheckPlugins($shoppingListItemTransfer);
 
         if ($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
-            return true;
+            return $shoppingListItemResponseTransfer;
         }
 
         foreach ($shoppingListPreAddItemCheckResponseTransfer->getMessages() as $messageTransfer) {
             $shoppingListItemResponseTransfer->addError($messageTransfer->getValue());
         }
 
-        $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
         $shoppingListItemResponseTransfer->setIsSuccess(false);
 
-        return false;
+        return $shoppingListItemResponseTransfer;
     }
 
     /**

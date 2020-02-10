@@ -27,19 +27,19 @@ class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDelete
     protected $shoppingListItemValidator;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface
      */
     protected $permissionValidator;
 
     /**
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface $shoppingListItemValidator
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface $messageAdder
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\PermissionValidatorInterface $permissionValidator
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface $permissionValidator
      */
     public function __construct(
         ShoppingListItemValidatorInterface $shoppingListItemValidator,
         MessageAdderInterface $messageAdder,
-        PermissionValidatorInterface $permissionValidator
+        ShoppingListItemPermissionValidatorInterface $permissionValidator
     ) {
         $this->messageAdder = $messageAdder;
         $this->shoppingListItemValidator = $shoppingListItemValidator;
@@ -65,20 +65,25 @@ class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDelete
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validateRequest(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool {
+    ): ShoppingListItemResponseTransfer {
         $shoppingListItemTransfer->requireIdShoppingListItem();
 
-        $isShoppingListItemValid = $this->shoppingListItemValidator
-            ->checkShoppingListItemParent($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
-        if (!$isShoppingListItemValid) {
+        $shoppingListItemResponseTransferWithValidatedParent = $this->shoppingListItemValidator->checkShoppingListItemParent(
+            $shoppingListItemTransfer,
+            $shoppingListItemResponseTransfer
+        );
+
+        if (!$shoppingListItemResponseTransferWithValidatedParent->getIsSuccess()) {
             $this->messageAdder->addShoppingListItemDeleteFailedMessage();
+
+            return $shoppingListItemResponseTransferWithValidatedParent;
         }
 
-        return $isShoppingListItemValid;
+        return $shoppingListItemResponseTransfer->setIsSuccess(true);
     }
 }

@@ -10,18 +10,18 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
-interface PermissionValidatorInterface
+interface ShoppingListItemPermissionValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function validatePermissionForPerformingOperation(
         ShoppingListTransfer $shoppingListTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): bool;
+    ): ShoppingListItemResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
