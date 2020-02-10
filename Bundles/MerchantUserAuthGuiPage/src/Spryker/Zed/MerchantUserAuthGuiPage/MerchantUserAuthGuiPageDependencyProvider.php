@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantUserAuthGuiPage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade\MerchantUserAuthGuiPageToAuthBridge;
+use Spryker\Zed\MerchantUserAuthGuiPage\Dependency\Facade\MerchantUserAuthGuiPageToAuthFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantUserAuthGuiPage\MerchantUserAuthGuiPageConfig getConfig()
@@ -38,7 +38,7 @@ class MerchantUserAuthGuiPageDependencyProvider extends AbstractBundleDependency
     protected function addAuthFacade(Container $container): Container
     {
         $container->set(static::FACADE_AUTH, function (Container $container) {
-            return new MerchantUserAuthGuiPageToAuthBridge($container->getLocator()->auth()->facade());
+            return new MerchantUserAuthGuiPageToAuthFacadeBridge($container->getLocator()->auth()->facade());
         });
 
         return $container;

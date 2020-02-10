@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\MerchantUserAuthGuiPage\MerchantUserAuthGuiPageConfig getConfig()
  * @method \Spryker\Zed\MerchantUserAuthGuiPage\Communication\MerchantUserAuthGuiPageCommunicationFactory getFactory()
  */
-class LoginForm extends AbstractType
+class MerchantLoginForm extends AbstractType
 {
     public const FIELD_USERNAME = 'username';
     public const FIELD_PASSWORD = 'password';

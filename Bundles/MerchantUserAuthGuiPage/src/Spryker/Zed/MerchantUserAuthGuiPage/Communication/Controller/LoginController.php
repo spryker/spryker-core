@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantUserAuthGuiPage\Communication\Controller;
 
 use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantUserAuthGuiPage\Communication\Form\LoginForm;
+use Spryker\Zed\MerchantUserAuthGuiPage\Communication\Form\MerchantLoginForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -40,7 +40,10 @@ class LoginController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            $isLoggedIn = $authFacade->login($formData[LoginForm::FIELD_USERNAME], $formData[LoginForm::FIELD_PASSWORD]);
+            $isLoggedIn = $authFacade->login(
+                $formData[MerchantLoginForm::FIELD_USERNAME],
+                $formData[MerchantLoginForm::FIELD_PASSWORD]
+            );
 
             if ($isLoggedIn) {
                 return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultTargetPath());
