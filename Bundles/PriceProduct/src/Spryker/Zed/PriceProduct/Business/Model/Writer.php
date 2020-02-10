@@ -171,7 +171,8 @@ class Writer implements WriterInterface
      */
     protected function loadProductConcreteIdForPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
     {
-        if ($priceProductTransfer->getIdProduct() === null &&
+        if (
+            $priceProductTransfer->getIdProduct() === null &&
             $this->productFacade->hasProductConcrete($priceProductTransfer->getSkuProduct())
         ) {
             $priceProductTransfer->setIdProduct(

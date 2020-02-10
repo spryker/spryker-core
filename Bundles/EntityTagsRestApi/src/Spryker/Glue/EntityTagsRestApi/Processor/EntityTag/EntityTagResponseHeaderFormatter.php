@@ -62,10 +62,12 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
 
         $resource = $restResponse->getResources()[0];
 
-        if (!$this->entityTagChecker->isMethodApplicableForAddingEntityTagHeader(
-            $restRequest->getHttpRequest()->getMethod(),
-            $resource->getType()
-        )) {
+        if (
+            !$this->entityTagChecker->isMethodApplicableForAddingEntityTagHeader(
+                $restRequest->getHttpRequest()->getMethod(),
+                $resource->getType()
+            )
+        ) {
             return $httpResponse;
         }
 

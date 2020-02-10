@@ -118,7 +118,8 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
         $url = $pathInfo;
         $scheme = $this->context->getScheme();
 
-        if ($referenceType !== self::NETWORK_PATH &&
+        if (
+            $referenceType !== self::NETWORK_PATH &&
             ($scheme === 'http' && $this->sslEnabled === true || $scheme === 'https' && $this->sslEnabled === false)
         ) {
             $referenceType = self::ABSOLUTE_URL;

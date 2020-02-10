@@ -39,7 +39,8 @@ class CustomerExpander implements CustomerExpanderInterface
     {
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
-        if ($companyUserTransfer
+        if (
+            $companyUserTransfer
             && $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit() !== null
             && $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getIdCompanyBusinessUnit()
         ) {
