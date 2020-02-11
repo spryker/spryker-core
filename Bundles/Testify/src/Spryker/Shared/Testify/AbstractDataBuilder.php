@@ -239,13 +239,16 @@ abstract class AbstractDataBuilder
 
             if (method_exists($transfer, 'add' . $name)) {
                 call_user_func([$transfer, 'add' . $name], $nestedTransfer);
+
                 continue;
             }
 
             if (method_exists($transfer, 'set' . $name)) {
                 call_user_func([$transfer, 'set' . $name], $nestedTransfer);
+
                 continue;
             }
+
             throw new DependencyNotDefinedException(sprintf('Dependency "%s" not defined in "%s"', $name, static::class));
         }
     }
