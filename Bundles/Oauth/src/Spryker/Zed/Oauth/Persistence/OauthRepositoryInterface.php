@@ -51,7 +51,7 @@ interface OauthRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
-    public function findRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
+    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer

@@ -121,7 +121,8 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     {
         return new RefreshTokenRepository(
             $this->oauthEntityManager,
-            $this->oauthRepository
+            $this->oauthRepository,
+            $this->utilEncodingService
         );
     }
 }

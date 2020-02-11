@@ -43,7 +43,7 @@ class OauthBusinessTester extends Actor
     public function createRevokeRefreshTokenRequestTransfer(string $customerReference, ?string $refreshToken = null): RevokeRefreshTokenRequestTransfer
     {
         $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestBuilder())
-            ->seed(['refreshToken' => $refreshToken, 'customerReference' => $customerReference])
+            ->seed([RevokeRefreshTokenRequestTransfer::REFRESH_TOKEN => $refreshToken, RevokeRefreshTokenRequestTransfer::CUSTOMER_REFERENCE => $customerReference])
             ->build();
 
         return $revokeRefreshTokenRequestTransfer;
