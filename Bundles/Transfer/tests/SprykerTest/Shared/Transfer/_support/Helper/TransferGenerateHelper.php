@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Shared\Transfer\Helper;
 
-use Codeception\Configuration;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Psr\Log\NullLogger;
@@ -20,6 +19,13 @@ class TransferGenerateHelper extends Module
     protected const TARGET_DIRECTORY = 'target_directory';
 
     /**
+     * @var string[]
+     */
+    protected $schemaDirectories = [
+        'src/*/Shared/*/Transfer/',
+    ];
+
+    /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
      */
@@ -27,9 +33,20 @@ class TransferGenerateHelper extends Module
     {
         parent::__construct($moduleContainer, $config);
 
-        if (!empty($config['enabled'])) {
-            $this->generateTransferObjects();
+        if (isset($config['schemaDirectories'])) {
+            $this->schemaDirectories = $config['schemaDirectories'];
         }
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return void
+     */
+    public function _beforeSuite($settings = [])
+    {
+        $this->generateTransferObjects();
+        $this->addAutoloader();
     }
 
     /**
@@ -39,11 +56,13 @@ class TransferGenerateHelper extends Module
     {
         $transferFacade = $this->getFacade();
 
-        $this->copyFromTestBundle();
+        $this->copySchemasFromDefinedSchemaDirectories();
 
         $transferFacade->deleteGeneratedTransferObjects();
+
         $this->debug('Generating Transfer Objects...');
         $transferFacade->generateTransferObjects(new NullLogger());
+
         $this->debug('Generating DataBuilders...');
         $transferFacade->generateDataBuilders(new NullLogger());
     }
@@ -57,11 +76,27 @@ class TransferGenerateHelper extends Module
     }
 
     /**
+     * This will copy all schema files from the schema directories which are defined in the codeception.yml file
+     * of the module under test.
+     *
+     * @example codeception.yml
+     *
+     * ```
+     * env:
+     *   isolated: # (environment name which will be used on CLI with `vendor/bin/codecept run --env isolated`)
+     *     modules:
+     *       config:
+     *         \SprykerTest\Shared\Transfer\Helper\TransferGenerateHelper:
+     *           schemaDirectories:
+     *             - # path to schema files, relative to the module under test.
+     *
+     * ```
+     *
      * @return void
      */
-    protected function copyFromTestBundle(): void
+    protected function copySchemasFromDefinedSchemaDirectories(): void
     {
-        $finder = $this->getBundleTransferSchemas();
+        $finder = $this->createTransferSchemaFinder($this->schemaDirectories);
 
         if ($finder->count() > 0) {
             $pathForTransferSchemas = $this->getTargetSchemaDirectory();
@@ -74,13 +109,22 @@ class TransferGenerateHelper extends Module
     }
 
     /**
+     * @param array $schemaDirectories
+     *
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
-    protected function getBundleTransferSchemas()
+    protected function createTransferSchemaFinder(array $schemaDirectories)
     {
-        $testBundleSchemaDirectory = Configuration::projectDir() . DIRECTORY_SEPARATOR . 'src';
+        $schemaDirectories = array_map(function (string $schemaDirectory) {
+            if (defined('MODULE_UNDER_TEST_ROOT_DIR') && MODULE_UNDER_TEST_ROOT_DIR !== null) {
+                return rtrim(MODULE_UNDER_TEST_ROOT_DIR . $schemaDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            }
+
+            return rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $schemaDirectory . DIRECTORY_SEPARATOR;
+        }, $schemaDirectories);
+
         $finder = new Finder();
-        $finder->files()->in($testBundleSchemaDirectory)->name('*.transfer.xml');
+        $finder->files()->in($schemaDirectories)->name('*.transfer.xml');
 
         return $finder;
     }
@@ -90,7 +134,7 @@ class TransferGenerateHelper extends Module
      */
     protected function getTargetSchemaDirectory(): string
     {
-        $pathForTransferSchemas = APPLICATION_ROOT_DIR . '/src/Spryker/Shared/Testify/';
+        $pathForTransferSchemas = rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Spryker/Shared/Testify/';
 
         if (isset($this->config[self::TARGET_DIRECTORY])) {
             $pathForTransferSchemas = $this->config[self::TARGET_DIRECTORY];
@@ -101,5 +145,30 @@ class TransferGenerateHelper extends Module
         }
 
         return $pathForTransferSchemas;
+    }
+
+    /**
+     * This will add autoloading for generated Transfer objects in isolated module tests.
+     *
+     * @return void
+     */
+    protected function addAutoloader(): void
+    {
+        spl_autoload_register(function ($className) {
+            if (strrpos($className, 'Transfer') === false) {
+                return false;
+            }
+
+            $classNameParts = explode('\\', $className);
+
+            $transferFileName = implode(DIRECTORY_SEPARATOR, $classNameParts) . '.php';
+            $transferFilePath = APPLICATION_ROOT_DIR . 'src' . DIRECTORY_SEPARATOR . $transferFileName;
+
+            if (!file_exists($transferFilePath)) {
+                return false;
+            }
+
+            require_once $transferFilePath;
+        });
     }
 }

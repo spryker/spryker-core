@@ -66,6 +66,16 @@ class TransferConfig extends AbstractBundleConfig
      *
      * @return string
      */
+    public function getTransferFileNamePattern(): string
+    {
+        return '/(.*?).transfer.xml/';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
     public function getDataBuilderFileNamePattern()
     {
         return '/(.*?).(databuilder|transfer).xml/';

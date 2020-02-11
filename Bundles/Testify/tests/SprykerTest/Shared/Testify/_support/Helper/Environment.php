@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
+use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
@@ -21,22 +22,119 @@ class Environment extends Module
     protected $rootDirectory;
 
     /**
+     * @var bool
+     */
+    protected $runIsolatedModuleTests = false;
+
+    /**
+     * @param \Codeception\Lib\ModuleContainer $moduleContainer
+     * @param array|null $config
+     */
+    public function __construct(ModuleContainer $moduleContainer, ?array $config = null)
+    {
+        parent::__construct($moduleContainer, $config);
+
+        if (isset($config['runIsolatedModuleTests'])) {
+            $this->runIsolatedModuleTests = (bool)$config['runIsolatedModuleTests'];
+        }
+    }
+
+    /**
      * @return void
      */
     public function _initialize(): void
     {
+        $this->prepareIsolatedModuleTests();
+
         $rootDirectory = $this->getRootDirectory();
         $store = $this->getStore();
         $applicationEnv = $this->getApplicationEnvironment();
+
+        defined('MODULE_UNDER_TEST_ROOT_DIR') || define('MODULE_UNDER_TEST_ROOT_DIR', $this->getModuleUnderTestRootDirectory());
 
         defined('APPLICATION_ENV') || define('APPLICATION_ENV', $applicationEnv);
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', $store);
         putenv('APPLICATION_STORE=' . $store);
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 
-        defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $rootDirectory);
-        defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
-        defined('APPLICATION_VENDOR_DIR') || define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . '/vendor');
+        defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', rtrim($rootDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+        defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . 'src/');
+        defined('APPLICATION_VENDOR_DIR') || define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . 'vendor/');
+    }
+
+    /**
+     * @return void
+     */
+    protected function prepareIsolatedModuleTests(): void
+    {
+        if ($this->runIsolatedModuleTests) {
+            $this->createDefaultStoreFile();
+            $this->createStoresFile();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function createDefaultStoreFile(): void
+    {
+        $defaultFileContent = sprintf('<?php return "%s";', $this->config['defaultStore'] ?? 'DE');
+        $pathToFile = $this->getRootDirectory() . 'config/Shared/default_store.php';
+
+        if (!file_exists(dirname($pathToFile))) {
+            mkdir(dirname($pathToFile), 0777, true);
+        }
+
+        file_put_contents($pathToFile, $defaultFileContent);
+    }
+
+    /**
+     * @return void
+     */
+    protected function createStoresFile(): void
+    {
+        $defaultStoreConfiguration = [
+            'DE' => [
+                'locales' => ['de' => 'de_DE'],
+                'countries' => ['DE'],
+                'currencyIsoCode' => 'EUR',
+            ],
+        ];
+
+        $storeConfiguration = $this->config['stores'] ?? $defaultStoreConfiguration;
+
+        $storesFileContent = sprintf('<?php return %s;', var_export($storeConfiguration, true));
+        $pathToFile = $this->getRootDirectory() . 'config/Shared/stores.php';
+
+        if (!file_exists(dirname($pathToFile))) {
+            mkdir(dirname($pathToFile), 0777, true);
+        }
+
+        file_put_contents($pathToFile, $storesFileContent);
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getModuleUnderTestRootDirectory(): ?string
+    {
+        if ($this->runIsolatedModuleTests) {
+            return $this->buildModuleUnderTestRootDirectory();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildModuleUnderTestRootDirectory(): string
+    {
+        $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());
+        $srcDirectoryPosition = array_search('tests', $pathParts);
+        $rootDirPathParts = array_slice($pathParts, 1, $srcDirectoryPosition - 1);
+
+        return DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -44,19 +142,56 @@ class Environment extends Module
      */
     protected function getRootDirectory(): string
     {
+        if ($this->canBuildVirtualDirectory()) {
+            return $this->buildVirtualDirectory();
+        }
+
         if (!$this->rootDirectory) {
+            $directory = getcwd();
+
             $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());
             $srcDirectoryPosition = array_search('current', $pathParts);
 
             $rootDirPathParts = array_slice($pathParts, 1, $srcDirectoryPosition);
             if ($rootDirPathParts) {
-                $this->rootDirectory = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
-            } else {
-                $this->rootDirectory = getcwd();
+                $directory = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
             }
+
+            $this->rootDirectory = rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         }
 
         return $this->rootDirectory;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canBuildVirtualDirectory(): bool
+    {
+        return ($this->runIsolatedModuleTests && $this->hasModule('\\' . VirtualFilesystemHelper::class));
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildVirtualDirectory(): string
+    {
+        if (!$this->rootDirectory) {
+            $this->rootDirectory = $this->getVirtualFilesystemHelper()->getVirtualDirectory();
+        }
+
+        return $this->rootDirectory;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
+     */
+    protected function getVirtualFilesystemHelper(): VirtualFilesystemHelper
+    {
+        /** @var \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper $virtualDirectoryHelper */
+        $virtualDirectoryHelper = $this->getModule('\\' . VirtualFilesystemHelper::class);
+
+        return $virtualDirectoryHelper;
     }
 
     /**
