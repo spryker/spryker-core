@@ -22,11 +22,6 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
     protected $shoppingListsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface
-     */
-    protected $shoppingListMapper;
-
-    /**
      * @var \Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface
      */
     protected $shoppingListRestRequestReader;

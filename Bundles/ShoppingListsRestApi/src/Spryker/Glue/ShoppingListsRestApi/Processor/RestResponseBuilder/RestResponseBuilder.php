@@ -14,6 +14,9 @@ use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class RestResponseBuilder implements RestResponseBuilderInterface
 {
+    protected const STATUS = 'status';
+    protected const DETAIL = 'detail';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -58,14 +61,15 @@ class RestResponseBuilder implements RestResponseBuilderInterface
      */
     protected function createRestErrorMessageByErrorCode(string $errorCode): RestErrorMessageTransfer
     {
-        $errorSignature = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
-            'status' => ShoppingListsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
-            'detail' => $errorCode,
-        ];
+        $errorSignature = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ??
+            [
+                static::STATUS => ShoppingListsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
+                static::DETAIL => $errorCode,
+            ];
 
         return (new RestErrorMessageTransfer())
             ->setCode($errorCode)
-            ->setStatus($errorSignature['status'])
-            ->setDetail($errorSignature['detail']);
+            ->setStatus($errorSignature[static::STATUS])
+            ->setDetail($errorSignature[static::DETAIL]);
     }
 }

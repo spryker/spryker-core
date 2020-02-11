@@ -11,10 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -23,7 +20,6 @@ use Spryker\Zed\CompanyUser\Business\CompanyUserFacade;
 use Spryker\Zed\ShoppingList\Business\ShoppingListFacade;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiBusinessFactory;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeBridge;
-use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 /**
  * Auto-generated group annotations
@@ -39,39 +35,15 @@ use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
  */
 class ShoppingListsRestApiFacadeTest extends Unit
 {
-    protected const COMPANY_USER_ID = 123;
-    protected const OWNER_NAME = 'John Doe';
-    protected const SHOPPING_LIST_UUID = 'SHOPPING_LIST_UUID';
-    protected const SHOPPING_LIST_ID = 123;
-    protected const READ_ONLY_SHOPPING_LIST_ID = 456;
-    protected const SHOPPING_LIST_ITEM_UUID = 'SHOPPING_LIST_ITEM_UUID';
-    protected const SHOPPING_LIST_ITEM_ID = 123;
-    protected const GOOD_CUSTOMER_REFERENCE = 'GOOD_CUSTOMER_REFERENCE';
-    protected const BAD_CUSTOMER_REFERENCE = 'BAD_CUSTOMER_REFERENCE';
-    protected const GOOD_SHOPPING_LIST_UUID = 'GOOD_SHOPPING_LIST_UUID';
-    protected const BAD_SHOPPING_LIST_UUID = 'BAD_SHOPPING_LIST_UUID';
-    protected const READ_ONLY_SHOPPING_LIST_UUID = 'FOREIGN_SHOPPING_LIST_UUID';
-    protected const GOOD_SHOPPING_LIST_NAME = 'GOOD_SHOPPING_LIST_NAME';
-    protected const BAD_SHOPPING_LIST_NAME = 'BAD_SHOPPING_LIST_NAME';
-    protected const GOOD_SKU = '123_123';
-    protected const BAD_SKU = '123_124';
-    protected const GOOD_QUANTITY = 1;
-    protected const BAD_QUANTITY = 0;
-
     /**
      * @var \SprykerTest\Zed\ShoppingListsRestApi\ShoppingListsRestApiBusinessTester
      */
     protected $tester;
 
     /**
-     * @var string|null
-     */
-    protected $lastShoppingListName;
-
-    /**
      * @inheritDoc
      */
-    public function _before()
+    public function before()
     {
         parent::_before();
 
@@ -88,10 +60,10 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
             ->setCompanyUserTransfer(
                 (new CompanyUserTransfer())
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
         $restShoppingListCollectionResponseTransfer = $shoppingListsRestApiFacade->getCustomerShoppingListCollection($customerTransfer);
 
@@ -108,18 +80,18 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-            ->setIdCompanyUser(static::COMPANY_USER_ID)
-            ->setName(static::GOOD_SHOPPING_LIST_NAME);
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+            ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+            ->setName($this->tester::GOOD_SHOPPING_LIST_NAME);
 
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->createShoppingList($shoppingListTransfer);
 
         $this->assertTrue($shoppingListResponseTransfer->getIsSuccess());
         $this->assertEquals(
-            static::GOOD_SHOPPING_LIST_NAME,
+            $this->tester::GOOD_SHOPPING_LIST_NAME,
             $shoppingListResponseTransfer->getShoppingList()->getName()
         );
-        $this->assertEquals(static::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
+        $this->assertEquals($this->tester::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
     }
 
     /**
@@ -132,9 +104,9 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-            ->setIdCompanyUser(static::COMPANY_USER_ID)
-            ->setName(static::BAD_SHOPPING_LIST_NAME);
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+            ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+            ->setName($this->tester::BAD_SHOPPING_LIST_NAME);
 
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->createShoppingList($shoppingListTransfer);
 
@@ -154,23 +126,23 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-            ->setIdCompanyUser(static::COMPANY_USER_ID)
-            ->setName(static::GOOD_SHOPPING_LIST_NAME)
-            ->setUuid(static::GOOD_SHOPPING_LIST_UUID);
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+            ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+            ->setName($this->tester::GOOD_SHOPPING_LIST_NAME)
+            ->setUuid($this->tester::GOOD_SHOPPING_LIST_UUID);
 
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->updateShoppingList($shoppingListTransfer);
 
         $this->assertTrue($shoppingListResponseTransfer->getIsSuccess());
         $this->assertEquals(
-            static::GOOD_SHOPPING_LIST_NAME,
+            $this->tester::GOOD_SHOPPING_LIST_NAME,
             $shoppingListResponseTransfer->getShoppingList()->getName()
         );
         $this->assertEquals(
-            static::GOOD_SHOPPING_LIST_UUID,
+            $this->tester::GOOD_SHOPPING_LIST_UUID,
             $shoppingListResponseTransfer->getShoppingList()->getUuid()
         );
-        $this->assertEquals(static::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
+        $this->assertEquals($this->tester::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
     }
 
     /**
@@ -183,10 +155,10 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-            ->setIdCompanyUser(static::COMPANY_USER_ID)
-            ->setName(static::BAD_SHOPPING_LIST_NAME)
-            ->setUuid(static::GOOD_SHOPPING_LIST_UUID);
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+            ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+            ->setName($this->tester::BAD_SHOPPING_LIST_NAME)
+            ->setUuid($this->tester::GOOD_SHOPPING_LIST_UUID);
 
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->updateShoppingList($shoppingListTransfer);
 
@@ -206,10 +178,10 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-            ->setIdCompanyUser(static::COMPANY_USER_ID)
-            ->setName(static::GOOD_SHOPPING_LIST_NAME)
-            ->setUuid(static::BAD_SHOPPING_LIST_UUID);
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+            ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+            ->setName($this->tester::GOOD_SHOPPING_LIST_NAME)
+            ->setUuid($this->tester::BAD_SHOPPING_LIST_UUID);
 
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->updateShoppingList($shoppingListTransfer);
 
@@ -229,9 +201,9 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-            ->setIdCompanyUser(static::COMPANY_USER_ID)
-            ->setUuid(static::GOOD_SHOPPING_LIST_UUID);
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+            ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+            ->setUuid($this->tester::GOOD_SHOPPING_LIST_UUID);
 
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingList($shoppingListTransfer);
 
@@ -249,9 +221,9 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-            ->setIdCompanyUser(static::COMPANY_USER_ID)
-            ->setUuid(static::READ_ONLY_SHOPPING_LIST_UUID);
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+            ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+            ->setUuid($this->tester::READ_ONLY_SHOPPING_LIST_UUID);
 
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingList($shoppingListTransfer);
 
@@ -271,9 +243,9 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-            ->setIdCompanyUser(static::COMPANY_USER_ID)
-            ->setUuid(static::BAD_SHOPPING_LIST_UUID);
+            ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+            ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+            ->setUuid($this->tester::BAD_SHOPPING_LIST_UUID);
 
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingList($shoppingListTransfer);
 
@@ -293,29 +265,29 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::SHOPPING_LIST_UUID)
+            ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setSku(static::GOOD_SKU)
-                    ->setQuantity(static::GOOD_QUANTITY)
-                    ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setSku($this->tester::GOOD_SKU)
+                    ->setQuantity($this->tester::GOOD_QUANTITY)
+                    ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertTrue($shoppingListItemResponseTransfer->getIsSuccess());
-        $this->assertEquals(static::GOOD_SKU, $shoppingListItemResponseTransfer->getShoppingListItem()->getSku());
+        $this->assertEquals($this->tester::GOOD_SKU, $shoppingListItemResponseTransfer->getShoppingListItem()->getSku());
         $this->assertEquals(
-            static::GOOD_QUANTITY,
+            $this->tester::GOOD_QUANTITY,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
         );
         $this->assertEquals(
-            static::SHOPPING_LIST_ITEM_UUID,
+            $this->tester::SHOPPING_LIST_ITEM_UUID,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getUuid()
         );
         $this->assertEquals(
-            static::SHOPPING_LIST_ITEM_ID,
+            $this->tester::SHOPPING_LIST_ITEM_ID,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getIdShoppingListItem()
         );
     }
@@ -330,13 +302,13 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::SHOPPING_LIST_UUID)
+            ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setSku(static::GOOD_SKU)
-                    ->setQuantity(static::BAD_QUANTITY)
-                    ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setSku($this->tester::GOOD_SKU)
+                    ->setQuantity($this->tester::BAD_QUANTITY)
+                    ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
@@ -357,13 +329,13 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::SHOPPING_LIST_UUID)
+            ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setSku(static::BAD_SKU)
-                    ->setQuantity(static::GOOD_QUANTITY)
-                    ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setSku($this->tester::BAD_SKU)
+                    ->setQuantity($this->tester::GOOD_QUANTITY)
+                    ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
@@ -386,7 +358,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::SHOPPING_LIST_UUID);
+            ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID);
 
         $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
     }
@@ -401,25 +373,25 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::SHOPPING_LIST_UUID)
+            ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setSku(static::GOOD_SKU)
-                    ->setQuantity(static::GOOD_QUANTITY)
-                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
-                    ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setSku($this->tester::GOOD_SKU)
+                    ->setQuantity($this->tester::GOOD_QUANTITY)
+                    ->setUuid($this->tester::SHOPPING_LIST_ITEM_UUID)
+                    ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertTrue($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertEquals(
-            static::GOOD_QUANTITY,
+            $this->tester::GOOD_QUANTITY,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
         );
         $this->assertEquals(
-            static::SHOPPING_LIST_ID,
+            $this->tester::SHOPPING_LIST_ID,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getFkShoppingList()
         );
     }
@@ -434,14 +406,14 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::BAD_SHOPPING_LIST_UUID)
+            ->setShoppingListUuid($this->tester::BAD_SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setSku(static::GOOD_SKU)
-                    ->setQuantity(static::GOOD_QUANTITY)
-                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
-                    ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setSku($this->tester::GOOD_SKU)
+                    ->setQuantity($this->tester::GOOD_QUANTITY)
+                    ->setUuid($this->tester::SHOPPING_LIST_ITEM_UUID)
+                    ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
@@ -462,14 +434,14 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::SHOPPING_LIST_UUID)
+            ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setSku(static::GOOD_SKU)
-                    ->setQuantity(static::GOOD_QUANTITY)
-                    ->setUuid(static::BAD_SHOPPING_LIST_UUID)
-                    ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setSku($this->tester::GOOD_SKU)
+                    ->setQuantity($this->tester::GOOD_QUANTITY)
+                    ->setUuid($this->tester::BAD_SHOPPING_LIST_UUID)
+                    ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
@@ -490,12 +462,12 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::SHOPPING_LIST_UUID)
+            ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
-                    ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setUuid($this->tester::SHOPPING_LIST_ITEM_UUID)
+                    ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingListItem($restShoppingListRequestTransfer);
@@ -513,12 +485,12 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
-            ->setShoppingListUuid(static::READ_ONLY_SHOPPING_LIST_UUID)
+            ->setShoppingListUuid($this->tester::READ_ONLY_SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
-                    ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser(static::COMPANY_USER_ID)
+                    ->setUuid($this->tester::SHOPPING_LIST_ITEM_UUID)
+                    ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingListItem($restShoppingListRequestTransfer);
@@ -528,7 +500,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiBusinessFactory
      */
-    protected function getMockShoppingListsRestApiBusinessFactory(): ShoppingListsRestApiBusinessFactory
+    protected function getMockShoppingListsRestApiBusinessFactory(): MockObject
     {
         $mockFactory = $this->createPartialMock(
             ShoppingListsRestApiBusinessFactory::class,
@@ -546,7 +518,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShoppingList\Business\ShoppingListFacade
      */
-    protected function getMockShoppingListFacade(): ShoppingListFacade
+    protected function getMockShoppingListFacade(): MockObject
     {
         $mockShoppingListFacade = $this->createPartialMock(
             ShoppingListFacade::class,
@@ -563,36 +535,36 @@ class ShoppingListsRestApiFacadeTest extends Unit
         );
 
         $mockShoppingListFacade->method('getCustomerShoppingListCollection')
-            ->willReturnCallback([$this, '_getCustomerShoppingListCollection']);
+            ->willReturnCallback([$this->tester, 'getCustomerShoppingListCollection']);
 
         $mockShoppingListFacade->method('findShoppingListByUuid')
-            ->willReturnCallback([$this, '_findShoppingListByUuid']);
+            ->willReturnCallback([$this->tester, 'findShoppingListByUuid']);
 
         $mockShoppingListFacade->method('createShoppingList')
-            ->willReturnCallback([$this, '_createShoppingList']);
+            ->willReturnCallback([$this->tester, 'createShoppingList']);
 
         $mockShoppingListFacade->method('updateShoppingList')
-            ->willReturnCallback([$this, '_updateShoppingList']);
+            ->willReturnCallback([$this->tester, 'updateShoppingList']);
 
         $mockShoppingListFacade->method('removeShoppingList')
-            ->willReturnCallback([$this, '_removeShoppingList']);
+            ->willReturnCallback([$this->tester, 'removeShoppingList']);
 
         $mockShoppingListFacade->method('addShoppingListItem')
-            ->willReturnCallback([$this, '_addShoppingListItem']);
+            ->willReturnCallback([$this->tester, 'addShoppingListItem']);
 
         $mockShoppingListFacade->method('updateShoppingListItemById')
-            ->willReturnCallback([$this, '_updateShoppingListItemById']);
+            ->willReturnCallback([$this->tester, 'updateShoppingListItemById']);
 
         $mockShoppingListFacade->method('removeItemById')
-            ->willReturnCallback([$this, '_removeItemById']);
+            ->willReturnCallback([$this->tester, 'removeItemById']);
 
         return $mockShoppingListFacade;
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyUser\Business\CompanyUserFacade
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCompanyUserFacade(): CompanyUserFacade
+    protected function getMockCompanyUserFacade(): MockObject
     {
         $mockCustomerFacade = $this->createPartialMock(
             CompanyUserFacade::class,
@@ -602,240 +574,8 @@ class ShoppingListsRestApiFacadeTest extends Unit
         );
 
         $mockCustomerFacade->method('findActiveCompanyUserByUuid')
-            ->willReturnCallback([$this, '_findActiveCompanyUserByUuid']);
+            ->willReturnCallback([$this->tester, 'findActiveCompanyUserByUuid']);
 
         return $mockCustomerFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
-     */
-    public function _getCustomerShoppingListCollection(
-        CustomerTransfer $customerTransfer
-    ): ShoppingListCollectionTransfer {
-        $shoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
-
-        if ($customerTransfer->getCustomerReference() === static::BAD_CUSTOMER_REFERENCE) {
-            return $shoppingListCollectionTransfer;
-        }
-
-        $shoppingListCollectionTransfer->addShoppingList(
-            (new ShoppingListTransfer())
-                ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setIdCompanyUser(static::COMPANY_USER_ID)
-        );
-
-        $shoppingListCollectionTransfer->addShoppingList(
-            (new ShoppingListTransfer())
-                ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setIdCompanyUser(static::COMPANY_USER_ID)
-        );
-
-        return $shoppingListCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function _findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
-    {
-        $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
-
-        if ($shoppingListTransfer->getUuid() === static::BAD_SHOPPING_LIST_UUID) {
-            $shoppingListResponseTransfer->setIsSuccess(false);
-
-            return $shoppingListResponseTransfer;
-        }
-
-        $shoppingListResponseTransfer->setShoppingList(
-            (new ShoppingListTransfer())
-                ->setCustomerReference($shoppingListTransfer->getCustomerReference())
-                ->setIdCompanyUser(static::COMPANY_USER_ID)
-                ->setUuid($shoppingListTransfer->getUuid())
-                ->setName($this->lastShoppingListName)
-                // Owner is defined only in read methods
-                ->setOwner(static::OWNER_NAME)
-                ->setIdShoppingList(
-                    $shoppingListTransfer->getUuid() === static::READ_ONLY_SHOPPING_LIST_UUID
-                        ? static::READ_ONLY_SHOPPING_LIST_ID
-                        : static::SHOPPING_LIST_ID
-                )
-                ->addItem(
-                    (new ShoppingListItemTransfer())
-                        ->setQuantity(static::GOOD_QUANTITY)
-                        ->setSku(static::GOOD_SKU)
-                        ->setIdShoppingListItem(static::SHOPPING_LIST_ITEM_ID)
-                        ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
-                )
-        );
-
-        return $shoppingListResponseTransfer->setIsSuccess(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function _createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
-    {
-        $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
-
-        if ($shoppingListTransfer->getName() === static::BAD_SHOPPING_LIST_NAME) {
-            $shoppingListResponseTransfer->setIsSuccess(false)
-                ->addError(ShoppingListsRestApiConfig::DUPLICATE_NAME_SHOPPING_LIST);
-
-            return $shoppingListResponseTransfer;
-        }
-
-        $shoppingListResponseTransfer->setShoppingList(
-            (new ShoppingListTransfer())
-                ->setCustomerReference($shoppingListTransfer->getCustomerReference())
-                ->setIdCompanyUser(static::COMPANY_USER_ID)
-                ->setName($shoppingListTransfer->getName())
-        );
-
-        $this->lastShoppingListName = $shoppingListTransfer->getName();
-
-        return $shoppingListResponseTransfer->setIsSuccess(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function _updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
-    {
-        $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
-
-        if ($shoppingListTransfer->getUuid() === static::BAD_SHOPPING_LIST_UUID) {
-            $shoppingListResponseTransfer->setIsSuccess(false)
-                ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND);
-
-            return $shoppingListResponseTransfer;
-        }
-
-        if ($shoppingListTransfer->getName() === static::BAD_SHOPPING_LIST_NAME) {
-            $shoppingListResponseTransfer->setIsSuccess(false)
-                ->addError(ShoppingListsRestApiConfig::DUPLICATE_NAME_SHOPPING_LIST);
-
-            return $shoppingListResponseTransfer;
-        }
-
-        $shoppingListResponseTransfer->setShoppingList(
-            (new ShoppingListTransfer())
-                ->setCustomerReference($shoppingListTransfer->getCustomerReference())
-                ->setIdCompanyUser(static::COMPANY_USER_ID)
-                ->setName($shoppingListTransfer->getName())
-                ->setUuid($shoppingListTransfer->getUuid())
-        );
-
-        $this->lastShoppingListName = $shoppingListTransfer->getName();
-
-        return $shoppingListResponseTransfer->setIsSuccess(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function _removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
-    {
-        $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
-
-        if ($shoppingListTransfer->getUuid() === static::BAD_SHOPPING_LIST_UUID) {
-            $shoppingListResponseTransfer->setIsSuccess(false)
-                ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND);
-
-            return $shoppingListResponseTransfer;
-        }
-
-        if ($shoppingListTransfer->getUuid() === static::READ_ONLY_SHOPPING_LIST_UUID) {
-            $shoppingListResponseTransfer->setIsSuccess(false)
-                ->addError(ShoppingListsRestApiConfig::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
-
-            return $shoppingListResponseTransfer;
-        }
-
-        return $shoppingListResponseTransfer->setIsSuccess(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function _addShoppingListItem(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer {
-        if ($shoppingListItemTransfer->getSku() === static::BAD_SKU) {
-            return (new ShoppingListItemResponseTransfer())
-                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND)
-                ->setIsSuccess(false);
-        }
-
-        if ($shoppingListItemTransfer->getQuantity() <= static::BAD_QUANTITY) {
-            return (new ShoppingListItemResponseTransfer())
-                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID)
-                ->setIsSuccess(false);
-        }
-
-        return (new ShoppingListItemResponseTransfer())
-            ->setIsSuccess(true)
-            ->setShoppingListItem(
-                $shoppingListItemTransfer
-                    ->setIdShoppingListItem(static::SHOPPING_LIST_ITEM_ID)
-                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
-            );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function _updateShoppingListItemById(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer {
-        if ($shoppingListItemTransfer->getFkShoppingList() === static::READ_ONLY_SHOPPING_LIST_ID) {
-            return (new ShoppingListItemResponseTransfer())
-                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
-                ->setIsSuccess(false);
-        }
-
-        if ($shoppingListItemTransfer->getQuantity() <= static::BAD_QUANTITY) {
-            return (new ShoppingListItemResponseTransfer())
-                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID)
-                ->setIsSuccess(false);
-        }
-
-        return (new ShoppingListItemResponseTransfer())
-            ->setIsSuccess(true)
-            ->setShoppingListItem(
-                $shoppingListItemTransfer->setFkShoppingList(static::SHOPPING_LIST_ID)
-            );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function _removeItemById(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer {
-        if ($shoppingListItemTransfer->getFkShoppingList() === static::READ_ONLY_SHOPPING_LIST_ID) {
-            return (new ShoppingListItemResponseTransfer())
-                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
-                ->setIsSuccess(false);
-        }
-
-        return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
     }
 }

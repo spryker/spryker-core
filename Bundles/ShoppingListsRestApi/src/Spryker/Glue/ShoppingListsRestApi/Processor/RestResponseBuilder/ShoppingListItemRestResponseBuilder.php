@@ -47,10 +47,11 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
     public function createShoppingListItemRestResourcesFromShoppingListTransfer(ShoppingListTransfer $shoppingListTransfer): array
     {
         $restResources = [];
+        $shoppingListUuid = $shoppingListTransfer->getUuid();
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $restResources[] = $this->createShoppingListItemRestResource(
                 $shoppingListItemTransfer,
-                $shoppingListTransfer->getUuid()
+                $shoppingListUuid
             );
         }
 

@@ -13,6 +13,9 @@
         <behavior name="uuid">
             <parameter name="key_columns" value="id_shopping_list.customer_reference" />
         </behavior>
+        <index name="spy_shopping_list-customer_reference">
+            <index-column name="customer_reference"/>
+        </index>
     </table>
 
     <table name="spy_shopping_list_item">
