@@ -8,13 +8,14 @@
 namespace Spryker\Client\ProductReview\Calculator;
 
 use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
+use Generated\Shared\Transfer\RatingAggregationTransfer;
 
 interface ProductReviewSummaryCalculatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
+     * @param \Generated\Shared\Transfer\RatingAggregationTransfer $ratingAggregationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function execute(ProductReviewSummaryTransfer $productReviewSummaryTransfer): ProductReviewSummaryTransfer;
+    public function calculate(RatingAggregationTransfer $ratingAggregationTransfer): ProductReviewSummaryTransfer;
 }

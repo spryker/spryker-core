@@ -112,5 +112,9 @@
         <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
     </transfer>
 
+    <transfer name="RatingAggregation">
+        <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
+    </transfer>
+
 </transfers>
 
