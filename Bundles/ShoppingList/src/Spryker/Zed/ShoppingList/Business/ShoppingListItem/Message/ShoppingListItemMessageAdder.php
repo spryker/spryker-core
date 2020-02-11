@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 
 class ShoppingListItemMessageAdder implements ShoppingListItemMessageAdderInterface
@@ -58,30 +57,30 @@ class ShoppingListItemMessageAdder implements ShoppingListItemMessageAdderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param string $sku
      *
      * @return void
      */
-    public function addShoppingListItemAddingFailedMessage(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function addShoppingListItemAddingFailedMessage(string $sku): void
     {
         $this->messengerFacade->addErrorMessage(
             (new MessageTransfer())
                 ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
-                ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
+                ->setParameters([static::GLOSSARY_PARAM_SKU => $sku])
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param string $sku
      *
      * @return void
      */
-    public function addShoppingListItemAddingSuccessMessage(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function addShoppingListItemAddingSuccessMessage(string $sku): void
     {
         $this->messengerFacade->addSuccessMessage(
             (new MessageTransfer())
                 ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS)
-                ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
+                ->setParameters([static::GLOSSARY_PARAM_SKU => $sku])
         );
     }
 

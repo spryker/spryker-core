@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message;
 
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
-
 interface ShoppingListItemMessageAdderInterface
 {
     /**
@@ -22,18 +20,18 @@ interface ShoppingListItemMessageAdderInterface
     public function addShoppingListItemUpdateSuccessMessage(): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param string $sku
      *
      * @return void
      */
-    public function addShoppingListItemAddingFailedMessage(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+    public function addShoppingListItemAddingFailedMessage(string $sku): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param string $sku
      *
      * @return void
      */
-    public function addShoppingListItemAddingSuccessMessage(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+    public function addShoppingListItemAddingSuccessMessage(string $sku): void;
 
     /**
      * @return void

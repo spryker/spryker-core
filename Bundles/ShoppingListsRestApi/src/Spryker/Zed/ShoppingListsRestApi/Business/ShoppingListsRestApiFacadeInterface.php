@@ -110,6 +110,7 @@ interface ShoppingListsRestApiFacadeInterface
 
     /**
      *  Specification:
+     *  - Expects uuid property to be set to the user UUID.
      *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Retrieves shopping list by uuid.

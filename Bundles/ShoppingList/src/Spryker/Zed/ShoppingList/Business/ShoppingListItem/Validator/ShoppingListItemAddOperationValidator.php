@@ -79,8 +79,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     ): ShoppingListItemResponseTransfer {
         if ($shoppingListItemResponseTransfer->getIsSuccess()) {
             $this->messageAdder->addShoppingListItemAddingSuccessMessage(
-                $shoppingListItemResponseTransfer->getShoppingListItem()
-                ?? new ShoppingListItemTransfer()
+                $shoppingListItemResponseTransfer->getShoppingListItem()->getSku()
             );
         }
 
@@ -110,7 +109,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
             $shoppingListItemResponseTransfer
         );
         if (!$shoppingListItemResponseTransferWithResolvedItemParent->getIsSuccess()) {
-            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
+            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer->getSku());
 
             return $shoppingListItemResponseTransferWithResolvedItemParent;
         }
@@ -183,7 +182,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
             $shoppingListItemResponseTransfer
         );
         if (!$shoppingListItemResponseTransferWithPerformedItemAddPreCheckPlugins->getIsSuccess()) {
-            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
+            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer->getSku());
 
             return $shoppingListItemResponseTransferWithPerformedItemAddPreCheckPlugins;
         }
@@ -209,7 +208,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
         $shoppingListItemResponseTransferWithValidatedPermission = $this->permissionValidator
             ->validatePermissionForPerformingOperation($shoppingListTransfer, $shoppingListItemResponseTransfer);
         if (!$shoppingListItemResponseTransferWithValidatedPermission->getIsSuccess()) {
-            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer);
+            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer->getSku());
 
             return $shoppingListItemResponseTransferWithValidatedPermission;
         }
