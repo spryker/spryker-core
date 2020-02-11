@@ -157,8 +157,10 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addCustomerReferenceMissingError($restResponse);
         }
 
-        if ($restCustomerAttributesTransfer->getPassword()
-            && $restCustomerAttributesTransfer->getPassword() !== $restCustomerAttributesTransfer->getConfirmPassword()) {
+        if (
+            $restCustomerAttributesTransfer->getPassword()
+            && $restCustomerAttributesTransfer->getPassword() !== $restCustomerAttributesTransfer->getConfirmPassword()
+        ) {
             return $this->restApiError->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomersAttributesTransfer::PASSWORD,

@@ -232,7 +232,8 @@ class MenuFormatter implements MenuFormatterInterface
     protected function getPageController(array $page, $action)
     {
         $pageController = null;
-        if (isset($page[self::CONTROLLER]) &&
+        if (
+            isset($page[self::CONTROLLER]) &&
             (
                 $page[self::CONTROLLER] !== self::INDEX || $action !== null
             )

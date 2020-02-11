@@ -128,7 +128,8 @@ class TranslationForm extends AbstractType
                 $defaultData = (array)$form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (array_key_exists(self::FIELD_GLOSSARY_KEY, $defaultData) === false ||
+                if (
+                    array_key_exists(self::FIELD_GLOSSARY_KEY, $defaultData) === false ||
                     $defaultData[self::FIELD_GLOSSARY_KEY] !== $submittedData[self::FIELD_GLOSSARY_KEY]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GLOSSARY_KEY_CHECK];
