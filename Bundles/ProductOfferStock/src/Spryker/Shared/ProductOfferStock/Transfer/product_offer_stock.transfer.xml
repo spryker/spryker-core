@@ -21,4 +21,10 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="ProductOffer">
+    </transfer>
+
+    <transfer name="Stock">
+    </transfer>
+
 </transfers>

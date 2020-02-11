@@ -173,6 +173,7 @@ class Dispatcher implements DispatcherInterface
             }
 
             $apiDataTransfer = $resourceParameter;
+
             break;
         }
 

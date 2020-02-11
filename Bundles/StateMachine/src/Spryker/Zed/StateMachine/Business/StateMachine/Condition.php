@@ -132,6 +132,7 @@ class Condition implements ConditionInterface
             $transactionLogger->setIsError(true);
             $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
             $transactionLogger->saveAll();
+
             throw $e;
         }
 

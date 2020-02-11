@@ -15,7 +15,7 @@ interface MerchantProductOfferDataImportFacadeInterface
     /**
      * Specification:
      * - Imports data from a specified file.
-     * - Iterates over the data sets and imports the data into the database.
+     * - Iterates over the data sets and imports the MerchantProductOffer data into the database.
      *
      * @api
      *
@@ -28,7 +28,7 @@ interface MerchantProductOfferDataImportFacadeInterface
     /**
      * Specification:
      * - Imports data from a specified file.
-     * - Iterates over the data sets and imports the data into the database.
+     * - Iterates over the data sets and imports the MerchantProductOfferStore data into the database.
      *
      * @api
      *

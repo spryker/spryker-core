@@ -46,10 +46,12 @@ class ShipmentMethodGiftCardFilter implements ShipmentMethodGiftCardFilterInterf
         $shipmentMethodsTransferList = $shipmentMethodsTransfer->getMethods();
 
         foreach ($shipmentMethodsTransferList as $shipmentMethodIndex => $shipmentMethodTransfer) {
-            if ($this->shipmentMethodGiftCardAllowanceChecker->isShipmentMethodSuitable(
-                $shipmentMethodTransfer,
-                $giftCardOnlyShipmentMethods
-            )) {
+            if (
+                $this->shipmentMethodGiftCardAllowanceChecker->isShipmentMethodSuitable(
+                    $shipmentMethodTransfer,
+                    $giftCardOnlyShipmentMethods
+                )
+            ) {
                 continue;
             }
 
