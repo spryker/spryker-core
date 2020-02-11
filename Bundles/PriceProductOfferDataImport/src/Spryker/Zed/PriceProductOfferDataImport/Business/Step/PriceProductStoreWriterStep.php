@@ -15,11 +15,6 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 class PriceProductStoreWriterStep implements DataImportStepInterface
 {
     /**
-     * @var string[]
-     */
-    protected $idPriceProductStoreCache = [];
-
-    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
@@ -36,11 +31,6 @@ class PriceProductStoreWriterStep implements DataImportStepInterface
      */
     protected function getIdPriceProductStore(DataSetInterface $dataSet): string
     {
-        $cacheIndex = $this->buildCacheIndex($dataSet);
-        if (isset($this->idPriceProductStoreCache[$cacheIndex])) {
-            return $this->idPriceProductStoreCache[$cacheIndex];
-        }
-
         $priceProductStoreEntity = SpyPriceProductStoreQuery::create()
             ->filterByFkStore($dataSet[PriceProductOfferDataSetInterface::FK_STORE])
             ->filterByFkCurrency($dataSet[PriceProductOfferDataSetInterface::FK_CURRENCY])
@@ -51,24 +41,6 @@ class PriceProductStoreWriterStep implements DataImportStepInterface
 
         $priceProductStoreEntity->save();
 
-        $this->idPriceProductStoreCache[$cacheIndex] = $priceProductStoreEntity->getIdPriceProductStore();
-
-        return $this->idPriceProductStoreCache[$cacheIndex];
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return string
-     */
-    protected function buildCacheIndex(DataSetInterface $dataSet): string
-    {
-        return implode('-', [
-            $dataSet[PriceProductOfferDataSetInterface::FK_STORE],
-            $dataSet[PriceProductOfferDataSetInterface::FK_CURRENCY],
-            $dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT],
-            $dataSet[PriceProductOfferDataSetInterface::VALUE_NET],
-            $dataSet[PriceProductOfferDataSetInterface::VALUE_GROSS],
-        ]);
+        return $priceProductStoreEntity->getIdPriceProductStore();
     }
 }

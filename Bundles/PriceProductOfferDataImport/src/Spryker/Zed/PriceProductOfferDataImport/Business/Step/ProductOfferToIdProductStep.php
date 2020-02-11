@@ -38,11 +38,7 @@ class ProductOfferToIdProductStep implements DataImportStepInterface
                 implode(', ', array_keys($dataSet->getArrayCopy()))
             ));
         }
-
-        $productConcreteSku = $dataSet[PriceProductOfferDataSetInterface::CONCRETE_SKU];
-        if (!empty($productConcreteSku)) {
-            $dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE] = $this->resolveIdProductByConcreteSku($productConcreteSku);
-        }
+        $dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE] = $this->resolveIdProductByConcreteSku($dataSet[PriceProductOfferDataSetInterface::CONCRETE_SKU]);
     }
 
     /**

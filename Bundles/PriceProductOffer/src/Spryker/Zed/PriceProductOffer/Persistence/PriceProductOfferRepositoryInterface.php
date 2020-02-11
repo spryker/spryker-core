@@ -7,20 +7,12 @@
 
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
 interface PriceProductOfferRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
-     */
-    public function buildPriceProductOfferDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer;
-
-    /**
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function buildUnconditionalPriceProductOfferDimensionQueryCriteria(): QueryCriteriaTransfer;
+    public function createQueryCriteriaTransfer(): QueryCriteriaTransfer;
 }
