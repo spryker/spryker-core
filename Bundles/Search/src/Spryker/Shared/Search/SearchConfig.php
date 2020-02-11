@@ -18,4 +18,5 @@ class SearchConfig extends AbstractSharedConfig
     public const FACET_TYPE_RANGE = 'range';
     public const FACET_TYPE_PRICE_RANGE = 'price-range';
     public const FACET_TYPE_CATEGORY = 'category';
+    public const FACET_TYPE_HIDDEN = 'hidden';
 }
