@@ -57,6 +57,8 @@ class QuoteRequestVersionDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
+        $this->markTestSkipped('Test is not valid. Demodata includes not existing quote request that generates reference field dynamically');
+
         $customerTransfer = $this->tester->haveCustomer();
 
         $quoteTransfer = (new QuoteBuilder())
