@@ -350,6 +350,7 @@
     "spryker/multi-carts-rest-api": "*",
     "spryker/navigation": "*",
     "spryker/navigation-collector": "*",
+    "spryker/navigation-extension": "*",
     "spryker/navigation-gui": "*",
     "spryker/navigation-storage": "*",
     "spryker/navigations-category-nodes-resource-relationship": "*",

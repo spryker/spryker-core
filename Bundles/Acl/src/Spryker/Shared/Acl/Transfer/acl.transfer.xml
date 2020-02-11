@@ -48,4 +48,10 @@
     <transfer name="GroupCriteriaFilter">
     </transfer>
 
+    <transfer name="NavigationItem">
+        <property name="module" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+    </transfer>
+
 </transfers>
