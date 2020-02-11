@@ -8,14 +8,11 @@
 namespace Spryker\Zed\Oauth\Business\Model;
 
 use DateTime;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 
 class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
 {
-    use TransactionTrait;
-
     /**
      * @var \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface
      */
@@ -27,15 +24,23 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
     protected $oauthConfig;
 
     /**
+     * @var \DateTime
+     */
+    protected $dateTime;
+
+    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
+     * @param \DateTime $dateTime
      */
     public function __construct(
         OauthEntityManagerInterface $oauthEntityManager,
-        OauthConfig $oauthConfig
+        OauthConfig $oauthConfig,
+        DateTime $dateTime
     ) {
         $this->oauthEntityManager = $oauthEntityManager;
         $this->oauthConfig = $oauthConfig;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -48,7 +53,7 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
             return null;
         }
 
-        $expiredAt = (new DateTime())
+        $expiredAt = $this->dateTime
             ->add($refreshTokenRetentionInterval)
             ->format('Y-m-d H:i:s');
 

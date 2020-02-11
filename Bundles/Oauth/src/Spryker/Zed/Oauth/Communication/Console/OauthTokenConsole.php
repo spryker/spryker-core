@@ -42,7 +42,7 @@ class OauthTokenConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
-        $output->writeln('<fg=yellow>Cleaning up expired refresh tokens in the database<fg=yellow>');
+        $output->writeln('<fg=yellow>Cleaning up expired refresh tokens in the database</fg=yellow>');
         $output->writeln('');
 
         try {
@@ -54,7 +54,7 @@ class OauthTokenConsole extends Console
             return static::CODE_ERROR;
         }
 
-        $output->writeln("<fg=white>Removed $deleteCount expired refresh tokens </fg=white>");
+        $output->writeln(sprintf("<fg=white>Removed %s expired refresh tokens </fg=white>", $deleteCount));
         $output->writeln('');
         $output->writeln('<fg=green>Finished. All Done.</fg=green>');
     }
