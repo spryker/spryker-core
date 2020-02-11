@@ -37,7 +37,6 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isPriceModeDecisionRuleSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }

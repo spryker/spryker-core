@@ -24,6 +24,7 @@ class ProductBundleCartPostSaveUpdate implements ProductBundleCartPostSaveUpdate
             foreach ($quoteTransfer->getItems() as $itemTransfer) {
                 if ($bundleItemTransfer->getBundleItemIdentifier() == $itemTransfer->getRelatedBundleItemIdentifier()) {
                     $bundleItems->append($bundleItemTransfer);
+
                     break;
                 }
             }
