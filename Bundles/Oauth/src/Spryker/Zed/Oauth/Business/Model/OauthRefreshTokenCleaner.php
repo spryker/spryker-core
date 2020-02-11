@@ -24,23 +24,15 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
     protected $oauthConfig;
 
     /**
-     * @var \DateTime
-     */
-    protected $dateTime;
-
-    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
-     * @param \DateTime $dateTime
      */
     public function __construct(
         OauthEntityManagerInterface $oauthEntityManager,
-        OauthConfig $oauthConfig,
-        DateTime $dateTime
+        OauthConfig $oauthConfig
     ) {
         $this->oauthEntityManager = $oauthEntityManager;
         $this->oauthConfig = $oauthConfig;
-        $this->dateTime = $dateTime;
     }
 
     /**
@@ -53,7 +45,7 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
             return null;
         }
 
-        $expiredAt = $this->dateTime
+        $expiredAt = (new DateTime())
             ->add($refreshTokenRetentionInterval)
             ->format('Y-m-d H:i:s');
 
