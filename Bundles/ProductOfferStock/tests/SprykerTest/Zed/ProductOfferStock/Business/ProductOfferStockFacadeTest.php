@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -26,10 +27,62 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
  */
 class ProductOfferStockFacadeTest extends Unit
 {
+    use DataCleanupHelperTrait;
+
     /**
      * @var \SprykerTest\Zed\ProductOfferStock\ProductOfferStockBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->ensureProductOfferStockTableIsEmpty();
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->getDataCleanupHelper()->_addCleanup(function (): void {
+            $this->tester->ensureProductOfferStockTableIsEmpty();
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsProductOfferNeverOutOfStock(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+
+        $stockTransfer = $this->tester->haveStock([
+            StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
+        ]);
+
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
+            ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => true,
+        ]);
+
+        // Act
+        $productOfferStockRequestTransfer = new ProductOfferStockRequestTransfer();
+        $productOfferStockRequestTransfer->setProductOfferReference($productOfferStockTransfer->getProductOffer()->getProductOfferReference());
+        $productOfferStockRequestTransfer->setStore($storeTransfer);
+
+        $response = $this->tester->getFacade()->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertTrue($response);
+    }
 
     /**
      * @return void

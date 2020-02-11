@@ -5,20 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferAvailability\Dependency\Facade;
+namespace Spryker\Zed\ProductOfferStock\Business\ProductOfferStock;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
-use Spryker\DecimalObject\Decimal;
 
-interface ProductOfferAvailabilityToProductOfferStockFacadeInterface
+interface ProductOfferStockReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
-
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *

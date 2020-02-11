@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductOfferAvailabilityStorage\Reader;
 
+use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Client\ProductOfferAvailabilityStorageToStorageClientInterface;
@@ -57,6 +58,31 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
             $productOfferAvailabilityStorageTransferData,
             new ProductOfferAvailabilityStorageTransfer()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
+     *
+     * @return bool
+     */
+    public function isProductOfferAvailable(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
+    {
+        $productOfferAvailabilityRequestTransfer->requireStore();
+
+        $productOfferAvailabilityStorageTransfer = $this->findByProductOfferReference(
+            $productOfferAvailabilityRequestTransfer->getProductOfferReference(),
+            $productOfferAvailabilityRequestTransfer->getStore()->getName()
+        );
+
+        if (!$productOfferAvailabilityStorageTransfer) {
+            return false;
+        }
+
+        if ($productOfferAvailabilityStorageTransfer->getIsNeverOutOfStock()) {
+            return true;
+        }
+
+        return $productOfferAvailabilityStorageTransfer->getAvailability() && $productOfferAvailabilityStorageTransfer->getAvailability()->isPositive();
     }
 
     /**

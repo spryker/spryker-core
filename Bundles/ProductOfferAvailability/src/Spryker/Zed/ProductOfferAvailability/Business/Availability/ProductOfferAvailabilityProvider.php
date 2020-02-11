@@ -45,6 +45,14 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
      */
     public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
     {
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
+
+        if ($this->productOfferStockFacade->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer)) {
+            return true;
+        }
+
         return $productOfferAvailabilityRequestTransfer->getQuantity()
             ->lessThanOrEquals(
                 $this->calculateAvailabilityForRequest($productOfferAvailabilityRequestTransfer)
@@ -59,11 +67,14 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     public function findProductConcreteAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ?ProductConcreteAvailabilityTransfer
     {
         $availability = $this->calculateAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
 
         return (new ProductConcreteAvailabilityTransfer())
             ->setAvailability($availability)
             ->setSku($productOfferAvailabilityRequestTransfer->getSku())
-            ->setIsNeverOutOfStock(false);
+            ->setIsNeverOutOfStock($this->productOfferStockFacade->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer));
     }
 
     /**
