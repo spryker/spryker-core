@@ -55,4 +55,7 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="Address">
+    </transfer>
+
 </transfers>

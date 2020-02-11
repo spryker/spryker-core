@@ -134,6 +134,7 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
 
             if ($this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $calculableObjectTransfer->getOriginalQuote())) {
                 $applicableGiftCards[] = $giftCardTransfer;
+
                 continue;
             }
 

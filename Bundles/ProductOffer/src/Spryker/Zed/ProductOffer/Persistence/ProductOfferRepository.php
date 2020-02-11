@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\ProductOffer\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -41,6 +44,9 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferTransfer = $this->getFactory()
                 ->createPropelProductOfferMapper()
                 ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
+
+            $productOfferTransfer->setStores($this->getStoresByProductOfferEntity($productOfferEntity));
+
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
 
@@ -65,6 +71,24 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         return $this->getFactory()->createPropelProductOfferMapper()
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $spyProductOfferEntity
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject
+     */
+    protected function getStoresByProductOfferEntity(SpyProductOffer $spyProductOfferEntity): ArrayObject
+    {
+        $storeTransfers = [];
+        foreach ($spyProductOfferEntity->getSpyStores() as $storeEntity) {
+            $storeTransfers[] = $this->getFactory()->createPropelProductOfferMapper()->mapStoreEntityToStoreTransfer(
+                $storeEntity,
+                new StoreTransfer()
+            );
+        }
+
+        return new ArrayObject($storeTransfers);
     }
 
     /**

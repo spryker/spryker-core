@@ -104,11 +104,13 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             if (is_object($value) && $isRecursive) {
                 if ($value instanceof TransferInterface) {
                     $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $camelCasedKeys);
+
                     continue;
                 }
 
                 if ($this->transferMetadata[$property]['is_collection'] && ($value instanceof Countable) && count($value) >= 1) {
                     $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys);
+
                     continue;
                 }
             }

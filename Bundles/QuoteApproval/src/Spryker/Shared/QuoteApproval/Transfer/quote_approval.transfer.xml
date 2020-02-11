@@ -157,4 +157,7 @@
     <transfer name="QuotePermissionGroup">
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
 </transfers>

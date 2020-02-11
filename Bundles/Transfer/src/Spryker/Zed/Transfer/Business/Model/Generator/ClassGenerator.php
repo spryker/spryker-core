@@ -71,16 +71,19 @@ class ClassGenerator implements GeneratorInterface
         foreach ($definition->getNormalizedProperties() as $property) {
             if ($this->isPropertyTypeCollection($property)) {
                 $collections[] = $property;
+
                 continue;
             }
 
             if ($this->isPropertyTypeTransfer($property)) {
                 $transfers[] = $property;
+
                 continue;
             }
 
             if ($this->isPropertyTypeValueObject($property)) {
                 $valueObjects[] = $property;
+
                 continue;
             }
 

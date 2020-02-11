@@ -54,4 +54,7 @@
 
     <transfer name="Currency">
     </transfer>
+
+    <transfer name="ProductOffer">
+    </transfer>
 </transfers>
