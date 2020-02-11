@@ -138,6 +138,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
 
             if ($useStatementFragments[0] === 'Orm') {
                 $dependentComposerNames[] = $useStatementFragments[2];
+
                 continue;
             }
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProfileStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeInterface;
 use Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageDependencyProvider;
 
 /**
@@ -25,5 +26,13 @@ class MerchantProfileStorageCommunicationFactory extends AbstractCommunicationFa
     public function getEventBehaviorFacade(): MerchantProfileStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeInterface
+     */
+    public function getMerchantProfileFacade(): MerchantProfileStorageToMerchantProfileFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileStorageDependencyProvider::FACADE_MERCHANT_PROFILE);
     }
 }

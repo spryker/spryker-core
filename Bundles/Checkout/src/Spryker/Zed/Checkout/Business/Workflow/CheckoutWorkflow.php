@@ -160,6 +160,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         foreach ($this->saveOrderStack as $orderSaver) {
             if ($orderSaver instanceof ObsoleteCheckoutSaveOrderInterface) {
                 $orderSaver->saveOrder($quoteTransfer, $checkoutResponse);
+
                 continue;
             }
 

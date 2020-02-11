@@ -80,7 +80,8 @@ class ExternalDependency extends AbstractDependencyFinder
                 continue;
             }
 
-            if (strpos($className, 'Spryker') !== false
+            if (
+                strpos($className, 'Spryker') !== false
                 || strpos($className, 'Generated') !== false
                 || strpos($className, 'Orm') !== false
                 || strpos($className, 'static') !== false

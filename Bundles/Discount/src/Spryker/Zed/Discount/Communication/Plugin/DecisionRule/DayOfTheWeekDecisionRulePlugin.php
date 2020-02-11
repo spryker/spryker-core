@@ -36,7 +36,6 @@ class DayOfTheWeekDecisionRulePlugin extends AbstractPlugin implements DecisionR
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isDayOfTheWeekSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
