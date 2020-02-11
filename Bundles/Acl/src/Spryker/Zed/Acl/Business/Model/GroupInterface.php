@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 
 interface GroupInterface
@@ -155,13 +154,6 @@ interface GroupInterface
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getGroupById($id);
-
-    /**
-     * @param \Generated\Shared\Transfer\GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\GroupTransfer|null
-     */
-    public function findOne(GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer): ?GroupTransfer;
 
     /**
      * @param int $id

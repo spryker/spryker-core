@@ -49,6 +49,7 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
             $url = $urlTransfer->getUrl();
             if ($urlPrefix === null || preg_match('#^' . $urlPrefix . '#i', $url) > 0) {
                 $merchantProfileUrlCollection->append($urlTransfer);
+
                 continue;
             }
             $url = preg_replace('#^/#', '', $url);

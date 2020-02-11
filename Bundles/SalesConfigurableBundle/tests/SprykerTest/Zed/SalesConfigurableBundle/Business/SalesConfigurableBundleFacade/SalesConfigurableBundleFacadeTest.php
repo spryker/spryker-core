@@ -637,8 +637,10 @@ class SalesConfigurableBundleFacadeTest extends Unit
     protected function translateTemplateNamesForQuote(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()
-                || !$itemTransfer->getConfiguredBundle()->getTemplate()->getName()) {
+            if (
+                !$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()
+                || !$itemTransfer->getConfiguredBundle()->getTemplate()->getName()
+            ) {
                 continue;
             }
 

@@ -8,16 +8,14 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantUser\Business\Group\GroupAdder;
-use Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface;
-use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreator;
-use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreatorInterface;
-use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdater;
-use Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdaterInterface;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriter;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface;
-use Spryker\Zed\MerchantUser\Business\Message\MessageConverter;
-use Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface;
+use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
+use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
+use Spryker\Zed\MerchantUser\Business\User\UserMapper;
+use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
@@ -31,58 +29,47 @@ use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 class MerchantUserBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostCreatorInterface
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface
      */
-    public function createMerchantPostCreator(): MerchantPostCreatorInterface
+    public function createMerchantUserCreator(): MerchantUserCreatorInterface
     {
-        return new MerchantPostCreator(
-            $this->createMerchantUserWriter(),
-            $this->createMessageConverter(),
-            $this->createGroupAdder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\Group\GroupAdderInterface
-     */
-    public function createGroupAdder(): GroupAdderInterface
-    {
-        return new GroupAdder($this->getAclFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\Merchant\MerchantPostUpdaterInterface
-     */
-    public function createMerchantPostUpdater(): MerchantPostUpdaterInterface
-    {
-        return new MerchantPostUpdater(
-            $this->createMerchantUserWriter(),
-            $this->createMerchantPostCreator(),
-            $this->createMessageConverter(),
-            $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserWriterInterface
-     */
-    public function createMerchantUserWriter(): MerchantUserWriterInterface
-    {
-        return new MerchantUserWriter(
+        return new MerchantUserCreator(
+            $this->getUtilTextService(),
+            $this->getUserFacade(),
+            $this->createUserMapper(),
+            $this->createAclGroupAdder(),
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getConfig(),
-            $this->getUserFacade(),
-            $this->getUtilTextService()
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\Message\MessageConverterInterface
+     * @return \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface
      */
-    public function createMessageConverter(): MessageConverterInterface
+    public function createAclGroupAdder(): AclGroupAdderInterface
     {
-        return new MessageConverter();
+        return new AclGroupAdder($this->getAclFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface
+     */
+    public function createUserMapper(): UserMapperInterface
+    {
+        return new UserMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface
+     */
+    public function createMerchantUserUpdater(): MerchantUserUpdaterInterface
+    {
+        return new MerchantUserUpdater(
+            $this->getRepository(),
+            $this->getUserFacade(),
+            $this->createUserMapper()
+        );
     }
 
     /**

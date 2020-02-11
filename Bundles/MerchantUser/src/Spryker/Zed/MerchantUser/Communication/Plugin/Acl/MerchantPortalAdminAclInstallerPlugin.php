@@ -7,11 +7,6 @@
 
 namespace Spryker\Zed\MerchantUser\Communication\Plugin\Acl;
 
-use Generated\Shared\Transfer\GroupTransfer;
-use Generated\Shared\Transfer\RoleTransfer;
-use Generated\Shared\Transfer\RuleTransfer;
-use Generated\Shared\Transfer\UserGroupTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -23,6 +18,7 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
 {
     /**
      * {@inheritDoc}
+     * - Returns Roles required for MerchantUser module.
      *
      * @api
      *
@@ -30,22 +26,12 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
      */
     public function getRoles(): array
     {
-        $roleTransfers = [];
-        foreach ($this->getConfig()->getInstallRoles() as $roleData) {
-            $roleTransfer = (new RoleTransfer())
-                ->fromArray($roleData, true)
-                ->setGroup((new GroupTransfer())->fromArray($roleData['group'], true));
-            $ruleTransfer = (new RuleTransfer())
-                ->fromArray($roleData['rule'], true)
-                ->setRole((new RoleTransfer())->fromArray($roleData, true));
-            $roleTransfers[] = $roleTransfer->setRule($ruleTransfer);
-        }
-
-        return $roleTransfers;
+        return $this->getConfig()->getInstallRoles();
     }
 
     /**
      * {@inheritDoc}
+     * - Returns Groups required for MerchantUser module.
      *
      * @api
      *
@@ -53,30 +39,6 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
      */
     public function getGroups(): array
     {
-        $groupTransfers = [];
-        foreach ($this->getConfig()->getInstallGroups() as $groupData) {
-            $groupTransfers[] = (new GroupTransfer())->fromArray($groupData, true);
-        }
-
-        return $groupTransfers;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\UserGroupTransfer[]
-     */
-    public function getUserGroups(): array
-    {
-        $userGroupTransfers = [];
-        foreach ($this->getConfig()->getInstallUserGroups() as $userGroupData) {
-            $userGroupTransfers[] = (new UserGroupTransfer())
-                ->setUser((new UserTransfer())->fromArray($userGroupData['user']))
-                ->setGroup((new GroupTransfer())->fromArray($userGroupData['group']));
-        }
-
-        return $userGroupTransfers;
+        return $this->getConfig()->getInstallGroups();
     }
 }

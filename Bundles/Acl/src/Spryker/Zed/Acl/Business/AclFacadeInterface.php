@@ -65,7 +65,7 @@ interface AclFacadeInterface
 
     /**
      * Specification:
-     * - Returns group transfer by criteria filter if found.
+     * - Returns group transfer by criteria filter.
      * - Returns NULL otherwise.
      *
      * @api
@@ -254,7 +254,7 @@ interface AclFacadeInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int $type
+     * @param string $type
      *
      * @return bool
      */

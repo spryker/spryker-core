@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Acl\Business;
 
 use Spryker\Zed\Acl\AclDependencyProvider;
-use Spryker\Zed\Acl\Business\Model\AclConverter;
-use Spryker\Zed\Acl\Business\Model\AclConverterInterface;
+use Spryker\Zed\Acl\Business\Acl\AclConfigReader;
+use Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface;
 use Spryker\Zed\Acl\Business\Model\Group;
 use Spryker\Zed\Acl\Business\Model\Installer;
 use Spryker\Zed\Acl\Business\Model\Role;
@@ -29,10 +29,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
      */
     public function createGroupModel()
     {
-        return new Group(
-            $this->getQueryContainer(),
-            $this->getRepository()
-        );
+        return new Group($this->getQueryContainer());
     }
 
     /**
@@ -61,11 +58,11 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Acl\Business\Model\AclConverterInterface
+     * @return \Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface
      */
-    public function createAclConverter(): AclConverterInterface
+    public function createAclConfigReader(): AclConfigReaderInterface
     {
-        return new AclConverter();
+        return new AclConfigReader($this->getConfig());
     }
 
     /**
@@ -85,10 +82,9 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->createGroupModel(),
             $this->createRoleModel(),
             $this->createRuleModel(),
-            $this->createAclConverter(),
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
-            $this->getAclInstallerPlugins(),
-            $this->getConfig()
+            $this->createAclConfigReader(),
+            $this->getAclInstallerPlugins()
         );
     }
 
@@ -105,6 +101,6 @@ class AclBusinessFactory extends AbstractBusinessFactory
      */
     public function getAclInstallerPlugins(): array
     {
-        return $this->getProvidedDependency(AclDependencyProvider::PLUGIN_ACL_INSTALLER_STACK);
+        return $this->getProvidedDependency(AclDependencyProvider::ACL_INSTALLER_PLUGINS);
     }
 }

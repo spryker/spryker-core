@@ -20,6 +20,7 @@
         <property name="idMerchant" type="int"/>
         <property name="idUser" type="int"/>
         <property name="user" type="User"/>
+        <property name="merchant" type="Merchant"/>
     </transfer>
 
     <transfer name="MerchantUserCriteriaFilter">
@@ -30,7 +31,7 @@
 
     <transfer name="MerchantUserResponse">
         <property name="merchantUser" type="MerchantUser"/>
-        <property name="isSuccess" type="bool"/>
+        <property name="isSuccessful" type="bool"/>
         <property name="errors" type="Message[]" singular="error"/>
     </transfer>
 
@@ -59,28 +60,21 @@
 
     <transfer name="Role">
         <property name="name" type="string"/>
-        <property name="group" type="Group"/>
-        <property name="rule" type="Rule"/>
+        <property name="aclGroup" type="Group"/>
+        <property name="aclRules" type="Rule[]" singular="aclRule"/>
     </transfer>
 
     <transfer name="Rule">
         <property name="bundle" type="string"/>
         <property name="controller" type="string"/>
-        <property name="group" type="Group"/>
         <property name="action" type="string"/>
         <property name="type" type="string"/>
-        <property name="role" type="Role"/>
     </transfer>
 
     <transfer name="Group">
         <property name="name" type="string"/>
         <property name="reference" type="string"/>
         <property name="idAclGroup" type="int"/>
-    </transfer>
-
-    <transfer name="UserGroup">
-        <property name="user" type="User"/>
-        <property name="group" type="Group"/>
     </transfer>
 
     <transfer name="GroupCriteriaFilter">

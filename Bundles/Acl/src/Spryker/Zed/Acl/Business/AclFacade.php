@@ -114,9 +114,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      */
     public function findGroup(GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer): ?GroupTransfer
     {
-        return $this->getFactory()
-            ->createGroupModel()
-            ->findOne($groupCriteriaFilterTransfer);
+        return $this->getRepository()->findGroup($groupCriteriaFilterTransfer);
     }
 
     /**
@@ -381,7 +379,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int $type
+     * @param string $type
      *
      * @return bool
      */

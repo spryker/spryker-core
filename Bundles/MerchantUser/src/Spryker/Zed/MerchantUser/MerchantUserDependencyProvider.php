@@ -45,7 +45,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserFacade(Container $container): Container
     {
-        $container->set(self::FACADE_USER, function (Container $container) {
+        $container->set(static::FACADE_USER, function (Container $container) {
             return new MerchantUserToUserFacadeBridge(
                 $container->getLocator()->user()->facade()
             );
@@ -61,7 +61,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilTextService(Container $container): Container
     {
-        $container->set(self::SERVICE_UTIL_TEXT, function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new MerchantUserToUtilTextServiceBridge(
                 $container->getLocator()->utilText()->service()
             );
@@ -77,7 +77,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAclFacade(Container $container): Container
     {
-        $container->set(self::FACADE_ACL, function (Container $container) {
+        $container->set(static::FACADE_ACL, function (Container $container) {
             return new MerchantUserToAclFacadeBridge(
                 $container->getLocator()->acl()->facade()
             );

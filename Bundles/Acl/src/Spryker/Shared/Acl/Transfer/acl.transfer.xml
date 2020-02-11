@@ -7,11 +7,6 @@
     <transfer name="Group">
         <property name="idAclGroup" type="int"/>
         <property name="name" type="string"/>
-        <property name="reference" type="string"/>
-    </transfer>
-
-    <transfer name="GroupCriteriaFilter">
-        <property name="reference" type="string"/>
     </transfer>
 
     <transfer name="Groups">
@@ -23,8 +18,8 @@
         <property name="name" type="string"/>
         <property name="idGroup" type="int"/>
         <property name="rules" type="string"/>
-        <property name="group" type="Group"/>
-        <property name="rule" type="Rule"/>
+        <property name="aclGroup" type="Group"/>
+        <property name="aclRules" type="Rule[]" singular="aclRule"/>
     </transfer>
 
     <transfer name="Roles">
@@ -38,7 +33,6 @@
         <property name="action" type="string"/>
         <property name="type" type="string"/>
         <property name="fkAclRole" type="int"/>
-        <property name="role" type="Role"/>
     </transfer>
 
     <transfer name="Rules">
@@ -48,11 +42,10 @@
     <transfer name="User">
         <property name="idUser" type="int"/>
         <property name="username" type="string"/>
+        <property name="aclGroups" type="Group[]" singular="aclGroup"/>
     </transfer>
 
-    <transfer name="UserGroup">
-        <property name="user" type="User"/>
-        <property name="group" type="Group"/>
+    <transfer name="GroupCriteriaFilter">
     </transfer>
 
     <transfer name="NavigationItem">

@@ -25,7 +25,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
     {
         $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
-        $merchantUserQuery = $this->applyFilters($merchantUserQuery, $merchantUserCriteriaFilterTransfer);
+        $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaFilterTransfer);
 
         $merchantUserEntity = $merchantUserQuery->findOne();
 
@@ -44,7 +44,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
      *
      * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery
      */
-    protected function applyFilters(
+    protected function applyCriteria(
         SpyMerchantUserQuery $merchantUserQuery,
         MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
     ): SpyMerchantUserQuery {
@@ -55,6 +55,8 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
         if ($merchantUserCriteriaFilterTransfer->getIdMerchant()) {
             $merchantUserQuery->filterByFkMerchant($merchantUserCriteriaFilterTransfer->getIdMerchant());
         }
+
+        $merchantUserQuery->orderByIdMerchantUser();
 
         return $merchantUserQuery;
     }
