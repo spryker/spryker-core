@@ -9,7 +9,7 @@ namespace Spryker\Client\ShoppingListsRestApi\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -109,17 +109,17 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
     /**
      * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::addShoppingListItemAction()
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function addShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/add-shopping-list-item',
-            $restShoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer
         );
 
         return $shoppingListItemResponseTransfer;
@@ -128,17 +128,17 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
     /**
      * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::deleteShoppingListItemAction()
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function deleteShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/delete-shopping-list-item',
-            $restShoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer
         );
 
         return $shoppingListItemResponseTransfer;
@@ -147,17 +147,17 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
     /**
      * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::updateShoppingListItemAction()
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function updateShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/update-shopping-list-item',
-            $restShoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer
         );
 
         return $shoppingListItemResponseTransfer;

@@ -9,7 +9,7 @@ namespace Spryker\Client\ShoppingListsRestApi\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -53,29 +53,29 @@ interface ShoppingListsRestApiStubInterface
     ): ShoppingListResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function addShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function deleteShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function updateShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer;
 }

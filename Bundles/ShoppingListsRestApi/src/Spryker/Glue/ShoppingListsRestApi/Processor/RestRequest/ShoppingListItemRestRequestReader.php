@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest;
 
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
@@ -18,16 +18,16 @@ class ShoppingListItemRestRequestReader implements ShoppingListItemRestRequestRe
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemRequestTransfer
      */
-    public function readRestShoppingListItemRequestTransferFromRequest(RestRequestInterface $restRequest): RestShoppingListItemRequestTransfer
+    public function readShoppingListItemRequestTransferFromRequest(RestRequestInterface $restRequest): ShoppingListItemRequestTransfer
     {
         $uuidShoppingList = $this->readUuidShoppingList($restRequest);
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
 
-        return (new RestShoppingListItemRequestTransfer())
+        return (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($uuidShoppingList)
             ->setShoppingListItem($shoppingListItemTransfer);
     }
@@ -35,26 +35,26 @@ class ShoppingListItemRestRequestReader implements ShoppingListItemRestRequestRe
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemRequestTransfer
      */
-    public function readRestShoppingListItemRequestTransferByUuid(RestRequestInterface $restRequest): RestShoppingListItemRequestTransfer
+    public function readShoppingListItemRequestTransferByUuid(RestRequestInterface $restRequest): ShoppingListItemRequestTransfer
     {
         $uuidShoppingListItem = $restRequest->getResource()->getId();
         if (!$uuidShoppingListItem) {
-            return (new RestShoppingListItemRequestTransfer())->addErrorCode(
+            return (new ShoppingListItemRequestTransfer())->addErrorCode(
                 SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED
             );
         }
 
-        $restShoppingListItemRequestTransfer = $this->readRestShoppingListItemRequestTransferFromRequest($restRequest);
+        $shoppingListItemRequestTransfer = $this->readShoppingListItemRequestTransferFromRequest($restRequest);
 
-        if (count($restShoppingListItemRequestTransfer->getErrorCodes()) > 0) {
-            return $restShoppingListItemRequestTransfer;
+        if (count($shoppingListItemRequestTransfer->getErrorCodes()) > 0) {
+            return $shoppingListItemRequestTransfer;
         }
 
-        $restShoppingListItemRequestTransfer->getShoppingListItem()->setUuid($uuidShoppingListItem);
+        $shoppingListItemRequestTransfer->getShoppingListItem()->setUuid($uuidShoppingListItem);
 
-        return $restShoppingListItemRequestTransfer;
+        return $shoppingListItemRequestTransfer;
     }
 
     /**

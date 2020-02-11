@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
@@ -45,15 +45,15 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function deleteItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
         $shoppingListItemResponseTransfer = $this->shoppingListItemReader->findShoppingListItem(
-            $restShoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer
         );
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {

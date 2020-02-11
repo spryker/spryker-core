@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 
 interface ShoppingListItemAdderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function addShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer;
 }

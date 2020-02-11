@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ShoppingListsRestApi\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -263,7 +263,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
@@ -300,7 +300,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
@@ -327,7 +327,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
@@ -356,7 +356,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID);
 
         $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
@@ -371,7 +371,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
@@ -404,7 +404,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::BAD_SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
@@ -432,7 +432,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
@@ -460,7 +460,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
@@ -483,7 +483,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListsRestApiFacade = $this->tester->getFacade();
         $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiBusinessFactory());
 
-        $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
+        $restShoppingListRequestTransfer = (new ShoppingListItemRequestTransfer())
             ->setShoppingListUuid($this->tester::READ_ONLY_SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())

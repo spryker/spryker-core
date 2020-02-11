@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
@@ -45,16 +45,15 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function updateShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        //TODO rename request transfer (remove Rest prefix)
         $shoppingListItemResponseTransfer = $this->shoppingListItemReader->findShoppingListItem(
-            $restShoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer
         );
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
@@ -63,7 +62,7 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
 
         $shoppingListItemTransfer = $shoppingListItemResponseTransfer->getShoppingListItem()
             ->fromArray(
-                $restShoppingListItemRequestTransfer->getShoppingListItem()->modifiedToArray(),
+                $shoppingListItemRequestTransfer->getShoppingListItem()->modifiedToArray(),
                 true
             );
 

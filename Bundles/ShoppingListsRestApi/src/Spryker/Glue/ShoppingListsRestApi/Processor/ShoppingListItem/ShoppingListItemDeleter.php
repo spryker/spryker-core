@@ -53,17 +53,17 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
     public function deleteShoppingListItem(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        $restShoppingListItemRequestTransfer = $this->shoppingListItemRestRequestReader->readRestShoppingListItemRequestTransferByUuid(
+        $shoppingListItemRequestTransfer = $this->shoppingListItemRestRequestReader->readShoppingListItemRequestTransferByUuid(
             $restRequest
         );
 
-        if (count($restShoppingListItemRequestTransfer->getErrorCodes()) > 0) {
+        if (count($shoppingListItemRequestTransfer->getErrorCodes()) > 0) {
             return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $restShoppingListItemRequestTransfer->getErrorCodes()
+                $shoppingListItemRequestTransfer->getErrorCodes()
             );
         }
 
-        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->deleteShoppingListItem($restShoppingListItemRequestTransfer);
+        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->deleteShoppingListItem($shoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(

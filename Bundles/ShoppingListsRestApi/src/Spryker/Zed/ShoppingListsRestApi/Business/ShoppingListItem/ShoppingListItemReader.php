@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
 use ArrayObject;
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -41,16 +41,16 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function findShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
         $shoppingListResponseTransfer = $this->shoppingListFacade->findShoppingListByUuid(
-            $this->shoppingListItemMapper->mapRestShoppingListItemRequestTransferToShoppingListTransfer(
-                $restShoppingListItemRequestTransfer,
+            $this->shoppingListItemMapper->mapShoppingListItemRequestTransferToShoppingListTransfer(
+                $shoppingListItemRequestTransfer,
                 new ShoppingListTransfer()
             )
         );
@@ -64,7 +64,7 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
 
         $shoppingListItemTransfer = $this->findShoppingListItemTransfer(
             $shoppingListResponseTransfer->getShoppingList()->getItems(),
-            $restShoppingListItemRequestTransfer->getShoppingListItem()->getUuid()
+            $shoppingListItemRequestTransfer->getShoppingListItem()->getUuid()
         );
 
         if (!$shoppingListItemTransfer) {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface;
@@ -47,17 +47,17 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function addShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        $restShoppingListItemRequestTransfer->requireShoppingListItem();
+        $shoppingListItemRequestTransfer->requireShoppingListItem();
         $shoppingListResponseTransferByUuid = $this->shoppingListFacade->findShoppingListByUuid(
-            $this->shoppingListItemMapper->mapRestShoppingListItemRequestTransferToShoppingListTransfer(
-                $restShoppingListItemRequestTransfer,
+            $this->shoppingListItemMapper->mapShoppingListItemRequestTransferToShoppingListTransfer(
+                $shoppingListItemRequestTransfer,
                 new ShoppingListTransfer()
             )
         );
@@ -69,7 +69,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             );
         }
 
-        $shoppingListItem = $restShoppingListItemRequestTransfer->getShoppingListItem()
+        $shoppingListItem = $shoppingListItemRequestTransfer->getShoppingListItem()
             ->setIdCompanyUser($shoppingListResponseTransferByUuid->getShoppingList()->getIdCompanyUser())
             ->setFkShoppingList($shoppingListResponseTransferByUuid->getShoppingList()->getIdShoppingList());
 

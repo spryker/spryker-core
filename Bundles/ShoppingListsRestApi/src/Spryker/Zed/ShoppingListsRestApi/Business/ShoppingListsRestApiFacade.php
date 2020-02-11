@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -90,14 +90,14 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function addShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        return $this->getFactory()->createShoppingListItemAdder()->addShoppingListItem($restShoppingListItemRequestTransfer);
+        return $this->getFactory()->createShoppingListItemAdder()->addShoppingListItem($shoppingListItemRequestTransfer);
     }
 
     /**
@@ -105,14 +105,14 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function deleteShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        return $this->getFactory()->createShoppingListItemDeleter()->deleteItem($restShoppingListItemRequestTransfer);
+        return $this->getFactory()->createShoppingListItemDeleter()->deleteItem($shoppingListItemRequestTransfer);
     }
 
     /**
@@ -120,13 +120,13 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function updateShoppingListItem(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        return $this->getFactory()->createShoppingListItemUpdater()->updateShoppingListItem($restShoppingListItemRequestTransfer);
+        return $this->getFactory()->createShoppingListItemUpdater()->updateShoppingListItem($shoppingListItemRequestTransfer);
     }
 }

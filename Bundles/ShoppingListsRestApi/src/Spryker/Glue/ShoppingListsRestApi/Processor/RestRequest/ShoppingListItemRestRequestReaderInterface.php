@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest;
 
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface ShoppingListItemRestRequestReaderInterface
@@ -15,14 +15,14 @@ interface ShoppingListItemRestRequestReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemRequestTransfer
      */
-    public function readRestShoppingListItemRequestTransferFromRequest(RestRequestInterface $restRequest): RestShoppingListItemRequestTransfer;
+    public function readShoppingListItemRequestTransferFromRequest(RestRequestInterface $restRequest): ShoppingListItemRequestTransfer;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemRequestTransfer
      */
-    public function readRestShoppingListItemRequestTransferByUuid(RestRequestInterface $restRequest): RestShoppingListItemRequestTransfer;
+    public function readShoppingListItemRequestTransferByUuid(RestRequestInterface $restRequest): ShoppingListItemRequestTransfer;
 }

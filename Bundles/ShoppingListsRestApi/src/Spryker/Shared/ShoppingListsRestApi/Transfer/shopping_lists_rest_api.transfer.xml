@@ -32,7 +32,7 @@
         <property name="fkShoppingList" type="int"/>
     </transfer>
 
-    <transfer name="RestShoppingListItemRequest">
+    <transfer name="ShoppingListItemRequest">
         <property name="shoppingListItem" type="ShoppingListItem"/>
         <property name="shoppingListUuid" type="string"/>
         <property name="companyUserUuid" type="string"/>

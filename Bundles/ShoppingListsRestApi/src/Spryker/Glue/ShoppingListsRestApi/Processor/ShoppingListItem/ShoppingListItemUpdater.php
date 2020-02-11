@@ -65,22 +65,22 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
         RestRequestInterface $restRequest,
         RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
     ): RestResponseInterface {
-        $restShoppingListItemRequestTransfer = $this->shoppingListItemRestRequestReader->readRestShoppingListItemRequestTransferByUuid(
+        $shoppingListItemRequestTransfer = $this->shoppingListItemRestRequestReader->readShoppingListItemRequestTransferByUuid(
             $restRequest
         );
 
-        if (count($restShoppingListItemRequestTransfer->getErrorCodes()) > 0) {
+        if (count($shoppingListItemRequestTransfer->getErrorCodes()) > 0) {
             return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $restShoppingListItemRequestTransfer->getErrorCodes()
+                $shoppingListItemRequestTransfer->getErrorCodes()
             );
         }
 
-        $restShoppingListItemRequestTransfer = $this->shoppingListItemMapper->mapRestShoppingListItemsAttributesTransferToRestShoppingListItemRequestTransfer(
+        $shoppingListItemRequestTransfer = $this->shoppingListItemMapper->mapRestShoppingListItemsAttributesTransferToShoppingListItemRequestTransfer(
             $restShoppingListItemsAttributesTransfer,
-            $restShoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer
         );
 
-        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->updateShoppingListItem($restShoppingListItemRequestTransfer);
+        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->updateShoppingListItem($shoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
@@ -90,7 +90,7 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
 
         return $this->shoppingListItemRestResponseBuilder->buildShoppingListItemRestResponse(
             $shoppingListItemResponseTransfer->getShoppingListItem(),
-            $restShoppingListItemRequestTransfer->getShoppingListUuid()
+            $shoppingListItemRequestTransfer->getShoppingListUuid()
         );
     }
 }
