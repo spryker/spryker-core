@@ -52,7 +52,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter
      */
-    protected function createMenuFormatter()
+    public function createMenuFormatter()
     {
         $urlBuilder = $this->getUrlBuilder();
         $urlUniqueValidator = $this->createUrlUniqueValidator();
@@ -68,7 +68,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinder
      */
-    protected function createNavigationSchemaFinder()
+    public function createNavigationSchemaFinder()
     {
         return new ZedNavigationSchemaFinder(
             $this->getConfig()->getNavigationSchemaPathPattern(),
@@ -79,7 +79,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollector
      */
-    protected function createNavigationCollector()
+    public function createNavigationCollector()
     {
         return new ZedNavigationCollector(
             $this->createNavigationSchemaFinder(),
@@ -90,7 +90,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractor
      */
-    protected function createPathExtractor()
+    public function createPathExtractor()
     {
         return new PathExtractor();
     }
@@ -98,7 +98,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Validator\MenuLevelValidator
      */
-    protected function createMenuLevelValidator()
+    public function createMenuLevelValidator()
     {
         $maxMenuCount = $this->getConfig()->getMaxMenuLevelCount();
 
@@ -108,7 +108,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache
      */
-    protected function createNavigationCache()
+    public function createNavigationCache()
     {
         return new ZedNavigationCache(
             $this->getConfig()->getCacheFile(),
@@ -120,7 +120,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingInterface
      */
-    protected function getUtilEncodingService()
+    public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(ZedNavigationDependencyProvider::SERVICE_ENCODING);
     }
@@ -128,15 +128,15 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
      */
-    protected function getNavigationItemFilterPlugins(): array
+    public function getNavigationItemFilterPlugins(): array
     {
-        return $this->getProvidedDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER_STACK);
+        return $this->getProvidedDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER);
     }
 
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCollectorCacheDecorator
      */
-    protected function createCachedNavigationCollector()
+    public function createCachedNavigationCollector()
     {
         return new ZedNavigationCollectorCacheDecorator(
             $this->createNavigationCollector(),
@@ -148,7 +148,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Url\UrlBuilderInterface
      */
-    protected function getUrlBuilder()
+    public function getUrlBuilder()
     {
         return $this->getProvidedDependency(ZedNavigationDependencyProvider::URL_BUILDER);
     }
@@ -156,7 +156,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidator
      */
-    protected function createUrlUniqueValidator()
+    public function createUrlUniqueValidator()
     {
         return new UrlUniqueValidator();
     }

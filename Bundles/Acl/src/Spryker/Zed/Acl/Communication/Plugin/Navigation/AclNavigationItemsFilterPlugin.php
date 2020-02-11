@@ -25,11 +25,11 @@ class AclNavigationItemsFilterPlugin extends AbstractPlugin implements Navigatio
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\NavigationItemTransfer $navigationItem
+     * @param \Generated\Shared\Transfer\NavigationItemTransfer $navigationItemTransfer
      *
      * @return bool
      */
-    public function isVisible(NavigationItemTransfer $navigationItem): bool
+    public function isVisible(NavigationItemTransfer $navigationItemTransfer): bool
     {
         $userFacade = $this->getFactory()->getUserFacade();
 
@@ -39,9 +39,9 @@ class AclNavigationItemsFilterPlugin extends AbstractPlugin implements Navigatio
 
         return $this->getFacade()->checkAccess(
             $userFacade->getCurrentUser(),
-            $navigationItem->getModule(),
-            $navigationItem->getController(),
-            $navigationItem->getAction()
+            $navigationItemTransfer->getModule(),
+            $navigationItemTransfer->getController(),
+            $navigationItemTransfer->getAction()
         );
     }
 }

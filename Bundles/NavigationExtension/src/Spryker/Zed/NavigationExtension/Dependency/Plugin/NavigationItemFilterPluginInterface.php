@@ -17,9 +17,9 @@ interface NavigationItemFilterPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\NavigationItemTransfer $navigationItem
+     * @param \Generated\Shared\Transfer\NavigationItemTransfer $navigationItemTransfer
      *
      * @return bool
      */
-    public function isVisible(NavigationItemTransfer $navigationItem): bool;
+    public function isVisible(NavigationItemTransfer $navigationItemTransfer): bool;
 }

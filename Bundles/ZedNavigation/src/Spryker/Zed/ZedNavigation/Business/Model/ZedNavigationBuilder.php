@@ -17,7 +17,7 @@ class ZedNavigationBuilder
 {
     public const MENU = 'menu';
     public const PATH = 'path';
-    public const PAGES = 'pages';
+    protected const NAVIGATION_ITEM_PAGES_KEY = 'pages';
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface
@@ -64,11 +64,11 @@ class ZedNavigationBuilder
      */
     public function build($pathInfo)
     {
-        $navigationPages = $this->navigationCollector->getNavigation();
-        $navigationPages = $this->filterItems($navigationPages);
+        $navigationItems = $this->navigationCollector->getNavigation();
+        $navigationItems = $this->filterNavigationItems($navigationItems);
 
-        $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, false);
-        $breadcrumb = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, true);
+        $menu = $this->menuFormatter->formatMenu($navigationItems, $pathInfo, false);
+        $breadcrumb = $this->menuFormatter->formatMenu($navigationItems, $pathInfo, true);
         $path = $this->pathExtractor->extractPathFromMenu($breadcrumb);
 
         return [
@@ -82,20 +82,22 @@ class ZedNavigationBuilder
      *
      * @return array
      */
-    protected function filterItems(array $navigationItems): array
+    protected function filterNavigationItems(array $navigationItems): array
     {
         $filteredNavigationItems = [];
-        foreach ($navigationItems as $itemKey => $item) {
-            if (!$this->isLeaf($item) && $this->isPageVisible($item)) {
-                $filteredNavigationItems[$itemKey] = $item;
+        foreach ($navigationItems as $itemKey => $navigationItem) {
+            if ($this->hasNestedNavigationItems($navigationItem)) {
+                $filteredNestedNavigationItems = $this->filterNavigationItems($navigationItem[static::NAVIGATION_ITEM_PAGES_KEY]);
+                if ($filteredNestedNavigationItems) {
+                    $navigationItem[static::NAVIGATION_ITEM_PAGES_KEY] = $filteredNestedNavigationItems;
+                    $filteredNavigationItems[] = $navigationItem;
+                }
+
+                continue;
             }
 
-            if ($this->isLeaf($item)) {
-                $filteredPages = $this->filterItems($item[static::PAGES]);
-                if ($filteredPages) {
-                    $item[static::PAGES] = $filteredPages;
-                    $filteredNavigationItems[$itemKey] = $item;
-                }
+            if ($this->isNavigationItemVisible($navigationItem)) {
+                $filteredNavigationItems[] = $navigationItem;
             }
         }
 
@@ -103,19 +105,19 @@ class ZedNavigationBuilder
     }
 
     /**
-     * @param array $page
+     * @param array $navigationItem
      *
      * @return bool
      */
-    protected function isPageVisible(array $page): bool
+    protected function isNavigationItemVisible(array $navigationItem): bool
     {
-        $itemTransfer = (new NavigationItemTransfer())
-            ->setModule($page[RuleTransfer::BUNDLE])
-            ->setController($page[RuleTransfer::CONTROLLER])
-            ->setAction($page[RuleTransfer::ACTION]);
+        $navigationItemTransfer = (new NavigationItemTransfer())
+            ->setModule($navigationItem[RuleTransfer::BUNDLE])
+            ->setController($navigationItem[RuleTransfer::CONTROLLER])
+            ->setAction($navigationItem[RuleTransfer::ACTION]);
 
-        foreach ($this->navigationItemFilterPlugins as $plugin) {
-            if (!$plugin->isVisible($itemTransfer)) {
+        foreach ($this->navigationItemFilterPlugins as $navigationItemFilterPlugin) {
+            if (!$navigationItemFilterPlugin->isVisible($navigationItemTransfer)) {
                 return false;
             }
         }
@@ -124,12 +126,12 @@ class ZedNavigationBuilder
     }
 
     /**
-     * @param array $section
+     * @param array $navigationItem
      *
      * @return bool
      */
-    protected function isLeaf(array $section): bool
+    protected function hasNestedNavigationItems(array $navigationItem): bool
     {
-        return !isset($section[RuleTransfer::BUNDLE], $section[RuleTransfer::CONTROLLER], $section[RuleTransfer::ACTION]);
+        return isset($navigationItem[static::NAVIGATION_ITEM_PAGES_KEY]);
     }
 }
