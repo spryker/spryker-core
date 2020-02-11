@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsBlockStorageFacade extends AbstractFacade implements CmsBlockStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -23,13 +23,13 @@ class CmsBlockStorageFacade extends AbstractFacade implements CmsBlockStorageFac
      *
      * @return void
      */
-    public function publish(array $cmsBlockIds)
+    public function publish(array $cmsBlockIds): void
     {
         $this->getFactory()->createCmsBlockStorageWriter()->publish($cmsBlockIds);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class CmsBlockStorageFacade extends AbstractFacade implements CmsBlockStorageFac
      *
      * @return void
      */
-    public function unpublish(array $cmsBlockIds)
+    public function unpublish(array $cmsBlockIds): void
     {
         $this->getFactory()->createCmsBlockStorageWriter()->unpublish($cmsBlockIds);
     }

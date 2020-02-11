@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -24,6 +24,7 @@ use Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResp
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
+ * @method \Spryker\Client\AuthRestApi\AuthRestApiClientInterface getClient()
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiConfig getConfig()
  */
 class AuthRestApiFactory extends AbstractFactory
@@ -34,7 +35,7 @@ class AuthRestApiFactory extends AbstractFactory
     public function createAccessTokensReader(): AccessTokensReaderInterface
     {
         return new AccessTokensReader(
-            $this->getOauthClient(),
+            $this->getClient(),
             $this->getResourceBuilder(),
             $this->getConfig()
         );

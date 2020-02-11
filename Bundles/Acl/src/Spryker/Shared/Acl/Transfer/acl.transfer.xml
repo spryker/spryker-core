@@ -5,36 +5,41 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Group">
-        <property name="idAclGroup" type="int" />
-        <property name="name" type="string" />
+        <property name="idAclGroup" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Groups">
-        <property name="groups" type="Group[]" singular="group" />
+        <property name="groups" type="Group[]" singular="group"/>
     </transfer>
 
     <transfer name="Role">
-        <property name="idAclRole" type="int" />
-        <property name="name" type="string" />
-        <property name="idGroup" type="int" />
-        <property name="rules" type="string" />
+        <property name="idAclRole" type="int"/>
+        <property name="name" type="string"/>
+        <property name="idGroup" type="int"/>
+        <property name="rules" type="string"/>
     </transfer>
 
     <transfer name="Roles">
-        <property name="roles" type="Role[]" singular="role" />
+        <property name="roles" type="Role[]" singular="role"/>
     </transfer>
 
     <transfer name="Rule">
-        <property name="idAclRule" type="int" />
-        <property name="bundle" type="string" />
-        <property name="controller" type="string" />
-        <property name="action" type="string" />
-        <property name="type" type="string" />
-        <property name="fkAclRole" type="int" />
+        <property name="idAclRule" type="int"/>
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+        <property name="fkAclRole" type="int"/>
     </transfer>
 
     <transfer name="Rules">
-        <property name="rules" type="Rule[]" singular="rule" />
+        <property name="rules" type="Rule[]" singular="rule"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+        <property name="username" type="string"/>
     </transfer>
 
 </transfers>

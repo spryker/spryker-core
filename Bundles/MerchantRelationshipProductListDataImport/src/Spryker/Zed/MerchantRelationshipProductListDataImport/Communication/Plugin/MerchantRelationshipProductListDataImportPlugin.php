@@ -20,7 +20,7 @@ use Spryker\Zed\MerchantRelationshipProductListDataImport\MerchantRelationshipPr
 class MerchantRelationshipProductListDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class MerchantRelationshipProductListDataImportPlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

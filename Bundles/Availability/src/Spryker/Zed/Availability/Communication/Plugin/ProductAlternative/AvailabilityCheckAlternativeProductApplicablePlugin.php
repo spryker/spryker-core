@@ -19,7 +19,7 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProduct
 class AvailabilityCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

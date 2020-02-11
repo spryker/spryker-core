@@ -22,7 +22,7 @@ class CategoryNodeStoragePublishListener extends AbstractPlugin implements Event
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

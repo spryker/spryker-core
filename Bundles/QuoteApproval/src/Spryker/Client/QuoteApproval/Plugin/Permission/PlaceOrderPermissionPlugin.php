@@ -16,7 +16,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
     public const FIELD_STORE_MULTI_CURRENCY = 'store_multi_currency';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if customer is allowed to place order with cent amount up to some value for specific currency, provided in configuration.
      * - Returns false, if context is not provided.
      * - Returns true, if configuration does not have cent amount for specific currency set.
@@ -50,7 +50,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Console\Business;
 
-use Spryker\Zed\Console\Business\Model\ConsoleRunnerHook;
+use Spryker\Shared\Console\Hook\ConsoleRunnerHook;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class ConsoleBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Console\Business\Model\ConsoleRunnerHookInterface
+     * @return \Spryker\Shared\Console\Hook\ConsoleRunnerHookInterface
      */
     public function createConsoleRunnerHook()
     {

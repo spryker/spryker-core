@@ -66,7 +66,9 @@ class ImageCollectionForm extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @return string
      */
     public function getBlockPrefix()
     {
@@ -74,7 +76,11 @@ class ImageCollectionForm extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {

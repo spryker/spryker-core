@@ -87,6 +87,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
 
         $quoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
+        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
         $updatedQuoteResponseTransfer = $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
 
         $mergedQuoteResponseTransfer = $this->mergeQuoteResponseTransfers($quoteResponseTransfer, $updatedQuoteResponseTransfer);
@@ -132,13 +133,12 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
 
         $cartChangeTransfer = $this->cartChangeRequestExpander->removeItemRequestExpand($cartChangeTransfer);
-        $quoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
-        $this->quoteFacade->updateQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->cartFacade->removeFromCart($cartChangeTransfer);
+        $updatedQuoteResponseTransfer = $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
 
-        $quoteResponseTransfer->setIsSuccessful(true);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $mergedQuoteResponseTransfer = $this->mergeQuoteResponseTransfers($quoteResponseTransfer, $updatedQuoteResponseTransfer);
 
-        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        return $this->quoteResponseExpander->expand($mergedQuoteResponseTransfer);
     }
 
     /**
@@ -148,15 +148,18 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        if (count($quoteTransfer->getItems())) {
-            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
-        }
-        $this->quoteFacade->updateQuote($quoteTransfer);
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setIsSuccessful(true);
 
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-        $quoteResponseTransfer->setIsSuccessful(true);
+        if (count($quoteTransfer->getItems())) {
+            $quoteResponseTransfer = $this->cartFacade->reloadItemsInQuote($quoteTransfer);
+        }
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
+        }
 
         return $quoteResponseTransfer;
     }
@@ -183,7 +186,8 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
+        if (
+            $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             )

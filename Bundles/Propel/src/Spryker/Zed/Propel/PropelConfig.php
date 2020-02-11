@@ -97,7 +97,7 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCorePropelSchemaPathPatterns()
     {
@@ -188,5 +188,13 @@ class PropelConfig extends AbstractBundleConfig
     public function getProcessTimeout()
     {
         return static::PROCESS_TIMEOUT;
+    }
+
+    /**
+     * @return bool
+     */
+    public function allowIndexOverriding(): bool
+    {
+        return false;
     }
 }

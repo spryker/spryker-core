@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilUuidGeneratorService extends AbstractService implements UtilUuidGeneratorServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

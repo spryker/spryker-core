@@ -14,6 +14,7 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -27,7 +28,7 @@ class ItemSkuDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testDecisionRuleWhenCurrentItemSkuMatchesShouldReturnTrue()
+    public function testDecisionRuleWhenCurrentItemSkuMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $itemSku) {
@@ -49,7 +50,7 @@ class ItemSkuDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
      */
-    protected function createItemSkuDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createItemSkuDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null): ItemSkuDecisionRule
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

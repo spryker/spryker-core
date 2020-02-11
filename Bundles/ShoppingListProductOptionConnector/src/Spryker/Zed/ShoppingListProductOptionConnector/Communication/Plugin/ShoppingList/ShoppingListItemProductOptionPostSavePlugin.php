@@ -18,7 +18,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSave
 class ShoppingListItemProductOptionPostSavePlugin extends AbstractPlugin implements ShoppingListItemPostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Saves the new list of product options to the shopping list item in persistence.
      *
      * @api

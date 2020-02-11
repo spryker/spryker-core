@@ -12,6 +12,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderP
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search
@@ -32,7 +33,7 @@ abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQ
      *
      * @return void
      */
-    public function testFacetQueryExpanderShouldCreateAggregationsBasedOnSearchConfig(SearchConfigInterface $searchConfig, array $expectedAggregations, array $params = [])
+    public function testFacetQueryExpanderShouldCreateAggregationsBasedOnSearchConfig(SearchConfigInterface $searchConfig, array $expectedAggregations, array $params = []): void
     {
         $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
 
@@ -49,5 +50,5 @@ abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQ
     /**
      * @return array
      */
-    abstract public function facetQueryExpanderDataProvider();
+    abstract public function facetQueryExpanderDataProvider(): array;
 }

@@ -12,6 +12,7 @@ use SprykerTest\Shared\Kernel\Fixtures\MissingPropertyLocator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Kernel
@@ -23,7 +24,7 @@ class AbstractLocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCreateInstanceShouldThrowExceptionIfApplicationNotDefined()
+    public function testCreateInstanceShouldThrowExceptionIfApplicationNotDefined(): void
     {
         $this->expectException('\Exception');
 
@@ -33,7 +34,7 @@ class AbstractLocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCanCreateShouldThrowException()
+    public function testCanCreateShouldThrowException(): void
     {
         $this->expectException('\Exception');
 

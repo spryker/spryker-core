@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -21,6 +22,10 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAv
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapperInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapper;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapperInterface;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductAbstractAvailabilityRestResponseBuilder;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductAbstractAvailabilityRestResponseBuilderInterface;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductConcreteAvailabilityRestResponseBuilder;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductConcreteAvailabilityRestResponseBuilderInterface;
 
 class ProductAvailabilitiesRestApiFactory extends AbstractFactory
 {
@@ -32,8 +37,7 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
         return new AbstractProductAvailabilitiesReader(
             $this->getProductStorageClient(),
             $this->getAvailabilityStorageClient(),
-            $this->getResourceBuilder(),
-            $this->createAbstractProductsAvailabilitiesResourceMapper()
+            $this->createProductAbstractAvailabilityRestResponseBuilder()
         );
     }
 
@@ -45,8 +49,7 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
         return new ConcreteProductAvailabilitiesReader(
             $this->getAvailabilityStorageClient(),
             $this->getProductStorageClient(),
-            $this->getResourceBuilder(),
-            $this->createConcreteProductsAvailabilitiesResourceMapper()
+            $this->createProductConcreteAvailabilityRestResponseBuilder()
         );
     }
 
@@ -72,6 +75,28 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
     public function createAbstractProductsAvailabilitiesResourceMapper(): AbstractProductAvailabilitiesResourceMapperInterface
     {
         return new AbstractProductAvailabilitiesResourceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductConcreteAvailabilityRestResponseBuilderInterface
+     */
+    public function createProductConcreteAvailabilityRestResponseBuilder(): ProductConcreteAvailabilityRestResponseBuilderInterface
+    {
+        return new ProductConcreteAvailabilityRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createConcreteProductsAvailabilitiesResourceMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductAbstractAvailabilityRestResponseBuilderInterface
+     */
+    public function createProductAbstractAvailabilityRestResponseBuilder(): ProductAbstractAvailabilityRestResponseBuilderInterface
+    {
+        return new ProductAbstractAvailabilityRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createAbstractProductsAvailabilitiesResourceMapper()
+        );
     }
 
     /**

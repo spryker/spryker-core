@@ -27,7 +27,7 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
     public const CATEGORY_TEMPLATE_ONLY_CMS_BLOCK = 'CMS Block';
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCmsBlockCategoryPositionList()
     {

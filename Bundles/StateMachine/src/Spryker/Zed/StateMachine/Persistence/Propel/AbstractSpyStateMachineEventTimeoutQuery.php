@@ -20,4 +20,4 @@ use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineEventTimeoutQuery as Ba
  */
 abstract class AbstractSpyStateMachineEventTimeoutQuery extends BaseSpyStateMachineEventTimeoutQuery
 {
-} // SpyStateMachineEventTimeoutQuery
+}

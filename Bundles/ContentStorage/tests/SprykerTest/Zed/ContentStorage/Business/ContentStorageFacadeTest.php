@@ -18,6 +18,7 @@ use Spryker\Zed\ContentStorage\Persistence\ContentStoragePersistenceFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ContentStorage

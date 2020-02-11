@@ -12,6 +12,7 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Symfony
@@ -23,11 +24,6 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 class TokenHashGeneratorTest extends Unit
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $sessionMock;
-
-    /**
      * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator
      */
     protected $tokenGenerator;
@@ -35,7 +31,7 @@ class TokenHashGeneratorTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->tokenGenerator = new TokenHashGenerator();
@@ -44,7 +40,7 @@ class TokenHashGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testTokenHashGeneratorGeneratesRandomHashes()
+    public function testTokenHashGeneratorGeneratesRandomHashes(): void
     {
         $hashOne = $this->tokenGenerator->generateToken();
         $hashTwo = $this->tokenGenerator->generateToken();

@@ -13,6 +13,7 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Sales
@@ -28,7 +29,7 @@ class SalesListCest
      *
      * @return void
      */
-    public function testOrderListShouldContainOrders(SalesPresentationTester $i, SalesListPage $salesListPage)
+    public function testOrderListShouldContainOrders(SalesPresentationTester $i, SalesListPage $salesListPage): void
     {
         $i->createOrderWithOneItem();
         $salesListPage->seeListOfOrders();
@@ -40,7 +41,7 @@ class SalesListCest
      *
      * @return void
      */
-    public function testICanGoToLatestOrderDetailsPage(SalesPresentationTester $i, SalesListPage $salesListPage)
+    public function testICanGoToLatestOrderDetailsPage(SalesPresentationTester $i, SalesListPage $salesListPage): void
     {
         $i->createOrderWithOneItem();
 
@@ -57,7 +58,7 @@ class SalesListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(SalesPresentationTester $i, SalesListPage $salesListPage)
+    public function breadcrumbIsVisible(SalesPresentationTester $i, SalesListPage $salesListPage): void
     {
         $i->createOrderWithOneItem();
 
@@ -65,6 +66,6 @@ class SalesListCest
         $url = SalesDetailPage::getOrderDetailsPageUrl($latestOrderId);
 
         $i->amOnPage($url);
-        $i->seeBreadcrumbNavigation('Dashboard / Sales / Orders / Order Overview');
+        $i->seeBreadcrumbNavigation('Sales / Orders / Order Overview');
     }
 }

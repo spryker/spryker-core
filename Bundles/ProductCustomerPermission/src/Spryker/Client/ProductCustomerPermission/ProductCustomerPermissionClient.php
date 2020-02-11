@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductCustomerPermissionClient extends AbstractClient implements ProductCustomerPermissionClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

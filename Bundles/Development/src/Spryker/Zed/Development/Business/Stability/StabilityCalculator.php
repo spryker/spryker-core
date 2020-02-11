@@ -169,10 +169,10 @@ class StabilityCalculator implements StabilityCalculatorInterface
         $dependencies = $this->bundles[$bundleName]['out'];
 
         foreach ($dependencies as $dependentBundle) {
-            if (array_key_exists($dependentBundle, $indirectOutgoingDependencies)) {
+            if ($indirectOutgoingDependencies->offsetExists($dependentBundle)) {
                 continue;
             }
-            $indirectOutgoingDependencies[$dependentBundle] = $dependentBundle;
+            $indirectOutgoingDependencies->offsetSet($dependentBundle, $dependentBundle);
             $this->buildIndirectOutgoingDependencies($dependentBundle, $indirectOutgoingDependencies);
         }
     }
@@ -188,10 +188,10 @@ class StabilityCalculator implements StabilityCalculatorInterface
         $dependencies = $this->bundles[$bundleName]['in'];
 
         foreach ($dependencies as $dependentBundle) {
-            if (array_key_exists($dependentBundle, $indirectIncomingDependencies)) {
+            if ($indirectIncomingDependencies->offsetExists($dependentBundle)) {
                 continue;
             }
-            $indirectIncomingDependencies[$dependentBundle] = $dependentBundle;
+            $indirectIncomingDependencies->offsetSet($dependentBundle, $dependentBundle);
             $this->buildIndirectIncomingDependencies($dependentBundle, $indirectIncomingDependencies);
         }
     }

@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAttributeGui
@@ -27,9 +28,9 @@ class ProductAttributeGuiAttributeCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i): void
     {
         $i->amOnPage(ProductAttributeGuiAttributeCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes / Create a Product Attribute');
+        $i->seeBreadcrumbNavigation('Products / Attributes / Create a Product Attribute');
     }
 }

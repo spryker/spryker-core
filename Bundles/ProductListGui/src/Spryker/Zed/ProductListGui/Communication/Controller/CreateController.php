@@ -31,8 +31,13 @@ class CreateController extends ProductListAbstractController
             $productListAggregateForm
         );
 
+        $viewData = $this->prepareTemplateVariables($productListAggregateForm);
+        $viewData['productListAggregationTabs'] = $this->getFactory()
+            ->createProductListCreateAggregationTabs()
+            ->createView();
+
         if ($productListTransfer === null) {
-            return $this->viewResponse($this->prepareTemplateVariables($productListAggregateForm));
+            return $this->viewResponse($viewData);
         }
 
         $productListResponseTransfer = $this->getFactory()
@@ -49,7 +54,12 @@ class CreateController extends ProductListAbstractController
             return $this->redirectResponse($this->getEditUrl($productListResponseTransfer->getProductList()->getIdProductList()));
         }
 
-        return $this->viewResponse($this->prepareTemplateVariables($productListAggregateForm));
+        $viewData = $this->prepareTemplateVariables($productListAggregateForm);
+        $viewData['productListAggregationTabs'] = $this->getFactory()
+            ->createProductListCreateAggregationTabs()
+            ->createView();
+
+        return $this->viewResponse();
     }
 
     /**

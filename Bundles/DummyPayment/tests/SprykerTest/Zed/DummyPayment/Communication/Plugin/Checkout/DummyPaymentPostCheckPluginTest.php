@@ -16,6 +16,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheck
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment
@@ -30,7 +31,7 @@ class DummyPaymentPostCheckPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldReturnCheckoutResponseTransferWithoutAnyErrorIfPaymentAuthorizationApproved()
+    public function testExecuteShouldReturnCheckoutResponseTransferWithoutAnyErrorIfPaymentAuthorizationApproved(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);
@@ -50,7 +51,7 @@ class DummyPaymentPostCheckPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldReturnCheckoutResponseTransferWithErrorIfPaymentAuthorizationNotApproved()
+    public function testExecuteShouldReturnCheckoutResponseTransferWithErrorIfPaymentAuthorizationNotApproved(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);

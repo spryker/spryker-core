@@ -17,7 +17,7 @@ class TestConditionPlugin implements ConditionPluginInterface
      *
      * @return bool
      */
-    public function check(StateMachineItemTransfer $stateMachineItemTransfer)
+    public function check(StateMachineItemTransfer $stateMachineItemTransfer): bool
     {
         return true;
     }

@@ -1,6 +1,6 @@
 # CmsBlockCollector Module
-[![Build Status](https://travis-ci.org/spryker/CmsBlockCollector.svg)](https://travis-ci.org/spryker/CmsBlockCollector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CmsBlockCollector/badge.svg)](https://coveralls.io/github/spryker/CmsBlockCollector)
+[![Build Status](https://travis-ci.org/spryker/cms-block-collector.svg)](https://travis-ci.org/spryker/cms-block-collector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 CmsBlockCollector provides CMS block data for Yves by exporting it to key-value storage and search.
 

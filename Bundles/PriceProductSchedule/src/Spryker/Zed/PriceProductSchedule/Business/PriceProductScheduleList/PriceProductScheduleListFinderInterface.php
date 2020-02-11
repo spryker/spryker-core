@@ -20,4 +20,9 @@ interface PriceProductScheduleListFinderInterface
     public function findPriceProductScheduleList(
         PriceProductScheduleListTransfer $requestedPriceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer|null
+     */
+    public function findDefaultPriceProductScheduleList(): ?PriceProductScheduleListTransfer;
 }

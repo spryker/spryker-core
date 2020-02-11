@@ -20,7 +20,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddressClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +54,7 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +105,7 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

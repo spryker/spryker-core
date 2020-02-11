@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductRelationStorageClient extends AbstractClient implements ProductRelationStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

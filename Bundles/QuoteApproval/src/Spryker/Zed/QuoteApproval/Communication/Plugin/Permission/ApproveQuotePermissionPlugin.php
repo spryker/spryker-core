@@ -16,7 +16,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     public const FIELD_STORE_MULTI_CURRENCY = 'store_multi_currency';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if approver is allowed to approve order with cent amount up to some value for specific currency, provided in configuration.
      * - Returns false, if context is not provided.
      * - Returns true, if configuration does not have cent amount for specific currency set.
@@ -50,7 +50,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

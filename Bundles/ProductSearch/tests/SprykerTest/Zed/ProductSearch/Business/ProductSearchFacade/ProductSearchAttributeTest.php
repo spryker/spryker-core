@@ -14,6 +14,7 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSearch
@@ -27,7 +28,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testCreateProductSearchAttribute()
+    public function testCreateProductSearchAttribute(): void
     {
         $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
         $productSearchAttributeTransfer
@@ -44,7 +45,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testUpdateProductSearchAttribute()
+    public function testUpdateProductSearchAttribute(): void
     {
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'updateProductSearchAttribute',
@@ -67,7 +68,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testDeleteProductSearchAttribute()
+    public function testDeleteProductSearchAttribute(): void
     {
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'deleteProductSearchAttribute',
@@ -90,7 +91,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testGetProductSearchAttribute()
+    public function testGetProductSearchAttribute(): void
     {
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'getProductSearchAttribute',
@@ -107,7 +108,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testGetProductSearchAttributeList()
+    public function testGetProductSearchAttributeList(): void
     {
         SpyProductSearchAttributeQuery::create()->deleteAll();
 
@@ -136,7 +137,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testUpdateProductSearchAttributeOrder()
+    public function testUpdateProductSearchAttributeOrder(): void
     {
         $entity1 = $this->createProductSearchAttributeEntity(
             'getProductSearchAttributeList-1',
@@ -185,7 +186,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return array
      */
-    public function touchProductAbstractByAsynchronousAttributesDataProvider()
+    public function touchProductAbstractByAsynchronousAttributesDataProvider(): array
     {
         return [
             'product abstract has attribute' => [
@@ -218,7 +219,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
@@ -255,7 +256,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
@@ -298,7 +299,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
@@ -327,7 +328,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute
      */
-    protected function createProductSearchAttributeEntity($attributeKey, ProductSearchAttributeTransfer $productSearchAttributeTransfer, $synced = false)
+    protected function createProductSearchAttributeEntity(string $attributeKey, ProductSearchAttributeTransfer $productSearchAttributeTransfer, bool $synced = false): SpyProductSearchAttribute
     {
         $productAttributeKeyEntity = $this->createProductAttributeKeyEntity($attributeKey);
         $productSearchAttributeEntity = new SpyProductSearchAttribute();

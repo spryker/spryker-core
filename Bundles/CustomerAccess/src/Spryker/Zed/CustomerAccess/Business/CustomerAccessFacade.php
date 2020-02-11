@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +54,7 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

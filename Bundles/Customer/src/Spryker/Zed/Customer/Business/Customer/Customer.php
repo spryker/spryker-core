@@ -161,12 +161,10 @@ class Customer implements CustomerInterface
     protected function attachAddresses(CustomerTransfer $customerTransfer, SpyCustomer $customerEntity)
     {
         $addresses = $customerEntity->getAddresses();
-        if ($addresses) {
-            $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
-            $customerTransfer->setAddresses($addressesTransfer);
+        $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
+        $customerTransfer->setAddresses($addressesTransfer);
 
-            $customerTransfer = $this->attachAddressesTransfer($customerTransfer, $addressesTransfer);
-        }
+        $customerTransfer = $this->attachAddressesTransfer($customerTransfer, $addressesTransfer);
 
         return $customerTransfer;
     }
@@ -477,15 +475,19 @@ class Customer implements CustomerInterface
         }
 
         $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
-        if (!$customerEntity->isModified() || $customerResponseTransfer->getIsSuccess() !== true) {
+        if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
-
-        $customerEntity->save();
 
         if ($customerTransfer->getSendPasswordToken()) {
             $this->sendPasswordRestoreMail($customerTransfer);
         }
+
+        if (!$customerEntity->isModified()) {
+            return $customerResponseTransfer;
+        }
+
+        $customerEntity->save();
 
         return $customerResponseTransfer;
     }
@@ -801,7 +803,7 @@ class Customer implements CustomerInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findById($customerTransfer)
     {
@@ -821,7 +823,7 @@ class Customer implements CustomerInterface
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference)
     {

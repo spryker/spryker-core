@@ -20,4 +20,4 @@ use Orm\Zed\ProductAttribute\Persistence\Base\SpyProductManagementAttributeQuery
  */
 abstract class AbstractSpyProductManagementAttributeQuery extends SpyProductManagementAttributeQuery
 {
-} // SpyProductManagementAttributeQuery
+}

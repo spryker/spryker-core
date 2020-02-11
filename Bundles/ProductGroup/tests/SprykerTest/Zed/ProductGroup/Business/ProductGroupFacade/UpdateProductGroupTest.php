@@ -14,6 +14,7 @@ use Spryker\Shared\ProductGroup\ProductGroupConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductGroup
@@ -29,7 +30,7 @@ class UpdateProductGroupTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductGroupPersistChangesToDatabase()
+    public function testUpdateProductGroupPersistChangesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -65,7 +66,7 @@ class UpdateProductGroupTest extends Unit
     /**
      * @return void
      */
-    public function testAddProductsToGroupPersistsChangesToDatabase()
+    public function testAddProductsToGroupPersistsChangesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -104,7 +105,7 @@ class UpdateProductGroupTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveProductsFromGroupPersistsChangesToDatabase()
+    public function testRemoveProductsFromGroupPersistsChangesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -145,7 +146,7 @@ class UpdateProductGroupTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductGroupTouchesProductAbstractGroupsAccordingToTheirState()
+    public function testUpdateProductGroupTouchesProductAbstractGroupsAccordingToTheirState(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -184,7 +185,7 @@ class UpdateProductGroupTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveProductsFromGroupTouchesProductAbstractGroupsAccordingToTheirState()
+    public function testRemoveProductsFromGroupTouchesProductAbstractGroupsAccordingToTheirState(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -225,7 +226,7 @@ class UpdateProductGroupTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductGroupMultipleTimesIsIdempotent()
+    public function testUpdateProductGroupMultipleTimesIsIdempotent(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();

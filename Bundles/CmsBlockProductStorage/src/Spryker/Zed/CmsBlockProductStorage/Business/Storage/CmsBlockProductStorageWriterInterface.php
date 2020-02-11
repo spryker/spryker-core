@@ -14,12 +14,12 @@ interface CmsBlockProductStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $productAbstractIds);
+    public function publish(array $productAbstractIds): void;
 
     /**
      * @param array $productAbstractIds
      *
      * @return void
      */
-    public function refreshOrUnpublish(array $productAbstractIds);
+    public function refreshOrUnpublish(array $productAbstractIds): void;
 }

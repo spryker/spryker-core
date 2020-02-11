@@ -39,7 +39,7 @@
 
         <behavior name="synchronization">
             <parameter name="resource" value="product_concrete_measurement_unit"/>
-            <parameter name="store" required="true" />
+            <parameter name="store" required="true"/>
             <parameter name="key_suffix_column" value="fk_product"/>
             <parameter name="queue_group" value="sync.storage.product"/>
         </behavior>

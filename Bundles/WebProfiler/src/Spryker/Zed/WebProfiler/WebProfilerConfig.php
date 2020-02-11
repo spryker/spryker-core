@@ -8,6 +8,7 @@
 namespace Spryker\Zed\WebProfiler;
 
 use ReflectionClass;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
@@ -19,7 +20,7 @@ class WebProfilerConfig extends AbstractBundleConfig
      */
     public function isWebProfilerEnabled()
     {
-        return $this->get(WebProfilerConstants::ENABLE_WEB_PROFILER, false);
+        return $this->get(WebProfilerConstants::IS_WEB_PROFILER_ENABLED, false);
     }
 
     /**
@@ -32,5 +33,15 @@ class WebProfilerConfig extends AbstractBundleConfig
         return [
             dirname(dirname((string)$reflectionClass->getFileName())) . '/Resources/views',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfilerCacheDirectory(): string
+    {
+        $defaultPath = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/profiler';
+
+        return $this->get(WebProfilerConstants::PROFILER_CACHE_DIRECTORY, $defaultPath);
     }
 }

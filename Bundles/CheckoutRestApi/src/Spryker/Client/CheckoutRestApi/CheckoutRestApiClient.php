@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CheckoutRestApiClient extends AbstractClient implements CheckoutRestApiClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CheckoutRestApiClient extends AbstractClient implements CheckoutRestApiCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

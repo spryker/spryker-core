@@ -131,7 +131,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idNode
-     * @param string $idLocale
+     * @param int $idLocale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode
      *

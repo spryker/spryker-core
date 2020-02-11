@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductRelationStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientBridge;
+use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientAdapter;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientBridge;
 use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceBridge;
 
@@ -43,11 +43,11 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function addStorageClient(Container $container)
+    public function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductRelationStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -57,11 +57,11 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function addSynchronizationService(Container $container)
+    public function addSynchronizationService(Container $container): Container
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductRelationStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
@@ -71,11 +71,11 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function addProductStorageClient(Container $container)
+    public function addProductStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
-            return new ProductRelationStorageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        $container->set(self::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new ProductRelationStorageToProductStorageClientAdapter($container->getLocator()->productStorage()->client());
+        });
 
         return $container;
     }
@@ -85,11 +85,11 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addRelatedProductExpanderPlugins(Container $container)
+    protected function addRelatedProductExpanderPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_RELATED_PRODUCT_EXPANDERS] = function () {
+        $container->set(self::PLUGIN_RELATED_PRODUCT_EXPANDERS, function () {
             return $this->getRelatedProductExpanderPlugins();
-        };
+        });
 
         return $container;
     }

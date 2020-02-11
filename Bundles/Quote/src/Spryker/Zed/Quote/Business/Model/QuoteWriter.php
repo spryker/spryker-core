@@ -10,6 +10,7 @@ namespace Spryker\Zed\Quote\Business\Model;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface;
 use Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
@@ -50,11 +51,17 @@ class QuoteWriter implements QuoteWriterInterface
     protected $quoteExpandBeforeCreatePlugins;
 
     /**
+     * @var \Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface
+     */
+    protected $quoteFieldsConfigurator;
+
+    /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface $quoteValidator
+     * @param \Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface $quoteFieldsConfigurator
      * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[] $quoteExpandBeforeCreatePlugins
      */
     public function __construct(
@@ -63,6 +70,7 @@ class QuoteWriter implements QuoteWriterInterface
         QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor,
         QuoteToStoreFacadeInterface $storeFacade,
         QuoteValidatorInterface $quoteValidator,
+        QuoteFieldsConfiguratorInterface $quoteFieldsConfigurator,
         array $quoteExpandBeforeCreatePlugins = []
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
@@ -71,6 +79,7 @@ class QuoteWriter implements QuoteWriterInterface
         $this->quoteWriterPluginExecutor = $quoteWriterPluginExecutor;
         $this->quoteValidator = $quoteValidator;
         $this->quoteExpandBeforeCreatePlugins = $quoteExpandBeforeCreatePlugins;
+        $this->quoteFieldsConfigurator = $quoteFieldsConfigurator;
     }
 
     /**
@@ -149,7 +158,7 @@ class QuoteWriter implements QuoteWriterInterface
     protected function executeCreateTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateBeforePlugins($quoteTransfer);
-        $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
+        $quoteTransfer = $this->saveQuote($quoteTransfer);
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateAfterPlugins($quoteTransfer);
 
         return $this->createQuoteResponseTransfer($quoteTransfer)
@@ -165,7 +174,7 @@ class QuoteWriter implements QuoteWriterInterface
     protected function executeUpdateTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateBeforePlugins($quoteTransfer);
-        $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
+        $quoteTransfer = $this->saveQuote($quoteTransfer);
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateAfterPlugins($quoteTransfer);
 
         return $this->createQuoteResponseTransfer($quoteTransfer)
@@ -219,7 +228,7 @@ class QuoteWriter implements QuoteWriterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function executeQuoteExpandBeforeCreatePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
@@ -228,5 +237,17 @@ class QuoteWriter implements QuoteWriterInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function saveQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteFieldsAllowedForSaving = $this->quoteFieldsConfigurator->getQuoteFieldsAllowedForSaving($quoteTransfer);
+
+        return $this->quoteEntityManager->saveQuote($quoteTransfer, $quoteFieldsAllowedForSaving);
     }
 }

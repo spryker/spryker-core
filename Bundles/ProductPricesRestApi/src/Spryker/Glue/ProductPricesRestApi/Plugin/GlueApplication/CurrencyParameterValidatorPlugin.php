@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CurrencyParameterValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates currency get request parameter.
      * - Checks that currency is available.
      *

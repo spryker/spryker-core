@@ -12,7 +12,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 abstract class AbstractProductTable extends AbstractTable
 {
     /**
-     * @param string $status
+     * @param bool $status
      *
      * @return string
      */

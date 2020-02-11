@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductCategory;
 
 use Codeception\Actor;
 use Codeception\Scenario;
+use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
@@ -17,6 +18,7 @@ use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -50,7 +52,7 @@ class ProductCategoryPresentationTester extends Actor
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    public function createProductEntity($name)
+    public function createProductEntity(string $name): SpyProductAbstract
     {
         $localeEntity = $this->createLocaleEntity('en_US');
 
@@ -76,7 +78,7 @@ class ProductCategoryPresentationTester extends Actor
      *
      * @return void
      */
-    public function assignProductToCategory($idCategory, $idProductAbstract)
+    public function assignProductToCategory(int $idCategory, int $idProductAbstract): void
     {
         $spyProductCategory = new SpyProductCategory();
         $spyProductCategory
@@ -90,7 +92,7 @@ class ProductCategoryPresentationTester extends Actor
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocale
      */
-    public function createLocaleEntity($localeName)
+    public function createLocaleEntity(string $localeName): SpyLocale
     {
         $localeEntity = SpyLocaleQuery::create()
             ->filterByLocaleName($localeName)
@@ -106,7 +108,7 @@ class ProductCategoryPresentationTester extends Actor
      *
      * @return void
      */
-    public function searchTableByProductName($productName)
+    public function searchTableByProductName(string $productName): void
     {
         $this->fillField(ProductCategoryAssignPage::SELECTOR_TABLE_SEARCH, $productName);
         $this->wait(3);

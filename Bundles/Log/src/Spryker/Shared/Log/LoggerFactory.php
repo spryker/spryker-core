@@ -25,7 +25,7 @@ class LoggerFactory
     /**
      * @var \Spryker\Shared\Log\Config\LoggerConfigInterface|null
      */
-    protected static $loggerConfig = null;
+    protected static $loggerConfig;
 
     /**
      * @param \Spryker\Shared\Log\Config\LoggerConfigInterface|null $loggerConfig

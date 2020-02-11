@@ -20,8 +20,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartBundleAvailabilityPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if bundled items in CartChangeTransfer are available.
+     * - Only checks bundle products and bundled items.
      * - Sets error message if they were not.
      *
      * @api

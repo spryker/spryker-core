@@ -24,7 +24,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,7 +81,7 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -93,7 +93,7 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

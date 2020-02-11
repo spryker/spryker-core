@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CompanyUnitAddressEntityManager extends AbstractEntityManager implements CompanyUnitAddressEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
@@ -48,7 +48,7 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idCompanyUnitAddress
      *

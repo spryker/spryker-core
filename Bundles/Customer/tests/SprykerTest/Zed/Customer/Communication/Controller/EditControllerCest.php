@@ -11,6 +11,7 @@ use SprykerTest\Zed\Customer\CustomerCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Customer
@@ -33,7 +34,7 @@ class EditControllerCest
      *
      * @return void
      */
-    public function _before(CustomerCommunicationTester $i)
+    public function _before(CustomerCommunicationTester $i): void
     {
         $this->customer = $i->haveCustomer();
     }
@@ -43,7 +44,7 @@ class EditControllerCest
      *
      * @return void
      */
-    public function testIndexAction(CustomerCommunicationTester $i)
+    public function testIndexAction(CustomerCommunicationTester $i): void
     {
         $url = '/customer/edit?id-customer=' . (int)$this->customer->getIdCustomer();
         $i->amOnPage($url);
@@ -56,7 +57,7 @@ class EditControllerCest
      *
      * @return void
      */
-    public function testEditUser(CustomerCommunicationTester $i)
+    public function testEditUser(CustomerCommunicationTester $i): void
     {
         $email = $this->customer->getEmail();
 

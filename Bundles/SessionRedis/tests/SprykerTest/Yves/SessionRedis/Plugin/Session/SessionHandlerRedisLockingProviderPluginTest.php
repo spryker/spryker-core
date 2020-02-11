@@ -14,6 +14,7 @@ use Spryker\Yves\SessionRedis\Plugin\Session\SessionHandlerRedisLockingProviderP
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group SessionRedis

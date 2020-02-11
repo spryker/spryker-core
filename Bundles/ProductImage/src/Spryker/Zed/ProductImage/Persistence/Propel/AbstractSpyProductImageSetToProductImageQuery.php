@@ -20,4 +20,4 @@ use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageSetToProductImageQuery;
  */
 abstract class AbstractSpyProductImageSetToProductImageQuery extends SpyProductImageSetToProductImageQuery
 {
-} // SpyProductImageSetToProductImageQuery
+}

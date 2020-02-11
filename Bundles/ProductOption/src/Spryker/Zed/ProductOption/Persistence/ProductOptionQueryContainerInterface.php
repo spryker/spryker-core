@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOption\Persistence;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 
 interface ProductOptionQueryContainerInterface
 {
@@ -84,12 +85,24 @@ interface ProductOptionQueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use queryTaxSetByIdProductOptionValueAndCountryIso2Code() instead.
+     *
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
+
+    /**
+     * @api
+     *
+     * @param int[] $idProductOptionValues
+     * @param string[] $countryIso2Codes
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery;
 
     /**
      * @api

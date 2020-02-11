@@ -19,7 +19,12 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
+    public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'SEARCH_SCHEMA_INSTALLER_PLUGINS';
+    public const PLUGINS_SEARCH_MAP_INSTALLER = 'PLUGINS_SEARCH_MAP_INSTALLER';
     public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
 
     /**
@@ -32,6 +37,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchClient($container);
         $container = $this->addUtilEncodingFacade($container);
         $container = $this->addPluginSearchPageMaps($container);
+        $container = $this->addSearchSourceInstallerPlugins($container);
+        $container = $this->addSearchMapInstallerPlugins($container);
         $container = $this->addGuzzleClient($container);
 
         return $container;
@@ -66,6 +73,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -80,9 +89,55 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
      */
     protected function getSearchPageMapPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSearchSourceInstallerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SEARCH_SOURCE_INSTALLER, function () {
+            return $this->getSearchSourceInstallerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    protected function getSearchSourceInstallerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSearchMapInstallerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SEARCH_MAP_INSTALLER, function () {
+            return $this->getSearchMapInstallerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    protected function getSearchMapInstallerPlugins(): array
     {
         return [];
     }

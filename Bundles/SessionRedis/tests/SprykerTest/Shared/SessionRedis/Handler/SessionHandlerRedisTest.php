@@ -15,6 +15,7 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group SessionRedis
@@ -44,7 +45,7 @@ class SessionHandlerRedisTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

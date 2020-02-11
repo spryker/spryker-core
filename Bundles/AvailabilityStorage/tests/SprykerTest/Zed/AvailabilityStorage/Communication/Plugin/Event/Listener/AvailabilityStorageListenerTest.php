@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageBusinessFactory;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade;
@@ -23,6 +24,7 @@ use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group AvailabilityStorage
@@ -53,7 +55,7 @@ class AvailabilityStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -64,7 +66,7 @@ class AvailabilityStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testAvailabilityStorageListenerStoreData()
+    public function testAvailabilityStorageListenerStoreData(): void
     {
         SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
 
@@ -129,7 +131,7 @@ class AvailabilityStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testAvailabilityProductStorageListenerStoreData()
+    public function testAvailabilityProductStorageListenerStoreData(): void
     {
         SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
@@ -152,7 +154,7 @@ class AvailabilityStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade
      */
-    protected function getAvailabilityStorageFacade()
+    protected function getAvailabilityStorageFacade(): AvailabilityStorageFacade
     {
         $factory = new AvailabilityStorageBusinessFactory();
         $factory->setConfig(new AvailabilityStorageConfigMock());
@@ -168,7 +170,7 @@ class AvailabilityStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertAvailabilityStorage($previousCount)
+    protected function assertAvailabilityStorage(int $previousCount): void
     {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
         $this->assertGreaterThan($previousCount, $availabilityStorageCount);
@@ -181,6 +183,6 @@ class AvailabilityStorageListenerTest extends Unit
 
         $this->assertNotNull($availabilityStorageEntity);
         $data = $availabilityStorageEntity->getData();
-        $this->assertEquals($this->spyAvailabilityAbstract->getQuantity(), $data['quantity']);
+        $this->assertEquals((new Decimal($this->spyAvailabilityAbstract->getQuantity()))->trim(), $data['quantity']);
     }
 }

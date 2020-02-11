@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductManagement\Communication\PluginExecutor;
 interface AbstractProductEditViewExpanderPluginExecutorInterface
 {
     /**
-     * @param array $viewDara
+     * @param array $viewData
      *
      * @return array
      */
-    public function expandEditAbstractProductViewData(array $viewDara): array;
+    public function expandEditAbstractProductViewData(array $viewData): array;
 }

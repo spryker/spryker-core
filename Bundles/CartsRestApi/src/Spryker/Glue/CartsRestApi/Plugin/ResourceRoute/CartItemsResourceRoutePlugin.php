@@ -15,12 +15,12 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPl
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiFactory getFactory()
+ * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +38,7 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

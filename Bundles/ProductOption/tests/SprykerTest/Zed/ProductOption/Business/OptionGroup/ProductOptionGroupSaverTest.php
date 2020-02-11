@@ -23,6 +23,7 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -39,7 +40,7 @@ class ProductOptionGroupSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testSaveProductOptionGroupShouldSaveGroup()
+    public function testSaveProductOptionGroupShouldSaveGroup(): void
     {
         $translationSaverMock = $this->createTranslationSaverMock();
         $translationSaverMock->expects($this->once())
@@ -55,7 +56,7 @@ class ProductOptionGroupSaverTest extends MockProvider
         );
 
         $optionGroupEntityMock = $this->createProductOptionGroupEntityMock();
-        $optionGroupEntityMock->method('save')->willReturnCallback(function () use ($optionGroupEntityMock) {
+        $optionGroupEntityMock->method('save')->willReturnCallback(function () use ($optionGroupEntityMock): void {
             $optionGroupEntityMock->setIdProductOptionGroup(1);
         });
 
@@ -141,8 +142,7 @@ class ProductOptionGroupSaverTest extends MockProvider
         ?TranslationSaverInterface $translationSaverMock = null,
         ?ProductOptionValueSaverInterface $productOptionValueSaverMock = null,
         ?AbstractProductOptionSaverInterface $abstractProductOptionSaver = null
-    ) {
-
+    ): ProductOptionGroupSaver {
         if (!$productOptionContainerMock) {
             $productOptionContainerMock = $this->createProductOptionQueryContainerMock();
         }
@@ -184,7 +184,7 @@ class ProductOptionGroupSaverTest extends MockProvider
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function createProductOptionGroupEntityMock()
+    protected function createProductOptionGroupEntityMock(): SpyProductOptionGroup
     {
         return $this->getMockBuilder(SpyProductOptionGroup::class)
             ->setMethods(['save'])

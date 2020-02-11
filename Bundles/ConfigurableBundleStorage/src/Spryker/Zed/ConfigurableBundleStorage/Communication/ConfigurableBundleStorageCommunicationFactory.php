@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Communication;
 
 use Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageDependencyProvider;
+use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -25,5 +26,13 @@ class ConfigurableBundleStorageCommunicationFactory extends AbstractCommunicatio
     public function getEventBehaviorFacade(): ConfigurableBundleStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToConfigurableBundleFacadeInterface
+     */
+    public function getConfigurableBundleFacade(): ConfigurableBundleStorageToConfigurableBundleFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::FACADE_CONFIGURABLE_BUNDLE);
     }
 }

@@ -17,6 +17,8 @@ use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleterInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdder;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteMerger;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteMergerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReader;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdater;
@@ -126,6 +128,18 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteMergerInterface
+     */
+    public function createQuoteMerger(): QuoteMergerInterface
+    {
+        return new QuoteMerger(
+            $this->createQuoteReader(),
+            $this->getPersistentCartFacade(),
+            $this->getQuoteFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface
      */
     public function createQuoteItemAdder(): QuoteItemAdderInterface
@@ -134,7 +148,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getPersistentCartFacade(),
             $this->createQuoteReader(),
             $this->createQuoteItemMapper(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
+            $this->getCartItemMapperPlugins()
         );
     }
 
@@ -147,8 +162,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->createQuoteItemAdder(),
             $this->createQuoteCreator(),
-            $this->getStoreFacade(),
-            $this->createQuoteItemMapper()
+            $this->getStoreFacade()
         );
     }
 
@@ -273,5 +287,13 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface[]
+     */
+    protected function getCartItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CART_ITEM_MAPPER);
     }
 }

@@ -1,6 +1,6 @@
+# Define the line ending behavior of the different file extensions
 # Set the default behavior, in case people don't have core.autocrlf set.
-* eol=lf
-* text=auto
+* text text=auto eol=lf
 
 # Denote all files that are truly binary and should not be modified.
 *.png binary

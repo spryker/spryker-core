@@ -1,0 +1,12 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Comments' | trans } %}
+
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                {{ render(controller('/sales/comment/list', {'request': app.request})) }}
+                {{ add_comments | raw }}
+            </div>
+        </div>
+    {% endblock %}
+
+{% endembed %}

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 
 class CmsBlockReader implements CmsBlockReaderInterface
@@ -38,7 +39,7 @@ class CmsBlockReader implements CmsBlockReaderInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockById($idCmsBlock)
+    public function findCmsBlockById(int $idCmsBlock): ?CmsBlockTransfer
     {
         $spyCmsBlock = $this->queryContainer
             ->queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation($idCmsBlock)

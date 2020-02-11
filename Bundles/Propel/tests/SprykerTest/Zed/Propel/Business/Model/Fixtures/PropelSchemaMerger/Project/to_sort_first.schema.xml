@@ -11,10 +11,10 @@
             <reference local="fk_column" foreign="id_column"/>
         </foreign-key>
         <behavior name="timestampable"/>
-        <column name="id_column" type="INTEGER" />
-        <column name="fk_column" type="INTEGER" />
-        <column name="column_c" type="INTEGER" />
-        <column name="column_a" type="INTEGER" />
+        <column name="id_column" type="INTEGER"/>
+        <column name="fk_column" type="INTEGER"/>
+        <column name="column_c" type="INTEGER"/>
+        <column name="column_a" type="INTEGER"/>
         <unique>
             <unique-column name="integer_column"/>
         </unique>

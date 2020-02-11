@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 abstract class AbstractProductPackagingUnitCartOperationStrategyPlugin extends AbstractPlugin
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

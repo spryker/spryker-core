@@ -21,6 +21,7 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Product
@@ -70,7 +71,7 @@ class ProductUrlGeneratorTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -112,7 +113,7 @@ class ProductUrlGeneratorTest extends Unit
     /**
      * @return void
      */
-    protected function setupLocales()
+    protected function setupLocales(): void
     {
         $this->locales['de_DE'] = new LocaleTransfer();
         $this->locales['de_DE']
@@ -128,7 +129,7 @@ class ProductUrlGeneratorTest extends Unit
     /**
      * @return void
      */
-    protected function setupProductAbstract()
+    protected function setupProductAbstract(): void
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
@@ -153,7 +154,7 @@ class ProductUrlGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductUrlShouldReturnTransfer()
+    public function testGetProductUrlShouldReturnTransfer(): void
     {
         $expectedDEUrl = (new LocalizedUrlTransfer())
         ->setLocale($this->locales['de_DE'])

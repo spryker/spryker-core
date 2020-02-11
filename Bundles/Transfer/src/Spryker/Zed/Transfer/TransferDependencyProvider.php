@@ -27,8 +27,6 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
-
         $container[static::SYMFONY_FILE_SYSTEM] = function () {
             return new Filesystem();
         };

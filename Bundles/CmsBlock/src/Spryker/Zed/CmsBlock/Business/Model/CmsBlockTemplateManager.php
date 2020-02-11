@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
+use Generated\Shared\Transfer\CmsBlockTemplateTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplatePathExistsException;
@@ -62,7 +63,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
-    public function createTemplate($name, $path)
+    public function createTemplate(string $name, string $path): CmsBlockTemplateTransfer
     {
         $this->checkTemplatePathDoesNotExist($path);
 
@@ -80,7 +81,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return void
      */
-    public function syncTemplate($templatePath)
+    public function syncTemplate(string $templatePath): void
     {
         $templateFolders = $this->config->getTemplateRealPaths($templatePath);
 
@@ -101,7 +102,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return void
      */
-    public function checkTemplateFileExists($path)
+    public function checkTemplateFileExists(string $path): void
     {
         if (!$this->isTemplateFileExists($path)) {
             throw new CmsBlockTemplateNotFoundException(
@@ -115,7 +116,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return bool
      */
-    public function hasTemplateFileById($idCmsBlockTemplate)
+    public function hasTemplateFileById(int $idCmsBlockTemplate): bool
     {
         $templateEntity = $this->getTemplateById($idCmsBlockTemplate);
 
@@ -127,7 +128,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate|null
      */
-    public function getTemplateById($idCmsBlockTemplate)
+    public function getTemplateById(int $idCmsBlockTemplate): ?SpyCmsBlockTemplate
     {
         return $this->cmsBlockQueryContainer
             ->queryTemplateById($idCmsBlockTemplate)
@@ -139,7 +140,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer|null
      */
-    public function findTemplateByPath($path)
+    public function findTemplateByPath(string $path): ?CmsBlockTemplateTransfer
     {
         $spyCmsBlockTemplate = $this->cmsBlockQueryContainer
             ->queryTemplateByPath($path)
@@ -159,7 +160,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return void
      */
-    protected function checkTemplatePathDoesNotExist($path)
+    protected function checkTemplatePathDoesNotExist(string $path): void
     {
         if ($this->hasTemplatePath($path)) {
             throw new CmsBlockTemplatePathExistsException(
@@ -176,7 +177,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return bool
      */
-    protected function hasTemplatePath($path)
+    protected function hasTemplatePath(string $path): bool
     {
         return $this->cmsBlockQueryContainer
             ->queryTemplateByPath($path)
@@ -188,7 +189,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return bool
      */
-    protected function isTemplateFileExists($realPath)
+    protected function isTemplateFileExists(string $realPath): bool
     {
         $realPaths = $this->config->getTemplateRealPaths($realPath);
 
@@ -207,7 +208,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return array
      */
-    protected function createTemplateForTwigTemplates($cmsTemplateFolderPath, $folder)
+    protected function createTemplateForTwigTemplates(string $cmsTemplateFolderPath, string $folder): array
     {
         $templatePaths = [];
         $this->finder->in($folder)
@@ -235,7 +236,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      *
      * @return void
      */
-    protected function createTemplates(array $paths)
+    protected function createTemplates(array $paths): void
     {
         foreach ($paths as $path => $filename) {
             $this->createTemplate($filename, $path);

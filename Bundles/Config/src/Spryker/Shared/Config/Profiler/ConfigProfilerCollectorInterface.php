@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Config\Profiler;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ConfigProfilerCollectorInterface
 {
     /**

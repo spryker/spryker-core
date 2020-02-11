@@ -4,21 +4,43 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductPricesAttributes">
-        <property name="price" type="int" />
-        <property name="prices" type="RestProductPriceAttributes[]" singular="price" />
+        <property name="price" type="int"/>
+        <property name="prices" type="RestProductPriceAttributes[]" singular="price"/>
     </transfer>
 
     <transfer name="RestProductPriceAttributes">
-        <property name="priceTypeName" type="string" />
-        <property name="netAmount" type="int" />
-        <property name="grossAmount" type="int" />
+        <property name="priceTypeName" type="string"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
         <property name="currency" type="RestCurrency"/>
     </transfer>
 
     <transfer name="RestCurrency">
-        <property name="code" type="string" />
-        <property name="name" type="string" />
-        <property name="symbol" type="string" />
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
+        <property name="symbol" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+        <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
+    </transfer>
+
+    <transfer name="Currency">
     </transfer>
 
 </transfers>

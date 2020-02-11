@@ -38,6 +38,6 @@ class RandomNumberGenerator implements RandomNumberGeneratorInterface
             return $this->max;
         }
 
-        return rand($this->min, $this->max);
+        return random_int($this->min, $this->max);
     }
 }

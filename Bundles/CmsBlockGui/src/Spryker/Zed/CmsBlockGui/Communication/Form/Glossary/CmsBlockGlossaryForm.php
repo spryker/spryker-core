@@ -19,10 +19,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsBlockGlossaryForm extends AbstractType
 {
+    use ArrayObjectTransformerTrait;
+
     public const FIELD_GLOSSARY_PLACEHOLDERS = 'glossaryPlaceholders';
     public const OPTION_DATA_CLASS_PLACEHOLDERS = 'data_class_glossary_placeholders';
-
-    use ArrayObjectTransformerTrait;
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

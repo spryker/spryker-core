@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockStorage\Persistence;
 
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
@@ -19,7 +20,7 @@ interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery
      */
-    public function queryCmsBlockStorageEntities(array $cmsBlockIds);
+    public function queryCmsBlockStorageEntities(array $cmsBlockIds): SpyCmsBlockStorageQuery;
 
     /**
      * @api
@@ -37,5 +38,5 @@ interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryBlockWithRelationsByIds(array $cmsBlockIds);
+    public function queryBlockWithRelationsByIds(array $cmsBlockIds): SpyCmsBlockQuery;
 }

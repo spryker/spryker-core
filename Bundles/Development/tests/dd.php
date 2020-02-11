@@ -1,7 +1,7 @@
 <?php
 
 if (!function_exists('dd')) {
-    function dd($var)
+    function dd($var): void
     {
         dump($var);
         $backtrace = debug_backtrace(false, 1);

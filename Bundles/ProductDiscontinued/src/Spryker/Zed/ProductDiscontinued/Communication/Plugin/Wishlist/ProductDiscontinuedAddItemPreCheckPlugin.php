@@ -20,7 +20,7 @@ use Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterfa
 class ProductDiscontinuedAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,13 +33,13 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function getCustomer($idCustomer)
     {
@@ -49,7 +49,7 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,9 +82,11 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */

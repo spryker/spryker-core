@@ -23,7 +23,7 @@ class ProductListProductAbstractStorageListener extends AbstractPlugin implement
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -74,14 +74,6 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
-     */
-    protected function getUniqueIdentifierSeparator()
-    {
-        return '-';
-    }
-
-    /**
      * This method provides list of URLs to render blocks inside customer detail page.
      * URL defines path to external bundle controller. For example: /sales/customer/customer-orders would call sales bundle, customer controller, customerOrders action.
      *
@@ -90,7 +82,7 @@ class CustomerConfig extends AbstractBundleConfig
      *    'sales' => '/sales/customer/customer-orders',
      * ]
      *
-     * @return array
+     * @return string[]
      */
     public function getCustomerDetailExternalBlocksUrls()
     {
@@ -111,5 +103,13 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerPasswordMaxLength(): int
     {
         return static::MAX_LENGTH_CUSTOMER_PASSWORD;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUniqueIdentifierSeparator()
+    {
+        return '-';
     }
 }

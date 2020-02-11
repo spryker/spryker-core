@@ -11,6 +11,7 @@ use SprykerTest\Zed\Glossary\GlossaryCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary
@@ -26,7 +27,7 @@ class IndexControllerCest
      *
      * @return void
      */
-    public function listTranslations(GlossaryCommunicationTester $i)
+    public function listTranslations(GlossaryCommunicationTester $i): void
     {
         $i->amOnPage('/glossary');
         $i->seeResponseCodeIs(200);

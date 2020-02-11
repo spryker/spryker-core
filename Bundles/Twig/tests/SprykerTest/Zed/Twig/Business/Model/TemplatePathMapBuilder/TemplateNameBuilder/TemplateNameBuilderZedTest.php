@@ -12,6 +12,7 @@ use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilder\T
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig
@@ -32,7 +33,7 @@ class TemplateNameBuilderZedTest extends Unit
      *
      * @return void
      */
-    public function testBuildTemplateName($path, $expectedTemplateName)
+    public function testBuildTemplateName(string $path, string $expectedTemplateName): void
     {
         $templateNameBuilder = new TemplateNameBuilderZed();
 
@@ -42,7 +43,7 @@ class TemplateNameBuilderZedTest extends Unit
     /**
      * @return array
      */
-    public function pathDataProvider()
+    public function pathDataProvider(): array
     {
         return [
             ['vendor/spryker/spryker/Modules/Module/src/Organization/Zed/Module/Presentation/Controller/index.twig', '@Module/Controller/index.twig'],
@@ -59,7 +60,7 @@ class TemplateNameBuilderZedTest extends Unit
      *
      * @return void
      */
-    public function testBuildNamespacedTemplateName($path, $expectedTemplateName)
+    public function testBuildNamespacedTemplateName(string $path, string $expectedTemplateName): void
     {
         $templateNameBuilder = new TemplateNameBuilderZed();
 
@@ -69,7 +70,7 @@ class TemplateNameBuilderZedTest extends Unit
     /**
      * @return array
      */
-    public function namespacedPathDataProvider()
+    public function namespacedPathDataProvider(): array
     {
         return [
             ['vendor/spryker/spryker/Modules/Module/src/Organization/Zed/Module/Presentation/Controller/index.twig', '@Organization:Module/Controller/index.twig'],

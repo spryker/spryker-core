@@ -33,6 +33,9 @@ use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeUpdaterInterf
 use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeValidator;
 use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeValidatorInterface;
 
+/**
+ * @method \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig getConfig()
+ */
 class ProductPricesRestApiFactory extends AbstractFactory
 {
     /**
@@ -114,7 +117,10 @@ class ProductPricesRestApiFactory extends AbstractFactory
      */
     public function createAbstractProductPricesRelationshipExpander(): AbstractProductPricesRelationshipExpanderInterface
     {
-        return new AbstractProductPricesRelationshipExpander($this->createAbstractProductPricesReader());
+        return new AbstractProductPricesRelationshipExpander(
+            $this->createAbstractProductPricesReader(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -122,7 +128,10 @@ class ProductPricesRestApiFactory extends AbstractFactory
      */
     public function createConcreteProductPricesRelationshipExpander(): ConcreteProductPricesRelationshipExpanderInterface
     {
-        return new ConcreteProductPricesRelationshipExpander($this->createConcreteProductPricesReader());
+        return new ConcreteProductPricesRelationshipExpander(
+            $this->createConcreteProductPricesReader(),
+            $this->getConfig()
+        );
     }
 
     /**

@@ -16,26 +16,26 @@ interface CmsBlockWriterInterface
      *
      * @return void
      */
-    public function activateById($idCmsBlock);
+    public function activateById(int $idCmsBlock): void;
 
     /**
      * @param int $idCmsBlock
      *
      * @return void
      */
-    public function deactivateById($idCmsBlock);
+    public function deactivateById(int $idCmsBlock): void;
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer;
 }

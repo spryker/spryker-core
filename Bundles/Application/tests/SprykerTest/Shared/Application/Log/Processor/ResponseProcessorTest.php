@@ -12,6 +12,7 @@ use Spryker\Shared\Application\Log\Processor\ResponseProcessor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Application
@@ -25,7 +26,7 @@ class ResponseProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testWHenContextContainsResponseResponseShouldBeRemovedFromContext()
+    public function testWHenContextContainsResponseResponseShouldBeRemovedFromContext(): void
     {
         $processor = new ResponseProcessor();
         $record = ['extra' => [], ResponseProcessor::RECORD_CONTEXT => [ResponseProcessor::EXTRA => 'response']];

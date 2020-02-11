@@ -14,7 +14,7 @@
             <parameter name="resource" value="cms_page"/>
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_cms_page"/>
-            <parameter name="store" required="false" />
+            <parameter name="store" required="false"/>
             <parameter name="queue_group" value="sync.storage.cms"/>
         </behavior>
         <behavior name="timestampable"/>

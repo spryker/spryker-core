@@ -15,6 +15,9 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisio
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule instead.
+ */
 class ShipmentPriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {
     /**
@@ -79,6 +82,6 @@ class ShipmentPriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleI
     {
         $moneyAmount = $this->moneyFacade->convertIntegerToDecimal($expenseTransfer->getUnitGrossPrice());
 
-        return $this->discountFacade->queryStringCompare($clauseTransfer, $moneyAmount);
+        return $this->discountFacade->queryStringCompare($clauseTransfer, (string)$moneyAmount);
     }
 }

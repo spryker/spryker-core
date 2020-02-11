@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ResourceShareClient extends AbstractClient implements ResourceShareClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ResourceShareClient extends AbstractClient implements ResourceShareClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class ResourceShareClient extends AbstractClient implements ResourceShareClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

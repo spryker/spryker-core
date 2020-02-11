@@ -119,7 +119,7 @@ class CatalogSearchRequestParametersIntegerValidator implements CatalogSearchReq
 
         $keys = explode('.', $key);
         foreach ($keys as $innerKey) {
-            if (!array_key_exists($innerKey, $data)) {
+            if (!isset($data[$innerKey])) {
                 return $default;
             }
 

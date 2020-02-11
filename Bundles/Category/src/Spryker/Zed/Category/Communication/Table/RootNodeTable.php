@@ -42,7 +42,7 @@ class RootNodeTable extends AbstractTable
     {
         $this->categoryQueryContainer = $productCategoryQueryContainer;
         $this->idLocale = $idLocale;
-        $this->defaultUrl = 'rootNodeTable';
+        $this->defaultUrl = 'root-node-table';
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 

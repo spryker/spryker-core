@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductOption\ProductOptionPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -26,14 +27,14 @@ class ProductOptionCreateCest
      *
      * @return void
      */
-    public function testCreateProductOptionGroupWithOptionValues(ProductOptionPresentationTester $i)
+    public function testCreateProductOptionGroupWithOptionValues(ProductOptionPresentationTester $i): void
     {
         $i->wantTo('Create single option group with one option');
         $i->expect('Option group with options created');
 
         $i->amOnPage(ProductOptionCreatePage::URL);
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Options / Create new Product Option');
+        $i->seeBreadcrumbNavigation('Products / Product Options / Create new Product Option');
 
         $optionGroupTestData = ProductOptionCreatePage::$productOptionGroupData[ProductOptionCreatePage::VALID_GROUP];
 

@@ -54,7 +54,7 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
     /**
      * @return array
      */
-    public function getArray()
+    public function getArray(): array
     {
         return $this->array;
     }
@@ -64,7 +64,7 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
      *
      * @return $this
      */
-    public function setArray($array)
+    public function setArray(array $array)
     {
         $this->array = $array;
 
@@ -74,7 +74,7 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
     /**
      * @return string
      */
-    public function getString()
+    public function getString(): string
     {
         return $this->string;
     }
@@ -84,7 +84,7 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
      *
      * @return $this
      */
-    public function setString($string)
+    public function setString(string $string)
     {
         $this->string = $string;
 
@@ -94,7 +94,7 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
     /**
      * @return string
      */
-    public function getNotSanitized()
+    public function getNotSanitized(): string
     {
         return $this->notSanitized;
     }
@@ -104,7 +104,7 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
      *
      * @return $this
      */
-    public function setNotSanitized($notSanitized)
+    public function setNotSanitized(string $notSanitized)
     {
         $this->notSanitized = $notSanitized;
 

@@ -19,7 +19,7 @@ use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 class MoneyFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

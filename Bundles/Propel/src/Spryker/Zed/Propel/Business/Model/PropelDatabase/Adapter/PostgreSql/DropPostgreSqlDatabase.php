@@ -58,7 +58,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     {
         $pdoConnection = $this->createPdoConnection();
         $pdoConnection->exec($this->getCloseOpenedConnectionsQuery());
-        $pdoConnection = null;
+        unset($pdoConnection);
     }
 
     /**

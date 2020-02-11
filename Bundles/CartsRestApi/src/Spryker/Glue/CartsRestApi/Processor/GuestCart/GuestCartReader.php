@@ -68,8 +68,10 @@ class GuestCartReader implements GuestCartReaderInterface
             return $this->guestCartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        return $this->guestCartRestResponseBuilder
-            ->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
+        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 
     /**
@@ -84,7 +86,9 @@ class GuestCartReader implements GuestCartReaderInterface
             return $this->guestCartRestResponseBuilder->createEmptyGuestCartRestResponse();
         }
 
-        return $this->guestCartRestResponseBuilder
-            ->createGuestCartRestResponse($quoteCollectionTransfer->getQuotes()->offsetGet(0));
+        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse(
+            $quoteCollectionTransfer->getQuotes()->offsetGet(0),
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 }

@@ -18,7 +18,7 @@ use Spryker\Glue\UpSellingProductsRestApi\UpSellingProductsRestApiConfig;
 class GuestCartUpSellingProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Configures action to retrieve up-selling products collection for guest cart.
      *
      * @api
@@ -35,7 +35,7 @@ class GuestCartUpSellingProductsResourceRoutePlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class GuestCartUpSellingProductsResourceRoutePlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class GuestCartUpSellingProductsResourceRoutePlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class GuestCartUpSellingProductsResourceRoutePlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

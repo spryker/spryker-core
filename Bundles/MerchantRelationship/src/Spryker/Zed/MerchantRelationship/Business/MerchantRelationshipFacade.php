@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -18,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelationshipFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +35,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +51,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +67,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +83,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -98,21 +99,23 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array
     {
         return $this->getFactory()
             ->createMerchantRelationshipReader()
-            ->getMerchantRelationshipCollection();
+            ->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

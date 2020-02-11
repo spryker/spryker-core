@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\BundleProxy;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel
@@ -24,7 +25,7 @@ class LocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldReturnBundleProxy()
+    public function testCallShouldReturnBundleProxy(): void
     {
         $locator = Locator::getInstance();
 

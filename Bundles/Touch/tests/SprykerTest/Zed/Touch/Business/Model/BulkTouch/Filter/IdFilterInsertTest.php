@@ -12,6 +12,7 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch
@@ -34,7 +35,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -47,7 +48,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    public function testFilter()
+    public function testFilter(): void
     {
         $ids = range(1, 200);
 
@@ -63,7 +64,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    public function testFilterChunkedAllInDatabase()
+    public function testFilterChunkedAllInDatabase(): void
     {
         $countAboveChunkSize = 500;
 
@@ -84,7 +85,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    public function testFilterChunkedNoneInDatabase()
+    public function testFilterChunkedNoneInDatabase(): void
     {
         $countAboveChunkSize = 500;
 

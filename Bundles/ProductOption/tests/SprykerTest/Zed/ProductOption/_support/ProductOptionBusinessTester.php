@@ -9,22 +9,27 @@ namespace SprykerTest\Zed\ProductOption;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Propel\Runtime\Propel;
-use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -48,14 +53,14 @@ class ProductOptionBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
-     * @param int $idStore
+     * @param int|null $idStore
      * @param int $idCurrency
      * @param int $netPrice
      * @param int $grossPrice
      *
      * @return void
      */
-    public function addPrice(ProductOptionValueTransfer $productOptionValueTransfer, $idStore, $idCurrency, $netPrice, $grossPrice)
+    public function addPrice(ProductOptionValueTransfer $productOptionValueTransfer, ?int $idStore, int $idCurrency, int $netPrice, int $grossPrice): void
     {
         $productOptionValueTransfer->addPrice(
             (new MoneyValueTransfer())
@@ -71,7 +76,7 @@ class ProductOptionBusinessTester extends Actor
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice
      */
-    public function getFirstProductOptionValuePriceByIdProductOptionGroup($idProductOptionGroup)
+    public function getFirstProductOptionValuePriceByIdProductOptionGroup(int $idProductOptionGroup): SpyProductOptionValuePrice
     {
         return SpyProductOptionValuePriceQuery::create()
             ->joinProductOptionValue()
@@ -86,7 +91,7 @@ class ProductOptionBusinessTester extends Actor
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice|null
      */
-    public function getFirstProductOptionValuePriceByIdProductOptionValue($idProductOptionValue)
+    public function getFirstProductOptionValuePriceByIdProductOptionValue(int $idProductOptionValue): ?SpyProductOptionValuePrice
     {
         return SpyProductOptionValuePriceQuery::create()
             ->filterByFkProductOptionValue($idProductOptionValue)
@@ -99,7 +104,7 @@ class ProductOptionBusinessTester extends Actor
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
      */
-    public function createTaxSet($iso2Code, $taxRate)
+    public function createTaxSet(string $iso2Code, int $taxRate): SpyTaxSet
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
 
@@ -124,7 +129,7 @@ class ProductOptionBusinessTester extends Actor
     /**
      * @return void
      */
-    public function enablePropelInstancePooling()
+    public function enablePropelInstancePooling(): void
     {
         Propel::enableInstancePooling();
     }
@@ -134,7 +139,7 @@ class ProductOptionBusinessTester extends Actor
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
-    public function findOneProductOptionValueById($idProductOptionValue)
+    public function findOneProductOptionValueById(int $idProductOptionValue): SpyProductOptionValue
     {
         return SpyProductOptionValueQuery::create()
             ->findOneByIdProductOptionValue($idProductOptionValue);
@@ -145,7 +150,7 @@ class ProductOptionBusinessTester extends Actor
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    public function createProductAbstract($sku)
+    public function createProductAbstract(string $sku): SpyProductAbstract
     {
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity->setSku($sku);
@@ -160,7 +165,7 @@ class ProductOptionBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function createAddressTransfer($iso2Code)
+    public function createAddressTransfer(string $iso2Code): AddressTransfer
     {
         $addressTransfer = new AddressTransfer();
         $addressTransfer->setIso2Code($iso2Code);
@@ -173,7 +178,7 @@ class ProductOptionBusinessTester extends Actor
      *
      * @return void
      */
-    public function setDependencyStoreFacade($storeFacade)
+    public function setDependencyStoreFacade($storeFacade): void
     {
         $this->setDependency(
             ProductOptionDependencyProvider::FACADE_STORE,
@@ -186,11 +191,41 @@ class ProductOptionBusinessTester extends Actor
      *
      * @return void
      */
-    public function setDependencyCurrencyFacade($currencyFacade)
+    public function setDependencyCurrencyFacade($currencyFacade): void
     {
         $this->setDependency(
             ProductOptionDependencyProvider::FACADE_CURRENCY,
             new ProductOptionToCurrencyFacadeBridge($currencyFacade)
         );
+    }
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    protected function haveCountryWithIso2Code(string $iso2Code): CountryTransfer
+    {
+        $countryEntity = SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne();
+
+        if ($countryEntity === null) {
+            $countryEntity = new SpyCountry();
+            $countryEntity->setIso2Code($iso2Code);
+            $countryEntity->save();
+        }
+
+        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
+
+        return $countryTransfer;
+    }
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return int
+     */
+    public function getCountryIdByIso2Code(string $iso2Code): int
+    {
+        return $this->haveCountryWithIso2Code($iso2Code)->getIdCountry();
     }
 }

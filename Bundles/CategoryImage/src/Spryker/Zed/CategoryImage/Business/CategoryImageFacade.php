@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,7 +83,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

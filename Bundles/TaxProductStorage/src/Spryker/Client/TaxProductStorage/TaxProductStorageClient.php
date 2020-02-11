@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class TaxProductStorageClient extends AbstractClient implements TaxProductStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

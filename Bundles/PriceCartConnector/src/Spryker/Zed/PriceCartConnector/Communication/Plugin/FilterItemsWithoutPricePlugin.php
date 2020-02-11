@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class FilterItemsWithoutPricePlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes quote items without price.
      *
      * @api

@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
+ * @deprecated Use \Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin instead.
+ *
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -20,7 +22,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 class ProductOptionSortHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

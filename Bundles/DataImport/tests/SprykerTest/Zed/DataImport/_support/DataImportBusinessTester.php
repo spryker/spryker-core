@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -32,7 +33,7 @@ class DataImportBusinessTester extends Actor
     /**
      * @return \Spryker\Zed\DataImport\Business\DataImportBusinessFactory
      */
-    public function getFactory()
+    public function getFactory(): DataImportBusinessFactory
     {
         return new DataImportBusinessFactory();
     }

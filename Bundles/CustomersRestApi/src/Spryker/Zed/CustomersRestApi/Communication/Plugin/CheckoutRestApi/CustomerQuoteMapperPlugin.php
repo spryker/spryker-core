@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CustomerQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Maps rest request customer to quote.
      *
      * @api

@@ -34,6 +34,16 @@ class PriceProductFilter implements PriceProductFilterInterface
     protected $currencyFacade;
 
     /**
+     * @var string
+     */
+    protected $defaultPriceMode;
+
+    /**
+     * @var string
+     */
+    protected $currentCurrencyCode;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
@@ -83,7 +93,11 @@ class PriceProductFilter implements PriceProductFilterInterface
     protected function getPriceMode(QuoteTransfer $quoteTransfer): string
     {
         if ($quoteTransfer->getPriceMode() === null) {
-            return $this->priceFacade->getDefaultPriceMode();
+            if (!$this->defaultPriceMode) {
+                $this->defaultPriceMode = $this->priceFacade->getDefaultPriceMode();
+            }
+
+            return $this->defaultPriceMode;
         }
 
         return $quoteTransfer->getPriceMode();
@@ -97,7 +111,11 @@ class PriceProductFilter implements PriceProductFilterInterface
     protected function getCurrencyCode(QuoteTransfer $quoteTransfer): string
     {
         if ($quoteTransfer->getCurrency() === null || $quoteTransfer->getCurrency()->getCode() === null) {
-            return $this->currencyFacade->getCurrent()->getCode();
+            if (!$this->currentCurrencyCode) {
+                $this->currentCurrencyCode = $this->currencyFacade->getCurrent()->getCode();
+            }
+
+            return $this->currentCurrencyCode;
         }
 
         return $quoteTransfer->getCurrency()->getCode();
@@ -165,6 +183,7 @@ class PriceProductFilter implements PriceProductFilterInterface
             if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
                 if ($cartChangeTransfer->getOperation() === PriceCartConnectorConfig::OPERATION_REMOVE) {
                     $quantity -= $itemTransfer->getQuantity();
+
                     continue;
                 }
 

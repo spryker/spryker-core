@@ -16,12 +16,12 @@ use Spryker\Client\Kernel\AbstractClient;
 class UrlStorageClient extends AbstractClient implements UrlStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param string $url
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return array
      */
@@ -34,7 +34,7 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

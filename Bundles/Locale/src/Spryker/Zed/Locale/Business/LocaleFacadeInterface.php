@@ -160,4 +160,15 @@ interface LocaleFacadeInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function setCurrentLocale(LocaleTransfer $localeTransfer): LocaleTransfer;
+
+    /**
+     * Specification:
+     * - Returns an array of locale ISO codes.
+     * - The list of locales is read from the configuration.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSupportedLocaleCodes(): array;
 }

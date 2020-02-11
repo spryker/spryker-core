@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsSlotTemplateDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Imports CmsSlotTemplate data.
      *
      * @api
@@ -36,7 +36,7 @@ class CmsSlotTemplateDataImportPlugin extends AbstractPlugin implements DataImpo
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

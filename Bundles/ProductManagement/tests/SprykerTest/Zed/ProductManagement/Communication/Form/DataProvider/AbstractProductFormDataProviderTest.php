@@ -13,6 +13,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProduc
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement
@@ -33,7 +34,7 @@ class AbstractProductFormDataProviderTest extends Unit
     /**
      * @return void
      */
-    public function testGetImageUrl()
+    public function testGetImageUrl(): void
     {
         $productFormDataProviderMock = $this->getProductFormDataProviderMock();
 
@@ -55,7 +56,7 @@ class AbstractProductFormDataProviderTest extends Unit
     /**
      * @return array
      */
-    public function prepareTestData()
+    public function prepareTestData(): array
     {
         $data = [
             self::IMAGE_URL_PREFIX . self::PIM_IMAGE_URL => self::PIM_IMAGE_URL,
@@ -68,9 +69,9 @@ class AbstractProductFormDataProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getProductFormDataProviderMock()
+    protected function getProductFormDataProviderMock(): AbstractProductFormDataProvider
     {
         $productFormDataProviderMock = $this->getMockBuilder(AbstractProductFormDataProvider::class)
             ->disableOriginalConstructor()

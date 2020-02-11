@@ -50,7 +50,7 @@ class PriceProductRemover implements PriceProductRemoverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *

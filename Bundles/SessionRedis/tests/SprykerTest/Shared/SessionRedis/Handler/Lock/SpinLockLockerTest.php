@@ -14,6 +14,7 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group SessionRedis
@@ -53,7 +54,7 @@ class SpinLockLockerTest extends Unit
         $this->redisClientMock->expects($this->exactly(3))
             ->method('set')
             ->with($this->anything())
-            ->will($this->onConsecutiveCalls(0, 0, 1));
+            ->will($this->onConsecutiveCalls(false, false, true));
 
         $this->spinLockLocker->lock('session_id');
     }

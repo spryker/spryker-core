@@ -20,4 +20,4 @@ use Orm\Zed\Acl\Persistence\Base\SpyAclRuleQuery as BaseSpyAclRuleQuery;
  */
 abstract class AbstractSpyAclRuleQuery extends BaseSpyAclRuleQuery
 {
-} // SpyAclRuleQuery
+}

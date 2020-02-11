@@ -15,6 +15,8 @@ use Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface;
 use Spryker\Zed\Newsletter\NewsletterConfig;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
  * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
  * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()

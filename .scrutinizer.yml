@@ -1,6 +1,6 @@
 build:
     environment:
-        php: '7.1'
+        php: '7.3'
 
     nodes:
         analysis:
@@ -11,6 +11,9 @@ build:
 filter:
     excluded_paths:
         - Bundles/Propel/src/Spryker/Zed/Propel/Business/Builder/*
+        - Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/*
+        - Bundles/*/src/Spryker/Zed/*/*Factory.php
+        - Bundles/Transfer/tests/_data/test_files/*
 
 build_failure_conditions:
     - 'project.metric("scrutinizer.quality", < 9.80)'

@@ -26,6 +26,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -39,7 +40,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountWithVoucherShouldSaveEntityWithVoucherPool()
+    public function testSaveDiscountWithVoucherShouldSaveEntityWithVoucherPool(): void
     {
         $discountPersist = $this->createDiscountPersist();
 
@@ -57,7 +58,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateWhenDiscountExistShouldCallSaveOnDiscountEntity()
+    public function testUpdateWhenDiscountExistShouldCallSaveOnDiscountEntity(): void
     {
         $discountEntityMock = $this->createDiscountEntityMock();
         $voucherPoolEntityMock = $this->createVoucherPoolEntity();
@@ -84,7 +85,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateWhenDiscountNotFoundShouldThrowException()
+    public function testUpdateWhenDiscountNotFoundShouldThrowException(): void
     {
         $this->expectException(PersistenceException::class);
 
@@ -106,7 +107,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return void
      */
-    public function testSaveVoucherCodesShouldCallVoucherEngineForCodeGeneration()
+    public function testSaveVoucherCodesShouldCallVoucherEngineForCodeGeneration(): void
     {
         $discountEntityMock = $this->createDiscountEntityMock();
         $voucherPoolEntityMock = $this->createVoucherPoolEntity();
@@ -137,7 +138,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return void
      */
-    public function testSaveVoucherCodesWhenDiscountNotFoundShouldThrowException()
+    public function testSaveVoucherCodesWhenDiscountNotFoundShouldThrowException(): void
     {
         $this->expectException(PersistenceException::class);
 
@@ -159,7 +160,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return void
      */
-    public function testToggleDiscountVisibilityShouldChangeActiveFlag()
+    public function testToggleDiscountVisibilityShouldChangeActiveFlag(): void
     {
         $discountEntityMock = $this->createDiscountEntityMock();
 
@@ -185,7 +186,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return void
      */
-    public function testToggleDiscountVisibilityShouldThrowExceptionWhenDiscountNotFound()
+    public function testToggleDiscountVisibilityShouldThrowExceptionWhenDiscountNotFound(): void
     {
         $this->expectException(PersistenceException::class);
 
@@ -207,7 +208,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
-    protected function createDiscountConfiguratorTransfer()
+    protected function createDiscountConfiguratorTransfer(): DiscountConfiguratorTransfer
     {
         $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
 
@@ -237,8 +238,7 @@ class DiscountPersistTest extends Unit
     protected function createDiscountPersist(
         ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
         ?VoucherEngineInterface $voucherEngineMock = null
-    ) {
-
+    ): DiscountPersist {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
@@ -270,7 +270,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
-    protected function createDiscountQueryContainerMock()
+    protected function createDiscountQueryContainerMock(): DiscountQueryContainerInterface
     {
         return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
@@ -278,7 +278,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter
      */
-    protected function createDiscountStoreRelationWriterMock()
+    protected function createDiscountStoreRelationWriterMock(): DiscountStoreRelationWriter
     {
         return $this->getMockBuilder(DiscountStoreRelationWriter::class)
             ->disableOriginalConstructor()
@@ -288,7 +288,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    protected function createDiscountQueryMock()
+    protected function createDiscountQueryMock(): SpyDiscountQuery
     {
         return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['findOneByIdDiscount'])->getMock();
     }
@@ -296,7 +296,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
      */
-    protected function createVoucherEngineMock()
+    protected function createVoucherEngineMock(): VoucherEngineInterface
     {
         return $this->getMockBuilder(VoucherEngineInterface::class)->getMock();
     }
@@ -304,7 +304,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscount
      */
-    protected function createDiscountEntityMock()
+    protected function createDiscountEntityMock(): SpyDiscount
     {
         $discountEntity = $this->getMockBuilder(SpyDiscount::class)->getMock();
         $discountEntity->expects($this->once())
@@ -317,7 +317,7 @@ class DiscountPersistTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
-    protected function createVoucherPoolEntity()
+    protected function createVoucherPoolEntity(): SpyDiscountVoucherPool
     {
         $discountVoucherPoolEntity = $this->getMockBuilder(SpyDiscountVoucherPool::class)->getMock();
         $discountVoucherPoolEntity

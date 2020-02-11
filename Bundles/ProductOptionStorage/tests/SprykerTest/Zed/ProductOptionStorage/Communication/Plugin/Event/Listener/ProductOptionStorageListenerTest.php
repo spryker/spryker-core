@@ -30,6 +30,7 @@ use SprykerTest\Zed\ProductOptionStorage\ProductOptionStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOptionStorage
@@ -60,7 +61,7 @@ class ProductOptionStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -99,7 +100,7 @@ class ProductOptionStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductOptionPublishStorageListenerStoreData()
+    public function testProductOptionPublishStorageListenerStoreData(): void
     {
         SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractOptionStorageQuery::create()->count();
@@ -119,7 +120,7 @@ class ProductOptionStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductOptionStorageListenerStoreData()
+    public function testProductOptionStorageListenerStoreData(): void
     {
         SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractOptionStorageQuery::create()->count();
@@ -141,7 +142,7 @@ class ProductOptionStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductOptionGroupStorageListenerStoreData()
+    public function testProductOptionGroupStorageListenerStoreData(): void
     {
         $productOptionStorageQueryContainer = new ProductOptionStorageQueryContainer();
         $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([$this->productOptionGroupTransfer->getIdProductOptionGroup()])->find()->getData();
@@ -164,7 +165,7 @@ class ProductOptionStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductOptionValueStorageListenerStoreData()
+    public function testProductOptionValueStorageListenerStoreData(): void
     {
         $productOptionStorageQueryContainer = new ProductOptionStorageQueryContainer();
         $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([$this->productOptionGroupTransfer->getIdProductOptionGroup()])->find()->getData();
@@ -188,7 +189,7 @@ class ProductOptionStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductOptionValuePriceStorageListenerStoreData()
+    public function testProductOptionValuePriceStorageListenerStoreData(): void
     {
         $productOptionStorageQueryContainer = new ProductOptionStorageQueryContainer();
         $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([$this->productOptionGroupTransfer->getIdProductOptionGroup()])->find()->getData();
@@ -202,8 +203,9 @@ class ProductOptionStorageListenerTest extends Unit
 
         $eventTransfers = [];
 
-        if ($productOptionValues) {
-            $productOptionValueTransfer = current($productOptionValues);
+        if ($productOptionValues->count() !== 0) {
+            /** @var \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer */
+            $productOptionValueTransfer = $productOptionValues[0];
 
             $eventTransfers[] = (new EventEntityTransfer())->setForeignKeys([
                 SpyProductOptionValuePriceTableMap::COL_FK_PRODUCT_OPTION_VALUE => $productOptionValueTransfer->getIdProductOptionValue(),
@@ -219,7 +221,7 @@ class ProductOptionStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageFacade
      */
-    protected function getProductOptionStorageFacade()
+    protected function getProductOptionStorageFacade(): ProductOptionStorageFacade
     {
         $factory = new ProductOptionStorageBusinessFactory();
         $factory->setConfig(new ProductOptionStorageConfigMock());
@@ -235,7 +237,7 @@ class ProductOptionStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductAbstractOptionGroupStorage($beforeCount)
+    protected function assertProductAbstractOptionGroupStorage(int $beforeCount): void
     {
         $productOptionStorageCount = SpyProductAbstractOptionStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productOptionStorageCount);
@@ -246,7 +248,7 @@ class ProductOptionStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductAbstractOptionStorage($beforeCount)
+    protected function assertProductAbstractOptionStorage(int $beforeCount): void
     {
         $productOptionStorageCount = SpyProductAbstractOptionStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productOptionStorageCount);

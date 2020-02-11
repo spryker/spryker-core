@@ -15,6 +15,7 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Locale
@@ -37,7 +38,7 @@ class LocaleTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +51,7 @@ class LocaleTest extends Unit
      *
      * @return void
      */
-    public function testCreateLocaleInsertsSomething()
+    public function testCreateLocaleInsertsSomething(): void
     {
         $localeQuery = $this->localeQueryContainer->queryLocaleByName('xy_ab');
         $this->assertEquals(0, $localeQuery->count());
@@ -65,7 +66,7 @@ class LocaleTest extends Unit
      *
      * @return void
      */
-    public function testDeleteLocaleDeletesSoftly()
+    public function testDeleteLocaleDeletesSoftly(): void
     {
         $localeQuery = $this->localeQueryContainer->queryLocaleByName('ab_xy');
         $this->localeFacade->createLocale('ab_xy');
@@ -78,7 +79,7 @@ class LocaleTest extends Unit
     /**
      * @return void
      */
-    public function testGetLocaleByIdReturnsValidLocaleTransfer()
+    public function testGetLocaleByIdReturnsValidLocaleTransfer(): void
     {
         $localeEntity = new SpyLocale();
         $localeEntity->setLocaleName('aa_AA');

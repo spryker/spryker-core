@@ -1,56 +1,36 @@
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discount' } %}
+<div class="row">
+    <div class="col-sm-12">
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discounts & Vouchers' } %}
 
-    {% block widget_content %}
+            {% block widget_content %}
+                {% if order.calculatedDiscounts is not empty %}
+                    <table class="footable table table-striped toggle-arrow-tiny">
+                        <thead>
+                        <tr class="text-left">
+                            <th>{{ 'Type' | trans }}</th>
+                            <th>{{ 'Name' | trans }}</th>
+                            <th>{{ 'Code' | trans }}</th>
+                            <th>{{ 'Amount' | trans }}</th>
+                            <th>{{ 'Description' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for calculatedDiscount in order.calculatedDiscounts %}
+                            <tr>
+                                <td>{{ calculatedDiscount.voucherCode ? 'Voucher' | trans : 'Discount' | trans }}</td>
+                                <td>{{ calculatedDiscount.displayName }}</td>
+                                <td>{{ calculatedDiscount.voucherCode ? calculatedDiscount.voucherCode : '-' }}</td>
+                                <td>{{ calculatedDiscount.sumAmount | money(true, order.currencyIsoCode) }}</td>
+                                <td>{{ calculatedDiscount.description ? calculatedDiscount.description : '-' }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <span class="text-left">{{ 'No returns for this order' | trans }}</span>
+                {% endif %}
+            {% endblock %}
 
-        <div class="row">
-            <div class="col-md-6">
-                <table class="table">
-                    <caption>{{ 'Voucher' | trans }}</caption>
-                    {% for calculatedDiscount in order.calculatedDiscounts %}
-                        {% if calculatedDiscount.voucherCode  %}
-                            <tr>
-                                <th>{{ 'Name' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.displayName }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ 'Value' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.sumAmount | money(true, order.currencyIsoCode) }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ 'Voucher Code' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.voucherCode }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ 'Description' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.description }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="col-md-6">
-                <table class="table">
-                    <caption>{{ 'Cart Rules' | trans }}</caption>
-                    {% for calculatedDiscount in order.calculatedDiscounts %}
-                        {% if calculatedDiscount.voucherCode is empty  %}
-                            <tr>
-                                <th>{{ 'Name' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.displayName }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ 'Value' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.sumAmount | money(true, order.currencyIsoCode) }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ 'Description' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.description }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-
-    {% endblock %}
-
-{% endembed %}
+        {% endembed %}
+    </div>
+</div>

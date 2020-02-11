@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductReviewCollectorFacade extends AbstractFacade implements ProductReviewCollectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class ProductReviewCollectorFacade extends AbstractFacade implements ProductRevi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

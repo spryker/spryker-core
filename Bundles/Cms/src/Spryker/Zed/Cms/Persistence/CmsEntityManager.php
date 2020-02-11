@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CmsEntityManager extends AbstractEntityManager implements CmsEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $idStores
      * @param int $idCmsPage
@@ -34,7 +34,7 @@ class CmsEntityManager extends AbstractEntityManager implements CmsEntityManager
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $idStores
      * @param int $idCmsPage

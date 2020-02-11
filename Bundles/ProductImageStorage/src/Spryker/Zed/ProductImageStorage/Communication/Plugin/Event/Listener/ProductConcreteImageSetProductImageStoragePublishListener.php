@@ -22,7 +22,7 @@ class ProductConcreteImageSetProductImageStoragePublishListener extends Abstract
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

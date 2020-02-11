@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipFacadeInterface
@@ -16,6 +17,7 @@ interface MerchantRelationshipFacadeInterface
      * - Creates a new merchant relationship entity.
      * - Uses incoming transfer to set entity fields.
      * - Persists the entity to DB.
+     * - Executes post-create plugin stack MerchantRelationshipPostCreatePluginInterface.
      * - Sets ID to the returning transfer.
      * - Creates new assignee relations by AssigneeCompanyBusinessUnitCollection (fk_merchant_relation, fk_company_business_unit).
      *
@@ -32,6 +34,7 @@ interface MerchantRelationshipFacadeInterface
      * - Finds a merchant record by ID in DB.
      * - Uses incoming transfer to update entity fields.
      * - Persists the entity to DB.
+     * - Executes post-update plugin stack MerchantRelationshipPostUpdatePluginInterface.
      * - Removes outdated relations by assigneeCompanyBusinessUnitCollection (fk_merchant_relation, fk_company_business_unit).
      * - Creates new relations by AssigneeCompanyBusinessUnitCollection (fk_merchant_relation, fk_company_business_unit).
      * - Throws MerchantRelationNotFoundException in case a record is not found.
@@ -87,15 +90,18 @@ interface MerchantRelationshipFacadeInterface
 
     /**
      * Specification:
-     * - Returns all merchant relations.
+     * - Returns merchant relations.
+     * - Filters by merchant relationship IDs when provided.
      * - Hydrate owner company business unit and merchant.
      * - Populates name in transfer.
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array;
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array;
 
     /**
      * Specification:

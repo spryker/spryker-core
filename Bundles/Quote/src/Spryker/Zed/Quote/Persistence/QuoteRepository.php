@@ -24,7 +24,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class QuoteRepository extends AbstractRepository implements QuoteRepositoryInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
      *
@@ -47,7 +47,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $customerReference
      * @param int $idStore
@@ -70,7 +70,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idQuote
      *
@@ -91,7 +91,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *

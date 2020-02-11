@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Currency\Business\Model;
 
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
+
 interface CurrencyReaderInterface
 {
     /**
@@ -29,6 +31,13 @@ interface CurrencyReaderInterface
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies();
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getStoreWithCurrenciesByIdStore(int $idStore): StoreWithCurrencyTransfer;
 
     /**
      * @param string $isoCode

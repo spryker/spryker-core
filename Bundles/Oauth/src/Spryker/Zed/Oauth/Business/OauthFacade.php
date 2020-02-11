@@ -19,12 +19,11 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
  * @method \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface getRepository()
- *
  */
 class OauthFacade extends AbstractFacade implements OauthFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +37,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +51,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +65,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +81,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +95,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -110,7 +109,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -124,7 +123,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

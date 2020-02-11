@@ -23,6 +23,7 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Newsletter
@@ -44,7 +45,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -55,7 +56,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSubscribeWithSingleOptInShouldSucceed()
+    public function testSubscribeWithSingleOptInShouldSucceed(): void
     {
         $request = new NewsletterSubscriptionRequestTransfer();
         $subscriber = $this->createSubscriber();
@@ -74,7 +75,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSubscribeWithSingleOptInFailsWhenEmailIsInvalid()
+    public function testSubscribeWithSingleOptInFailsWhenEmailIsInvalid(): void
     {
         // Assign
         $subscriptionRequestTransfer = (new NewsletterSubscriptionRequestTransfer())
@@ -95,7 +96,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSubscribeForAlreadySubscribedTypeShouldFail()
+    public function testSubscribeForAlreadySubscribedTypeShouldFail(): void
     {
         $request = new NewsletterSubscriptionRequestTransfer();
         $subscriber = $this->createSubscriber();
@@ -113,7 +114,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSubscribeWithDoubleOptInShouldSucceed()
+    public function testSubscribeWithDoubleOptInShouldSucceed(): void
     {
         $request = new NewsletterSubscriptionRequestTransfer();
         $subscriber = $this->createSubscriber();
@@ -132,7 +133,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSubscribeWithDoubleOptInFailsWhenEmailIsInvalid()
+    public function testSubscribeWithDoubleOptInFailsWhenEmailIsInvalid(): void
     {
         // Assign
         $subscriptionRequestTransfer = (new NewsletterSubscriptionRequestTransfer())
@@ -153,7 +154,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testApproveDoubleOptInSubscriberShouldSucceed()
+    public function testApproveDoubleOptInSubscriberShouldSucceed(): void
     {
         $request = new NewsletterSubscriptionRequestTransfer();
         $subscriber = $this->createSubscriber();
@@ -171,7 +172,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testApproveNonExistentDoubleOptInSubscriberShouldFail()
+    public function testApproveNonExistentDoubleOptInSubscriberShouldFail(): void
     {
         $subscriber = $this->createSubscriber();
 
@@ -183,7 +184,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnsubscribeFromTypesShouldSucceed()
+    public function testUnsubscribeFromTypesShouldSucceed(): void
     {
         $request = new NewsletterSubscriptionRequestTransfer();
         $subscriber = $this->createSubscriber();
@@ -204,7 +205,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnsubscribeFromNotSubscribedTypesShouldFail()
+    public function testUnsubscribeFromNotSubscribedTypesShouldFail(): void
     {
         $request = new NewsletterSubscriptionRequestTransfer();
         $subscriber = $this->createSubscriber();
@@ -230,7 +231,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSubscriptionForSubscribedTypesShouldSucceed()
+    public function testCheckSubscriptionForSubscribedTypesShouldSucceed(): void
     {
         $request = new NewsletterSubscriptionRequestTransfer();
         $subscriber = $this->createSubscriber();
@@ -249,7 +250,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSubscriptionForNotSubscribedTypesShouldFail()
+    public function testCheckSubscriptionForNotSubscribedTypesShouldFail(): void
     {
         $request = new NewsletterSubscriptionRequestTransfer();
         $subscriber = $this->createSubscriber();
@@ -266,7 +267,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAssignCustomerToExistingSubscriber()
+    public function testAssignCustomerToExistingSubscriber(): void
     {
         $newsletterSubscriberTransfer = $this->createSubscriber();
 
@@ -299,7 +300,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setNewsletterFacade()
+    protected function setNewsletterFacade(): void
     {
         $this->newsletterFacade = new NewsletterFacade();
         $container = new Container();
@@ -318,7 +319,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setTestNewsletterTypes()
+    protected function setTestNewsletterTypes(): void
     {
         $typeEntity = new SpyNewsletterType();
         $typeEntity->setName(self::TEST_TYPE1);
@@ -332,7 +333,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
-    protected function createSubscriber()
+    protected function createSubscriber(): NewsletterSubscriberTransfer
     {
         $subscriber = new NewsletterSubscriberTransfer();
         $subscriber->setEmail('example@spryker.com');
@@ -344,7 +345,7 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
-    protected function createInvalidSubscriber()
+    protected function createInvalidSubscriber(): NewsletterSubscriberTransfer
     {
         $subscriber = new NewsletterSubscriberTransfer();
         $subscriber->setEmail('invalid<>example@spryker.com');
@@ -358,7 +359,7 @@ class NewsletterFacadeTest extends Unit
      *
      * @return void
      */
-    protected function addTestType1ToSubscriptionRequest(NewsletterSubscriptionRequestTransfer $request)
+    protected function addTestType1ToSubscriptionRequest(NewsletterSubscriptionRequestTransfer $request): void
     {
         $type1 = new NewsletterTypeTransfer();
         $type1->setName(self::TEST_TYPE1);
@@ -371,7 +372,7 @@ class NewsletterFacadeTest extends Unit
      *
      * @return void
      */
-    protected function addTestType2ToSubscriptionRequest(NewsletterSubscriptionRequestTransfer $request)
+    protected function addTestType2ToSubscriptionRequest(NewsletterSubscriptionRequestTransfer $request): void
     {
         $type2 = new NewsletterTypeTransfer();
         $type2->setName(self::TEST_TYPE2);

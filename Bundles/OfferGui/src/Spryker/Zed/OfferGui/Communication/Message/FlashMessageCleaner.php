@@ -78,7 +78,7 @@ class FlashMessageCleaner implements FlashMessageCleanerInterface
     }
 
     /**
-     * @param mixed[] $messages
+     * @param array $messages
      *
      * @return string[]
      */
@@ -88,6 +88,7 @@ class FlashMessageCleaner implements FlashMessageCleanerInterface
         foreach ($messages as $message) {
             if (is_array($message)) {
                 $result = array_merge($result, $message);
+
                 continue;
             }
             $result[] = $message;

@@ -1,6 +1,6 @@
 # PriceProductMerchantRelationshipStorage Module
-[![Build Status](https://travis-ci.org/spryker/price-product-business-unit-storage.svg)](https://travis-ci.org/spryker/price-product-business-unit-storage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-business-unit-storage/badge.svg)](https://coveralls.io/github/spryker/price-product-business-unit-storage)
+[![Build Status](https://travis-ci.org/spryker/price-product-merchant-relationship-storage.svg)](https://travis-ci.org/spryker/price-product-merchant-relationship-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This modules is used for saving MerchantRelationship prices into Storage and contains plugins for reading them.
 

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 /**
  * @deprecated Will be removed without replacement.
- *
  */
 class SalesQuantityToProductFacadeBridge implements SalesQuantityToProductFacadeInterface
 {

@@ -20,11 +20,14 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefiniti
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\HealthCheckInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\SearchHealthCheck;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
+use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
@@ -39,10 +42,12 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createSearchInstaller(LoggerInterface $messenger)
     {
-        return new SearchInstaller($this->getSearchInstallerStack($messenger));
+        return new SearchInstaller($messenger, $this->getSearchInstallerStack($messenger));
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndex()` instead.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManagerInterface
      */
     public function createSearchIndexManager()
@@ -61,7 +66,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
-    protected function createJsonIndexDefinitionLoader()
+    public function createJsonIndexDefinitionLoader()
     {
         return new JsonIndexDefinitionLoader(
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
@@ -72,12 +77,21 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::getInstallerPlugins()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
-     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
      */
-    protected function getSearchInstallerStack(LoggerInterface $messenger)
+    public function getSearchInstallerStack(LoggerInterface $messenger)
     {
+        $installerPlugins = $this->getInstallerPlugins();
+
+        /** @deprecated Will be removed in favor of direct return of the attached InstallPluginInterface's. */
+        if (count($installerPlugins) > 0) {
+            return $installerPlugins;
+        }
+
         return [
             $this->createElasticsearchIndexInstaller($messenger),
             $this->createIndexMapInstaller($messenger),
@@ -85,11 +99,40 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    public function getInstallerPlugins(): array
+    {
+        return array_merge(
+            $this->getSourceInstallerPlugins(),
+            $this->getMapInstallerPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    public function getSourceInstallerPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_SOURCE_INSTALLER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    public function getMapInstallerPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_MAP_INSTALLER);
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::createSearchSourceInstaller()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    protected function createElasticsearchIndexInstaller(LoggerInterface $messenger)
+    public function createElasticsearchIndexInstaller(LoggerInterface $messenger)
     {
         return new IndexInstaller(
             $this->createJsonIndexDefinitionLoader(),
@@ -115,9 +158,29 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    public function createSourceMapInstaller(LoggerInterface $messenger): SearchInstallerInterface
+    {
+        return new SearchInstaller($messenger, $this->getMapInstallerPlugins());
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    public function createSearchSourceInstaller(LoggerInterface $messenger): SearchInstallerInterface
+    {
+        return new SearchInstaller($messenger, $this->getSourceInstallerPlugins());
+    }
+
+    /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface
      */
-    protected function createElasticsearchIndexMapGenerator()
+    public function createElasticsearchIndexMapGenerator()
     {
         return new IndexMapGenerator(
             $this->getConfig()->getClassTargetDirectory(),
@@ -128,7 +191,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface
      */
-    protected function createElasticsearchIndexMapCleaner()
+    public function createElasticsearchIndexMapCleaner()
     {
         return new IndexMapCleaner($this->getConfig()->getClassTargetDirectory());
     }
@@ -149,7 +212,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Client\Search\Provider\SearchClientProvider
      */
-    protected function createSearchClientProvider()
+    public function createSearchClientProvider()
     {
         return new SearchClientProvider();
     }
@@ -159,7 +222,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Elastica\Index
      */
-    protected function getElasticsearchIndex($index = null)
+    public function getElasticsearchIndex($index = null)
     {
         return $this
             ->createIndexProvider()
@@ -169,7 +232,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Client\Search\Provider\IndexClientProvider
      */
-    protected function createIndexProvider()
+    public function createIndexProvider()
     {
         return new IndexClientProvider();
     }
@@ -177,7 +240,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface
      */
-    protected function createJsonIndexDefinitionMerger()
+    public function createJsonIndexDefinitionMerger()
     {
         return new JsonIndexDefinitionMerger();
     }
@@ -191,6 +254,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface
      */
     public function createPageDataMapper()
@@ -202,9 +267,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
      */
-    protected function createPageMapBuilder()
+    public function createPageMapBuilder()
     {
         return new PageMapBuilder();
     }
@@ -212,12 +279,14 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
      */
-    protected function getUtilEncodingService()
+    public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
      */
     public function getSearchPageMapPlugins()
@@ -236,12 +305,14 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Elastica\Snapshot
      */
-    protected function createElasticsearchSnapshot()
+    public function createElasticsearchSnapshot()
     {
         return new Snapshot($this->getElasticsearchClient());
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndexCopier()` instead.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopierInterface
      */
     public function createElasticsearchIndexCopier()
@@ -255,8 +326,18 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \GuzzleHttp\Client
      */
-    protected function getGuzzleClient()
+    public function getGuzzleClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\HealthCheckInterface
+     */
+    public function createSearchHealthChecker(): HealthCheckInterface
+    {
+        return new SearchHealthCheck(
+            $this->getSearchClient()
+        );
     }
 }

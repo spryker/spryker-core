@@ -21,6 +21,7 @@ use Spryker\Zed\PersistentCart\PersistentCartConfig;
 class QuoteResolver implements QuoteResolverInterface
 {
     use PermissionAwareTrait;
+
     public const GLOSSARY_KEY_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
 
     /**
@@ -105,7 +106,8 @@ class QuoteResolver implements QuoteResolverInterface
     protected function findCustomerQuoteById(int $idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
-        if (!$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
+        if (
+            !$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
         ) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE);

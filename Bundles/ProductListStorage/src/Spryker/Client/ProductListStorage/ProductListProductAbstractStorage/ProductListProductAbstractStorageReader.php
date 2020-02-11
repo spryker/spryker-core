@@ -78,4 +78,50 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
     {
         return (new ProductAbstractProductListStorageTransfer())->fromArray($productAbstractProductListStorageData, true);
     }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]
+     */
+    public function getProductAbstractProductListStorageTransfersByProductAbstractIds(array $productAbstractIds): array
+    {
+        $productAbstractProductListStorageKeys = $this->generateProductAbstractProductListStorageKeys($productAbstractIds);
+        $productAbstractProductListStorageData = $this->storageClient->getMulti($productAbstractProductListStorageKeys);
+
+        return $this->mapProductAbstractProductListTransfers($productAbstractProductListStorageData);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return string[]
+     */
+    protected function generateProductAbstractProductListStorageKeys(array $productAbstractIds): array
+    {
+        $productAbstractProductListStorageKeys = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $productAbstractProductListStorageKeys[] = $this->generateKey($idProductAbstract);
+        }
+
+        return $productAbstractProductListStorageKeys;
+    }
+
+    /**
+     * @param array $productAbstractProductListStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]
+     */
+    protected function mapProductAbstractProductListTransfers(array $productAbstractProductListStorageData): array
+    {
+        $productAbstractProductListStorageTransfers = [];
+        foreach ($productAbstractProductListStorageData as $data) {
+            if (!$data) {
+                continue;
+            }
+            $productAbstractProductListStorageTransfers[] = $this->mapProductAbstractProductListStorage(json_decode($data, true));
+        }
+
+        return $productAbstractProductListStorageTransfers;
+    }
 }

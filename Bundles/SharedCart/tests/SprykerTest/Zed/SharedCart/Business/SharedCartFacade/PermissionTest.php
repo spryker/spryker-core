@@ -17,6 +17,7 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SharedCart
@@ -55,7 +56,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -114,7 +115,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanReadCart1()
+    public function testOwnerCanReadCart1(): void
     {
         $ownerCanReadCart1 = $this->tester->getLocator()
             ->permission()
@@ -127,7 +128,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanWriteCart1()
+    public function testOwnerCanWriteCart1(): void
     {
         $ownerCanWriteCart1 = $this->tester->getLocator()
             ->permission()
@@ -140,7 +141,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    public function testOtherUserCanReadCart1()
+    public function testOtherUserCanReadCart1(): void
     {
         $otherUserCanReadCart1 = $this->tester->getLocator()
             ->permission()
@@ -153,7 +154,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    public function testOtherUserCanNotWriteCart1()
+    public function testOtherUserCanNotWriteCart1(): void
     {
         $otherUserCanNotWriteCart1 = $this->tester->getLocator()
             ->permission()
@@ -166,7 +167,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanReadCart2()
+    public function testOwnerCanReadCart2(): void
     {
         $ownerCanReadCart2 = $this->tester->getLocator()
             ->permission()
@@ -179,7 +180,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanWriteCart2()
+    public function testOwnerCanWriteCart2(): void
     {
         $ownerCanWriteCart2 = $this->tester->getLocator()
             ->permission()
@@ -192,7 +193,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    public function testOtherUserCanReadCart2()
+    public function testOtherUserCanReadCart2(): void
     {
         $otherUserCanReadCart2 = $this->tester->getLocator()
             ->permission()
@@ -205,7 +206,7 @@ class PermissionTest extends Unit
     /**
      * @return void
      */
-    public function testOtherUserCanWriteCart2()
+    public function testOtherUserCanWriteCart2(): void
     {
         $otherUserCanWriteCart2 = $this->tester->getLocator()
             ->permission()

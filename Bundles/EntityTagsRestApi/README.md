@@ -1,6 +1,6 @@
 # EntityTagsRestApi Module
-[![Build Status](https://travis-ci.org/spryker/entity-tag-rest-api.svg)](https://travis-ci.org/spryker/entity-tag-rest-api)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/entity-tag-rest-api/badge.svg)](https://coveralls.io/github/spryker/entity-tag-rest-api)
+[![Build Status](https://travis-ci.org/spryker/entity-tags-rest-api.svg)](https://travis-ci.org/spryker/entity-tags-rest-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Provides possibility to protect REST Api resources from concurrent updates.
 

@@ -20,7 +20,6 @@ use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterface
 {
     use TransactionTrait;
-
     use PermissionAwareTrait;
 
     /**

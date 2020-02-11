@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductListSearch
@@ -35,7 +36,7 @@ class ProductListSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductConcretePageSearchTransferWithProductLists()
+    public function testExpandProductConcretePageSearchTransferWithProductLists(): void
     {
         // Arrange
         $productConcretePageSearchTransfer = new ProductConcretePageSearchTransfer();
@@ -54,7 +55,7 @@ class ProductListSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapProductDataToProductListMapTransfer()
+    public function testMapProductDataToProductListMapTransfer(): void
     {
         // Arrange
         $productData = [
@@ -76,7 +77,7 @@ class ProductListSearchFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface
+     * @return \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface
      */
     protected function getFacade()
     {

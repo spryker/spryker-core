@@ -58,7 +58,7 @@ class PriceProductDataHelper extends Module
             $priceProductTransfer->getIdPriceProduct()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer): void {
             $this->cleanupPriceProduct($priceProductTransfer->getIdPriceProduct());
         });
 
@@ -184,8 +184,8 @@ class PriceProductDataHelper extends Module
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function createMoneyValueTransfer(
-        $grossAmount,
-        $netAmount,
+        int $grossAmount,
+        int $netAmount,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): MoneyValueTransfer {

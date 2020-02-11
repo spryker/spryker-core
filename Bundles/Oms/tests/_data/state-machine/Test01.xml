@@ -70,12 +70,12 @@
         <events>
             <event name="authorize" manual="true"/>
             <event name="authorization-failed" manual="true"/>
-            <event name="pay" manual="true" timeout="1 hour" />
+            <event name="pay" manual="true" timeout="1 hour"/>
             <event name="export"  manual="true"/>
-            <event name="ship" manual="true" />
+            <event name="ship" manual="true"/>
             <event name="stock-update" manual="true"/>
             <event name="close" manual="true" timeout="1 hour"/>
-            <event name="return" manual="true" />
+            <event name="return" manual="true"/>
         </events>
     </process>
 

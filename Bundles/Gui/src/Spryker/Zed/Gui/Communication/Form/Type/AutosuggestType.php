@@ -22,10 +22,6 @@ class AutosuggestType extends AbstractType
     public const URL = 'url';
     public const PLACEHOLDER = 'placeholder';
 
-    public function __construct()
-    {
-    }
-
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form

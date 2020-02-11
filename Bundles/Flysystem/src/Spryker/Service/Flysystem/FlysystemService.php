@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class FlysystemService extends AbstractService implements FlysystemServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,7 +91,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -110,7 +110,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -129,7 +129,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -148,7 +148,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +168,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -187,7 +187,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +206,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -226,7 +226,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -245,7 +245,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -265,7 +265,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -284,7 +284,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -305,7 +305,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -325,7 +325,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -346,7 +346,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -367,7 +367,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -388,7 +388,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -407,7 +407,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -428,7 +428,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,4 +18,22 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     public const PERMISSION_CONTEXT_CENT_AMOUNT = 'PERMISSION_CONTEXT_CENT_AMOUNT';
     public const PERMISSION_CONTEXT_STORE_NAME = 'PERMISSION_CONTEXT_STORE_NAME';
     public const PERMISSION_CONTEXT_CURRENCY_CODE = 'PERMISSION_CONTEXT_CURRENCY_CODE';
+
+    /**
+     * @return string[]
+     */
+    public function getRequiredQuoteFieldsForApprovalProcess(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
+     * @return bool
+     */
+    public function isShipmentPriceIncludedInQuoteApprovalPermissionCheck(): bool
+    {
+        return false;
+    }
 }

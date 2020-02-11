@@ -18,6 +18,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin` instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
@@ -26,7 +28,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     public const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Applies facet filters to query
      * - Facet filter values that equal null, empty string or false are dropped other values are kept including 0(zero)
      *

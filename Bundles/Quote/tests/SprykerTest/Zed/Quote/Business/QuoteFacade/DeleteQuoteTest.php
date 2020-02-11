@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote
@@ -30,7 +31,7 @@ class DeleteQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteQuoteEntityFromDatabase()
+    public function testDeleteQuoteEntityFromDatabase(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -52,7 +53,7 @@ class DeleteQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteForeignCustomerQuoteEntityFromDatabase()
+    public function testDeleteForeignCustomerQuoteEntityFromDatabase(): void
     {
         // Arrange
         $customerTransfer1 = $this->tester->haveCustomer();

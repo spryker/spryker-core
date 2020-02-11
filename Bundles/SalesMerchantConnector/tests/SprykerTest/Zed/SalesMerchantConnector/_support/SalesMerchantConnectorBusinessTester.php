@@ -11,6 +11,7 @@ use Codeception\Actor;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -27,6 +28,7 @@ use Codeception\Actor;
 class SalesMerchantConnectorBusinessTester extends Actor
 {
     use _generated\SalesMerchantConnectorBusinessTesterActions;
+
    /**
     * Define custom actions here
     */

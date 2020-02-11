@@ -10,6 +10,9 @@ namespace Spryker\Zed\Sales\Business\Model\OrderItem;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
+/**
+ * @deprecated Use \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface instead.
+ */
 interface SalesOrderItemMapperInterface
 {
     /**

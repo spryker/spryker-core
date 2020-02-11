@@ -27,6 +27,7 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyUserInvitation
@@ -74,7 +75,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -106,7 +107,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testImportCompanyUserInvitationsShouldFail()
+    public function testImportCompanyUserInvitationsShouldFail(): void
     {
         $companyUserInvitationCollection = (new CompanyUserInvitationCollectionTransfer())
             ->addCompanyUserInvitation($this->createCompanyUserInvitationTransfer())
@@ -125,7 +126,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyUserInvitationCollectionShouldReturnNoData()
+    public function testGetCompanyUserInvitationCollectionShouldReturnNoData(): void
     {
         $this->haveCompanyUserInvitation();
         $this->haveCompanyUserInvitation();
@@ -146,7 +147,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testSendCompanyUserInvitationShouldFail()
+    public function testSendCompanyUserInvitationShouldFail(): void
     {
         $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
@@ -161,7 +162,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testSendCompanyUserInvitationsShouldFail()
+    public function testSendCompanyUserInvitationsShouldFail(): void
     {
         $this->haveCompanyUserInvitation();
         $this->haveCompanyUserInvitation();
@@ -175,7 +176,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testUpdateCompanyUserInvitationStatusShouldFail()
+    public function testUpdateCompanyUserInvitationStatusShouldFail(): void
     {
         $companyUserInvitationTransfer = $this->haveCompanyUserInvitation();
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
@@ -192,7 +193,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyUserInvitationByHashShouldReturnCorrectData()
+    public function testGetCompanyUserInvitationByHashShouldReturnCorrectData(): void
     {
         $companyUserInvitationTransfer = $this->haveCompanyUserInvitation();
 
@@ -208,7 +209,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testCreateCompanyUserInvitationShouldFail()
+    public function testCreateCompanyUserInvitationShouldFail(): void
     {
         $companyUserInvitationCreateRequestTransfer = (new CompanyUserInvitationCreateRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
@@ -223,7 +224,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testDeleteCompanyUserInvitationShouldFail()
+    public function testDeleteCompanyUserInvitationShouldFail(): void
     {
         $companyUserInvitationDeleteRequestTransfer = (new CompanyUserInvitationDeleteRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())

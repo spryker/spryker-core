@@ -33,7 +33,7 @@ class ProductSetStorageToStorageClientBridge implements ProductSetStorageToStora
     }
 
     /**
-     * @param array $keys
+     * @param string[] $keys
      *
      * @return array
      */

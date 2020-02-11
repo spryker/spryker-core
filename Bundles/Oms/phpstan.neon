@@ -1,0 +1,17 @@
+parameters:
+    ignoreErrors:
+    - '#Call to an undefined method .+Criteria::.+\(\)#'
+    - '#Cannot cast .+SpyOmsProductReservationStore to int.#'
+    - '#Method .+CommandByOrderInterface::run\(\) invoked with 2 parameters, 3 required.#'
+    - '#Method .+OmsQueryContainer::.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
+    -
+        message: '#Result of && is always false.#'
+        path: 'vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Command/CommandCollection.php'
+    -
+        message: '#Result of && is always false.#'
+        path: 'vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Condition/ConditionCollection.php'
+    - '#Instanceof between \*NEVER\* and .+ConditionInterface will always evaluate to false#'
+    - '#Parameter \#1 \$orderItems of method .+CommandByOrderInterface::run\(\) expects array<.+SpySalesOrderItem>, .+SpySalesOrderItem given.#'
+    - '#Parameter \#2 \$orderEntity of method .+CommandByOrderInterface::run\(\) expects .+SpySalesOrder, .+ReadOnlyArrayObject given.#'
+    - '#Parameter \#1 \$v of method .+SpyOmsProductReservationLastExportedVersion::setVersion\(\) expects string, int given.#'
+    - '#Parameter \#1 \$string of method .+ConnectionInterface::quote\(\) expects string, int given.#'

@@ -33,7 +33,11 @@ class NewsletterStub implements NewsletterStubInterface
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
-        return $this->zedStub->call('/newsletter/gateway/subscribe-with-single-opt-in', $newsletterSubscriptionRequest);
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer $newsletterSubscriptionResponseTransfer */
+        $newsletterSubscriptionResponseTransfer = $this->zedStub
+            ->call('/newsletter/gateway/subscribe-with-single-opt-in', $newsletterSubscriptionRequest);
+
+        return $newsletterSubscriptionResponseTransfer;
     }
 
     /**
@@ -43,7 +47,11 @@ class NewsletterStub implements NewsletterStubInterface
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
-        return $this->zedStub->call('/newsletter/gateway/subscribe-with-double-opt-in', $newsletterSubscriptionRequest);
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer $newsletterSubscriptionResponseTransfer */
+        $newsletterSubscriptionResponseTransfer = $this->zedStub
+            ->call('/newsletter/gateway/subscribe-with-double-opt-in', $newsletterSubscriptionRequest);
+
+        return $newsletterSubscriptionResponseTransfer;
     }
 
     /**
@@ -53,7 +61,11 @@ class NewsletterStub implements NewsletterStubInterface
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
-        return $this->zedStub->call('/newsletter/gateway/approve-double-opt-in-subscriber', $newsletterSubscriber);
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer $newsletterSubscriptionApprovalResultTransfer */
+        $newsletterSubscriptionApprovalResultTransfer = $this->zedStub
+            ->call('/newsletter/gateway/approve-double-opt-in-subscriber', $newsletterSubscriber);
+
+        return $newsletterSubscriptionApprovalResultTransfer;
     }
 
     /**
@@ -63,7 +75,11 @@ class NewsletterStub implements NewsletterStubInterface
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
-        return $this->zedStub->call('/newsletter/gateway/unsubscribe', $newsletterSubscriptionRequest);
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer $newsletterSubscriptionResponseTransfer */
+        $newsletterSubscriptionResponseTransfer = $this->zedStub
+            ->call('/newsletter/gateway/unsubscribe', $newsletterSubscriptionRequest);
+
+        return $newsletterSubscriptionResponseTransfer;
     }
 
     /**
@@ -73,6 +89,10 @@ class NewsletterStub implements NewsletterStubInterface
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
-        return $this->zedStub->call('/newsletter/gateway/check-subscription', $newsletterUnsubscriptionRequest);
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer $newsletterSubscriptionResponseTransfer */
+        $newsletterSubscriptionResponseTransfer = $this->zedStub
+            ->call('/newsletter/gateway/check-subscription', $newsletterUnsubscriptionRequest);
+
+        return $newsletterSubscriptionResponseTransfer;
     }
 }

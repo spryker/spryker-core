@@ -25,7 +25,7 @@ class CustomerNoteGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array|null $formData
+     * @param \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer|null $formData
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface

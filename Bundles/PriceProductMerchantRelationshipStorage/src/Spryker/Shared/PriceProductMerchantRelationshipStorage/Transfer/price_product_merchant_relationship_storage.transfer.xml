@@ -4,39 +4,87 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProduct">
-        <property name="groupKey" type="string" />
-        <property name="isMergeable" type="bool" />
+        <property name="groupKey" type="string"/>
+        <property name="isMergeable" type="bool"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="priceTypeName" type="string"/>
     </transfer>
 
     <transfer name="PriceProductStorage">
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
     </transfer>
 
     <transfer name="PriceProductMerchantRelationshipStorage">
-        <property name="storeName" type="string" />
-        <property name="idMerchantRelationship" type="int" deprecated="Use PriceProductMerchantRelationshipValueTransfer::idMerchantRelationship instead." />
-        <property name="idCompanyBusinessUnit" type="int" />
-        <property name="idProduct" type="int" />
-        <property name="priceKey" type="string" />
-        <property name="prices" type="array" />
-        <property name="ungroupedPrices" type="PriceProductMerchantRelationshipValue[]" singular="ungroupedPrice" />
+        <property name="storeName" type="string"/>
+        <property name="idMerchantRelationship" type="int" deprecated="Use PriceProductMerchantRelationshipValueTransfer::idMerchantRelationship instead."/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="priceKey" type="string"/>
+        <property name="prices" type="array" singular="prices"/>
+        <property name="ungroupedPrices" type="PriceProductMerchantRelationshipValue[]" singular="ungroupedPrice"/>
     </transfer>
 
     <transfer name="PriceProductMerchantRelationshipValue">
-        <property name="idMerchantRelationship" type="int" />
-        <property name="priceType" type="string" />
-        <property name="priceData" type="string" />
-        <property name="grossPrice" type="int" />
-        <property name="netPrice" type="int" />
-        <property name="currencyCode" type="string" />
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="priceType" type="string"/>
+        <property name="priceData" type="string"/>
+        <property name="grossPrice" type="int"/>
+        <property name="netPrice" type="int"/>
+        <property name="currencyCode" type="string"/>
     </transfer>
 
     <transfer name="PriceProductMerchantRelationship">
-        <property name="idPriceProductMerchantRelationship" type="int" />
-        <property name="fkPriceProductStore" type="int" />
-        <property name="fkMerchantRelationship" type="int" />
-        <property name="fkProduct" type="int" />
-        <property name="fkProductAbstract" type="int" />
+        <property name="idPriceProductMerchantRelationship" type="int"/>
+        <property name="fkPriceProductStore" type="int"/>
+        <property name="fkMerchantRelationship" type="int"/>
+        <property name="fkProduct" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+        <property name="idMerchantRelationship" type="int"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
 </transfers>

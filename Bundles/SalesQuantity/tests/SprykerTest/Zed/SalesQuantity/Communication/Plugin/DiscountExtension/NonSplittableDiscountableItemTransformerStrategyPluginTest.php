@@ -14,6 +14,7 @@ use Spryker\Zed\SalesQuantity\Communication\Plugin\DiscountExtension\NonSplittab
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesQuantity

@@ -188,6 +188,7 @@ class Discount implements DiscountInterface
         foreach ($discounts as $key => $discountEntity) {
             if (!$this->isDiscountApplicable($quoteTransfer, $discountEntity) || isset($uniqueVoucherDiscounts[$discountEntity->getIdDiscount()])) {
                 $nonApplicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity, $quoteTransfer);
+
                 continue;
             }
 
@@ -229,7 +230,7 @@ class Discount implements DiscountInterface
             $voucherCodes[] = $voucherDiscountTransfer->getVoucherCode();
         }
 
-        return $voucherCodes;
+        return array_merge($voucherCodes, $quoteTransfer->getUsedNotAppliedVoucherCodes());
     }
 
     /**

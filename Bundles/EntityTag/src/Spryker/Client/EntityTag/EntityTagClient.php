@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class EntityTagClient extends AbstractClient implements EntityTagClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class EntityTagClient extends AbstractClient implements EntityTagClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

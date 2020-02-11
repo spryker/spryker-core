@@ -29,6 +29,7 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyUserInvitation
@@ -76,7 +77,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -119,7 +120,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testImportCompanyUserInvitationsShouldReturnNoErrorsWhenEmailsDoNotExist()
+    public function testImportCompanyUserInvitationsShouldReturnNoErrorsWhenEmailsDoNotExist(): void
     {
         $companyUserInvitationCollection = (new CompanyUserInvitationCollectionTransfer())
             ->addCompanyUserInvitation($this->createCompanyUserInvitationTransfer())
@@ -138,7 +139,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testImportCompanyUserInvitationsShouldReturnErrorsWhenEmailsExist()
+    public function testImportCompanyUserInvitationsShouldReturnErrorsWhenEmailsExist(): void
     {
         $companyUserInvitationTransfer = $this->createCompanyUserInvitationTransfer();
         $this->haveCompanyUserInvitation(['email' => $companyUserInvitationTransfer->getEmail()]);
@@ -158,7 +159,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyUserInvitationCollectionShouldReturnCorrectData()
+    public function testGetCompanyUserInvitationCollectionShouldReturnCorrectData(): void
     {
         $this->haveCompanyUserInvitation();
         $this->haveCompanyUserInvitation();
@@ -179,7 +180,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testSendCompanyUserInvitationShouldReturnSuccess()
+    public function testSendCompanyUserInvitationShouldReturnSuccess(): void
     {
         $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
@@ -194,7 +195,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testSendCompanyUserInvitationsShouldReturnSuccess()
+    public function testSendCompanyUserInvitationsShouldReturnSuccess(): void
     {
         $this->haveCompanyUserInvitation();
         $this->haveCompanyUserInvitation();
@@ -209,7 +210,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testUpdateCompanyUserInvitationStatusShouldReturnSuccess()
+    public function testUpdateCompanyUserInvitationStatusShouldReturnSuccess(): void
     {
         $companyUserInvitationTransfer = $this->haveCompanyUserInvitation();
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
@@ -226,7 +227,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testCreateCompanyUserInvitationShouldReturnSuccess()
+    public function testCreateCompanyUserInvitationShouldReturnSuccess(): void
     {
         $companyUserInvitationCreateRequestTransfer = (new CompanyUserInvitationCreateRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
@@ -241,7 +242,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     /**
      * @return void
      */
-    public function testDeleteCompanyUserInvitationShouldReturnSuccess()
+    public function testDeleteCompanyUserInvitationShouldReturnSuccess(): void
     {
         $companyUserInvitationDeleteRequestTransfer = (new CompanyUserInvitationDeleteRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())

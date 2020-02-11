@@ -38,4 +38,12 @@ class StorageConfig extends AbstractBundleConfig
     {
         return [];
     }
+
+    /**
+     * @return bool
+     */
+    public function isStorageCachingEnabled(): bool
+    {
+        return true;
+    }
 }

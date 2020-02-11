@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SanitizeQuoteRequestQuoteLockPreResetPlugin extends AbstractPlugin implements QuoteLockPreResetPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sanitizes data related to request for quote in quote.
      *
      * @api

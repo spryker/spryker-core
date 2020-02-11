@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Url
@@ -51,7 +52,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -64,7 +65,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateUrlInsertsAndReturnsSomething()
+    public function testCreateUrlInsertsAndReturnsSomething(): void
     {
         $urlQuery = $this->urlQueryContainer->queryUrls();
         $locale = $this->localeFacade->createLocale('CBCDE');
@@ -82,7 +83,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveUrlInsertsAndReturnsSomethingOnCreate()
+    public function testSaveUrlInsertsAndReturnsSomethingOnCreate(): void
     {
         $urlQuery = $this->urlQueryContainer->queryUrls();
         $redirect = $this->urlFacade->createRedirect('/YetSomeOtherPageUrl2');
@@ -106,7 +107,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveUrlUpdatesSomething()
+    public function testSaveUrlUpdatesSomething(): void
     {
         $url = new UrlTransfer();
         $urlQuery = $this->urlQueryContainer->queryUrl('/SoManyPageUrls');
@@ -132,7 +133,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasUrlId()
+    public function testHasUrlId(): void
     {
         $locale = $this->localeFacade->createLocale('UNIXA');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls4');
@@ -145,7 +146,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetUrlByPath()
+    public function testGetUrlByPath(): void
     {
         $locale = $this->localeFacade->createLocale('DFGHE');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls5');
@@ -162,7 +163,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetUrlById()
+    public function testGetUrlById(): void
     {
         $locale = $this->localeFacade->createLocale('DFGHX');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls5');
@@ -179,7 +180,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTouchUrlActive()
+    public function testTouchUrlActive(): void
     {
         $locale = $this->localeFacade->createLocale('ABCDE');
         $redirect = $this->urlFacade->createRedirect('/ARedirectUrl');
@@ -200,7 +201,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateRedirectInsertsAndReturnsSomething()
+    public function testCreateRedirectInsertsAndReturnsSomething(): void
     {
         $redirectQuery = $this->urlQueryContainer->queryRedirects();
 
@@ -216,7 +217,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRedirectInsertsAndReturnsSomethingOnCreate()
+    public function testSaveRedirectInsertsAndReturnsSomethingOnCreate(): void
     {
         $redirect = new RedirectTransfer();
         $redirect->setToUrl('/pageToUrl');
@@ -236,7 +237,7 @@ class LegacyUrlFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRedirectUpdatesSomething()
+    public function testSaveRedirectUpdatesSomething(): void
     {
         $redirect = new RedirectTransfer();
         $redirect->setToUrl('/pageToUrl2');

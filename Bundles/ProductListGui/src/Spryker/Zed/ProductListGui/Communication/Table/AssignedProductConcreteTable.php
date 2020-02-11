@@ -11,7 +11,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 
 class AssignedProductConcreteTable extends AbstractProductConcreteTable
 {
-    protected const DEFAULT_URL = 'assignedProductConcreteTable';
+    protected const DEFAULT_URL = 'assigned-product-concrete-table';
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 
     /**

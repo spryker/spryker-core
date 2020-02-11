@@ -14,21 +14,20 @@ class SalesExpenseMapper implements SalesExpenseMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $salesExpenseEntity
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpense
      */
-    public function mapExpenseTransferToSalesExpenseEntity(ExpenseTransfer $expenseTransfer): SpySalesExpense
+    public function mapExpenseTransferToSalesExpenseEntity(ExpenseTransfer $expenseTransfer, SpySalesExpense $salesExpenseEntity): SpySalesExpense
     {
-        $salesOrderExpenseEntity = new SpySalesExpense();
+        $salesExpenseEntity->fromArray($expenseTransfer->toArray());
+        $salesExpenseEntity->setGrossPrice($expenseTransfer->getSumGrossPrice());
+        $salesExpenseEntity->setNetPrice($expenseTransfer->getSumNetPrice());
+        $salesExpenseEntity->setPrice($expenseTransfer->getSumPrice());
+        $salesExpenseEntity->setTaxAmount($expenseTransfer->getSumTaxAmount());
+        $salesExpenseEntity->setDiscountAmountAggregation($expenseTransfer->getSumDiscountAmountAggregation());
+        $salesExpenseEntity->setPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation());
 
-        $salesOrderExpenseEntity->fromArray($expenseTransfer->toArray());
-        $salesOrderExpenseEntity->setGrossPrice($expenseTransfer->getSumGrossPrice());
-        $salesOrderExpenseEntity->setNetPrice($expenseTransfer->getSumNetPrice());
-        $salesOrderExpenseEntity->setPrice($expenseTransfer->getSumPrice());
-        $salesOrderExpenseEntity->setTaxAmount($expenseTransfer->getSumTaxAmount());
-        $salesOrderExpenseEntity->setDiscountAmountAggregation($expenseTransfer->getSumDiscountAmountAggregation());
-        $salesOrderExpenseEntity->setPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation());
-
-        return $salesOrderExpenseEntity;
+        return $salesExpenseEntity;
     }
 }

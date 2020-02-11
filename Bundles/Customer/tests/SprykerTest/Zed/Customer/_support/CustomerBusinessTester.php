@@ -11,6 +11,7 @@ use Codeception\Actor;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -23,12 +24,10 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  */
 class CustomerBusinessTester extends Actor
 {
     use _generated\CustomerBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

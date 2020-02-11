@@ -33,4 +33,16 @@ class ProductsCategoriesResourceRelationshipToProductStorageClientBridge impleme
     {
         return $this->productStorageClient->findProductAbstractStorageDataByMapping($mappingType, $identifier, $localeName);
     }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        return $this->productStorageClient->findBulkProductAbstractStorageDataByMapping($mappingType, $identifiers, $localeName);
+    }
 }

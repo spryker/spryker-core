@@ -4,30 +4,45 @@
   "description": "Router module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/event-dispatcher-extension": "^1.0.0"
+    "php": ">=7.2",
+    "spryker/application-extension": "^1.0.0",
+    "spryker/container": "^1.1.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
+    "spryker/kernel": "^3.40.0",
+    "spryker/log": "^3.0.0",
+    "spryker/router-extension": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/zend": "^2.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/container": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/kernel": "*",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/util-text": "*"
   },
   "suggest": {
-    "spryker/container": "If you want to use EventDispatcher plugin.",
-    "spryker/event-dispatcher": "If you want to use EventDispatcher plugin.",
-    "spryker/kernel": "If you want to use EventDispatcher plugin.",
-    "spryker/symfony": "If you want to use EventDispatcher plugin."
+    "spryker/event-dispatcher": "If you want to use the RouterLocaleEventDispatcher plugin.",
+    "spryker/silex": "Deprecated dependency try to not use it anymore.",
+    "spryker/util-text": "If you want to use the RouterEnhancer plugins."
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Yves\\Router\\Helper\\": "tests/SprykerTest/Yves/Router/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

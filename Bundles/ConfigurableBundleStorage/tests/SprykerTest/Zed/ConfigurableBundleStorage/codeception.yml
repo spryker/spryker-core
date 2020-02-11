@@ -24,3 +24,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\ConfigurableBundle\Helper\ConfigurableBundleDataHelper
+                - \SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper

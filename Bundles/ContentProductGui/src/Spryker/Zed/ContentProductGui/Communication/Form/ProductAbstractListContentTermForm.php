@@ -110,7 +110,6 @@ class ProductAbstractListContentTermForm extends AbstractType
             'allow_delete' => true,
             'entry_options' => [
                 'label' => false,
-                'grouping' => true,
             ],
             'constraints' => [
                 $this->getFactory()->createContentProductAbstractListConstraint(),

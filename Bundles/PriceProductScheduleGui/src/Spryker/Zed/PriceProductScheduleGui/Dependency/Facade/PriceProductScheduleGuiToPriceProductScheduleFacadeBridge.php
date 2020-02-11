@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
 class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
@@ -99,5 +101,81 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer
     {
         return $this->priceProductScheduleFacade->validateCsvFile($uploadedFile);
+    }
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array {
+        return $this->priceProductScheduleFacade
+            ->findPriceProductSchedulesByIdPriceProductScheduleList($idPriceProductScheduleList);
+    }
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function removeAndApplyPriceProductSchedule(int $idPriceProductSchedule): void
+    {
+        $this->priceProductScheduleFacade->removeAndApplyPriceProductSchedule($idPriceProductSchedule);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
+     */
+    public function createAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
+    {
+        return $this->priceProductScheduleFacade
+            ->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
+     */
+    public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
+    {
+        return $this->priceProductScheduleFacade
+            ->updateAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+    }
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function findPriceProductScheduleById(int $idPriceProductSchedule): ?PriceProductScheduleTransfer
+    {
+        return $this->priceProductScheduleFacade
+            ->findPriceProductScheduleById($idPriceProductSchedule);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool
+    {
+        return $this->priceProductScheduleFacade->isPriceProductScheduleUnique($priceProductScheduleTransfer);
+    }
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer
+    {
+        return $this->priceProductScheduleFacade
+            ->removePriceProductScheduleList($idPriceProductScheduleList);
     }
 }

@@ -22,4 +22,16 @@ interface CmsNavigationConnectorFacadeInterface
      * @return void
      */
     public function updateCmsPageNavigationNodesIsActive(CmsPageTransfer $cmsPageTransfer);
+
+    /**
+     * Specification:
+     * - Removes Navigation nodes related to Cms page.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return void
+     */
+    public function deleteCmsPageNavigationNodes(CmsPageTransfer $cmsPageTransfer): void;
 }

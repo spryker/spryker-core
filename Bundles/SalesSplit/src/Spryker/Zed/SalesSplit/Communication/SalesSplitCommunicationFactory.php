@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesSplit\Communication;
 
-use ArrayObject;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
@@ -24,25 +23,6 @@ class SalesSplitCommunicationFactory extends AbstractCommunicationFactory
     public function createOrderItemSplitForm()
     {
         return $this->getFormFactory()->create(OrderItemSplitForm::class);
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItems
-     *
-     * @return array
-     */
-    public function createOrderItemSplitFormCollection(ArrayObject $orderItems)
-    {
-        $formCollectionArray = [];
-        $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();
-        foreach ($orderItems as $itemTransfer) {
-            $formCollectionArray[$itemTransfer->getIdSalesOrderItem()] = $this
-                ->getFormFactory()
-                ->create(OrderItemSplitForm::class, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
-                ->createView();
-        }
-
-        return $formCollectionArray;
     }
 
     /**

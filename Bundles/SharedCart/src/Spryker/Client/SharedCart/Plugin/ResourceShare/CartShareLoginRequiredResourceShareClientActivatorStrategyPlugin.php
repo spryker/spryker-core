@@ -34,7 +34,7 @@ class CartShareLoginRequiredResourceShareClientActivatorStrategyPlugin extends A
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns 'true', when resource type is Quote and share option is either "read only" or "full access".
      * - Returns 'false' otherwise.
      *
@@ -58,7 +58,7 @@ class CartShareLoginRequiredResourceShareClientActivatorStrategyPlugin extends A
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns ResourceShareResponseTransfer with provided ResourceShare.
      * - Returns isSuccessful=true and isLoginRequired=false if customer property is set.
      * - Returns isSuccessful=false and isLoginRequired=true otherwise.

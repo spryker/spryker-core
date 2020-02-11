@@ -71,7 +71,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $priceMap
      *
@@ -153,7 +153,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         $priceMode = $priceProductFilter->getPriceMode();
         $price = $this->getPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceMode);
 
-        if (!$price) {
+        if ($price === null) {
             return $currentProductPriceTransfer;
         }
 
@@ -177,7 +177,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setCurrency($priceProductFilter->getCurrency())
             ->setQuantity($priceProductFilter->getQuantity())
             ->setPriceMode($priceMode)
-            ->setSumPrice($price * $priceProductFilter->getQuantity());
+            ->setSumPrice($price * $priceProductFilter->getQuantity())
+            ->setPriceDimension($priceProductTransfer->getPriceDimension());
     }
 
     /**
@@ -248,6 +249,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                     }
                     if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
                         $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
+
                         continue;
                     }
 

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -61,13 +62,12 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     * @expectedExceptionMessage Could not find company by key "invalid company"
-     *
      * @return void
      */
     public function testImportThrowsExceptionWhenCompanyNotFound(): void
     {
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('Could not find company by key "invalid company"');
         $this->tester->truncateCompanyBusinessUnitRelations();
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
@@ -80,13 +80,12 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     * @expectedExceptionMessage Could not find company business unit by key "invalid parent"
-     *
      * @return void
      */
     public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void
     {
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('Could not find company business unit by key "invalid parent"');
         $this->tester->truncateCompanyBusinessUnitRelations();
 
         $companyTransfer = $this->tester->haveActiveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);

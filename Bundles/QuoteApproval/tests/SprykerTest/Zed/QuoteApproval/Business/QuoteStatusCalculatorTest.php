@@ -17,6 +17,7 @@ use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group QuoteApproval

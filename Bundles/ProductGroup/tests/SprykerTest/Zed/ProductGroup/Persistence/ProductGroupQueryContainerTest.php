@@ -15,6 +15,7 @@ use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductGroup
@@ -27,7 +28,7 @@ class ProductGroupQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductAbstractGroupsReturnCorrectQuery()
+    public function testQueryAllProductAbstractGroupsReturnCorrectQuery(): void
     {
         $productGroupQueryContainer = new ProductGroupQueryContainer();
         $productGroupQueryContainer->setFactory(new ProductGroupPersistenceFactory());
@@ -39,7 +40,7 @@ class ProductGroupQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductGroupsReturnCorrectQuery()
+    public function testQueryAllProductGroupsReturnCorrectQuery(): void
     {
         $productGroupQueryContainer = new ProductGroupQueryContainer();
         $productGroupQueryContainer->setFactory(new ProductGroupPersistenceFactory());

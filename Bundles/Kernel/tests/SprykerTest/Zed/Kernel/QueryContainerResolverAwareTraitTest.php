@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\QueryContainerResolverAwareTrait;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -24,7 +25,7 @@ class QueryContainerResolverAwareTraitTest extends Unit
     /**
      * @return void
      */
-    public function testSetQueryContainerMustReturnFluentInterface()
+    public function testSetQueryContainerMustReturnFluentInterface(): void
     {
         $queryContainerResolverAwareTraitMock = $this->getQueryContainerResolverAwareTraitMock();
         $returned = $queryContainerResolverAwareTraitMock->setQueryContainer(
@@ -45,7 +46,7 @@ class QueryContainerResolverAwareTraitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    private function getAbstractQueryContainerMock()
+    private function getAbstractQueryContainerMock(): AbstractQueryContainer
     {
         return $this->getMockForAbstractClass(AbstractQueryContainer::class);
     }

@@ -23,7 +23,7 @@ class CatalogPriceProductConnectorToPriceProductStorageClientBridge implements C
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

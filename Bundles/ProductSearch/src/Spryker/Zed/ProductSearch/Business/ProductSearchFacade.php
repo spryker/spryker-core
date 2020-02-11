@@ -18,6 +18,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface as ProductSearchExtensionPageMapBuilderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -34,6 +35,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\ProductSearch\Business\ProductSearchFacade::mapDynamicProductAttributesToSearchData` instead.
+     *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param array $attributes
@@ -48,6 +51,24 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             ->getFactory()
             ->createProductSearchAttributeMapper()
             ->mapDynamicProductAttributes($pageMapBuilder, $pageMapTransfer, $attributes);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $attributes
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function mapDynamicProductAttributesToSearchData(ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes): PageMapTransfer
+    {
+        return $this->getFactory()
+            ->createProductSearchAttributeMapper()
+            ->mapDynamicProductAttributesToSearchData($pageMapBuilder, $pageMapTransfer, $attributes);
     }
 
     /**

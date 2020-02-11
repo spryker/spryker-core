@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -84,7 +84,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -98,7 +98,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -112,7 +112,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -124,7 +124,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +140,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +154,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -166,7 +166,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -182,7 +182,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -196,7 +196,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -210,7 +210,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -226,7 +226,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

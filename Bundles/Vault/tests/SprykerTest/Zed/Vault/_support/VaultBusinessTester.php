@@ -9,11 +9,12 @@ namespace SprykerTest\Zed\Vault;
 
 use Codeception\Actor;
 use Spryker\Shared\Vault\VaultConfig as SharedVaultConfig;
-use Spryker\Zed\Vault\Business\VaultBusinessFactory;
+use Spryker\Zed\Vault\Business\VaultFacadeInterface;
 use Spryker\Zed\Vault\VaultConfig;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -24,6 +25,7 @@ use Spryker\Zed\Vault\VaultConfig;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Vault\Business\VaultFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -40,12 +42,28 @@ class VaultBusinessTester extends Actor
      *
      * @return \Spryker\Zed\Vault\Business\VaultFacadeInterface
      */
-    public function getVaultFacadeWithSharedConfig(SharedVaultConfig $sharedVaultConfig)
+    public function getVaultFacadeWithSharedConfig(SharedVaultConfig $sharedVaultConfig): VaultFacadeInterface
     {
         $vaultConfig = (new VaultConfig())
             ->setSharedConfig($sharedVaultConfig);
 
-        $vaultBusinessFactory = (new VaultBusinessFactory())
+        $vaultBusinessFactory = $this->getFactory()
+            ->setConfig($vaultConfig);
+
+        $vaultFacade = $this->getFacade()
+            ->setFactory($vaultBusinessFactory);
+
+        return $vaultFacade;
+    }
+
+    /**
+     * @param \Spryker\Zed\Vault\VaultConfig $vaultConfig
+     *
+     * @return \Spryker\Zed\Vault\Business\VaultFacadeInterface
+     */
+    public function getVaultFacadeWithConfig(VaultConfig $vaultConfig): VaultFacadeInterface
+    {
+        $vaultBusinessFactory = $this->getFactory()
             ->setConfig($vaultConfig);
 
         $vaultFacade = $this->getFacade()

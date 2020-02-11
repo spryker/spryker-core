@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductLabelDiscountConnectorFacade extends AbstractFacade implements ProductLabelDiscountConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

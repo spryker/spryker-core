@@ -44,6 +44,8 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     protected $storeFacade;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -117,6 +119,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
 
             if (!in_array($pair[static::STORE_NAME], $storeRelations, true)) {
                 $this->deleteStorageEntity($cmsPageStorageEntity);
+
                 continue;
             }
 

@@ -16,6 +16,7 @@ use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImp
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyUnitAddressLabelDataImport

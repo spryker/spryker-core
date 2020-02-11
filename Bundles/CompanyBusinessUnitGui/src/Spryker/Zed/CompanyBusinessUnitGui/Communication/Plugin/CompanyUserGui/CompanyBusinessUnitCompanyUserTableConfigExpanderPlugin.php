@@ -23,7 +23,7 @@ class CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin extends AbstractPl
     protected const TITLE_COMPANY_BUSINESS_UNIT_NAME = 'Company Business Unit';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands config options of company user table with company business unit column.
      *
      * @api

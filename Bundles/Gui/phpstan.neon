@@ -2,3 +2,4 @@ parameters:
     ignoreErrors:
     - '#Function twig_escape_filter not found.#'
     - '#Class Symfony\\Bridge\\Twig\\Form\\TwigRenderer not found.#'
+    - '#Parameter \#1 \$attribute of method .+ConnectionInterface::getAttribute\(\) expects string, int given.#'

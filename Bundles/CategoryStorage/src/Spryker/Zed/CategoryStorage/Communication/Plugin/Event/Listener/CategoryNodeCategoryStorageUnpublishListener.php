@@ -22,7 +22,7 @@ class CategoryNodeCategoryStorageUnpublishListener extends AbstractPlugin implem
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

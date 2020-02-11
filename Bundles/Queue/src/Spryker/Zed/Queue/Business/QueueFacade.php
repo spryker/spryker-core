@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class QueueFacade extends AbstractFacade implements QueueFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

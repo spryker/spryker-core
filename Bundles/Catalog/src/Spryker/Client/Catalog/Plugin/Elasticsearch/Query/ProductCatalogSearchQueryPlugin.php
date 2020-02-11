@@ -25,7 +25,10 @@ class ProductCatalogSearchQueryPlugin extends CatalogSearchQueryPlugin
     {
         $baseQuery = parent::addFulltextSearchToQuery($baseQuery);
 
-        $this->setTypeFilter($baseQuery->getQuery());
+        /** @var \Elastica\Query\BoolQuery $boolQuery */
+        $boolQuery = $baseQuery->getQuery();
+
+        $this->setTypeFilter($boolQuery);
         $this->setSuggestion($baseQuery);
 
         return $baseQuery;

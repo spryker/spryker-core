@@ -15,6 +15,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch
@@ -35,7 +36,7 @@ class TouchQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -57,7 +58,7 @@ class TouchQueryContainerTest extends Unit
      *
      * @return void
      */
-    public function testQueryTouchEntriesByItemTypeAndItemIds(array $itemsIds, $expectedCount)
+    public function testQueryTouchEntriesByItemTypeAndItemIds(array $itemsIds, int $expectedCount): void
     {
         $touchQueryContainer = new TouchQueryContainer();
         $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds(self::ITEM_TYPE, $itemsIds);
@@ -68,7 +69,7 @@ class TouchQueryContainerTest extends Unit
     /**
      * @return array
      */
-    public function queryTouchEntriesByItemTypeAndItemIdsDataProvider()
+    public function queryTouchEntriesByItemTypeAndItemIdsDataProvider(): array
     {
         return [
             [[self::ITEM_ID_1], 1],
@@ -86,7 +87,7 @@ class TouchQueryContainerTest extends Unit
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
-    protected function createTouchEntity($itemEvent, $itemId)
+    protected function createTouchEntity(string $itemEvent, int $itemId): SpyTouch
     {
         $touchEntity = new SpyTouch();
         $touchEntity->setItemEvent($itemEvent)

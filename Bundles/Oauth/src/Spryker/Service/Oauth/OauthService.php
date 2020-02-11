@@ -16,7 +16,7 @@ use Spryker\Service\Kernel\AbstractService;
 class OauthService extends AbstractService implements OauthServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

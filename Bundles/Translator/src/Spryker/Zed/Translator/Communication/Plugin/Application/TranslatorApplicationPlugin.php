@@ -26,7 +26,7 @@ class TranslatorApplicationPlugin extends AbstractPlugin implements ApplicationP
     protected const BC_FEATURE_FLAG_TWIG_TRANSLATOR = 'BC_FEATURE_FLAG_TWIG_TRANSLATOR';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `translator` service.
      *
      * @api

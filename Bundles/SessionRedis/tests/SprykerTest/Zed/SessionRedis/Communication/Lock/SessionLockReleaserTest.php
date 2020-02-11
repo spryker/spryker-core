@@ -14,6 +14,7 @@ use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaser;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SessionRedis
@@ -42,7 +43,7 @@ class SessionLockReleaserTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -1,2 +1,3 @@
 parameters:
     ignoreErrors:
+        - '#Parameter \#1 \$v of method .+SpyTaxRate::setFkCountry\(\) expects int, null given.#'

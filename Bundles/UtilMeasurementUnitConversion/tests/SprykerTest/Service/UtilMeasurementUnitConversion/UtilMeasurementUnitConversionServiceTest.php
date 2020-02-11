@@ -12,6 +12,7 @@ use Spryker\Service\UtilMeasurementUnitConversion\Exception\InvalidMeasurementUn
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilMeasurementUnitConversion

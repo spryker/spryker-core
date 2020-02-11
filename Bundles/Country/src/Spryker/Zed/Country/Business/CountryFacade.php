@@ -41,7 +41,7 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -127,7 +127,7 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

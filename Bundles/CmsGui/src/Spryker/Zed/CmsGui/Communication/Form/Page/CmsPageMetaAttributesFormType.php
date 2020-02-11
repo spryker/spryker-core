@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
@@ -23,6 +24,8 @@ class CmsPageMetaAttributesFormType extends AbstractType
     public const FIELD_META_DESCRIPTION = 'metaDescription';
     public const FIELD_LOCALE_NAME = 'localeName';
     public const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
+
+    protected const MAX_LENGTH_META_TITLE = 255;
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -49,6 +52,11 @@ class CmsPageMetaAttributesFormType extends AbstractType
         $builder->add(static::FIELD_META_TITLE, TextType::class, [
             'label' => 'Meta title',
             'required' => false,
+            'constraints' => [
+                new Length([
+                    'max' => static::MAX_LENGTH_META_TITLE,
+                ]),
+            ],
         ]);
 
         return $this;

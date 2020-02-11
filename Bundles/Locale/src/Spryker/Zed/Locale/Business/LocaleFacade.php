@@ -187,7 +187,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -201,7 +201,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -214,5 +214,17 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
         $this->getFactory()->getStore()->setCurrentLocale($localeTransfer->getLocaleName());
 
         return $localeTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSupportedLocaleCodes(): array
+    {
+        return $this->getFactory()->createLocaleManager()->getSupportedLocaleCodes();
     }
 }

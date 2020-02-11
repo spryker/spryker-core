@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
+use Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpander;
+use Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpanderInterface;
 use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsFilter;
 use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsFilterInterface;
 use Spryker\Zed\ProductCartConnector\Business\Validator\ProductValidator;
@@ -75,5 +77,16 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): ProductCartConnectorToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpanderInterface
+     */
+    public function createProductUrlExpander(): ProductUrlExpanderInterface
+    {
+        return new ProductUrlExpander(
+            $this->getLocaleFacade(),
+            $this->getProductFacade()
+        );
     }
 }

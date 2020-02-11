@@ -10,6 +10,9 @@ namespace Spryker\Client\Shipment;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Shipment\Zed\ShipmentStub;
 
+/**
+ * @method \Spryker\Client\Shipment\ShipmentConfig getConfig()
+ */
 class ShipmentFactory extends AbstractFactory
 {
     /**

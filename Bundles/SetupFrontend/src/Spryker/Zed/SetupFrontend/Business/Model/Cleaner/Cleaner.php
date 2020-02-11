@@ -30,6 +30,7 @@ class Cleaner implements CleanerInterface
     public function clean()
     {
         $filesystem = new Filesystem();
+        /** @var string $directory */
         foreach ($this->directories as $directory) {
             if (is_dir($directory)) {
                 $filesystem->remove($directory);

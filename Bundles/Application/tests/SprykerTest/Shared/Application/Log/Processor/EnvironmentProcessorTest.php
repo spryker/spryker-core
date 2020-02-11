@@ -12,6 +12,7 @@ use Spryker\Shared\Application\Log\Processor\EnvironmentProcessor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Application
@@ -25,7 +26,7 @@ class EnvironmentProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testInvokeShouldAddEnvironmentInformationToRecordsExtra()
+    public function testInvokeShouldAddEnvironmentInformationToRecordsExtra(): void
     {
         $processor = new EnvironmentProcessor();
         $record = ['extra'];

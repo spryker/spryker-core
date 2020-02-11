@@ -21,7 +21,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginI
 class ProductPackagingUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

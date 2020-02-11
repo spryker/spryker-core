@@ -16,7 +16,7 @@ class ConfigInit extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         if (isset($this->config['enabled']) && $this->config['enabled']) {
             $this->copyBundleConfigurationFiles();
@@ -29,7 +29,7 @@ class ConfigInit extends Module
      *
      * @return void
      */
-    private function copyBundleConfigurationFiles()
+    private function copyBundleConfigurationFiles(): void
     {
         $files = $this->getConfigFiles();
         $filesystem = new Filesystem();
@@ -41,7 +41,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     private function getConfigFiles()
     {
@@ -55,9 +55,9 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    private function getSourceDirectories()
+    private function getSourceDirectories(): array
     {
         $configPaths = [
             APPLICATION_ROOT_DIR . '/../*/config/',
@@ -69,11 +69,11 @@ class ConfigInit extends Module
     }
 
     /**
-     * @param array $configPaths
+     * @param string[] $configPaths
      *
-     * @return array
+     * @return string[]
      */
-    private function addBundleToTestConfigDirectory(array $configPaths)
+    private function addBundleToTestConfigDirectory(array $configPaths): array
     {
         $bundleToTestConfigDirectory = APPLICATION_ROOT_DIR . '/../../../config/';
         if (is_dir($bundleToTestConfigDirectory)) {
@@ -88,7 +88,7 @@ class ConfigInit extends Module
      *
      * @return string
      */
-    private function getTargetDirectory()
+    private function getTargetDirectory(): string
     {
         return APPLICATION_ROOT_DIR . '/config/Shared/';
     }
@@ -99,7 +99,7 @@ class ConfigInit extends Module
      *
      * @return void
      */
-    private function generateConfigDefaultFile()
+    private function generateConfigDefaultFile(): void
     {
         $this->clearGeneratedConfigFile();
         $this->writeConfigFile($this->generateConfig());
@@ -108,7 +108,7 @@ class ConfigInit extends Module
     /**
      * @return void
      */
-    private function clearGeneratedConfigFile()
+    private function clearGeneratedConfigFile(): void
     {
         $this->writeConfigFile('');
     }
@@ -116,7 +116,7 @@ class ConfigInit extends Module
     /**
      * @return string
      */
-    private function generateConfig()
+    private function generateConfig(): string
     {
         $finder = $this->getConfigDefaultFiles();
         $configHeader = '<?php' . PHP_EOL . PHP_EOL;
@@ -139,7 +139,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     private function getConfigDefaultFiles()
     {
@@ -157,7 +157,7 @@ class ConfigInit extends Module
      *
      * @return void
      */
-    private function writeConfigFile($fileContent)
+    private function writeConfigFile(string $fileContent): void
     {
         file_put_contents($this->getConfigFilePath(), $fileContent);
     }
@@ -165,7 +165,7 @@ class ConfigInit extends Module
     /**
      * @return string
      */
-    private function getConfigFilePath()
+    private function getConfigFilePath(): string
     {
         return $this->getTargetDirectory() . '/config_default-test.php';
     }

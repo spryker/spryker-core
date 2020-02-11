@@ -21,7 +21,7 @@ class SpySalesOrderItemMock extends OriginalSpySalesOrderItem
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    public function copy($deepCopy = false)
+    public function copy($deepCopy = false): OriginalSpySalesOrderItem
     {
         $this->propelModelCopy = parent::copy($deepCopy);
 
@@ -31,7 +31,7 @@ class SpySalesOrderItemMock extends OriginalSpySalesOrderItem
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    public function getCreatedCopy()
+    public function getCreatedCopy(): OriginalSpySalesOrderItem
     {
         return $this->propelModelCopy;
     }

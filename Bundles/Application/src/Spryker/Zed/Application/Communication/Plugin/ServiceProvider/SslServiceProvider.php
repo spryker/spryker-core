@@ -14,12 +14,16 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use `\Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    public const BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER = 'BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER';
+
     /**
      * @param \Silex\Application $app
      *
@@ -27,6 +31,8 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     public function register(Application $app)
     {
+        $app->set(static::BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER, true);
+
         $this->setTrustedProxies();
         $this->setTrustedHosts();
         $this->addProtocolCheck($app);
@@ -72,7 +78,10 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
         }
 
         $app->before(
-            function (Request $request) {
+            function (Request $request) use ($app) {
+                if ($app->get(static::BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER) === false) {
+                    return null;
+                }
                 if ($this->shouldBeSsl($request)) {
                     $fakeRequest = clone $request;
                     $fakeRequest->server->set('HTTPS', true);

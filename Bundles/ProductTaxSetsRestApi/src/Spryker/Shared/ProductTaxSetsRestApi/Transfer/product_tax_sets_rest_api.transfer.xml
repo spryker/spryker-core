@@ -4,26 +4,26 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductTaxSetsAttributes">
-        <property name="name" type="string" />
-        <property name="RestTaxRates" type="RestProductTaxRate[]" singular="RestProductTaxRate"/>
+        <property name="name" type="string"/>
+        <property name="restTaxRates" type="RestProductTaxRate[]" singular="restProductTaxRate"/>
     </transfer>
 
     <transfer name="RestProductTaxRate">
-        <property name="name" type="string" />
-        <property name="rate" type="string" />
-        <property name="country" type="string" />
+        <property name="name" type="string"/>
+        <property name="rate" type="string"/>
+        <property name="country" type="string"/>
     </transfer>
 
     <transfer name="TaxSet">
-        <property name="uuid" type="string" />
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="TaxProductStorage">
-        <property name="idTaxSet" type="int" />
+        <property name="idTaxSet" type="int"/>
     </transfer>
 
     <transfer name="TaxSetStorage">
-        <property name="uuid" type="string" />
+        <property name="uuid" type="string"/>
         <property name="taxRates" type="TaxRateStorage[]"  singular="taxRate"/>
     </transfer>
 
@@ -31,6 +31,12 @@
         <property name="name" type="string"/>
         <property name="country" type="string"/>
         <property name="rate" type="float"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
     </transfer>
 
 </transfers>

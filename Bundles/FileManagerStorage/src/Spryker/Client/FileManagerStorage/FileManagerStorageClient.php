@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class FileManagerStorageClient extends AbstractClient implements FileManagerStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

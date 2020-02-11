@@ -72,7 +72,8 @@ class GuestCartsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",
-     *              "404": "Cart with given uuid not found."
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Can’t switch price mode when there are items in the cart."
      *          }
      *     }
      * })

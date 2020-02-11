@@ -20,4 +20,4 @@ use Orm\Zed\Nopayment\Persistence\Base\SpyNopaymentPaidQuery as BaseSpyNopayment
  */
 abstract class AbstractSpyNopaymentPaidQuery extends BaseSpyNopaymentPaidQuery
 {
-} // SpyNopaymentPaidQuery
+}

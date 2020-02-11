@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductRelation\ProductRelationCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductRelation
@@ -27,11 +28,11 @@ class ProductRelationViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductRelationCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductRelationCommunicationTester $i): void
     {
         $i->listDataTable(ProductRelationListPage::URL . '/table');
         $i->clickDataTableViewButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / View Product Relation');
+        $i->seeBreadcrumbNavigation('Products / Product Relations / View Product Relation');
     }
 }

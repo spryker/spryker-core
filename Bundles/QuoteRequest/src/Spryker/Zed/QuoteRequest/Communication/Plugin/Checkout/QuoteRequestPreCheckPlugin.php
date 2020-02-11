@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class QuoteRequestPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates quote request if quote request reference exists in quote.
      * - Checks if quote request version exists in database.
      * - Checks status from quote request.

@@ -14,6 +14,7 @@ use Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInte
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group OauthCustomerConnector

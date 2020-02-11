@@ -19,7 +19,7 @@ class CategoryEditPage extends Category
      *
      * @return string
      */
-    public static function getUrl($idCategory)
+    public static function getUrl(int $idCategory): string
     {
         return self::URL . $idCategory;
     }

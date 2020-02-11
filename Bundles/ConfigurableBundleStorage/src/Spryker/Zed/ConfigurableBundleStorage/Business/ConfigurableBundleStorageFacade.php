@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ConfigurableBundleStorageFacade extends AbstractFacade implements ConfigurableBundleStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,5 +30,53 @@ class ConfigurableBundleStorageFacade extends AbstractFacade implements Configur
         $this->getFactory()
             ->createConfigurableBundleStoragePublisher()
             ->publishConfigurableBundleTemplates($configurableBundleTemplateIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function unpublishConfigurableBundleTemplate(array $configurableBundleTemplateIds): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleStorageUnpublisher()
+            ->unpublishConfigurableBundleTemplates($configurableBundleTemplateIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function publishConfigurableBundleTemplateImage(array $configurableBundleTemplateIds): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateImageStoragePublisher()
+            ->publish($configurableBundleTemplateIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function unpublishConfigurableBundleTemplateImage(array $configurableBundleTemplateIds): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateImageStorageUnpublisher()
+            ->unpublish($configurableBundleTemplateIds);
     }
 }

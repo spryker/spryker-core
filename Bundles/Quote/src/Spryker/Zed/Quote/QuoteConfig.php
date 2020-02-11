@@ -27,7 +27,7 @@ class QuoteConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving()
     {

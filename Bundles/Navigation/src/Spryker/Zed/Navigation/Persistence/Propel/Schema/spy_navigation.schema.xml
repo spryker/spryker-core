@@ -31,8 +31,8 @@
         <column name="node_type" type="VARCHAR" size="255" required="false" default="null"/>
         <column name="position" type="INTEGER" required="false" default="NULL"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-        <column name="valid_from" type="TIMESTAMP" required="false" />
-        <column name="valid_to" type="TIMESTAMP" required="false" />
+        <column name="valid_from" type="TIMESTAMP" required="false"/>
+        <column name="valid_to" type="TIMESTAMP" required="false"/>
 
         <foreign-key foreignTable="spy_navigation_node" phpName="ParentNavigationNode" refPhpName="ChildrenNavigationNode" onDelete="CASCADE">
             <reference foreign="id_navigation_node" local="fk_parent_navigation_node"/>

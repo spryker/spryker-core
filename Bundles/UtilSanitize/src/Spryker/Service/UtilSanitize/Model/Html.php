@@ -45,14 +45,11 @@ class Html implements HtmInterface
         static $defaultCharset = false;
         if ($defaultCharset === false) {
             $defaultCharset = mb_internal_encoding();
-            if ($defaultCharset === null) {
+            if (!$defaultCharset) {
                 $defaultCharset = 'UTF-8';
             }
         }
-        if (is_string($double)) {
-            $charset = $double;
-        }
 
-        return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, ($charset) ? $charset : $defaultCharset, $double);
+        return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, $charset ?: $defaultCharset, $double);
     }
 }

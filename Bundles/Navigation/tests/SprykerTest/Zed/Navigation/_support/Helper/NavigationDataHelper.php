@@ -11,7 +11,9 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\NavigationBuilder;
 use Generated\Shared\DataBuilder\NavigationNodeBuilder;
 use Generated\Shared\DataBuilder\NavigationNodeLocalizedAttributesBuilder;
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
+use Spryker\Zed\Navigation\Business\NavigationFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -25,13 +27,13 @@ class NavigationDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    public function haveNavigation(array $seedData = [])
+    public function haveNavigation(array $seedData = []): NavigationTransfer
     {
         $navigationTransfer = $this->generateNavigationTransfer($seedData);
 
         $this->getNavigationFacade()->createNavigation($navigationTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($navigationTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($navigationTransfer): void {
             $this->cleanupNavigation($navigationTransfer);
         });
 
@@ -43,7 +45,7 @@ class NavigationDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    public function haveNavigationNode(array $seedData = [])
+    public function haveNavigationNode(array $seedData = []): NavigationNodeTransfer
     {
         $navigationNodeTransfer = $this->generateNavigationNodeTransfer($seedData);
 
@@ -57,7 +59,7 @@ class NavigationDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    public function haveLocalizedNavigationNode(array $seedData = [])
+    public function haveLocalizedNavigationNode(array $seedData = []): NavigationNodeTransfer
     {
         $navigationNodeTransfer = $this->generateLocalizedNavigationNodeTransfer($seedData);
 
@@ -69,7 +71,7 @@ class NavigationDataHelper extends Module
     /**
      * @return \Spryker\Zed\Navigation\Business\NavigationFacadeInterface
      */
-    protected function getNavigationFacade()
+    protected function getNavigationFacade(): NavigationFacadeInterface
     {
         return $this->getLocator()->navigation()->facade();
     }
@@ -79,7 +81,7 @@ class NavigationDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    protected function generateNavigationTransfer(array $seedData = [])
+    protected function generateNavigationTransfer(array $seedData = []): NavigationTransfer
     {
         $navigationTransfer = (new NavigationBuilder($seedData))->build();
         $navigationTransfer->setIdNavigation(null);
@@ -92,7 +94,7 @@ class NavigationDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    protected function generateNavigationNodeTransfer(array $seedData)
+    protected function generateNavigationNodeTransfer(array $seedData): NavigationNodeTransfer
     {
         $navigationNodeTransfer = (new NavigationNodeBuilder($seedData))->build();
 
@@ -104,7 +106,7 @@ class NavigationDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    protected function generateLocalizedNavigationNodeTransfer(array $seedData = [])
+    protected function generateLocalizedNavigationNodeTransfer(array $seedData = []): NavigationNodeTransfer
     {
         $navigationNodeTransfer = $this->generateNavigationNodeTransfer($seedData);
 
@@ -119,7 +121,7 @@ class NavigationDataHelper extends Module
      *
      * @return void
      */
-    protected function cleanupNavigation(NavigationTransfer $navigationTransfer)
+    protected function cleanupNavigation(NavigationTransfer $navigationTransfer): void
     {
         $this->getNavigationFacade()->deleteNavigation($navigationTransfer);
     }

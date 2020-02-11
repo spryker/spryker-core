@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductSetClient extends AbstractClient implements ProductSetClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ProductSetClient extends AbstractClient implements ProductSetClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class ProductSetClient extends AbstractClient implements ProductSetClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
 class ProductValidityCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Saves product validity on "after" event when a concrete product is created.
      *
      * @api

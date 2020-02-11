@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Wishlist\Persistence" package="src.Orm.Zed.Wishlist.Persistence">
 
-    <table name="spy_wishlist" phpName="SpyWishlist">
+    <table name="spy_wishlist">
         <column name="id_wishlist" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
@@ -19,7 +19,7 @@
         <id-method-parameter value="spy_wishlist_pk_seq"/>
     </table>
 
-    <table name="spy_wishlist_item" phpName="SpyWishlistItem">
+    <table name="spy_wishlist_item">
         <column name="id_wishlist_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_wishlist" required="true" type="INTEGER"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>

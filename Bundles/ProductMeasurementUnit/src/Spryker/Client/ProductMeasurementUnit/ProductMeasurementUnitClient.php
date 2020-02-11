@@ -17,13 +17,12 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductMeasurementUnitClient extends AbstractClient implements ProductMeasurementUnitClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
      * @param array $params
-     *
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
@@ -35,7 +34,7 @@ class ProductMeasurementUnitClient extends AbstractClient implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

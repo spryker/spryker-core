@@ -89,6 +89,10 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     protected function saveStorageEntityTransfer(int $idProduct, array $storageEntityTransfers): void
     {
         $productConcreteMeasurementUnitStorageData = $this->generateProductConcreteMeasurementUnitStorageTransfersByIdProduct($idProduct);
+        /**
+         * @var string $storeName
+         * @var array $storageData
+         */
         foreach ($productConcreteMeasurementUnitStorageData as $storeName => $storageData) {
             if (!isset($storageEntityTransfers[$storeName])) {
                 $storageEntityTransfers[$storeName] = new SpyProductConcreteMeasurementUnitStorageEntityTransfer();
@@ -107,7 +111,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     }
 
     /**
-     * @param \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorage[] $productConcreteMeasurementUnitStorageEntityTransfers Keys are store names
+     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $productConcreteMeasurementUnitStorageEntityTransfers Keys are store names
      *
      * @return void
      */

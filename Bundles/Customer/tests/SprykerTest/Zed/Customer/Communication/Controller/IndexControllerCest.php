@@ -15,6 +15,7 @@ use SprykerTest\Zed\Customer\CustomerCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Customer
@@ -30,7 +31,7 @@ class IndexControllerCest
      *
      * @return void
      */
-    public function _before(CustomerCommunicationTester $i)
+    public function _before(CustomerCommunicationTester $i): void
     {
         $i->setDependency(CustomerDependencyProvider::FACADE_MAIL, $this->getMailFacadeMock());
     }
@@ -38,7 +39,7 @@ class IndexControllerCest
     /**
      * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
      */
-    protected function getMailFacadeMock()
+    protected function getMailFacadeMock(): CustomerToMailInterface
     {
         /** @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacadeMock */
         $mailFacadeMock = Stub::makeEmpty(CustomerToMailInterface::class);
@@ -51,7 +52,7 @@ class IndexControllerCest
      *
      * @return void
      */
-    public function listCustomers(CustomerCommunicationTester $i)
+    public function listCustomers(CustomerCommunicationTester $i): void
     {
         $i->amOnPage('/customer');
         $i->seeResponseCodeIs(200);
@@ -63,7 +64,7 @@ class IndexControllerCest
      *
      * @return void
      */
-    public function addCustomer(CustomerCommunicationTester $i)
+    public function addCustomer(CustomerCommunicationTester $i): void
     {
         $customerTransfer = $this->getCustomerTransfer();
 
@@ -94,7 +95,7 @@ class IndexControllerCest
      *
      * @return void
      */
-    public function addCustomerWithoutNameAndFail(CustomerCommunicationTester $i)
+    public function addCustomerWithoutNameAndFail(CustomerCommunicationTester $i): void
     {
         $customerTransfer = $this->getCustomerTransfer();
         $email = $customerTransfer->getEmail();

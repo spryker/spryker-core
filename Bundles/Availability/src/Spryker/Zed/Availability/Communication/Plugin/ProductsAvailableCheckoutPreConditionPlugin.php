@@ -21,7 +21,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *  - Check if all items in cart are sellable.
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *
      * @api
      *

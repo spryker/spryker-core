@@ -10,6 +10,9 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\SearchConfig;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation\StringFacetAggregation` instead.
+ */
 class StringFacetAggregation extends AbstractTermsFacetAggregation
 {
     public const VALUE_SUFFIX = '-value';

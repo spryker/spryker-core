@@ -27,7 +27,7 @@ class LocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
     protected const EVENT_PRIORITY = 16;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds locale listener.
      *
      * @api

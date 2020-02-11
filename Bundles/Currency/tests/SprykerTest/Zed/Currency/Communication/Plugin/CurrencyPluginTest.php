@@ -13,6 +13,7 @@ use Spryker\Zed\Currency\Communication\Plugin\CurrencyPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Currency
@@ -26,7 +27,7 @@ class CurrencyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFromIsoCodeShouldReturnCurrencyTransfer()
+    public function testFromIsoCodeShouldReturnCurrencyTransfer(): void
     {
         $currencyPlugin = new CurrencyPlugin();
         $currencyTransfer = $currencyPlugin->fromIsoCode('EUR');
@@ -36,7 +37,7 @@ class CurrencyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetDefaultShouldReturnCurrencyTransfer()
+    public function testGetDefaultShouldReturnCurrencyTransfer(): void
     {
         $currencyPlugin = new CurrencyPlugin();
         $currencyTransfer = $currencyPlugin->getCurrent();

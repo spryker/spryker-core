@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Kernel
@@ -25,7 +26,7 @@ class ClassInfoTest extends Unit
     /**
      * @return void
      */
-    public function testGetBundleStripsStoreNameFromBundleName()
+    public function testGetBundleStripsStoreNameFromBundleName(): void
     {
         $classInfo = $this->getClassInfo('DE');
 
@@ -39,7 +40,7 @@ class ClassInfoTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
-    protected function getClassInfo($storeName)
+    protected function getClassInfo(string $storeName): ClassInfo
     {
         $mock = $this
             ->getMockBuilder(ClassInfo::class)
@@ -58,7 +59,7 @@ class ClassInfoTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function getBundleNameResolverMock($storeName)
+    protected function getBundleNameResolverMock(string $storeName): BundleNameResolver
     {
         $mock = $this
             ->getMockBuilder(BundleNameResolver::class)

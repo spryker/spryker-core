@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class BusinessOnBehalfGuiAttachToCompanyButtonCustomerTableActionExpanderPlugin extends AbstractPlugin implements CustomerTableActionExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds "Attach to company" button to customer table actions if the customer has at least one company user.
      *
      * @api

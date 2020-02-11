@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class PriceProductClient extends AbstractClient implements PriceProductClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

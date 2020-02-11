@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Glue\Testify\Tester;
@@ -19,7 +19,7 @@ abstract class ApiEndToEndTester extends EndToEndTester
      *
      * @return string
      */
-    public function formatUrl(string $url, $params = []): string
+    public function formatUrl(string $url, array $params = []): string
     {
         $refinedParams = [];
 
@@ -36,7 +36,7 @@ abstract class ApiEndToEndTester extends EndToEndTester
      *
      * @return string
      */
-    public function formatFullUrl(string $url, $params = []): string
+    public function formatFullUrl(string $url, array $params = []): string
     {
         return rtrim(Config::get(TestifyConstants::GLUE_APPLICATION_DOMAIN) . '/' . $this->formatUrl($url, $params), '/');
     }

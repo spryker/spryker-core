@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAttributeGui
@@ -27,11 +28,11 @@ class ProductAttributeGuiAttributeViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i): void
     {
         $i->listDataTable(ProductAttributeGuiAttributeListPage::URL . '/table');
         $i->clickDataTableViewButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes / View Product Attribute');
+        $i->seeBreadcrumbNavigation('Products / Attributes / View Product Attribute');
     }
 }

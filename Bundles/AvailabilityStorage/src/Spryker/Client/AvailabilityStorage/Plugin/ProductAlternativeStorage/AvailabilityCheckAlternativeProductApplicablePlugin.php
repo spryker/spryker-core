@@ -18,7 +18,7 @@ use Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\Alternat
 class AvailabilityCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

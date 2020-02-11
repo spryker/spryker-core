@@ -19,7 +19,7 @@ class ProductReviewStorageClient extends AbstractClient implements ProductReview
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer|null
      */
     public function findProductAbstractReview($idProductAbstract)
     {

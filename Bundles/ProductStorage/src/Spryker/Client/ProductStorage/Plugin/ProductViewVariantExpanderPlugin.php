@@ -18,7 +18,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
 class ProductViewVariantExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface, ProductConcreteViewExpanderExcluderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands the transfer object with the attribute map, product variant map.
      * - Expands the transfer object with product concrete ID using the values of `selectedAttributes`.
      *

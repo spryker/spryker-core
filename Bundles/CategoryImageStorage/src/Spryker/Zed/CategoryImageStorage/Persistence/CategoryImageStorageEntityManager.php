@@ -16,7 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CategoryImageStorageEntityManager extends AbstractEntityManager implements CategoryImageStorageEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
+     *
+     * @return void
      */
     public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer)
     {
@@ -24,7 +26,9 @@ class CategoryImageStorageEntityManager extends AbstractEntityManager implements
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $idCategoryImageStorageEntityTransfer
+     *
+     * @return void
      */
     public function deleteCategoryImageStorage(string $idCategoryImageStorageEntityTransfer)
     {

@@ -16,7 +16,7 @@ use Spryker\Service\Kernel\AbstractService;
 class ProductQuantityService extends AbstractService implements ProductQuantityServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Service\Kernel\AbstractService;
 class PriceProductService extends AbstractService implements PriceProductServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class PriceProductService extends AbstractService implements PriceProductService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class PriceProductService extends AbstractService implements PriceProductService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class PriceProductService extends AbstractService implements PriceProductService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +86,7 @@ class PriceProductService extends AbstractService implements PriceProductService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

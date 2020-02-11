@@ -18,7 +18,7 @@ use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 class SharedCartByCartIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds shared-carts resource as relationship.
      *
      * @api
@@ -36,7 +36,7 @@ class SharedCartByCartIdResourceRelationshipPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

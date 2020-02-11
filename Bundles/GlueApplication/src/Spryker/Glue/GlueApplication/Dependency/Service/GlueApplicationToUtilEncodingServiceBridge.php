@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -29,7 +29,7 @@ class GlueApplicationToUtilEncodingServiceBridge implements GlueApplicationToUti
      *
      * @return string|null
      */
-    public function encodeJson(array $value, $options = null, $depth = null): ?string
+    public function encodeJson($value, $options = null, $depth = null)
     {
         return $this->utilEncoding->encodeJson($value, $options, $depth);
     }

@@ -15,6 +15,7 @@ use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search
@@ -30,7 +31,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testEmptyIndexDefinitionLoading()
+    public function testEmptyIndexDefinitionLoading(): void
     {
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/EmptyIndex'],
@@ -52,7 +53,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testSingleIndexDefinitionLoadingWithMultipleMappingTypes()
+    public function testSingleIndexDefinitionLoadingWithMultipleMappingTypes(): void
     {
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
@@ -69,7 +70,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testSingleIndexDefinitionSettings()
+    public function testSingleIndexDefinitionSettings(): void
     {
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
@@ -103,7 +104,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testSingleIndexDefinitionMappings()
+    public function testSingleIndexDefinitionMappings(): void
     {
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
@@ -135,7 +136,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testIsIndexNameSuffixUsedWhenProvided()
+    public function testIsIndexNameSuffixUsedWhenProvided(): void
     {
         $suffix = '_suffix';
 
@@ -170,7 +171,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testMultipleIndexDefinitionLoading()
+    public function testMultipleIndexDefinitionLoading(): void
     {
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/MultipleIndex'],
@@ -187,7 +188,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testMultipleIndexDefinitionMerging()
+    public function testMultipleIndexDefinitionMerging(): void
     {
         $fooExpectedDefinition = (new ElasticsearchIndexDefinitionTransfer())
             ->setIndexName('de_foo')
@@ -235,7 +236,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testDefinitionsShouldBeCreatedPerStore()
+    public function testDefinitionsShouldBeCreatedPerStore(): void
     {
         $stores = ['A', 'B', 'C'];
 
@@ -256,7 +257,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testStoreDefinitionShouldBeOverwritable()
+    public function testStoreDefinitionShouldBeOverwritable(): void
     {
         $stores = ['A', 'B'];
 
@@ -324,8 +325,8 @@ class JsonIndexDefinitionLoaderTest extends Unit
         JsonIndexDefinitionMerger $definitionMerger,
         array $stores,
         SearchToUtilEncodingInterface $utilEncodingMock,
-        $suffix = ''
-    ) {
+        string $suffix = ''
+    ): JsonIndexDefinitionLoader {
         $jsonIndexDefinitionLoader = $this->getMockBuilder(JsonIndexDefinitionLoader::class)
             ->setConstructorArgs([$sourceDirectories, $definitionMerger, $utilEncodingMock, $stores])
             ->setMethods(['getIndexNameSuffix'])
@@ -340,7 +341,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger
      */
-    protected function createJsonIndexDefinitionMerger()
+    protected function createJsonIndexDefinitionMerger(): JsonIndexDefinitionMerger
     {
         return new JsonIndexDefinitionMerger();
     }
@@ -348,7 +349,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return array
      */
-    protected function getStores()
+    protected function getStores(): array
     {
         return ['DE'];
     }
@@ -356,7 +357,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getUtilEncodingMock()
+    protected function getUtilEncodingMock(): SearchToUtilEncodingInterface
     {
         $utilEncodingMock = $this->getMockBuilder(SearchToUtilEncodingInterface::class)
             ->disableOriginalConstructor()

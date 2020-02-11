@@ -14,6 +14,7 @@ use Spryker\Zed\Propel\PropelFilterCriteria;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -26,7 +27,7 @@ class PropelFilterCriteriaTest extends Unit
     /**
      * @return void
      */
-    public function testToCriteriaShouldReturnEmptyCriteriaWhenNothingWasSet()
+    public function testToCriteriaShouldReturnEmptyCriteriaWhenNothingWasSet(): void
     {
         $filterTransfer = new FilterTransfer();
 
@@ -42,7 +43,7 @@ class PropelFilterCriteriaTest extends Unit
     /**
      * @return void
      */
-    public function testToCriteriaShouldReturnCriteriaWithParameters()
+    public function testToCriteriaShouldReturnCriteriaWithParameters(): void
     {
         $filterTransfer = new FilterTransfer();
         $filterTransfer->setLimit(10);

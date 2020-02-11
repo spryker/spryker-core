@@ -8,8 +8,9 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Reader\Search;
 
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
+use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 
-interface ConfigurableSearchReaderInterface
+interface ConfigurableSearchReaderInterface extends ReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer $collectorConfigurationTransfer

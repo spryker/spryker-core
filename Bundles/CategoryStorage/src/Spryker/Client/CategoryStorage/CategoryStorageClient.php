@@ -42,4 +42,21 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
             ->createCategoryNodeStorage()
             ->getCategoryNodeById($idCategoryNode, $localeName);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createCategoryNodeStorage()
+            ->getCategoryNodeByIds($categoryNodeIds, $localeName);
+    }
 }

@@ -10,11 +10,13 @@ namespace Spryker\Zed\Wishlist\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Util\PropelModelPager;
@@ -26,6 +28,8 @@ use Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface;
 
 class Reader implements ReaderInterface
 {
+    protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'wishlist.not.found';
+
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
      */
@@ -407,6 +411,28 @@ class Reader implements ReaderInterface
             ->getIdCustomer();
 
         return $this->getCollectionByIdCustomer($idCustomer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
+    {
+        $wishlistFilterTransfer->requireIdCustomer();
+
+        $wishlistTransfer = $this->wishlistRepository->findWishlistByFilter($wishlistFilterTransfer);
+
+        if (!$wishlistTransfer) {
+            return (new WishlistResponseTransfer())
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_WISHLIST_NOT_FOUND);
+        }
+
+        return (new WishlistResponseTransfer())
+            ->setWishlist($wishlistTransfer)
+            ->setIsSuccess(true);
     }
 
     /**

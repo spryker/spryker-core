@@ -171,30 +171,6 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku)
-    {
-        return $this->getOrderItemsForSku($this->retrieveReservedStates(), $sku, false);
-    }
-
-    /**
-     * @param array $states
-     * @param string $sku
-     * @param bool $returnTest
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    protected function getOrderItemsForSku(array $states, $sku, $returnTest = true)
-    {
-        $orderItems = $this->queryContainer->querySalesOrderItemsForSku($states, $sku, $returnTest);
-
-        return $orderItems;
-    }
-
-    /**
      * @deprecated Not in use anymore.
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states

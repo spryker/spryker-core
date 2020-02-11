@@ -13,7 +13,7 @@ namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 class FilePublishListener extends AbstractFileManagerListener
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -11,6 +11,8 @@ use Elastica\ResultSet;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
 
 /**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SortedResultFormatterPlugin` instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin

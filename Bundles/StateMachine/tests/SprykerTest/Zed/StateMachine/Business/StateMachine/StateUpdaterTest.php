@@ -20,6 +20,7 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine
@@ -35,7 +36,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testStateUpdaterShouldUpdateStateInTransaction()
+    public function testStateUpdaterShouldUpdateStateInTransaction(): void
     {
         $stateUpdater = $this->createStateUpdater();
 
@@ -49,7 +50,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testStateUpdaterShouldTriggerHandlerWhenStateChanged()
+    public function testStateUpdaterShouldTriggerHandlerWhenStateChanged(): void
     {
         $stateMachineHandlerResolverMock = $this->createHandlerResolverMock();
 
@@ -75,7 +76,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testStateUpdaterShouldUpdateTimeoutsWhenStateChanged()
+    public function testStateUpdaterShouldUpdateTimeoutsWhenStateChanged(): void
     {
         $timeoutMock = $this->createTimeoutMock();
 
@@ -96,7 +97,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testStateMachineUpdaterShouldPersistStateHistory()
+    public function testStateMachineUpdaterShouldPersistStateHistory(): void
     {
         $persistenceMock = $this->createPersistenceMock();
         $persistenceMock->expects($this->once())->method('saveItemStateHistory')->with(
@@ -119,7 +120,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    protected function createStateMachineItems()
+    protected function createStateMachineItems(): array
     {
         $items = [];
 
@@ -143,7 +144,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
      */
-    protected function createProcesses()
+    protected function createProcesses(): array
     {
         $processes = [];
 
@@ -157,7 +158,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\State[]
      */
-    protected function createSourceStateBuffer()
+    protected function createSourceStateBuffer(): array
     {
         $sourceStates = [];
 
@@ -180,8 +181,7 @@ class StateUpdaterTest extends StateMachineMocks
         ?HandlerResolverInterface $handlerResolverMock = null,
         ?PersistenceInterface $stateMachinePersistenceMock = null,
         ?ConnectionInterface $propelConnectionMock = null
-    ) {
-
+    ): StateUpdater {
         if ($timeoutMock === null) {
             $timeoutMock = $this->createTimeoutMock();
         }
@@ -220,7 +220,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
      */
-    protected function createQueryContainerMock()
+    protected function createQueryContainerMock(): StateMachineQueryContainerInterface
     {
         return $this->getMockBuilder(StateMachineQueryContainerInterface::class)->getMock();
     }
@@ -228,7 +228,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory
      */
-    protected function createStateMachineHistoryQueryMock()
+    protected function createStateMachineHistoryQueryMock(): SpyStateMachineItemStateHistory
     {
         return $this->getMockBuilder(SpyStateMachineItemStateHistory::class)->getMock();
     }

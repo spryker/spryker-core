@@ -132,6 +132,7 @@ class Condition implements ConditionInterface
             $transactionLogger->setIsError(true);
             $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
             $transactionLogger->saveAll();
+
             throw $e;
         }
 
@@ -165,7 +166,7 @@ class Condition implements ConditionInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][] $itemsWithOnEnterEvent
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName)
     {

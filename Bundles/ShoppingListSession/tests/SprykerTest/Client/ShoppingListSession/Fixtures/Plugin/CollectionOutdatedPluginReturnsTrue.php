@@ -14,6 +14,10 @@ class CollectionOutdatedPluginReturnsTrue implements ShoppingListCollectionOutda
 {
     /**
      * {@inheritDoc}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSession
+     *
+     * @return bool
      */
     public function isCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): bool
     {

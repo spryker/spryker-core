@@ -18,7 +18,7 @@ use Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttribute
 class CategoryNodeRestUrlResolverAttributesTransferProviderPlugin extends AbstractPlugin implements RestUrlResolverAttributesTransferProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if the UrlStorageTransfer::fkResourceCategorynode is not null.
      *
      * @api
@@ -33,7 +33,7 @@ class CategoryNodeRestUrlResolverAttributesTransferProviderPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Maps data for RestUrlResolverAttributesTransfer from the UrlStorageTransfer.
      *
      * @api

@@ -1,24 +1,25 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
 
     <transfer name="ProductSet">
-        <property name="isActive" dataBuilderRule="=true" />
-        <property name="productSetKey" dataBuilderRule="unique()->text(50)" />
+        <property name="isActive" dataBuilderRule="=true"/>
+        <property name="productSetKey" dataBuilderRule="unique()->text(50)"/>
     </transfer>
 
     <transfer name="ProductSetData">
-        <property name="name" dataBuilderRule="word" />
-        <property name="description" dataBuilderRule="text(100)" />
-        <property name="metaTitle" dataBuilderRule="word" />
-        <property name="metaDescription" dataBuilderRule="text(100)" />
-        <property name="metaKeywords" dataBuilderRule="words(5, true)" />
+        <property name="name" dataBuilderRule="word"/>
+        <property name="description" dataBuilderRule="text(100)"/>
+        <property name="metaTitle" dataBuilderRule="word"/>
+        <property name="metaDescription" dataBuilderRule="text(100)"/>
+        <property name="metaKeywords" dataBuilderRule="words(5, true)"/>
     </transfer>
 
     <transfer name="LocalizedProductSet">
-        <property name="url" dataBuilderRule="slug" />
+        <property name="url" dataBuilderRule="slug"/>
     </transfer>
 
 </transfers>
-

@@ -22,7 +22,7 @@ class ProductSetStoragePublishListener extends AbstractPlugin implements EventBu
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

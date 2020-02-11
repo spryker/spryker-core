@@ -21,6 +21,7 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
 
     /**
      * //TODO add specification
+     *
      * @api
      */
     public const PLUGIN_PRODUCT_PAGE_RATING_DATA = 'PLUGIN_PRODUCT_PAGE_RATING_DATA';

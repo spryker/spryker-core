@@ -18,7 +18,7 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 class ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds concrete-products resource as relationship by attributeMap -> product_concrete_ids.
      *
      * @api
@@ -36,7 +36,7 @@ class ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin extends Abs
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

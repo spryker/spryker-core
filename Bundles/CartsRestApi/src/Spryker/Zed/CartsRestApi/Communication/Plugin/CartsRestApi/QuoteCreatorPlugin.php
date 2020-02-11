@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class QuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Creates a single quote for customer.
      * - Creating of more than one quote is not allowed.
      *

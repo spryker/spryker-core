@@ -17,7 +17,7 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInt
 class UserAgentTableConfigExpanderPlugin extends AbstractPlugin implements UserTableConfigExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

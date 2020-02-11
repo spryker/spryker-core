@@ -48,7 +48,7 @@ class ProductSetStorageMapper implements ProductSetStorageMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer
      */
     public function mapProductImages(ProductSetDataStorageTransfer $productSetDataStorageTransfer)
     {

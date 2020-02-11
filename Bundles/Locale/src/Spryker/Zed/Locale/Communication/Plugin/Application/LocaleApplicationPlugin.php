@@ -27,7 +27,7 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     protected const BC_FEATURE_FLAG_LOCALE_LISTENER = 'BC_FEATURE_FLAG_LOCALE_LISTENER';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Provides locale service.
      *
      * @api

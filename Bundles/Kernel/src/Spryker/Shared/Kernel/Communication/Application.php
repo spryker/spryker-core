@@ -14,18 +14,33 @@ use Silex\Application\UrlGeneratorTrait;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Deprecated: Please use `\Spryker\Shared\Application\Application` instead.
+ */
 class Application extends SilexApplication
 {
     use TranslationTrait;
     use TwigTrait;
     use UrlGeneratorTrait;
 
-    public const REQUEST = 'request';
+    /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     */
     public const ROUTERS = 'routers';
+
+    /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_REQUEST
+     */
+    public const REQUEST = 'request';
+
+    /**
+     * @dsee \Spryker\Shared\Application\Application::SERVICE_REQUEST_STACK
+     */
     public const REQUEST_STACK = 'request_stack';
 
     /**
-     * Adds a router to the list of routers.
+     * @deprecated Use `\Spryker\Zed\Router\RouterDependencyProvider::getRouterPlugins()` instead.
+     * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()` instead.
      *
      * @param \Symfony\Component\Routing\RouterInterface $router The router
      * @param int $priority The priority of the router
@@ -34,8 +49,8 @@ class Application extends SilexApplication
      */
     public function addRouter(RouterInterface $router, $priority = 0)
     {
-        /** @var \Pimple $this */
-        $this[self::ROUTERS] = $this->share($this->extend(self::ROUTERS, function (ChainRouter $chainRouter) use ($router, $priority) {
+        /** @var \Spryker\Service\Container\ContainerInterface $this */
+        $this->set(static::ROUTERS, $this->extend(static::ROUTERS, function (ChainRouter $chainRouter) use ($router, $priority) {
             $chainRouter->add($router, $priority);
 
             return $chainRouter;

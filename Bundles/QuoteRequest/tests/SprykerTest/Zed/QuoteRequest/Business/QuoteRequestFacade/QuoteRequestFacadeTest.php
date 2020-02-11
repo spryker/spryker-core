@@ -1453,9 +1453,6 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus();
-        $quoteTransfer = (new QuoteTransfer())
-            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
-            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
 
         // Act
         $this->tester->getFacade()->deleteQuoteRequestsByIdCompanyUser(

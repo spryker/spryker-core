@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\LocalizedContentTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

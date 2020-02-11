@@ -33,7 +33,7 @@ class ProductSetToStorageBridge implements ProductSetToStorageInterface
     }
 
     /**
-     * @param array $keys
+     * @param string[] $keys
      *
      * @return array
      */

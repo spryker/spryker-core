@@ -131,7 +131,8 @@ class ProductOptionListTable extends AbstractTable
 
         $productQuery = $this->productOptionQueryContainer
             ->queryAllProductOptionGroups()
-            ->joinSpyProductOptionValue();
+            ->joinSpyProductOptionValue()
+            ->groupByIdProductOptionGroup();
 
         /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup[] $queryResult */
         $queryResult = $this->runQuery($productQuery, $config, true);

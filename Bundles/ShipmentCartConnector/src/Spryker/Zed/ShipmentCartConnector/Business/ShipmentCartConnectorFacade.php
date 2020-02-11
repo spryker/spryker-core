@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShipmentCartConnectorFacade extends AbstractFacade implements ShipmentCartConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -26,11 +26,14 @@ class ShipmentCartConnectorFacade extends AbstractFacade implements ShipmentCart
      */
     public function updateShipmentPrice(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFactory()->createShipmentCartExpander()->updateShipmentPrice($cartChangeTransfer);
+        return $this->getFactory()
+            ->createShipmentCartExpanderStrategyResolver()
+            ->resolve($cartChangeTransfer->getQuote()->getItems())
+            ->updateShipmentPrice($cartChangeTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,6 +43,9 @@ class ShipmentCartConnectorFacade extends AbstractFacade implements ShipmentCart
      */
     public function validateShipment(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFactory()->createShipmentCartValidate()->validateShipment($cartChangeTransfer);
+        return $this->getFactory()
+            ->createShipmentCartValidatorStrategyResolver()
+            ->resolve($cartChangeTransfer->getQuote()->getItems())
+            ->validateShipment($cartChangeTransfer);
     }
 }

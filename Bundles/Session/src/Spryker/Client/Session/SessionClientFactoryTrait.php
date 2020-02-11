@@ -9,6 +9,9 @@ namespace Spryker\Client\Session;
 
 use Spryker\Client\Session\ServiceProvider\SessionClientServiceProvider;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 trait SessionClientFactoryTrait
 {
     /**

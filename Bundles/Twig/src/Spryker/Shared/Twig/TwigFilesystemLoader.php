@@ -86,7 +86,9 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $name
+     *
+     * @return string
      */
     protected function findTemplate($name)
     {
@@ -224,11 +226,12 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
      */
     protected function returnFromCache($name)
     {
-        if ($this->cache->get($name) === false) {
+        $template = $this->cache->get($name);
+        if (!$template) {
             throw new LoaderError(sprintf('Unable to find template "%s" (cached).', $name));
         }
 
-        return $this->cache->get($name);
+        return $template;
     }
 
     /**

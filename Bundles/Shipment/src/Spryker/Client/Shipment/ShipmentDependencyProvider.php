@@ -10,6 +10,9 @@ namespace Spryker\Client\Shipment;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\Shipment\ShipmentConfig getConfig()
+ */
 class ShipmentDependencyProvider extends AbstractDependencyProvider
 {
     public const SERVICE_ZED = 'zed service';

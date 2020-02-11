@@ -18,7 +18,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterf
 class ShoppingListItemNoteExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

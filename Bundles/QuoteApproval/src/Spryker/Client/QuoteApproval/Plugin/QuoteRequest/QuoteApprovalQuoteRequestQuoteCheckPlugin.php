@@ -17,7 +17,7 @@ use Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteChec
 class QuoteApprovalQuoteRequestQuoteCheckPlugin extends AbstractPlugin implements QuoteRequestQuoteCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns false if quote does't have status `waiting`, true otherwise.
      *
      * @api

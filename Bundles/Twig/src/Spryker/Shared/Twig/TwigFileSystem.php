@@ -93,8 +93,13 @@ class TwigFileSystem extends FilesystemLoader
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @param string $name
+     *
      * @throws \Twig\Error\LoaderError
+     *
+     * @return string|false|null The template name or false/null
      */
     protected function findTemplate($name)
     {
@@ -124,6 +129,7 @@ class TwigFileSystem extends FilesystemLoader
             $pos = strpos($name, '/');
             if ($pos === false) {
                 $this->cache[$name] = false;
+
                 throw new LoaderError(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
             }
             $bundle = ucfirst(substr($name, 1, $pos - 1));
@@ -136,6 +142,7 @@ class TwigFileSystem extends FilesystemLoader
         $pos = strpos(ltrim($name, '/'), '/');
         if ($pos === false) {
             $this->cache[$name] = false;
+
             throw new LoaderError(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
         }
         $bundle = ucfirst(substr($name, 1, $pos));
@@ -163,6 +170,7 @@ class TwigFileSystem extends FilesystemLoader
         }
 
         $this->cache[$name] = false;
+
         throw new LoaderError(sprintf('Unable to find template "%s" (looked into: %s).', $templateName, implode(', ', $paths)));
     }
 }

@@ -227,7 +227,7 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
             ->endUse()
             ->endUse();
 
-        $nodeQuery->filterByIsRoot(0);
+        $nodeQuery->filterByIsRoot(false);
 
         $nodeQuery
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')

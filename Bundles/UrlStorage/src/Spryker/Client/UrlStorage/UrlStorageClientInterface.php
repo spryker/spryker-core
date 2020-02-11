@@ -13,12 +13,13 @@ interface UrlStorageClientInterface
 {
     /**
      * Specification:
-     * - Matches a URL and a locale to its storage entry
+     * - Matches a URL and a locale to its storage entry.
+     * - When localeName is null the localeName will be retrieved from the URL details.
      *
      * @api
      *
      * @param string $url
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return array
      */

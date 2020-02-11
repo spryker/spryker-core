@@ -9,10 +9,11 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
@@ -23,9 +24,9 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $productBundleQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
-    protected $availabilityQueryContainer;
+    protected $availabilityFacade;
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
@@ -34,16 +35,16 @@ class ProductBundleReader implements ProductBundleReaderInterface
 
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
+        ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
         ProductBundleToStoreFacadeInterface $storeFacade
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
-        $this->availabilityQueryContainer = $availabilityQueryContainer;
+        $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
     }
 
@@ -91,10 +92,10 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productBundleTransfer = new ProductBundleTransfer();
         $productBundleTransfer->setBundledProducts($bundledProducts);
 
-        $productBundleAvailabilityEntity = $this->findOrCreateProductBundleAvailabilityEntity($productConcreteTransfer);
-        if ($productBundleAvailabilityEntity !== null) {
-            $productBundleTransfer->setAvailability($productBundleAvailabilityEntity->getQuantity());
-            $productBundleTransfer->setIsNeverOutOfStock($productBundleAvailabilityEntity->getIsNeverOutOfStock());
+        $productBundleAvailabilityTransfer = $this->findProductConcreteAvailabilityBySkuForStore($productConcreteTransfer);
+        if ($productBundleAvailabilityTransfer !== null) {
+            $productBundleTransfer->setAvailability($productBundleAvailabilityTransfer->getAvailability());
+            $productBundleTransfer->setIsNeverOutOfStock($productBundleAvailabilityTransfer->getIsNeverOutOfStock());
         }
 
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
@@ -117,14 +118,13 @@ class ProductBundleReader implements ProductBundleReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    protected function findOrCreateProductBundleAvailabilityEntity(ProductConcreteTransfer $productConcreteTransfer)
+    protected function findProductConcreteAvailabilityBySkuForStore(ProductConcreteTransfer $productConcreteTransfer): ?ProductConcreteAvailabilityTransfer
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        return $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($productConcreteTransfer->getSku(), $storeTransfer->getIdStore())
-            ->findOneOrCreate();
+        return $this->availabilityFacade
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($productConcreteTransfer->getSku(), $storeTransfer);
     }
 }

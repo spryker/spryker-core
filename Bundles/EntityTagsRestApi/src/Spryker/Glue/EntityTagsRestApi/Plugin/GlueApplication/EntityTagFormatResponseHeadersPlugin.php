@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class EntityTagFormatResponseHeadersPlugin extends AbstractPlugin implements FormatResponseHeadersPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds ETag header to response if applicable.
      *
      * @api

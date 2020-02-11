@@ -12,6 +12,7 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group AvailabilityGui
@@ -26,7 +27,7 @@ class AvailabilityViewCest
      *
      * @return void
      */
-    public function testDisplayViewPage(AvailabilityGuiPresentationTester $i)
+    public function testDisplayViewPage(AvailabilityGuiPresentationTester $i): void
     {
         $i->wantTo('View selected availability item');
         $i->expect('List of all availability items.');
@@ -37,7 +38,7 @@ class AvailabilityViewCest
             AvailabilityPage::AVAILABILITY_ID_STORE
         ));
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Availability / Product Availability');
+        $i->seeBreadcrumbNavigation('Products / Availability / Product Availability');
 
         $i->wait(1);
 

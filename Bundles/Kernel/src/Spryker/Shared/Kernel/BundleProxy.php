@@ -15,11 +15,11 @@ use Spryker\Shared\Kernel\Locator\LocatorInterface;
  */
 class BundleProxy
 {
+    use SharedConfigResolverAwareTrait;
+
     protected const LOCATOR_MATCHER_SUFFIX = 'Matcher';
     protected const INSTANCE = 'instance';
     protected const CLASS_NAME = 'className';
-
-    use SharedConfigResolverAwareTrait;
 
     /**
      * @var string

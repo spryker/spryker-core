@@ -62,7 +62,7 @@ class ShoppingListHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
-    public function haveShoppingListPermissionGroup($name, array $permissionKeys): ShoppingListPermissionGroupTransfer
+    public function haveShoppingListPermissionGroup(string $name, array $permissionKeys): ShoppingListPermissionGroupTransfer
     {
         $shoppingListPermissionGroupEntity = new SpyShoppingListPermissionGroup();
         $shoppingListPermissionGroupEntity->setName($name);

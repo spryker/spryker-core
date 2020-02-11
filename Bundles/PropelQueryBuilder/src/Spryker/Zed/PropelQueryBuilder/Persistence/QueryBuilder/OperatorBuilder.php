@@ -27,7 +27,7 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\NotIn;
 class OperatorBuilder implements OperatorBuilderInterface
 {
     /**
-     * @var \Everon\Component\Collection\CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface|null
      */
     protected $operatorStorage;
 

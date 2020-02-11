@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -92,7 +92,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -148,7 +148,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,7 +162,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -178,7 +178,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -194,7 +194,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -210,7 +210,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -226,7 +226,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -242,7 +242,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -258,7 +258,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -272,7 +272,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

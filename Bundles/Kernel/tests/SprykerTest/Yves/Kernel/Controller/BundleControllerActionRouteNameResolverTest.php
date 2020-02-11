@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel
@@ -25,7 +26,7 @@ class BundleControllerActionRouteNameResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveShouldReturnResolvedRouteName()
+    public function testResolveShouldReturnResolvedRouteName(): void
     {
         $bundleControllerAction = new BundleControllerAction('Foo', 'Bar', 'baz');
         $resolver = new BundleControllerActionRouteNameResolver($bundleControllerAction);

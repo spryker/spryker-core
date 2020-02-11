@@ -15,6 +15,7 @@ use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Product
@@ -27,7 +28,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testCreateProductUrlShouldCreateNewUrlForProductAbstract()
+    public function testCreateProductUrlShouldCreateNewUrlForProductAbstract(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -48,7 +49,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testUpdateProductUrlShouldSaveUrlForProductAbstract()
+    public function testUpdateProductUrlShouldSaveUrlForProductAbstract(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -74,7 +75,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testDeleteProductUrlShouldDeleteUrlForProductAbstract()
+    public function testDeleteProductUrlShouldDeleteUrlForProductAbstract(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -93,7 +94,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testCreateUrlShouldThrowExceptionWhenUrlExists()
+    public function testCreateUrlShouldThrowExceptionWhenUrlExists(): void
     {
         $this->expectException(UrlExistsException::class);
 
@@ -107,7 +108,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testUpdateUrlShouldNotThrowExceptionWhenUrlExistsForSameProduct()
+    public function testUpdateUrlShouldNotThrowExceptionWhenUrlExistsForSameProduct(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -119,7 +120,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testProductUrlShouldBeUnique()
+    public function testProductUrlShouldBeUnique(): void
     {
         $this->expectException(UrlExistsException::class);
 
@@ -133,7 +134,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testDeleteProductUrlCanBeExecutedWhenUrlDoesNotExist()
+    public function testDeleteProductUrlCanBeExecutedWhenUrlDoesNotExist(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -144,7 +145,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGetProductUrl()
+    public function testGetProductUrl(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productFacade->createProductUrl($this->productAbstractTransfer);
@@ -166,7 +167,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testTouchProductUrlActiveShouldTouchLogic()
+    public function testTouchProductUrlActiveShouldTouchLogic(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -189,7 +190,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testTouchProductUrlDeletedShouldTouchLogic()
+    public function testTouchProductUrlDeletedShouldTouchLogic(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);

@@ -62,6 +62,6 @@ class TwigFileFinder implements TwigFileFinderInterface
             $twigFilePaths[] = sprintf($pathPattern, $module);
         }
 
-        return $twigFilePaths = array_filter($twigFilePaths, 'glob');
+        return array_filter($twigFilePaths, 'glob');
     }
 }

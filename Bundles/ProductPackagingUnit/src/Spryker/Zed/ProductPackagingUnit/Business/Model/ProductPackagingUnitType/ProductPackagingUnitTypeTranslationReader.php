@@ -68,6 +68,7 @@ class ProductPackagingUnitTypeTranslationReader implements ProductPackagingUnitT
         }
 
         $translationTransfer = $this->glossaryFacade->getTranslation($nameTranslationKey, $localeTransfer);
+
         $productPackagingUnitTypeTransfer->addProductPackagingUnitTypeTranslation(
             (new ProductPackagingUnitTypeTranslationTransfer())
                 ->setLocaleCode($localeTransfer->getLocaleName())

@@ -4,36 +4,36 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="QueueSendMessage">
-        <property name="body" type="string" />
-        <property name="queuePoolName" type="string" />
-        <property name="storeName" type="string" />
-        <property name="locale" type="string" />
+        <property name="body" type="string"/>
+        <property name="queuePoolName" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="locale" type="string"/>
     </transfer>
 
     <transfer name="QueueReceiveMessage">
-        <property name="queueName" type="string" />
-        <property name="queueMessage" type="QueueSendMessage" />
+        <property name="queueName" type="string"/>
+        <property name="queueMessage" type="QueueSendMessage"/>
         <property name="acknowledge" type="bool"/>
         <property name="reject" type="bool"/>
         <property name="hasError" type="bool"/>
     </transfer>
 
     <transfer name="QueueProcess">
-        <property name="idQueueProcess" type="int" />
-        <property name="serverId" type="string" />
-        <property name="processPid" type="int" />
-        <property name="workerPid" type="int" />
-        <property name="queueName" type="string" />
+        <property name="idQueueProcess" type="int"/>
+        <property name="serverId" type="string"/>
+        <property name="processPid" type="int"/>
+        <property name="workerPid" type="int"/>
+        <property name="queueName" type="string"/>
     </transfer>
 
     <transfer name="QueueDumpRequest">
-        <property name="queueName" type="string" />
-        <property name="limit" type="int" />
-        <property name="format" type="string" />
+        <property name="queueName" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="format" type="string"/>
         <property name="acknowledge" type="bool"/>
     </transfer>
 
     <transfer name="QueueDumpResponse">
-        <property name="message" type="string" />
+        <property name="message" type="string"/>
     </transfer>
 </transfers>

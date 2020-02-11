@@ -23,6 +23,7 @@ use SprykerTest\Zed\ProductRelationStorage\ProductRelationStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductRelationStorage
@@ -53,7 +54,7 @@ class ProductRelationStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -73,7 +74,7 @@ class ProductRelationStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductRelation\Business\ProductRelationFacade
      */
-    protected function createProductRelationFacade()
+    protected function createProductRelationFacade(): ProductRelationFacade
     {
         return new ProductRelationFacade();
     }
@@ -81,7 +82,7 @@ class ProductRelationStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductRelationPublishStorageListenerStoreData()
+    public function testProductRelationPublishStorageListenerStoreData(): void
     {
         SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractRelationStorageQuery::create()->count();
@@ -101,7 +102,7 @@ class ProductRelationStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductRelationStorageListenerStoreData()
+    public function testProductRelationStorageListenerStoreData(): void
     {
         SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractRelationStorageQuery::create()->count();
@@ -123,7 +124,7 @@ class ProductRelationStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductRelationProductAbstractStorageListenerStoreData()
+    public function testProductRelationProductAbstractStorageListenerStoreData(): void
     {
         SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractRelationStorageQuery::create()->count();
@@ -145,7 +146,7 @@ class ProductRelationStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade
      */
-    protected function getProductRelationStorageFacade()
+    protected function getProductRelationStorageFacade(): ProductRelationStorageFacade
     {
         $factory = new ProductRelationStorageBusinessFactory();
         $factory->setConfig(new ProductRelationStorageConfigMock());
@@ -161,7 +162,7 @@ class ProductRelationStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductAbstractRelationStorage($beforeCount)
+    protected function assertProductAbstractRelationStorage(int $beforeCount): void
     {
         $productRelationStorageCount = SpyProductAbstractRelationStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productRelationStorageCount);

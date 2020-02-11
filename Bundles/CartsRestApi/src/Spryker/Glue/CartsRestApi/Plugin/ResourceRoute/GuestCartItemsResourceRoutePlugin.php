@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Configures available actions for guest-cart-items resource.
      *
      * @api
@@ -37,7 +37,7 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +73,7 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

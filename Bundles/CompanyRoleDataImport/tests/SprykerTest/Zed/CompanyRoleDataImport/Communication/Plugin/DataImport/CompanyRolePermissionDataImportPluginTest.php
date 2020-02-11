@@ -15,6 +15,7 @@ use Spryker\Zed\CompanyRoleDataImport\CompanyRoleDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyRoleDataImport

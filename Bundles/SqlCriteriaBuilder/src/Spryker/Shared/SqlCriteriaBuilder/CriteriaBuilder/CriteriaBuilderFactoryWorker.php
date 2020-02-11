@@ -12,7 +12,7 @@ use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorker as EveronCrite
 class CriteriaBuilderFactoryWorker extends EveronCriteriaBuilderFactoryWorker implements CriteriaBuilderFactoryWorkerInterface
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function buildCriteriaBuilder()
     {

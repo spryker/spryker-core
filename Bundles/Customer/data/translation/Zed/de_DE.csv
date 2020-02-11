@@ -40,3 +40,4 @@ View,Ansicht
 "View Customer","Kunden anzeigen"
 "Zed Account Reference",Zed-Konto-Referenz
 ZipCode,Postleitzahl
+"Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"

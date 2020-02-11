@@ -39,7 +39,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPromotionAvailabilityCalculator()
     {
-        return new PromotionAvailabilityCalculator($this->getAvailabilityFacade(), $this->getLocaleFacade());
+        return new PromotionAvailabilityCalculator($this->getAvailabilityFacade());
     }
 
     /**
@@ -80,13 +80,5 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     protected function getAvailabilityFacade()
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_AVAILABILITY);
-    }
-
-    /**
-     * @return \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_LOCALE);
     }
 }

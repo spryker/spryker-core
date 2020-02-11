@@ -78,4 +78,38 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
     {
         return (new ProductConcreteProductListStorageTransfer())->fromArray($productConcreteProductListStorageData, true);
     }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     */
+    public function getProductConcreteProductListStorageTransfersByProductConcreteIds(array $productConcreteIds): array
+    {
+        $productConcreteProductListStorageKeys = [];
+        foreach ($productConcreteIds as $idProductConcrete) {
+            $productConcreteProductListStorageKeys[] = $this->generateKey($idProductConcrete);
+        }
+        $productConcreteProductListStorageData = $this->storageClient->getMulti($productConcreteProductListStorageKeys);
+
+        return $this->mapProductConcreteStorageDataToProductConcreteProductListStorageTransfers($productConcreteProductListStorageData);
+    }
+
+    /**
+     * @param string[] $productConcreteProductListStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     */
+    protected function mapProductConcreteStorageDataToProductConcreteProductListStorageTransfers(array $productConcreteProductListStorageData): array
+    {
+        $productConcreteProductListStorageTransfers = [];
+        foreach ($productConcreteProductListStorageData as $data) {
+            if (!$data) {
+                continue;
+            }
+            $productConcreteProductListStorageTransfers[] = $this->mapProductConcreteProductListStorage(json_decode($data, true));
+        }
+
+        return $productConcreteProductListStorageTransfers;
+    }
 }

@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
+ * @deprecated Use `\Spryker\Glue\GlueApplication\Plugin\EventDispatcher\GlueRestControllerListenerEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class GlueControllerListenerPlugin extends AbstractPlugin

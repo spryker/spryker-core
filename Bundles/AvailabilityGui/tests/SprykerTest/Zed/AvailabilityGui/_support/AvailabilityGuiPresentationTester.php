@@ -12,6 +12,7 @@ use Codeception\Scenario;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -43,7 +44,7 @@ class AvailabilityGuiPresentationTester extends Actor
     /**
      * @return void
      */
-    public function assertTableWithDataExists()
+    public function assertTableWithDataExists(): void
     {
         $showingEntries = $this->grabTextFrom('//*[@class="dataTables_info"]');
         preg_match('/^Showing\s{1}\d+\s{1}to\s{1}(\d+)/', $showingEntries, $matches);
@@ -58,7 +59,7 @@ class AvailabilityGuiPresentationTester extends Actor
     /**
      * @return void
      */
-    public function clickViewButton()
+    public function clickViewButton(): void
     {
         $this->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[8]/a");
     }

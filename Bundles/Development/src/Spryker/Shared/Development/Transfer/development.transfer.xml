@@ -72,7 +72,7 @@
         <property name="toModule" type="string"/>
         <property name="toModuleLayer" type="string"/>
         <property name="toType" type="string"/>
-        <property name="methods" type="string[]"/>
+        <property name="methods" type="string[]" singular="methods"/>
     </transfer>
 
     <transfer name="DependencyValidationRequest">
@@ -96,7 +96,7 @@
         <property name="isOwnExtensionModule" type="bool"/>
         <property name="isInComposerRequire" type="bool"/>
         <property name="isInComposerRequireDev" type="bool"/>
-        <property name="dependencyTypes" type="string[]"/>
+        <property name="dependencyTypes" type="string[]" singular="dependencyTypes"/>
         <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
     </transfer>
 
@@ -156,7 +156,7 @@
     </transfer>
 
     <transfer name="DependencyProviderCollection">
-        <property name="dependencyProvider" type="DependencyProvider[]"/>
+        <property name="dependencyProvider" type="DependencyProvider[]" singular="dependencyProvider"/>
     </transfer>
 
     <transfer name="Plugin">

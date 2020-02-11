@@ -20,4 +20,4 @@ use Orm\Zed\Stock\Persistence\Base\SpyStockQuery as BaseSpyStockQuery;
  */
 abstract class AbstractSpyStockQuery extends BaseSpyStockQuery
 {
-} // SpyStockQuery
+}

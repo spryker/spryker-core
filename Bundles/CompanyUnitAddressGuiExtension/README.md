@@ -1,6 +1,6 @@
 # CompanyUnitAddressGuiExtension Module
-[![Build Status](https://travis-ci.org/spryker/CompanyUnitAddressGuiExtension.svg)](https://travis-ci.org/spryker/CompanyUnitAddressGuiExtension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CompanyUnitAddressGuiExtension/badge.svg)](https://coveralls.io/github/spryker/CompanyUnitAddressGuiExtension)
+[![Build Status](https://travis-ci.org/spryker/company-unit-address-gui-extension.svg)](https://travis-ci.org/spryker/company-unit-address-gui-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Company unit address gui extension module provides an interfaces of plugins to extend CompanyUnitAddressGui module from the other modules.
 

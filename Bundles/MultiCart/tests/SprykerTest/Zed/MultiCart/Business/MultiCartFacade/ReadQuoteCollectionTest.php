@@ -18,6 +18,7 @@ use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group MultiCart
@@ -78,7 +79,7 @@ class ReadQuoteCollectionTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -89,7 +90,7 @@ class ReadQuoteCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testReadCartsCollectionFromDatabaseByCustomer()
+    public function testReadCartsCollectionFromDatabaseByCustomer(): void
     {
         $this->initWithResult();
         $criteriaTransfer = new QuoteCriteriaFilterTransfer();
@@ -105,7 +106,7 @@ class ReadQuoteCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testReadEmptyCartsCollectionFromDatabaseByCustomer()
+    public function testReadEmptyCartsCollectionFromDatabaseByCustomer(): void
     {
         $this->initWithoutResult();
         $criteriaTransfer = new QuoteCriteriaFilterTransfer();
@@ -119,9 +120,9 @@ class ReadQuoteCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge
      */
-    protected function getQuoteFacadeMock()
+    protected function getQuoteFacadeMock(): MultiCartToQuoteFacadeBridge
     {
         $quoteCollectionTransfer = $this->getQuotesCollectionTransfer();
         $mock = $this
@@ -133,9 +134,9 @@ class ReadQuoteCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge
      */
-    protected function getEmptyQuoteFacadeMock()
+    protected function getEmptyQuoteFacadeMock(): MultiCartToQuoteFacadeBridge
     {
         $quoteCollectionTransfer = new QuoteCollectionTransfer();
         $mock = $this
@@ -200,7 +201,7 @@ class ReadQuoteCollectionTest extends Unit
     /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
-    protected function createCustomer()
+    protected function createCustomer(): SpyCustomer
     {
         $customerEntity = SpyCustomerQuery::create()->findOneByCustomerReference(static::CUSTOMER_DATA['customer_reference']);
         if ($customerEntity) {

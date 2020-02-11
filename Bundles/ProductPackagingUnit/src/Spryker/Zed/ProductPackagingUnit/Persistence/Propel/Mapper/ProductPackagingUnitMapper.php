@@ -8,12 +8,11 @@
 namespace Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -30,15 +29,11 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
         SpyProductPackagingUnit $productPackagingUnitEntity,
         ProductPackagingUnitTransfer $productPackagingUnitTransfer
     ): ProductPackagingUnitTransfer {
-        $productPackagingUnitAmountEntity = $productPackagingUnitEntity->getSpyProductPackagingUnitAmounts()->getFirst();
-
         $productPackagingUnitTransfer->fromArray($productPackagingUnitEntity->toArray(), true);
 
-        if ($productPackagingUnitAmountEntity) {
-            $productPackagingUnitTransfer->setProductPackagingUnitAmount(
-                (new ProductPackagingUnitAmountTransfer())->fromArray($productPackagingUnitAmountEntity->toArray(), true)
-            );
-        }
+        $productPackagingUnitTransfer->setProductPackagingUnitAmount(
+            (new ProductPackagingUnitAmountTransfer())->fromArray($productPackagingUnitEntity->toArray(), true)
+        );
 
         $productPackagingUnitTransfer->setProductPackagingUnitType(
             $this->mapProductPackagingUnitTypeTransfer(
@@ -66,24 +61,6 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct $productPackagingLeadProductEntity
-     * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
-     */
-    public function mapProductPackagingLeadProductTransfer(
-        SpyProductPackagingLeadProduct $productPackagingLeadProductEntity,
-        ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
-    ): ProductPackagingLeadProductTransfer {
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->fromArray($productPackagingLeadProductEntity->getSpyProduct()->toArray(), true);
-        $productPackagingLeadProductTransfer->setProduct($productConcreteTransfer);
-        $productPackagingLeadProductTransfer->setIdProductAbstract($productPackagingLeadProductEntity->getFkProductAbstract());
-
-        return $productPackagingLeadProductTransfer;
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
      *
@@ -96,5 +73,18 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
         $spySalesOrderItemEntityTransfer->fromArray($salesOrderItemEntity->toArray(), true);
 
         return $spySalesOrderItemEntityTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapProductEntityToProductConcreteTransfer(
+        SpyProduct $productEntity,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): ProductConcreteTransfer {
+        return $productConcreteTransfer->fromArray($productEntity->toArray(), true);
     }
 }

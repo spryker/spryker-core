@@ -13,6 +13,7 @@ use Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel
@@ -25,7 +26,7 @@ class AbstractClassResolverTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -38,7 +39,7 @@ class AbstractClassResolverTest extends Unit
     /**
      * @return void
      */
-    public function testCanResolveWithExistingClass()
+    public function testCanResolveWithExistingClass(): void
     {
         $classExists = true;
         $abstractClassResolverMock = $this->getAbstractClassResolverMock($classExists);
@@ -50,7 +51,7 @@ class AbstractClassResolverTest extends Unit
     /**
      * @return void
      */
-    public function testCanResolveNotExistingClass()
+    public function testCanResolveNotExistingClass(): void
     {
         $classExists = false;
         $abstractClassResolverMock = $this->getAbstractClassResolverMock($classExists);
@@ -64,7 +65,7 @@ class AbstractClassResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver
      */
-    private function getAbstractClassResolverMock($classExists)
+    private function getAbstractClassResolverMock(bool $classExists): AbstractClassResolver
     {
         $abstractClassResolverMock = $this->getMockForAbstractClass(AbstractClassResolver::class, [], '', true, true, true, ['classExists']);
         $abstractClassResolverMock->method('classExists')->willReturn($classExists);

@@ -12,6 +12,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilText
@@ -25,7 +26,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testUrlConstruct()
+    public function testUrlConstruct(): void
     {
         $url = new Url(['path' => '/foo/bar']);
 
@@ -35,7 +36,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testToString()
+    public function testToString(): void
     {
         $url = new Url(['path' => '/foo/bar']);
 
@@ -45,7 +46,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $url = new Url(['path' => '/foo/bar', 'query' => ['x' => 'y'], 'fragment' => 'z']);
 
@@ -66,7 +67,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testBuild()
+    public function testBuild(): void
     {
         $url = new Url(['path' => '/foo/bar', 'query' => ['x' => 'y'], 'fragment' => 'z']);
 
@@ -76,7 +77,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testBuildWithQueryAsString()
+    public function testBuildWithQueryAsString(): void
     {
         $url = new Url(['path' => '/foo/bar', 'query' => 'ö=ä', 'fragment' => 'z']);
 
@@ -86,7 +87,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testBuildWithNestedQuery()
+    public function testBuildWithNestedQuery(): void
     {
         $url = new Url([
             'path' => '/foo/bar',
@@ -107,7 +108,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testBuildEscaped()
+    public function testBuildEscaped(): void
     {
         $url = new Url(['path' => '/foo/bar', 'query' => ['x' => 'y', 'ö' => 'ä'], 'fragment' => 'z']);
 
@@ -117,7 +118,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testParse()
+    public function testParse(): void
     {
         $url = Url::parse('/foo/bar?q=a#z');
 
@@ -127,7 +128,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testGetPathSegments()
+    public function testGetPathSegments(): void
     {
         $url = new Url(['path' => '/foo/bar/baz', 'query' => 'q=a', 'fragment' => 'x']);
         $segments = $url->getPathSegments();
@@ -137,7 +138,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testNormalizePath()
+    public function testNormalizePath(): void
     {
         $url = new Url(['path' => '/foo/bar/baz//abc/', 'query' => ['x' => 'y'], 'fragment' => 'z']);
         $path = $url->normalizePath()->build();
@@ -147,7 +148,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testSetPathAsString()
+    public function testSetPathAsString(): void
     {
         $url = new Url(['path' => '/foo/bar/baz', 'query' => 'x=y', 'fragment' => 'z']);
         $url->setPath('/e/f');
@@ -157,7 +158,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testSetPathAsArray()
+    public function testSetPathAsArray(): void
     {
         $url = new Url(['path' => '/foo/bar/baz', 'query' => 'x=y', 'fragment' => 'z']);
         $url->setPath(['e', 'f']);
@@ -167,7 +168,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testAddPathAsString()
+    public function testAddPathAsString(): void
     {
         $url = new Url(['path' => '/foo/bar/baz', 'query' => 'x=y', 'fragment' => 'z']);
         $url->addPath('/e/f/');
@@ -178,7 +179,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testAddPathAsArray()
+    public function testAddPathAsArray(): void
     {
         $url = new Url(['path' => '/foo/bar/baz', 'query' => 'x=y', 'fragment' => 'z']);
         $url->addPath(['e', 'f']);
@@ -189,7 +190,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testSetQuery()
+    public function testSetQuery(): void
     {
         $url = new Url(['path' => '/foo/bar/baz', 'query' => 'x=y', 'fragment' => 'z']);
         $url->addQuery('c', 'd');
@@ -200,7 +201,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $url = new Url();
         $this->assertSame('/', $url->build(), 'Empty URL object must return homepage');
@@ -209,7 +210,7 @@ class UrlTest extends Unit
     /**
      * @return void
      */
-    public function testFull()
+    public function testFull(): void
     {
         $url = new Url();
         $url->addQuery('x', 'y');

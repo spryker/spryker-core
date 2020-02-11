@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use `\Spryker\Zed\Acl\Communication\Plugin\EventDispatcher\AccessControlEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  * @method \Spryker\Zed\Acl\AclConfig getConfig()

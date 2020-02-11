@@ -23,6 +23,7 @@ use Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group MerchantRelationshipSalesOrderThresholdDataImport

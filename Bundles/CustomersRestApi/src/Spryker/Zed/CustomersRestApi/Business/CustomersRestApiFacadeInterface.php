@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\CustomersRestApi\Business;
 
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -26,7 +27,8 @@ interface CustomersRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Maps rest request billing and shipping addresses information to quote.
+     * - Maps rest request billing address information to quote.
+     * - Maps rest request shipping address information to quote level (BC) and item level shipping addresses.
      *
      * @api
      *

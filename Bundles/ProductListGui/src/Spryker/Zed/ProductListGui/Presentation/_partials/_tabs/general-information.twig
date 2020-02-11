@@ -1,7 +1,3 @@
 {{ form_row(productListForm.idProductList) }}
 {{ form_row(productListForm.title) }}
 {{ form_row(productListForm.type) }}
-{{ form_row(aggregateForm.ownerType) }}
-{% if productListForm.fkMerchantRelationship is defined %}
-    {{ form_row(productListForm.fkMerchantRelationship) }}
-{% endif %}

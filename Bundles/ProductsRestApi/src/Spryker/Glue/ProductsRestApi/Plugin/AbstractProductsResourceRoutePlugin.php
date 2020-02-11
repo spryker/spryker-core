@@ -19,7 +19,7 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 class AbstractProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class AbstractProductsResourceRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class AbstractProductsResourceRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class AbstractProductsResourceRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

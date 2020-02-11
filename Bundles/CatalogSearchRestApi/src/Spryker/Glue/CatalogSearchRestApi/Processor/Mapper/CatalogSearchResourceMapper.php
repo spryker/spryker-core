@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -111,6 +112,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
                 $valueFacet = (new RestFacetSearchResultTransfer())->fromArray($facet->toArray(), true);
                 $valueFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfig()));
                 $restSearchAttributesTransfer->addValueFacet($valueFacet);
+
                 continue;
             }
             if ($facet instanceof RangeSearchResultTransfer) {

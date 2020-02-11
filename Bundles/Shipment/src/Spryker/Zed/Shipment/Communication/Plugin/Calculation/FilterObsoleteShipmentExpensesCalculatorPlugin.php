@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class FilterObsoleteShipmentExpensesCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Filters obsolete shipment expenses from Quote if shipment method is not set.
      *
      * @api

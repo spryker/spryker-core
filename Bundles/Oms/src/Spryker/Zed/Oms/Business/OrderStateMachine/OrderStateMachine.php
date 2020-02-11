@@ -31,6 +31,8 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     public const BY_ITEM = 'byItem';
     public const BY_ORDER = 'byOrder';
     public const MAX_EVENT_REPEATS = 10;
@@ -38,8 +40,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @deprecated Not in use anymore, will be removed in the next major.
      */
     public const MAX_ON_ENTER = 50;
-
-    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var array
@@ -369,6 +369,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     $log->setIsError(true);
                     $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                     $log->saveAll();
+
                     throw $e;
                 }
 
@@ -482,6 +483,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         if ($command instanceof CommandByItemInterface) {
             return self::BY_ITEM;
         }
+
         throw new LogicException('Unknown type of command: ' . get_class($command));
     }
 
@@ -517,6 +519,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
             if (!$event->hasCommand()) {
                 $processedOrderItems[] = $orderItemEntity;
+
                 continue;
             }
 
@@ -566,10 +569,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateStateByEvent($eventId, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
-        if ($sourceStateBuffer === null) {
-            $sourceStateBuffer = [];
-        }
-
         $targetStateMap = [];
         foreach ($orderItems as $i => $orderItem) {
             $stateId = $orderItem->getState()->getName();
@@ -607,9 +606,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateStateByTransition($stateToTransitionsMap, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
-        if ($sourceStateBuffer === null) {
-            $sourceStateBuffer = [];
-        }
         $targetStateMap = [];
         foreach ($orderItems as $i => $orderItem) {
             $stateId = $orderItem->getState()->getName();
@@ -694,7 +690,8 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $this->reservation->updateReservationQuantity($orderItem->getSku());
             }
 
-            if ($sourceState !== $targetState->getName()
+            if (
+                $sourceState !== $targetState->getName()
                 && $targetState->hasOnEnterEvent()
             ) {
                 $event = $targetState->getOnEnterEvent();

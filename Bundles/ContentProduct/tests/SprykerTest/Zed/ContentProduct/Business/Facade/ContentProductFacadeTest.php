@@ -14,6 +14,7 @@ use Spryker\Zed\ContentProduct\ContentProductConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ContentProduct

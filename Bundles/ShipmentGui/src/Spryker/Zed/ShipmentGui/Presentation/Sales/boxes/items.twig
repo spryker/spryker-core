@@ -1,0 +1,7 @@
+{{ render(controller('/shipment-gui/sales/items', {
+    orderTransfer: order,
+    events: events,
+    eventsGroupedByShipment: eventsGroupedByShipment,
+    eventsGroupedByItem: eventsGroupedByItem,
+    changeStatusRedirectUrl: changeStatusRedirectUrl
+})) }}

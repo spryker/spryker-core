@@ -14,6 +14,7 @@ use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cart
@@ -29,7 +30,7 @@ class SkuGroupKeyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExpandItemMustSetGroupKeyToSkuOfGivenProductWhenNoGroupKeyIsSet()
+    public function testExpandItemMustSetGroupKeyToSkuOfGivenProductWhenNoGroupKeyIsSet(): void
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::SKU);
@@ -46,7 +47,7 @@ class SkuGroupKeyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExpandItemMustNotChangeGroupKeyWhenGroupKeyIsSet()
+    public function testExpandItemMustNotChangeGroupKeyWhenGroupKeyIsSet(): void
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::SKU);

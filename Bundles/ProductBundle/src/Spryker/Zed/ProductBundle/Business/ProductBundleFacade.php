@@ -27,7 +27,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,7 +43,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,7 +91,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,7 +107,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -123,7 +123,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -139,7 +139,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -158,7 +158,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -174,7 +174,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +190,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +206,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -222,7 +222,23 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        return $this->getFactory()
+            ->createProductBundleStatusUpdater()
+            ->deactivateRelatedProductBundles($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -241,7 +257,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -258,7 +274,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -274,7 +290,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -290,7 +306,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -305,7 +321,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -321,7 +337,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -337,7 +353,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -353,7 +369,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -369,7 +385,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -385,7 +401,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -403,7 +419,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -420,7 +436,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -438,7 +454,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -449,5 +465,38 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     public function extractQuoteItems(QuoteTransfer $quoteTransfer): ItemCollectionTransfer
     {
         return $this->getFactory()->createQuoteItemsGrouper()->extractQuoteItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderProductBundlesWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createProductOptionExpander()
+            ->expandOrderProductBundlesWithProductOptions($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductBundleExpander()
+            ->expandUniqueOrderItemsWithProductBundles($itemTransfers, $orderTransfer);
     }
 }

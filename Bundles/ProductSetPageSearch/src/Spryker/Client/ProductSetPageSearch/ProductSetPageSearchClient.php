@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductSetPageSearchClient extends AbstractClient implements ProductSetPageSearchClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

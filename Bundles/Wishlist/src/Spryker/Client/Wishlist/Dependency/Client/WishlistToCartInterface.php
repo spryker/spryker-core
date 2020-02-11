@@ -22,10 +22,11 @@ interface WishlistToCartInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers);
+    public function addItems(array $itemTransfers, array $params = []);
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

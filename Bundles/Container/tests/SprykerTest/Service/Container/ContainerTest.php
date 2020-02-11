@@ -12,9 +12,12 @@ use Spryker\Service\Container\Container;
 use Spryker\Service\Container\Exception\ContainerException;
 use Spryker\Service\Container\Exception\FrozenServiceException;
 use Spryker\Service\Container\Exception\NotFoundException;
+use stdClass;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Container
@@ -106,7 +109,37 @@ class ContainerTest extends Unit
         //Arrange
         $container = new Container();
         $container->set(static::SERVICE, function () {
-            return new class {
+            return new class
+            {
+            };
+        });
+
+        //Act
+        $service = $container->get(static::SERVICE);
+        $service2 = $container->get(static::SERVICE);
+
+        //Assert
+        $this->assertSame($service, $service2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnsSameServiceInstanceOnConsecutiveCallsWithInvokableClass(): void
+    {
+        //Arrange
+        $container = new Container();
+        $container->set(static::SERVICE, function () {
+            return new class
+            {
+                /**
+                 * @param \Symfony\Component\HttpKernel\Event\RequestEvent $requestEvent
+                 *
+                 * @return void
+                 */
+                public function __invoke(RequestEvent $requestEvent): void
+                {
+                }
             };
         });
 
@@ -126,7 +159,8 @@ class ContainerTest extends Unit
         //Arrange
         $container = new Container();
         $container->set(static::SERVICE, $container->factory(function () {
-            return new class {
+            return new class
+            {
             };
         }));
 
@@ -164,7 +198,7 @@ class ContainerTest extends Unit
     public function testHasReturnsTrueWhenServiceWasAdded(): void
     {
         $container = new Container();
-        $container->set(static::SERVICE, function () {
+        $container->set(static::SERVICE, function (): void {
         });
 
         $this->assertTrue($container->has(static::SERVICE));
@@ -177,7 +211,7 @@ class ContainerTest extends Unit
     {
         //Arrange
         $container = new Container();
-        $container->set(static::SERVICE, function () {
+        $container->set(static::SERVICE, function (): void {
         });
 
         //Act
@@ -206,7 +240,7 @@ class ContainerTest extends Unit
         $this->expectException(ContainerException::class);
 
         $container = new Container();
-        $container->factory('');
+        $container->factory(new stdClass());
     }
 
     /**
@@ -217,7 +251,7 @@ class ContainerTest extends Unit
         $this->expectException(ContainerException::class);
 
         $container = new Container();
-        $container->protect('');
+        $container->protect(new stdClass());
     }
 
     /**
@@ -265,7 +299,7 @@ class ContainerTest extends Unit
         $container->get(static::SERVICE);
 
         $this->expectException(FrozenServiceException::class);
-        $container->extend(static::SERVICE, function () {
+        $container->extend(static::SERVICE, function (): void {
         });
     }
 
@@ -278,7 +312,7 @@ class ContainerTest extends Unit
         $container->set(static::SERVICE, 'not an object and not invokable');
 
         $this->expectException(ContainerException::class);
-        $container->extend(static::SERVICE, function () {
+        $container->extend(static::SERVICE, function (): void {
         });
     }
 
@@ -288,11 +322,11 @@ class ContainerTest extends Unit
     public function testExtendThrowsExceptionWhenTheServiceToBeExtendedIsProtected(): void
     {
         $container = new Container();
-        $container->set(static::SERVICE, $container->protect(function () {
+        $container->set(static::SERVICE, $container->protect(function (): void {
         }));
 
         $this->expectException(ContainerException::class);
-        $container->extend(static::SERVICE, function () {
+        $container->extend(static::SERVICE, function (): void {
         });
     }
 

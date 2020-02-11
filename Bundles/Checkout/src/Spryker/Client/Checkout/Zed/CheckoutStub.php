@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Checkout\Zed;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
@@ -26,6 +27,8 @@ class CheckoutStub implements CheckoutStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Checkout\Communication\Controller\GatewayController::placeOrderAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
@@ -34,6 +37,21 @@ class CheckoutStub implements CheckoutStubInterface
     {
         /** @var \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer */
         $checkoutResponseTransfer = $this->zedStub->call('/checkout/gateway/place-order', $quoteTransfer);
+
+        return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\Checkout\Communication\Controller\GatewayController::isPlaceableOrderAction()
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function isPlaceableOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer */
+        $checkoutResponseTransfer = $this->zedStub->call('/checkout/gateway/is-placeable-order', $quoteTransfer);
 
         return $checkoutResponseTransfer;
     }

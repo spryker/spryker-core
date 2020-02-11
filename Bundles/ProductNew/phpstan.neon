@@ -1,3 +1,4 @@
 parameters:
     ignoreErrors:
     - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
+    - '#Parameter \#2 \$value of method Elastica\\Query\\Term::setTerm\(\) expects array|string, int given.#'

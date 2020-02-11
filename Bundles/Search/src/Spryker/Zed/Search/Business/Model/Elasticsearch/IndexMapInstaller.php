@@ -13,6 +13,9 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInt
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
+/**
+ * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\IndexMapInstaller` instead.
+ */
 class IndexMapInstaller implements SearchInstallerInterface
 {
     /**

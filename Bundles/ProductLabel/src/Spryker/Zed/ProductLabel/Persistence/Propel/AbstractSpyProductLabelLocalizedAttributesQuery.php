@@ -20,4 +20,4 @@ use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabelLocalizedAttributesQuer
  */
 abstract class AbstractSpyProductLabelLocalizedAttributesQuery extends SpyProductLabelLocalizedAttributesQuery
 {
-} // SpyProductLabelLocalizedAttributesQuery
+}

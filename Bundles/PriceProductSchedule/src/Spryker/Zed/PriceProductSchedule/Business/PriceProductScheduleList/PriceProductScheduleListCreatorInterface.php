@@ -20,4 +20,9 @@ interface PriceProductScheduleListCreatorInterface
     public function createPriceProductScheduleList(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
+     */
+    public function createDefaultPriceProductScheduleList(): PriceProductScheduleListTransfer;
 }

@@ -12,6 +12,7 @@ use Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development

@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class OauthClientInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Populates database with oauth client data.
      *
      * @api

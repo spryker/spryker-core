@@ -42,7 +42,7 @@ class DataImporterCollection implements
     /**
      * @var \Spryker\Zed\DataImport\DataImportConfig|null
      */
-    protected $config = null;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[] $beforeImportHooks
@@ -69,7 +69,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[] $dataImporterPluginCollection
+     * @param (\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array)[] $dataImporterPluginCollection
      *
      * @return $this
      */
@@ -127,7 +127,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
@@ -171,7 +171,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string
      */
@@ -227,7 +227,8 @@ class DataImporterCollection implements
         }
 
         foreach ($dataImporters as $dataImporter) {
-            if ($this->config->getFullImportTypes()
+            if (
+                $this->config->getFullImportTypes()
                 && !in_array($dataImporter->getImportType(), $this->config->getFullImportTypes(), true)
             ) {
                 continue;
@@ -280,7 +281,8 @@ class DataImporterCollection implements
      */
     protected function getDataImportersByImportGroup(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): array
     {
-        if (!$dataImporterConfigurationTransfer
+        if (
+            !$dataImporterConfigurationTransfer
             || $dataImporterConfigurationTransfer->getImportGroup() === DataImportConfig::IMPORT_GROUP_FULL
         ) {
             return $this->dataImporter;

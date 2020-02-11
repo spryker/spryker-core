@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

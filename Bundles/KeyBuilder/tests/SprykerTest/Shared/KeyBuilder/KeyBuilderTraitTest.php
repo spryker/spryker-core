@@ -13,6 +13,7 @@ use SprykerTest\Shared\KeyBuilder\Fixtures\KeyBuilder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group KeyBuilder
@@ -29,7 +30,7 @@ class KeyBuilderTraitTest extends Unit
      *
      * @return void
      */
-    public function testGenerateKeyBuildExpectedStrings($data, $expectedGeneratedKey)
+    public function testGenerateKeyBuildExpectedStrings($data, string $expectedGeneratedKey): void
     {
         $keyBuilder = new KeyBuilder();
         $generatedKey = $keyBuilder->generateKey($data, 'de_DE');
@@ -40,7 +41,7 @@ class KeyBuilderTraitTest extends Unit
     /**
      * @return array
      */
-    public function generateKey()
+    public function generateKey(): array
     {
         $storeName = strtolower(Store::getInstance()->getStoreName());
 

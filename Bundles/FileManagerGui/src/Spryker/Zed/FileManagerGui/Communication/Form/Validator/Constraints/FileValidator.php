@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints;
 
 use Generated\Shared\Transfer\FileUploadTransfer;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Spryker\Zed\FileManagerGui\Communication\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator as SymfonyFileValidator;
 
@@ -28,7 +28,7 @@ class FileValidator extends SymfonyFileValidator
     /**
      * @param \Generated\Shared\Transfer\FileUploadTransfer|null $fileUploadTransfer
      *
-     * @return \Symfony\Component\HttpFoundation\File\UploadedFile|null
+     * @return \Spryker\Zed\FileManagerGui\Communication\File\UploadedFile|null
      */
     protected function createSymfonyUploadedFileFromTransfer(?FileUploadTransfer $fileUploadTransfer = null)
     {

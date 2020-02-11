@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,7 +81,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -93,7 +93,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +105,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +137,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -152,7 +152,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -172,7 +172,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -192,7 +192,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -204,7 +204,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -223,7 +223,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -241,7 +241,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -258,7 +258,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

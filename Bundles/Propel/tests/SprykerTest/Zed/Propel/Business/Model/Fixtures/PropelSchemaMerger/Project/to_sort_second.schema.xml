@@ -11,7 +11,7 @@
         <index name="index-table_a-fk_column">
             <index-column name="fk_column"/>
         </index>
-        <column name="column_b" type="INTEGER" />
+        <column name="column_b" type="INTEGER"/>
     </table>
 
 </database>

@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+        - '#Parameter \#1 \$limit of method DataImporterReaderConfigurationTransfer::setLimit\(\) expects int|null, array<string>|bool|string|null given.#'

@@ -19,7 +19,8 @@ use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class ShoppingListSharer implements ShoppingListSharerInterface
 {
-    use PermissionAwareTrait, TransactionTrait;
+    use PermissionAwareTrait;
+    use TransactionTrait;
 
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
     protected const CANNOT_RESHARE_SHOPPING_LIST = 'customer.account.shopping_list.share.share_shopping_list_fail';
@@ -61,10 +62,11 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             return $this->createErrorShareResponse(static::CANNOT_UPDATE_SHOPPING_LIST);
         }
 
-        if ($this->shoppingListRepository->isShoppingListSharedWithCompanyBusinessUnit(
-            $shoppingListTransfer->getIdShoppingList(),
-            $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()
-        )
+        if (
+            $this->shoppingListRepository->isShoppingListSharedWithCompanyBusinessUnit(
+                $shoppingListTransfer->getIdShoppingList(),
+                $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()
+            )
         ) {
             return $this->createErrorShareResponse(static::CANNOT_RESHARE_SHOPPING_LIST);
         }
@@ -94,10 +96,11 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             return $this->createErrorShareResponse(static::CANNOT_UPDATE_SHOPPING_LIST);
         }
 
-        if ($this->shoppingListRepository->isShoppingListSharedWithCompanyUser(
-            $shoppingListTransfer->getIdShoppingList(),
-            $shoppingListShareRequestTransfer->getIdCompanyUser()
-        )
+        if (
+            $this->shoppingListRepository->isShoppingListSharedWithCompanyUser(
+                $shoppingListTransfer->getIdShoppingList(),
+                $shoppingListShareRequestTransfer->getIdCompanyUser()
+            )
         ) {
             return $this->createErrorShareResponse(static::CANNOT_RESHARE_SHOPPING_LIST);
         }
@@ -218,7 +221,8 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             return false;
         }
 
-        if ($isExists && $sharedShoppingListCompanyUserIds[$shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] ===
+        if (
+            $isExists && $sharedShoppingListCompanyUserIds[$shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] ===
             $shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()
         ) {
             return false;
@@ -270,7 +274,8 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             return false;
         }
 
-        if ($isExists && $sharedShoppingListCompanyBusinessUnitIds[$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] ===
+        if (
+            $isExists && $sharedShoppingListCompanyBusinessUnitIds[$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] ===
             $shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()
         ) {
             return false;

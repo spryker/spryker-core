@@ -22,7 +22,7 @@ class RestorePasswordMailTypePlugin extends AbstractPlugin implements MailTypePl
     public const MAIL_TYPE = 'restore password';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class RestorePasswordMailTypePlugin extends AbstractPlugin implements MailTypePl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

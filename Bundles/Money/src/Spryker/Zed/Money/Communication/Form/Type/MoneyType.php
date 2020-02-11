@@ -169,9 +169,15 @@ class MoneyType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

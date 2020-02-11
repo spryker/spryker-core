@@ -12,6 +12,7 @@ use SprykerTest\Zed\CmsBlockGui\PageObject\CmsBlockGuiListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsBlockGui
@@ -27,11 +28,11 @@ class CmsBlockGuiEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsBlockGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsBlockGuiCommunicationTester $i): void
     {
         $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->listDataTable(CmsBlockGuiListPage::URL . '/table');
         $i->clickDataTableButton('Edit Block');
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / Edit CMS Block');
+        $i->seeBreadcrumbNavigation('Content Management / Blocks / Edit CMS Block');
     }
 }

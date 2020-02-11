@@ -27,4 +27,11 @@ interface CurrencyToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
     public function findStoreByName(string $name): ?StoreTransfer;
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreById($idStore);
 }

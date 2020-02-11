@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -28,7 +29,7 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetLocatorShouldReturnInstanceOfLocator()
+    public function testGetLocatorShouldReturnInstanceOfLocator(): void
     {
         $container = new Container();
 
@@ -38,7 +39,7 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
-    public function testContainerShouldHaveAccessToGlobalProvidedDependency()
+    public function testContainerShouldHaveAccessToGlobalProvidedDependency(): void
     {
         $containerGlobals = new ContainerGlobals();
         $containerGlobals[self::TEST_KEY] = self::TEST_VALUE;

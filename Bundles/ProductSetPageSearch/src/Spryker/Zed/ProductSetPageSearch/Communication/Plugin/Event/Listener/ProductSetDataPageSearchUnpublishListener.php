@@ -23,7 +23,7 @@ class ProductSetDataPageSearchUnpublishListener extends AbstractPlugin implement
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Handles product sets unpublish event.
      *
      * @api

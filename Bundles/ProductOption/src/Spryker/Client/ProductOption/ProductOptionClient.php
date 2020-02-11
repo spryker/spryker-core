@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductOptionClient extends AbstractClient implements ProductOptionClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

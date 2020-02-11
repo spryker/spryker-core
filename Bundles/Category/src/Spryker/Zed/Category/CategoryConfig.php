@@ -31,7 +31,7 @@ class CategoryConfig extends AbstractBundleConfig
     protected const REDIRECT_URL_CATEGORY_GUI = '/category-gui/list';
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTemplateList()
     {

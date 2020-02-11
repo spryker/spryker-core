@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use Codeception\Stub;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -27,6 +28,8 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use ReflectionClass;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
@@ -34,13 +37,12 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
-use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\PriceProductDefaultProductPagePublishListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategoryNodeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategorySearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetProductImageSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageLocalizedAttributesSearchListener;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceProductStoreSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceTypeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractListener;
@@ -54,14 +56,14 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer;
+use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
-use SprykerTest\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactoryMock;
-use SprykerTest\Zed\ProductPageSearch\ProductPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductPageSearch
@@ -110,7 +112,7 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -144,6 +146,8 @@ class ProductPageSearchListenerTest extends Unit
         ];
 
         $this->priceProductTransfer = $this->tester->havePriceProduct($priceProductOverride);
+        $this->tester->mockConfigMethod('isSendingToQueue', false);
+        $this->mockSearchFacade();
     }
 
     /**
@@ -167,7 +171,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageProductAbstractListener = new ProductPageProductAbstractListener();
-        $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductAbstractListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
@@ -191,7 +195,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageProductAbstractPublishListener = new ProductPageProductAbstractPublishListener();
-        $productPageProductAbstractPublishListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductAbstractPublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
@@ -210,12 +214,17 @@ class ProductPageSearchListenerTest extends Unit
     public function testProductPageProductAbstractUnpublishListener(): void
     {
         // Prepare
+        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
         $idProductAbstract = $this->productAbstractTransfer->getIdProductAbstract();
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($idProductAbstract)->delete();
 
         // Act
         $productPageProductAbstractListener = new ProductPageProductAbstractPublishListener();
-        $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductAbstractListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($idProductAbstract),
@@ -224,7 +233,7 @@ class ProductPageSearchListenerTest extends Unit
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
         $productPageProductAbstractListener = new ProductPageProductAbstractUnpublishListener();
-        $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductAbstractListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($idProductAbstract),
@@ -251,7 +260,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageCategoryNodeSearchListener = new ProductPageCategoryNodeSearchListener();
-        $productPageCategoryNodeSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageCategoryNodeSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -280,7 +289,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageCategorySearchListener = new ProductPageCategorySearchListener();
-        $productPageCategorySearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageCategorySearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())
@@ -311,7 +320,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageImageSetProductImageSearchListener = new ProductPageImageSetProductImageSearchListener();
-        $productPageImageSetProductImageSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageImageSetProductImageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [];
 
@@ -337,7 +346,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageImageSetSearchListener = new ProductPageImageSetSearchListener();
-        $productPageImageSetSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageImageSetSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -363,7 +372,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageLocalizedAttributesSearchListener = new ProductPageLocalizedAttributesSearchListener();
-        $productPageLocalizedAttributesSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageLocalizedAttributesSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -381,7 +390,7 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductPagePriceProductStoreSearchListenerStoreData(): void
+    public function testProductPagePriceProductDefaultSearchListenerStoreData(): void
     {
         // Prepare
         $priceProductIds = [
@@ -394,15 +403,15 @@ class ProductPageSearchListenerTest extends Unit
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
         // Act
-        $productPagePriceProductStoreSearchListener = new ProductPagePriceProductStoreSearchListener();
-        $productPagePriceProductStoreSearchListener->setFacade($this->getProductPageSearchFacade());
+        $priceProductDefaultProductPagePublishListener = new PriceProductDefaultProductPagePublishListener();
+        $priceProductDefaultProductPagePublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT => $this->priceProductTransfer->getIdPriceProduct(),
             ]),
         ];
-        $productPagePriceProductStoreSearchListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE);
+        $priceProductDefaultProductPagePublishListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE);
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
@@ -420,7 +429,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPagePriceSearchListener = new ProductPagePriceSearchListener();
-        $productPagePriceSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPagePriceSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -452,7 +461,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPagePriceTypeSearchListener = new ProductPagePriceTypeSearchListener();
-        $productPagePriceTypeSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPagePriceTypeSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->priceProductTransfer->getFkPriceType()),
@@ -475,7 +484,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageProductCategorySearchListener = new ProductPageProductCategorySearchListener();
-        $productPageProductCategorySearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductCategorySearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -507,7 +516,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageProductConcreteLocalizedAttributesSearchListener = new ProductPageProductConcreteLocalizedAttributesSearchListener();
-        $productPageProductConcreteLocalizedAttributesSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductConcreteLocalizedAttributesSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -532,7 +541,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageProductConcreteSearchListener = new ProductPageProductConcreteSearchListener();
-        $productPageProductConcreteSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductConcreteSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -566,7 +575,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageProductImageSearchListener = new ProductPageProductImageSearchListener();
-        $productPageProductImageSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductImageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [];
 
@@ -592,7 +601,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Act
         $productPageUrlSearchListener = new ProductPageUrlSearchListener();
-        $productPageUrlSearchListener->setFacade($this->getProductPageSearchFacade());
+        $productPageUrlSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -608,22 +617,6 @@ class ProductPageSearchListenerTest extends Unit
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
         $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade
-     */
-    protected function getProductPageSearchFacade()
-    {
-        $productPageSearchToSearchBridgeMock = $this->getMockBuilder(ProductPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
-        $productPageSearchToSearchBridgeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);
-        $factory = new ProductPageSearchBusinessFactoryMock($productPageSearchToSearchBridgeMock);
-        $factory->setConfig(new ProductPageSearchConfigMock());
-
-        $facade = new ProductPageSearchFacade();
-        $facade->setFactory($factory);
-
-        return $facade;
     }
 
     /**
@@ -727,5 +720,20 @@ class ProductPageSearchListenerTest extends Unit
         $property = $reflectedClass->getProperty('categoryTree');
         $property->setAccessible(true);
         $property->setValue(null);
+    }
+
+    /**
+     * @return void
+     */
+    protected function mockSearchFacade(): void
+    {
+        $this->tester->setDependency(ProductPageSearchDependencyProvider::FACADE_SEARCH, Stub::make(
+            ProductPageSearchToSearchBridge::class,
+            [
+                'transformPageMapToDocumentByMapperName' => function () {
+                    return [];
+                },
+            ]
+        ));
     }
 }

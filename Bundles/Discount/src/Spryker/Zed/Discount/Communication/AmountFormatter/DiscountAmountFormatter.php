@@ -43,7 +43,7 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
 
         $formatterAmount = $this->formatAmount(
             $calculatorPlugin,
-            $discountConfiguratorTransfer->getDiscountCalculator()->getAmount()
+            (int)$discountConfiguratorTransfer->getDiscountCalculator()->getAmount()
         );
 
         $discountConfiguratorTransfer->getDiscountCalculator()->setAmount($formatterAmount);

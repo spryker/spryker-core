@@ -1,24 +1,25 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
+<transfers
+    xmlns="spryker:databuilder-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
 
     <transfer name="File">
-        <property name="fileName" type="string" dataBuilderRule="=fileName" />
+        <property name="fileName" dataBuilderRule="=fileName"/>
     </transfer>
 
     <transfer name="FileInfo">
-        <property name="fkFile" dataBuilderRule="1" />
-        <property name="type" dataBuilderRule="=text" />
-        <property name="size" dataBuilderRule="10" />
-        <property name="version" dataBuilderRule="=1" />
-        <property name="versionName" dataBuilderRule="=v1" />
-        <property name="storageName" dataBuilderRule="=file" />
-        <property name="storageFileName" dataBuilderRule="=file" />
-        <property name="extension" dataBuilderRule="=txt" />
-        <property name="createdAt" dataBuilderRule="=date('Y-m-d', '-1 year')" />
-        <property name="updatedAt" dataBuilderRule="=date('Y-m-d', '-1 year')" />
+        <property name="fkFile" dataBuilderRule="1"/>
+        <property name="type" dataBuilderRule="=text"/>
+        <property name="size" dataBuilderRule="10"/>
+        <property name="version" dataBuilderRule="=1"/>
+        <property name="versionName" dataBuilderRule="=v1"/>
+        <property name="storageName" dataBuilderRule="=file"/>
+        <property name="storageFileName" dataBuilderRule="=file"/>
+        <property name="extension" dataBuilderRule="=txt"/>
+        <property name="createdAt" dataBuilderRule="=date('Y-m-d', '-1 year')"/>
+        <property name="updatedAt" dataBuilderRule="=date('Y-m-d', '-1 year')"/>
     </transfer>
 
 </transfers>
-

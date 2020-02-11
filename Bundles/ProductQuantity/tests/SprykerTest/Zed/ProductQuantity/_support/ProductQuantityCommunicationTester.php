@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -38,7 +39,7 @@ class ProductQuantityCommunicationTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createEmptyCartChangeTransfer()
+    public function createEmptyCartChangeTransfer(): CartChangeTransfer
     {
         return (new CartChangeTransfer())
            ->setQuote(

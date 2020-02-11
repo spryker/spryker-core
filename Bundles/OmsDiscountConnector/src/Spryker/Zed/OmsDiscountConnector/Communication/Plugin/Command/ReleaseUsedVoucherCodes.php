@@ -22,7 +22,7 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
-     * @return array $returnArray
+     * @return array
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
@@ -40,14 +40,15 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
-     * @return array
+     * @return string[]
      */
     protected function getVoucherCodes(SpySalesOrder $orderEntity)
     {
         $voucherCodes = [];
         foreach ($orderEntity->getDiscounts() as $discountEntity) {
             foreach ($discountEntity->getDiscountCodes() as $salesDiscountCodesEntity) {
-                $voucherCodes[$salesDiscountCodesEntity->getCode()] = $salesDiscountCodesEntity->getCode();
+                $code = $salesDiscountCodesEntity->getCode();
+                $voucherCodes[$code] = $code;
             }
         }
 

@@ -20,7 +20,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginIn
 class PackagingUnitSplittableItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class PackagingUnitSplittableItemTransformerStrategyPlugin extends AbstractPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

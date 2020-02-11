@@ -213,7 +213,6 @@ class TaxAmountCalculator implements CalculatorInterface
      */
     protected function calculateTaxUnitAmountForProductOptions(ArrayObject $items, $priceMode)
     {
-        $lastProductOptionTransfer = null;
         foreach ($items as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $productOptionTransfer->setUnitTaxAmount(0);

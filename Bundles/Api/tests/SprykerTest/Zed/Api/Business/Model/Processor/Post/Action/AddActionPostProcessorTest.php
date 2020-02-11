@@ -16,6 +16,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Api
@@ -32,7 +33,7 @@ class AddActionPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -40,7 +41,7 @@ class AddActionPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageOne()
+    public function testProcessWithDefaultsPageOne(): void
     {
         $config = new ApiConfig();
         $processor = new AddActionPostProcessor($config);

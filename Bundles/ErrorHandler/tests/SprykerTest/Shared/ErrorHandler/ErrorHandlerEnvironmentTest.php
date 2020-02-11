@@ -12,6 +12,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group ErrorHandler
@@ -23,7 +24,7 @@ class ErrorHandlerEnvironmentTest extends Unit
     /**
      * @return void
      */
-    public function testInitializeShouldSetErrorHandler()
+    public function testInitializeShouldSetErrorHandler(): void
     {
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();

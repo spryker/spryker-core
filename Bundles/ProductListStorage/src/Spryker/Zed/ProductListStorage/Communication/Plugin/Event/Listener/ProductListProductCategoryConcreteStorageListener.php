@@ -23,7 +23,7 @@ class ProductListProductCategoryConcreteStorageListener extends AbstractPlugin i
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

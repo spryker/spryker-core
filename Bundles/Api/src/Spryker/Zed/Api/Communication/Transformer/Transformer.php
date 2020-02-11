@@ -74,7 +74,7 @@ class Transformer implements TransformerInterface
         $content = [];
         $content['code'] = $apiResponseTransfer->getCode();
         $content['message'] = $apiResponseTransfer->getMessage();
-        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_VALIDATION_ERRORS) {
+        if ((int)$apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_VALIDATION_ERRORS) {
             $content['errors'] = $apiResponseTransfer->getValidationErrors();
         }
 
@@ -110,6 +110,6 @@ class Transformer implements TransformerInterface
      */
     protected function isContentless(ApiResponseTransfer $apiResponseTransfer)
     {
-        return $apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getType() === ApiOptionsTransfer::class;
+        return (int)$apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getType() === ApiOptionsTransfer::class;
     }
 }

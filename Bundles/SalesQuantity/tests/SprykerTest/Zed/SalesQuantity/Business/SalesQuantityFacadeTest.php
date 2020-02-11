@@ -23,6 +23,7 @@ use Spryker\Zed\SalesQuantity\SalesQuantityConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesQuantity
@@ -55,7 +56,7 @@ class SalesQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -133,7 +134,7 @@ class SalesQuantityFacadeTest extends Unit
      *
      * @return void
      */
-    public function testIsItemQuantitySplittableReturnsTrueForItemsWithBundleItemIdentifier()
+    public function testIsItemQuantitySplittableReturnsTrueForItemsWithBundleItemIdentifier(): void
     {
         // Assign
         $threshold = 5;
@@ -158,7 +159,7 @@ class SalesQuantityFacadeTest extends Unit
      *
      * @return void
      */
-    public function testIsItemQuantitySplittableReturnsTrueForItemsWithRelatedBundleItemIdentifier()
+    public function testIsItemQuantitySplittableReturnsTrueForItemsWithRelatedBundleItemIdentifier(): void
     {
         // Assign
         $threshold = 5;
@@ -182,7 +183,7 @@ class SalesQuantityFacadeTest extends Unit
      *
      * @return void
      */
-    public function testIsItemQuantitySplittableReturnsFalseForNonSplittableItems()
+    public function testIsItemQuantitySplittableReturnsFalseForNonSplittableItems(): void
     {
         // Assign
         $threshold = null;
@@ -200,9 +201,9 @@ class SalesQuantityFacadeTest extends Unit
     }
 
     /**
-     * @see SalesQuantityConfig::findItemQuantityThreshold()
-     *
      * @dataProvider thresholds
+     *
+     * @see SalesQuantityConfig::findItemQuantityThreshold()
      *
      * @param bool $expectedResult
      * @param int $quantity
@@ -210,7 +211,7 @@ class SalesQuantityFacadeTest extends Unit
      *
      * @return void
      */
-    public function testIsItemQuantitySplittableRespectsThreshold($expectedResult, $quantity, $threshold)
+    public function testIsItemQuantitySplittableRespectsThreshold(bool $expectedResult, int $quantity, ?int $threshold): void
     {
         // Assign
         $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($threshold);
@@ -228,7 +229,7 @@ class SalesQuantityFacadeTest extends Unit
     /**
      * @return array
      */
-    public function thresholds()
+    public function thresholds(): array
     {
         return [
             [true,  5, null],
@@ -243,7 +244,7 @@ class SalesQuantityFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
-    protected function createDiscountableItemTransformerTransfer(DiscountableItemTransfer $discountableItemTransfer)
+    protected function createDiscountableItemTransformerTransfer(DiscountableItemTransfer $discountableItemTransfer): DiscountableItemTransformerTransfer
     {
         $discountTransfer = (new DiscountTransfer())->setIdDiscount(1);
         $totalDiscountAmount = 10;

@@ -1,26 +1,26 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\Testify\OpenApi3\Reference;
 
 use Spryker\Glue\Testify\OpenApi3\Collection\AbstractCollection;
-use Spryker\Glue\Testify\OpenApi3\Object\AbstractObject;
 use Spryker\Glue\Testify\OpenApi3\Primitive\Any;
 use Spryker\Glue\Testify\OpenApi3\SchemaFieldInterface;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject;
 
 class ReferenceResolver implements ReferenceResolverInterface
 {
     /**
-     * @var \Spryker\Glue\Testify\OpenApi3\Object\AbstractObject[]
+     * @var \Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject[]
      */
     protected $containers = [];
 
     /**
-     * @param \Spryker\Glue\Testify\OpenApi3\Object\AbstractObject $container
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject $container
      */
     public function __construct(AbstractObject $container)
     {

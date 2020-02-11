@@ -20,7 +20,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
@@ -29,6 +29,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment
@@ -43,9 +44,14 @@ class ShipmentTaxRateCalculationTest extends Unit
     public const DEFAULT_TAX_COUNTRY = 'DE';
 
     /**
+     * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate()
+    public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate(): void
     {
         $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(20, 'DE');
 
@@ -70,7 +76,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate()
+    public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate(): void
     {
         $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(20, 'DE');
 
@@ -98,7 +104,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */
-    protected function createShipmentMethodWithTaxSet($taxRate, $iso2Code)
+    protected function createShipmentMethodWithTaxSet(int $taxRate, string $iso2Code): SpyShipmentMethod
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
 
@@ -154,7 +160,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentFacade
      */
-    protected function createShipmentFacade()
+    protected function createShipmentFacade(): ShipmentFacade
     {
         return new ShipmentFacade();
     }
@@ -162,7 +168,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForDefaultCountry()
+    public function testCalculateTaxRateForDefaultCountry(): void
     {
         // Assign
         $quoteTransfer = $this->createQuoteTransfer();
@@ -178,7 +184,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForDifferentCountry()
+    public function testCalculateTaxRateForDifferentCountry(): void
     {
         // Assign
         $quoteTransfer = $this->createQuoteTransfer();
@@ -197,7 +203,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $countryTaxRate)
+    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, ?float $countryTaxRate): float
     {
         $productItemTaxRateCalculatorMock = $this->createShipmentTaxRateCalculator($countryTaxRate);
 
@@ -212,11 +218,12 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator
      */
-    protected function createShipmentTaxRateCalculator($countryTaxRate)
+    protected function createShipmentTaxRateCalculator(?float $countryTaxRate): ShipmentTaxRateCalculator
     {
         return new ShipmentTaxRateCalculator(
             $this->createQueryContainerMock($countryTaxRate),
-            $this->createProductOptionToTaxBridgeMock()
+            $this->createProductOptionToTaxBridgeMock(),
+            $this->tester->getShipmentService()
         );
     }
 
@@ -225,7 +232,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer
      */
-    protected function createQueryContainerMock($countryTaxRate)
+    protected function createQueryContainerMock(?float $countryTaxRate): ShipmentQueryContainer
     {
         $return = $countryTaxRate === null ? null : [ShipmentQueryContainer::COL_MAX_TAX_RATE => $countryTaxRate];
 
@@ -253,7 +260,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge
      */
-    protected function createProductOptionToTaxBridgeMock()
+    protected function createProductOptionToTaxBridgeMock(): ShipmentToTaxBridge
     {
         $bridgeMock = $this->getMockBuilder(ShipmentToTaxBridge::class)
             ->disableOriginalConstructor()
@@ -277,7 +284,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
+    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer): float
     {
         $taxSum = 0;
         foreach ($quoteTransfer->getExpenses() as $expense) {
@@ -292,7 +299,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -306,7 +313,7 @@ class ShipmentTaxRateCalculationTest extends Unit
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->setName($shipmentMethodTransfer->getName());
-        $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $expenseTransfer->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
 
         $quoteTransfer->addExpense($expenseTransfer);
 

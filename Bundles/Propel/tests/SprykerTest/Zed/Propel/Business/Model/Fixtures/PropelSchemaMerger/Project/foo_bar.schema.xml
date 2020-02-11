@@ -7,14 +7,14 @@
     package="Package">
 
     <table name="table_a" phpName="TableA">
-        <column name="integer_column" type="INTEGER" />
+        <column name="integer_column" type="INTEGER"/>
         <unique>
             <unique-column name="integer_column"/>
         </unique>
     </table>
 
     <table name="spy_foo" idMethod="native">
-        <column name="project_column" type="BOOLEAN" />
+        <column name="project_column" type="BOOLEAN"/>
         <unique name="spy_foo-unique">
             <unique-column name="project_column"/>
             <unique-column name="core_column"/>

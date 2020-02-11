@@ -9,6 +9,7 @@ namespace Spryker\Shared\Application\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Application\Application as SprykerApplication;
 
 /**
  * Symfony CMF Routing component Provider for URL generation.
@@ -16,7 +17,7 @@ use Silex\ServiceProviderInterface;
 class UrlGeneratorServiceProvider implements ServiceProviderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Silex\Application $app
      *
@@ -25,7 +26,7 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['url_generator'] = $app->share(function ($app) {
-            return $app['routers'];
+            return $app[SprykerApplication::SERVICE_ROUTER];
         });
     }
 

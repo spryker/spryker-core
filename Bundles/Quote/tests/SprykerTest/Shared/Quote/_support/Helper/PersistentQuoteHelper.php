@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Quote\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Quote\Business\QuoteFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -23,7 +24,7 @@ class PersistentQuoteHelper extends Module
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function havePersistentQuote(array $seed = [])
+    public function havePersistentQuote(array $seed = []): QuoteTransfer
     {
         $quoteTransfer = (new QuoteBuilder($seed))->build();
         $quoteTransfer->setIdQuote(null);
@@ -41,7 +42,7 @@ class PersistentQuoteHelper extends Module
     /**
      * @return \Spryker\Zed\Quote\Business\QuoteFacadeInterface
      */
-    private function getFacade()
+    private function getFacade(): QuoteFacadeInterface
     {
         return $this->getLocator()->quote()->facade();
     }

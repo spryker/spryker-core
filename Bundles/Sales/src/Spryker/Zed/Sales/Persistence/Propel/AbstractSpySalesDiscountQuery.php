@@ -20,4 +20,4 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesDiscountQuery as BaseSpySalesDiscount
  */
 abstract class AbstractSpySalesDiscountQuery extends BaseSpySalesDiscountQuery
 {
-} // SpySalesDiscountQuery
+}

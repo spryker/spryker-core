@@ -6,23 +6,23 @@
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="fkCompany" type="int"/>
-        <property name="company" type="Company" />
+        <property name="company" type="Company"/>
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
-        <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="Button">
-        <property name="url" type="string" />
-        <property name="title" type="string" />
-        <property name="defaultOptions" type="array" />
-        <property name="customOptions" type="array" />
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+        <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="idCustomer" type="int" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
+        <property name="idCustomer" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="Company">
@@ -46,6 +46,7 @@
     <transfer name="CompanyUserResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="ResponseMessage[]" singular="message"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="ResponseMessage">

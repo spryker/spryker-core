@@ -42,6 +42,7 @@ class PathMethodSpecificationComponent implements PathMethodSpecificationCompone
             return [];
         }
 
+        $pathData = [];
         $pathData[PathMethodComponentTransfer::SUMMARY] = $this->pathMethodComponentTransfer->getSummary();
         $pathData[PathMethodComponentTransfer::TAGS] = $this->pathMethodComponentTransfer->getTags();
         if ($this->pathMethodComponentTransfer->getParameters()) {

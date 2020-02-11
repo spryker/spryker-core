@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Console;
 
-use Spryker\Shared\Console\ConsoleConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Console\ConsoleConfig getSharedConfig()
+ */
 class ConsoleConfig extends AbstractBundleConfig
 {
     /**
@@ -17,6 +19,6 @@ class ConsoleConfig extends AbstractBundleConfig
      */
     public function shouldCatchExceptions(): bool
     {
-        return $this->get(ConsoleConstants::CATCH_EXCEPTIONS, false);
+        return $this->getSharedConfig()->shouldCatchExceptions();
     }
 }

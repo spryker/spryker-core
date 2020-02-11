@@ -7,11 +7,13 @@
 
 namespace SprykerTest\Zed\ProductManagement\Presentation;
 
+use PHPUnit\Framework\Assert;
 use SprykerTest\Zed\ProductManagement\PageObject\ProductManagementProductListPage;
 use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement
@@ -26,7 +28,7 @@ class ProductManagementProductEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
@@ -36,7 +38,7 @@ class ProductManagementProductEditCest
         $i->waitForElementVisible('.dataTables_scrollBody');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
     }
 
     /**
@@ -44,8 +46,9 @@ class ProductManagementProductEditCest
      *
      * @return void
      */
-    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i)
+    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i): void
     {
+        Assert::markTestSkipped('Re-enable when GLUE-9675 is done');
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
 
@@ -54,7 +57,7 @@ class ProductManagementProductEditCest
         $i->waitForElementVisible('.dataTables_scrollBody');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
         $i->click('Save');
 
         $i->waitForJS('return document.readyState == "complete"');

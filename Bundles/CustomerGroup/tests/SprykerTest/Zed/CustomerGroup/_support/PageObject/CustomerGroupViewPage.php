@@ -14,7 +14,7 @@ class CustomerGroupViewPage
      *
      * @return string
      */
-    public static function buildUrl($idCustomerGroup)
+    public static function buildUrl(int $idCustomerGroup): string
     {
         return '/customer-group/view?id-customer-group=' . $idCustomerGroup;
     }

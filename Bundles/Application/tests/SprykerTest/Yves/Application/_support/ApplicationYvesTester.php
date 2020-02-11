@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -38,7 +39,7 @@ class ApplicationYvesTester extends Actor
      *
      * @return \Silex\Application
      */
-    public function getApplicationForSslTest($controllerResponse = '', $isSslEnabled = true)
+    public function getApplicationForSslTest(string $controllerResponse = '', bool $isSslEnabled = true): Application
     {
         $this->setConfig(ApplicationConstants::YVES_SSL_ENABLED, $isSslEnabled);
         $this->setConfig(ApplicationConstants::YVES_TRUSTED_HOSTS, []);
@@ -56,7 +57,7 @@ class ApplicationYvesTester extends Actor
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    public function getRequestForSslTest()
+    public function getRequestForSslTest(): Request
     {
         return Request::create('/foo');
     }

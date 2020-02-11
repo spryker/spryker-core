@@ -49,7 +49,7 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-cms-gui-main.css">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-cms-gui-main.css') }}">
 {% endblock %}
 
 {% block footer_js %}
@@ -59,6 +59,6 @@
         {{ render(controller('/content-gui/assets/index'), {'ignore_errors':true}) }}
         {{ parent() }}
     {% endblock %}
-    <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-cms-gui-main.js') }}"></script>
 {% endblock %}
 

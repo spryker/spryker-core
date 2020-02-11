@@ -12,7 +12,6 @@ use Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterfac
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- *
  * @method \Spryker\Client\CartCurrencyConnector\CartCurrencyConnectorFactory getFactory()
  */
 class CartUpdateCurrencyOnCurrencyChangePlugin extends AbstractPlugin implements CurrencyPostChangePluginInterface

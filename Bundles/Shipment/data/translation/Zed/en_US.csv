@@ -1,23 +1,12 @@
 Add,Add
-"Add new Carrier Company","Add new Carrier Company"
-"Add new Shipment Method","Add new Shipment Method"
-"Availability plugin","Availability plugin"
 Carrier,Carrier
-"Carrier was created successfully.","Carrier was created successfully."
-"Carrier with the same name already exists.","Carrier with the same name already exists."
-"Create new Shipment Carrier","Create new Shipment Carrier"
-"Delivery time plugin","Delivery time plugin"
-"Edit Shipment Method","Edit Shipment Method"
-Enabled?,Activate
 "List Shipment Methods","List of shipment methods"
 Method,Method
 "New Shipment Method","New Shipment Method"
 Price,Price
-"Price plugin","Price plugin"
 Save,Save
 "Select one","Select one"
 "Shipment Method","Shipment Method"
 "Shipment method ""%s"" was created successfully.","Shipment method ""%s"" was created successfully."
 "Shipment method ""%s"" was updated successfully.","Shipment method ""%s"" was updated successfully."
-"Shipment Methods","Shipment Methods"
 "Shipment method with such name already exists for selected shipment provider.","Shipment method with such name already exists for selected shipment provider."

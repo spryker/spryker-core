@@ -15,6 +15,7 @@ use SprykerTest\Client\Kernel\Fixtures\Plugin\FooPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Kernel
@@ -26,7 +27,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetFactoryShouldReturnInstanceIfExists()
+    public function testGetFactoryShouldReturnInstanceIfExists(): void
     {
         $plugin = new FooPlugin();
 
@@ -44,7 +45,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetClientShouldReturnInstanceIfExists()
+    public function testGetClientShouldReturnInstanceIfExists(): void
     {
         $plugin = new FooPlugin();
 

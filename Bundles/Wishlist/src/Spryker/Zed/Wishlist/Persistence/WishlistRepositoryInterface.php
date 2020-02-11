@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Wishlist\Persistence;
 
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistRepositoryInterface
 {
@@ -17,4 +19,11 @@ interface WishlistRepositoryInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getByCustomerReference(string $customerReference): WishlistCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer|null
+     */
+    public function findWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): ?WishlistTransfer;
 }

@@ -167,7 +167,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
 
         $startTime = microtime(true);
-        $result = $this->connection->delete($key);
+        $this->connection->delete($key);
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;

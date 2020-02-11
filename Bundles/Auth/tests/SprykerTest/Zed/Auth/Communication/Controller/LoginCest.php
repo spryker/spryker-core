@@ -11,6 +11,7 @@ use SprykerTest\Zed\Auth\AuthCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Auth
@@ -26,7 +27,7 @@ class LoginCest
      *
      * @return void
      */
-    public function testLoginFormIsVisible(AuthCommunicationTester $i)
+    public function testLoginFormIsVisible(AuthCommunicationTester $i): void
     {
         $i->amOnPage('/auth/login');
         $i->seeElement('form', ['name' => 'auth']);

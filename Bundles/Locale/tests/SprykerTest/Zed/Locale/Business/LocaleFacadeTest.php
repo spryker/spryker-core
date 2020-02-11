@@ -15,6 +15,7 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Locale
@@ -48,7 +49,7 @@ class LocaleFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -61,7 +62,7 @@ class LocaleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAvailableLocalesToBeArrayType()
+    public function testAvailableLocalesToBeArrayType(): void
     {
         $this->assertIsArray($this->localeNames);
     }
@@ -69,7 +70,7 @@ class LocaleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAvailableLocalesAreTheSameAsConfiguredOnes()
+    public function testAvailableLocalesAreTheSameAsConfiguredOnes(): void
     {
         $this->assertSame(
             array_values($this->availableLocales),
@@ -80,7 +81,7 @@ class LocaleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAvailableLocalesHasDifferentIdsThanConfiguredOnes()
+    public function testAvailableLocalesHasDifferentIdsThanConfiguredOnes(): void
     {
         $this->assertNotSame(
             array_keys($this->availableLocales),
@@ -99,9 +100,9 @@ class LocaleFacadeTest extends Unit
 
         //Act
         $this->localeFacade->setCurrentLocale($newLocale);
-        $newCurentLocale = $this->localeFacade->getCurrentLocale();
+        $newCurrentLocale = $this->localeFacade->getCurrentLocale();
 
         //Assert
-        $this->assertSame($currentLocale->getLocaleName(), $newCurentLocale->getLocaleName());
+        $this->assertSame($currentLocale->getLocaleName(), $newCurrentLocale->getLocaleName());
     }
 }

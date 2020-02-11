@@ -16,7 +16,9 @@ interface NewsletterConstants
     public const SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_SUBJECT = 'DOUBLE_OPT_IN_CONFIRMATION_SUBJECT';
     public const MERGE_LANGUAGE_HANDLEBARS = 'MERGE_LANGUAGE_HANDLEBARS';
 
-    /** @deprecated Please use NewsletterConstants::BASE_URL_YVES instead */
+    /**
+     * @deprecated Please use NewsletterConstants::BASE_URL_YVES instead
+     */
     public const HOST_YVES = 'HOST_YVES';
 
     /**

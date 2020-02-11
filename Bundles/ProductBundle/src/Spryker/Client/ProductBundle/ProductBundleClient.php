@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductBundleClient extends AbstractClient implements ProductBundleClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,11 +34,12 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array
@@ -49,7 +50,7 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

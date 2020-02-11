@@ -17,7 +17,7 @@ interface RegionInstallInterface
      * .*?([^\s]+)\s+(..-.{1,3})
      *             '$2' => '$1',
      *
-     * @return array
+     * @return string[]
      */
     public function getCodeArray();
 

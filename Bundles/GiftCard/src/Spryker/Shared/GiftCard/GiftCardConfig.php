@@ -11,4 +11,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class GiftCardConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT
+     */
+    public const SHIPMENT_METHOD_NAME_NO_SHIPMENT = 'NoShipment';
 }

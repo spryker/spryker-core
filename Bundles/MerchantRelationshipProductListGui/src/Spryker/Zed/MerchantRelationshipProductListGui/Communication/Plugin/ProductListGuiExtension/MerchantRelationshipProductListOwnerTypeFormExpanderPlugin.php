@@ -12,6 +12,8 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFo
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\Communication\MerchantRelationshipProductListGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
  */
@@ -20,7 +22,7 @@ class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends Abstrac
     public const OWNER_TYPE = 'Merchant Relationship';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +34,7 @@ class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends Abstrac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

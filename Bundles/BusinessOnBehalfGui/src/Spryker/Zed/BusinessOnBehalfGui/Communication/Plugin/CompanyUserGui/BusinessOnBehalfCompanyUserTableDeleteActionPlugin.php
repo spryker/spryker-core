@@ -19,7 +19,7 @@ class BusinessOnBehalfCompanyUserTableDeleteActionPlugin extends AbstractPlugin 
     protected const PATH_CONFIRM_DELETE_COMPANY_USER = '/business-on-behalf-gui/delete-company-user/delete-confirm';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns delete company link through BusinessOnBehalfGui module.
      *
      * @api

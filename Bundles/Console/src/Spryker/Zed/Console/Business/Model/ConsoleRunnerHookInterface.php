@@ -10,6 +10,9 @@ namespace Spryker\Zed\Console\Business\Model;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @deprecated Use `\Spryker\Shared\Console\Hook\ConsoleRunnerHookInterface` instead.
+ */
 interface ConsoleRunnerHookInterface
 {
     /**

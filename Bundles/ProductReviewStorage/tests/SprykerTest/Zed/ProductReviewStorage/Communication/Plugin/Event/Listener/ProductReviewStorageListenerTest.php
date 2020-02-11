@@ -23,6 +23,7 @@ use SprykerTest\Zed\ProductReviewStorage\ProductReviewStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductReviewStorage
@@ -48,7 +49,7 @@ class ProductReviewStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -67,7 +68,7 @@ class ProductReviewStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductReviewPublishStorageListenerStoreData()
+    public function testProductReviewPublishStorageListenerStoreData(): void
     {
         SpyProductAbstractReviewStorageQuery::create()->filterByFkProductAbstract($this->productReviewTransfer->getFkProductAbstract())->delete();
         $beforeCount = SpyProductAbstractReviewStorageQuery::create()->count();
@@ -87,7 +88,7 @@ class ProductReviewStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductReviewStorageListenerStoreData()
+    public function testProductReviewStorageListenerStoreData(): void
     {
         SpyProductAbstractReviewStorageQuery::create()->filterByFkProductAbstract($this->productReviewTransfer->getFkProductAbstract())->delete();
         $beforeCount = SpyProductAbstractReviewStorageQuery::create()->count();
@@ -109,7 +110,7 @@ class ProductReviewStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageFacade
      */
-    protected function getProductReviewStorageFacade()
+    protected function getProductReviewStorageFacade(): ProductReviewStorageFacade
     {
         $factory = new ProductReviewStorageBusinessFactory();
         $factory->setConfig(new ProductReviewStorageConfigMock());
@@ -125,7 +126,7 @@ class ProductReviewStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductReviewStorage($beforeCount)
+    protected function assertProductReviewStorage(int $beforeCount): void
     {
         $productSetStorageCount = SpyProductAbstractReviewStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productSetStorageCount);

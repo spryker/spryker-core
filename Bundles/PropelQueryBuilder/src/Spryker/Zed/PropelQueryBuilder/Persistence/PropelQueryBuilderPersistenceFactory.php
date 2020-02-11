@@ -68,7 +68,6 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     protected function createQueryBuilderCriteriaMapper()
     {
         return new CriteriaMapper(
-
             $this->createQueryBuilderOperatorBuilder(),
             $this->createAttributeCriterionMapper()
         );

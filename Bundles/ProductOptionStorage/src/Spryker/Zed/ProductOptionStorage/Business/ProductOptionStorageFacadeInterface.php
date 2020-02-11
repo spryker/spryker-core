@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOptionStorage\Business;
 interface ProductOptionStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -21,7 +21,7 @@ interface ProductOptionStorageFacadeInterface
     public function publish(array $productAbstractIds);
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

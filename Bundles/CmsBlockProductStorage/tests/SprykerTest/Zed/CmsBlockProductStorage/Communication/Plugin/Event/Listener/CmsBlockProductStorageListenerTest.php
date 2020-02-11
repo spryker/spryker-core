@@ -24,6 +24,7 @@ use SprykerTest\Zed\CmsBlockProductStorage\CmsBlockProductStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsBlockProductStorage
@@ -51,7 +52,7 @@ class CmsBlockProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -189,7 +190,7 @@ class CmsBlockProductStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\CmsBlockProductStorage\Business\CmsBlockProductStorageFacade
      */
-    protected function getCmsBlockProductStorageFacade()
+    protected function getCmsBlockProductStorageFacade(): CmsBlockProductStorageFacade
     {
         $factory = new CmsBlockProductStorageBusinessFactory();
         $factory->setConfig(new CmsBlockProductStorageConfigMock());

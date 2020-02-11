@@ -19,6 +19,7 @@ var ContentItemDialog = function(
             this.context = context;
             this.$body = $(document.body);
             this.editor = context.layoutInfo.editor;
+            this.editable = context.layoutInfo.editable;
             this.options = context.options;
             this.$ui = $.summernote.ui;
             this.$range = $.summernote.range;
@@ -136,6 +137,7 @@ var ContentItemDialog = function(
 
                 this.context.invoke('pasteHTML', elementForInsert);
                 this.removeUnecessaryLines($clickedNode);
+                this.removeEmptyContentItems();
             };
 
             this.isNodeEmpty = function ($clickedNode) {
@@ -152,6 +154,28 @@ var ContentItemDialog = function(
                 }
 
                 return $nodeInnerItems.length <= 2 && $nodeInnerItems.eq(1).is('br') && $nodeInnerItems.children().length <= 1;
+            };
+
+            this.isContentItemEmpty = function ($nodeItem) {
+                var $nodeInnerItems = $nodeItem.children();
+                var isContentItem = $nodeInnerItems.eq(0).is('.js-content-item-editor');
+                var isContentItemEmpty = !$nodeInnerItems.children().text().length;
+
+                return isContentItem && isContentItemEmpty;
+            };
+
+            this.removeEmptyContentItems = function () {
+                var $self = this;
+
+                this.editable.children().each(function (index, item) {
+                    var $nodeItem = $(item);
+
+                    if (!$self.isContentItemEmpty($nodeItem)) {
+                        return;
+                    }
+
+                    $nodeItem.closest('p').remove();
+                });
             };
 
             this.removeItemFromEditor = function () {
@@ -174,7 +198,7 @@ var ContentItemDialog = function(
                     self.history.stackOffset--;
                     self.history.stack.splice(-1,1);
                     self.history.recordUndo();
-                };
+                }
             };
 
             this.clearNode = function ($clickedNode) {

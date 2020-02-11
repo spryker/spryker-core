@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
@@ -32,11 +33,19 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
      */
     public function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
@@ -56,7 +65,9 @@ class ProductStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getLocaleClient(),
-            $this->getProductConcreteRestrictionPlugins()
+            $this->getUtilEncodingService(),
+            $this->getProductConcreteRestrictionPlugins(),
+            $this->getProductConcreteRestrictionFilterPlugins()
         );
     }
 
@@ -81,7 +92,8 @@ class ProductStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->getStore(),
             $this->createProductAbstractAttributeMapRestrictionFilter(),
-            $this->getProductAbstractRestrictionPlugins()
+            $this->getProductAbstractRestrictionPlugins(),
+            $this->getProductAbstractRestrictionFilterPlugins()
         );
     }
 
@@ -182,5 +194,21 @@ class ProductStorageFactory extends AbstractFactory
     public function getProductConcreteExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface[]
+     */
+    public function getProductAbstractRestrictionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_RESTRICTION_FILTER);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[]
+     */
+    public function getProductConcreteRestrictionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_RESTRICTION_FILTER);
     }
 }

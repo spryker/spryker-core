@@ -9,7 +9,7 @@ namespace Spryker\Glue\AlternativeProductsRestApi;
 
 use Spryker\Glue\AlternativeProductsRestApi\Dependency\Client\AlternativeProductsRestApiToProductAlternativeStorageClientInterface;
 use Spryker\Glue\AlternativeProductsRestApi\Dependency\Client\AlternativeProductsRestApiToProductStorageClientInterface;
-use Spryker\Glue\AlternativeProductsRestApi\Dependency\Resource\AlternativeProductsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\AlternativeProductsRestApi\Dependency\RestApiResource\AlternativeProductsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\AlternativeProductsRestApi\Processor\AbstractAlternativeProduct\AbstractAlternativeProductReader;
 use Spryker\Glue\AlternativeProductsRestApi\Processor\AbstractAlternativeProduct\AbstractAlternativeProductReaderInterface;
 use Spryker\Glue\AlternativeProductsRestApi\Processor\ConcreteAlternativeProduct\ConcreteAlternativeProductReader;
@@ -72,7 +72,7 @@ class AlternativeProductsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\AlternativeProductsRestApi\Dependency\Resource\AlternativeProductsRestApiToProductsRestApiResourceInterface
+     * @return \Spryker\Glue\AlternativeProductsRestApi\Dependency\RestApiResource\AlternativeProductsRestApiToProductsRestApiResourceInterface
      */
     public function getProductsRestApiResource(): AlternativeProductsRestApiToProductsRestApiResourceInterface
     {

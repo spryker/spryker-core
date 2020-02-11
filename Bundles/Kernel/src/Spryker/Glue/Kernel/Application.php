@@ -7,9 +7,12 @@
 
 namespace Spryker\Glue\Kernel;
 
-use Silex\Application as SilexApplication;
+use Spryker\Shared\Kernel\Communication\Application as SharedApplication;
 
-class Application extends SilexApplication
+/**
+ * @deprecated Use `\Spryker\Shared\Kernel\Communication\Application` instead.
+ */
+class Application extends SharedApplication
 {
     /**
      * Instantiate a new Application.

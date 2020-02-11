@@ -12,6 +12,7 @@ use Spryker\Yves\Twig\TwigConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Twig
@@ -28,7 +29,7 @@ class TwigConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetTemplatePathsShouldReturnOnlyDefaultTemplatePaths()
+    public function testGetTemplatePathsShouldReturnOnlyDefaultTemplatePaths(): void
     {
         $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
         $twigConfig = $this->tester->getModuleConfig();
@@ -53,7 +54,7 @@ class TwigConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetTemplatePathsShouldReturnOnlyDefaultTemplatePathsWhenThemeNameEqualsDefaultThemeName()
+    public function testGetTemplatePathsShouldReturnOnlyDefaultTemplatePathsWhenThemeNameEqualsDefaultThemeName(): void
     {
         $this->tester->mockConfigMethod('getThemeName', 'default');
         $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
@@ -79,7 +80,7 @@ class TwigConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetTemplatePathsShouldReturnCustomAndDefaultTemplatePaths()
+    public function testGetTemplatePathsShouldReturnCustomAndDefaultTemplatePaths(): void
     {
         $this->tester->mockConfigMethod('getThemeName', 'custom');
         $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
@@ -110,7 +111,7 @@ class TwigConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetCacheFilePathReturnsString()
+    public function testGetCacheFilePathReturnsString(): void
     {
         $twigConfig = new TwigConfig();
         $this->assertIsString($twigConfig->getCacheFilePath());
@@ -119,7 +120,7 @@ class TwigConfigTest extends Unit
     /**
      * @return void
      */
-    public function testIsPathCacheEnabledReturnsBoolean()
+    public function testIsPathCacheEnabledReturnsBoolean(): void
     {
         $twigConfig = new TwigConfig();
         $this->assertIsBool($twigConfig->isPathCacheEnabled());
@@ -128,7 +129,7 @@ class TwigConfigTest extends Unit
     /**
      * @return \Spryker\Yves\Twig\TwigConfig
      */
-    public function getModuleConfig()
+    public function getModuleConfig(): TwigConfig
     {
         return $this->tester->getModuleConfig();
     }

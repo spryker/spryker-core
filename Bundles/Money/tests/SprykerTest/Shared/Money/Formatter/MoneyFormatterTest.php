@@ -16,6 +16,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterWithTypeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money
@@ -30,7 +31,7 @@ class MoneyFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $moneyFormatter = new MoneyFormatter($this->getMoneyFormatterCollectionMock());
         $this->assertInstanceOf(MoneyFormatterWithTypeInterface::class, $moneyFormatter);
@@ -39,7 +40,7 @@ class MoneyFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatShouldCallCollectionToGetFormatterAndReturnedFormatted()
+    public function testFormatShouldCallCollectionToGetFormatterAndReturnedFormatted(): void
     {
         $moneyFormatter = new MoneyFormatter($this->getMoneyFormatterCollectionMock());
         $moneyTransfer = new MoneyTransfer();
@@ -52,7 +53,7 @@ class MoneyFormatterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface
      */
-    protected function getMoneyFormatterCollectionMock()
+    protected function getMoneyFormatterCollectionMock(): MoneyFormatterCollectionInterface
     {
         $moneyFormatterCollectionMock = $this->getMockBuilder(MoneyFormatterCollectionInterface::class)->getMock();
         $moneyFormatterCollectionMock->method('getFormatter')->willReturn($this->getMoneyFormatterMock());
@@ -63,7 +64,7 @@ class MoneyFormatterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
-    protected function getMoneyFormatterMock()
+    protected function getMoneyFormatterMock(): MoneyFormatterInterface
     {
         $moneyFormatterMock = $this->getMockBuilder(MoneyFormatterInterface::class)->getMock();
         $moneyFormatterMock->method('format')->willReturnCallback([$this, 'format']);
@@ -76,7 +77,7 @@ class MoneyFormatterTest extends Unit
      *
      * @return string
      */
-    public function format(MoneyTransfer $moneyTransfer)
+    public function format(MoneyTransfer $moneyTransfer): string
     {
         return $moneyTransfer->getAmount() . ' Formatted';
     }

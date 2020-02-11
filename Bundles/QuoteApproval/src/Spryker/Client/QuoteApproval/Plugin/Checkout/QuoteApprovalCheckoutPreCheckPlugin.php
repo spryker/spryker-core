@@ -14,6 +14,8 @@ use Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInt
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Client\QuoteApproval\QuoteApprovalClient getClient()
  */
 class QuoteApprovalCheckoutPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
@@ -21,7 +23,7 @@ class QuoteApprovalCheckoutPreCheckPlugin extends AbstractPlugin implements Chec
     protected const MESSAGE_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Successful if customer does't have RequestQuoteApprovalPermissionPlugin permission assigned.
      * - Successful if executing of PlaceOrderPermissionPlugin permission returns true.
      * - Successful if quote approval status is `approved`.

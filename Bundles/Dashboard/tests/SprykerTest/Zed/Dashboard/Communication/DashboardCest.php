@@ -12,6 +12,7 @@ use SprykerTest\Zed\Dashboard\PageObject\DashboardPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Dashboard
@@ -26,10 +27,10 @@ class DashboardCest
      *
      * @return void
      */
-    public function isVisibleBreadcrumb(DashboardCommunicationTester $i)
+    public function isVisibleBreadcrumb(DashboardCommunicationTester $i): void
     {
         $i->amOnPage(DashboardPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Dashboard');
+        $i->seeBreadcrumbNavigation('Dashboard');
     }
 
     /**
@@ -37,7 +38,7 @@ class DashboardCest
      *
      * @return void
      */
-    public function isVisibleTitle(DashboardCommunicationTester $i)
+    public function isVisibleTitle(DashboardCommunicationTester $i): void
     {
         $i->amOnPage(DashboardPage::URL);
         $i->canSee(DashboardPage::TITLE, 'h2');

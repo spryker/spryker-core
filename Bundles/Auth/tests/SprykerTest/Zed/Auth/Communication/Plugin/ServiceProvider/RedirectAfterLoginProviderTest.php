@@ -16,7 +16,10 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
+ * @deprecated When the deprecated plugin gets removed, remove this test as well.
+ *
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Auth
@@ -35,7 +38,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         Request::setTrustedHosts([]);
         Request::setTrustedProxies([], Request::HEADER_X_FORWARDED_ALL);
@@ -44,7 +47,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseShouldSetRefererWhenRedirectingToLogin()
+    public function testOnKernelResponseShouldSetRefererWhenRedirectingToLogin(): void
     {
         $kernel = $this->getHttpKernel();
         $request = new Request();
@@ -65,7 +68,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseShouldNotSetInvalidRefererWhenRedirectingToLogin()
+    public function testOnKernelResponseShouldNotSetInvalidRefererWhenRedirectingToLogin(): void
     {
         $kernel = $this->getHttpKernel();
         $request = new Request();
@@ -86,7 +89,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseShouldNotChangeResponseIfRedirectUriNotSetInReferer()
+    public function testOnKernelResponseShouldNotChangeResponseIfRedirectUriNotSetInReferer(): void
     {
         $kernel = $this->getHttpKernel();
         $request = new Request();
@@ -107,7 +110,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseShouldNotUseInvalidReferer()
+    public function testOnKernelResponseShouldNotUseInvalidReferer(): void
     {
         $kernel = $this->getHttpKernel();
         $request = new Request();
@@ -129,7 +132,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseMustNotSetRedirectUriIfRedirectUriSetAndUserIsNotAuthenticated()
+    public function testOnKernelResponseMustNotSetRedirectUriIfRedirectUriSetAndUserIsNotAuthenticated(): void
     {
         $kernel = $this->getHttpKernel();
         $request = new Request();
@@ -151,7 +154,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseMustSetRedirectResponseIfRedirectUriSetInRefererAndUserIsAuthenticated()
+    public function testOnKernelResponseMustSetRedirectResponseIfRedirectUriSetInRefererAndUserIsAuthenticated(): void
     {
         $kernel = $this->getHttpKernel();
         $request = new Request();
@@ -177,7 +180,7 @@ class RedirectAfterLoginProviderTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider
      */
-    protected function getRedirectAfterLoginProvider(array $methods = [])
+    protected function getRedirectAfterLoginProvider(array $methods = []): RedirectAfterLoginProvider
     {
         if (!$methods) {
             return new RedirectAfterLoginProvider();
@@ -191,7 +194,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getHttpKernel()
+    protected function getHttpKernel(): HttpKernelInterface
     {
         return $this->getMockBuilder(HttpKernelInterface::class)->getMock();
     }

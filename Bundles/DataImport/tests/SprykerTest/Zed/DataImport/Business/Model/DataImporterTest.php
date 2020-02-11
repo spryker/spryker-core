@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport
@@ -36,7 +37,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testGetImporterTypeReturnsString()
+    public function testGetImporterTypeReturnsString(): void
     {
         $dataImporter = $this->getDataImporter();
 
@@ -46,7 +47,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportReturnsReport()
+    public function testImportReturnsReport(): void
     {
         $dataImporter = $this->getDataImporter();
 
@@ -56,7 +57,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportWithConfigurableDataReaderShouldReConfigureDataReader()
+    public function testImportWithConfigurableDataReaderShouldReConfigureDataReader(): void
     {
         $dataImporter = $this->getDataImporter();
 
@@ -70,7 +71,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportExecutesDataSets()
+    public function testImportExecutesDataSets(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataImporter->addDataSetStepBroker($this->tester->getDataSetMock());
@@ -81,7 +82,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportExecutesBeforeImportHooks()
+    public function testImportExecutesBeforeImportHooks(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataImporter->addBeforeImportHook($this->tester->getBeforeImportHookMock());
@@ -92,7 +93,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportExecutesAfterImportHooks()
+    public function testImportExecutesAfterImportHooks(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataImporter->addAfterImportHook($this->tester->getAfterImportHookMock());
@@ -103,7 +104,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportThrowsExceptionWhenThrowExceptionFlagSet()
+    public function testImportThrowsExceptionWhenThrowExceptionFlagSet(): void
     {
         $this->expectException(Exception::class);
 
@@ -120,7 +121,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportLogsExceptionWhenThrowExceptionFlagNotSet()
+    public function testImportLogsExceptionWhenThrowExceptionFlagNotSet(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataSetImporter = $this->tester->getFactory()->createDataSetStepBroker();
@@ -135,7 +136,7 @@ class DataImporterTest extends Unit
     /**
      * @return void
      */
-    public function testImportReturnsReportWithMessagesWhenThrowExceptionFlagNotSet()
+    public function testImportReturnsReportWithMessagesWhenThrowExceptionFlagNotSet(): void
     {
         $dataImporter = $this->getDataImporter();
         $dataSetImporter = $this->tester->getFactory()->createDataSetStepBroker();

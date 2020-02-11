@@ -46,7 +46,6 @@ class PermissionExecutor implements PermissionExecutorInterface
     public function can($permissionKey, $identifier, $context = null): bool
     {
         $permissionPlugin = $this->permissionFinder->findPermissionPlugin($permissionKey);
-
         if (!$permissionPlugin) {
             return true;
         }

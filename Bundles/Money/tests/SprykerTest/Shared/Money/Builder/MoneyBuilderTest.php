@@ -19,6 +19,7 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money
@@ -37,7 +38,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $moneyBuilder = $this->getMoneyBuilder();
         $this->assertInstanceOf(MoneyBuilderInterface::class, $moneyBuilder);
@@ -46,7 +47,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromIntegerWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
+    public function testFromIntegerWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency(): void
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
@@ -58,7 +59,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromIntegerWithCurrencyShouldReturnMoneyTransfer()
+    public function testFromIntegerWithCurrencyShouldReturnMoneyTransfer(): void
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
@@ -70,7 +71,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromIntegerWithoutIntegerShouldThrowException()
+    public function testFromIntegerWithoutIntegerShouldThrowException(): void
     {
         $this->expectException(InvalidAmountArgumentException::class);
 
@@ -81,7 +82,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromFloatWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
+    public function testFromFloatWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency(): void
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
@@ -93,7 +94,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromFloatWithCurrencyShouldReturnMoneyTransfer()
+    public function testFromFloatWithCurrencyShouldReturnMoneyTransfer(): void
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
@@ -105,7 +106,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromFloatWithoutFloatShouldThrowException()
+    public function testFromFloatWithoutFloatShouldThrowException(): void
     {
         $this->expectException(InvalidAmountArgumentException::class);
 
@@ -116,7 +117,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromStringWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
+    public function testFromStringWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency(): void
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
@@ -128,7 +129,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromStringWithCurrencyShouldReturnMoneyTransfer()
+    public function testFromStringWithCurrencyShouldReturnMoneyTransfer(): void
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
@@ -140,7 +141,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromStringWithoutStringShouldThrowException()
+    public function testFromStringWithoutStringShouldThrowException(): void
     {
         $this->expectException(InvalidAmountArgumentException::class);
 
@@ -151,7 +152,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFromStringWithInvalidStringShouldThrowException()
+    public function testFromStringWithInvalidStringShouldThrowException(): void
     {
         $this->expectException(InvalidAmountArgumentException::class);
 
@@ -160,9 +161,9 @@ class MoneyBuilderTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapper
+     * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMoneyToTransferConverterMock()
+    protected function getMoneyToTransferConverterMock(): MoneyToTransferMapperInterface
     {
         $moneyToTransferConverterMock = $this->getMockBuilder(MoneyToTransferMapperInterface::class)->getMock();
         $moneyToTransferConverterMock->method('convert')->willReturnCallback([$this, 'convert']);
@@ -175,7 +176,7 @@ class MoneyBuilderTest extends Unit
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function convert(Money $money)
+    public function convert(Money $money): MoneyTransfer
     {
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount($money->getAmount());
@@ -190,7 +191,7 @@ class MoneyBuilderTest extends Unit
     /**
      * @return \Spryker\Shared\Money\Builder\MoneyBuilderInterface
      */
-    protected function getMoneyBuilder()
+    protected function getMoneyBuilder(): MoneyBuilderInterface
     {
         return new MoneyBuilder($this->getMoneyToTransferConverterMock(), new DecimalToIntegerConverter(), self::DEFAULT_CURRENCY);
     }

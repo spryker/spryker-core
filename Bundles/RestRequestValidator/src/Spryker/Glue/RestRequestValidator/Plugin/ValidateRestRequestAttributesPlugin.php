@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ValidateRestRequestAttributesPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates the `attributes` section of the api request against the defined rules.
      * - Requires validation cache being collected.
      * - Returns null on successful validation and a collection of error messages on validation failure.

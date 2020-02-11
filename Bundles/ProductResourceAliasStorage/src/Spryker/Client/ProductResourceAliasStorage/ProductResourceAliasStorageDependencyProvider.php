@@ -9,15 +9,18 @@ namespace Spryker\Client\ProductResourceAliasStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToProductStorageClientBridge;
 use Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStorageClientBridge;
 use Spryker\Client\ProductResourceAliasStorage\Dependency\Service\ProductResourceAliasStorageToSynchronizationServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 class ProductResourceAliasStorageDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     public const STORE = 'STORE';
 
     /**
@@ -27,7 +30,9 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractDependencyPr
      */
     public function provideServiceLayerDependencies(Container $container)
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
+        $container = $this->addProductStorageClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addStore($container);
 
@@ -44,6 +49,20 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractDependencyPr
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductResourceAliasStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new ProductResourceAliasStorageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
+        });
 
         return $container;
     }

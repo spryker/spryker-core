@@ -20,4 +20,4 @@ use Orm\Zed\Category\Persistence\Base\SpyCategoryClosureTableQuery as BaseSpyCat
  */
 abstract class AbstractSpyCategoryClosureTableQuery extends BaseSpyCategoryClosureTableQuery
 {
-} // SpyCategoryClosureTableQuery
+}

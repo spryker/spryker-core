@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyBusinessUnitAttachCustomerFormExpanderPlugin extends AbstractPlugin implements CompanyUserAttachCustomerFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Expands CustomerCompanyAttachForm with choice field of company business units form CompanyUserBusinessUnitChoiceFormType.
      *
      * @api

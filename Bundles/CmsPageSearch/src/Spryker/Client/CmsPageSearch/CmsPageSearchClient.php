@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,8 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class FileSaver implements FileSaverInterface
 {
-    use FileNameResolverTrait, TransactionTrait;
+    use FileNameResolverTrait;
+    use TransactionTrait;
 
     protected const FILE_NAME_PATTERN = '%u%s%s.%s';
     protected const DEFAULT_FILENAME = 'file';

@@ -1,0 +1,42 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block head_title %}
+    {{ 'Scheduled Prices' | trans }}
+{% endblock %}
+
+{% set widget_title = "Scheduled Prices" %}
+
+{% block section_title %}
+    {{ widget_title }}
+{% endblock %}
+
+{#{% set widget_title = "Are you sure about deleting the Scheduled prices %s?" | format(priceProductScheduleList.name) | trans %}#}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with {
+        widget_title: "Are you sure about deleting the Scheduled prices \"%s\"?" | format(priceProductScheduleList.name) | trans,
+    } %}
+
+        {% block widget_content %}
+                {{ "You will delete %d prices for %d products. Is this what you want?"| format(
+                    priceProductScheduleList.metaData.numberOfPrices,
+                    priceProductScheduleList.metaData.numberOfProducts
+                ) }}
+            <br><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="/price-product-schedule-gui/import" class="btn btn-back">{{ 'No, I want to keep those prices' | trans}}</a>
+                </div>
+                <div class="col-md-2">
+                    {{ form(form, {'method': 'POST'}) }}
+                </div>
+            </div>
+
+            {#{{ form(form, {'method': 'POST'}) }}#}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

@@ -20,13 +20,14 @@ use Twig\Environment;
 class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds application global variables.
-     * - Extends twig with application global functions.
+     * - Extends Twig with application global functions.
      *
      * @api
      *
      * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Twig\Environment
      */

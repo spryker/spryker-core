@@ -12,7 +12,7 @@ use Codeception\Codecept;
 class FixturesRunner extends Codecept
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function runSuite($settings, $suite, $test = null)
     {

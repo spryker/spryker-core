@@ -1,14 +1,15 @@
-"Actions","Actions"
-"Activate","Activate"
-"Deactivate","Deactivate"
-"Description","Description"
-"Edit","Edit"
-"ID","ID"
-"List of Slots","List of Slots"
+Actions,Actions
+Activate,Activate
+"Content Provider","Content Provider"
+Deactivate,Deactivate
+Description,Description
+Edit,Edit
+ID,ID
+"List of Slots for","List of Slots for"
 "List of Templates","List of Templates"
-"Name","Name"
+Name,Name
 "Overview of Slots","Overview of Slots"
-"Ownership","Ownership"
-"Slots","Slots"
+Slots,Slots
 "Slot Key","Slot Key"
-"Status","Status"
+Status,Status
+Template,Template

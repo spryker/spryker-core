@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -29,7 +30,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return void
      */
-    public function testGetBundleShouldReturnBundleNameFromRequest()
+    public function testGetBundleShouldReturnBundleNameFromRequest(): void
     {
         $bundleControllerAction = $this->getBundleControllerAction();
 
@@ -39,7 +40,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return void
      */
-    public function testGetControllerShouldReturnControllerNameFromRequest()
+    public function testGetControllerShouldReturnControllerNameFromRequest(): void
     {
         $bundleControllerAction = $this->getBundleControllerAction();
 
@@ -49,7 +50,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return void
      */
-    public function testGetActionShouldReturnActionNameFromRequest()
+    public function testGetActionShouldReturnActionNameFromRequest(): void
     {
         $bundleControllerAction = $this->getBundleControllerAction();
 
@@ -59,7 +60,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Communication\BundleControllerAction
      */
-    private function getBundleControllerAction()
+    private function getBundleControllerAction(): BundleControllerAction
     {
         $request = $this->getRequestTestObject();
         $bundleControllerAction = new BundleControllerAction(
@@ -74,7 +75,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    private function getRequestTestObject()
+    private function getRequestTestObject(): Request
     {
         $request = new Request(
             [],

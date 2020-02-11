@@ -12,6 +12,7 @@ use SprykerTest\Zed\CmsGui\PageObject\CmsGuiListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsGui
@@ -27,9 +28,9 @@ class CmsGuiListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsGuiCommunicationTester $i): void
     {
         $i->amOnPage(CmsGuiListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages');
+        $i->seeBreadcrumbNavigation('Content Management / Pages');
     }
 }

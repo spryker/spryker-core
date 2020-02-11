@@ -14,6 +14,7 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Availability
@@ -26,7 +27,7 @@ class AvailabilityQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllAvailabilityAbstractsReturnCorrectQueryObject()
+    public function testQueryAllAvailabilityAbstractsReturnCorrectQueryObject(): void
     {
         $availabilityQueryContainer = new AvailabilityQueryContainer();
         $availabilityQueryContainer->setFactory(new AvailabilityPersistenceFactory());

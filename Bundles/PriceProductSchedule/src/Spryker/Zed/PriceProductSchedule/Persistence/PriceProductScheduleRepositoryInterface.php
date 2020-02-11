@@ -20,6 +20,20 @@ interface PriceProductScheduleRepositoryInterface
     public function findPriceProductSchedulesToDisable(): array;
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToDisableByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToDisableByIdProductConcrete(int $idProductConcrete): array;
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
@@ -52,4 +66,58 @@ interface PriceProductScheduleRepositoryInterface
     public function findPriceProductScheduleListById(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): ?PriceProductScheduleListTransfer;
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array;
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function findPriceProductScheduleById(
+        int $idPriceProductSchedule
+    ): ?PriceProductScheduleTransfer;
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer|null
+     */
+    public function findPriceProductScheduleListByName(string $name): ?PriceProductScheduleListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(
+        StoreTransfer $storeTransfer,
+        int $idProductAbstract
+    ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(
+        StoreTransfer $storeTransfer,
+        int $idProductConcrete
+    ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool;
 }

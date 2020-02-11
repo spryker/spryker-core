@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms
@@ -32,7 +33,7 @@ class ConditionCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddShouldReturnInstance()
+    public function testAddShouldReturnInstance(): void
     {
         $conditionCollection = new ConditionCollection();
         $result = $conditionCollection->add($this->getConditionMock(), self::CONDITION_NAME);
@@ -43,7 +44,7 @@ class ConditionCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldReturnCommand()
+    public function testGetShouldReturnCommand(): void
     {
         $conditionCollection = new ConditionCollection();
         $condition = $this->getConditionMock();
@@ -55,7 +56,7 @@ class ConditionCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnFalse()
+    public function testHasShouldReturnFalse(): void
     {
         $conditionCollection = new ConditionCollection();
 
@@ -65,7 +66,7 @@ class ConditionCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnTrue()
+    public function testHasShouldReturnTrue(): void
     {
         $conditionCollection = new ConditionCollection();
         $condition = $this->getConditionMock();
@@ -77,7 +78,7 @@ class ConditionCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldThrowException()
+    public function testGetShouldThrowException(): void
     {
         $conditionCollection = new ConditionCollection();
 
@@ -89,7 +90,7 @@ class ConditionCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $conditionCollection = new ConditionCollection();
         $this->assertFalse(isset($conditionCollection[self::CONDITION_NAME]));
@@ -107,7 +108,7 @@ class ConditionCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
-    private function getConditionMock()
+    private function getConditionMock(): ConditionInterface
     {
         return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }

@@ -17,6 +17,7 @@ use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductL
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ProductListStorage
@@ -29,7 +30,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
     public const CONCRETE_PRODUCT_ID = 1;
 
     /**
-     * @var \SprykerTest\Client\ProductListStorage\ProductListStorageClientTester;
+     * @var \SprykerTest\Client\ProductListStorage\ProductListStorageClientTester
      */
     protected $tester;
 
@@ -117,7 +118,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
      *
      * @return void
      */
-    public function testProductConcreteRestrictionReader(array $customerData, array $productData, bool $expectedResult)
+    public function testProductConcreteRestrictionReader(array $customerData, array $productData, bool $expectedResult): void
     {
         $customerClientMock = $this->createCustomerClientMock($customerData['whitelist'], $customerData['blacklist']);
         $productListProductConcreteStorageReader = $this->createProductListProductConcreteStorageReader(
@@ -141,16 +142,20 @@ class ProductConcreteRestrictionReaderTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
      */
-    protected function createCustomerClientMock(array $whiteListIds, array $blackListIds)
+    protected function createCustomerClientMock(array $whiteListIds, array $blackListIds): ProductListStorageToCustomerClientInterface
     {
         $customerProductListCollectionTransfer = new CustomerProductListCollectionTransfer();
+
         $customerProductListCollectionTransfer->setWhitelistIds($whiteListIds);
+
         $customerProductListCollectionTransfer->setBlacklistIds($blackListIds);
 
         $customerTransfer = new CustomerTransfer();
+
         $customerTransfer->setCustomerProductListCollection($customerProductListCollectionTransfer);
 
         $customerClientMock = $this->getMockBuilder(ProductListStorageToCustomerClientInterface::class)->getMock();
+
         $customerClientMock->method('getCustomer')->willReturn($customerTransfer);
 
         return $customerClientMock;
@@ -160,15 +165,18 @@ class ProductConcreteRestrictionReaderTest extends Unit
      * @param int[] $whiteListIds
      * @param int[] $blackListIds
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader;
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface
      */
-    protected function createProductListProductConcreteStorageReader(array $whiteListIds, array $blackListIds)
+    protected function createProductListProductConcreteStorageReader(array $whiteListIds, array $blackListIds): ProductListProductConcreteStorageReaderInterface
     {
         $productConcreteProductListStorageTransfer = new ProductConcreteProductListStorageTransfer();
+
         $productConcreteProductListStorageTransfer->setIdWhitelists($whiteListIds);
+
         $productConcreteProductListStorageTransfer->setIdBlacklists($blackListIds);
 
         $productListProductConcreteStorageReader = $this->getMockBuilder(ProductListProductConcreteStorageReaderInterface::class)->getMock();
+
         $productListProductConcreteStorageReader->expects($this->once())->method('findProductConcreteProductListStorage')->willReturn($productConcreteProductListStorageTransfer);
 
         return $productListProductConcreteStorageReader;

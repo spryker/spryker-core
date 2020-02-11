@@ -12,6 +12,7 @@ use Spryker\Shared\Application\Log\Processor\ServerProcessor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Application
@@ -25,7 +26,7 @@ class ServerProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testInvokeShouldAddServerInformationToRecordsExtra()
+    public function testInvokeShouldAddServerInformationToRecordsExtra(): void
     {
         $_SERVER['SERVER_NAME'] = 'www.example.com';
         $processor = new ServerProcessor();
@@ -38,7 +39,7 @@ class ServerProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testInvokeWithSecuredConnectionShouldAddServerInformationToRecordsExtra()
+    public function testInvokeWithSecuredConnectionShouldAddServerInformationToRecordsExtra(): void
     {
         $_SERVER['HTTPS'] = 'on';
 

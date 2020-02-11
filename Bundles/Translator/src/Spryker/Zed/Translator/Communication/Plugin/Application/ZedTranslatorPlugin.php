@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ZedTranslatorPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Extends Application with Translator instance.
      *
      * @api
@@ -39,7 +39,7 @@ class ZedTranslatorPlugin extends AbstractPlugin implements ApplicationPluginInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

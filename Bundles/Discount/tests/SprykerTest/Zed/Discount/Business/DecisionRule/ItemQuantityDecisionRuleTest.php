@@ -14,6 +14,7 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -27,7 +28,7 @@ class ItemQuantityDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testDecisionRuleWhenCurrentItemQuantityMatchesShouldReturnTrue()
+    public function testDecisionRuleWhenCurrentItemQuantityMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $itemQuantity) {
@@ -47,9 +48,9 @@ class ItemQuantityDecisionRuleTest extends BaseRuleTester
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
      *
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule
      */
-    protected function createItemQuantityDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createItemQuantityDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null): ItemQuantityDecisionRule
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

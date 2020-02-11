@@ -12,6 +12,7 @@ use SprykerTest\Zed\User\UserCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group User
@@ -27,9 +28,9 @@ class UserListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(UserCommunicationTester $i)
+    public function breadcrumbIsVisible(UserCommunicationTester $i): void
     {
         $i->amOnPage(UserListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / User');
+        $i->seeBreadcrumbNavigation('Users Control / User');
     }
 }

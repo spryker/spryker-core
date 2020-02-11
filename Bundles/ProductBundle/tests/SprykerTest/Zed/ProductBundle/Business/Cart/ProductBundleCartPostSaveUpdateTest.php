@@ -14,6 +14,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostS
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle
@@ -27,7 +28,7 @@ class ProductBundleCartPostSaveUpdateTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundlesShouldRemoveStaleBundles()
+    public function testUpdateBundlesShouldRemoveStaleBundles(): void
     {
         $productBundlesCartPostSaveUpdate = new ProductBundleCartPostSaveUpdate();
 

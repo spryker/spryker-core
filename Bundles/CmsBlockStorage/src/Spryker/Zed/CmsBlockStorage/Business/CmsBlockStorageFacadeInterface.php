@@ -21,7 +21,7 @@ interface CmsBlockStorageFacadeInterface
      *
      * @return void
      */
-    public function publish(array $cmsBlockIds);
+    public function publish(array $cmsBlockIds): void;
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ interface CmsBlockStorageFacadeInterface
      *
      * @return void
      */
-    public function unpublish(array $cmsBlockIds);
+    public function unpublish(array $cmsBlockIds): void;
 }

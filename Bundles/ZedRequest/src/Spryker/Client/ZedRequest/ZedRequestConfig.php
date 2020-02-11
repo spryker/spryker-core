@@ -59,14 +59,6 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return bool
-     */
-    public function isAuthenticationEnabled()
-    {
-        return $this->getConfig()->get(ZedRequestConstants::AUTH_ZED_ENABLED, true);
-    }
-
-    /**
      * @return array
      */
     public function getClientConfiguration()

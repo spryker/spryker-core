@@ -35,6 +35,8 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $queryContainer;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -306,6 +308,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         static::$categoryTree = [];
 
         $categoryNodes = $this->queryContainer->queryAllCategoryNodes()->find();
+        /** @var array $categoryEntities */
         $categoryEntities = $this->queryContainer->queryAllCategoriesWithAttributesAndOrderByDescendant()->find();
         $formattedCategoriesByLocaleAndNodeIds = $this->formatCategoriesWithLocaleAndNodIds($categoryEntities);
 

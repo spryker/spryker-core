@@ -38,7 +38,7 @@ class UrlDataHelper extends Module
             $urlTransfer->getIdUrl()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($urlTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($urlTransfer): void {
             $this->cleanupUrl($urlTransfer);
         });
 
@@ -70,7 +70,7 @@ class UrlDataHelper extends Module
             $urlRedirectTransfer->getIdUrlRedirect()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($urlRedirectTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($urlRedirectTransfer): void {
             $this->cleanupUrlRedirect($urlRedirectTransfer);
         });
 

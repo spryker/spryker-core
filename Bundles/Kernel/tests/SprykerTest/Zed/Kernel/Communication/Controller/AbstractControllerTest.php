@@ -13,6 +13,7 @@ use SprykerTest\Zed\Kernel\Communication\Controller\Fixtures\MockController;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -37,7 +38,7 @@ class AbstractControllerTest extends Unit
      *
      * @return void
      */
-    public function testCastInt($input, $expected, $isValid)
+    public function testCastInt($input, int $expected, bool $isValid): void
     {
         $controller = new MockController();
 
@@ -54,7 +55,7 @@ class AbstractControllerTest extends Unit
     /**
      * @return array
      */
-    public function getTestData()
+    public function getTestData(): array
     {
         return [
             ['1', 1, true],

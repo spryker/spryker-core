@@ -4,13 +4,13 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CustomerAccess">
-        <property name="ContentTypeAccess" type="ContentTypeAccess[]" singular="ContentTypeAccess" />
+        <property name="contentTypeAccess" type="ContentTypeAccess[]" singular="contentTypeAccess"/>
     </transfer>
 
     <transfer name="ContentTypeAccess">
-        <property name="idUnauthenticatedCustomerAccess" type="int" />
-        <property name="contentType" type="string" />
-        <property name="isRestricted" type="bool" />
+        <property name="idUnauthenticatedCustomerAccess" type="int"/>
+        <property name="contentType" type="string"/>
+        <property name="isRestricted" type="bool"/>
     </transfer>
 
 </transfers>

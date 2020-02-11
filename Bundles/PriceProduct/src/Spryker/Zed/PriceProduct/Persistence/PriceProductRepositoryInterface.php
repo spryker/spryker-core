@@ -156,4 +156,13 @@ interface PriceProductRepositoryInterface
         array $concreteSkus,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(
+        PriceProductTransfer $priceProductTransfer
+    ): bool;
 }

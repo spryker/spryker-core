@@ -16,6 +16,7 @@ use Spryker\Zed\CmsPageDataImport\Communication\Plugin\CmsPageStoreDataImportPlu
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsPageDataImport

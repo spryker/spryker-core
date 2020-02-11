@@ -53,7 +53,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 
     /**
      * @param int $price Price as integer (e. g 15508 for 155.08)
-     * @param int $taxRate
+     * @param float $taxRate
      * @param string|null $identifier
      *
      * @return int

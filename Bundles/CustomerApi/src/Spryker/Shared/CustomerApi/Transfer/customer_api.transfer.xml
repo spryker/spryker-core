@@ -4,25 +4,80 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CustomerApi">
-        <property name="idCustomer" type="int" />
-        <property name="email" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="customerReference" type="string" />
-        <property name="company" type="string" />
-        <property name="gender" type="string" />
-        <property name="dateOfBirth" type="string" />
-        <property name="salutation" type="string" />
-        <property name="defaultBillingAddress" type="int" />
-        <property name="defaultShippingAddress" type="int" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
-        <property name="restorePasswordKey" type="string" />
-        <property name="restorePasswordDate" type="string" />
-        <property name="registrationKey" type="string" />
-        <property name="confirmationLink" type="string" />
-        <property name="registered" type="string" />
+        <property name="idCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="company" type="string"/>
+        <property name="gender" type="string"/>
+        <property name="dateOfBirth" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="defaultBillingAddress" type="int"/>
+        <property name="defaultShippingAddress" type="int"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="restorePasswordKey" type="string"/>
+        <property name="restorePasswordDate" type="string"/>
+        <property name="registrationKey" type="string"/>
+        <property name="confirmationLink" type="string"/>
+        <property name="registered" type="string"/>
         <property name="fkLocale" type="int"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderColumn">
+        <property name="name" type="string"/>
+        <property name="alias" type="string"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderColumnSelection">
+        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
+    </transfer>
+
+    <transfer name="ApiData">
+        <property name="data" type="array" singular="data"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="ApiItem">
+        <property name="data" type="array" singular="data"/>
+    </transfer>
+
+    <transfer name="ApiRequest">
+        <property name="filter" type="ApiFilter"/>
+    </transfer>
+
+    <transfer name="ApiPagination">
+        <property name="itemsPerPage" type="int"/>
+        <property name="page" type="int"/>
+        <property name="total" type="int"/>
+        <property name="pageTotal" type="int"/>
+    </transfer>
+
+    <transfer name="ApiCollection">
+        <property name="pagination" type="ApiPagination"/>
+    </transfer>
+
+    <transfer name="ApiQueryBuilderQuery">
+        <property name="apiRequest" type="ApiRequest"/>
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
+        <property name="errors" type="CustomerError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="ApiFilter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

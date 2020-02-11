@@ -20,4 +20,4 @@ use Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery as BaseSpyResetPasswordQ
  */
 abstract class AbstractSpyResetPasswordQuery extends BaseSpyResetPasswordQuery
 {
-} // SpyResetPasswordQuery
+}

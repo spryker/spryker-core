@@ -91,12 +91,12 @@ class Drawer implements DrawerInterface
     /**
      * @var int|null
      */
-    protected $fontSizeBig = null;
+    protected $fontSizeBig;
 
     /**
      * @var int|null
      */
-    protected $fontSizeSmall = null;
+    protected $fontSizeSmall;
 
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
@@ -289,6 +289,7 @@ class Drawer implements DrawerInterface
         foreach ($transitions as $transition) {
             if ($transition->getTargetState()->getName() !== $state->getName()) {
                 $hasOnlySelfReferences = false;
+
                 break;
             }
         }

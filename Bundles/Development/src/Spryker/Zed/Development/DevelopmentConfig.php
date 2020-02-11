@@ -22,6 +22,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
     protected const NAMESPACE_SPRYKER_ECO = 'SprykerEco';
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
+    protected const NAMESPACE_SPRYKER_MIDDLEWARE = 'SprykerMiddleware';
     protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
 
     protected const GROUP_SPRYKER_TEST = 'SprykerTest';
@@ -50,12 +51,13 @@ class DevelopmentConfig extends AbstractBundleConfig
         self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
         self::NAMESPACE_SPRYKER_ECO => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-eco/',
         self::NAMESPACE_SPRYKER_SDK => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-sdk/',
+        self::NAMESPACE_SPRYKER_MIDDLEWARE => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-middleware/',
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-merchant-portal/',
     ];
 
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
-    protected const TIMEOUT_DEFAULT = 4800;
+    protected const TIMEOUT_DEFAULT = 9000;
 
     /**
      * @return int
@@ -264,6 +266,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Psr\\Container\\' => 'spryker/container',
             'Propel\\' => 'spryker/propel-orm',
             'Silex\\' => 'spryker/silex',
+            'Spryker\\DecimalObject\\' => 'spryker/decimal-object',
             'Pimple' => 'spryker/container',
             'Predis\\' => 'spryker/redis',
             'Guzzle\\' => 'spryker/guzzle',

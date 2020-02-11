@@ -21,7 +21,7 @@ class TaxProductStoragePublishListener extends AbstractPlugin implements EventBu
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Handles product tax sets create and update events.
      *
      * @api

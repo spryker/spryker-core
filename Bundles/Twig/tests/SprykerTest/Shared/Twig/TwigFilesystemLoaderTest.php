@@ -12,6 +12,7 @@ use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
+use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use SprykerTest\Shared\Twig\Stub\CacheStub;
 use Twig\Error\LoaderError;
@@ -19,6 +20,7 @@ use Twig\Loader\LoaderInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig
@@ -37,7 +39,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testCanBeConstructedWithTemplatePathsArray()
+    public function testCanBeConstructedWithTemplatePathsArray(): void
     {
         $templatePaths = [];
         $filesystemLoader = new TwigFilesystemLoader($templatePaths, $this->getCacheStub(), $this->getTemplateNameExtractor());
@@ -48,7 +50,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceReturnsFileFromCache()
+    public function testGetSourceReturnsFileFromCache(): void
     {
         $cache = $this->getCacheStub();
         $cache->set('@CachedBundle/Controller/index.twig', __DIR__ . '/Fixtures/cache/cached.twig');
@@ -60,7 +62,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceThrowsExceptionWhenPathInCacheMarkedAsInvalid()
+    public function testGetSourceThrowsExceptionWhenPathInCacheMarkedAsInvalid(): void
     {
         $cache = $this->getCacheStub();
         $cache->set('@Invalid/Controller/index.twig', false);
@@ -113,7 +115,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceThrowsExceptionWhenFileNotExists()
+    public function testGetSourceThrowsExceptionWhenFileNotExists(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
 
@@ -126,7 +128,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceThrowsExceptionWhenNameDoesNotContainControllerAndTemplateNameInfo()
+    public function testGetSourceThrowsExceptionWhenNameDoesNotContainControllerAndTemplateNameInfo(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
 
@@ -139,7 +141,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testIsFreshReturnsTrueWhenFileIsFresh()
+    public function testIsFreshReturnsTrueWhenFileIsFresh(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
         $time = filemtime(static::PATH_TO_ZED_PROJECT . '/Controller/index.twig') + 10;
@@ -150,7 +152,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testIsFreshReturnsFalseWhenFileIsNotFresh()
+    public function testIsFreshReturnsFalseWhenFileIsNotFresh(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
         $time = filemtime(static::PATH_TO_ZED_PROJECT . '/Controller/index.twig') - 10;
@@ -161,7 +163,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetCacheKeyReturnsPathToTemplate()
+    public function testGetCacheKeyReturnsPathToTemplate(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
         $cacheKey = $filesystemLoader->getCacheKey(static::TEMPLATE_NAME);
@@ -172,7 +174,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return \Spryker\Shared\Twig\Cache\CacheInterface
      */
-    protected function getCacheStub()
+    protected function getCacheStub(): CacheInterface
     {
         return new CacheStub();
     }
@@ -180,7 +182,7 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface
      */
-    protected function getTemplateNameExtractor()
+    protected function getTemplateNameExtractor(): TemplateNameExtractorInterface
     {
         $twigToUtilTextBridge = new TwigToUtilTextServiceBridge(new UtilTextService());
         $templateNameExtractor = new TemplateNameExtractor($twigToUtilTextBridge);
@@ -194,7 +196,7 @@ class TwigFilesystemLoaderTest extends Unit
      *
      * @return \Spryker\Shared\Twig\TwigFilesystemLoader
      */
-    protected function getFilesystemLoader($path, ?CacheInterface $cache = null)
+    protected function getFilesystemLoader($path, ?CacheInterface $cache = null): TwigFilesystemLoader
     {
         if (!$cache) {
             $cache = $this->getCacheStub();

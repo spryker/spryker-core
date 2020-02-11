@@ -12,6 +12,7 @@ use Spryker\Zed\Scheduler\Communication\Twig\SchedulerTwigPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Scheduler

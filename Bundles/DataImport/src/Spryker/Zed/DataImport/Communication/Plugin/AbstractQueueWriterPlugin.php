@@ -23,7 +23,7 @@ abstract class AbstractQueueWriterPlugin extends AbstractPlugin implements DataS
     protected static $dataSetItemBuffer = [];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ abstract class AbstractQueueWriterPlugin extends AbstractPlugin implements DataS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

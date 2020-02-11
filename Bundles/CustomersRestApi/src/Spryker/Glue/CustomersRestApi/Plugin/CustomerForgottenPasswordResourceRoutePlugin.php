@@ -19,7 +19,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Configures available actions for customer-forgotten-password resource.
      *
      * @api
@@ -37,7 +37,7 @@ class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

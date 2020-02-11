@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Monitoring;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container as KernelContainer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToLocaleFacadeBridge;
 use Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToStoreFacadeBridge;
@@ -44,7 +43,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMonitoringService(Container $container): KernelContainer
+    protected function addMonitoringService(Container $container): Container
     {
         $container[static::MONITORING_SERVICE] = function (Container $container) {
             return $container->getLocator()->monitoring()->service();

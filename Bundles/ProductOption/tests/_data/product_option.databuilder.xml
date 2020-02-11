@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
 <transfers
-    xmlns="spryker:transfer-01"
+    xmlns="spryker:databuilder-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
 
     <transfer name="ProductOptionGroup">
-        <property name="fkTaxSet" dataBuilderRule="=1" />
-        <property name="active" dataBuilderRule="=true" />
-        <property name="name" dataBuilderRule="word" />
+        <property name="fkTaxSet" dataBuilderRule="=1"/>
+        <property name="active" dataBuilderRule="=true"/>
+        <property name="name" dataBuilderRule="word"/>
     </transfer>
 
     <transfer name="ProductOptionTranslation">
-        <property name="key" dataBuilderRule="word" />
-        <property name="localeCode" dataBuilderRule="=en_US" />
-        <property name="name" dataBuilderRule="word" />
+        <property name="key" dataBuilderRule="word"/>
+        <property name="localeCode" dataBuilderRule="=en_US"/>
+        <property name="name" dataBuilderRule="word"/>
     </transfer>
 
     <transfer name="ProductOptionValue">
-        <property name="value" dataBuilderRule="word" />
-        <property name="sku" dataBuilderRule="isbn10" />
+        <property name="value" dataBuilderRule="word"/>
+        <property name="sku" dataBuilderRule="isbn10"/>
     </transfer>
 
 </transfers>

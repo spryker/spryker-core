@@ -19,7 +19,7 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
     public const STORE = 'store';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

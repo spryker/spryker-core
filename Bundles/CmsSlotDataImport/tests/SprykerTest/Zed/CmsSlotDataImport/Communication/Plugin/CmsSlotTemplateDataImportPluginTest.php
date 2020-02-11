@@ -15,6 +15,7 @@ use Spryker\Zed\CmsSlotDataImport\Communication\Plugin\CmsSlotTemplateDataImport
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsSlotDataImport
@@ -51,12 +52,11 @@ class CmsSlotTemplateDataImportPluginTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     *
      * @return void
      */
     public function testCmsSlotTemplateImportWithInvalidDataThrowsException(): void
     {
+        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
         $this->tester->ensureSpyCmsSlotTemplateTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();

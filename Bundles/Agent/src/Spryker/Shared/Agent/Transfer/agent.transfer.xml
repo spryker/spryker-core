@@ -5,10 +5,11 @@
 
     <transfer name="User">
         <property name="isAgent" type="bool"/>
+        <property name="username" type="string"/>
     </transfer>
 
     <transfer name="CustomerAutocompleteResponse">
-        <property name="customers" type="Customer[]" singular="Customer"/>
+        <property name="customers" type="Customer[]" singular="customer"/>
     </transfer>
 
     <transfer name="CustomerQuery">
@@ -20,4 +21,12 @@
         <property name="agent" type="User"/>
         <property name="isAgentFound" type="bool"/>
     </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+    </transfer>
+
 </transfers>

@@ -81,6 +81,8 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool

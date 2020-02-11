@@ -12,6 +12,9 @@ use Silex\ServiceProviderInterface;
 use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\ContainerGlobals;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class SessionClientServiceProvider implements ServiceProviderInterface
 {
     public const CLIENT_SESSION = 'session client';

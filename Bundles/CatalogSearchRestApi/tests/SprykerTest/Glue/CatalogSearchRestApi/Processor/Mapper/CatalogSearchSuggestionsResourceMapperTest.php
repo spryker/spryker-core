@@ -10,13 +10,12 @@ namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group CatalogSearchRestApi
@@ -29,7 +28,9 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
 {
     protected const REQUESTED_CURRENCY = 'CHF';
 
-    /** @deprecated Will be removed in next major release. */
+    /**
+     * @deprecated Will be removed in next major release.
+     */
     protected const KEY_PRODUCTS = 'products';
     protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
@@ -140,16 +141,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     protected function getMapper(): CatalogSearchSuggestionsResourceMapperInterface
     {
         return $this->catalogSearchSuggestionsResourceMapper;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function getResourceBuilder(): MockObject
-    {
-        return $this->getMockBuilder(RestResourceBuilder::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
     }
 
     /**

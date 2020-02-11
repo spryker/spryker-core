@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Saves order and items to Persistence.
      *
      * @api

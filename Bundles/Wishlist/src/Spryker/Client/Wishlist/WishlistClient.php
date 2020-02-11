@@ -9,10 +9,12 @@ namespace Spryker\Client\Wishlist;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -22,7 +24,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +38,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +52,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +66,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +80,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -92,7 +94,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +108,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +122,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +136,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -148,7 +150,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,9 +164,11 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use WishlistClient::getWishlistByFilter() instead.
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
@@ -176,7 +180,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -192,7 +196,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +210,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -222,7 +226,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -252,5 +256,19 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
             $this->getFactory()->createCartClient(),
             $this
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
+    {
+        return $this->getZedStub()->getWishlistByFilter($wishlistFilterTransfer);
     }
 }

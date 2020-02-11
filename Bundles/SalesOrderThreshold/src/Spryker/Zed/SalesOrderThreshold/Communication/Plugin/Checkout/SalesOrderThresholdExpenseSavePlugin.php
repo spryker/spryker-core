@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SalesOrderThresholdExpenseSavePlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Persists the threshold expenses of the quote in the database.
      *
      * @api

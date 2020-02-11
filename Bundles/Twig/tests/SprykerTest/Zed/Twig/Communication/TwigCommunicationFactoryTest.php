@@ -13,6 +13,7 @@ use Twig\Loader\LoaderInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig
@@ -25,7 +26,7 @@ class TwigCommunicationFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateFilesystemLoaderReturnsTwigLoader()
+    public function testCreateFilesystemLoaderReturnsTwigLoader(): void
     {
         $twigCommunicationFactory = new TwigCommunicationFactory();
         $filesystemLoader = $twigCommunicationFactory->createFilesystemLoader();

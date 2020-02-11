@@ -17,6 +17,7 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductImage
@@ -48,10 +49,17 @@ class ProductImageTransferMapperTest extends Unit
     protected $transferGenerator;
 
     /**
+     * @var \SprykerTest\Zed\ProductImage\ProductImageBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->queryContainer = new ProductImageQueryContainer();
         $this->localeFacade = new LocaleFacade();
         $this->transferGenerator = new ProductImageTransferMapper(
@@ -68,11 +76,19 @@ class ProductImageTransferMapperTest extends Unit
     /**
      * @return void
      */
-    public function testConvertProductImageSetEntitiesIntoTransfer()
+    public function testConvertProductImageSetEntitiesIntoTransfer(): void
     {
-        $transferCollection = $this->reader
-            ->getProductImagesSetCollectionByProductAbstractId(1);
+        // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
 
+        // Act
+        $transferCollection = $this->reader
+            ->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstract());
+
+        // Assert
         foreach ($transferCollection as $transfer) {
             $this->assertInstanceOf(ProductImageSetTransfer::class, $transfer);
 

@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +73,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +89,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +105,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -121,7 +121,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +137,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -153,7 +153,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -169,7 +169,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -185,7 +185,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -201,7 +201,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -217,7 +217,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -233,7 +233,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -249,7 +249,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -265,7 +265,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -281,7 +281,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -297,7 +297,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -313,7 +313,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -329,7 +329,23 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->getFactory()
+            ->createAddress()
+            ->findCustomerAddressByAddressData($addressTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -345,7 +361,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -361,7 +377,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -377,7 +393,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -393,7 +409,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -409,7 +425,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -425,7 +441,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -441,7 +457,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -460,7 +476,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -472,12 +488,13 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     public function saveOrderCustomer(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFactory()
-            ->createCheckoutCustomerOrderSaver()
+            ->createCustomerOrderSaverStrategyResolver()
+            ->resolve($quoteTransfer->getItems())
             ->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -496,7 +513,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -512,7 +529,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -528,7 +545,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -542,7 +559,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -553,5 +570,17 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     public function findCustomerByReference(string $customerReference): CustomerResponseTransfer
     {
         return $this->getFactory()->createCustomerReader()->findCustomerByReference($customerReference);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAllSalutations(): array
+    {
+        return $this->getRepository()->getAllSalutations();
     }
 }

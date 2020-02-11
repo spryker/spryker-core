@@ -9,6 +9,9 @@ namespace Spryker\Zed\Cms\Business\Exception;
 
 use Exception;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class MissingPlaceholdersException extends Exception
 {
 }

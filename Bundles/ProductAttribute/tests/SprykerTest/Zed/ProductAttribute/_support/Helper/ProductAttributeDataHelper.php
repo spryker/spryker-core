@@ -12,6 +12,8 @@ use Generated\Shared\DataBuilder\LocalizedProductManagementAttributeKeyBuilder;
 use Generated\Shared\DataBuilder\ProductManagementAttributeBuilder;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
@@ -30,7 +32,7 @@ class ProductAttributeDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function generateProductManagementAttributeTransfer(array $seedData = [])
+    public function generateProductManagementAttributeTransfer(array $seedData = []): ProductManagementAttributeTransfer
     {
         $productManagementAttributeTransfer = (new ProductManagementAttributeBuilder($seedData))->build();
 
@@ -42,7 +44,7 @@ class ProductAttributeDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer
      */
-    public function generateLocalizedProductManagementAttributeKeyTransfer(array $seedData = [])
+    public function generateLocalizedProductManagementAttributeKeyTransfer(array $seedData = []): LocalizedProductManagementAttributeKeyTransfer
     {
         $localizedProductManagementAttributeKeyTransfer = (new LocalizedProductManagementAttributeKeyBuilder($seedData))->build();
 
@@ -54,7 +56,7 @@ class ProductAttributeDataHelper extends Module
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKey
      */
-    public function haveProductAttributeKeyEntity(array $seedData = [])
+    public function haveProductAttributeKeyEntity(array $seedData = []): SpyProductAttributeKey
     {
         $seedData = $seedData + ['key' => md5(microtime())];
 
@@ -62,7 +64,7 @@ class ProductAttributeDataHelper extends Module
         $productAttributeKeyEntity->fromArray($seedData);
         $productAttributeKeyEntity->save();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAttributeKeyEntity) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAttributeKeyEntity): void {
             $productAttributeKeyEntity->delete();
         });
 
@@ -74,7 +76,7 @@ class ProductAttributeDataHelper extends Module
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute
      */
-    public function haveProductManagementAttributeEntity(array $seedData = [])
+    public function haveProductManagementAttributeEntity(array $seedData = []): SpyProductManagementAttribute
     {
         $seedData = $seedData + [
             'input_type' => 'bar',
@@ -85,7 +87,7 @@ class ProductAttributeDataHelper extends Module
         $productManagementAttributeEntity->fromArray($seedData);
         $productManagementAttributeEntity->save();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productManagementAttributeEntity) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productManagementAttributeEntity): void {
             $productManagementAttributeEntity->delete();
         });
 

@@ -7,14 +7,13 @@
 
 namespace Spryker\Glue\Kernel\Controller;
 
-use Silex\Application;
 use Spryker\Glue\Kernel\ClassResolver\Factory\FactoryResolver;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class AbstractController
 {
     /**
-     * @var \Silex\Application
+     * @var \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
     private $application;
 
@@ -31,11 +30,11 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application|\Spryker\Service\Container\ContainerInterface $application
      *
      * @return $this
      */
-    public function setApplication(Application $application)
+    public function setApplication($application)
     {
         $this->application = $application;
 
@@ -93,7 +92,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Silex\Application
+     * @return \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
     protected function getApplication()
     {

@@ -8,11 +8,13 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DocumentationGeneratorRestApi
@@ -23,6 +25,8 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttribut
  */
 class ResourceTransferAnalyzerTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const REQUEST_SCHEMA_NAME = 'RestTestRequest';
     protected const REQUEST_DATA_SCHEMA_NAME = 'RestTestRequestData';
     protected const REQUEST_ATTRIBUTES_SCHEMA_NAME = 'RestTestRequestAttributes';

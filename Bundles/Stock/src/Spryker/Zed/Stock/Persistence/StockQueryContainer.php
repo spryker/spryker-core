@@ -47,6 +47,7 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
             ->queryStockByNeverOutOfStockAllTypes($idProduct)
             ->useStockQuery()
                 ->filterByName($stockNames, Criteria::IN)
+                ->filterByIsActive(true)
             ->endUse();
     }
 

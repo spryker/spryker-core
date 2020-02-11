@@ -27,7 +27,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,8 +87,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
-     * {@inheritdoc}
-     *
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +101,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -116,7 +115,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -130,7 +129,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -144,7 +143,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

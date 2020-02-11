@@ -4,6 +4,7 @@
         {{ 'You can define a price for the product that will take effect at a date and time in the future. You can define multiple prices on the same period.' | trans }}
     </p>
     {{ editActionButton('/price-product-schedule-gui/import', 'Import via CSV file' | trans) }}
+    {{ createActionButton('/price-product-schedule-gui/create?idProduct='~ idProduct~'&idProductAbstract='~idProductAbstract, 'Add scheduled price' | trans) }}
 </div>
 
 {{ tabs(

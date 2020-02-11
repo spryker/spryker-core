@@ -16,6 +16,7 @@ use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductDiscontinued
@@ -51,7 +52,7 @@ class ProductDiscontinuedFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

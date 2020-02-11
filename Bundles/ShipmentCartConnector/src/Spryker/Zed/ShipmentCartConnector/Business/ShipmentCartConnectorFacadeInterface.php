@@ -16,7 +16,8 @@ interface ShipmentCartConnectorFacadeInterface
 {
     /**
      * Specification:
-     *  - Changes shipment method and shipment expenses based on current currency
+     *  - Changes shipment method and shipment expenses based on current currency for quote level (BC)
+     * or item level shipments.
      *
      * @api
      *
@@ -28,7 +29,7 @@ interface ShipmentCartConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Validates if current shipment method is still valid in cart.
+     *  - Validates if current shipment method is still valid in cart for quote level (BC) or item level shipments.
      *
      * @api
      *

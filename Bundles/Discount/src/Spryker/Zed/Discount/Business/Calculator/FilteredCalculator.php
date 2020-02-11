@@ -25,7 +25,7 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $collectorBuilder
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface[] $calculatorPlugins
      * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface[] $collectedDiscountGroupingPlugins
      * @param \Spryker\Zed\Discount\Business\Filter\DiscountableItemFilterInterface $discountableItemFilter
      */

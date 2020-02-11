@@ -37,21 +37,29 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     protected $priceProductService;
 
     /**
+     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface[]
+     */
+    protected $priceProductFilterExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface $priceProductClient
      * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
+     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface[] $priceProductFilterExpanderPlugins
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
         PriceProductStorageToPriceProductClientInterface $priceProductClient,
-        PriceProductStorageToPriceProductServiceInterface $priceProductService
+        PriceProductStorageToPriceProductServiceInterface $priceProductService,
+        array $priceProductFilterExpanderPlugins
     ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
         $this->priceProductClient = $priceProductClient;
         $this->priceProductService = $priceProductService;
+        $this->priceProductFilterExpanderPlugins = $priceProductFilterExpanderPlugins;
     }
 
     /**
@@ -134,7 +142,13 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      */
     protected function getPriceProductFilterFromProductView(ProductViewTransfer $productViewTransfer): PriceProductFilterTransfer
     {
-        return (new PriceProductFilterTransfer())
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setQuantity($productViewTransfer->getQuantity());
+
+        foreach ($this->priceProductFilterExpanderPlugins as $priceProductFilterExpanderPlugin) {
+            $priceProductFilterTransfer = $priceProductFilterExpanderPlugin->expand($productViewTransfer, $priceProductFilterTransfer);
+        }
+
+        return $priceProductFilterTransfer;
     }
 }

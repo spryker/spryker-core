@@ -18,7 +18,7 @@ use Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig;
 class ProductTaxSetByProductAbstractSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Adds product-tax-sets resource as a relationship by the resource id.
      *  - Identifier of passed resources should contain abstract product sku.
      *
@@ -37,7 +37,7 @@ class ProductTaxSetByProductAbstractSkuResourceRelationshipPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -13,6 +13,7 @@ use Spryker\Zed\Chart\ChartConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Chart
@@ -29,14 +30,14 @@ class ChartFacadeTest extends Unit
     protected $chartFacade;
 
     /**
-     * @var \Spryker\Zed\Chart\Business\ChartConfig
+     * @var \Spryker\Zed\Chart\ChartConfig
      */
     protected $chartConfig;
 
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -47,7 +48,7 @@ class ChartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDefaultChartType()
+    public function testDefaultChartType(): void
     {
         $defaultType = $this->chartFacade->getDefaultChartType();
 
@@ -57,7 +58,7 @@ class ChartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testChartTypes()
+    public function testChartTypes(): void
     {
         $types = $this->chartFacade->getChartTypes();
 

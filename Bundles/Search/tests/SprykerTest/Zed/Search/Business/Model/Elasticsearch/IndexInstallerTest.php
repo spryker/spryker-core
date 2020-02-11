@@ -15,10 +15,12 @@ use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
+use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 use Spryker\Zed\Search\SearchConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search
@@ -33,7 +35,7 @@ class IndexInstallerTest extends Unit
     /**
      * @return void
      */
-    public function testIndexInstallerCreatesIndexesIfTheyNotExist()
+    public function testIndexInstallerCreatesIndexesIfTheyNotExist(): void
     {
         $indexDefinitions = [
             $this->createIndexDefinition('foo'),
@@ -66,7 +68,7 @@ class IndexInstallerTest extends Unit
      *
      * @return void
      */
-    public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist()
+    public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist(): void
     {
         $indexMock = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
@@ -90,7 +92,7 @@ class IndexInstallerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    protected function createIndexInstallerMock($indexMock)
+    protected function createIndexInstallerMock($indexMock): SearchInstallerInterface
     {
         $indexDefinitions = [
             $this->createIndexDefinition('foo', [
@@ -118,7 +120,7 @@ class IndexInstallerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
-    protected function createIndexDefinitionLoaderMock(array $indexDefinitions)
+    protected function createIndexDefinitionLoaderMock(array $indexDefinitions): IndexDefinitionLoaderInterface
     {
         $indexDefinitionLoader = $this->getMockBuilder(IndexDefinitionLoaderInterface::class)
             ->disableOriginalConstructor()
@@ -137,7 +139,7 @@ class IndexInstallerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\SearchConfig
      */
-    protected function createSearchConfigMock()
+    protected function createSearchConfigMock(): SearchConfig
     {
         $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
             ->disableOriginalConstructor()
@@ -154,7 +156,7 @@ class IndexInstallerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Client
      */
-    protected function createElasticaClientMock($indexMock)
+    protected function createElasticaClientMock($indexMock): Client
     {
         $elasticaClientMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
@@ -171,7 +173,7 @@ class IndexInstallerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function createMessengerMock()
+    protected function createMessengerMock(): LoggerInterface
     {
         $messengerMock = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
@@ -187,7 +189,7 @@ class IndexInstallerTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer
      */
-    protected function createIndexDefinition($name, array $settings = [], array $mappings = [])
+    protected function createIndexDefinition(string $name, array $settings = [], array $mappings = []): ElasticsearchIndexDefinitionTransfer
     {
         $indexDefinition = new ElasticsearchIndexDefinitionTransfer();
         $indexDefinition

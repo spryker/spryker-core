@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport
@@ -27,7 +28,7 @@ class DataSetTest extends Unit
     /**
      * @return void
      */
-    public function testGetValueWithUndefinedKeyThrowsException()
+    public function testGetValueWithUndefinedKeyThrowsException(): void
     {
         $dataSet = $this->tester->getFactory()->createDataSet();
         $this->expectException(DataKeyNotFoundInDataSetException::class);
@@ -37,7 +38,7 @@ class DataSetTest extends Unit
     /**
      * @return void
      */
-    public function testUnsetValueWithUndefinedKeyThrowsException()
+    public function testUnsetValueWithUndefinedKeyThrowsException(): void
     {
         $dataSet = $this->tester->getFactory()->createDataSet();
         $this->expectException(DataKeyNotFoundInDataSetException::class);
@@ -47,7 +48,7 @@ class DataSetTest extends Unit
     /**
      * @return void
      */
-    public function testExchangeArraySetsNewArray()
+    public function testExchangeArraySetsNewArray(): void
     {
         $oldData = ['old'];
         $newData = ['new'];

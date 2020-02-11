@@ -71,12 +71,12 @@ class Drawer implements DrawerInterface
     /**
      * @var int|null
      */
-    protected $fontSizeBig = null;
+    protected $fontSizeBig;
 
     /**
      * @var int|null
      */
-    protected $fontSizeSmall = null;
+    protected $fontSizeSmall;
 
     /**
      * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface
@@ -335,6 +335,7 @@ class Drawer implements DrawerInterface
         foreach ($transitions as $transition) {
             if ($transition->getTarget()->getName() !== $state->getName()) {
                 $hasOnlySelfReferences = false;
+
                 break;
             }
         }

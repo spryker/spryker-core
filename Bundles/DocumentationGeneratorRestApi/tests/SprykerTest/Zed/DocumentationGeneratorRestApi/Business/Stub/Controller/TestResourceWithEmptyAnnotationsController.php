@@ -14,7 +14,7 @@ class TestResourceWithEmptyAnnotationsController
      *
      * @return void
      */
-    public function postAction()
+    public function postAction(): void
     {
     }
 }

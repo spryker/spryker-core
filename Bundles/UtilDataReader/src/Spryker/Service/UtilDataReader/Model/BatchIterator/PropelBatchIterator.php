@@ -78,7 +78,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function current()
     {
@@ -86,9 +86,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function next()
     {
@@ -96,7 +94,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function key()
     {
@@ -104,7 +102,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function valid()
     {
@@ -112,7 +110,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @return void
      */
@@ -123,7 +121,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count()
     {

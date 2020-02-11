@@ -10,7 +10,9 @@ namespace SprykerTest\Zed\Transfer\Business\Model;
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
@@ -23,6 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer
@@ -36,7 +39,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldGenerateExpectedTransfer()
+    public function testExecuteShouldGenerateExpectedTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Test/Transfer/'),
@@ -60,7 +63,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteWithStrictnessTransfer()
+    public function testExecuteWithStrictnessTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Test/Transfer/'),
@@ -87,7 +90,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldGenerateExpectedMergedTransfer()
+    public function testExecuteShouldGenerateExpectedMergedTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Project/Test/Transfer/'),
@@ -114,7 +117,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldGenerateExpectedDeprecatedTransfer()
+    public function testExecuteShouldGenerateExpectedDeprecatedTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Deprecated/Transfer/'),
@@ -138,7 +141,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldGenerateExpectedMergedDeprecatedTransfer()
+    public function testExecuteShouldGenerateExpectedMergedDeprecatedTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Vendor/Deprecated/Transfer/'),
@@ -164,7 +167,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return string
      */
-    protected function getTargetDirectory()
+    protected function getTargetDirectory(): string
     {
         return codecept_output_dir();
     }
@@ -172,7 +175,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return \Symfony\Component\Console\Logger\ConsoleLogger
      */
-    protected function getMessenger()
+    protected function getMessenger(): ConsoleLogger
     {
         $messenger = new ConsoleLogger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
 
@@ -182,7 +185,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
-    protected function getClassGenerator()
+    protected function getClassGenerator(): GeneratorInterface
     {
         $targetDirectory = $this->getTargetDirectory();
 
@@ -195,7 +198,7 @@ class TransferGeneratorTest extends Unit
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    protected function getTransferDefinitionBuilder($sourceDirectories, ?TransferConfig $config = null)
+    protected function getTransferDefinitionBuilder(array $sourceDirectories, ?TransferConfig $config = null): DefinitionBuilderInterface
     {
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
@@ -212,7 +215,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Transfer\TransferConfig
      */
-    protected function getTransferConfigMock()
+    protected function getTransferConfigMock(): TransferConfig
     {
         return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
     }

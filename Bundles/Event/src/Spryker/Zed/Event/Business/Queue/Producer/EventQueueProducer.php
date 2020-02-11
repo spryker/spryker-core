@@ -13,6 +13,7 @@ use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Dependency\Client\EventToQueueInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
+use Spryker\Zed\Event\EventConfig;
 
 class EventQueueProducer implements EventQueueProducerInterface
 {
@@ -27,15 +28,23 @@ class EventQueueProducer implements EventQueueProducerInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\Event\EventConfig
+     */
+    protected $eventConfig;
+
+    /**
      * @param \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface $queueClient
      * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\Event\EventConfig $eventConfig
      */
     public function __construct(
         EventToQueueInterface $queueClient,
-        EventToUtilEncodingInterface $utilEncodingService
+        EventToUtilEncodingInterface $utilEncodingService,
+        EventConfig $eventConfig
     ) {
         $this->queueClient = $queueClient;
         $this->utilEncodingService = $utilEncodingService;
+        $this->eventConfig = $eventConfig;
     }
 
     /**
@@ -48,12 +57,11 @@ class EventQueueProducer implements EventQueueProducerInterface
      */
     public function enqueueListenerBulk($eventName, array $transfers, $listener, $queuePoolName = null): void
     {
-        $queueSendMessageTransfers = [];
-        foreach ($transfers as $transfer) {
-            $queueSendMessageTransfers[] = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);
-        }
+        $transfers = array_chunk($transfers, $this->eventConfig->getEnqueueEventMessageChunkSize());
 
-        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $queueSendMessageTransfers);
+        foreach ($transfers as $transfersChunk) {
+            $this->enqueueListenerBulkChunk($eventName, $transfersChunk, $listener, $queuePoolName);
+        }
     }
 
     /**
@@ -69,6 +77,24 @@ class EventQueueProducer implements EventQueueProducerInterface
         $messageTransfer = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);
 
         $this->queueClient->sendMessage(EventConstants::EVENT_QUEUE, $messageTransfer);
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param string $listener
+     * @param string|null $queuePoolName
+     *
+     * @return void
+     */
+    protected function enqueueListenerBulkChunk(string $eventName, array $transfers, string $listener, ?string $queuePoolName = null): void
+    {
+        $queueSendMessageTransfers = [];
+        foreach ($transfers as $transfer) {
+            $queueSendMessageTransfers[] = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);
+        }
+
+        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $queueSendMessageTransfers);
     }
 
     /**

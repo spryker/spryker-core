@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class UserLocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Gets locale from UserTransfer.
      *
      * @api

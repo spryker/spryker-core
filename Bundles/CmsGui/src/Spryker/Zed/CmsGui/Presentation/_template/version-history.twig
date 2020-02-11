@@ -66,31 +66,33 @@
 {% endblock %}
 {% endembed %}
 
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
-{% block widget_content %}
+{%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
+    {% block widget_content %}
 
-    {% if hasTemplateDiff == false and versionDiffClass == 'diff' %}
-    <div class="well">
-        {% filter trans|raw %}
-            <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> The Template has changed, Auto-Diff is not possible for placeholders.</p>
-        {% endfilter %}
-    </div>
-    {% endif %}
+        {% if hasTemplateDiff == false and versionDiffClass == 'diff' %}
+        <div class="well">
+            {% filter trans|raw %}
+                <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> The Template has changed, Auto-Diff is not possible for placeholders.</p>
+            {% endfilter %}
+        </div>
+        {% endif %}
 
-    {% set locales = [] %}
-    {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
-        {% for translation in glossaryAttribute.translations %}
-            {% set locales = locales|merge({(translation.localeName) : ''}) %}
+        {% set locales = [] %}
+        {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
+            {% for translation in glossaryAttribute.translations %}
+                {% set locales = locales|merge({(translation.localeName) : ''}) %}
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
 
-    {% for localeName,value in locales %}
-        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': localeName, 'collapsed': false , 'hasError': false} %}
-            {% block content %}
-                {{ include ('@CmsGui/_partial/placeholders.twig') }}
-            {% endblock %}
-        {% endembed %}
-    {% endfor %}
+        {% for localeName,value in locales %}
+            {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': localeName, 'collapsed': false , 'hasError': false} %}
+                {% block content %}
+                    {{ include ('@CmsGui/_partial/placeholders.twig') }}
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
 
-{% endblock %}
-{% endembed %}
+    {% endblock %}
+    {% endembed %}
+{% endif %}

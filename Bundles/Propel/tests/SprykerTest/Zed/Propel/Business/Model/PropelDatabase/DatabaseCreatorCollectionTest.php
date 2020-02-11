@@ -13,6 +13,7 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -29,7 +30,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
         $databaseCreatorCollection = new DatabaseCreatorCollection();
@@ -40,7 +41,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasReturnTrue()
+    public function testHasReturnTrue(): void
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
         $databaseCreatorCollection = new DatabaseCreatorCollection();
@@ -52,7 +53,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasReturnFalse()
+    public function testHasReturnFalse(): void
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
         $databaseCreatorCollection = new DatabaseCreatorCollection();
@@ -64,7 +65,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGet()
+    public function testGet(): void
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
         $databaseCreatorCollection = new DatabaseCreatorCollection();
@@ -76,7 +77,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
-    private function getDatabaseCreatorMock()
+    private function getDatabaseCreatorMock(): DatabaseCreatorInterface
     {
         $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->setMethods(['getEngine', 'createIfNotExists'])->getMock();
         $databaseCreatorMock->expects($this->once())->method('getEngine')->willReturn(self::TEST_ENGINE);

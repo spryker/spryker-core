@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <transfers
-    xmlns="spryker:transfer-01"
+    xmlns="spryker:databuilder-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
 
     <transfer name="ProductReview">
-        <property name="rating" dataBuilderRule="numberBetween(1,5)" />
-        <property name="summary" dataBuilderRule="sentence(2)" />
-        <property name="description" dataBuilderRule="sentence(6)" />
-        <property name="nickname" dataBuilderRule="name(2)" />
+        <property name="rating" dataBuilderRule="numberBetween(1,5)"/>
+        <property name="summary" dataBuilderRule="sentence(2)"/>
+        <property name="description" dataBuilderRule="sentence(6)"/>
+        <property name="nickname" dataBuilderRule="name(2)"/>
     </transfer>
 
 </transfers>

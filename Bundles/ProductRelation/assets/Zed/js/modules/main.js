@@ -17,13 +17,13 @@ $(document).ready(function() {
         selectedProductContainer: $('#selected-product'),
         selectProductNotice: $('#select-product-notice'),
         productTable: $('#product-table'),
-        selectProductUrl: '/product-relation/product-selector/index?id-product-abstract='
+        selectProductUrl: '/product-relation/product-selector?id-product-abstract='
     });
 
     new SqlQueryBuilder({
         id: $('#product_relation_idProductRelation').val(),
         queryBuilderElement: $('#builder'),
-        filtersUrl: '/product-relation/queryBuilder/loadFilterSet?id-product-relation=',
+        filtersUrl: '/product-relation/query-builder/load-filter-set?id-product-relation=',
         productRelationQuerySet: $('#product_relation_querySet'),
         productRelationForm: $('#form-product-relation'),
         productRelationFormSubmitBtn: $('#submit-relation'),

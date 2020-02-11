@@ -9,14 +9,23 @@ namespace SprykerTest\Zed\ProductPackagingUnit;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OmsProcessTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OmsStateTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -71,32 +80,24 @@ class ProductPackagingUnitBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $boxProductConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
-     * @param int $quoteAmount
-     * @param int $quoteQuantity
+     * @param int $itemAmount
+     * @param int $itemQuantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function createCartChangeTransferForProductPackagingUnitValidation(
         ProductConcreteTransfer $boxProductConcreteTransfer,
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
-        int $quoteAmount,
-        int $quoteQuantity
+        int $itemAmount,
+        int $itemQuantity
     ): CartChangeTransfer {
         $cartChangeTransfer = (new CartChangeTransfer())
-            ->setQuote(
-                (new QuoteTransfer())
-                    ->addItem(
-                        (new ItemTransfer())
-                            ->setSku($boxProductConcreteTransfer->getSku())
-                            ->setGroupKey(uniqid())
-                            ->setQuantity($quoteQuantity)
-                    )
-            )
+            ->setQuote((new QuoteTransfer()))
             ->addItem(
                 (new ItemTransfer())
                     ->setSku($boxProductConcreteTransfer->getSku())
-                    ->setQuantity($quoteQuantity)
-                    ->setAmount($quoteAmount)
+                    ->setQuantity($itemQuantity)
+                    ->setAmount($itemAmount)
                     ->setAmountSalesUnit($productMeasurementSalesUnitTransfer)
                     ->setGroupKey(uniqid())
             );
@@ -171,19 +172,122 @@ class ProductPackagingUnitBusinessTester extends Actor
 
     /**
      * @param string $sku
-     * @param int|null $itemQuantity
-     * @param int|null $itemAmount
+     * @param int $itemQuantity
+     * @param \Spryker\DecimalObject\Decimal $itemAmount
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function createProductPackagingUnitItemTransfer(
         string $sku,
-        int $itemQuantity = 1,
-        int $itemAmount = 1
+        int $itemQuantity,
+        Decimal $itemAmount
     ): ItemTransfer {
         return (new ItemTransfer())
             ->setSku($sku)
             ->setQuantity($itemQuantity)
             ->setAmount($itemQuantity);
+    }
+
+    /**
+     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $amount
+     * @param int $itemsCount
+     * @param bool $selfLead
+     *
+     * @return array
+     */
+    public function haveProductPackagingUnitWithSalesOrderItems(int $quantity, Decimal $amount, int $itemsCount, bool $selfLead = false): array
+    {
+        [$leadProductConcreteTransfer, $packagingUnitProductConcreteTransfer] = $this->havePackagingUnitAndLead($selfLead);
+
+        $packagingUnitProductPackagingUnitType = $this->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => 'packagingUnit']);
+
+        $this->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $leadProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $packagingUnitProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $packagingUnitProductPackagingUnitType->getIdProductPackagingUnitType(),
+            SpyProductPackagingUnitEntityTransfer::DEFAULT_AMOUNT => 1,
+        ]);
+
+        $stateCollectionTransfer = $this->haveSalesOrderWithItems(
+            $itemsCount,
+            $quantity,
+            $packagingUnitProductConcreteTransfer->getSku(),
+            $amount,
+            $leadProductConcreteTransfer->getSku()
+        );
+
+        return [
+            $stateCollectionTransfer,
+            $leadProductConcreteTransfer,
+        ];
+    }
+
+    /**
+     * @param int $itemsCount
+     * @param int $quantity
+     * @param string $sku
+     * @param \Spryker\DecimalObject\Decimal|null $amount
+     * @param string|null $amountSku
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function haveSalesOrderWithItems(int $itemsCount, int $quantity, string $sku, ?Decimal $amount = null, ?string $amountSku = null): OmsStateCollectionTransfer
+    {
+        $this->haveStore([StoreTransfer::NAME => 'DE']);
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::SKU => $sku,
+            ItemTransfer::QUANTITY => $quantity,
+            ItemTransfer::AMOUNT => $amount,
+        ]))->build();
+        $stateCollectionTransfer = new OmsStateCollectionTransfer();
+        $salesOrderEntity = $this->haveSalesOrderEntity(array_fill(0, $itemsCount, $itemTransfer));
+
+        $salesOrderEntity
+            ->setStore('DE')
+            ->save();
+
+        foreach ($salesOrderEntity->getItems() as $orderItemEntity) {
+            $orderItemEntity
+                ->setSku($sku)
+                ->setQuantity($quantity)
+                ->setAmountSku($amountSku)
+                ->setAmount($amount)
+                ->save();
+
+            $stateName = $orderItemEntity->getState()->getName();
+            $processName = $orderItemEntity->getProcess()->getName();
+            $stateCollectionTransfer->addState(
+                $stateName,
+                (new OmsStateTransfer())
+                    ->setName($stateName)
+                    ->addProcess($processName, (new OmsProcessTransfer())->setName($processName))
+            );
+        }
+
+        return $stateCollectionTransfer;
+    }
+
+    /**
+     * @param bool $selfLead
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function havePackagingUnitAndLead(bool $selfLead): array
+    {
+        $leadProductConcreteTransfer = $this->haveProduct();
+        if ($selfLead) {
+            return [
+                $leadProductConcreteTransfer,
+                $leadProductConcreteTransfer,
+            ];
+        }
+
+        $packagingUnitProductConcreteTransfer = $this->haveProduct();
+
+        return [
+            $leadProductConcreteTransfer,
+            $packagingUnitProductConcreteTransfer,
+        ];
     }
 }

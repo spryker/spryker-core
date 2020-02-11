@@ -4,14 +4,15 @@
   "description": "Silex module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/silexphp": "^0.1.0 || ^0.2.0"
+    "php": ">=7.2",
+    "spryker/silexphp": "^0.3.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {},
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

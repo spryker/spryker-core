@@ -14,6 +14,7 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProduc
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAlternativeProductLabelConnector

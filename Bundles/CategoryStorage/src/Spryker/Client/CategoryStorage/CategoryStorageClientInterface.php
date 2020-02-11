@@ -33,4 +33,17 @@ interface CategoryStorageClientInterface
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
     public function getCategoryNodeById($idCategoryNode, $localeName);
+
+    /**
+     * Specification:
+     * - Returns category nodes storage data by array of id category node and locale name.
+     *
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array;
 }

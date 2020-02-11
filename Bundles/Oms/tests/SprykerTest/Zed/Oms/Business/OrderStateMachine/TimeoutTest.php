@@ -12,9 +12,11 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
+use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms
@@ -32,7 +34,7 @@ class TimeoutTest extends Unit
     /**
      * @return void
      */
-    public function testCheckTimeouts()
+    public function testCheckTimeouts(): void
     {
         $salesOrderItem1 = $this->createSalesOrderItem(10, 1, static::EVENT_PAY);
         $salesOrderItem2 = $this->createSalesOrderItem(11, 1, static::EVENT_PAY);
@@ -75,7 +77,7 @@ class TimeoutTest extends Unit
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function createSalesOrderItem($idSalesOrderItem, $idSalesOrder, $eventName)
+    protected function createSalesOrderItem(int $idSalesOrderItem, int $idSalesOrder, string $eventName): SpySalesOrderItem
     {
         return (new SpySalesOrderItem())
             ->setIdSalesOrderItem($idSalesOrderItem)
@@ -86,7 +88,7 @@ class TimeoutTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
      */
-    protected function createOrderStateMachine()
+    protected function createOrderStateMachine(): OrderStateMachine
     {
         return $this->getMockBuilder(OrderStateMachine::class)
             ->disableOriginalConstructor()
@@ -99,7 +101,7 @@ class TimeoutTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
      */
-    private function createOmsTimeoutMock()
+    private function createOmsTimeoutMock(): TimeoutInterface
     {
         return $this->getMockBuilder(Timeout::class)
             ->disableOriginalConstructor()

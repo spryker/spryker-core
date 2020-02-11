@@ -57,7 +57,7 @@ class BatchResult implements BatchResultInterface
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer|null
      */
-    protected $processedLocale = null;
+    protected $processedLocale;
 
     /**
      * @return int

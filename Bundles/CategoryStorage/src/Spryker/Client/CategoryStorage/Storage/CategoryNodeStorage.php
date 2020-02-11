@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
+use Spryker\Client\CategoryStorage\Exception\CategoryNodeDataCacheNotFoundException;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
@@ -26,6 +27,11 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      * @var \Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
+
+    /**
+     * @var array
+     */
+    protected static $categoryNodeDataCache = [];
 
     /**
      * @param \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface $storageClient
@@ -56,6 +62,57 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
+     * @param int[] $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array
+    {
+        $cachedCategoryNodeStorageData = $this->getCategoryNodeDataCacheByIdCategoryNodesAndLocaleName($categoryNodeIds, $localeName);
+        $categoryNodeIds = array_diff($categoryNodeIds, array_keys($cachedCategoryNodeStorageData));
+
+        if (!$categoryNodeIds) {
+            return $cachedCategoryNodeStorageData;
+        }
+
+        $categoryNodes = $this->getStorageDataByNodeIds($categoryNodeIds, $localeName);
+
+        $categoryNodeStorageTransfers = [];
+        foreach ($categoryNodes as $categoryNode) {
+            $categoryNodeStorageTransfers[] = $this->mapCategoryNodeStorageDataToCategoryNodeStorageTransfer($categoryNode, $localeName);
+        }
+
+        return array_merge($cachedCategoryNodeStorageData, $categoryNodeStorageTransfers);
+    }
+
+    /**
+     * @param string $categoryNodeStorageData
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer|null
+     */
+    protected function mapCategoryNodeStorageDataToCategoryNodeStorageTransfer(string $categoryNodeStorageData, string $localeName): ?CategoryNodeStorageTransfer
+    {
+        $decodedCategoryNodeStorageData = json_decode($categoryNodeStorageData, true);
+
+        if (!$decodedCategoryNodeStorageData) {
+            return null;
+        }
+
+        $categoryNodeStorageTransfer = (new CategoryNodeStorageTransfer())
+            ->fromArray($decodedCategoryNodeStorageData, true);
+
+        $this->cacheCategoryNodeDataByIdCategoryNodeAndLocaleName(
+            $categoryNodeStorageTransfer->getNodeId(),
+            $localeName,
+            $categoryNodeStorageTransfer
+        );
+
+        return $categoryNodeStorageTransfer;
+    }
+
+    /**
      * @param int $idCategoryNode
      * @param string $localeName
      *
@@ -71,6 +128,22 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $categoryData = $this->storageClient->get($categoryNodeKey);
 
         return $categoryData;
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function getStorageDataByNodeIds(array $categoryNodeIds, string $localeName): array
+    {
+        $categoryNodeKeys = [];
+        foreach ($categoryNodeIds as $categoryNodeId) {
+            $categoryNodeKeys[] = $this->generateKey($categoryNodeId, $localeName);
+        }
+
+        return $this->storageClient->getMulti($categoryNodeKeys);
     }
 
     /**
@@ -142,16 +215,79 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
 
     /**
      * @param int $idCategoryNode
-     * @param string $locale
+     * @param string $localeName
      *
      * @return string
      */
-    protected function generateKey($idCategoryNode, $locale)
+    protected function generateKey(int $idCategoryNode, string $localeName): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setReference($idCategoryNode);
-        $synchronizationDataTransfer->setLocale($locale);
+        $synchronizationDataTransfer->setReference((string)$idCategoryNode);
+        $synchronizationDataTransfer->setLocale($localeName);
 
-        return $this->synchronizationService->getStorageKeyBuilder(CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param string $localeName
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer|null $categoryNodeStorageTransfer
+     *
+     * @return void
+     */
+    protected function cacheCategoryNodeDataByIdCategoryNodeAndLocaleName(
+        int $idCategoryNode,
+        string $localeName,
+        ?CategoryNodeStorageTransfer $categoryNodeStorageTransfer
+    ): void {
+        static::$categoryNodeDataCache[$idCategoryNode][$localeName] = $categoryNodeStorageTransfer;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param string $localeName
+     *
+     * @throws \Spryker\Client\CategoryStorage\Exception\CategoryNodeDataCacheNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
+     */
+    protected function getCategoryNodeDataCacheByIdCategoryNodeAndLocaleName(int $idCategoryNode, string $localeName): CategoryNodeStorageTransfer
+    {
+        if (!$this->hasCategoryNodeDataCacheByIdCategoryNodeAndLocaleName($idCategoryNode, $localeName)) {
+            throw new CategoryNodeDataCacheNotFoundException();
+        }
+
+        return static::$categoryNodeDataCache[$idCategoryNode][$localeName];
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    protected function hasCategoryNodeDataCacheByIdCategoryNodeAndLocaleName(int $idCategoryNode, string $localeName): bool
+    {
+        return isset(static::$categoryNodeDataCache[$idCategoryNode][$localeName]);
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getCategoryNodeDataCacheByIdCategoryNodesAndLocaleName(array $categoryNodeIds, string $localeName)
+    {
+        $cachedCategoryNodeData = [];
+        foreach ($categoryNodeIds as $idCategoryNode) {
+            if ($this->hasCategoryNodeDataCacheByIdCategoryNodeAndLocaleName($idCategoryNode, $localeName)) {
+                $cachedCategoryNodeData[$idCategoryNode] = $this->getCategoryNodeDataCacheByIdCategoryNodeAndLocaleName($idCategoryNode, $localeName);
+            }
+        }
+
+        return $cachedCategoryNodeData;
     }
 }

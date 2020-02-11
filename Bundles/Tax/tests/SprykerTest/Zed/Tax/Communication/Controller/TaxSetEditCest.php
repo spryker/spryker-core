@@ -12,6 +12,7 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Tax
@@ -27,11 +28,11 @@ class TaxSetEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxCommunicationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Edit Tax Set');
+        $i->seeBreadcrumbNavigation('Taxes / Tax Sets / Edit Tax Set');
     }
 
     /**
@@ -39,7 +40,7 @@ class TaxSetEditCest
      *
      * @return void
      */
-    public function dataIsProvided(TaxCommunicationTester $i)
+    public function dataIsProvided(TaxCommunicationTester $i): void
     {
         $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
         $i->clickDataTableEditButton();

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-use Generated\Shared\Transfer\StockProductTransfer;
-
 class ProductManagementToStockBridge implements ProductManagementToStockInterface
 {
     /**
@@ -22,37 +20,6 @@ class ProductManagementToStockBridge implements ProductManagementToStockInterfac
     public function __construct($stockFacade)
     {
         $this->stockFacade = $stockFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
-     *
-     * @return int
-     */
-    public function createStockProduct(StockProductTransfer $stockProductTransfer)
-    {
-        return $this->stockFacade->createStockProduct($stockProductTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
-     *
-     * @return int
-     */
-    public function updateStockProduct(StockProductTransfer $stockProductTransfer)
-    {
-        return $this->stockFacade->updateStockProduct($stockProductTransfer);
-    }
-
-    /**
-     * @param string $sku
-     * @param string $stockType
-     *
-     * @return bool
-     */
-    public function hasStockProduct($sku, $stockType)
-    {
-        return $this->stockFacade->hasStockProduct($sku, $stockType);
     }
 
     /**

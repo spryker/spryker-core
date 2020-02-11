@@ -9,6 +9,7 @@
         <property name="isActive" type="bool"/>
         <property name="status" type="string"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CompanyResponse">
@@ -19,8 +20,8 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="ResponseMessage">
@@ -28,7 +29,11 @@
     </transfer>
 
     <transfer name="CompanyCollection">
-        <property name="companies" type="Company[]" singular="company" />
+        <property name="companies" type="Company[]" singular="company"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
     </transfer>
 
 </transfers>

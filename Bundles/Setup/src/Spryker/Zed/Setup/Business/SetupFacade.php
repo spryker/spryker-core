@@ -65,7 +65,7 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

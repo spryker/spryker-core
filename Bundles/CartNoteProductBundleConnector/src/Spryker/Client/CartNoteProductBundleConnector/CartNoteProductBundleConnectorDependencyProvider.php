@@ -34,9 +34,9 @@ class CartNoteProductBundleConnectorDependencyProvider extends AbstractDependenc
      */
     protected function addProductBundleClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_BUNDLE, function (Container $container) {
             return new CartNoteProductBundleConnectorToProductBundleClientBridge($container->getLocator()->productBundle()->client());
-        };
+        });
 
         return $container;
     }

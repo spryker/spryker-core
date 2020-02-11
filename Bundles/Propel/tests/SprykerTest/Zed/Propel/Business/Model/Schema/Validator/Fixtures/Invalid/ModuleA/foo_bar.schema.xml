@@ -7,13 +7,13 @@
     package="Package">
 
     <table name="table_a" phpName="TableA">
-        <column name="column_a" type="INTEGER" />
-        <column name="column_b" type="INTEGER" />
+        <column name="column_a" type="INTEGER"/>
+        <column name="column_b" type="INTEGER"/>
     </table>
 
     <table name="table_b" phpName="TableB">
-        <column name="column_a" type="INTEGER" />
-        <column name="column_b" type="INTEGER" />
+        <column name="column_a" type="INTEGER"/>
+        <column name="column_b" type="INTEGER"/>
     </table>
 
 </database>

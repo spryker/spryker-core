@@ -15,6 +15,8 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_NETWORK = 'util network service';
 
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -23,6 +25,7 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addUtilNetworkService($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -37,6 +40,20 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::SERVICE_UTIL_NETWORK] = function (Container $container) {
             return new ZedRequestToUtilNetworkBridge($container->getLocator()->utilNetwork()->service());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
+            return $container->getLocator()->zedRequest()->client();
+        });
 
         return $container;
     }

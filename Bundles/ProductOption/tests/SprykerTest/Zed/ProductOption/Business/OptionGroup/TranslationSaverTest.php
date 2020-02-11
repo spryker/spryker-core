@@ -17,6 +17,7 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -30,7 +31,7 @@ class TranslationSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testAddValueTranslationsShouldTranslateProvidedValues()
+    public function testAddValueTranslationsShouldTranslateProvidedValues(): void
     {
         $translationSaver = $this->createAddTranslationSaverWithMocks();
 
@@ -48,7 +49,7 @@ class TranslationSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testAddGroupNameTranslationsShouldTranslateProvidedValues()
+    public function testAddGroupNameTranslationsShouldTranslateProvidedValues(): void
     {
         $translationSaver = $this->createAddTranslationSaverWithMocks();
 
@@ -67,7 +68,7 @@ class TranslationSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testDeleteTranslationShouldTriggerGlossaryDeleteRequest()
+    public function testDeleteTranslationShouldTriggerGlossaryDeleteRequest(): void
     {
         $glossaryFacadeMock = $this->createGlossaryFacadeMock();
         $glossaryFacadeMock
@@ -88,7 +89,7 @@ class TranslationSaverTest extends MockProvider
     protected function createTranslationSaver(
         ?ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null,
         ?ProductOptionToLocaleFacadeInterface $localeFacadeMock = null
-    ) {
+    ): TranslationSaver {
         if (!$glossaryFacadeMock) {
             $glossaryFacadeMock = $this->createGlossaryFacadeMock();
         }
@@ -106,7 +107,7 @@ class TranslationSaverTest extends MockProvider
     /**
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver
      */
-    protected function createAddTranslationSaverWithMocks()
+    protected function createAddTranslationSaverWithMocks(): TranslationSaver
     {
         $glossaryFacadeMock = $this->createGlossaryFacadeMock();
         $glossaryFacadeMock->expects($this->exactly(2))

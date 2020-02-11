@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -70,7 +70,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +86,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +102,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -118,7 +118,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,7 +162,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -178,7 +178,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -194,7 +194,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -210,7 +210,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -226,7 +226,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -242,7 +242,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -259,7 +259,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -277,7 +277,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -295,7 +295,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

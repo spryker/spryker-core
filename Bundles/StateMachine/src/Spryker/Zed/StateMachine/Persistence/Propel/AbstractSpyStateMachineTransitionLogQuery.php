@@ -20,4 +20,4 @@ use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineTransitionLogQuery as B
  */
 abstract class AbstractSpyStateMachineTransitionLogQuery extends BaseSpyStateMachineTransitionLogQuery
 {
-} // SpyStateMachineTransitionLogQuery
+}

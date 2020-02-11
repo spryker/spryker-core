@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\Locator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel
@@ -24,7 +25,7 @@ class LocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldReturnBundleProxy()
+    public function testCallShouldReturnBundleProxy(): void
     {
         $locator = Locator::getInstance();
 

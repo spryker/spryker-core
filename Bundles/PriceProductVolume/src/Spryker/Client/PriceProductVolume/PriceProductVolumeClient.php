@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class PriceProductVolumeClient extends AbstractClient implements PriceProductVolumeClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class PriceProductVolumeClient extends AbstractClient implements PriceProductVol
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

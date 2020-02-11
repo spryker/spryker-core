@@ -15,6 +15,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryF
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Api
@@ -32,7 +33,7 @@ class PaginationByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -40,7 +41,7 @@ class PaginationByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaults()
+    public function testProcessWithDefaults(): void
     {
         $config = new ApiConfig();
         $processor = new PaginationByQueryFilterPreProcessor($config);
@@ -56,7 +57,7 @@ class PaginationByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageTwo()
+    public function testProcessWithDefaultsPageTwo(): void
     {
         $config = new ApiConfig();
         $processor = new PaginationByQueryFilterPreProcessor($config);
@@ -76,7 +77,7 @@ class PaginationByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithCustomLimit()
+    public function testProcessWithCustomLimit(): void
     {
         $config = new ApiConfig();
         $processor = new PaginationByQueryFilterPreProcessor($config);
@@ -96,7 +97,7 @@ class PaginationByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithTooHighLimit()
+    public function testProcessWithTooHighLimit(): void
     {
         $config = new ApiConfig();
         $processor = new PaginationByQueryFilterPreProcessor($config);

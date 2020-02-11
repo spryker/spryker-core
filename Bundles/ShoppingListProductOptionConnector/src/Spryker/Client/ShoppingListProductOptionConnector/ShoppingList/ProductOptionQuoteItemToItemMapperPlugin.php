@@ -17,7 +17,7 @@ use Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapper
 class ProductOptionQuoteItemToItemMapperPlugin extends AbstractPlugin implements QuoteItemToItemMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets group key of "itemTransfer" as the provided "quoteItemTransfer" group key if they have the same set of product options.
      *
      * @api

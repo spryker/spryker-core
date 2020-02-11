@@ -10,6 +10,9 @@ namespace Spryker\Zed\Search;
 use Spryker\Shared\Search\SearchConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Search\SearchConfig getSharedConfig()
+ */
 class SearchConfig extends AbstractBundleConfig
 {
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
@@ -54,6 +57,8 @@ class SearchConfig extends AbstractBundleConfig
     public const INDEX_CLOSE_STATE = 'close';
 
     /**
+     * @deprecated Will be removed without replacement. The type will be resolved based on the source identifier, provider for search.
+     *
      * @return string
      */
     public function getElasticaDocumentType()
@@ -62,6 +67,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getReindexUrl()` instead.
+     *
      * @return string
      */
     public function getReindexUrl()
@@ -74,6 +81,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getJsonSchemaDefinitionDirectories()` instead.
+     *
      * @return array
      */
     public function getJsonIndexDefinitionDirectories()
@@ -83,7 +92,7 @@ class SearchConfig extends AbstractBundleConfig
         ];
 
         $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/IndexMap/';
-        if (glob($applicationTransferGlobPattern)) {
+        if (glob($applicationTransferGlobPattern, GLOB_NOSORT | GLOB_ONLYDIR)) {
             $directories[] = $applicationTransferGlobPattern;
         }
 
@@ -91,6 +100,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getClassTargetDirectory()` instead.
+     *
      * @return string
      */
     public function getClassTargetDirectory()
@@ -99,6 +110,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getBlacklistSettingsForIndexUpdate()` instead.
+     *
      * @return string[]
      */
     public function getBlacklistSettingsForIndexUpdate(): array
@@ -107,6 +120,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getStaticIndexSettings()` instead.
+     *
      * @return string[]
      */
     public function getStaticIndexSettings()
@@ -115,6 +130,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getDynamicIndexSettings()` instead.
+     *
      * @return string[]
      */
     public function getDynamicIndexSettings()
@@ -131,10 +148,32 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getPermissionMode()` instead.
+     *
      * @return int
      */
     public function getPermissionMode(): int
     {
         return $this->get(SearchConstants::DIRECTORY_PERMISSION, 0777);
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getIndexMapClassTemplateDirectory()` instead.
+     *
+     * @return string
+     */
+    public function getIndexMapClassTemplateDirectory(): string
+    {
+        return __DIR__ . '/Business/Installer/IndexMap/Generator/Templates/';
+    }
+
+    /**
+     * @deprecated The index suffix will be resolved by `\Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpanderInterface` implementation in Elasticsearch specific vendor module.
+     *
+     * @return string
+     */
+    public function getIndexNameSuffix(): string
+    {
+        return $this->get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
     }
 }

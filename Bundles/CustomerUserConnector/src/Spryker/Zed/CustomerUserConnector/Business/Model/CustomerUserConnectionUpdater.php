@@ -26,7 +26,7 @@ class CustomerUserConnectionUpdater implements CustomerUserConnectionUpdaterInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,6 +18,8 @@ use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfigurator;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface;
 use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
 use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidator;
@@ -45,6 +47,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteWriterPluginExecutor(),
             $this->getStoreFacade(),
             $this->createQuoteValidator(),
+            $this->createQuoteFieldsConfigurator(),
             $this->getQuoteExpandBeforeCreatePlugins()
         );
     }
@@ -123,6 +126,17 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteValidator(
             $this->getQuoteValidatorPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfigurator
+     */
+    public function createQuoteFieldsConfigurator(): QuoteFieldsConfiguratorInterface
+    {
+        return new QuoteFieldsConfigurator(
+            $this->getConfig(),
+            $this->getQuoteFieldsAllowedForSavingProviderPlugins()
         );
     }
 
@@ -212,5 +226,13 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function getQuoteValidatorPlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
+     */
+    public function getQuoteFieldsAllowedForSavingProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER);
     }
 }

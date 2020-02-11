@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class User implements UserInterface
 {
+    use TransactionTrait;
+
     public const USER_BUNDLE_SESSION_KEY = 'user';
 
     /**
@@ -51,8 +53,6 @@ class User implements UserInterface
      * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface[]
      */
     protected $userTransferExpanderPlugins;
-
-    use TransactionTrait;
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
@@ -240,7 +240,7 @@ class User implements UserInterface
     {
         $passwordInfo = password_get_info($password);
 
-        return $passwordInfo['algo'] === 0;
+        return $passwordInfo['algoName'] === 'unknown';
     }
 
     /**

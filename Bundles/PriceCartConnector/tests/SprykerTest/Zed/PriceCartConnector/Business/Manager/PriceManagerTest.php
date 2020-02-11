@@ -14,15 +14,19 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter;
+use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToPriceProductAdapter;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface;
 use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceCartConnector
@@ -34,9 +38,14 @@ use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 class PriceManagerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function testAddPriceToItems()
+    public function testAddPriceToItems(): void
     {
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
         $priceProductFacadeStub->addPriceStub('123', 1000);
@@ -58,7 +67,7 @@ class PriceManagerTest extends Unit
     /**
      * @return void
      */
-    public function testSourceUnitPriceHasHighestPriority()
+    public function testSourceUnitPriceHasHighestPriority(): void
     {
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
         $priceProductFacadeStub->addPriceStub('123', 1000);
@@ -113,12 +122,11 @@ class PriceManagerTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
-     *
      * @return void
      */
-    public function testIsNotPriceAbleWithInvalidPrice()
+    public function testIsNotPriceAbleWithInvalidPrice(): void
     {
+        $this->expectException('Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException');
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
         $priceProductFacadeStub->addPriceStub('123', 1000);
         $priceProductFacadeStub->addValidityStub('123', false);
@@ -142,7 +150,7 @@ class PriceManagerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
      */
-    protected function createPriceFacadeBridgeMock()
+    protected function createPriceFacadeBridgeMock(): PriceCartToPriceInterface
     {
         return $this->getMockBuilder(PriceCartToPriceInterface::class)->getMock();
     }
@@ -156,7 +164,7 @@ class PriceManagerTest extends Unit
     protected function createPriceProductFilterMock(
         PriceCartToPriceProductInterface $priceProductCartToPriceBridge,
         PriceCartToPriceInterface $priceFacadeMock
-    ) {
+    ): PriceProductFilterInterface {
         return new PriceProductFilter(
             $priceProductCartToPriceBridge,
             $priceFacadeMock,
@@ -167,7 +175,7 @@ class PriceManagerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface
      */
-    protected function createCurrencyFacadeBridgeMock()
+    protected function createCurrencyFacadeBridgeMock(): PriceCartConnectorToCurrencyFacadeInterface
     {
         return $this->getMockBuilder(PriceCartConnectorToCurrencyFacadeInterface::class)->getMock();
     }
@@ -177,7 +185,7 @@ class PriceManagerTest extends Unit
      *
      * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager
      */
-    protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub)
+    protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub): PriceManager
     {
         $priceProductCartToPriceAdapter = new PriceCartConnectorToPriceProductAdapter($priceProductFacadeStub);
 
@@ -194,13 +202,21 @@ class PriceManagerTest extends Unit
 
         $priceProductFilterMock = $this->createPriceProductFilterMock($priceProductCartToPriceAdapter, $priceFacadeMock);
 
-        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock);
+        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock, $this->createPriceCartConnectorToPriceProductServiceBridge());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface
+     */
+    protected function createPriceCartConnectorToPriceProductServiceBridge(): PriceCartConnectorToPriceProductServiceInterface
+    {
+        return new PriceCartConnectorToPriceProductServiceBridge($this->tester->getLocator()->priceProduct()->service());
     }
 
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransfer()
+    protected function createCartChangeTransfer(): CartChangeTransfer
     {
         $itemCollection = new CartChangeTransfer();
 
@@ -223,7 +239,7 @@ class PriceManagerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransferWithItem()
+    protected function createCartChangeTransferWithItem(): CartChangeTransfer
     {
         $itemCollection = $this->createCartChangeTransfer();
 

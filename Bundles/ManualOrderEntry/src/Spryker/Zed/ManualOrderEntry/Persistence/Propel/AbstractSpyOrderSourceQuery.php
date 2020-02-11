@@ -20,4 +20,4 @@ use Orm\Zed\ManualOrderEntry\Persistence\Base\SpyOrderSourceQuery as BaseSpyOrde
  */
 abstract class AbstractSpyOrderSourceQuery extends BaseSpyOrderSourceQuery
 {
-} // SpyOrderSourceQuery
+}

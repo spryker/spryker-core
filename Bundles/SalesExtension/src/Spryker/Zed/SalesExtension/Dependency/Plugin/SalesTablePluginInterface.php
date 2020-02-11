@@ -20,7 +20,7 @@ interface SalesTablePluginInterface
      * @param callable $buttonGenerator
      * @param array $item
      *
-     * @return array $item
+     * @return array
      */
     public function formatTableRow(callable $buttonGenerator, array $item): array;
 }

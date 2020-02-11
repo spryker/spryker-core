@@ -20,7 +20,7 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSa
 class MerchantRelationshipPriceDimensionAbstractWriterPlugin extends AbstractPlugin implements PriceDimensionAbstractSaverPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class MerchantRelationshipPriceDimensionAbstractWriterPlugin extends AbstractPlu
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

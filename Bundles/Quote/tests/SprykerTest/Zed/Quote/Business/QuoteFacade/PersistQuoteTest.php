@@ -20,6 +20,7 @@ use Spryker\Zed\Quote\Business\QuoteFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote
@@ -43,7 +44,7 @@ class PersistQuoteTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -58,7 +59,7 @@ class PersistQuoteTest extends Unit
      *
      * @return void
      */
-    public function testPersistQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $expectedQuoteTransfer)
+    public function testPersistQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $expectedQuoteTransfer): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -101,7 +102,7 @@ class PersistQuoteTest extends Unit
     /**
      * @return array
      */
-    public function persistQuoteDataProvider()
+    public function persistQuoteDataProvider(): array
     {
         return [
             'persist empty quote' => $this->providePersistEmptyQuoteData(),
@@ -112,7 +113,7 @@ class PersistQuoteTest extends Unit
     /**
      * @return array
      */
-    protected function providePersistEmptyQuoteData()
+    protected function providePersistEmptyQuoteData(): array
     {
         $quoteTransfer = (new QuoteBuilder())->build();
         $expectedQuoteTransfer = clone $quoteTransfer;
@@ -123,7 +124,7 @@ class PersistQuoteTest extends Unit
     /**
      * @return array
      */
-    protected function providePersistFilteredQuoteData()
+    protected function providePersistFilteredQuoteData(): array
     {
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())->build();

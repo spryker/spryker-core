@@ -12,6 +12,7 @@ use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -27,7 +28,7 @@ class DiscountCreateCest
      *
      * @return void
      */
-    public function createExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
+    public function createExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage): void
     {
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
@@ -39,7 +40,7 @@ class DiscountCreateCest
      *
      * @return void
      */
-    public function createNotExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
+    public function createNotExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage): void
     {
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_NOT_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
@@ -51,7 +52,7 @@ class DiscountCreateCest
      *
      * @return void
      */
-    public function createInvalidDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
+    public function createInvalidDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage): void
     {
         $createPage->createDiscount(DiscountCreatePage::EMPTY_DISCOUNT, ['name' => null]);
         $i->dontSee($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);

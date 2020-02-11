@@ -33,7 +33,7 @@ interface CustomerApiFacadeInterface
      *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function getCustomer($idCustomer);
 

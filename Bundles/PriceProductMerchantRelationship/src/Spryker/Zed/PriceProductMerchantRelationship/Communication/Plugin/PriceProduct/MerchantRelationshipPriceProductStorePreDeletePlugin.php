@@ -20,7 +20,7 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDele
 class MerchantRelationshipPriceProductStorePreDeletePlugin extends AbstractPlugin implements PriceProductStorePreDeletePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

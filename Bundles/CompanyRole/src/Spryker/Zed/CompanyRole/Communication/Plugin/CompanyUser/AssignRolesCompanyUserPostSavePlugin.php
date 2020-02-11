@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AssignRolesCompanyUserPostSavePlugin extends AbstractPlugin implements CompanyUserPostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Saves company user it has at least one assigned company role.
      *
      * @api
@@ -31,7 +31,8 @@ class AssignRolesCompanyUserPostSavePlugin extends AbstractPlugin implements Com
     {
         $companyUser = $companyUserResponseTransfer->getCompanyUser();
 
-        if ($companyUser->getCompanyRoleCollection() !== null &&
+        if (
+            $companyUser->getCompanyRoleCollection() !== null &&
             $companyUser->getCompanyRoleCollection()->getRoles()->count()
         ) {
             $this->getFacade()->saveCompanyUser($companyUser);

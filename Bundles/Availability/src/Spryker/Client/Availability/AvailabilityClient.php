@@ -16,9 +16,11 @@ use Spryker\Client\Kernel\AbstractClient;
 class AvailabilityClient extends AbstractClient implements AvailabilityClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Client\AvailabilityStorage\AvailabilityStorageClient::getProductAvailabilityByIdProductAbstract() instead`.
      *
      * @param int $idProductAbstract
      *
@@ -28,14 +30,13 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
-        $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
-        $availabilityStorage = $this->getFactory()->createAvailabilityStorage($locale);
-
-        return $availabilityStorage->getProductAvailability($idProductAbstract);
+        return $this->getFactory()
+            ->createCurrentLocaleAvailabilityStorage()
+            ->getProductAvailability($idProductAbstract);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,9 +52,11 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *

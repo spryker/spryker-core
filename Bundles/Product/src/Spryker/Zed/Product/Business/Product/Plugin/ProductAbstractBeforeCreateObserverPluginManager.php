@@ -26,7 +26,7 @@ class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstrac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *

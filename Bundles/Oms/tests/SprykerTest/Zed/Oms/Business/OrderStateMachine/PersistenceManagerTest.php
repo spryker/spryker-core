@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\OmsConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms
@@ -27,7 +28,7 @@ class PersistenceManagerTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessEntityShouldThrowExceptionIfProcessNotSet()
+    public function testGetProcessEntityShouldThrowExceptionIfProcessNotSet(): void
     {
         $omsConfigMock = $this->createOmsConfigMock();
 
@@ -46,7 +47,7 @@ class PersistenceManagerTest extends Unit
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager
      */
-    protected function createPersistenceManager(OmsConfig $omsConfigMock)
+    protected function createPersistenceManager(OmsConfig $omsConfigMock): PersistenceManager
     {
         return new PersistenceManager($omsConfigMock);
     }
@@ -54,7 +55,7 @@ class PersistenceManagerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\OmsConfig
      */
-    protected function createOmsConfigMock()
+    protected function createOmsConfigMock(): OmsConfig
     {
         return $this->getMockBuilder(OmsConfig::class)->getMock();
     }

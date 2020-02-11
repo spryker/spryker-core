@@ -13,6 +13,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilDateTime
@@ -24,7 +25,7 @@ class UtilDateTimeServiceFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateDateFormatterShouldReturnDateFormatter()
+    public function testCreateDateFormatterShouldReturnDateFormatter(): void
     {
         $utilDateTimeServiceFactory = new UtilDateTimeServiceFactory();
 

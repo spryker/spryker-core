@@ -19,6 +19,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Mail
@@ -41,7 +42,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $rendererMock = $this->getRendererMock();
         $mailerMock = $this->getMailerMock();
@@ -53,7 +54,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return void
      */
-    public function testSendMailAddSubjectToMessage()
+    public function testSendMailAddSubjectToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
         $mailerMock->expects($this->once())->method('setSubject')->with(static::SUBJECT);
@@ -65,7 +66,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return void
      */
-    public function testSendMailAddsSenderToMessage()
+    public function testSendMailAddsSenderToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
         $mailerMock->expects($this->once())->method('setFrom')->with(static::FROM_EMAIL, static::FROM_NAME);
@@ -77,7 +78,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return void
      */
-    public function testSendMailAddRecipientToMessage()
+    public function testSendMailAddRecipientToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
         $mailerMock->expects($this->once())->method('addTo')->with(static::TO_EMAIL, static::TO_NAME);
@@ -89,7 +90,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return void
      */
-    public function testSendMailAddHtmlContentToMessage()
+    public function testSendMailAddHtmlContentToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
         $mailerMock->expects($this->once())->method('setHtmlContent')->with(static::HTML_MAIL_CONTENT);
@@ -101,7 +102,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return void
      */
-    public function testSendMailAddTextContentToMessage()
+    public function testSendMailAddTextContentToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
         $mailerMock->expects($this->once())->method('setTextContent')->with(static::TEXT_MAIL_CONTENT);
@@ -113,7 +114,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface
      */
-    protected function getRendererMock()
+    protected function getRendererMock(): RendererInterface
     {
         $rendererMock = $this->getMockBuilder(RendererInterface::class)->getMock();
 
@@ -123,7 +124,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    protected function getMailTransfer()
+    protected function getMailTransfer(): MailTransfer
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer->setSubject(static::SUBJECT);
@@ -162,7 +163,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface
      */
-    protected function getMailerMock()
+    protected function getMailerMock(): MailToMailerInterface
     {
         $mailerMock = $this->getMockBuilder(MailToMailerInterface::class)
             ->setMethods(['setSubject', 'setFrom', 'addTo', 'setHtmlContent', 'setTextContent', 'send'])
@@ -176,7 +177,7 @@ class SwiftMailerTest extends Unit
      *
      * @return \Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer
      */
-    protected function getSwiftMailerWithMocks(MailToMailerInterface $mailerMock)
+    protected function getSwiftMailerWithMocks(MailToMailerInterface $mailerMock): SwiftMailer
     {
         $renderMock = $this->getRendererMock();
         $swiftMailer = new SwiftMailer($renderMock, $mailerMock);

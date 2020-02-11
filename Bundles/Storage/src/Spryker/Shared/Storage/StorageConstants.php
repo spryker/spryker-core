@@ -53,6 +53,7 @@ interface StorageConstants
      * Specification:
      * - Defines a custom configuration for \Predis\Client.
      * - This configuration is used exclusively when set, e.g. no other storage configuration will be used for the client.
+     *
      * @see https://github.com/nrk/predis/wiki/Connection-Parameters for details.
      *
      * @api

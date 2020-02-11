@@ -12,6 +12,7 @@ use Spryker\Service\UtilText\UtilTextService;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilText
@@ -29,7 +30,7 @@ class UtilTextFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -39,12 +40,27 @@ class UtilTextFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateSlug()
+    public function testGenerateSlug(): void
     {
         $slug = $this->utilTextFacade->generateSlug('A #value#, [to] Slug 8 times.');
 
         $expectedSlug = 'a-value-to-slug-8-times';
 
         $this->assertEquals($expectedSlug, $slug);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateRandomByteStringWillGenerateByteStringOfExpectedLength(): void
+    {
+        //Arrange
+        $length = 64;
+
+        //Act
+        $string = $this->utilTextFacade->generateRandomByteString($length);
+
+        //Assert
+        $this->assertEquals($length, strlen($string), 'String length did not match expected value.');
     }
 }

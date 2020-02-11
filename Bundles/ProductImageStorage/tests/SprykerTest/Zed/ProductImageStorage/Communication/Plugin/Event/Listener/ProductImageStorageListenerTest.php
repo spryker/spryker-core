@@ -48,6 +48,7 @@ use SprykerTest\Zed\ProductImageStorage\ProductImageStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductImageStorage
@@ -85,7 +86,7 @@ class ProductImageStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -412,7 +413,7 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductImageConcretePublishStorageListenerStoreData()
+    public function testProductImageConcretePublishStorageListenerStoreData(): void
     {
         // Prepare
         SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
@@ -893,7 +894,7 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacade
      */
-    protected function getProductImageStorageFacade()
+    protected function getProductImageStorageFacade(): ProductImageStorageFacade
     {
         $factory = new ProductImageStorageBusinessFactory();
         $factory->setConfig(new ProductImageStorageConfigMock());
@@ -909,7 +910,7 @@ class ProductImageStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductAbstractImageStorage($beforeCount): void
+    protected function assertProductAbstractImageStorage(int $beforeCount): void
     {
         $productImageStorageCount = SpyProductAbstractImageStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productImageStorageCount);

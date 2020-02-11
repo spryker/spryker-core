@@ -53,4 +53,26 @@ interface ContainerInterface extends PsrContainerInterface
      * @return void
      */
     public function remove(string $id): void;
+
+    /**
+     * Use this store values instead of services.
+     *
+     * @param \Closure|object $service
+     *
+     * @throws \Spryker\Service\Container\Exception\ContainerException
+     *
+     * @return \Closure|object
+     */
+    public function protect($service);
+
+    /**
+     * Use this to make sure you always get a fresh instead of the same instance.
+     *
+     * @param \Closure|object $service
+     *
+     * @throws \Spryker\Service\Container\Exception\ContainerException
+     *
+     * @return \Closure|object
+     */
+    public function factory($service);
 }

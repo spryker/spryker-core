@@ -1,6 +1,6 @@
 # ProductResourceAliasStorage Module
 [![Build Status](https://travis-ci.org/spryker/product-resource-alias-storage.svg)](https://travis-ci.org/spryker/product-resource-alias-storage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/product-resource-alias-storage/badge.svg)](https://coveralls.io/github/spryker/product-resource-alias-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ProductResourceAliasStorage Module provides functionality to read product data from key-value storage by sku.
 

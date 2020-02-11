@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartBundlePricesPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Checks if bundled products of cart items has price for current store.
      *  - Sets error message if prices are not available.
      *

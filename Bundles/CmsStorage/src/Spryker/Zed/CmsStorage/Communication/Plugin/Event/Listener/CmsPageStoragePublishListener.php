@@ -22,7 +22,7 @@ class CmsPageStoragePublishListener extends AbstractPlugin implements EventBulkH
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -11,6 +11,7 @@ use Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ZedNavigation
@@ -23,7 +24,7 @@ class ZedNavigationBusinessFactoryTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance()
+    public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance(): void
     {
         $instance = $this->getFactory()->createNavigationBuilder();
 

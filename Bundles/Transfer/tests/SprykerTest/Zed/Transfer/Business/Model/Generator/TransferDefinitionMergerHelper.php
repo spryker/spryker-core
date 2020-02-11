@@ -12,7 +12,7 @@ class TransferDefinitionMergerHelper
     /**
      * @return array
      */
-    public function getTransferDefinition1()
+    public function getTransferDefinition1(): array
     {
         return [
             'name' => 'Transfer',
@@ -32,7 +32,7 @@ class TransferDefinitionMergerHelper
     /**
      * @return array
      */
-    public function getTransferDefinition2()
+    public function getTransferDefinition2(): array
     {
         return [
             'name' => 'Transfer',
@@ -59,7 +59,7 @@ class TransferDefinitionMergerHelper
     /**
      * @return array
      */
-    public function getExpectedTransfer()
+    public function getExpectedTransfer(): array
     {
         return [
             'name' => 'Transfer',

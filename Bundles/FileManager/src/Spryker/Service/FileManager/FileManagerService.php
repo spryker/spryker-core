@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class FileManagerService extends AbstractService implements FileManagerServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class FileManagerService extends AbstractService implements FileManagerServiceIn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

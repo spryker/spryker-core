@@ -1,30 +1,32 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
+<transfers
+    xmlns="spryker:databuilder-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
 
     <transfer name="SpyProductMeasurementUnitEntity">
-        <property name="defaultPrecision" type="int" dataBuilderRule="=1000" />
-        <property name="name" type="string" dataBuilderRule="=KILO" />
-        <property name="code" type="string" dataBuilderRule="=measurement_unit.standard.weight.kilo.name" />
+        <property name="defaultPrecision" type="int" dataBuilderRule="=1000"/>
+        <property name="name" type="string" dataBuilderRule="=KILO"/>
+        <property name="code" type="string" dataBuilderRule="=measurement_unit.standard.weight.kilo.name"/>
     </transfer>
 
     <transfer name="SpyProductMeasurementSalesUnitEntity">
-        <property name="conversion" type="float" dataBuilderRule="=1" />
-        <property name="precision" type="int" dataBuilderRule="=1000" />
-        <property name="isDisplayed" type="bool" dataBuilderRule="=true" />
-        <property name="isDefault" type="bool" dataBuilderRule="=false" />
-        <property name="key" type="string" dataBuilderRule="isbn10" />
+        <property name="conversion" type="float" dataBuilderRule="=1"/>
+        <property name="precision" type="int" dataBuilderRule="=1000"/>
+        <property name="isDisplayed" type="bool" dataBuilderRule="=true"/>
+        <property name="isDefault" type="bool" dataBuilderRule="=false"/>
+        <property name="key" type="string" dataBuilderRule="isbn10"/>
     </transfer>
 
     <transfer name="ProductMeasurementSalesUnit">
-        <property name="productMeasurementUnit" type="ProductMeasurementUnit" dataBuilderRule="=" />
-        <property name="conversion" type="float" dataBuilderRule="=1" />
-        <property name="precision" type="int" dataBuilderRule="=1000" />
+        <property name="productMeasurementUnit" dataBuilderRule="="/>
+        <property name="conversion" dataBuilderRule="=1"/>
+        <property name="precision" dataBuilderRule="=1000"/>
     </transfer>
 
     <transfer name="ProductMeasurementUnit">
-        <property name="name" type="string" dataBuilderRule="unique()->sentence(1)" />
+        <property name="name" dataBuilderRule="unique()->sentence(1)"/>
     </transfer>
 
 </transfers>

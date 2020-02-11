@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
+ * @deprecated Use `ConcreteProductPriceProductConcreteReadPlugin` instead.
+ * @see \Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\ConcreteProductPriceProductConcreteReadPlugin
+ *
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
@@ -24,7 +27,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\RestRequestValidator\Communication;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapter;
@@ -29,6 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group RestRequestValidator
@@ -152,9 +152,9 @@ class RestRequestValidatorPluginsTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockConfig(): MockObject
+    protected function createMockConfig(): RestRequestValidatorConfig
     {
         $mockConfig = $this->createPartialMock(
             RestRequestValidatorConfig::class,
@@ -181,9 +181,9 @@ class RestRequestValidatorPluginsTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockConfigWithWrongConstraint(): MockObject
+    protected function createMockConfigWithWrongConstraint(): RestRequestValidatorConfig
     {
         $mockConfig = $this->createPartialMock(
             RestRequestValidatorConfig::class,
@@ -212,9 +212,9 @@ class RestRequestValidatorPluginsTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockStoreClient(string $storeName): MockObject
+    protected function createMockStoreClient(string $storeName): RestRequestValidatorToStoreClientInterface
     {
         $mockStoreClient = $this->createPartialMock(
             RestRequestValidatorToStoreClientInterface::class,

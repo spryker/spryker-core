@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    public const AVAILABILITY_LIST_URL = '/availability-gui/index';
     public const URL_PARAM_ID_STORE = 'id-store';
 
     /**
@@ -47,7 +48,7 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function viewAction(Request $request)
     {
@@ -58,12 +59,18 @@ class IndexController extends AbstractController
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
 
         $localeTransfer = $this->getCurrentLocaleTransfer();
-
         $productAbstractAvailabilityTransfer = $this->getFactory()
-            ->getAvailabilityFacade()
-            ->findProductAbstractAvailability($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
+            ->createProductAvailabilityHelper()
+            ->findProductAbstractAvailabilityTransfer($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
 
-        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idStore);
+        if ($productAbstractAvailabilityTransfer === null) {
+            $this->addErrorMessage(
+                'The product [%d] you are trying to view, does not exist.',
+                ['%d' => $idProductAbstract]
+            );
+
+            return $this->redirectResponse(static::AVAILABILITY_LIST_URL);
+        }
 
         $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
         $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
@@ -72,7 +79,6 @@ class IndexController extends AbstractController
         return [
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render(),
-            'bundledProductAvailabilityTable' => $bundledProductAvailabilityTable->render(),
             'stores' => $stores,
             'idStore' => $idStore,
             'idProduct' => $idProductAbstract,
@@ -211,12 +217,12 @@ class IndexController extends AbstractController
 
     /**
      * @param int $idStore
-     * @param int|null $idProductBundle
-     * @param int|null $idBundleProductAbstract
+     * @param int $idProductBundle
+     * @param int $idBundleProductAbstract
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable
      */
-    protected function getBundledProductAvailabilityTable($idStore, $idProductBundle = null, $idBundleProductAbstract = null)
+    protected function getBundledProductAvailabilityTable(int $idStore, int $idProductBundle, int $idBundleProductAbstract)
     {
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
@@ -260,7 +266,7 @@ class IndexController extends AbstractController
      */
     protected function isStockProductTransferValid(StockProductTransfer $stockProductTransfer)
     {
-        return $stockProductTransfer->getIdStockProduct() === null && ((int)$stockProductTransfer->getQuantity() !== 0) || $stockProductTransfer->getIsNeverOutOfStock();
+        return $stockProductTransfer->getIdStockProduct() === null && (!$stockProductTransfer->getQuantity()->isZero()) || $stockProductTransfer->getIsNeverOutOfStock();
     }
 
     /**

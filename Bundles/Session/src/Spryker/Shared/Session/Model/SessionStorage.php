@@ -44,7 +44,7 @@ class SessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return array
      */
@@ -54,7 +54,7 @@ class SessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return \SessionHandlerInterface
      */

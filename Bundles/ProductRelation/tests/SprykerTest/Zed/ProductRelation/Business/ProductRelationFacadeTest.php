@@ -18,11 +18,14 @@ use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Shared\ProductRelation\ProductRelationTypes;
 use Spryker\Zed\Category\Business\CategoryFacade;
+use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
+use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
 use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductRelation
@@ -38,7 +41,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductRelationShouldPersistGivenTransfer()
+    public function testCreateProductRelationShouldPersistGivenTransfer(): void
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
@@ -51,7 +54,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductRelationShouldUpdateExistingRelation()
+    public function testUpdateProductRelationShouldUpdateExistingRelation(): void
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
@@ -71,7 +74,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductRelationByIdShouldReturnPersistedRelation()
+    public function testFindProductRelationByIdShouldReturnPersistedRelation(): void
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
@@ -86,7 +89,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductRelationTypeListShouldReturnPersistedProductRelationTypeList()
+    public function testGetProductRelationTypeListShouldReturnPersistedProductRelationTypeList(): void
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
@@ -103,7 +106,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testActivateProductRelationShouldActivateRelation()
+    public function testActivateProductRelationShouldActivateRelation(): void
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
@@ -120,7 +123,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeactivateProductRelationShouldDeactivateRelation()
+    public function testDeactivateProductRelationShouldDeactivateRelation(): void
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
@@ -140,7 +143,7 @@ class ProductRelationFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function createProductCategory($categoryName, array $productToAssign)
+    protected function createProductCategory(string $categoryName, array $productToAssign): CategoryTransfer
     {
         $categoryFacade = $this->createCategoryFacade();
 
@@ -176,7 +179,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductRelationShouldDropExistingRelationFromPersistence()
+    public function testDeleteProductRelationShouldDropExistingRelationFromPersistence(): void
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
@@ -196,7 +199,7 @@ class ProductRelationFacadeTest extends Unit
      *
      * @return int
      */
-    protected function createProductAbstract($sku)
+    protected function createProductAbstract(string $sku): int
     {
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity->setSku($sku);
@@ -210,7 +213,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ProductRelation\Business\ProductRelationFacade
      */
-    protected function createProductRelationFacade()
+    protected function createProductRelationFacade(): ProductRelationFacade
     {
         return new ProductRelationFacade();
     }
@@ -221,7 +224,7 @@ class ProductRelationFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
-    protected function createProductRelationTransfer($skuValueForFilter = null, $categoryName = null)
+    protected function createProductRelationTransfer(?string $skuValueForFilter = null, ?string $categoryName = null): ProductRelationTransfer
     {
         $productRelationTransfer = new ProductRelationTransfer();
         $productRelationTransfer->setFkProductAbstract($this->createProductAbstract('sku-test-product-relations'));
@@ -250,7 +253,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface
      */
-    protected function createProductFacade()
+    protected function createProductFacade(): ProductCategoryFacadeInterface
     {
         return new ProductCategoryFacade();
     }
@@ -258,7 +261,7 @@ class ProductRelationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Category\Business\CategoryFacadeInterface
      */
-    protected function createCategoryFacade()
+    protected function createCategoryFacade(): CategoryFacadeInterface
     {
         return new CategoryFacade();
     }
@@ -268,7 +271,7 @@ class ProductRelationFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
-    protected function createProductAbstractSkuRuleTransfer($skuValueForFilter)
+    protected function createProductAbstractSkuRuleTransfer(string $skuValueForFilter): PropelQueryBuilderRuleSetTransfer
     {
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setId('spy_product_abstract');
@@ -286,7 +289,7 @@ class ProductRelationFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
-    protected function createProductCategoryNameRuleTransfer($categoryName)
+    protected function createProductCategoryNameRuleTransfer(string $categoryName): PropelQueryBuilderRuleSetTransfer
     {
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setId('product_category_name');

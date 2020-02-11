@@ -55,7 +55,24 @@ class ViewPageController extends AbstractController
             'cmsVersion' => $cmsVersionTransfer,
             'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt(),
             'relatedStoreNames' => $relatedStoreNames,
+            'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
         ];
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return bool
+     */
+    protected function isPageTemplateWithPlaceholders(int $idCmsPage): bool
+    {
+        $cmsGlossaryTransfer = $this->getFactory()->getCmsFacade()->findPageGlossaryAttributes($idCmsPage);
+
+        if (!$cmsGlossaryTransfer) {
+            return false;
+        }
+
+        return $cmsGlossaryTransfer->getGlossaryAttributes()->count() > 0;
     }
 
     /**

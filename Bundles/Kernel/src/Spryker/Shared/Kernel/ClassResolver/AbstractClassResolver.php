@@ -146,7 +146,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     private function buildClassNames()
     {
@@ -159,9 +159,9 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @param array $classNames
+     * @param string[] $classNames
      *
-     * @return array
+     * @return string[]
      */
     private function addProjectClassNames(array $classNames)
     {
@@ -175,9 +175,9 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @param array $classNames
+     * @param string[] $classNames
      *
-     * @return array
+     * @return string[]
      */
     private function addCoreClassNames(array $classNames)
     {
@@ -189,7 +189,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getProjectNamespaces()
     {
@@ -197,7 +197,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getCoreNamespaces()
     {

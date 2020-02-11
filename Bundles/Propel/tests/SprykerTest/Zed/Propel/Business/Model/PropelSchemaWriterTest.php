@@ -12,6 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -28,7 +29,7 @@ class PropelSchemaWriterTest extends AbstractPropelSchemaTest
     /**
      * @return void
      */
-    public function testWriteMustWriteContentToFile()
+    public function testWriteMustWriteContentToFile(): void
     {
         $writer = new PropelSchemaWriter(new Filesystem(), $this->getFixtureDirectory());
         $this->assertFalse(file_exists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME));

@@ -57,7 +57,8 @@ class PropelCommandRunner implements PropelCommandRunnerInterface
         $input = $this->inputBuilder
             ->buildInput(
                 $inputDefinition,
-                $command->getDefinition()
+                $command->getDefinition(),
+                $command->getName()
             );
 
         return $command->run($input, $output);

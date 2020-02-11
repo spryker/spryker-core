@@ -15,12 +15,12 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 class PriceProductFacadeStub extends PriceProductFacade
 {
     /**
-     * @var array
+     * @var int[]
      */
     private $prices = [];
 
     /**
-     * @var array
+     * @var bool[]
      */
     private $validities = [];
 
@@ -28,7 +28,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      * @param string $sku
      * @param string|null $priceType
      *
-     * @return mixed
+     * @return int|null
      */
     public function findPriceBySku($sku, $priceType = null)
     {
@@ -63,6 +63,7 @@ class PriceProductFacadeStub extends PriceProductFacade
         }
 
         return (new PriceProductTransfer())
+            ->setSkuProduct($priceFilterTransfer->getSku())
             ->setMoneyValue(
                 (new MoneyValueTransfer())
                     ->setGrossAmount($price)
@@ -75,7 +76,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceType = null)
+    public function hasValidPrice($sku, $priceType = null): bool
     {
         if (!isset($this->validities[$sku])) {
             return false;
@@ -90,7 +91,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      *
      * @return void
      */
-    public function addPriceStub($sku, $price)
+    public function addPriceStub(string $sku, int $price): void
     {
         $this->prices[$sku] = $price;
     }
@@ -101,7 +102,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      *
      * @return void
      */
-    public function addValidityStub($sku, $validity = true)
+    public function addValidityStub(string $sku, bool $validity = true): void
     {
         $this->validities[$sku] = $validity;
     }
@@ -109,8 +110,23 @@ class PriceProductFacadeStub extends PriceProductFacade
     /**
      * @return string
      */
-    public function getDefaultPriceTypeName()
+    public function getDefaultPriceTypeName(): string
     {
         return 'DEFAULT';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array
+    {
+        $priceProductTransfers = [];
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceProductTransfers[] = $this->findPriceProductFor($priceProductFilterTransfer);
+        }
+
+        return array_filter($priceProductTransfers);
     }
 }

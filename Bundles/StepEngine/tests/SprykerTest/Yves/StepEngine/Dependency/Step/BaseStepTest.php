@@ -14,6 +14,7 @@ use SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group StepEngine
@@ -30,7 +31,7 @@ class BaseStepTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $baseStep = $this->getBaseStepInstance();
 
@@ -40,7 +41,7 @@ class BaseStepTest extends Unit
     /**
      * @return void
      */
-    public function testGetStepRoute()
+    public function testGetStepRoute(): void
     {
         $baseStep = $this->getBaseStepInstance();
         $this->assertSame(self::STEP_ROUTE, $baseStep->getStepRoute());
@@ -49,7 +50,7 @@ class BaseStepTest extends Unit
     /**
      * @return void
      */
-    public function testGetEscapeRoute()
+    public function testGetEscapeRoute(): void
     {
         $baseStep = $this->getBaseStepInstance();
         $this->assertSame(self::ESCAPE_ROUTE, $baseStep->getEscapeRoute());
@@ -58,7 +59,7 @@ class BaseStepTest extends Unit
     /**
      * @return void
      */
-    public function testGetTemplateVariables()
+    public function testGetTemplateVariables(): void
     {
         $baseStep = $this->getBaseStepInstance();
         $this->assertSame([], $baseStep->getTemplateVariables($this->getDataTransferMock()));
@@ -67,7 +68,7 @@ class BaseStepTest extends Unit
     /**
      * @return \SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep
      */
-    private function getBaseStepInstance()
+    private function getBaseStepInstance(): BaseStep
     {
         return new BaseStep(self::STEP_ROUTE, self::ESCAPE_ROUTE);
     }
@@ -75,7 +76,7 @@ class BaseStepTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    private function getDataTransferMock()
+    private function getDataTransferMock(): AbstractTransfer
     {
         return $this->getMockBuilder(AbstractTransfer::class)->getMock();
     }

@@ -3,3 +3,11 @@ parameters:
     - '#Property .+SessionHandlerCouchbase::\$connection has unknown class Couchbase as its type.#'
     - '#Instantiated class Couchbase not found.#'
     - '#Call to method .+\(\) on an unknown class Couchbase.#'
+    - '#Parameter \#1 \$keys of method Predis\\ClientInterface::del\(\) expects array, string given.#'
+    - "#Parameter \\#6 \\$gc of function session_set_save_handler expects callable\\(string\\): bool, array\\(SessionHandlerInterface, 'gc'\\) given.#"
+    -
+            message: '#Ternary operator condition is always true.#'
+            path: 'vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerCouchbase.php'
+    -
+            message: '#Ternary operator condition is always true.#'
+            path: 'vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedis.php'

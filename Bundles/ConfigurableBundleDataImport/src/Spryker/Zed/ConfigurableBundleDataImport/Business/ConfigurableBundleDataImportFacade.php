@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ConfigurableBundleDataImportFacade extends AbstractFacade implements ConfigurableBundleDataImportFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ConfigurableBundleDataImportFacade extends AbstractFacade implements Confi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,6 +45,22 @@ class ConfigurableBundleDataImportFacade extends AbstractFacade implements Confi
     {
         return $this->getFactory()
             ->getConfigurableBundleTemplateSlotDataImporter()
+            ->import($dataImporterConfigurationTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importConfigurableBundleTemplateImages(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()
+            ->getConfigurableBundleTemplateImageDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
 }

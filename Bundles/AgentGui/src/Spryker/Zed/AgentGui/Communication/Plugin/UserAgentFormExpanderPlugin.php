@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class UserAgentFormExpanderPlugin extends AbstractPlugin implements UserFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

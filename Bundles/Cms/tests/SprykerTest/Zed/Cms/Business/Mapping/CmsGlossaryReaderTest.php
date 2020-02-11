@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Cms\Business\Mapping;
 
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
-use Spryker\Zed\Cms\CmsConfig;
+use Spryker\Zed\Cms\Business\Template\TemplateReaderInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -16,6 +16,7 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms
@@ -29,7 +30,7 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetPageGlossaryAttributesShouldReadDataFromTemplateAndPersistenceToTransfer()
+    public function testGetPageGlossaryAttributesShouldReadDataFromTemplateAndPersistenceToTransfer(): void
     {
         $localeFacadeMock = $this->createLocaleMock();
 
@@ -40,18 +41,11 @@ class CmsGlossaryReaderTest extends CmsMocks
 
         $cmsPageEntityMock = $this->createCmsPageEntityMock();
         $cmsPageEntityMock->setVirtualColumn(CmsQueryContainer::TEMPLATE_PATH, 'test_template');
+        $cmsPageEntityMock->method('getVirtualColumn')->willReturn('');
 
         $cmsGlossaryReaderMock->expects($this->once())
             ->method('getCmsPageEntity')
             ->willReturn($cmsPageEntityMock);
-
-        $cmsGlossaryReaderMock->expects($this->any())
-            ->method('fileExists')
-            ->willReturn(true);
-
-        $cmsGlossaryReaderMock->expects($this->once())
-            ->method('readTemplateContents')
-            ->willReturn($this->getSampleTemplateContents());
 
         $glossaryMappingCollection = $this->createGlossaryMappingCollection();
 
@@ -73,15 +67,15 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface|null $localeFacadeMock
-     * @param \Spryker\Zed\Cms\CmsConfig|null $cmsConfigMock
+     * @param \Spryker\Zed\Cms\Business\Template\TemplateReaderInterface|null $templateReader
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader
      */
     protected function createCmsGlossaryReaderMock(
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToLocaleFacadeInterface $localeFacadeMock = null,
-        ?CmsConfig $cmsConfigMock = null
-    ) {
+        ?TemplateReaderInterface $templateReader = null
+    ): CmsGlossaryReader {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }
@@ -90,51 +84,25 @@ class CmsGlossaryReaderTest extends CmsMocks
             $localeFacadeMock = $this->createLocaleMock();
         }
 
-        if ($cmsConfigMock === null) {
-            $cmsConfigMock = $this->createCmsConfigMock();
-            $cmsConfigMock->method('getTemplateRealPaths')
-                ->willReturn(['test_template']);
+        if ($templateReader === null) {
+            $templateReader = $this->createTemplateReaderMock();
+            $templateReader->method('getPlaceholdersByTemplatePath')
+                ->willReturn(['title', 'content']);
         }
 
-        $cmsConfigMock
-            ->method('getPlaceholderPattern')
-            ->willReturn('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/');
-
-        $cmsConfigMock
-            ->method('getPlaceholderValuePattern')
-            ->willReturn('/"([^"]+)"/');
-
         return $this->getMockBuilder(CmsGlossaryReader::class)
-            ->setConstructorArgs([$cmsQueryContainerMock, $localeFacadeMock, $cmsConfigMock])
+            ->setConstructorArgs([$cmsQueryContainerMock, $localeFacadeMock, $templateReader])
             ->setMethods([
                 'getCmsPageEntity',
                 'getGlossaryMappingCollection',
-                'readTemplateContents',
-                'fileExists',
             ])
             ->getMock();
     }
 
     /**
-     * @return string
-     */
-    protected function getSampleTemplateContents()
-    {
-        return '
-            <html>
-            <body>
-            <title>Sample template</title>
-            <!-- CMS_PLACEHOLDER : "title" -->
-            <!-- CMS_PLACEHOLDER : "content" -->
-            </body>
-            </html>
-        ';
-    }
-
-    /**
      * @return array
      */
-    protected function createGlossaryMappingCollection()
+    protected function createGlossaryMappingCollection(): array
     {
         $glossaryMappingCollection = [];
         $glossaryMappingEntity = $this->createGlossaryMappingEntityMock();
@@ -169,7 +137,7 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @return array
      */
-    protected function getAvailableLocales()
+    protected function getAvailableLocales(): array
     {
         return [
             1 => 'en_US',

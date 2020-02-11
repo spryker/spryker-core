@@ -20,7 +20,7 @@ class CmsBlockStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery
      */
-    public function createSpyCmsBlockStorage()
+    public function createSpyCmsBlockStorage(): SpyCmsBlockStorageQuery
     {
         return SpyCmsBlockStorageQuery::create();
     }
@@ -28,7 +28,7 @@ class CmsBlockStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function createCmsBlockQuery()
+    public function createCmsBlockQuery(): SpyCmsBlockQuery
     {
         return SpyCmsBlockQuery::create();
     }

@@ -13,7 +13,7 @@ namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 class FileUnpublishListener extends AbstractFileManagerListener
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

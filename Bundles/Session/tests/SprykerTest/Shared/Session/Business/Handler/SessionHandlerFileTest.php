@@ -16,6 +16,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Session
@@ -38,7 +39,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (is_dir($this->getFixtureDirectory())) {
             $filesystem = new Filesystem();
@@ -49,7 +50,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return string
      */
-    private function getFixtureDirectory()
+    private function getFixtureDirectory(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
@@ -57,7 +58,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return string
      */
-    protected function getSavePath()
+    protected function getSavePath(): string
     {
         return $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Sessions';
     }
@@ -65,7 +66,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallOpenMustCreateDirectoryIfNotExists()
+    public function testCallOpenMustCreateDirectoryIfNotExists(): void
     {
         $this->assertFalse(is_dir($this->getSavePath()));
 
@@ -78,7 +79,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallOpenMustReturnTrue()
+    public function testCallOpenMustReturnTrue(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $result = $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
@@ -89,7 +90,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallCloseMustReturnTrue()
+    public function testCallCloseMustReturnTrue(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $result = $sessionHandlerFile->close();
@@ -100,7 +101,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallWriteMustReturnFalseIfNoDataPassed()
+    public function testCallWriteMustReturnFalseIfNoDataPassed(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
@@ -112,7 +113,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallWriteMustReturnTrueWhenDataCanBeWrittenToFile()
+    public function testCallWriteMustReturnTrueWhenDataCanBeWrittenToFile(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
@@ -124,7 +125,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testWriteMustAllowZeroValue()
+    public function testWriteMustAllowZeroValue(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
@@ -136,7 +137,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallReadMustReturnContentOfSessionForGivenSessionId()
+    public function testCallReadMustReturnContentOfSessionForGivenSessionId(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
@@ -150,7 +151,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallDestroyMustReturnTrueIfNoFileExistsForSessionId()
+    public function testCallDestroyMustReturnTrueIfNoFileExistsForSessionId(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
@@ -163,7 +164,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallDestroyMustReturnTrueIfFileExistsForSessionId()
+    public function testCallDestroyMustReturnTrueIfFileExistsForSessionId(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
@@ -177,7 +178,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallGcMustDeleteFilesWhichAreOlderThenMaxLifetime()
+    public function testCallGcMustDeleteFilesWhichAreOlderThenMaxLifetime(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
@@ -201,7 +202,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    protected function makeFileOlderThanItIs()
+    protected function makeFileOlderThanItIs(): void
     {
         touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID, time() - 200);
     }
@@ -209,7 +210,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    protected function makeFileNewerThanItIs()
+    protected function makeFileNewerThanItIs(): void
     {
         touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID_2, time() + 200);
     }
@@ -217,7 +218,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceBridge
      */
-    protected function createMonitoringServiceMock()
+    protected function createMonitoringServiceMock(): SessionToMonitoringServiceBridge
     {
         $mock = $this->getMockBuilder(MonitoringServiceInterface::class)
             ->disableOriginalConstructor()

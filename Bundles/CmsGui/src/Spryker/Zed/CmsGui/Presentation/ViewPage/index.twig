@@ -19,7 +19,9 @@
         {{ viewActionButton(url('/cms-gui/version-page/history', {'id-cms-page': cmsPage.fkPage , 'redirect-url' : redirectUrl }), 'Version History' | trans) }}
     {% endif %}
     {{ editActionButton(url('/cms-gui/edit-page', { 'id-cms-page': cmsPage.fkPage }), 'Edit page' | trans) }}
-    {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
+    {%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
+        {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
+    {% endif %}
     {{ include ('@CmsGui/_template/activate-button.twig', { 'isActive': cmsPage.isActive, 'idCmsPage': cmsPage.fkPage }) }}
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
@@ -126,30 +128,32 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
-        {% block widget_content %}
+    {%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
+            {% block widget_content %}
 
-            {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
+                {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
 
-                <h3>{{ glossaryAttribute.placeholder }}</h3>
+                    <h3>{{ glossaryAttribute.placeholder }}</h3>
 
-                <p>
-                    <strong>{{ 'Translation key:' | trans }}</strong> {{ glossaryAttribute.translationKey }}
-                </p>
+                    <p>
+                        <strong>{{ 'Translation key:' | trans }}</strong> {{ glossaryAttribute.translationKey }}
+                    </p>
 
-                {% for translation in glossaryAttribute.translations %}
-                   {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': translation.localeName, 'collapsed': true , 'hasError': false} %}
-                       {% block content %}
-                           {{ translation.translation | raw }}
-                       {% endblock %}
-                   {% endembed %}
+                    {% for translation in glossaryAttribute.translations %}
+                       {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': translation.localeName, 'collapsed': true , 'hasError': false} %}
+                           {% block content %}
+                               {{ translation.translation | raw }}
+                           {% endblock %}
+                       {% endembed %}
+                    {% endfor %}
+
+                    <br>
                 {% endfor %}
 
-                <br>
-            {% endfor %}
-
-        {% endblock %}
-    {% endembed %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 
 
 {% endblock %}

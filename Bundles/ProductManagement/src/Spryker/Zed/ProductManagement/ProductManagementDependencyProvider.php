@@ -24,6 +24,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCa
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingBridge;
@@ -51,6 +52,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -82,55 +84,55 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductManagementToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
-        $container[static::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new ProductManagementToTaxBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
-        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
+        });
 
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new ProductManagementToPriceProductBridge($container->getLocator()->priceProduct()->facade());
-        };
+        });
 
         $container = $this->addStockFacade($container);
 
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
-        };
+        });
 
-        $container[static::FACADE_PRODUCT_ATTRIBUTE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_ATTRIBUTE, function (Container $container) {
             return new ProductManagementToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_STOCK] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_STOCK, function (Container $container) {
             return $container->getLocator()->stock()->queryContainer();
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return $container->getLocator()->productImage()->queryContainer();
-        };
+        });
 
-        $container[static::FACADE_PRICE] = function (Container $container) {
+        $container->set(static::FACADE_PRICE, function (Container $container) {
             return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
-        };
+        });
 
         return $container;
     }
@@ -142,81 +144,85 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         $container = $this->addProductBundleFacade($container);
 
-        $container[static::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductManagementToProductCategoryBridge($container->getLocator()->productCategory()->facade());
-        };
+        });
 
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductManagementToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
-        $container[static::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new ProductManagementToTaxBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new ProductManagementToPriceProductBridge($container->getLocator()->priceProduct()->facade());
-        };
+        });
 
-        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
+        });
 
         $container = $this->addStockFacade($container);
 
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new ProductManagementToMoneyBridge($container->getLocator()->money()->facade());
-        };
+        });
 
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new ProductManagementToCurrencyBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_STOCK] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_STOCK, function (Container $container) {
             return $container->getLocator()->stock()->queryContainer();
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return $container->getLocator()->productImage()->queryContainer();
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT_GROUP] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_GROUP, function (Container $container) {
             return $container->getLocator()->productGroup()->queryContainer();
-        };
+        });
 
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductManagementToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
-        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new ProductManagementToAvailabilityBridge($container->getLocator()->availability()->facade());
-        };
+        });
 
-        $container[static::FACADE_PRODUCT_ATTRIBUTE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductManagementToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
+
+        $container->set(static::FACADE_PRODUCT_ATTRIBUTE, function (Container $container) {
             return new ProductManagementToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
-        };
+        });
 
-        $container[static::FACADE_PRICE] = function (Container $container) {
+        $container->set(static::FACADE_PRICE, function (Container $container) {
             return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
-        };
+        });
 
         $container = $this->addStockFacade($container);
         $container = $this->addStore($container);
@@ -243,9 +249,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return new ProductManagementToStoreBridge(Store::getInstance());
-        };
+        });
 
         return $container;
     }
@@ -257,9 +263,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductAbstractViewPlugins(Container $container)
     {
-        $container[static::PLUGINS_PRODUCT_ABSTRACT_VIEW] = function () {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_VIEW, function () {
             return $this->getProductAbstractViewPlugins();
-        };
+        });
 
         return $container;
     }
@@ -271,9 +277,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addMoneyFormTypePlugin(Container $container)
     {
-        $container[static::PLUGIN_MONEY_FORM_TYPE] = function (Container $container) {
+        $container->set(static::PLUGIN_MONEY_FORM_TYPE, function (Container $container) {
             return $this->createMoneyFormTypePlugin($container);
-        };
+        });
 
         return $container;
     }
@@ -312,9 +318,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addStoreRelationFormTypePlugin(Container $container)
     {
-        $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
+        $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return $this->getStoreRelationFormTypePlugin();
-        };
+        });
 
         return $container;
     }
@@ -343,9 +349,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductBundleFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_BUNDLE, function (Container $container) {
             return new ProductManagementToProductBundleBridge($container->getLocator()->productBundle()->facade());
-        };
+        });
 
         return $container;
     }
@@ -357,9 +363,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addStockFacade(Container $container)
     {
-        $container[static::FACADE_STOCK] = function (Container $container) {
+        $container->set(static::FACADE_STOCK, function (Container $container) {
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
-        };
+        });
 
         return $container;
     }
@@ -371,9 +377,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductAbstractFormExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER, function (Container $container) {
             return $this->getProductAbstractFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -393,9 +399,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductConcreteFormExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER, function (Container $container) {
             return $this->getProductConcreteFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -415,9 +421,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductConcreteEditFormExpanderPlugins(Container $container): Container
     {
-        $container[static::PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getProductConcreteEditFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -437,9 +443,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductConcreteFormEditDataProviderExpanderPlugins(Container $container): Container
     {
-        $container[static::PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getProductConcreteFormEditDataProviderExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -459,9 +465,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductFormTransferMapperExpanderPlugins(Container $container): Container
     {
-        $container[static::PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getProductFormTransferMapperExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -481,9 +487,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductConcreteFormEditTabsExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER, function (Container $container) {
             return $this->getProductConcreteFormEditTabsExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -503,9 +509,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductAbstractFormEditTabsExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER, function () {
             return $this->getProductAbstractFormEditTabsExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -525,9 +531,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductAbstractEditViewExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER, function () {
             return $this->getProductAbstractEditViewExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -547,9 +553,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductConcreteEditViewExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER, function () {
             return $this->getProductConcreteEditViewExpanderPlugins();
-        };
+        });
 
         return $container;
     }

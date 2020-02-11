@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductRelationCollectorFacade extends AbstractFacade implements ProductRelationCollectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

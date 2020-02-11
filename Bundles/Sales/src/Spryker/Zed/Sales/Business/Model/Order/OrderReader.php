@@ -10,6 +10,9 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
+/**
+ * @deprecated Use Spryker\Zed\Sales\Business\Order\OrderReader instead.
+ */
 class OrderReader implements OrderReaderInterface
 {
     /**

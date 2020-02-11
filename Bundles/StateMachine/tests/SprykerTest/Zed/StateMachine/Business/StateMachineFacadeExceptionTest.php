@@ -22,6 +22,7 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandlerException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine
@@ -38,15 +39,7 @@ class StateMachineFacadeExceptionTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetManualEventsForStateMachineItemShouldReturnAlsoOnEnterEventsForProvidedState()
+    public function testGetManualEventsForStateMachineItemShouldReturnAlsoOnEnterEventsForProvidedState(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -84,7 +77,7 @@ class StateMachineFacadeExceptionTest extends Unit
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
      */
-    protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler)
+    protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler): StateMachineFacade
     {
         $stateMachineBusinessFactory = new StateMachineBusinessFactory();
         $stateMachineConfig = new StateMachineConfig();

@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductCategory\ProductCategoryPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategory
@@ -26,7 +27,7 @@ class ProductCategoryAssignCest
      *
      * @return void
      */
-    public function testThatICanAssignProducts(ProductCategoryPresentationTester $i)
+    public function testThatICanAssignProducts(ProductCategoryPresentationTester $i): void
     {
         $name = 'my_unique_product_name_' . sha1(random_bytes(50));
 
@@ -61,7 +62,7 @@ class ProductCategoryAssignCest
      *
      * @return void
      */
-    public function testThatICanDeassignProducts(ProductCategoryPresentationTester $i)
+    public function testThatICanDeassignProducts(ProductCategoryPresentationTester $i): void
     {
         $name = 'my_unique_product_name_' . sha1(random_bytes(50));
         $idAbstractProduct = $i->createProductEntity($name)->getIdProductAbstract();
@@ -91,7 +92,7 @@ class ProductCategoryAssignCest
      *
      * @return string
      */
-    private function buildProductSelector($idAbstractProduct, $selectorPrefix)
+    private function buildProductSelector(int $idAbstractProduct, string $selectorPrefix): string
     {
         return sprintf(
             '%s%s',

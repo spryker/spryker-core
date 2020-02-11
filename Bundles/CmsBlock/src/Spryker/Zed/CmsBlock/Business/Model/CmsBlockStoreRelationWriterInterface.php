@@ -16,5 +16,5 @@ interface CmsBlockStoreRelationWriterInterface
      *
      * @return void
      */
-    public function update(StoreRelationTransfer $storeRelationTransfer);
+    public function update(StoreRelationTransfer $storeRelationTransfer): void;
 }

@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CartNoteClient extends AbstractClient implements CartNoteClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class CartNoteClient extends AbstractClient implements CartNoteClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

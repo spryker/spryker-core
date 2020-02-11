@@ -137,16 +137,6 @@ class CodeArchitectureSnifferConsole extends Console
     }
 
     /**
-     * @param string $namespace
-     *
-     * @return bool
-     */
-    protected function getNamespaceIsSpryker(string $namespace): bool
-    {
-        return $namespace === static::NAMESPACE_SPRYKER || $namespace === static::NAMESPACE_SPRYKER_SHOP;
-    }
-
-    /**
      * @param string $moduleArgument
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
@@ -261,6 +251,7 @@ class CodeArchitectureSnifferConsole extends Console
                 }
                 if (!is_dir($path)) {
                     $output->writeln('Path not found, skipping: ' . $path, OutputInterface::VERBOSITY_VERY_VERBOSE);
+
                     continue;
                 }
                 $output->writeln('Checking path: ' . $path, OutputInterface::VERBOSITY_VERBOSE);

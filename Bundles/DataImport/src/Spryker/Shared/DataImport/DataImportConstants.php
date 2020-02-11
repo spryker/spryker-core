@@ -34,4 +34,20 @@ interface DataImportConstants
      * @api
      */
     public const QUEUE_WRITER_CHUNK_SIZE = 'DATA_IMPORT:QUEUE_WRITER_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Defines the size of the chunk to be used in publisher for triggering events to the queue.
+     *
+     * @api
+     */
+    public const PUBLISHER_TRIGGER_CHUNK_SIZE = 'DATA_IMPORT:PUBLISHER_TRIGGER_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Defines the size of the chunk to be used in publisher for flushing local cache of events.
+     *
+     * @api
+     */
+    public const PUBLISHER_FLUSH_CHUNK_SIZE = 'DATA_IMPORT:PUBLISHER_FLUSH_CHUNK_SIZE';
 }

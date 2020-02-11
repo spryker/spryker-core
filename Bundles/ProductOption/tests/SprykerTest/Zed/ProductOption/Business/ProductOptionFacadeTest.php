@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
@@ -28,6 +29,7 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -603,6 +605,48 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCalculateTaxRateForProductOptionShouldSetRateToProvidedOptionsWithItemLevelShipments(): void
+    {
+        $iso2Code = 'DE';
+        $taxRate = 19;
+
+        $productOptionFacade = $this->getProductOptionFacade();
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
+        $taxSetEntity = $this->tester->createTaxSet($iso2Code, $taxRate);
+
+        $productOptionGroupTransfer->setFkTaxSet($taxSetEntity->getIdTaxSet());
+
+        $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue());
+
+        $shipment = new ShipmentTransfer();
+        $shipment->setShippingAddress($this->tester->createAddressTransfer($iso2Code));
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->addProductOption($productOptionTransfer);
+        $itemTransfer->setShipment($shipment);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $productOptionFacade->calculateProductOptionTaxRate($quoteTransfer);
+
+        $itemTransfer = $quoteTransfer->getItems()[0];
+        $productOptionTransfer = $itemTransfer->getProductOptions()[0];
+
+        $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate());
+    }
+
+    /**
+     * @return void
+     */
     public function testToggleOptionActiveShouldActivateDeactiveOptionAcordingly(): void
     {
         $productOptionFacade = $this->getProductOptionFacade();
@@ -1037,7 +1081,7 @@ class ProductOptionFacadeTest extends Unit
      *
      * @return void
      */
-    protected function mockStoreFacadeDefaultStore($storeName): void
+    protected function mockStoreFacadeDefaultStore(string $storeName): void
     {
         $storeTransfer = $this->tester->getLocator()->store()->facade()->getStoreByName($storeName);
 
@@ -1061,7 +1105,7 @@ class ProductOptionFacadeTest extends Unit
      *
      * @return void
      */
-    protected function mockCurrencyFacadeDefaultCurrency($currencyCode): void
+    protected function mockCurrencyFacadeDefaultCurrency(string $currencyCode): void
     {
         $currencyTransfer = $this->tester->getLocator()->currency()->facade()->fromIsoCode($currencyCode);
 

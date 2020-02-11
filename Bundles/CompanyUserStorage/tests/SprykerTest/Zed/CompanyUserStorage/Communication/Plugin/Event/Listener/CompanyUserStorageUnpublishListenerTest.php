@@ -18,6 +18,7 @@ use Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepository;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyUserStorage

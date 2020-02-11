@@ -12,12 +12,16 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Shared\ProductSetPageSearch\ProductSetPageSearchConstants;
 
-class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements QueryInterface
+class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    protected const SOURCE_IDENTIFIER = 'page';
+
     /**
      * @var int|null
      */
@@ -34,6 +38,11 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
     protected $query;
 
     /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
+    /**
      * @param int|null $limit
      * @param int|null $offset
      */
@@ -46,11 +55,48 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns a query object for product set page search.
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Defines a context for product set page search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function getSearchContext(): SearchContextTransfer
+    {
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
+        }
+
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets a context for product set page search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -155,5 +201,24 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
         $query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
 
         return $this;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDefaultSearchContext(): void
+    {
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }

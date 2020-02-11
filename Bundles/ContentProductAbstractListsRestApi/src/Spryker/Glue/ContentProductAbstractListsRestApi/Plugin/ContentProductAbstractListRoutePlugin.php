@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

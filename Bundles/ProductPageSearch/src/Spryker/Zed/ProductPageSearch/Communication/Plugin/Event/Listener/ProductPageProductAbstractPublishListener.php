@@ -19,7 +19,7 @@ class ProductPageProductAbstractPublishListener extends AbstractProductPageSearc
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -23,7 +23,7 @@ class ProductSearchListener extends AbstractPlugin implements EventBulkHandlerIn
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

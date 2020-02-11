@@ -8,10 +8,24 @@
 namespace Spryker\Client\QuoteApproval\Permission\ContextProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Client\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig as SharedQuoteApprovalConfig;
 
 class PermissionContextProvider implements PermissionContextProviderInterface
 {
+    /**
+     * @var \Spryker\Client\QuoteApproval\QuoteApprovalConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Client\QuoteApproval\QuoteApprovalConfig $config
+     */
+    public function __construct(QuoteApprovalConfig $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -20,9 +34,9 @@ class PermissionContextProvider implements PermissionContextProviderInterface
     public function provideContext(QuoteTransfer $quoteTransfer): array
     {
         return [
-            QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT => $this->getQuoteSum($quoteTransfer),
-            QuoteApprovalConfig::PERMISSION_CONTEXT_STORE_NAME => $quoteTransfer->getStore()->getName(),
-            QuoteApprovalConfig::PERMISSION_CONTEXT_CURRENCY_CODE => $quoteTransfer->getCurrency()->getCode(),
+            SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT => $this->getQuoteSum($quoteTransfer),
+            SharedQuoteApprovalConfig::PERMISSION_CONTEXT_STORE_NAME => $quoteTransfer->getStore()->getName(),
+            SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CURRENCY_CODE => $quoteTransfer->getCurrency()->getCode(),
         ];
     }
 
@@ -37,10 +51,28 @@ class PermissionContextProvider implements PermissionContextProviderInterface
             return 0;
         }
 
+        if (!$this->config->isShipmentPriceIncludedInQuoteApprovalPermissionCheck()) {
+            return $this->getQuoteSumWithoutShipment($quoteTransfer);
+        }
+
+        return $quoteTransfer->getTotals()->getGrandTotal();
+    }
+
+    /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getQuoteSumWithoutShipment(QuoteTransfer $quoteTransfer): int
+    {
         return $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);
     }
 
     /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int

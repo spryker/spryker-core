@@ -20,7 +20,7 @@ interface DiscountPostUpdatePluginInterface
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function postUpdate(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
 }

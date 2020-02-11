@@ -19,7 +19,7 @@ use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Cart\AbstractProductPa
 class ProductPackagingUnitCartAddItemStrategyPlugin extends AbstractProductPackagingUnitCartOperationStrategyPlugin implements CartOperationStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

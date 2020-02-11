@@ -12,13 +12,13 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Dependency\RestApiResource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpSellingProductRestResponseBuilder implements UpSellingProductRestResponseBuilderInterface
 {
     /**
-     * @var \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface
+     * @var \Spryker\Glue\UpSellingProductsRestApi\Dependency\RestApiResource\UpSellingProductsRestApiToProductsRestApiResourceInterface
      */
     protected $productsRestApiResource;
 
@@ -28,7 +28,7 @@ class UpSellingProductRestResponseBuilder implements UpSellingProductRestRespons
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource
+     * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\RestApiResource\UpSellingProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(

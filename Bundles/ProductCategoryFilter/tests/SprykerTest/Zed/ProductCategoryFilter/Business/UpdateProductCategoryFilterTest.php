@@ -14,6 +14,7 @@ use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategoryFilter
@@ -28,7 +29,7 @@ class UpdateProductCategoryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductCategoryFilterChangesDataInDatabase()
+    public function testUpdateProductCategoryFilterChangesDataInDatabase(): void
     {
         // Arrange
         $newFilterData = [

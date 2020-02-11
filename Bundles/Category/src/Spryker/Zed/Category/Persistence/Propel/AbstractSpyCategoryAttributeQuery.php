@@ -20,4 +20,4 @@ use Orm\Zed\Category\Persistence\Base\SpyCategoryAttributeQuery as BaseSpyCatego
  */
 abstract class AbstractSpyCategoryAttributeQuery extends BaseSpyCategoryAttributeQuery
 {
-} // SpyCategoryAttributeQuery
+}

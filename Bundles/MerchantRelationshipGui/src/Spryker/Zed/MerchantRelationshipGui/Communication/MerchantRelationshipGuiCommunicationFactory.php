@@ -107,4 +107,20 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
     {
         return $this->getProvidedDependency(MerchantRelationshipGuiDependencyProvider::PROPEL_MERCHANT_RELATIONSHIP_QUERY);
     }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipCreateFormExpanderPluginInterface[]
+     */
+    public function getMerchantRelationshipCreateFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipGuiDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_CREATE_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipEditFormExpanderPluginInterface[]
+     */
+    public function getMerchantRelationshipEditFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipGuiDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_EDIT_FORM_EXPANDER);
+    }
 }

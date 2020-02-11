@@ -15,6 +15,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -29,7 +30,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return void
      */
-    public function testGetAvailableFieldsShouldReturnFieldProvidedByPlugins()
+    public function testGetAvailableFieldsShouldReturnFieldProvidedByPlugins(): void
     {
         $fieldName = 'sample field';
         $decisionRulePluginMock = $this->createDecisionRulePluginMock();
@@ -49,7 +50,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return void
      */
-    public function testIsFieldAvailableReturnsTrueIfFieldIsAvailable()
+    public function testIsFieldAvailableReturnsTrueIfFieldIsAvailable(): void
     {
         // Assign
         $fieldName = 'sample field';
@@ -71,7 +72,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return void
      */
-    public function testIsFieldAvailableReturnsFalseIfFieldIsNotAvailable()
+    public function testIsFieldAvailableReturnsFalseIfFieldIsNotAvailable(): void
     {
         // Assign
         $fieldName = 'sample field';
@@ -94,7 +95,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return void
      */
-    public function testGetAcceptedTypesByFieldNameShouldReturnAcceptedDateTypesForGivenPlugin()
+    public function testGetAcceptedTypesByFieldNameShouldReturnAcceptedDateTypesForGivenPlugin(): void
     {
         $decisionRulePluginMock = $this->createDecisionRulePluginMock();
 
@@ -118,7 +119,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return void
      */
-    public function testAvailableOperatorExpressionsShouldReturnAllOperatorExpressions()
+    public function testAvailableOperatorExpressionsShouldReturnAllOperatorExpressions(): void
     {
         $decisionRulePluginMock = $this->createDecisionRulePluginMock();
 
@@ -150,7 +151,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return void
      */
-    public function testGetLogicalComparatorsShouldReturnListOfOperatorsProvidedByComparator()
+    public function testGetLogicalComparatorsShouldReturnListOfOperatorsProvidedByComparator(): void
     {
         $logicalComparatorsMock = $this->createLogicalComparatorsMock();
         $logicalComparatorsMock->expects($this->once())
@@ -170,7 +171,7 @@ class MetaDataProviderTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
-    protected function createMetaDataProvider($decisionRulePluginMock = null, $comparatorOperators = null, $logicalComparatorsMock = null)
+    protected function createMetaDataProvider(?DecisionRulePluginInterface $decisionRulePluginMock = null, ?ComparatorOperators $comparatorOperators = null, ?LogicalComparators $logicalComparatorsMock = null): MetaDataProvider
     {
         if (!isset($decisionRulePluginMock)) {
             $decisionRulePluginMock = $this->createDecisionRulePluginMock();
@@ -196,7 +197,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
      */
-    protected function createDecisionRulePluginMock()
+    protected function createDecisionRulePluginMock(): DecisionRulePluginInterface
     {
         return $this->getMockBuilder(DecisionRulePluginInterface::class)->getMock();
     }
@@ -204,7 +205,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
-    protected function createComparatorOperatorsMock()
+    protected function createComparatorOperatorsMock(): ComparatorOperators
     {
         return $this->getMockBuilder(ComparatorOperators::class)
             ->disableOriginalConstructor()
@@ -214,7 +215,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
-    protected function createLogicalComparatorsMock()
+    protected function createLogicalComparatorsMock(): LogicalComparators
     {
         return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }

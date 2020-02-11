@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\SchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
@@ -137,7 +138,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData($this->schemaBuilder->createResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
-        if ($resourceRelationships) {
+        if ($resourceRelationships && !$plugin instanceof ResourceWithParentPluginInterface) {
             $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
         }
 
@@ -199,7 +200,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
 
         $transferMetadata = $this->resourceTransferAnalyzer->getTransferMetadata($transfer);
         foreach ($transferMetadata as $key => $value) {
-            if (class_exists($value[static::KEY_TYPE])) {
+            if ($value[static::KEY_IS_TRANSFER] && class_exists($value[static::KEY_TYPE])) {
                 $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($value[static::KEY_TYPE]);
                 $this->addResponseDataAttributesSchemaFromTransfer(new $value[static::KEY_TYPE](), $schemaName);
             }
@@ -267,6 +268,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected function addDefaultRelationshipsSchema(): void
     {
         $this->addSchemaData($this->schemaBuilder->createDefaultRelationshipDataAttributesSchema());
+        $this->addSchemaData($this->schemaBuilder->createDefaultRelationshipDataCollectionAttributesSchema());
     }
 
     /**

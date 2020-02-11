@@ -1,6 +1,6 @@
 # ProductMerchantConnector Module
-[![Build Status](https://travis-ci.org/spryker/merchant-product-connector.svg)](https://travis-ci.org/spryker/merchant-product-connector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/merchant-product-connector/badge.svg)](https://coveralls.io/github/spryker/merchant-product-connector)
+[![Build Status](https://travis-ci.org/spryker/product-merchant-connector.svg)](https://travis-ci.org/spryker/product-merchant-connector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module provides the connection between product entities and merchant entities.
 

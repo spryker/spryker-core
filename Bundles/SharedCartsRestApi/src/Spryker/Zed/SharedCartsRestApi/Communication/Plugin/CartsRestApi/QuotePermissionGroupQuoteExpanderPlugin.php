@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class QuotePermissionGroupQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands quote transfer with quote permission group.
      * - Will expand only if QuoteTransfer::$customer is a company user the cart is shared with.
      *

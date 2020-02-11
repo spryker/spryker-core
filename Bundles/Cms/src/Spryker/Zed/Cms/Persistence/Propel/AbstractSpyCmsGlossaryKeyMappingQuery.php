@@ -20,4 +20,4 @@ use Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMappingQuery as BaseSpyCmsGlos
  */
 abstract class AbstractSpyCmsGlossaryKeyMappingQuery extends BaseSpyCmsGlossaryKeyMappingQuery
 {
-} // SpyCmsGlossaryKeyMappingQuery
+}

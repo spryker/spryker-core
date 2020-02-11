@@ -8,10 +8,8 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReader;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriter;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriterInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageWriter;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageWriterInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
@@ -23,24 +21,13 @@ use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependenc
 class ProductPackagingUnitStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageWriterInterface
      */
-    public function createProductPackagingStorageReader(): ProductPackagingStorageReaderInterface
+    public function createProductPackagingUnitStorageWriter(): ProductPackagingUnitStorageWriterInterface
     {
-        return new ProductPackagingStorageReader(
-            $this->getRepository(),
-            $this->getProductPackagingUnitFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriterInterface
-     */
-    public function createProductPackagingStorageWriter(): ProductPackagingStorageWriterInterface
-    {
-        return new ProductPackagingStorageWriter(
+        return new ProductPackagingUnitStorageWriter(
             $this->getEntityManager(),
-            $this->createProductPackagingStorageReader()
+            $this->getRepository()
         );
     }
 

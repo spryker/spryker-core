@@ -13,6 +13,7 @@ use SprykerTest\Zed\Auth\PageObject\LoginPage;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -46,7 +47,7 @@ class AuthPresentationTester extends Actor
      *
      * @return $this
      */
-    public function doLogin($username, $password)
+    public function doLogin(string $username, string $password)
     {
         $i = $this;
 

@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +80,7 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,5 +105,19 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         return $this->getFactory()->createQuoteCollectionReader()->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function addDefaultQuoteChangedMessage(QuoteTransfer $quoteTransfer): void
+    {
+        $this->getFactory()->createMultiCartMessenger()->addDefaultQuoteChangedMessage($quoteTransfer);
     }
 }

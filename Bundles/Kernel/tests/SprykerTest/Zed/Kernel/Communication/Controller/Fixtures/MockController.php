@@ -16,7 +16,7 @@ class MockController extends AbstractController
      *
      * @return int
      */
-    public function indexAction($id)
+    public function indexAction($id): int
     {
         return $this->castId($id);
     }

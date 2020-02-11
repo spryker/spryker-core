@@ -14,6 +14,7 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE = 'configurable-bundle-template';
     public const IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'configurable-bundle-template-slot';
+    public const IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE = 'configurable-bundle-template-image';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -38,6 +39,19 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'configurable_bundle_template_slot.csv',
             static::IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getConfigurableBundleTemplateImageDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
+        return $this->buildImporterConfiguration(
+            $moduleDataImportDirectory . 'configurable_bundle_template_image.csv',
+            static::IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE
         );
     }
 

@@ -16,6 +16,7 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money
@@ -31,7 +32,7 @@ class MoneyToTransferConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertShouldReturnTransfer()
+    public function testConvertShouldReturnTransfer(): void
     {
         $money = new Money(self::AMOUNT, new Currency(self::CURRENCY));
         $moneyToTransferConverter = new MoneyToTransferMapper();

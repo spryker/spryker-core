@@ -9,9 +9,13 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Application\Application as SprykerApplication;
 use Spryker\Shared\Application\Business\Routing\SilexRouter;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
+/**
+ * @deprecated Use `\Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin` instead.
+ */
 class SilexRoutingServiceProvider implements ServiceProviderInterface
 {
     /**
@@ -30,8 +34,8 @@ class SilexRoutingServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app['routers'] = $app->share(
-            $app->extend('routers', function (ChainRouter $chainRouter) use ($app) {
+        $app[SprykerApplication::SERVICE_ROUTER] = $app->share(
+            $app->extend(SprykerApplication::SERVICE_ROUTER, function (ChainRouter $chainRouter) use ($app) {
                 $chainRouter->add(new SilexRouter($app));
 
                 return $chainRouter;

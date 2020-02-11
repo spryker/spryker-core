@@ -19,7 +19,7 @@ use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresho
 class MerchantRelationshipSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin implements SalesOrderThresholdDataSourceStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Finds the applicable merchant relationship thresholds for the merchant relationship sub total.
      *
      * @api

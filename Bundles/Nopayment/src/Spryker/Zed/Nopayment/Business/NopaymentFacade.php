@@ -42,7 +42,7 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

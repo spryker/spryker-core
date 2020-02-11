@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class PaginationParametersValidateHttpRequestPlugin extends AbstractPlugin implements ValidateHttpRequestPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Validates pagination parameters of request.
      *  - Returns error if parameters are invalid.
      *

@@ -7,12 +7,14 @@
 
 namespace SprykerTest\Yves\Kernel\ClassResolver\DependencyProvider;
 
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use SprykerTest\Yves\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel
@@ -48,7 +50,7 @@ class DependencyProviderResolverTest extends AbstractResolverTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): AbstractClassResolver
     {
         $resolverMock = $this->getMockBuilder(DependencyProviderResolver::class)->setMethods($methods)->getMock();
 

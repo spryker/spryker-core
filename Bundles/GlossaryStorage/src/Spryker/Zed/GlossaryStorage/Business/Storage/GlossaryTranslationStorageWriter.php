@@ -18,6 +18,8 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     protected $queryContainer;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -68,7 +70,8 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
             $idGlossaryKey = $glossaryTranslation['fk_glossary_key'];
             $localeName = $glossaryTranslation['Locale']['locale_name'];
 
-            if ((!$glossaryTranslation['is_active'] || !$glossaryTranslation['value']) &&
+            if (
+                (!$glossaryTranslation['is_active'] || !$glossaryTranslation['value']) &&
                 isset($spyGlossaryTranslationStorageEntities[$idGlossaryKey][$localeName])
             ) {
                 $spyGlossaryStorageEntities[] = $spyGlossaryTranslationStorageEntities[$idGlossaryKey][$localeName];

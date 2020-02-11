@@ -9,6 +9,8 @@ namespace SprykerTest\Shared\Currency\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -22,7 +24,7 @@ class CurrencyDataHelper extends Module
      *
      * @return int
      */
-    public function haveCurrency(array $override = [])
+    public function haveCurrency(array $override = []): int
     {
          $currencyTransfer = (new CurrencyBuilder($override))->build();
 
@@ -30,9 +32,21 @@ class CurrencyDataHelper extends Module
     }
 
     /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function haveCurrencyTransfer(array $override = []): CurrencyTransfer
+    {
+        $idCurrency = $this->haveCurrency($override);
+
+        return $this->getCurrencyFacade()->getByIdCurrency($idCurrency);
+    }
+
+    /**
      * @return \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
-    protected function getCurrencyFacade()
+    protected function getCurrencyFacade(): CurrencyFacadeInterface
     {
         return $this->getLocator()->currency()->facade();
     }

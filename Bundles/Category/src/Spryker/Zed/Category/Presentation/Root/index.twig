@@ -2,7 +2,7 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-category-root.css">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-category-root.css') }}">
 {% endblock %}
 
 {% set widget_title = 'Category' %}
@@ -37,5 +37,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-category-root.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-category-root.js') }}"></script>
 {% endblock %}

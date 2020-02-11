@@ -131,6 +131,7 @@ class ProductConcreteFormAddDataProvider
 
         $localizedAttributeOptions[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, null);
 
+        $formOptions = [];
         $formOptions[ProductConcreteFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $localizedAttributeOptions;
         $formOptions[ProductConcreteFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductConcreteFormAdd::OPTION_ATTRIBUTE_SUPER] = [];

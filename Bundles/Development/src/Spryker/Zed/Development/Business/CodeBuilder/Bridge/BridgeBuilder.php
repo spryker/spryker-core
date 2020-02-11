@@ -547,13 +547,11 @@ class BridgeBuilder
                 '{parametersWithoutTypes}' => $this->getParameterNames($method),
             ];
 
-            $methods .=
-                str_replace(
-                    array_keys($replacements),
-                    array_values($replacements),
-                    $methodTemplate
-                )
-                . PHP_EOL . PHP_EOL . str_repeat(' ', 4);
+            $methods .= str_replace(
+                array_keys($replacements),
+                array_values($replacements),
+                $methodTemplate
+            ) . PHP_EOL . PHP_EOL . str_repeat(' ', 4);
         }
 
         $useStatements = array_keys($useStatements);

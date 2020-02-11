@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 class ImageSetDeleter implements ImageSetDeleterInterface
 {
     use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface
      */

@@ -32,7 +32,7 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
     protected const ORDER_DIRECTION = 'ASC';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +86,7 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -98,7 +98,7 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -110,7 +110,7 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

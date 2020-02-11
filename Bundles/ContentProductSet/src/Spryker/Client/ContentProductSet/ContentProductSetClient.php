@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ContentProductSetClient extends AbstractClient implements ContentProductSetClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

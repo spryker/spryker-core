@@ -16,6 +16,7 @@ use SprykerTest\Zed\ZedNavigation\Business\ZedNavigationBusinessTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ZedNavigation
@@ -30,7 +31,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -43,7 +44,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testIsNavigationCacheHasContentMustReturnFalseOnNotExistsFile()
+    public function testIsNavigationCacheHasContentMustReturnFalseOnNotExistsFile(): void
     {
         //prepare
         $navigationCache = $this->getZedNavigationCache('');
@@ -55,7 +56,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testIsNavigationCacheHasContentMustReturnTrue()
+    public function testIsNavigationCacheHasContentMustReturnTrue(): void
     {
         //prepare
         $navigationCache = $this->getZedNavigationCache(__FILE__);
@@ -67,7 +68,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testSetMustSerializeGivenNavigationDataIntoFile()
+    public function testSetMustSerializeGivenNavigationDataIntoFile(): void
     {
         //prepare
         $navigationCache = $this->getZedNavigationCache();

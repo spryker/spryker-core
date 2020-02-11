@@ -18,7 +18,7 @@ class BaseStep extends AbstractBaseStep
      *
      * @return bool
      */
-    public function preCondition(AbstractTransfer $quoteTransfer)
+    public function preCondition(AbstractTransfer $quoteTransfer): bool
     {
         return true;
     }
@@ -28,7 +28,7 @@ class BaseStep extends AbstractBaseStep
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer)
+    public function requireInput(AbstractTransfer $dataTransfer): bool
     {
         return true;
     }
@@ -39,7 +39,7 @@ class BaseStep extends AbstractBaseStep
      *
      * @return void
      */
-    public function execute(Request $request, AbstractTransfer $dataTransfer)
+    public function execute(Request $request, AbstractTransfer $dataTransfer): void
     {
     }
 
@@ -48,7 +48,7 @@ class BaseStep extends AbstractBaseStep
      *
      * @return bool
      */
-    public function postCondition(AbstractTransfer $dataTransfer)
+    public function postCondition(AbstractTransfer $dataTransfer): bool
     {
         return true;
     }

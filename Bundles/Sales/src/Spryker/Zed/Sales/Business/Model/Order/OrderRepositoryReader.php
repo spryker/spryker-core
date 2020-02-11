@@ -8,14 +8,15 @@
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class OrderRepositoryReader implements OrderRepositoryReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
+     * @var \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver
      */
-    protected $orderHydrator;
+    protected $orderHydratorStrategyResolver;
 
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface
@@ -23,14 +24,14 @@ class OrderRepositoryReader implements OrderRepositoryReaderInterface
     protected $salesRepository;
 
     /**
-     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
+     * @param \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      */
     public function __construct(
-        OrderHydratorInterface $orderHydrator,
+        OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver,
         SalesRepositoryInterface $salesRepository
     ) {
-        $this->orderHydrator = $orderHydrator;
+        $this->orderHydratorStrategyResolver = $orderHydratorStrategyResolver;
         $this->salesRepository = $salesRepository;
     }
 
@@ -50,6 +51,8 @@ class OrderRepositoryReader implements OrderRepositoryReaderInterface
             return new OrderTransfer();
         }
 
-        return $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
+        return $this->orderHydratorStrategyResolver
+            ->resolve($orderTransfer->getItems())
+            ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Client\Price\PriceModeResolver;
 
 use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface;
 use Spryker\Client\Price\PriceConfig;
+use Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface;
 
 class PriceModeResolver implements PriceModeResolverInterface
 {
@@ -23,18 +24,23 @@ class PriceModeResolver implements PriceModeResolverInterface
     protected $priceConfig;
 
     /**
-     * @var string|null
+     * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface
      */
-    protected static $priceModeCache;
+    protected $priceModeCache;
 
     /**
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\Price\PriceConfig $priceConfig
+     * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface $priceModeCache
      */
-    public function __construct(PriceToQuoteClientInterface $quoteClient, PriceConfig $priceConfig)
-    {
+    public function __construct(
+        PriceToQuoteClientInterface $quoteClient,
+        PriceConfig $priceConfig,
+        PriceModeCacheInterface $priceModeCache
+    ) {
         $this->quoteClient = $quoteClient;
         $this->priceConfig = $priceConfig;
+        $this->priceModeCache = $priceModeCache;
     }
 
     /**
@@ -42,12 +48,15 @@ class PriceModeResolver implements PriceModeResolverInterface
      */
     public function getCurrentPriceMode()
     {
-        if (static::$priceModeCache === null) {
-            $quoteTransfer = $this->quoteClient->getQuote();
-
-            static::$priceModeCache = $quoteTransfer->getPriceMode() ?: $this->priceConfig->getDefaultPriceMode();
+        if ($this->priceModeCache->isCached()) {
+            return $this->priceModeCache->get();
         }
 
-        return static::$priceModeCache;
+        $quoteTransfer = $this->quoteClient->getQuote();
+
+        $priceMode = $quoteTransfer->getPriceMode() ?: $this->priceConfig->getDefaultPriceMode();
+        $this->priceModeCache->cache($priceMode);
+
+        return $priceMode;
     }
 }

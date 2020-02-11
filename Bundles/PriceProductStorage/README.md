@@ -1,7 +1,6 @@
 # PriceProductStorage Module
 [![Build Status](https://travis-ci.org/spryker/price-product-storage.svg)](https://travis-ci.org/spryker/price-product-storage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-storage/badge.svg)](https://coveralls.io/github/spryker/price-product-storage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/price-product-storage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/price-product-storage/?branch=master)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ## Installation
 

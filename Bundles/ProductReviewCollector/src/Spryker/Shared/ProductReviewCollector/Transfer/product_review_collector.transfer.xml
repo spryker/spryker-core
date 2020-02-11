@@ -4,23 +4,32 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductReview">
-        <property name="idProductReview" type="int" />
-        <property name="fkProductAbstract" type="int" />
-        <property name="fkLocale" type="int" />
-        <property name="customerReference" type="string" />
-        <property name="rating" type="int" />
-        <property name="summary" type="string" />
-        <property name="description" type="string" />
-        <property name="nickname" type="string" />
-        <property name="status" type="int" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
+        <property name="idProductReview" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="customerReference" type="string"/>
+        <property name="rating" type="int"/>
+        <property name="summary" type="string"/>
+        <property name="description" type="string"/>
+        <property name="nickname" type="string"/>
+        <property name="status" type="int"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
     </transfer>
 
     <transfer name="ProductAbstractReview">
-        <property name="idProductAbstract" type="int" />
-        <property name="averageRating" type="float" />
-        <property name="reviewCount" type="int" />
+        <property name="idProductAbstract" type="int"/>
+        <property name="averageRating" type="float"/>
+        <property name="reviewCount" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="SearchCollectorConfiguration">
+        <property name="typeName" type="string"/>
     </transfer>
 
 </transfers>

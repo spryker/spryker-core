@@ -91,7 +91,7 @@ class VoucherValidator implements VoucherValidatorInterface
         }
 
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {
-            $this->addInfoMessage(
+            $this->addErrorMessage(
                 static::REASON_VOUCHER_CODE_LIMIT_REACHED,
                 ['%code%' => $discountVoucherEntity->getCode()]
             );
@@ -162,8 +162,10 @@ class VoucherValidator implements VoucherValidatorInterface
      */
     protected function isValidNumberOfUses(SpyDiscountVoucher $discountVoucherEntity)
     {
-        if ($discountVoucherEntity->getMaxNumberOfUses() > 0 &&
-            $discountVoucherEntity->getNumberOfUses() >= $discountVoucherEntity->getMaxNumberOfUses()) {
+        if (
+            $discountVoucherEntity->getMaxNumberOfUses() > 0 &&
+            $discountVoucherEntity->getNumberOfUses() >= $discountVoucherEntity->getMaxNumberOfUses()
+        ) {
             return false;
         }
 

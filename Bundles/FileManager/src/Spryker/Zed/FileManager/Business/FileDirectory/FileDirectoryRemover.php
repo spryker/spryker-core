@@ -19,7 +19,8 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class FileDirectoryRemover implements FileDirectoryRemoverInterface
 {
-    use TransactionTrait, FileNameResolverTrait;
+    use TransactionTrait;
+    use FileNameResolverTrait;
 
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface

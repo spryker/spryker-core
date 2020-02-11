@@ -82,6 +82,6 @@ class GrandTotalCalculator implements CalculatorInterface
      */
     protected function generateTotalsHash($grandTotal)
     {
-        return $this->utilTextService->hashValue($grandTotal, Hash::SHA256);
+        return $this->utilTextService->hashValue((string)$grandTotal, Hash::SHA256);
     }
 }

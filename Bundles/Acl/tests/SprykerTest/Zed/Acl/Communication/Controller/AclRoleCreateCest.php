@@ -12,6 +12,7 @@ use SprykerTest\Zed\Acl\PageObject\AclRoleCreatePage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Acl
@@ -27,9 +28,9 @@ class AclRoleCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(AclCommunicationTester $i)
+    public function breadcrumbIsVisible(AclCommunicationTester $i): void
     {
         $i->amOnPage(AclRoleCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Roles / Create new Role');
+        $i->seeBreadcrumbNavigation('Users Control / Roles / Create new Role');
     }
 }

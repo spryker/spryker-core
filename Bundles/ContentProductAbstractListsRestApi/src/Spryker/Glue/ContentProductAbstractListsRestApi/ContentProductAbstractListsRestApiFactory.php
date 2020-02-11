@@ -8,7 +8,7 @@
 namespace Spryker\Glue\ContentProductAbstractListsRestApi;
 
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
-use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Resource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\ContentProductAbstractListReader;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\ContentProductAbstractListReaderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -36,7 +36,7 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Resource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface
+     * @return \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface
      */
     public function getProductRestApiResource(): ContentProductAbstractListsRestApiToProductsRestApiResourceInterface
     {

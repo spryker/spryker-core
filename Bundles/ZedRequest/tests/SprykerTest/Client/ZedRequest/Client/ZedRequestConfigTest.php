@@ -13,6 +13,7 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ZedRequest
@@ -30,7 +31,7 @@ class ZedRequestConfigTest extends Unit
     /**
      * @return void
      */
-    public function testOverrideClientConfig()
+    public function testOverrideClientConfig(): void
     {
         $configuredClientOptions = [
             'timeout' => 30,

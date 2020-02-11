@@ -13,6 +13,7 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Session
@@ -28,7 +29,7 @@ class RedisLockKeyGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateAddsSuffix()
+    public function testGenerateAddsSuffix(): void
     {
         $generator = new RedisLockKeyGenerator(new RedisSessionKeyGenerator());
         $generatedKey = $generator->generateLockKey('foo-session-123');

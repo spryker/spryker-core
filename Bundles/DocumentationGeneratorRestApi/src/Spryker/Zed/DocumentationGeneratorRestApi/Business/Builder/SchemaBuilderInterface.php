@@ -92,5 +92,10 @@ interface SchemaBuilderInterface
     /**
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
+    public function createDefaultRelationshipDataCollectionAttributesSchema(): SchemaDataTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
     public function createDefaultLinksSchema(): SchemaDataTransfer;
 }

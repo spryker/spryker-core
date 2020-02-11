@@ -17,7 +17,7 @@ class FormTwigPlugin implements TwigPluginInterface
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

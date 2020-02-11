@@ -96,7 +96,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,7 +162,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -200,7 +200,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -238,7 +238,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -295,7 +295,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -314,7 +314,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -368,7 +368,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -495,7 +495,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -513,7 +513,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -531,7 +531,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -581,7 +581,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -598,7 +598,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -641,7 +641,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -658,7 +658,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -674,7 +674,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -691,7 +691,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -706,7 +706,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

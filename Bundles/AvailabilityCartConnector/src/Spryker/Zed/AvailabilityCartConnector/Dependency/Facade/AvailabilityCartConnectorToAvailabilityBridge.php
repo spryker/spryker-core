@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartConnectorToAvailabilityInterface
 {
@@ -25,62 +28,34 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
-     * @deprecated Use calculateStockForProductWithStore() instead.
-     *
      * @param string $sku
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(
+        string $sku,
+        StoreTransfer $storeTransfer,
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
+    ): ?ProductConcreteAvailabilityTransfer {
+        return $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer, $productAvailabilityCriteriaTransfer);
+    }
+
+    /**
+     * @param string $sku
+     * @param \Spryker\DecimalObject\Decimal $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return bool
      */
-    public function isProductSellable($sku, $quantity)
-    {
-        return $this->availabilityFacade->isProductSellable($sku, $quantity);
-    }
-
-    /**
-     * @deprecated Use calculateStockForProduct() instead.
-     *
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku)
-    {
-        return $this->availabilityFacade->calculateStockForProduct($sku);
-    }
-
-    /**
-     * The method check for "method_exists" is for BC for modules without multi store support.
-     *
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return int
-     */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
-    {
-        if (method_exists($this->availabilityFacade, 'calculateStockForProductWithStore')) {
-            return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
-        }
-
-        return $this->availabilityFacade->calculateStockForProduct($sku);
-    }
-
-    /**
-     * The method check for "method_exists" is for BC for modules without multi store support.
-     *
-     * @param string $sku
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return bool
-     */
-    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
-    {
-        if (method_exists($this->availabilityFacade, 'isProductSellableForStore')) {
-            return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
-        }
-
-        return (bool)$this->availabilityFacade->calculateStockForProduct($sku);
+    public function isProductSellableForStore(
+        string $sku,
+        Decimal $quantity,
+        StoreTransfer $storeTransfer,
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
+    ): bool {
+        return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer);
     }
 }

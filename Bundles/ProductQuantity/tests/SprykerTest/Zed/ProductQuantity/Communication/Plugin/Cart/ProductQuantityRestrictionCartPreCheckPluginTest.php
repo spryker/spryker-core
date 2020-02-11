@@ -12,6 +12,7 @@ use Spryker\Zed\ProductQuantity\Communication\Plugin\Cart\ProductQuantityRestric
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductQuantity
@@ -36,7 +37,7 @@ class ProductQuantityRestrictionCartPreCheckPluginTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +47,7 @@ class ProductQuantityRestrictionCartPreCheckPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCheckDoesNotThrowExceptionWhenCalledWithEmptyListOfItems()
+    public function testCheckDoesNotThrowExceptionWhenCalledWithEmptyListOfItems(): void
     {
         // Assign
         $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();

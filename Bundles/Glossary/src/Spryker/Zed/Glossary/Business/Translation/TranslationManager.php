@@ -126,7 +126,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $idGlossaryKey
+     * @param int $idGlossaryKey
      * @param string $value
      * @param bool $isActive
      *
@@ -417,6 +417,7 @@ class TranslationManager implements TranslationManagerInterface
             Propel::getConnection()->commit();
         } catch (Exception $e) {
             Propel::getConnection()->rollBack();
+
             throw $e;
         }
 

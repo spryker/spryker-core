@@ -14,6 +14,7 @@ use SprykerTest\Service\Kernel\Fixtures\Service;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Kernel
@@ -25,7 +26,7 @@ class AbstractServiceTest extends Unit
     /**
      * @return void
      */
-    public function testSetFactoryWillReturnFluentInterface()
+    public function testSetFactoryWillReturnFluentInterface(): void
     {
         $abstractFactory = new AbstractServiceFactory();
         $abstractService = new AbstractService();
@@ -36,7 +37,7 @@ class AbstractServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetFactoryWillReturnAddedFactory()
+    public function testGetFactoryWillReturnAddedFactory(): void
     {
         $abstractFactory = new AbstractServiceFactory();
         $abstractService = new Service();

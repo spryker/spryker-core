@@ -16,6 +16,7 @@ use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer
@@ -29,7 +30,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return \Spryker\Zed\Transfer\Business\TransferBusinessFactory
      */
-    private function getFactory()
+    private function getFactory(): TransferBusinessFactory
     {
         return new TransferBusinessFactory();
     }
@@ -37,7 +38,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    private function getMessenger()
+    private function getMessenger(): LoggerInterface
     {
         return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
@@ -45,7 +46,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance()
+    public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance(): void
     {
         $transferGenerator = $this->getFactory()->createTransferGenerator(
             $this->getMessenger()
@@ -57,7 +58,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTransferCleanerShouldReturnFullyConfiguredInstance()
+    public function testCreateTransferCleanerShouldReturnFullyConfiguredInstance(): void
     {
         $transferCleaner = $this->getFactory()->createTransferCleaner();
 
@@ -67,7 +68,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTransferValidatorShouldReturnFullyConfiguredInstance()
+    public function testCreateTransferValidatorShouldReturnFullyConfiguredInstance(): void
     {
         $transferCleaner = $this->getFactory()->createValidator($this->getMessenger());
 

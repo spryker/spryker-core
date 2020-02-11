@@ -80,6 +80,8 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
         ],
     ];
 
+    protected const IS_PAYMENT_PROVIDER_METHOD_TO_STATE_MACHINE_MAPPING_ENABLED = true;
+
     /**
      * @param string $paymentMethodName
      *
@@ -116,5 +118,13 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public function getErrorIdentifierToRestErrorMapping(): array
     {
         return static::ERROR_IDENTIFIER_TO_REST_ERROR_MAPPING;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaymentProviderMethodToStateMachineMappingEnabled(): bool
+    {
+        return static::IS_PAYMENT_PROVIDER_METHOD_TO_STATE_MACHINE_MAPPING_ENABLED;
     }
 }

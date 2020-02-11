@@ -18,7 +18,7 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProduct
 class DiscontinuedCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

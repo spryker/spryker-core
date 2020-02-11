@@ -19,7 +19,7 @@
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
-        <property name="company" type="Company" />
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="Company">

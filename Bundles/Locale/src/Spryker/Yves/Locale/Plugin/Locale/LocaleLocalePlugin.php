@@ -22,7 +22,7 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
     public const REQUEST_URI = 'REQUEST_URI';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

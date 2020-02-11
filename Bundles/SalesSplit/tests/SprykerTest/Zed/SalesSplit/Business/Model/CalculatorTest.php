@@ -13,6 +13,7 @@ use Spryker\Zed\SalesSplit\Business\Model\Calculator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesSplit
@@ -26,7 +27,7 @@ class CalculatorTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateAmountLeft()
+    public function testCalculateAmountLeft(): void
     {
         $calculator = new Calculator();
         $spySalesOrderItem = new SpySalesOrderItem();

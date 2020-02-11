@@ -16,5 +16,5 @@ interface QuoteRequestToCalculationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer);
+    public function recalculateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

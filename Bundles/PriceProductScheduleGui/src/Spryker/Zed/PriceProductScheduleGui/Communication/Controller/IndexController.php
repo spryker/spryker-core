@@ -46,8 +46,13 @@ class IndexController extends AbstractController
     {
         $idProductConcrete = $request->query->get(static::REQUEST_KEY_ID_PRODUCT_CONCRETE);
         $idPriceType = $request->query->get(static::REQUEST_KEY_ID_PRICE_TYPE);
+        $idProductAbstract = $request->query->get(static::REQUEST_KEY_ID_PRODUCT_ABSTRACT);
         $priceProductScheduleTable = $this->getFactory()
-            ->createPriceProductScheduleConcreteTable($idProductConcrete, $idPriceType);
+            ->createPriceProductScheduleConcreteTable(
+                $idProductConcrete,
+                $idProductAbstract,
+                $idPriceType
+            );
 
         return $this->jsonResponse(
             $priceProductScheduleTable->fetchData()

@@ -12,6 +12,7 @@ use SprykerTest\Zed\ZedNavigation\Business\ZedNavigationBusinessTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ZedNavigation
@@ -26,7 +27,7 @@ class ZedNavigationCacheBuilderTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testWriteNavigationCacheMustReadNavigationFromCollectorAndPassItToTheCache()
+    public function testWriteNavigationCacheMustReadNavigationFromCollectorAndPassItToTheCache(): void
     {
         //prepare
         $navigationCacheMock = $this->getZedNavigationCacheMock();

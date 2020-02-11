@@ -12,6 +12,11 @@ use Silex\Application;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @deprecated Will be removed without replacement.
+ *
+ * @see Router Module.
+ */
 class Helper
 {
     /**

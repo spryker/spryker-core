@@ -8,12 +8,12 @@
 namespace SprykerTest\Zed\Kernel\Communication;
 
 use Codeception\Test\Unit;
-use Silex\Application;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerTest\Zed\Kernel\Communication\Fixture\FixtureGatewayController;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -26,13 +26,11 @@ class AbstractGatewayControllerTest extends Unit
     /**
      * @return void
      */
-    public function testGatewayControllerMustBeConstructable()
+    public function testGatewayControllerMustBeConstructable(): void
     {
-        $application = new Application();
-
         $this->assertInstanceOf(
             AbstractGatewayController::class,
-            new FixtureGatewayController($application)
+            new FixtureGatewayController()
         );
     }
 }

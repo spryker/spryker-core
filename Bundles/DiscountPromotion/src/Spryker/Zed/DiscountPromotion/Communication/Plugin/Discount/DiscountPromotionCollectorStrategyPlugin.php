@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class DiscountPromotionCollectorStrategyPlugin extends AbstractPlugin implements CollectorStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,9 +36,9 @@ class DiscountPromotionCollectorStrategyPlugin extends AbstractPlugin implements
     }
 
     /**
-     * @api
+     * {@inheritDoc}
      *
-     * {@inheritdoc}
+     * @api
      *
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

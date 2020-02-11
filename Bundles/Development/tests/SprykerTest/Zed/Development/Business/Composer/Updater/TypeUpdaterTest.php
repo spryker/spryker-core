@@ -13,6 +13,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -27,7 +28,7 @@ class TypeUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testSetsTypeToPropelBehaviorWhenPackageNameContainsBehavior()
+    public function testSetsTypeToPropelBehaviorWhenPackageNameContainsBehavior(): void
     {
         $typeUpdater = new TypeUpdater();
         $updatedJson = $typeUpdater->update($this->getComposerJson('foo-behavior'), $this->getSplFile());
@@ -38,7 +39,7 @@ class TypeUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testSetsTypeToLibraryBehaviorWhenPackageNameNotContainsBehavior()
+    public function testSetsTypeToLibraryBehaviorWhenPackageNameNotContainsBehavior(): void
     {
         $typeUpdater = new TypeUpdater();
         $updatedJson = $typeUpdater->update($this->getComposerJson('foo'), $this->getSplFile());
@@ -64,7 +65,7 @@ class TypeUpdaterTest extends Unit
     /**
      * @return \Symfony\Component\Finder\SplFileInfo
      */
-    protected function getSplFile()
+    protected function getSplFile(): SplFileInfo
     {
         return new SplFileInfo(__FILE__, __DIR__, __DIR__);
     }

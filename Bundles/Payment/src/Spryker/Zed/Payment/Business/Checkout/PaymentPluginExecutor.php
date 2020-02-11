@@ -160,6 +160,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
         $paymentProvider = $quoteTransfer->getPayment()->getPaymentProvider();
 
         if ($this->hasPlugin($pluginType, $paymentProvider)) {
+            /** @var \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface $plugin */
             $plugin = $this->findPlugin($pluginType, $paymentProvider);
             $isPassed &= $this->executePreCheckPluginPayment($quoteTransfer, $checkoutResponseTransfer, $plugin);
         }
@@ -185,6 +186,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
                 continue;
             }
 
+            /** @var \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface $plugin */
             $plugin = $this->findPlugin($pluginType, $paymentTransfer->getPaymentProvider());
             $isPassed &= $this->executePreCheckPluginPayment($quoteTransfer, $checkoutResponseTransfer, $plugin);
         }

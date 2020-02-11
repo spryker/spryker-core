@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class QuickOrderClient extends AbstractClient implements QuickOrderClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

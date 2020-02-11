@@ -29,7 +29,7 @@ class QuoteRequestToQuoteClientBridge implements QuoteRequestToQuoteClientInterf
      *
      * @return void
      */
-    public function setQuote(QuoteTransfer $quoteTransfer)
+    public function setQuote(QuoteTransfer $quoteTransfer): void
     {
         $this->quoteClient->setQuote($quoteTransfer);
     }

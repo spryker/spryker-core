@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartBundleActivePreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if bundled items in CartChangeTransfer are active.
      * - Sets CartPreCheckResponseTransfer::isSuccess to false if some of products are not active.
      * - Sets error message if some of products are not active.
@@ -38,7 +38,7 @@ class CartBundleActivePreCheckPlugin extends AbstractPlugin implements CartPreCh
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -22,7 +22,7 @@ class ConnectionHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         if (class_exists(PropelApplicationPlugin::class)) {
             $propelApplicationPlugin = new PropelApplicationPlugin();
@@ -50,7 +50,7 @@ class ConnectionHelper extends Module
      *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         Propel::closeConnections();
     }

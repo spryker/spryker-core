@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\NumericFacetAggregation;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\RangeExtractor` instead.
+ */
 class RangeExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
     /**
@@ -57,10 +60,10 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
         [$activeMin, $activeMax] = $this->getActiveRangeData($requestParameters, $min, $max);
 
         $rangeResultTransfer
-            ->setMin($this->resolveMin((int)$min, (int)$activeMin))
-            ->setMax($this->resolveMax((int)$max, (int)$activeMax))
-            ->setActiveMin((int)$activeMin)
-            ->setActiveMax((int)$activeMax);
+            ->setMin((int)$min)
+            ->setMax((int)$max)
+            ->setActiveMin($this->resolveMin((int)$min, (int)$activeMin))
+            ->setActiveMax($this->resolveMax((int)$max, (int)$activeMax));
 
         return $rangeResultTransfer;
     }

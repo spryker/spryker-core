@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
+use Generated\Shared\Transfer\CmsBlockTemplateTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 
 interface CmsBlockTemplateMapperInterface
@@ -16,5 +17,5 @@ interface CmsBlockTemplateMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
-    public function mapTemplateEntityToTransfer(SpyCmsBlockTemplate $spyCmsBlockTemplate);
+    public function mapTemplateEntityToTransfer(SpyCmsBlockTemplate $spyCmsBlockTemplate): CmsBlockTemplateTransfer;
 }

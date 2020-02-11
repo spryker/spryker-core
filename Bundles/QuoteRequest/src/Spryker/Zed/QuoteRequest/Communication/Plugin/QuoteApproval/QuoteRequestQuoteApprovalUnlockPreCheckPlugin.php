@@ -19,7 +19,7 @@ use Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreC
 class QuoteRequestQuoteApprovalUnlockPreCheckPlugin extends AbstractPlugin implements QuoteApprovalUnlockPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns false if quote in 'request for quote' process.
      *
      * @api

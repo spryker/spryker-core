@@ -18,10 +18,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use OutOfBoundsException;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
@@ -40,17 +40,17 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected $priceProductFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface
      */
     protected $priceFacade;
 
@@ -72,16 +72,16 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface $priceFacade
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToPriceProductFacadeInterface $priceProductFacade,
-        ProductBundleToProductInterface $productFacade,
-        ProductBundleToLocaleInterface $localeFacade,
-        ProductBundleToPriceInterface $priceFacade
+        ProductBundleToProductFacadeInterface $productFacade,
+        ProductBundleToLocaleFacadeInterface $localeFacade,
+        ProductBundleToPriceFacadeInterface $priceFacade
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->priceProductFacade = $priceProductFacade;
@@ -105,6 +105,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getRelatedBundleItemIdentifier()) {
                 $cartChangeItems->append($itemTransfer);
+
                 continue;
             }
 
@@ -115,6 +116,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
             if ($bundledProducts->count() == 0) {
                 $cartChangeItems->append($itemTransfer);
+
                 continue;
             }
 
@@ -250,7 +252,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $itemTransfer->requireSku();
 
-        return $this->buildGroupKey($itemTransfer) . static::BUNDLE_IDENTIFIER_DELIMITER . uniqid(true);
+        return $this->buildGroupKey($itemTransfer) . static::BUNDLE_IDENTIFIER_DELIMITER . uniqid('1');
     }
 
     /**

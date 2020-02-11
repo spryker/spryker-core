@@ -39,7 +39,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     protected $navigation;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

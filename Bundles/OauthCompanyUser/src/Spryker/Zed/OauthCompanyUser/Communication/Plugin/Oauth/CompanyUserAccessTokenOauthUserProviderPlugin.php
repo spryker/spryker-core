@@ -22,7 +22,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterfac
 class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin implements OauthUserProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if CompanyUser GrantType is provided, false otherwise.
      *
      * @api
@@ -41,7 +41,7 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Retrieves active company user if idCompanyUser provided.
      * - Expands the OauthUserTransfer if active company user exists.
      *

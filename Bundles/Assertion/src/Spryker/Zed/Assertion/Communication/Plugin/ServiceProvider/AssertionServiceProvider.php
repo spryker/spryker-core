@@ -11,6 +11,9 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Assertion\Business\AssertionFacade;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class AssertionServiceProvider implements ServiceProviderInterface
 {
     public const ASSERTION = 'assertion';

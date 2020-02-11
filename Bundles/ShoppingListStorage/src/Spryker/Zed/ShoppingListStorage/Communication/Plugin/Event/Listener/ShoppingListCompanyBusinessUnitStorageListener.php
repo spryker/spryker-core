@@ -22,7 +22,7 @@ class ShoppingListCompanyBusinessUnitStorageListener extends AbstractPlugin impl
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Handles shipping list to company business unit relation create and update events.
      *
      * @api

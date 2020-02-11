@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyUserAgentClient extends AbstractClient implements CompanyUserAgentClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

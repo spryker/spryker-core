@@ -14,6 +14,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterP
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Api
@@ -31,7 +32,7 @@ class SortByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -39,7 +40,7 @@ class SortByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessEmpty()
+    public function testProcessEmpty(): void
     {
         $processor = new SortByQueryFilterPreProcessor();
 
@@ -53,7 +54,7 @@ class SortByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcess()
+    public function testProcess(): void
     {
         $processor = new SortByQueryFilterPreProcessor();
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockStorage\Communication;
 
 use Spryker\Zed\CmsBlockStorage\CmsBlockStorageDependencyProvider;
+use Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -20,7 +21,7 @@ class CmsBlockStorageCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToEventBehaviorFacadeInterface
      */
-    public function getEventBehaviorFacade()
+    public function getEventBehaviorFacade(): CmsBlockStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }

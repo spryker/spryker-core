@@ -23,7 +23,7 @@ class ProductListProductConcreteSearchListener extends AbstractPlugin implements
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

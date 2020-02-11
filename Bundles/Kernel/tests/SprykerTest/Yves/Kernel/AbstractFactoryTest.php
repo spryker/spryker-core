@@ -16,6 +16,7 @@ use SprykerTest\Yves\Kernel\Fixtures\ConcreteFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel
@@ -30,7 +31,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testSetContainer()
+    public function testSetContainer(): void
     {
         $factory = new ConcreteFactory();
         $this->assertSame($factory, $factory->setContainer(new Container()));
@@ -39,7 +40,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependency()
+    public function testGetProvidedDependency(): void
     {
         $container = new Container([self::TEST_KEY => self::TEST_VALUE]);
 
@@ -51,7 +52,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyWithResolvedProvider()
+    public function testGetProvidedDependencyWithResolvedProvider(): void
     {
         $factoryMock = $this->getFactoryMock();
 
@@ -61,7 +62,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Yves\Kernel\Fixtures\ConcreteFactory
      */
-    protected function getFactoryMock()
+    protected function getFactoryMock(): ConcreteFactory
     {
         $dependencyResolverMock = $this->getMockForAbstractClass(AbstractBundleDependencyProvider::class);
         $container = new Container([self::TEST_KEY => self::TEST_VALUE]);
@@ -76,7 +77,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyThrowsExceptionWhenProviderNotFound()
+    public function testGetProvidedDependencyThrowsExceptionWhenProviderNotFound(): void
     {
         $factory = new ConcreteFactory();
         $this->expectException(DependencyProviderNotFoundException::class);
@@ -87,7 +88,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyThrowsExceptionWhenKeyNotInContainer()
+    public function testGetProvidedDependencyThrowsExceptionWhenKeyNotInContainer(): void
     {
         $container = new Container();
         $factory = new ConcreteFactory();

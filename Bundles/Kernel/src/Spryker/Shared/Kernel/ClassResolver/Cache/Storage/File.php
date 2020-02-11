@@ -36,8 +36,13 @@ class File implements StorageInterface
                 $flag = LOCK_NB;
             }
 
+            $cacheFilePath = $this->getCacheFilename();
+            if (!is_dir(dirname($cacheFilePath))) {
+                mkdir(dirname($cacheFilePath), 0755, true);
+            }
+
             file_put_contents(
-                $this->getCacheFilename(),
+                $cacheFilePath,
                 '<?php return ' . $string . ';',
                 $flag
             );

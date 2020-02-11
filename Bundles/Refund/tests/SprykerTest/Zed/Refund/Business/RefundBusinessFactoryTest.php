@@ -15,6 +15,7 @@ use Spryker\Zed\Refund\Business\RefundBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund
@@ -27,7 +28,7 @@ class RefundBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateRefundCalculatorShouldReturnRefundCalculatorInterface()
+    public function testCreateRefundCalculatorShouldReturnRefundCalculatorInterface(): void
     {
         $refundCalculationFactory = new RefundBusinessFactory();
 
@@ -37,7 +38,7 @@ class RefundBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateItemRefundCalculatorShouldReturnRefundCalculatorInterface()
+    public function testCreateItemRefundCalculatorShouldReturnRefundCalculatorInterface(): void
     {
         $refundCalculationFactory = new RefundBusinessFactory();
 
@@ -47,7 +48,7 @@ class RefundBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateExpenseRefundCalculatorShouldReturnRefundCalculatorInterface()
+    public function testCreateExpenseRefundCalculatorShouldReturnRefundCalculatorInterface(): void
     {
         $refundCalculationFactory = new RefundBusinessFactory();
 
@@ -57,7 +58,7 @@ class RefundBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateRefundSaverShouldReturnRefundSaverInterface()
+    public function testCreateRefundSaverShouldReturnRefundSaverInterface(): void
     {
         $refundCalculationFactory = new RefundBusinessFactory();
 

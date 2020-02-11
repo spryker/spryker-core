@@ -12,6 +12,7 @@ use Spryker\Service\UtilText\Model\Filter\SeparatorToCamelCase;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilText
@@ -25,7 +26,7 @@ class SeparatorToCamelCaseTest extends Unit
     /**
      * @return array
      */
-    public function dataProvider()
+    public function dataProvider(): array
     {
         return [
             ['camelCase', '-', 'camel-case', false],
@@ -53,7 +54,7 @@ class SeparatorToCamelCaseTest extends Unit
      *
      * @return void
      */
-    public function testWithDifferentSeparator($expected, $separator, $string, $upperCase)
+    public function testWithDifferentSeparator(string $expected, string $separator, string $string, bool $upperCase): void
     {
         $filter = new SeparatorToCamelCase();
         $this->assertEquals($expected, $filter->filter($string, $separator, $upperCase));

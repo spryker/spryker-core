@@ -15,7 +15,7 @@ interface CurrencyQueryContainerInterface
     /**
      * @api
      *
-     * @param int $isoCode
+     * @param string $isoCode
      *
      * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
      */

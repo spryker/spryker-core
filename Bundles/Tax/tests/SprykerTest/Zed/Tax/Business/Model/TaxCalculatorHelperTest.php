@@ -12,6 +12,7 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Tax
@@ -25,7 +26,7 @@ class TaxCalculatorHelperTest extends Unit
     /**
      * @return void
      */
-    public function testTaxValueFromTax()
+    public function testTaxValueFromTax(): void
     {
         $taxCalculatorHelper = $this->createPriceCalculationHelper();
 
@@ -37,7 +38,7 @@ class TaxCalculatorHelperTest extends Unit
     /**
      * @return void
      */
-    public function testTaxValueFroPrice()
+    public function testTaxValueFroPrice(): void
     {
         $taxCalculatorHelper = $this->createPriceCalculationHelper();
 
@@ -49,7 +50,7 @@ class TaxCalculatorHelperTest extends Unit
     /**
      * @return void
      */
-    public function testTaxRateFromPrice()
+    public function testTaxRateFromPrice(): void
     {
         $taxCalculatorHelper = $this->createPriceCalculationHelper();
 
@@ -61,7 +62,7 @@ class TaxCalculatorHelperTest extends Unit
     /**
      * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelper
      */
-    protected function createPriceCalculationHelper()
+    protected function createPriceCalculationHelper(): PriceCalculationHelper
     {
         return new PriceCalculationHelper();
     }

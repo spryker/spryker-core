@@ -15,6 +15,7 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
@@ -28,7 +29,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testWhenGrandTotalMatchesShouldReturnTrue()
+    public function testWhenGrandTotalMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $grandTotal) {
@@ -54,7 +55,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testWhenGrandTotalNotMatchingShouldReturnFalse()
+    public function testWhenGrandTotalNotMatchingShouldReturnFalse(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $grandTotal) {
@@ -80,7 +81,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testWhenGrandTotalIsNotSetShouldReturnFalse()
+    public function testWhenGrandTotalIsNotSetShouldReturnFalse(): void
     {
         $grandTotalDecisionRule = $this->createGrandTotalDecisionRule();
 
@@ -98,7 +99,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule
      */
-    protected function createGrandTotalDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createGrandTotalDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null): GrandTotalDecisionRule
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

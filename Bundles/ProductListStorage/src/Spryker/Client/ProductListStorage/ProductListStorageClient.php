@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductListStorageClient extends AbstractClient implements ProductListStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,5 +78,37 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
         return $this->getFactory()
             ->createProductConcreteRestrictionReader()
             ->isProductConcreteRestricted($idProduct);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedAbstractProducts(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractProductRestrictionFilter()
+            ->filterRestrictedProducts($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedConcreteProducts(array $productConcreteIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteProductRestrictionFilter()
+            ->filterRestrictedProducts($productConcreteIds);
     }
 }

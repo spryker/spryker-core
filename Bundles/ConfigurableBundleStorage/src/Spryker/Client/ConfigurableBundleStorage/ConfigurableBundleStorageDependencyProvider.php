@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage;
 
+use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductStorageClientBridge;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientBridge;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -15,6 +16,8 @@ use Spryker\Client\Kernel\Container;
 class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
@@ -26,6 +29,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
+        $container = $this->addProductStorageClient($container);
         $container = $this->addSynchronizationService($container);
 
         return $container;
@@ -54,6 +58,22 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ConfigurableBundleStorageToStorageClientBridge($container->getLocator()->storage()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new ConfigurableBundleStorageToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
+            );
         });
 
         return $container;

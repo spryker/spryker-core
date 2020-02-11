@@ -21,7 +21,7 @@ class CartChangeTransferQuantityNormalizerPlugin extends AbstractPlugin implemen
     protected const NORMALIZABLE_FIELD = 'quantity';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if there is at least 1 ItemTransfer with a normalizable quantity field.
      * - Returns false otherwise.
      *
@@ -38,7 +38,7 @@ class CartChangeTransferQuantityNormalizerPlugin extends AbstractPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adjusts cart item quantity according to product quantity restrictions.
      * - Adds notification message about adjustment.
      *

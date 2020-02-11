@@ -17,7 +17,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 class MoneyClient extends AbstractClient implements MoneyClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class MoneyClient extends AbstractClient implements MoneyClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,5 +47,22 @@ class MoneyClient extends AbstractClient implements MoneyClientInterface
         return $this->getFactory()
             ->createMoneyBuilder()
             ->fromInteger($amount, $isoCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param float $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat(float $amount, ?string $isoCode = null): MoneyTransfer
+    {
+        return $this->getFactory()
+            ->createMoneyBuilder()
+            ->fromFloat($amount, $isoCode);
     }
 }

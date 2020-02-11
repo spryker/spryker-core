@@ -13,7 +13,7 @@ use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 class HardMinimumThresholdStrategyPlugin extends AbstractSalesOrderThresholdStrategyPlugin
 {
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -25,7 +25,7 @@ class HardMinimumThresholdStrategyPlugin extends AbstractSalesOrderThresholdStra
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class HardMinimumThresholdStrategyPlugin extends AbstractSalesOrderThresholdStra
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,11 +47,11 @@ class HardMinimumThresholdStrategyPlugin extends AbstractSalesOrderThresholdStra
      */
     public function isValid(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): bool
     {
-        return !(($salesOrderThresholdValueTransfer->getSalesOrderThresholdValue() < 1 || $salesOrderThresholdValueTransfer->getFee()));
+        return !(($salesOrderThresholdValueTransfer->getValue() < 1 || $salesOrderThresholdValueTransfer->getFee()));
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class HardMinimumThresholdStrategyPlugin extends AbstractSalesOrderThresholdStra
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

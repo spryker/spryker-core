@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CheckoutResourcePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for checkout resource.
      *
      * @api
@@ -34,7 +34,7 @@ class CheckoutResourcePlugin extends AbstractPlugin implements ResourceRoutePlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class CheckoutResourcePlugin extends AbstractPlugin implements ResourceRoutePlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -58,7 +58,7 @@ class CheckoutResourcePlugin extends AbstractPlugin implements ResourceRoutePlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyRepository extends AbstractRepository implements CompanyRepositoryInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idCompany
      *
@@ -44,7 +44,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idCompany
      *
@@ -84,7 +84,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */

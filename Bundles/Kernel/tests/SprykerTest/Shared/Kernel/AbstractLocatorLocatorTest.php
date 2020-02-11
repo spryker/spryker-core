@@ -12,6 +12,7 @@ use SprykerTest\Shared\Kernel\Fixtures\LocatorLocator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Kernel
@@ -23,7 +24,7 @@ class AbstractLocatorLocatorTest extends Unit
     /**
      * @return void
      */
-    public function testMagicMethodCallShouldReturnBundleProxy()
+    public function testMagicMethodCallShouldReturnBundleProxy(): void
     {
         $locator = LocatorLocator::getInstance();
         $bundleProxy = $locator->foo();

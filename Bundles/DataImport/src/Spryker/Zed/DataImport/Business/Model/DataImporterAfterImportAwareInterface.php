@@ -12,7 +12,7 @@ interface DataImporterAfterImportAwareInterface extends DataImporterAfterImportI
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface $afterImportHook
      *
-     * @return void
+     * @return $this
      */
     public function addAfterImportHook(DataImporterAfterImportInterface $afterImportHook);
 }

@@ -19,7 +19,7 @@ class DatasetConfig extends AbstractBundleConfig
      */
     public function getMaxFileSize(): string
     {
-        return $path = $this->getConfig()->hasValue(DatasetConstants::DATASET_FILE_SIZE) ?
+        return $this->getConfig()->hasValue(DatasetConstants::DATASET_FILE_SIZE) ?
             $this->getConfig()->get(DatasetConstants::DATASET_FILE_SIZE) : static::DEFAULT_SIZE;
     }
 }

@@ -7,8 +7,12 @@
 
 namespace Spryker\Client\ProductReview;
 
+use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductReview\Pagination\PaginationExpander;
+use Spryker\Client\ProductReview\Pagination\PaginationExpanderInterface;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\BulkProductReviewsQueryPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\ProductReviewsQueryPlugin;
 use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
@@ -38,6 +42,30 @@ class ProductReviewFactory extends AbstractFactory
             $this->getProductReviewsQueryExpanderPlugins(),
             $productReviewSearchRequestTransfer->getRequestParams()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function createBulkProductReviewsQueryPlugin(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer)
+    {
+        $bulkProductReviewsQueryPlugin = new BulkProductReviewsQueryPlugin($bulkProductReviewSearchRequestTransfer);
+
+        return $this->getSearchClient()->expandQuery(
+            $bulkProductReviewsQueryPlugin,
+            $this->getProductReviewsQueryExpanderPlugins(),
+            $bulkProductReviewSearchRequestTransfer->getFilter()->toArray()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\Pagination\PaginationExpanderInterface
+     */
+    public function createPaginationExpander(): PaginationExpanderInterface
+    {
+        return new PaginationExpander($this->getPaginationConfigBuilder());
     }
 
     /**

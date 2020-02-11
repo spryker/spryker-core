@@ -28,7 +28,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -16,6 +16,7 @@ use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageR
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAlternativeStorage

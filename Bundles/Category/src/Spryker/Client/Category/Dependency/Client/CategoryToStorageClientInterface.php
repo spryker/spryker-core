@@ -12,7 +12,7 @@ interface CategoryToStorageClientInterface
     /**
      * @param string $key
      *
-     * @return string
+     * @return array
      */
     public function get($key);
 }

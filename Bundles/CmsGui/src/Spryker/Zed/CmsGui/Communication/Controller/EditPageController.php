@@ -89,7 +89,24 @@ class EditPageController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
+            'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
         ];
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return bool
+     */
+    protected function isPageTemplateWithPlaceholders(int $idCmsPage): bool
+    {
+        $cmsGlossaryTransfer = $this->getFactory()->getCmsFacade()->findPageGlossaryAttributes($idCmsPage);
+
+        if (!$cmsGlossaryTransfer) {
+            return false;
+        }
+
+        return $cmsGlossaryTransfer->getGlossaryAttributes()->count() > 0;
     }
 
     /**
@@ -137,9 +154,9 @@ class EditPageController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_PAGE_ACTIVATION_SUCCESS);
         } catch (CannotActivatePageException $exception) {
              $this->addErrorMessage($exception->getMessage());
-        } finally {
-            return $this->redirectResponse($redirectUrl);
         }
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**

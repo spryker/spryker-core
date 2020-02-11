@@ -80,7 +80,7 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
     {
         $currencySymbol = static::NO_SYMBOL_FOUND;
         $currencyTransfer = $this->getCurrencyTransfer($isoCode);
-        if ($currencyTransfer && $currencyTransfer->getSymbol() !== null) {
+        if ($currencyTransfer->getSymbol() !== null) {
             $currencySymbol = $currencyTransfer->getSymbol();
         }
 

@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductPackagingUnitRepositoryInterface
 {
@@ -41,31 +42,20 @@ interface ProductPackagingUnitRepositoryInterface
     ): int;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function findProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer;
-
-    /**
      * @param string $siblingProductSku
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductPackagingLeadProductBySiblingProductSku(
+    public function findProductPackagingUnitLeadProductForPackagingUnit(
         string $siblingProductSku
-    ): ?ProductPackagingLeadProductTransfer;
+    ): ?ProductConcreteTransfer;
 
     /**
      * @param int[] $productPackagingUnitTypeIds
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
      * @param int $idProductPackagingUnit
@@ -106,8 +96,9 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @param string $sku
      * @param string[] $reservedStateNames
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
+    public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array;
 }

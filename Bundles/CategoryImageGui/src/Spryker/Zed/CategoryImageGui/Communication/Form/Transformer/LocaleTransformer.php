@@ -26,12 +26,11 @@ class LocaleTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $value The value in the original representation
      *
      * @return int|null The value in the transformed representation
-     *
      */
     public function transform($value)
     {
@@ -43,12 +42,11 @@ class LocaleTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int|null $value The value in the transformed representation
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer|null The value in the original representation
-     *
      */
     public function reverseTransform($value)
     {

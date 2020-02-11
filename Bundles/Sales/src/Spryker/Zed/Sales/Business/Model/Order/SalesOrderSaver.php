@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -20,9 +21,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
 class SalesOrderSaver implements SalesOrderSaverInterface
@@ -70,7 +71,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesOrderSaverPluginExecutor;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface
+     * @var \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface
      */
     protected $salesOrderItemMapper;
 
@@ -88,7 +89,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
-     * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
+     * @param \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface $salesOrderItemMapper
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[] $orderPostSavePlugins
      */
     public function __construct(
@@ -209,10 +210,12 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function hydrateAddresses(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
         $billingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getBillingAddress());
-        $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
-
         $salesOrderEntity->setBillingAddress($billingAddressEntity);
-        $salesOrderEntity->setShippingAddress($shippingAddressEntity);
+
+        if ($quoteTransfer->getShippingAddress() !== null && $quoteTransfer->getShippingAddress()->getFirstName() !== null) {
+            $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
+            $salesOrderEntity->setShippingAddress($shippingAddressEntity);
+        }
     }
 
     /**
@@ -310,6 +313,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
 
         if (isset($customerData['created_at'])) {
             unset($customerData['created_at']);
+        }
+
+        if (isset($customerData['updated_at'])) {
+            unset($customerData['updated_at']);
         }
 
         $salesOrderEntity->fromArray($customerData);
@@ -520,9 +527,12 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function executeOrderItemExpanderPreSavePlugins(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItem $spySalesOrderItemEntity): SpySalesOrderItem
     {
-        $salesOrderItemEntity = $this->salesOrderItemMapper->mapSpySalesOrderItemEntityToSalesOrderItemEntity($spySalesOrderItemEntity);
-        $salesOrderItemEntity = $this->salesOrderSaverPluginExecutor->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
-        $spySalesOrderItemEntity = $this->salesOrderItemMapper->mapSalesOrderItemEntityToSpySalesOrderItemEntity($salesOrderItemEntity);
+        $salesOrderItemEntity = $this->salesOrderItemMapper
+            ->mapSpySalesOrderItemEntityToSalesOrderItemEntity($spySalesOrderItemEntity, new SpySalesOrderItemEntityTransfer());
+        $salesOrderItemEntity = $this->salesOrderSaverPluginExecutor
+            ->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
+        $spySalesOrderItemEntity = $this->salesOrderItemMapper
+            ->mapSalesOrderItemEntityToSpySalesOrderItemEntity($salesOrderItemEntity, new SpySalesOrderItem());
 
         return $spySalesOrderItemEntity;
     }

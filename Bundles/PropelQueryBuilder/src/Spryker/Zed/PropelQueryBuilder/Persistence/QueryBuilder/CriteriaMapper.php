@@ -211,7 +211,7 @@ class CriteriaMapper implements CriteriaMapperInterface
         OperatorInterface $operator,
         array $mappings = []
     ) {
-        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $lastCriterion */
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null $lastCriterion */
         $lastCriterion = null;
 
         $mappedFields = $this->getMappedFields($ruleSetTransfer->getId(), $mappings);
@@ -222,6 +222,7 @@ class CriteriaMapper implements CriteriaMapperInterface
             $criterion = $this->createCriterion($criteria, $multiRule, $operator);
             if (!$lastCriterion) {
                 $lastCriterion = $criterion;
+
                 continue;
             }
 

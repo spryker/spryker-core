@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class UtilCsvService extends AbstractService implements UtilCsvServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class UtilCsvService extends AbstractService implements UtilCsvServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

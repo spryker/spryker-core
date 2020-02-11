@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -32,5 +34,49 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->findOne();
 
         return $idSalesOrder;
+    }
+
+    /**
+     * @param int $idOrderAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findOrderAddressByIdOrderAddress(int $idOrderAddress): ?AddressTransfer
+    {
+        $addressEntity = $this->getFactory()
+            ->createSalesOrderAddressQuery()
+            ->leftJoinWithCountry()
+            ->filterByIdSalesOrderAddress($idOrderAddress)
+            ->findOne();
+
+        if ($addressEntity === null) {
+            return null;
+        }
+
+        return $this->hydrateAddressTransferFromEntity($this->createOrderAddressTransfer(), $addressEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $addressEntity
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function hydrateAddressTransferFromEntity(
+        AddressTransfer $addressTransfer,
+        SpySalesOrderAddress $addressEntity
+    ): AddressTransfer {
+        $addressTransfer->fromArray($addressEntity->toArray(), true);
+        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function createOrderAddressTransfer(): AddressTransfer
+    {
+        return new AddressTransfer();
     }
 }

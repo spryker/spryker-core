@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class DiscountPromotionFilterCollectedItemsPlugin extends AbstractPlugin implements DiscountableItemFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

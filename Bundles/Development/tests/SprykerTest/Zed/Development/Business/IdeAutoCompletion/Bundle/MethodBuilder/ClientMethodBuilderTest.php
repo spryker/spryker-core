@@ -11,10 +11,12 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -33,7 +35,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMethodNameIsClient()
+    public function testMethodNameIsClient(): void
     {
         $methodBuilderMock = $this->getClientMethodBuilderMock();
         $methodBuilderMock
@@ -49,7 +51,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupIsPerformedInClientApplication()
+    public function testFileLookupIsPerformedInClientApplication(): void
     {
         $methodBuilderMock = $this->getClientMethodBuilderMock();
         $methodBuilderMock
@@ -63,7 +65,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
      */
-    protected function getClientMethodBuilderMock()
+    protected function getClientMethodBuilderMock(): ClientMethodBuilder
     {
         $methodBuilderMock = $this
             ->getMockBuilder(ClientMethodBuilder::class)
@@ -82,7 +84,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
      */
-    protected function getNamespaceExtractorMock()
+    protected function getNamespaceExtractorMock(): NamespaceExtractorInterface
     {
         return $this
             ->getMockBuilder(NamespaceExtractor::class)
@@ -92,7 +94,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    protected function getBundleTransfer()
+    protected function getBundleTransfer(): IdeAutoCompletionBundleTransfer
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');

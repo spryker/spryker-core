@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class SetAnonymousCustomerIdControllerBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Sets customer reference value from X-Anonymous-Customer-Unique-Id header.
      *
      * @api

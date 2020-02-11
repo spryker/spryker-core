@@ -18,7 +18,7 @@ class LocatorWithMatcherMatcher implements LocatorMatcherInterface
      *
      * @return bool
      */
-    public function match($method)
+    public function match($method): bool
     {
         return (strpos($method, self::NAME) === 0);
     }
@@ -28,7 +28,7 @@ class LocatorWithMatcherMatcher implements LocatorMatcherInterface
      *
      * @return string
      */
-    public function filter($method)
+    public function filter(string $method): string
     {
         return substr($method, strlen(self::NAME));
     }

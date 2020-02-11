@@ -198,7 +198,7 @@ class Install implements InstallInterface
         }
 
         $mappings = $json['supplemental']['postalCodeData'];
-        unset($rawFileInput, $json);
+        unset($json);
 
         foreach ($countries as $iso2 => $country) {
             if (!isset($mappings[$iso2])) {

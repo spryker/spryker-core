@@ -20,4 +20,4 @@ use Orm\Zed\Oms\Persistence\Base\SpyOmsTransitionLogQuery as BaseSpyOmsTransitio
  */
 abstract class AbstractSpyOmsTransitionLogQuery extends BaseSpyOmsTransitionLogQuery
 {
-} // SpyOmsTransitionLogQuery
+}

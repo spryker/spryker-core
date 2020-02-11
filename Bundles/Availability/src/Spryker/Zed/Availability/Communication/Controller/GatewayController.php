@@ -11,11 +11,15 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null

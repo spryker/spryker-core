@@ -54,7 +54,7 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,5 +67,21 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
         return $this->getFactory()
             ->createInactiveItemsFilter()
             ->filterInactiveItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandItemTransfersWithUrls(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createProductUrlExpander()
+            ->expandItemTransfersWithUrls($cartChangeTransfer);
     }
 }

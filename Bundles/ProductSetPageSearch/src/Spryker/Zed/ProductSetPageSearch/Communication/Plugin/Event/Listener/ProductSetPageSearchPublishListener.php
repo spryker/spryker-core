@@ -22,7 +22,7 @@ class ProductSetPageSearchPublishListener extends AbstractPlugin implements Even
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

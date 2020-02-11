@@ -12,6 +12,7 @@ use SprykerTest\Zed\Glossary\PageObject\GlossaryListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary
@@ -27,10 +28,10 @@ class GlossaryEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(GlossaryCommunicationTester $i)
+    public function breadcrumbIsVisible(GlossaryCommunicationTester $i): void
     {
         $i->listDataTable(GlossaryListPage::URL . '/index/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Glossary / Edit Translation');
+        $i->seeBreadcrumbNavigation('Glossary / Edit Translation');
     }
 }

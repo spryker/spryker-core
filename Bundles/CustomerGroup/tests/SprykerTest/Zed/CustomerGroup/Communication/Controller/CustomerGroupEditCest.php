@@ -12,6 +12,7 @@ use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupEditPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerGroup
@@ -27,11 +28,11 @@ class CustomerGroupEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i)
+    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i): void
     {
         $customerGroupTransfer = $i->haveCustomerGroup();
         $i->amOnPage(CustomerGroupEditPage::buildUrl($customerGroupTransfer->getIdCustomerGroup()));
 
-        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups / Edit customer group');
+        $i->seeBreadcrumbNavigation('Customers / Customer Groups / Edit Customer Group');
     }
 }

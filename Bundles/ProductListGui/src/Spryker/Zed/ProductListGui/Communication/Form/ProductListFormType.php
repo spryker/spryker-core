@@ -64,8 +64,7 @@ class ProductListFormType extends AbstractType
     {
         $this->addIdProductListField($builder)
             ->addTitleField($builder)
-            ->addTypeFiled($builder)
-            ->executeOwnerTypeFormExpanderPlugins($builder, $options);
+            ->addTypeFiled($builder);
     }
 
     /**
@@ -123,21 +122,6 @@ class ProductListFormType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function executeOwnerTypeFormExpanderPlugins(FormBuilderInterface $builder, array $options)
-    {
-        foreach ($this->getFactory()->getProductListOwnerTypeFormExpanderPlugins() as $productListOwnerTypeFormExpanderPlugin) {
-            $productListOwnerTypeFormExpanderPlugin->buildForm($builder, $options);
-        }
 
         return $this;
     }

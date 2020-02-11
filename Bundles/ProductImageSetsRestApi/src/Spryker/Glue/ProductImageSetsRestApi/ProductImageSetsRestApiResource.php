@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ProductImageSetsRestApiResource extends AbstractRestResource implements ProductImageSetsRestApiResourceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ProductImageSetsRestApiResource extends AbstractRestResource implements Pr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

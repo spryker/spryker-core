@@ -35,6 +35,8 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     protected $repository;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -78,7 +80,8 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             $idLocale = $productAbstractLocalizedEntity->getFkLocale();
             $idAbstractAttributes = $productAbstractLocalizedEntity->getIdAbstractAttributes();
 
-            if (!isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale]) &&
+            if (
+                !isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale]) &&
                 !isset($defaultProductAbstractImageSetsBulk[$idProductAbstract])
             ) {
                 continue;

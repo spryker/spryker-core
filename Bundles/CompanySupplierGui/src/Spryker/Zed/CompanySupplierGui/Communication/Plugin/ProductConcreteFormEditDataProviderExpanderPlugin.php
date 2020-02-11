@@ -17,7 +17,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteForm
 class ProductConcreteFormEditDataProviderExpanderPlugin extends AbstractPlugin implements ProductConcreteFormEditDataProviderExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -12,6 +12,7 @@ use SprykerTest\Zed\Dataset\DatasetObject\DatasetListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Dataset
@@ -30,6 +31,6 @@ class DatasetListCest
     public function breadcrumbIsVisible(DatasetCommunicationTester $i): void
     {
         $i->amOnPage(DatasetListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Dataset');
+        $i->seeBreadcrumbNavigation('Dataset');
     }
 }

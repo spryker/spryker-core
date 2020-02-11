@@ -14,6 +14,11 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Session\SessionDependencyProvider;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
+use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
 
 /**
  * @method \Spryker\Zed\Session\SessionConfig getConfig()
@@ -136,5 +141,31 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     public function getSessionClient()
     {
         return $this->getProvidedDependency(SessionDependencyProvider::SESSION_CLIENT);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     */
+    public function createMockSessionStorage(): SessionStorageInterface
+    {
+        return new MockFileSessionStorage();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     */
+    public function createNativeSessionStorage(): SessionStorageInterface
+    {
+        $sessionStorage = $this->createSessionStorage();
+
+        return new NativeSessionStorage($sessionStorage->getOptions(), $sessionStorage->getAndRegisterHandler());
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createSaveSessionEventSubscriber(): EventSubscriberInterface
+    {
+        return new SaveSessionListener();
     }
 }

@@ -15,4 +15,13 @@
         <property name="categories" singular="category" type="ProductCategoryStorage[]"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="locale" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+    </transfer>
+
 </transfers>

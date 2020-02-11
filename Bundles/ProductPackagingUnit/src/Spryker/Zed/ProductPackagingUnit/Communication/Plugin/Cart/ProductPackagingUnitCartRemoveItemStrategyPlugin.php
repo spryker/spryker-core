@@ -18,7 +18,7 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInter
 class ProductPackagingUnitCartRemoveItemStrategyPlugin extends AbstractProductPackagingUnitCartOperationStrategyPlugin implements CartOperationStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

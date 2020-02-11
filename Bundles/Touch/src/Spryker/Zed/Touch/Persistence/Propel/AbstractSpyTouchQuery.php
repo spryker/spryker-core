@@ -56,4 +56,4 @@ abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
     {
         self::$cache[$key] = $value;
     }
-} // SpyTouchQuery
+}

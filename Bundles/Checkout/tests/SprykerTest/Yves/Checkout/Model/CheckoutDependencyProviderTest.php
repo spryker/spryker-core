@@ -15,6 +15,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Checkout
@@ -27,7 +28,7 @@ class CheckoutDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testProvideDependencies()
+    public function testProvideDependencies(): void
     {
         $container = new Container();
         $checkoutDependencyProvider = new CheckoutDependencyProvider();

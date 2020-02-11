@@ -64,6 +64,8 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderItemsBySkuAndStatesNames()` instead.
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -74,6 +76,8 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderItemsBySkuAndStatesNames()` instead.
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku

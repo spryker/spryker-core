@@ -18,6 +18,6 @@ class PaymentRedirected extends AbstractCondition
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        return (microtime() * 1000000 % 2) ? true : false;
+        return (microtime(true) * 1000000 % 2) ? true : false;
     }
 }

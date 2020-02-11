@@ -18,7 +18,7 @@ use Spryker\Glue\RelatedProductsRestApi\RelatedProductsRestApiConfig;
 class RelatedProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Configures action to retrieve related products collection.
      *
      * @api
@@ -35,7 +35,7 @@ class RelatedProductsResourceRoutePlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class RelatedProductsResourceRoutePlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class RelatedProductsResourceRoutePlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class RelatedProductsResourceRoutePlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

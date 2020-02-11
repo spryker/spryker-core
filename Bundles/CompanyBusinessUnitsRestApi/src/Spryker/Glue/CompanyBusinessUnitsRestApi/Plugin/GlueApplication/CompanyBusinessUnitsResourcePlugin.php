@@ -19,7 +19,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CompanyBusinessUnitsResourcePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for company-business-units resource.
      *
      * @api
@@ -36,7 +36,7 @@ class CompanyBusinessUnitsResourcePlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class CompanyBusinessUnitsResourcePlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class CompanyBusinessUnitsResourcePlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

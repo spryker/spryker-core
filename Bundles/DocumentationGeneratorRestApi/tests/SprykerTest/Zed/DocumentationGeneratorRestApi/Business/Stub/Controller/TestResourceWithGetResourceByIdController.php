@@ -28,7 +28,7 @@ class TestResourceWithGetResourceByIdController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 }

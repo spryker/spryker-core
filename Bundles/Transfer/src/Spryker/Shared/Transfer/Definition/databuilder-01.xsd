@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="spryker:databuilder-01"
+    elementFormDefault="qualified">
+
+    <xsd:element name="transfers">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transfer" maxOccurs="unbounded" minOccurs="0">
+                    <xsd:complexType>
+
+                        <xsd:sequence>
+                            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                                <xsd:element name="property" maxOccurs="unbounded" minOccurs="0">
+                                    <xsd:complexType mixed="true">
+                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                        <xsd:attribute type="xsd:string" name="dataBuilderRule" use="required"/>
+                                    </xsd:complexType>
+                                </xsd:element>
+                            </xsd:choice>
+                        </xsd:sequence>
+
+                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

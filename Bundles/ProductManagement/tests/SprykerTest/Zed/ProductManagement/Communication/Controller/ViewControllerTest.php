@@ -13,6 +13,7 @@ use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement
@@ -33,7 +34,7 @@ class ViewControllerTest extends Unit
     /**
      * @return void
      */
-    public function testGetImageUrl()
+    public function testGetImageUrl(): void
     {
         $vieControllerMock = $this->getViewControllerMock();
 
@@ -52,7 +53,7 @@ class ViewControllerTest extends Unit
     /**
      * @return array
      */
-    public function prepareTestData()
+    public function prepareTestData(): array
     {
         $data = [
             self::IMAGE_URL_PREFIX . self::PIM_IMAGE_URL => self::PIM_IMAGE_URL,
@@ -65,9 +66,9 @@ class ViewControllerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductManagement\Communication\Controller\ViewController|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getViewControllerMock()
+    protected function getViewControllerMock(): ViewController
     {
         $vieControllerMock = $this->getMockBuilder(ViewController::class)
             ->disableOriginalConstructor()

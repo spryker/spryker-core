@@ -17,7 +17,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
 class ProductViewVariantRestrictionPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

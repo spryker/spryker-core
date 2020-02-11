@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\BusinessOnBehalfGui;
 
 use Spryker\Zed\BusinessOnBehalfGuiExtension\Dependency\Plugin\CustomerBusinessUnitAttachFormExpanderPluginInterface;
@@ -17,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyRoleCustomerBusinessUnitAttachFormExpanderPlugin extends AbstractPlugin implements CustomerBusinessUnitAttachFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands CustomerBusinessUnitAttachForm with choice field of company roles form CompanyUserRoleChoiceFormType.
      * - Returns CustomerBusinessUnitAttachForm without expanding if Company does not exist in CompanyUserTransfer.
      *

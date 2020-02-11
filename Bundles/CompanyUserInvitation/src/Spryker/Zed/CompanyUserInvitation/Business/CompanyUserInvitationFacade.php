@@ -32,7 +32,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserInvitationFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,7 +83,7 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -100,7 +100,7 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -117,7 +117,7 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -151,7 +151,7 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +168,7 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -24,7 +24,7 @@ use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +54,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +96,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -110,7 +110,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -124,7 +124,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +140,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -156,7 +156,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -172,7 +172,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -188,7 +188,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -204,7 +204,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -220,7 +220,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetExtractor` instead.
+ */
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
     public const DOC_COUNT = 'doc_count';

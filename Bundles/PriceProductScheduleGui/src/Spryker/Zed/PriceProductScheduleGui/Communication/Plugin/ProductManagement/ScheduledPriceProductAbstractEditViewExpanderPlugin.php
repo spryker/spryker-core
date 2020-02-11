@@ -17,7 +17,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEdit
 class ScheduledPriceProductAbstractEditViewExpanderPlugin extends AbstractPlugin implements ProductAbstractEditViewExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands view data for edit abstract product with scheduled price data.
      *
      * @api

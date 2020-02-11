@@ -18,9 +18,8 @@ use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 class WishlistRelationshipByResourceIdPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * - Identifier of passed resources should contain customer reference.
+     * {@inheritDoc}
+     * - Adds `wishlists` resources as relationship by customer reference provided as a resource id.
      *
      * @api
      *
@@ -32,12 +31,12 @@ class WishlistRelationshipByResourceIdPlugin extends AbstractPlugin implements R
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createWishlistRelationshipExpanderByResourceId()
-            ->addResourceRelationshipsByResourceId($resources, $restRequest);
+            ->createWishlistByCustomerReferenceRelationshipExpander()
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

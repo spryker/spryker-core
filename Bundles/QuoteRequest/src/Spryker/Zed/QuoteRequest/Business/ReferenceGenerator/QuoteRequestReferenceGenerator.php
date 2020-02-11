@@ -41,7 +41,7 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
      *
      * @return string
      */
-    public function generateQuoteRequestReference(string $customerReference)
+    public function generateQuoteRequestReference(string $customerReference): string
     {
         $customerQuoteRequestCounter = $this->quoteRequestRepository->countCustomerQuoteRequests($customerReference);
 

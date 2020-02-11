@@ -30,7 +30,7 @@ class CategoryAttributeTable extends AbstractTable
     public function __construct(SpyCategoryAttributeQuery $categoryAttributeQuery)
     {
         $this->categoryAttributeQuery = $categoryAttributeQuery;
-        $this->defaultUrl = 'categoryAttributeTable';
+        $this->defaultUrl = 'category-attribute-table';
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 
