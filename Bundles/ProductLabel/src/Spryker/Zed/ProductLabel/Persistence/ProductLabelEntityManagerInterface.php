@@ -29,4 +29,20 @@ interface ProductLabelEntityManagerInterface
      * @return void
      */
     public function deleteProductLabelProductAbstractRelations(int $idProductLabel): void;
+
+    /**
+     * @param array $idStores
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    public function removeProductLabelStoreRelationsForStores(array $idStores, int $idProductLabel): void;
+
+    /**
+     * @param array $idStores
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    public function addProductLabelStoreRelationsForStores(array $idStores, int $idProductLabel): void;
 }

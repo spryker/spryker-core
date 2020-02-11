@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -51,5 +52,40 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
             ->createProductRelationQuery()
             ->findByFkProductLabel($idProductLabel)
             ->delete();
+    }
+
+    /**
+     * @param array $idStores
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    public function removeProductLabelStoreRelationsForStores(array $idStores, int $idProductLabel): void
+    {
+        if ($idStores === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createProductLabelStoreQuery()
+            ->filterByFkProductLabel($idProductLabel)
+            ->filterByFkStore_In($idStores)
+            ->delete();
+    }
+
+    /**
+     * @param array $idStores
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    public function addProductLabelStoreRelationsForStores(array $idStores, int $idProductLabel): void
+    {
+        foreach ($idStores as $idStore) {
+            $productLabelStoreEntity = new SpyProductLabelStore();
+            $productLabelStoreEntity->setFkStore($idStore)
+                ->setFkProductLabel($idProductLabel)
+                ->save();
+        }
     }
 }

@@ -13,6 +13,7 @@ use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
+use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
@@ -43,21 +44,29 @@ class LabelUpdater implements LabelUpdaterInterface
     protected $productAbstractRelationTouchManager;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface
+     */
+    protected $storeRelationUpdater;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager
+     * @param \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater
      */
     public function __construct(
         LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
         ProductLabelQueryContainerInterface $queryContainer,
         LabelDictionaryTouchManagerInterface $dictionaryTouchManager,
-        ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager
+        ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager,
+        ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater
     ) {
         $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
         $this->queryContainer = $queryContainer;
         $this->dictionaryTouchManager = $dictionaryTouchManager;
         $this->productAbstractRelationTouchManager = $productAbstractRelationTouchManager;
+        $this->storeRelationUpdater = $storeRelationUpdater;
     }
 
     /**
@@ -86,7 +95,8 @@ class LabelUpdater implements LabelUpdaterInterface
             ->requireName()
             ->requireIsActive()
             ->requireIsExclusive()
-            ->requirePosition();
+            ->requirePosition()
+            ->requireStoreRelation();
     }
 
     /**
@@ -99,6 +109,7 @@ class LabelUpdater implements LabelUpdaterInterface
         $isModified = $this->persistLabel($productLabelTransfer);
 
         $this->persistLocalizedAttributesCollection($productLabelTransfer);
+        $this->persistStoreRelation($productLabelTransfer);
 
         if ($isModified) {
             $this->touchDictionary();
@@ -201,6 +212,20 @@ class LabelUpdater implements LabelUpdaterInterface
     protected function persistLocalizedAttributesCollection(ProductLabelTransfer $productLabelTransfer)
     {
         $this->localizedAttributesCollectionWriter->save($productLabelTransfer->getLocalizedAttributesCollection());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function persistStoreRelation(ProductLabelTransfer $productLabelTransfer): void
+    {
+        $productLabelTransfer
+            ->getStoreRelation()
+            ->setIdEntity($productLabelTransfer->getIdProductLabel());
+
+        $this->storeRelationUpdater->update($productLabelTransfer->getStoreRelation());
     }
 
     /**

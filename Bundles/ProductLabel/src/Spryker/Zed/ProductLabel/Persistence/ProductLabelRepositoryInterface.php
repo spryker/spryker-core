@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Persistence;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface ProductLabelRepositoryInterface
 {
@@ -17,4 +18,11 @@ interface ProductLabelRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
     public function findProductLabelByIdProductLabel(int $idProductLabel): ?ProductLabelTransfer;
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdProductLabel(int $idProductLabel): StoreRelationTransfer;
 }

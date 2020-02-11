@@ -16,6 +16,8 @@ use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
+use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdater;
+use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\ValidityUpdater;
 use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleter;
 use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReader;
@@ -41,7 +43,8 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
         return new LabelCreator(
             $this->createLocalizedAttributesCollectionWriter(),
             $this->getQueryContainer(),
-            $this->createLabelDictionaryTouchManager()
+            $this->createLabelDictionaryTouchManager(),
+            $this->createProductLabelStoreRelationUpdater()
         );
     }
 
@@ -54,7 +57,8 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
             $this->createLocalizedAttributesCollectionWriter(),
             $this->getQueryContainer(),
             $this->createLabelDictionaryTouchManager(),
-            $this->createProductAbstractRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager(),
+            $this->createProductLabelStoreRelationUpdater()
         );
     }
 
@@ -193,5 +197,13 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     protected function getProductLabelRelationUpdaterPlugins()
     {
         return $this->getProvidedDependency(ProductLabelDependencyProvider::PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface
+     */
+    public function createProductLabelStoreRelationUpdater(): ProductLabelStoreRelationUpdaterInterface
+    {
+        return new ProductLabelStoreRelationUpdater($this->getRepository(), $this->getEntityManager());
     }
 }
