@@ -371,7 +371,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if product in shopping list item is activate.
+     *  - Checks if product in shopping list item is active.
      *
      * @api
      *
