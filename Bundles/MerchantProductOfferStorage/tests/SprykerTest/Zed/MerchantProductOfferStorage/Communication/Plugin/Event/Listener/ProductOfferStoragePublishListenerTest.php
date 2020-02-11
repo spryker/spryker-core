@@ -76,7 +76,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         //Act
         $this->productOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
 
@@ -102,7 +102,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         //Act
         $this->productOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
 
@@ -128,7 +128,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         //Act
         $this->productOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
 
@@ -155,7 +155,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         //Act
         $this->productOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
 

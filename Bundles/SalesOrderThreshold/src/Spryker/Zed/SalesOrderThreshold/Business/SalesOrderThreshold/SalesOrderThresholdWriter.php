@@ -86,7 +86,8 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
                 $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getKey()
             );
 
-        if (!$salesOrderThresholdTransfer->getSalesOrderThresholdValue()
+        if (
+            !$salesOrderThresholdTransfer->getSalesOrderThresholdValue()
             ->getSalesOrderThresholdType()
             ->getIdSalesOrderThresholdType()
         ) {

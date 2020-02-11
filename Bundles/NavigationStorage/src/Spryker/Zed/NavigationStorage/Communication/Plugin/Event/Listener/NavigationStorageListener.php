@@ -37,7 +37,8 @@ class NavigationStorageListener extends AbstractPlugin implements EventBulkHandl
         $this->preventTransaction();
         $navigationIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === NavigationEvents::ENTITY_SPY_NAVIGATION_DELETE ||
+        if (
+            $eventName === NavigationEvents::ENTITY_SPY_NAVIGATION_DELETE ||
             $eventName === NavigationEvents::NAVIGATION_KEY_UNPUBLISH
         ) {
             $this->getFacade()->unpublish($navigationIds);

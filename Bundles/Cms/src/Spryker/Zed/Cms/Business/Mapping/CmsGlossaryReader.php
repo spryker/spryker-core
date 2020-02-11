@@ -157,6 +157,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
 
             if (!isset($glossaryKeyEntityMap[$pagePlaceholder])) {
                 $glossaryAttributeTransfer->addTranslation($cmsPlaceholderTranslationTransfer);
+
                 continue;
             }
 

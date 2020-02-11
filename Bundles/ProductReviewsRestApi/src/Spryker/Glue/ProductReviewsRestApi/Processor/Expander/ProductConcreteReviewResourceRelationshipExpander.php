@@ -110,7 +110,8 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
                 continue;
             }
 
-            if ($resource->getId() !== $productConcrete[static::KEY_SKU]
+            if (
+                $resource->getId() !== $productConcrete[static::KEY_SKU]
                 || $productConcrete[static::KEY_ID_PRODUCT_ABSTRACT] !== $idProductAbstract
             ) {
                 continue;
