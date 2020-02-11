@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface PriceProductConcreteReaderInterface
 {
@@ -79,4 +80,11 @@ interface PriceProductConcreteReaderInterface
         array $concreteSkus,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

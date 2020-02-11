@@ -7,11 +7,17 @@
 
 namespace Spryker\Zed\ProductOffer\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -38,6 +44,9 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferTransfer = $this->getFactory()
                 ->createPropelProductOfferMapper()
                 ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
+
+            $productOfferTransfer->setStores($this->getStoresByProductOfferEntity($productOfferEntity));
+
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
 
@@ -65,6 +74,24 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $spyProductOfferEntity
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject
+     */
+    protected function getStoresByProductOfferEntity(SpyProductOffer $spyProductOfferEntity): ArrayObject
+    {
+        $storeTransfers = [];
+        foreach ($spyProductOfferEntity->getSpyStores() as $storeEntity) {
+            $storeTransfers[] = $this->getFactory()->createPropelProductOfferMapper()->mapStoreEntityToStoreTransfer(
+                $storeEntity,
+                new StoreTransfer()
+            );
+        }
+
+        return new ArrayObject($storeTransfers);
+    }
+
+    /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
@@ -82,12 +109,33 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByProductOfferReference($productOfferCriteriaFilter->getProductOfferReference());
         }
 
+        if ($productOfferCriteriaFilter->getIdProductOffer()) {
+            $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer());
+        }
+
         if ($productOfferCriteriaFilter->getConcreteSkus()) {
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilter->getConcreteSkus());
         }
 
         if ($productOfferCriteriaFilter->getProductOfferReferences()) {
             $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilter->getProductOfferReferences());
+        }
+
+        if ($productOfferCriteriaFilter->getIsActive() !== null) {
+            $productOfferQuery->filterByIsActive($productOfferCriteriaFilter->getIsActive());
+        }
+
+        if ($productOfferCriteriaFilter->getApprovalStatuses()) {
+            $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilter->getApprovalStatuses());
+        }
+
+        if ($productOfferCriteriaFilter->getIsActiveConcreteProduct() !== null) {
+            $productOfferQuery->addJoin(
+                SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                SpyProductTableMap::COL_SKU,
+                Criteria::INNER_JOIN
+            );
+            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, true);
         }
 
         return $productOfferQuery;

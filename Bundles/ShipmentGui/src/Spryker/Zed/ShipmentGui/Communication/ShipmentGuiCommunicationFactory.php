@@ -24,6 +24,8 @@ use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\Constraint\Shipmen
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ViewShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
+use Spryker\Zed\ShipmentGui\Communication\Grouper\ProductBundleGrouper;
+use Spryker\Zed\ShipmentGui\Communication\Grouper\ProductBundleGrouperInterface;
 use Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper;
 use Spryker\Zed\ShipmentGui\Communication\Table\ShipmentMethodTable;
 use Spryker\Zed\ShipmentGui\Communication\Tabs\ShipmentMethodTabs;
@@ -58,6 +60,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createShipmentCarrierFormDataProvider(): ShipmentCarrierFormDataProvider
     {
         return new ShipmentCarrierFormDataProvider($this->getShipmentFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Grouper\ProductBundleGrouperInterface
+     */
+    public function createProductBundleGrouper(): ProductBundleGrouperInterface
+    {
+        return new ProductBundleGrouper();
     }
 
     /**
