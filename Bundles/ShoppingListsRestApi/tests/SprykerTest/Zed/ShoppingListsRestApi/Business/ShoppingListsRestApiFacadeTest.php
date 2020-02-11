@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacade;
@@ -500,7 +499,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiBusinessFactory
      */
-    protected function getMockShoppingListsRestApiBusinessFactory(): MockObject
+    protected function getMockShoppingListsRestApiBusinessFactory(): ShoppingListsRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             ShoppingListsRestApiBusinessFactory::class,
@@ -518,7 +517,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShoppingList\Business\ShoppingListFacade
      */
-    protected function getMockShoppingListFacade(): MockObject
+    protected function getMockShoppingListFacade(): ShoppingListFacade
     {
         $mockShoppingListFacade = $this->createPartialMock(
             ShoppingListFacade::class,
@@ -564,7 +563,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCompanyUserFacade(): MockObject
+    protected function getMockCompanyUserFacade()
     {
         $mockCustomerFacade = $this->createPartialMock(
             CompanyUserFacade::class,

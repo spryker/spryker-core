@@ -8,13 +8,13 @@
 namespace SprykerTest\Zed\ShoppingListsRestApi;
 
 use Codeception\Actor;
-use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 /**

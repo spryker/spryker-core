@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingList;
+namespace Spryker\Zed\ShoppingList\Communication\Plugin;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
