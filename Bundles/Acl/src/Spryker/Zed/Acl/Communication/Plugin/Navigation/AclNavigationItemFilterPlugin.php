@@ -17,7 +17,7 @@ use Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPlugin
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  */
-class AclNavigationItemsFilterPlugin extends AbstractPlugin implements NavigationItemFilterPluginInterface
+class AclNavigationItemFilterPlugin extends AbstractPlugin implements NavigationItemFilterPluginInterface
 {
     /**
      * {@inheritDoc}
