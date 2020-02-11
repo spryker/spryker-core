@@ -112,6 +112,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
                 $valueFacet = (new RestFacetSearchResultTransfer())->fromArray($facet->toArray(), true);
                 $valueFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfig()));
                 $restSearchAttributesTransfer->addValueFacet($valueFacet);
+
                 continue;
             }
             if ($facet instanceof RangeSearchResultTransfer) {

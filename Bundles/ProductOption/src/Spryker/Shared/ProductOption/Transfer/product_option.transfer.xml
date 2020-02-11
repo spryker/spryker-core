@@ -218,4 +218,13 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="Totals">
+    </transfer>
+
+    <transfer name="CheckoutError">
+    </transfer>
+
 </transfers>

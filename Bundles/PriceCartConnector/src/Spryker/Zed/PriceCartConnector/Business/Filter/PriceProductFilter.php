@@ -183,6 +183,7 @@ class PriceProductFilter implements PriceProductFilterInterface
             if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
                 if ($cartChangeTransfer->getOperation() === PriceCartConnectorConfig::OPERATION_REMOVE) {
                     $quantity -= $itemTransfer->getQuantity();
+
                     continue;
                 }
 
