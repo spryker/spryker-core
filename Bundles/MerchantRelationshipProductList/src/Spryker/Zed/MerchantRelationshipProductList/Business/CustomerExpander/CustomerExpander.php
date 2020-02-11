@@ -69,6 +69,7 @@ class CustomerExpander implements CustomerExpanderInterface
         foreach ($productListCollectionTransfer->getProductLists() as $productListTransfer) {
             if ($productListTransfer->getType() === static::TYPE_WHITELIST) {
                 $customerTransfer->getCustomerProductListCollection()->addWhitelistId($productListTransfer->getIdProductList());
+
                 continue;
             }
 
