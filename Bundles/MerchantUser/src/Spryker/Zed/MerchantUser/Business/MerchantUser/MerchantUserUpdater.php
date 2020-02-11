@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use InvalidArgumentException;
-use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -28,6 +27,11 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
      */
     protected const USER_STATUS_ACTIVE = 'active';
+
+    /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
      */
@@ -109,8 +113,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
      */
     protected function resetUserPassword(UserTransfer $originalUserTransfer, UserTransfer $updatedUserTransfer): void
     {
-        if (
-            $updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
+        if ($updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
             && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
         ) {
             $this->authFacade->requestPasswordReset($updatedUserTransfer->getUsername());
@@ -129,7 +132,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     ): UserTransfer {
         $userTransfer->setStatus(static::USER_STATUS_BLOCKED);
 
-        if ($merchantTransfer->getStatus() === MerchantConfig::STATUS_APPROVED) {
+        if ($merchantTransfer->getStatus() === static::MERCHANT_STATUS_APPROVED) {
             $userTransfer->setStatus(static::USER_STATUS_ACTIVE);
         }
 
