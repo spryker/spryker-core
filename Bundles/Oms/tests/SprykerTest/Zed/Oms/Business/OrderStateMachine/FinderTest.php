@@ -113,7 +113,7 @@ class FinderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
-    protected function createOmsQueryContainer()
+    protected function createOmsQueryContainer(): OmsQueryContainerInterface
     {
         return $this->getMockBuilder(OmsQueryContainerInterface::class)->getMock();
     }
@@ -121,7 +121,7 @@ class FinderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\DrawerInterface
      */
-    protected function createDrawerMock()
+    protected function createDrawerMock(): DrawerInterface
     {
         return $this->getMockBuilder(DrawerInterface::class)->getMock();
     }

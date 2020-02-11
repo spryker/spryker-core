@@ -55,7 +55,7 @@ class SessionStorageHandlerPoolTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SessionHandlerInterface
      */
-    protected function getSessionHandlerInterfaceMock()
+    protected function getSessionHandlerInterfaceMock(): SessionHandlerInterface
     {
         return $this->getMockBuilder(SessionHandlerInterface::class)->getMock();
     }

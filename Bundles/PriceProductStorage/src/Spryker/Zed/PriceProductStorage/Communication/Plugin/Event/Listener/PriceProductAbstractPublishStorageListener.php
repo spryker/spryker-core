@@ -36,7 +36,8 @@ class PriceProductAbstractPublishStorageListener extends AbstractPlugin implemen
     {
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-        if ($eventName === PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE ||
+        if (
+            $eventName === PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE ||
             $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
             $eventName === PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH
         ) {

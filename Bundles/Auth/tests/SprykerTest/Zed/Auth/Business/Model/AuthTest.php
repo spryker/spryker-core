@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Auth\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
@@ -170,7 +169,7 @@ class AuthTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
      */
-    protected function createFacadeUser()
+    protected function createFacadeUser(): AuthToUserBridge
     {
         $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods([
             'getUserByUsername',
@@ -188,8 +187,9 @@ class AuthTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient
      */
-    protected function createSessionClient()
+    protected function createSessionClient(): SessionClient
     {
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient $sessionClient */
         $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'migrate'])->getMock();
         $sessionClient->setContainer(new Session(new MockArraySessionStorage()));
 
@@ -199,7 +199,7 @@ class AuthTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Auth\Business\Client\StaticToken
      */
-    protected function createStaticTokenClient()
+    protected function createStaticTokenClient(): StaticToken
     {
         $staticTokenClient = $this->getMockBuilder(StaticToken::class)->getMock();
 
@@ -231,7 +231,7 @@ class AuthTest extends Unit
      *
      * @return void
      */
-    protected function checkMigrateIsCalled(MockObject $sessionClient): void
+    protected function checkMigrateIsCalled(SessionClient $sessionClient): void
     {
         $sessionClient->expects($this->once())
             ->method('migrate')

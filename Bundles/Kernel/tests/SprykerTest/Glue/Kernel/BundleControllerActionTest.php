@@ -50,7 +50,7 @@ class BundleControllerActionTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\BundleControllerAction
      */
-    protected function getBundleControllerAction(string $bundle, string $controller, string $action, string $storeName)
+    protected function getBundleControllerAction(string $bundle, string $controller, string $action, string $storeName): BundleControllerAction
     {
         $mock = $this
             ->getMockBuilder(BundleControllerAction::class)
@@ -70,7 +70,7 @@ class BundleControllerActionTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function getBundleNameResolverMock(string $storeName)
+    protected function getBundleNameResolverMock(string $storeName): BundleNameResolver
     {
         $mock = $this
             ->getMockBuilder(BundleNameResolver::class)

@@ -79,7 +79,7 @@ abstract class AbstractResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
      */
-    abstract protected function getResolverMock(array $methods);
+    abstract protected function getResolverMock(array $methods): AbstractClassResolver;
 
     /**
      * @return void

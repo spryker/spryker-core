@@ -127,7 +127,7 @@ class StepEngine implements StepEngineInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function executeWithoutInput(StepInterface $currentStep, Request $request, AbstractTransfer $dataTransfer)
     {

@@ -470,7 +470,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface
      */
-    protected function createDiscountableItemFilterPluginMock()
+    protected function createDiscountableItemFilterPluginMock(): DiscountableItemFilterPluginInterface
     {
         return $this->getMockBuilder(DiscountableItemFilterPluginInterface::class)->getMock();
     }

@@ -142,7 +142,7 @@ class CmsPageSaverTest extends CmsMocks
         ?CmsGlossarySaverInterface $cmsGlossarySaverMock = null,
         ?TemplateManagerInterface $templateManagerMock = null,
         ?CmsPageStoreRelationWriterInterface $cmsPageStoreRelationWriterMock = null
-    ) {
+    ): CmsPageSaver {
         if ($urlFacadeMock === null) {
             $urlFacadeMock = $this->createUrlFacadeMock();
         }

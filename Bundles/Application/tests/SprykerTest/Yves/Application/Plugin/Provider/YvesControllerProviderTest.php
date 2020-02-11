@@ -90,7 +90,7 @@ class YvesControllerProviderTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
      */
-    protected function createControllerProviderMock($ssl, $controller, array $urls = [])
+    protected function createControllerProviderMock($ssl, $controller, array $urls = []): ControllerProviderMock
     {
         $controllerProviderMock = $this->getMockBuilder(ControllerProviderMock::class)->setMethods(['getService', 'getController', 'getExcludedUrls'])->setConstructorArgs([$ssl])->getMock();
         $controllerProviderMock->method('getService')->willReturn('');
@@ -106,7 +106,7 @@ class YvesControllerProviderTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Silex\Controller
      */
-    private function getControllerMock(string $methodName, $callTimes)
+    private function getControllerMock(string $methodName, $callTimes): Controller
     {
         $controllerMock = $this->getMockBuilder(Controller::class)->disableOriginalConstructor()->getMock();
         $controllerMock

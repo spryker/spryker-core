@@ -36,7 +36,7 @@ class AbstractKvProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Storage\Provider\AbstractKvProvider
      */
-    protected function getAbstractKvProviderMock()
+    protected function getAbstractKvProviderMock(): AbstractKvProvider
     {
         $abstractKvProviderMock = $this->getMockBuilder(AbstractKvProvider::class)
             ->setMethods(['getConnectionParameters'])

@@ -58,7 +58,7 @@ class ZedBootstrapTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Application\Communication\ZedBootstrap
      */
-    protected function createZedBootstrapMock()
+    protected function createZedBootstrapMock(): ZedBootstrap
     {
         return $this->getMockBuilder(ZedBootstrap::class)->setMethods([
             self::SETUP_APPLICATION,

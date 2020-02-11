@@ -216,7 +216,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentsRestApiFactory()
+    protected function getMockShipmentsRestApiFactory(): ShipmentsRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
@@ -232,7 +232,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentFacade()
+    protected function getMockShipmentFacade(): ShipmentFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             ShipmentFacade::class,
@@ -258,7 +258,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentsRestApiFactoryWithShipmentNotFound()
+    protected function getMockShipmentsRestApiFactoryWithShipmentNotFound(): ShipmentsRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
@@ -274,7 +274,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockShipmentFacadeWithShipmentNotFound()
+    protected function getMockShipmentFacadeWithShipmentNotFound(): ShipmentFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             ShipmentFacade::class,

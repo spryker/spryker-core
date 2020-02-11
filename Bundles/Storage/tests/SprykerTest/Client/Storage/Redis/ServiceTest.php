@@ -368,9 +368,9 @@ class ServiceTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\Storage\Redis\Service|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\Storage\StorageClient|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function getStorageClientMock()
+    public function getStorageClientMock(): StorageClient
     {
         StorageClient::$cachedKeys = [];
 

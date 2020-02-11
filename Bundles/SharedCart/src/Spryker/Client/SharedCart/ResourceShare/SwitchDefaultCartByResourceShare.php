@@ -60,7 +60,7 @@ class SwitchDefaultCartByResourceShare implements SwitchDefaultCartByResourceSha
         QuoteTransfer $quoteTransfer,
         ResourceShareTransfer $resourceShareTransfer
     ): ResourceShareResponseTransfer {
-        $quoteResponseTransfer = $this->multiCartClient->setDefaultQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->multiCartClient->markQuoteAsDefault($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return (new ResourceShareResponseTransfer())

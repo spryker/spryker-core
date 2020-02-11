@@ -11,7 +11,6 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge;
 
 /**
@@ -121,11 +120,11 @@ class WhitelistExpandProductBundleTest extends Unit
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[] $bundledProducts
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getProductBundleProductListConnectorToProductBundleFacadeBridgeMock(
         ArrayObject $bundledProducts
-    ): MockObject {
+    ): ProductBundleProductListConnectorToProductBundleFacadeBridge {
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this
             ->getMockBuilder(ProductBundleProductListConnectorToProductBundleFacadeBridge::class)
             ->disableOriginalConstructor()

@@ -40,7 +40,7 @@ class ClassInfoTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
-    protected function getClassInfo(string $storeName)
+    protected function getClassInfo(string $storeName): ClassInfo
     {
         $mock = $this
             ->getMockBuilder(ClassInfo::class)
@@ -59,7 +59,7 @@ class ClassInfoTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function getBundleNameResolverMock(string $storeName)
+    protected function getBundleNameResolverMock(string $storeName): BundleNameResolver
     {
         $mock = $this
             ->getMockBuilder(BundleNameResolver::class)

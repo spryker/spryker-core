@@ -204,7 +204,7 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Auth\Communication\Plugin\EventDispatcher\RedirectAfterLoginEventDispatcherPlugin
      */
-    protected function getRedirectAfterLoginEventDispatcherPlugin(array $methods = [])
+    protected function getRedirectAfterLoginEventDispatcherPlugin(array $methods = []): RedirectAfterLoginEventDispatcherPlugin
     {
         if (!$methods) {
             return new RedirectAfterLoginEventDispatcherPlugin();
@@ -218,7 +218,7 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
     /**
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getHttpKernel()
+    protected function getHttpKernel(): HttpKernelInterface
     {
         return $this->getMockBuilder(HttpKernelInterface::class)->getMock();
     }

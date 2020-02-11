@@ -18,4 +18,9 @@ interface ProductOptionToPriceFacadeInterface
      * @return string
      */
     public function getNetPriceModeIdentifier();
+
+    /**
+     * @return string
+     */
+    public function getDefaultPriceMode();
 }

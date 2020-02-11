@@ -23,4 +23,18 @@
         <property name="key" type="string"/>
     </transfer>
 
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="orderBy" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+
 </transfers>

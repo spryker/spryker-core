@@ -99,4 +99,7 @@
     <transfer name="Store">
     </transfer>
 
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
 </transfers>

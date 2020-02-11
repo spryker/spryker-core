@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig getConfig()
@@ -19,9 +17,12 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class ProductConcreteOffersStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
-
     /**
+     * {@inheritDoc}
+     * - Writes product concrete product offer data to storage by provided product sku events.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
@@ -29,14 +30,6 @@ class ProductConcreteOffersStoragePublishListener extends AbstractPlugin impleme
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $productSkus = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
-
-        if (!$productSkus) {
-            return;
-        }
-
-        $this->getFacade()->publishProductConcreteProductOffersStorage($productSkus);
+        $this->getFacade()->writeProductConcreteProductOffersStorageCollectionByProductSkuEvents($transfers);
     }
 }

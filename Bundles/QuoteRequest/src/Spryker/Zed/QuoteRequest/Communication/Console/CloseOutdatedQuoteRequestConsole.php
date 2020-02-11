@@ -39,7 +39,7 @@ class CloseOutdatedQuoteRequestConsole extends Console
      *
      * @return int|null null or 0 if everything went fine, or an error code
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $this->getFacade()->closeOutdatedQuoteRequests();
     }

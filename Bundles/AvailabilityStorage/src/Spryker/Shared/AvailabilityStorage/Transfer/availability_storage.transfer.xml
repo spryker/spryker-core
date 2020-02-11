@@ -15,6 +15,18 @@
         <property name="isAbstractProductAvailable" type="bool"/>
     </transfer>
 
+    <transfer name="ProductAbstractAvailability">
+        <property name="sku" type="string"/>
+        <property name="availability" type="decimal"/>
+        <property name="productConcreteAvailabilities" type="ProductConcreteAvailability[]" singular="productConcreteAvailability"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailability">
+        <property name="sku" type="string"/>
+        <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
     <transfer name="SynchronizationData">
         <property name="store" type="string"/>
         <property name="reference" type="string"/>

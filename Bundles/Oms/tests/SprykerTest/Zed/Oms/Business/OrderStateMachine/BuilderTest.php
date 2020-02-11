@@ -138,7 +138,7 @@ class BuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Process\EventInterface
      */
-    private function getEventMock()
+    private function getEventMock(): EventInterface
     {
         return $this->getMockBuilder(EventInterface::class)->getMock();
     }
@@ -146,7 +146,7 @@ class BuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Process\StateInterface
      */
-    private function getStateMock()
+    private function getStateMock(): StateInterface
     {
         return $this->getMockBuilder(StateInterface::class)->getMock();
     }
@@ -154,7 +154,7 @@ class BuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Process\TransitionInterface
      */
-    private function getTransitionMock()
+    private function getTransitionMock(): TransitionInterface
     {
         return $this->getMockBuilder(TransitionInterface::class)->getMock();
     }
@@ -172,7 +172,7 @@ class BuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\DrawerInterface
      */
-    private function getDrawerMock()
+    private function getDrawerMock(): DrawerInterface
     {
         return $this->getMockBuilder(DrawerInterface::class)->getMock();
     }

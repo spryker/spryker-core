@@ -213,7 +213,7 @@ class CartClientTest extends Unit
         ?CartToQuoteInterface $quote = null,
         ?CartStubInterface $cartStub = null,
         ?QuoteStorageStrategyPluginInterface $quoteStorageStrategyPlugin = null
-    ) {
+    ): AbstractFactory {
         $factoryMock = $this->getMockBuilder(AbstractFactory::class)
             ->setMethods(['getQuoteClient', 'createZedStub', 'createQuoteStorageStrategyProxy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
             ->disableOriginalConstructor()->getMock();
@@ -251,7 +251,7 @@ class CartClientTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
-    private function getSessionQuoteStorageStrategyPluginMock()
+    private function getSessionQuoteStorageStrategyPluginMock(): QuoteStorageStrategyPluginInterface
     {
         $sessionQuoteStorageStrategyPluginMock = $this->getMockBuilder(SessionQuoteStorageStrategyPlugin::class)
             ->setMethods(['getFactory'])->disableOriginalConstructor()->getMock();
@@ -264,7 +264,7 @@ class CartClientTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\CartClient
      */
-    private function getCartClientMock($factoryMock)
+    private function getCartClientMock($factoryMock): CartClient
     {
         $cartClientMock = $this->getMockBuilder(CartClient::class)->setMethods(['getFactory'])->disableOriginalConstructor()->getMock();
 
@@ -278,7 +278,7 @@ class CartClientTest extends Unit
     /**
      * @return \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getQuoteMock()
+    private function getQuoteMock(): CartToQuoteInterface
     {
         $quoteMock = $this->getMockBuilder(CartToQuoteInterface::class)->setMethods([
             'getQuote',
@@ -299,7 +299,7 @@ class CartClientTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\Zed\CartStubInterface
      */
-    private function getStubMock()
+    private function getStubMock(): CartStubInterface
     {
         return $this->getMockBuilder(CartStubInterface::class)->setMethods([
             'addValidItems',

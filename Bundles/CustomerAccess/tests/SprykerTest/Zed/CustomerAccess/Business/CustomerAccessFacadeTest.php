@@ -157,6 +157,7 @@ class CustomerAccessFacadeTest extends Unit
         foreach ($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {
                 $this->assertTrue($removedContentTypeAccess->getIsRestricted());
+
                 continue;
             }
 
@@ -198,7 +199,7 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CustomerAccess\CustomerAccessConfig
      */
-    protected function createCustomerAccessConfigMock()
+    protected function createCustomerAccessConfigMock(): CustomerAccessConfig
     {
         return $this->getMockBuilder(CustomerAccessConfig::class)->getMock();
     }

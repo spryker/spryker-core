@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductOffer\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 
 /**
  * Auto-generated group annotations
@@ -46,7 +47,9 @@ class ProductOfferFacadeTest extends Unit
     public function testFind(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer(['fkMerchant' => $this->tester->haveMerchant()->getIdMerchant()]);
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
+        ]);
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
@@ -63,7 +66,9 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
-        $productOfferTransfer = (new ProductOfferBuilder(['fkMerchant' => $merchantTransfer->getIdMerchant()]))->build();
+        $productOfferTransfer = (new ProductOfferBuilder([
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+        ]))->build();
         $productOfferTransfer->setIdProductOffer(null);
 
         // Act
@@ -71,5 +76,47 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertNotEmpty($productOfferTransfer->getIdProductOffer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateProductOfferById(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::IS_ACTIVE => false,
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        // Act
+        $productOfferTransfer->setIsActive(true);
+        $productOfferResponseTransfer = $this->tester->getFacade()->update($productOfferTransfer);
+
+        // Assert
+        $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
+        $this->assertTrue($productOfferResponseTransfer->getProductOffer()->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeactivateProductOfferById(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::IS_ACTIVE => true,
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        // Act
+        $productOfferTransfer->setIsActive(false);
+        $productOfferResponseTransfer = $this->tester->getFacade()->update($productOfferTransfer);
+
+        // Assert
+        $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
+        $this->assertFalse($productOfferResponseTransfer->getProductOffer()->getIsActive());
     }
 }

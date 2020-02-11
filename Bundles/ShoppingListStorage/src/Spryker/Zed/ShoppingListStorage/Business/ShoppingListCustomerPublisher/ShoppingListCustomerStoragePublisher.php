@@ -67,6 +67,7 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
         foreach ($customerReferences as $customerReference) {
             if (isset($shoppingListCustomerStorageEntities[$customerReference])) {
                 $this->storeDataSet($customerReference, $shoppingListCustomerStorageEntities[$customerReference]);
+
                 continue;
             }
 

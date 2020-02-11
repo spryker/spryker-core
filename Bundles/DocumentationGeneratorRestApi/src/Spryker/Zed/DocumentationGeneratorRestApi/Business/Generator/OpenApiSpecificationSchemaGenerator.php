@@ -270,6 +270,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected function addDefaultRelationshipsSchema(): void
     {
         $this->addSchemaData($this->schemaBuilder->createDefaultRelationshipDataAttributesSchema());
+        $this->addSchemaData($this->schemaBuilder->createDefaultRelationshipDataCollectionAttributesSchema());
     }
 
     /**

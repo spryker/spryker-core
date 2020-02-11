@@ -90,6 +90,7 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (in_array($itemTransfer->getSku(), $restrictedProductConcreteSkus)) {
                 $this->addFilterMessage($itemTransfer->getSku());
+
                 continue;
             }
 

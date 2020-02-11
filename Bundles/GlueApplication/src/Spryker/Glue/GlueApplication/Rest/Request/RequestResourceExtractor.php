@@ -77,8 +77,10 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
         $data = $requestData[RestResourceInterface::RESOURCE_DATA];
         $request->attributes->set(RestResourceInterface::RESOURCE_DATA, $data);
 
-        if (!isset($data[RestResourceInterface::RESOURCE_TYPE]) ||
-            !isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
+        if (
+            !isset($data[RestResourceInterface::RESOURCE_TYPE]) ||
+            !isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])
+        ) {
             return null;
         }
 

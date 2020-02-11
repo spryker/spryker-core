@@ -220,7 +220,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
      */
-    protected function createQueryContainerMock()
+    protected function createQueryContainerMock(): StateMachineQueryContainerInterface
     {
         return $this->getMockBuilder(StateMachineQueryContainerInterface::class)->getMock();
     }
@@ -228,7 +228,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory
      */
-    protected function createStateMachineHistoryQueryMock()
+    protected function createStateMachineHistoryQueryMock(): SpyStateMachineItemStateHistory
     {
         return $this->getMockBuilder(SpyStateMachineItemStateHistory::class)->getMock();
     }

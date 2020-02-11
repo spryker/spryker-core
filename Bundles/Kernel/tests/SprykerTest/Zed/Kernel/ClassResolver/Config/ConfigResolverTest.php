@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\ClassResolver\Config;
 
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use SprykerTest\Zed\Kernel\ClassResolver\AbstractResolverTest;
@@ -54,7 +55,7 @@ class ConfigResolverTest extends AbstractResolverTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): AbstractClassResolver
     {
         $resolverMock = $this->getMockBuilder(BundleConfigResolver::class)->setMethods($methods)->getMock();
 
