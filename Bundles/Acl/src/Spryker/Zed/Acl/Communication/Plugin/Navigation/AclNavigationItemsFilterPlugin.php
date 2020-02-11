@@ -20,8 +20,8 @@ use Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPlugin
 class AclNavigationItemsFilterPlugin extends AbstractPlugin implements NavigationItemFilterPluginInterface
 {
     /**
-     * Specification:
-     * - Returns true if navigation item is visible in menu.
+     * {@inheritDoc}
+     * - Returns false if user is not authorized.
      *
      * @api
      *
