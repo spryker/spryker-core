@@ -70,16 +70,16 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
      */
     protected function hydrateOrderTransfersInOrderListTransfer(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderTransfers = [];
+        $orderTransfers = new ArrayObject();
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
             $idSalesOrder = $orderTransfer->getIdSalesOrder();
             if ($this->omsFacade->isOrderFlaggedExcludeFromCustomer($idSalesOrder)) {
                 continue;
             }
 
-            $orderTransfers[] = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
+            $orderTransfers->append($this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder));
         }
 
-        return $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
+        return $orderListTransfer->setOrders($orderTransfers);
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface;
@@ -107,7 +108,7 @@ class OrderReader implements OrderReaderInterface
         $limit = 0;
         if ($restRequest->getPage()) {
             $limit = $restRequest->getPage()->getLimit();
-            $orderListRequestTransfer->setFilter($this->createFilterTransfer($restRequest));
+            $orderListRequestTransfer->setFilter($this->createFilterTransfer($restRequest->getPage()));
         }
 
         $orderListTransfer = $this->salesClient->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
@@ -139,14 +140,14 @@ class OrderReader implements OrderReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
      *
      * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    protected function createFilterTransfer(RestRequestInterface $restRequest): FilterTransfer
+    protected function createFilterTransfer(PageInterface $page): FilterTransfer
     {
         return (new FilterTransfer())
-            ->setOffset($restRequest->getPage()->getOffset())
-            ->setLimit($restRequest->getPage()->getLimit());
+            ->setOffset($page->getOffset())
+            ->setLimit($page->getLimit());
     }
 }
