@@ -17,9 +17,7 @@ use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
@@ -41,19 +39,9 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected $shoppingListRepository;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface
      */
-    protected $addOperationValidator;
-
-    /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface
-     */
-    protected $updateOperationValidator;
-
-    /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface
-     */
-    protected $deleteOperationValidator;
+    protected $shoppingListItemOperationValidator;
 
     /**
      * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
@@ -68,26 +56,20 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface $addOperationValidator
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface $updateOperationValidator
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface $deleteOperationValidator
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface $shoppingListItemOperationValidator
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
         ShoppingListRepositoryInterface $shoppingListRepository,
-        ShoppingListItemAddOperationValidatorInterface $addOperationValidator,
-        ShoppingListItemUpdateOperationValidatorInterface $updateOperationValidator,
-        ShoppingListItemDeleteOperationValidatorInterface $deleteOperationValidator,
+        ShoppingListItemOperationValidatorInterface $shoppingListItemOperationValidator,
         ShoppingListItemPluginExecutorInterface $pluginExecutor,
         ShoppingListToProductFacadeInterface $productFacade
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->shoppingListRepository = $shoppingListRepository;
-        $this->addOperationValidator = $addOperationValidator;
-        $this->updateOperationValidator = $updateOperationValidator;
-        $this->deleteOperationValidator = $deleteOperationValidator;
+        $this->shoppingListItemOperationValidator = $shoppingListItemOperationValidator;
         $this->pluginExecutor = $pluginExecutor;
         $this->productFacade = $productFacade;
     }
@@ -102,7 +84,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     ): ShoppingListItemResponseTransfer {
         $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
 
-        $validatedShoppingListItemResponseTransfer = $this->addOperationValidator->validateRequest(
+        $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator->validateItemAddRequest(
             $shoppingListItemTransfer,
             $shoppingListItemResponseTransfer
         );
@@ -112,7 +94,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 
         $shoppingListItemResponseTransfer = $this->saveShoppingListItemTransaction($shoppingListItemTransfer);
 
-        return $this->addOperationValidator->invalidateResponse($shoppingListItemResponseTransfer);
+        return $this->shoppingListItemOperationValidator->invalidateItemAddResponse($shoppingListItemResponseTransfer);
     }
 
     /**
@@ -125,7 +107,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     ): ShoppingListItemResponseTransfer {
         $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
 
-        $validatedShoppingListItemResponseTransfer = $this->updateOperationValidator->validateRequest(
+        $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator->validateItemUpdateRequest(
             $shoppingListItemTransfer,
             $shoppingListItemResponseTransfer
         );
@@ -135,9 +117,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 
         $shoppingListItemResponseTransfer = $this->saveShoppingListItemTransaction($shoppingListItemTransfer);
 
-        return $this->updateOperationValidator->invalidateResponse(
-            $shoppingListItemResponseTransfer
-        );
+        return $this->shoppingListItemOperationValidator->invalidateItemUpdateResponse($shoppingListItemResponseTransfer);
     }
 
     /**
@@ -174,7 +154,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             ->requireCustomerReference();
 
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
-        $validatedShoppingListResponseTransfer = $this->addOperationValidator->validateBulkRequest(
+        $validatedShoppingListResponseTransfer = $this->shoppingListItemOperationValidator->validateItemAddBulkRequest(
             $shoppingListTransfer,
             $shoppingListResponseTransfer
         );
@@ -215,7 +195,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 
             $updatedShoppingListItemTransfer[] = $shoppingListItemTransfer;
 
-            $this->addOperationValidator->invalidateResponse(
+            $this->shoppingListItemOperationValidator->invalidateItemAddResponse(
                 (new ShoppingListItemResponseTransfer())
                     ->setShoppingListItem($shoppingListItemTransfer)
                     ->setIsSuccess(true)
@@ -234,7 +214,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     {
         $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
 
-        $validatedShoppingListItemResponseTransfer = $this->deleteOperationValidator->validateRequest(
+        $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator->validateItemDeleteRequest(
             $shoppingListItemTransfer,
             $shoppingListItemResponseTransfer
         );
@@ -242,7 +222,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return $shoppingListItemResponseTransfer;
         }
 
-        return $this->deleteOperationValidator->invalidateResponse(
+        return $this->shoppingListItemOperationValidator->invalidateItemDeleteResponse(
             $this->deleteShoppingListItem($shoppingListItemTransfer)
         );
     }

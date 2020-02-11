@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 
-class MessageAdder implements MessageAdderInterface
+class ShoppingListItemMessageAdder implements ShoppingListItemMessageAdderInterface
 {
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_UPDATE_FAILED = 'customer.account.shopping_list.item.update.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_UPDATE_SUCCESS = 'customer.account.shopping_list.item.update.success';

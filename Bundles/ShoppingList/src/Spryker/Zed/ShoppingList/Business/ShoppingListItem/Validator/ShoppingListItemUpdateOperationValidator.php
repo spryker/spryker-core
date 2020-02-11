@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface;
 
 class ShoppingListItemUpdateOperationValidator implements ShoppingListItemUpdateOperationValidatorInterface
 {
@@ -22,7 +22,7 @@ class ShoppingListItemUpdateOperationValidator implements ShoppingListItemUpdate
     protected $shoppingListItemValidator;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface
      */
     protected $messageAdder;
 
@@ -33,12 +33,12 @@ class ShoppingListItemUpdateOperationValidator implements ShoppingListItemUpdate
 
     /**
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface $shoppingListItemValidator
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\MessageAdderInterface $messageAdder
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface $messageAdder
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface $permissionValidator
      */
     public function __construct(
         ShoppingListItemValidatorInterface $shoppingListItemValidator,
-        MessageAdderInterface $messageAdder,
+        ShoppingListItemMessageAdderInterface $messageAdder,
         ShoppingListItemPermissionValidatorInterface $permissionValidator
     ) {
         $this->shoppingListItemValidator = $shoppingListItemValidator;

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
-interface MessageAdderInterface
+interface ShoppingListItemMessageAdderInterface
 {
     /**
      * @return void
