@@ -123,7 +123,11 @@ interface OauthFacadeInterface
 
     /**
      * Specification:
-     *  - Revokes concrete refresh token by identifier and customer reference.
+     * - Revokes refresh token by provided identifier and customer reference.
+     * - Requires refresh token and customer reference.
+     * - Returns RevokeRefreshTokenResponseTransfer.isSuccessful = true.
+     * - Returns RevokeRefreshTokenResponseTransfer.isSuccessful = false when refresh token is not valid
+     * - Returns RevokeRefreshTokenResponseTransfer.isSuccessful = false when refresh token was not found
      *
      * @api
      *
@@ -135,7 +139,9 @@ interface OauthFacadeInterface
 
     /**
      * Specification:
-     *  - Revokes all refresh tokens by customer.
+     * - Revokes all refresh tokens by provided customer reference.
+     * - Requires customer reference.
+     * - Returns RevokeRefreshTokenResponseTransfer.isSuccessful = true.
      *
      * @api
      *

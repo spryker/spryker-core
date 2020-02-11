@@ -10,8 +10,8 @@ namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
-use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
+use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
@@ -28,13 +28,23 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     protected $oauthRepository;
 
     /**
+     * @var \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
+     * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(OauthEntityManagerInterface $oauthEntityManager, OauthRepositoryInterface $oauthRepository)
-    {
+    public function __construct(
+        OauthEntityManagerInterface $oauthEntityManager,
+        OauthRepositoryInterface $oauthRepository,
+        OauthToUtilEncodingServiceInterface $utilEncodingService
+    ) {
         $this->oauthEntityManager = $oauthEntityManager;
         $this->oauthRepository = $oauthRepository;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -64,7 +74,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
             ->setUserIdentifier($userIdentifier)
             ->setExpiresAt($refreshTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
             ->setIdOauthClient($refreshTokenEntity->getAccessToken()->getClient()->getIdentifier())
-            ->setScopes((new UtilEncodingService())->encodeJson($refreshTokenEntity->getAccessToken()->getScopes()));
+            ->setScopes($this->utilEncodingService->encodeJson($refreshTokenEntity->getAccessToken()->getScopes()));
 
         $this->oauthEntityManager->saveRefreshToken($oauthRefreshTokenTransfer);
     }

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Oauth\Persistence\OauthPersistenceFactory getFactory()
@@ -108,7 +109,7 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
      */
-    public function findRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
+    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
     {
         $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
         $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
@@ -127,11 +128,10 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
      */
     public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool
     {
-        $oauthRefreshTokenEntity = $this->getFactory()->createRefreshTokenQuery()
+        return $this->getFactory()->createRefreshTokenQuery()
             ->filterByIdentifier($oauthRefreshTokenTransfer->getIdentifier())
-            ->findOne();
-
-        return !empty($oauthRefreshTokenEntity->getRevokedAt());
+            ->filterByRevokedAt(null, Criteria::NOT_EQUAL)
+            ->exists();
     }
 
     /**

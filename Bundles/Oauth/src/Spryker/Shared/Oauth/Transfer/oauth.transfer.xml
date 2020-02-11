@@ -100,10 +100,6 @@
         <property name="oauthRefreshTokens" type="OauthRefreshToken[]" singular="oauthRefreshToken"/>
     </transfer>
 
-    <transfer name="OauthAccessTokenCollection">
-        <property name="oauthAccessTokens" type="OauthAccessTokenData[]" singular="oauthAccessTokenData"/>
-    </transfer>
-
     <transfer name="JwtToken">
         <property name="headers" type="array" singular="headers"/>
         <property name="claims" type="array" singular="claims"/>

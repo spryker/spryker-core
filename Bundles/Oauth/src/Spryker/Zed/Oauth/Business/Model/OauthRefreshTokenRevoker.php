@@ -28,8 +28,6 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected const REFRESH_TOKEN_NOT_FOUND_ERROR_MESSAGE = 'Refresh Token not found';
 
     protected const KEY_REFRESH_TOKEN_ID = 'refresh_token_id';
-    protected const KEY_ACCESS_TOKEN_ID = 'access_token_id';
-    protected const KEY_EXPIRE_TIME = 'expire_time';
 
     /**
      * @var \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface
@@ -63,10 +61,10 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      */
     public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
-
         $revokeRefreshTokenRequestTransfer->requireRefreshToken()
             ->requireCustomerReference();
+
+        $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
 
         $decryptedRefreshToken = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
         if (!$decryptedRefreshToken) {
@@ -106,7 +104,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->setRevokedAt(null);
 
         $oauthRefreshTokenTransfers = $this->oauthRepository
-            ->findRefreshTokens($oauthTokenCriteriaFilterTransfer)
+            ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)
             ->getOauthRefreshTokens();
 
         $this->executeRevokeRefreshTokensTransaction($oauthRefreshTokenTransfers);
