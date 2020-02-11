@@ -25,10 +25,11 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return array
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName)
+    public function getProductAbstractStorageData($idProductAbstract, $localeName, ?string $storeName = null)
     {
         return $this->getFactory()
             ->createProductAbstractStorageReader()
@@ -292,6 +293,24 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createProductAbstractStorageReader()
             ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     * @param string $localeName
+     * @param string|null $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName(array $productAbstractIds, string $localeName, ?string $storeName = null): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName($productAbstractIds, $localeName, $storeName);
     }
 
     /**

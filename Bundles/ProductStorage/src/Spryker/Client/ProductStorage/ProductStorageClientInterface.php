@@ -23,10 +23,11 @@ interface ProductStorageClientInterface
      *
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return array
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName);
+    public function getProductAbstractStorageData($idProductAbstract, $localeName, ?string $storeName = null);
 
     /**
      * Specification:
@@ -245,6 +246,19 @@ interface ProductStorageClientInterface
      * @return array
      */
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     * @param string $localeName
+     * @param string|null $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName(array $productAbstractIds, string $localeName, ?string $storeName = null): array;
 
     /**
      * Specification:

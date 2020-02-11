@@ -44,10 +44,28 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
     {
         if (!method_exists($this->productStorageClient, 'getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName')) {
-            return $this->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+            return $this->getProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
         }
 
         return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
+
+    /**
+     * The method check for `method_exists` is for BC for supporting old majors of `ProductStorage` module.
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string|null $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStore(array $productAbstractIds, string $localeName, ?string $storeName = null): array
+    {
+        if (!method_exists($this->productStorageClient, 'getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStore')) {
+            return $this->getProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStore($productAbstractIds, $localeName, $storeName);
+        }
+
+        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName($productAbstractIds, $localeName, $storeName);
     }
 
     /**
@@ -63,6 +81,25 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
         $productAbstractStorageData = [];
         foreach ($productAbstractIds as $productAbstractId) {
             $productAbstractStorageData[] = $this->productStorageClient->getProductAbstractStorageData($productAbstractId, $localeName);
+        }
+
+        return $productAbstractStorageData;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string|null $storeName
+     *
+     * @return array
+     */
+    protected function getProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStore(array $productAbstractIds, string $localeName, ?string $storeName = null): array
+    {
+        $productAbstractStorageData = [];
+        foreach ($productAbstractIds as $productAbstractId) {
+            $productAbstractStorageData[] = $this->productStorageClient->getProductAbstractStorageData($productAbstractId, $localeName, $storeName);
         }
 
         return $productAbstractStorageData;

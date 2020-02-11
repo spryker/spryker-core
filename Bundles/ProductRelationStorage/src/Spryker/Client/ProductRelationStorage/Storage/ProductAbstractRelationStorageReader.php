@@ -39,12 +39,13 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
 
     /**
      * @param int $idProductAbstract
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer|null
      */
-    public function findProductAbstractRelation($idProductAbstract)
+    public function findProductAbstractRelation($idProductAbstract, ?string $storeName = null)
     {
-        $productAbstractRelationStorageData = $this->getStorageData($idProductAbstract);
+        $productAbstractRelationStorageData = $this->getStorageData($idProductAbstract, $storeName);
 
         if (!$productAbstractRelationStorageData) {
             return null;
@@ -57,10 +58,11 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
 
     /**
      * @param int $idProductAbstract
+     * @param string|null $storeName
      *
      * @return array|null
      */
-    protected function getStorageData(int $idProductAbstract)
+    protected function getStorageData(int $idProductAbstract, ?string $storeName = null)
     {
         if (ProductRelationStorageConfig::isCollectorCompatibilityMode()) {
             $clientLocatorClassName = Locator::class;
@@ -91,22 +93,23 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
 
             return $productAbstractRelationCollectorData;
         }
-        $key = $this->generateKey($idProductAbstract);
-        $productAbstractRelationStorageData = $this->storageClient->get($key);
+        $key = $this->generateKey($idProductAbstract, $storeName);
 
-        return $productAbstractRelationStorageData;
+        return $this->storageClient->get($key);
     }
 
     /**
      * @param int $idProductAbstract
+     * @param string|null $storeName
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract)
+    protected function generateKey($idProductAbstract, ?string $storeName = null)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference((string)$idProductAbstract);
+            ->setReference((string)$idProductAbstract)
+            ->setStore($storeName);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(SharedProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME)

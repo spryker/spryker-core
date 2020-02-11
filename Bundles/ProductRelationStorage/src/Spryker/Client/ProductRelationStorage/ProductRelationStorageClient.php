@@ -22,10 +22,11 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      *
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findRelatedProducts($idProductAbstract, $localeName)
+    public function findRelatedProducts($idProductAbstract, $localeName, ?string $storeName = null)
     {
         return $this->getFactory()
             ->createRelatedProductReader()
@@ -55,14 +56,15 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      * @api
      *
      * @param int $idProductAbstract
+     * @param string|null $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract): array
+    public function findRelatedAbstractProductIds(int $idProductAbstract, ?string $storeName = null): array
     {
         return $this->getFactory()
             ->createRelatedProductReader()
-            ->findRelatedAbstractProductIds($idProductAbstract);
+            ->findRelatedAbstractProductIds($idProductAbstract, $storeName);
     }
 
     /**
