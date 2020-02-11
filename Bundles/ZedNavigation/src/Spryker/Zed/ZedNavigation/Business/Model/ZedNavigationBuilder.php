@@ -85,7 +85,7 @@ class ZedNavigationBuilder
     protected function filterNavigationItems(array $navigationItems): array
     {
         $filteredNavigationItems = [];
-        foreach ($navigationItems as $itemKey => $navigationItem) {
+        foreach ($navigationItems as $navigationItem) {
             if ($this->hasNestedNavigationItems($navigationItem)) {
                 $filteredNestedNavigationItems = $this->filterNavigationItems($navigationItem[static::NAVIGATION_ITEM_PAGES_KEY]);
                 if ($filteredNestedNavigationItems) {
