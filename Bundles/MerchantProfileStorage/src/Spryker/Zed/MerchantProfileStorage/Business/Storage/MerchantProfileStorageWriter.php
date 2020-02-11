@@ -73,6 +73,7 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
         foreach ($merchantProfileTransfers as $merchantProfileTransfer) {
             if (!$merchantProfileTransfer->getIsActive()) {
                 $merchantIdsForDeletion[] = $merchantProfileTransfer->getFkMerchant();
+
                 continue;
             }
 

@@ -36,7 +36,6 @@ class TimeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugi
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isTimeSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }

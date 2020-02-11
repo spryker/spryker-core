@@ -34,7 +34,6 @@ class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements Decision
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isCustomerGroupSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }

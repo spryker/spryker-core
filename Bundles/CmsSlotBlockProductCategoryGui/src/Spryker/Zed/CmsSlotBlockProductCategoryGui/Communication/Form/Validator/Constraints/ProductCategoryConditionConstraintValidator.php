@@ -36,7 +36,8 @@ class ProductCategoryConditionConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$value[ProductCategorySlotBlockConditionForm::FIELD_PRODUCT_IDS] &&
+        if (
+            !$value[ProductCategorySlotBlockConditionForm::FIELD_PRODUCT_IDS] &&
             !$value[ProductCategorySlotBlockConditionForm::FIELD_CATEGORY_IDS]
         ) {
             $this->context->buildViolation($constraint->getMessage())

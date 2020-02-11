@@ -59,4 +59,7 @@
         <property name="carrierName" type="string"/>
     </transfer>
 
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
 </transfers>
