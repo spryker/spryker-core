@@ -119,6 +119,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
 
             if (!in_array($pair[static::STORE_NAME], $storeRelations, true)) {
                 $this->deleteStorageEntity($cmsPageStorageEntity);
+
                 continue;
             }
 

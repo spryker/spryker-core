@@ -88,8 +88,10 @@ class CmsSlotBlockProductCategoryConditionsStep implements DataImportStepInterfa
             return;
         }
 
-        if ($conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_CATEGORY_IDS]
-            || $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_PRODUCT_ABSTRACT_IDS]) {
+        if (
+            $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_CATEGORY_IDS]
+            || $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_PRODUCT_ABSTRACT_IDS]
+        ) {
             $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_ALL] = false;
         }
 
