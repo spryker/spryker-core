@@ -1,7 +1,7 @@
 # MerchantDashboardGuiPage Module
 [![Build Status](https://travis-ci.org/spryker/merchant-dashboard-gui-page.svg)](https://travis-ci.org/spryker/merchant-dashboard-gui-page)
 
-Dashboard for merchant portal
+This module contains the dashboard and its related components for the Merchant portal.
 
 ## Installation
 

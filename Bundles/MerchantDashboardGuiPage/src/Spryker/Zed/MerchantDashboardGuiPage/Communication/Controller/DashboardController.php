@@ -15,7 +15,7 @@ class DashboardController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response|array
+     * @return array
      */
     public function indexAction(Request $request)
     {

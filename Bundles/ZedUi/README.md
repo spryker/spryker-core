@@ -1,7 +1,7 @@
 # ZedUi Module
 [![Build Status](https://travis-ci.org/spryker/zed-ui.svg)](https://travis-ci.org/spryker/zed-ui)
 
-Ui for zed application
+This module provides base UI components for Zed application.
 
 ## Installation
 
