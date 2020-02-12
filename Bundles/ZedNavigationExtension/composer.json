@@ -1,7 +1,7 @@
 {
-  "name": "spryker/navigation-extension",
+  "name": "spryker/zed-navigation-extension",
   "type": "library",
-  "description": "NavigationExtension module",
+  "description": "ZedNavigationExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2"

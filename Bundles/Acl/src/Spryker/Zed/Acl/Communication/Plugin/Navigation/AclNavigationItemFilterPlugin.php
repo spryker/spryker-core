@@ -9,7 +9,7 @@ namespace Spryker\Zed\Acl\Communication\Plugin\Navigation;
 
 use Generated\Shared\Transfer\NavigationItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface;
+use Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface;
 
 /**
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\NavigationExtension\Dependency\Plugin;
+namespace Spryker\Zed\ZedNavigationExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\NavigationItemTransfer;
 

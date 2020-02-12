@@ -35,7 +35,7 @@ class ZedNavigationBuilder
     private $pathExtractor;
 
     /**
-     * @var \Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     * @var \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
      */
     protected $navigationItemFilterPlugins;
 
@@ -43,7 +43,7 @@ class ZedNavigationBuilder
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface $menuFormatter
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface $pathExtractor
-     * @param \Spryker\Zed\NavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[] $navigationItemFilterPlugins
+     * @param \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[] $navigationItemFilterPlugins
      */
     public function __construct(
         ZedNavigationCollectorInterface $navigationCollector,
