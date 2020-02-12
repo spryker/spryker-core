@@ -55,4 +55,11 @@ interface OauthEntityManagerInterface
      * @return void
      */
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void;
+
+    /**
+     * @param string $expiresAt
+     *
+     * @return int
+     */
+    public function deleteExpiredRefreshTokens(string $expiresAt): int;
 }

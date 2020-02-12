@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthRefreshToken;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Oauth\Persistence\OauthPersistenceFactory getFactory()
@@ -105,5 +106,18 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
         if ($oauthAccessTokenEntity) {
             $oauthAccessTokenEntity->delete();
         }
+    }
+
+    /**
+     * @param string $expiresAt
+     *
+     * @return int
+     */
+    public function deleteExpiredRefreshTokens(string $expiresAt): int
+    {
+        return $this->getFactory()
+            ->createRefreshTokenQuery()
+            ->filterByExpiresAt($expiresAt, Criteria::LESS_EQUAL)
+            ->delete();
     }
 }

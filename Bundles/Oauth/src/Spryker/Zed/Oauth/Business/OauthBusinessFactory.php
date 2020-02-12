@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Business;
 
+use DateTime;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstaller;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstallerInterface;
@@ -35,6 +36,8 @@ use Spryker\Zed\Oauth\Business\Model\OauthClientReader;
 use Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriterInterface;
+use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleaner;
+use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleanerInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenRevoker;
 use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenRevokerInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReader;
@@ -226,6 +229,26 @@ class OauthBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncodingService(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleanerInterface
+     */
+    public function createOauthRefreshTokenCleaner(): OauthRefreshTokenCleanerInterface
+    {
+        return new OauthRefreshTokenCleaner(
+            $this->getEntityManager(),
+            $this->getConfig(),
+            $this->createDateTime()
+        );
+    }
+
+    /**
+     * @return \DateTime
+     */
+    protected function createDateTime(): DateTime
+    {
+        return new DateTime();
     }
 
     /**

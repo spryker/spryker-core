@@ -165,4 +165,16 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     {
         return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function deleteExpiredRefreshTokens(): ?int
+    {
+        return $this->getFactory()->createOauthRefreshTokenCleaner()->deleteExpiredRefreshTokens();
+    }
 }

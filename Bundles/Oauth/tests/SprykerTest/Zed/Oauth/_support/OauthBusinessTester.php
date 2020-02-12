@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\RevokeRefreshTokenRequestBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
 
 /**
  * Inherited Methods
@@ -58,5 +59,21 @@ class OauthBusinessTester extends Actor
             CustomerTransfer::PASSWORD => static::TEST_PASSWORD,
             CustomerTransfer::NEW_PASSWORD => static::TEST_PASSWORD,
         ]);
+    }
+
+    /**
+     * @return int
+     */
+    public function getOauthRefreshTokensCount(): int
+    {
+        return SpyOauthRefreshTokenQuery::create()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function deleteAllOauthRefreshTokens(): int
+    {
+        return SpyOauthRefreshTokenQuery::create()->deleteAll();
     }
 }
