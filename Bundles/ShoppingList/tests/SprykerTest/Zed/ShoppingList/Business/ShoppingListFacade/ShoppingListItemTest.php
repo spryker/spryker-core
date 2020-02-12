@@ -130,6 +130,260 @@ class ShoppingListItemTest extends Unit
     public function testOwnerCanAddItemToShoppingList(): void
     {
         // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+
+        // Act
+        $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertNotNull($resultShoppingListItemTransfer->getIdShoppingListItem(), 'Owner should be able to add item to shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testOwnerCanNotAddItemWithNonPositiveQuantityToShoppingList(): void
+    {
+        $quantities = [0, -1];
+
+        foreach ($quantities as $quantity) {
+            // Arrange
+            $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+            $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+                ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::SKU => $this->product->getSku(),
+            ]);
+
+            // Act
+            $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+            // Assert
+            $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), "Owner should not be able to add item with quantity '$quantity'' to shopping list.");
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomerCanNotAddItemToSharedShoppingList(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->otherCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+
+        // Act
+        $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), 'Shared shopping list should not modified by customer.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testOwnerCanGetListOfShoppingListItems(): void
+    {
+        // Arrange
+        $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $secondShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $secondShoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemCollectionTransfer = (new ShoppingListCollectionTransfer())
+            ->addShoppingList($fistShoppingListTransfer)
+            ->addShoppingList($secondShoppingListTransfer);
+
+        // Act
+        $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        // Assert
+        $this->assertSame(2, $shoppingListItemResponseTransfer->getItems()->count(), 'Customer should be able to load shopping list items by shopping lists.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testSharedCompanyUserWithFullAccessPermissionCanAddItemToShoppingList(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+
+        $shoppingListCompanyUserTransfer = (new ShoppingListCompanyUserTransfer())
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdShoppingListPermissionGroup($this->fullAccessPermissionGroup->getIdShoppingListPermissionGroup());
+        $shoppingListTransfer->addSharedCompanyUsers($shoppingListCompanyUserTransfer);
+
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $shoppingListCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateShoppingListSharedEntities($shoppingListTransfer);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection(
+            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer)
+        );
+
+        // Assert
+        $this->assertSame(1, $shoppingListItemResponseTransfer->getItems()->count(), 'Shared company user with full access permission can add item to shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testSharedCompanyUserWithReadOnlyPermissionCanNotAddItemToShoppingList(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+
+        $shoppingListCompanyUserTransfer = (new ShoppingListCompanyUserTransfer())
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdShoppingListPermissionGroup($this->readOnlyPermissionGroup->getIdShoppingListPermissionGroup());
+        $shoppingListTransfer->addSharedCompanyUsers($shoppingListCompanyUserTransfer);
+
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $shoppingListCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateShoppingListSharedEntities($shoppingListTransfer);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection(
+            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer)
+        );
+
+        // Assert
+        $this->assertSame(0, $shoppingListItemResponseTransfer->getItems()->count(), 'Shared company user with read only permission can not add item to shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerShoppingListCollection(): void
+    {
+        // Arrange
+        $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 2,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        // Act
+        $shoppingListItemResponseTransfer = $this->tester->getFacade()->getCustomerShoppingListCollection($this->ownerCompanyUserTransfer->getCustomer());
+
+        // Assert
+        $this->assertSame(3, $shoppingListItemResponseTransfer->getShoppingLists()[0]->getNumberOfItems(), 'Customer should get correct count of items in the shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomerCanGetItemListOfSharedShoppingList(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+            ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdShoppingListPermissionGroup($this->fullAccessPermissionGroup->getIdShoppingListPermissionGroup());
+        $this->tester->getFacade()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+        $sharedShoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser());
+
+        $shoppingListItemCollectionTransfer = (new ShoppingListCollectionTransfer())
+            ->addShoppingList($sharedShoppingListTransfer);
+
+        // Act
+        $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        // Assert
+        $this->assertSame(1, $shoppingListItemResponseTransfer->getItems()->count(), 'Customer should be able to load shopping list items from shared shopping lists.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testOnlyConcreteProductCanBeAddedToShoppingList(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getAbstractSku(),
+        ]);
+
+        // Act
+        $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), 'Abstract product should not be able to be added to shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testOwnerCanAddShoppingListItemToShoppingList(): void
+    {
+        // Arrange
         /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
         $shoppingListFacade = $this->tester->getFacade();
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -151,7 +405,7 @@ class ShoppingListItemTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanNotAddItemWithNonPositiveQuantityToShoppingList(): void
+    public function testOwnerCanNotAddShoppingListItemWithNonPositiveQuantityToShoppingList(): void
     {
         /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
         $shoppingListFacade = $this->tester->getFacade();
@@ -181,7 +435,7 @@ class ShoppingListItemTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanNotAddItemToSharedShoppingList(): void
+    public function testCustomerCanNotAddShoppingListItemToSharedShoppingList(): void
     {
         // Arrange
         /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
@@ -225,80 +479,6 @@ class ShoppingListItemTest extends Unit
 
         // Assert
         $this->assertTrue($shoppingListItemResponseTransfer->getIsSuccess(), 'Owner should be able to remove item from shopping list.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testOwnerCanGetListOfShoppingListItems(): void
-    {
-        // Arrange
-        /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
-        $shoppingListFacade = $this->tester->getFacade();
-        $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
-        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
-            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
-            ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => 1,
-            ShoppingListItemTransfer::SKU => $this->product->getSku(),
-        ]);
-        $shoppingListFacade->addShoppingListItem($shoppingListItemTransfer);
-
-        $secondShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
-        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
-            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
-            ShoppingListItemTransfer::FK_SHOPPING_LIST => $secondShoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => 1,
-            ShoppingListItemTransfer::SKU => $this->product->getSku(),
-        ]);
-        $shoppingListFacade->addShoppingListItem($shoppingListItemTransfer);
-
-        $shoppingListItemCollectionTransfer = (new ShoppingListCollectionTransfer())
-            ->addShoppingList($fistShoppingListTransfer)
-            ->addShoppingList($secondShoppingListTransfer);
-
-        // Act
-        $shoppingListItemResponseTransfer = $shoppingListFacade->getShoppingListItemCollection($shoppingListItemCollectionTransfer);
-
-        // Assert
-        $this->assertSame(2, $shoppingListItemResponseTransfer->getItems()->count(), 'Customer should be able to load shopping list items by shopping lists.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testCustomerCanGetItemListOfSharedShoppingList(): void
-    {
-        // Arrange
-        /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
-        $shoppingListFacade = $this->tester->getFacade();
-        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
-        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
-            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
-            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => 1,
-            ShoppingListItemTransfer::SKU => $this->product->getSku(),
-        ]);
-        $shoppingListFacade->addShoppingListItem($shoppingListItemTransfer);
-
-        $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
-                ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
-                ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
-                ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-                ->setIdShoppingListPermissionGroup($this->fullAccessPermissionGroup->getIdShoppingListPermissionGroup());
-        $shoppingListFacade->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
-        $sharedShoppingListTransfer = (new ShoppingListTransfer())
-            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser());
-
-        $shoppingListItemCollectionTransfer = (new ShoppingListCollectionTransfer())
-            ->addShoppingList($sharedShoppingListTransfer);
-
-        // Act
-        $shoppingListItemResponseTransfer = $shoppingListFacade->getShoppingListItemCollection($shoppingListItemCollectionTransfer);
-
-        // Assert
-        $this->assertSame(1, $shoppingListItemResponseTransfer->getItems()->count(), 'Customer should be able to load shopping list items from shared shopping lists.');
     }
 
     /**
@@ -381,7 +561,7 @@ class ShoppingListItemTest extends Unit
     /**
      * @return void
      */
-    public function testSharedCompanyUserWithFullAccessPermissionCanAddItemToShoppingList(): void
+    public function testSharedCompanyUserWithFullAccessPermissionCanAddShoppingListItemToShoppingList(): void
     {
         // Arrange
         /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
@@ -416,7 +596,7 @@ class ShoppingListItemTest extends Unit
     /**
      * @return void
      */
-    public function testSharedCompanyUserWithReadOnlyPermissionCanNotAddItemToShoppingList(): void
+    public function testSharedCompanyUserWithReadOnlyPermissionCanNotAddShoppingListItemToShoppingList(): void
     {
         // Arrange
         /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
