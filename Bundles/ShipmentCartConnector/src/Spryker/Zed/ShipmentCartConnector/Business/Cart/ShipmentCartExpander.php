@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Cart;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -70,7 +69,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     public function updateShipmentPrice(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $quoteTransfer = $cartChangeTransfer->getQuote();
-        $quoteTransfer->setItems($cartChangeTransfer->getItems());
 
         $availableShipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
         $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($cartChangeTransfer->getItems());
@@ -114,8 +112,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
             $quoteTransfer = $this->updateShipmentExpense($quoteTransfer, $shipmentGroupTransfer);
         }
-
-        $quoteTransfer->setItems(new ArrayObject());
 
         return $cartChangeTransfer->setQuote($quoteTransfer);
     }
