@@ -15,7 +15,7 @@ use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
-use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
+use Spryker\Shared\CmsPageDataImport\CmsPageDataImportConfig;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\CmsPageDataImport\Business\DataSet\CmsPageDataSet;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -156,6 +156,6 @@ class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterf
             $pageKeyMappingEntity->save();
         }
 
-        $this->addPublishEvents(GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryTranslationEntity->getFkGlossaryKey());
+        $this->addPublishEvents(CmsPageDataImportConfig::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryTranslationEntity->getFkGlossaryKey());
     }
 }
