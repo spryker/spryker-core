@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductReview\Calculator;
 
 use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
+use Generated\Shared\Transfer\RatingAggregationTransfer;
 use Spryker\Client\ProductReview\ProductReviewConfig;
 
 class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorInterface
@@ -29,15 +30,15 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
+     * @param \Generated\Shared\Transfer\RatingAggregationTransfer $ratingAggregationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function execute(ProductReviewSummaryTransfer $productReviewSummaryTransfer): ProductReviewSummaryTransfer
+    public function calculate(RatingAggregationTransfer $ratingAggregationTransfer): ProductReviewSummaryTransfer
     {
-        $productReviewSummaryTransfer->requireRatingAggregation();
+        $ratingAggregationTransfer->requireRatingAggregation();
 
-        $ratingAggregation = $productReviewSummaryTransfer->getRatingAggregation();
+        $ratingAggregation = $ratingAggregationTransfer->getRatingAggregation();
         $totalReview = $this->getTotalReview($ratingAggregation);
 
         return (new ProductReviewSummaryTransfer())

@@ -124,6 +124,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if (!isset($uniqueBundledItems[$bundleItemTransfer->getSku()])) {
                 $uniqueBundledItems[$bundleItemTransfer->getSku()] = $bundleItemTransfer;
+
                 continue;
             }
         }
@@ -142,8 +143,10 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         $processedErrorMessages = [];
 
         foreach ($availabilityErrorMessages as $availabilityErrorMessage) {
-            if (!$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)
-            || $this->isAvailabilityErrorMessage($availabilityErrorMessage)) {
+            if (
+                !$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)
+                || $this->isAvailabilityErrorMessage($availabilityErrorMessage)
+            ) {
                 $processedErrorMessages[] = $availabilityErrorMessage;
             }
         }

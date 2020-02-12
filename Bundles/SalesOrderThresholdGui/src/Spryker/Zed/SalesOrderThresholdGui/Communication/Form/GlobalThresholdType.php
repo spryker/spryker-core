@@ -141,6 +141,7 @@ class GlobalThresholdType extends AbstractType
         foreach ($this->getFactory()->getSalesOrderThresholdFormExpanderPlugins() as $formExpanderPlugin) {
             if ($formExpanderPlugin->getThresholdGroup() === SalesOrderThresholdGuiConfig::GROUP_SOFT) {
                 $formExpanderPlugin->expand($builder->get(static::FIELD_SOFT), $options);
+
                 continue;
             }
 
