@@ -46,9 +46,11 @@ class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
             return $result;
         } catch (Exception $exception) {
             $this->connection->rollBack();
+
             throw $exception;
         } catch (Throwable $exception) {
             $this->connection->rollBack();
+
             throw $exception;
         }
     }

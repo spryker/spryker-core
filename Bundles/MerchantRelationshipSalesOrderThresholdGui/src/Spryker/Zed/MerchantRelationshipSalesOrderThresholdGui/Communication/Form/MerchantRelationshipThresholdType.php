@@ -148,6 +148,7 @@ class MerchantRelationshipThresholdType extends AbstractType
         foreach ($this->getFactory()->getSalesOrderThresholdFormExpanderPlugins() as $formExpanderPlugin) {
             if ($formExpanderPlugin->getThresholdGroup() === MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_SOFT) {
                 $formExpanderPlugin->expand($builder->get(static::FIELD_SOFT), $options);
+
                 continue;
             }
 
