@@ -108,7 +108,8 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getShoppingListItemBeforeDeletePlugins(),
             $this->getShoppingListItemPostSavePlugins(),
             $this->getAddItemPreCheckPlugins(),
-            $this->getItemExpanderPlugins()
+            $this->getItemExpanderPlugins(),
+            $this->getItemCollectionExpanderPlugins()
         );
     }
 
@@ -144,6 +145,14 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[]
+     */
+    public function getItemCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_COLLECTION_EXPANDER);
     }
 
     /**

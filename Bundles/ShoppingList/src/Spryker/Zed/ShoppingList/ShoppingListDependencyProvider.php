@@ -29,6 +29,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_EVENT = 'FACADE_EVENT';
 
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
+    public const PLUGINS_ITEM_COLLECTION_EXPANDER = 'PLUGINS_ITEM_COLLECTION_EXPANDER';
     public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
     public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
     public const PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE';
@@ -50,6 +51,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserFacade($container);
 
         $container = $this->addItemExpanderPlugins($container);
+        $container = $this->addItemCollectionExpanderPlugins($container);
         $container = $this->addQuoteItemExpanderPlugins($container);
         $container = $this->addAddItemPreCheckPlugins($container);
         $container = $this->addShoppingListItemPostSavePlugins($container);
@@ -162,6 +164,20 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addItemCollectionExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ITEM_COLLECTION_EXPANDER] = function () {
+            return $this->getItemCollectionExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addQuoteItemExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_QUOTE_ITEM_EXPANDER] = function () {
@@ -189,6 +205,14 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected function getItemExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getItemCollectionExpanderPlugins(): array
     {
         return [];
     }

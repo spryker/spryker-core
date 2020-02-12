@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Persistence;
 
+use Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListItemTableMap;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\Map\SpyShoppingListProductOptionTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -28,5 +31,38 @@ class ShoppingListProductOptionConnectorRepository extends AbstractRepository im
             ->select([SpyShoppingListProductOptionTableMap::COL_FK_PRODUCT_OPTION_VALUE])
             ->find()
             ->getArrayCopy();
+    }
+
+    /**
+     * @param int[] $shoppingListItemIds
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer
+     */
+    public function getShoppingListProductOptionCollectionByShoppingListItemIds(array $shoppingListItemIds): ShoppingListProductOptionCollectionTransfer
+    {
+        $shoppingListProductOptionEntityCollection = $this->getFactory()
+            ->createSpyShoppingListProductOptionQuery()
+            ->useSpyShoppingListItemQuery()
+            ->endUse()
+            ->useSpyProductOptionValueQuery()
+                ->useSpyProductOptionGroupQuery()
+                    ->useSpyProductAbstractProductOptionGroupQuery()
+                        ->useSpyProductAbstractQuery()
+                            ->useSpyProductQuery()
+                            ->endUse()
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->filterByFkShoppingListItem_In($shoppingListItemIds)
+            ->where(SpyShoppingListItemTableMap::COL_SKU . ' = ' . SpyProductTableMap::COL_SKU)
+            ->find();
+
+        return $this->getFactory()
+            ->createShoppingListProductOptionMapper()
+            ->mapShoppingListProductOptionEntityCollectionToShoppingListProductOptionCollectionTransfer(
+                $shoppingListProductOptionEntityCollection,
+                new ShoppingListProductOptionCollectionTransfer()
+            );
     }
 }

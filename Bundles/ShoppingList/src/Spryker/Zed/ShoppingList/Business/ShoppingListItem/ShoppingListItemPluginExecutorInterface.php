@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListItemPluginExecutorInterface
@@ -31,6 +32,13 @@ interface ShoppingListItemPluginExecutorInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function executeItemExpanderPlugins(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function executeShoppingListItemCollectionExpanderPlugins(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
