@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductOfferAvailabilityStorage\Reader;
 
-use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer;
 
 interface ProductOfferAvailabilityStorageReaderInterface
@@ -19,11 +18,4 @@ interface ProductOfferAvailabilityStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer|null
      */
     public function findByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-     *
-     * @return bool
-     */
-    public function isProductOfferAvailable(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool;
 }

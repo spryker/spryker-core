@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOfferStock\Business\ProductOfferStock;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException;
 use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface;
 
 class ProductOfferStockReader implements ProductOfferStockReaderInterface
@@ -28,21 +30,28 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return bool
+     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
-    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool
+    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer
     {
         $productOfferStockRequestTransfer->requireProductOfferReference()
             ->requireStore()
             ->getStore()
-                ->requireName();
+            ->requireName();
 
-        $productOfferTransfer = $this->productOfferStockRepository->findOne($productOfferStockRequestTransfer);
+        $productOfferStockTransfer = $this->productOfferStockRepository->findOne($productOfferStockRequestTransfer);
 
-        if (!$productOfferTransfer) {
-            return false;
+        if (!$productOfferStockTransfer) {
+            throw new ProductOfferNotFoundException(
+                sprintf(
+                    'Product offer stock with product reference: %s, not found',
+                    $productOfferStockRequestTransfer->getProductOfferReference()
+                )
+            );
         }
 
-        return $productOfferTransfer->getIsNeverOutOfStock();
+        return $productOfferStockTransfer;
     }
 }

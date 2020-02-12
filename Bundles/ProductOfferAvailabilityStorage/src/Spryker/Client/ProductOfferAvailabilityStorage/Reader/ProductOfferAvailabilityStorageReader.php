@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductOfferAvailabilityStorage\Reader;
 
-use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Client\ProductOfferAvailabilityStorageToStorageClientInterface;
@@ -61,31 +60,6 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-     *
-     * @return bool
-     */
-    public function isProductOfferAvailable(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
-    {
-        $productOfferAvailabilityRequestTransfer->requireStore();
-
-        $productOfferAvailabilityStorageTransfer = $this->findByProductOfferReference(
-            $productOfferAvailabilityRequestTransfer->getProductOfferReference(),
-            $productOfferAvailabilityRequestTransfer->getStore()->getName()
-        );
-
-        if (!$productOfferAvailabilityStorageTransfer) {
-            return false;
-        }
-
-        if ($productOfferAvailabilityStorageTransfer->getIsNeverOutOfStock()) {
-            return true;
-        }
-
-        return $productOfferAvailabilityStorageTransfer->getAvailability() && $productOfferAvailabilityStorageTransfer->getAvailability()->isPositive();
-    }
-
-    /**
      * @param array $productOfferAvailabilityStorageTransferData
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
      *
@@ -95,7 +69,13 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
         array $productOfferAvailabilityStorageTransferData,
         ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
     ): ProductOfferAvailabilityStorageTransfer {
-        return $productOfferAvailabilityStorageTransfer->fromArray($productOfferAvailabilityStorageTransferData, true);
+        $productOfferAvailabilityStorageTransfer->fromArray($productOfferAvailabilityStorageTransferData, true);
+
+        $productOfferAvailabilityStorageTransfer->setIsAvailable(
+            $this->isAvailableProductOffer($productOfferAvailabilityStorageTransfer)
+        );
+
+        return $productOfferAvailabilityStorageTransfer;
     }
 
     /**
@@ -113,5 +93,18 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductOfferAvailabilityStorageConfig::PRODUCT_OFFER_AVAILABILITY_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
+     *
+     * @return bool
+     */
+    protected function isAvailableProductOffer(ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer): bool
+    {
+        $availability = $productOfferAvailabilityStorageTransfer->getAvailability();
+        $isAvailable = $availability && $availability->isPositive();
+
+        return $productOfferAvailabilityStorageTransfer->getIsNeverOutOfStock() || $isAvailable;
     }
 }

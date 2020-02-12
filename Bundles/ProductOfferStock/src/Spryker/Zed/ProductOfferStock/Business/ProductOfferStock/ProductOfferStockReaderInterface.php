@@ -8,13 +8,14 @@
 namespace Spryker\Zed\ProductOfferStock\Business\ProductOfferStock;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
 
 interface ProductOfferStockReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
-    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool;
+    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer;
 }

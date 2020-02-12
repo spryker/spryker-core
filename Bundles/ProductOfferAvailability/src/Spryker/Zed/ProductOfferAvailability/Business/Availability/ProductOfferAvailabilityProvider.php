@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOfferAvailability\Business\Availability;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToOmsFacadeInterface;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeInterface;
@@ -45,17 +46,15 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
      */
     public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
     {
-        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
-            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
-            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
+        $productOfferStockTransfer = $this->getProductOfferStockTransfer($productOfferAvailabilityRequestTransfer);
 
-        if ($this->productOfferStockFacade->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer)) {
+        if ($productOfferStockTransfer->getIsNeverOutOfStock()) {
             return true;
         }
 
         return $productOfferAvailabilityRequestTransfer->getQuantity()
             ->lessThanOrEquals(
-                $this->calculateAvailabilityForRequest($productOfferAvailabilityRequestTransfer)
+                $this->calculateAvailabilityForRequest($productOfferStockTransfer, $productOfferAvailabilityRequestTransfer)
             );
     }
 
@@ -66,39 +65,50 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
      */
     public function findProductConcreteAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ?ProductConcreteAvailabilityTransfer
     {
-        $availability = $this->calculateAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
-        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
-            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
-            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
+        $productOfferStockTransfer = $this->getProductOfferStockTransfer($productOfferAvailabilityRequestTransfer);
+        $availability = $this->calculateAvailabilityForRequest($productOfferStockTransfer, $productOfferAvailabilityRequestTransfer);
 
         return (new ProductConcreteAvailabilityTransfer())
             ->setAvailability($availability)
             ->setSku($productOfferAvailabilityRequestTransfer->getSku())
-            ->setIsNeverOutOfStock($this->productOfferStockFacade->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer));
+            ->setIsNeverOutOfStock($productOfferStockTransfer->getIsNeverOutOfStock());
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): Decimal
-    {
+    protected function calculateAvailabilityForRequest(
+        ProductOfferStockTransfer $productOfferStockTransfer,
+        ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
+    ): Decimal {
+        $quantity = $productOfferStockTransfer->getQuantity();
+
+        if ($quantity && $quantity->isZero()) {
+            return $quantity;
+        }
+
         $reservedProductQuantity = $this->omsFacade->getOmsReservedProductQuantityForSku(
             $productOfferAvailabilityRequestTransfer->getSku(),
             $productOfferAvailabilityRequestTransfer->getStore()
         );
 
-        $stock = $this->productOfferStockFacade->getProductOfferStock(
-            (new ProductOfferStockRequestTransfer())
-                ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
-                ->setStore($productOfferAvailabilityRequestTransfer->getStore())
-        );
+        return $quantity->subtract($reservedProductQuantity);
+    }
 
-        if ($stock->isZero()) {
-            return $stock;
-        }
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
+     */
+    protected function getProductOfferStockTransfer(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ProductOfferStockTransfer
+    {
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
 
-        return $stock->subtract($reservedProductQuantity);
+        return $this->productOfferStockFacade->getProductOfferStock($productOfferStockRequestTransfer);
     }
 }
