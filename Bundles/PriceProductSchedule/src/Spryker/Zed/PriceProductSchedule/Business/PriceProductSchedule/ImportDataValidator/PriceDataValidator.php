@@ -22,8 +22,10 @@ class PriceDataValidator extends AbstractImportDataValidator
     public function validatePriceProductScheduleImportTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): ?PriceProductScheduleListImportErrorTransfer {
-        if ($this->isGrossPriceValid($priceProductScheduleImportTransfer) === false
-            || $this->isNetPriceValid($priceProductScheduleImportTransfer) === false) {
+        if (
+            $this->isGrossPriceValid($priceProductScheduleImportTransfer) === false
+            || $this->isNetPriceValid($priceProductScheduleImportTransfer) === false
+        ) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
                 static::ERROR_MESSAGE_GROSS_AND_NET_VALUE

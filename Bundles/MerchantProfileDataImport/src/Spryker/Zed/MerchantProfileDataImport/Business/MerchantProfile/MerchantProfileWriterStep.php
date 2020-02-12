@@ -78,6 +78,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
             }
             if ($attributeName === MerchantProfileDataSetInterface::URL) {
                 $this->addMerchantProfileUrl($merchantProfileEntity->getIdMerchantProfile(), $idLocale, $attributeValue);
+
                 continue;
             }
 

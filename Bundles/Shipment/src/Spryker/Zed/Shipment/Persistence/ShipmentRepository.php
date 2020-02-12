@@ -505,10 +505,12 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             $idDefaultShipmentTransfer = $defaultShipmentTransfer->getIdSalesShipment();
         }
 
-        foreach ($salesOrderItemIdsWithShipmentIds as [
+        foreach (
+            $salesOrderItemIdsWithShipmentIds as [
             SpySalesOrderItemTableMap::COL_FK_SALES_SHIPMENT => $shipmentId,
             SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM => $orderItemId,
-        ]) {
+            ]
+        ) {
             $shipmentId = $shipmentId ?? $idDefaultShipmentTransfer;
             if (!isset($groupedResult[$shipmentId])) {
                 $groupedResult[$shipmentId] = [];

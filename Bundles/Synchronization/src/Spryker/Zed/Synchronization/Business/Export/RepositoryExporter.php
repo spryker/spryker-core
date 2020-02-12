@@ -66,6 +66,7 @@ class RepositoryExporter implements ExporterInterface
         foreach ($plugins as $plugin) {
             if ($plugin instanceof SynchronizationDataRepositoryPluginInterface) {
                 $this->exportData($ids, $plugin);
+
                 continue;
             }
 
