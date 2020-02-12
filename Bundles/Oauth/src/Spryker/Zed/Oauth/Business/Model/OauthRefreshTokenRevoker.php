@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
-use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
@@ -40,17 +40,25 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected $refreshTokenRepository;
 
     /**
+     * @var \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
+     * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      */
     public function __construct(
         RefreshTokenRepositoryInterface $refreshTokenRepository,
         OauthRepositoryInterface $oauthRepository,
+        OauthToUtilEncodingServiceInterface $utilEncodingService,
         OauthConfig $oauthConfig
     ) {
         $this->refreshTokenRepository = $refreshTokenRepository;
         $this->oauthRepository = $oauthRepository;
+        $this->utilEncodingService = $utilEncodingService;
         $this->encryptionKey = $oauthConfig->getEncryptionKey();
     }
 
@@ -76,7 +84,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
         $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())
             ->setIdentifier($decryptedRefreshToken)
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
-            ->setRevokedAt(null);
+            ->setIsRevoked(false);
 
         $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($oauthTokenCriteriaFilterTransfer);
         if (!$oauthRefreshTokenTransfer) {
@@ -101,7 +109,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
         $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
-            ->setRevokedAt(null);
+            ->setIsRevoked(false);
 
         $oauthRefreshTokenTransfers = $this->oauthRepository
             ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)
@@ -139,7 +147,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             return null;
         }
 
-        $refreshTokenData = (new UtilEncodingService())->decodeJson($refreshToken, true);
+        $refreshTokenData = $this->utilEncodingService->decodeJson($refreshToken, true);
 
         return $refreshTokenData[static::KEY_REFRESH_TOKEN_ID];
     }

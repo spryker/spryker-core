@@ -48,7 +48,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     }
 
     /**
-     * Creates a new refresh token
+     * Creates a new refresh token.
      *
      * @return \League\OAuth2\Server\Entities\RefreshTokenEntityInterface
      */
