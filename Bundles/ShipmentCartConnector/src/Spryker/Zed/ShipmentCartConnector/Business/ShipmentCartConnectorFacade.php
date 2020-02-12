@@ -28,7 +28,7 @@ class ShipmentCartConnectorFacade extends AbstractFacade implements ShipmentCart
     {
         return $this->getFactory()
             ->createShipmentCartExpanderStrategyResolver()
-            ->resolve($cartChangeTransfer->getQuote()->getItems())
+            ->resolve($cartChangeTransfer->getItems())
             ->updateShipmentPrice($cartChangeTransfer);
     }
 
@@ -45,7 +45,7 @@ class ShipmentCartConnectorFacade extends AbstractFacade implements ShipmentCart
     {
         return $this->getFactory()
             ->createShipmentCartValidatorStrategyResolver()
-            ->resolve($cartChangeTransfer->getQuote()->getItems())
+            ->resolve($cartChangeTransfer->getItems())
             ->validateShipment($cartChangeTransfer);
     }
 }

@@ -102,11 +102,7 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
      */
     protected function clearSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setSourceUnitGrossPrice(null);
-            $itemTransfer->setSourceUnitNetPrice(null);
-        }
-
+        $quoteTransfer = $this->clearItemSourcePrices($quoteTransfer);
         $quoteTransfer = $this->clearItemShipmentMethodSourcePrices($quoteTransfer);
         $quoteTransfer = $this->clearSingleShipmentMethodSourcePrices($quoteTransfer);
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Cart;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -69,9 +70,10 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     public function updateShipmentPrice(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $quoteTransfer = $cartChangeTransfer->getQuote();
+        $quoteTransfer->setItems($cartChangeTransfer->getItems());
 
         $availableShipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
-        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($cartChangeTransfer->getItems());
 
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $shipmentTransfer = $shipmentGroupTransfer->getShipment();
@@ -80,11 +82,11 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             }
 
             $cartShipmentMethodTransfer = $shipmentTransfer->getMethod();
-
-            if ($cartShipmentMethodTransfer === null
+            $shouldSkipExecution = $cartShipmentMethodTransfer === null
                 || $cartShipmentMethodTransfer->getIdShipmentMethod() === null
-                || $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false
-            ) {
+                || ($this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false && !$cartShipmentMethodTransfer->getSourcePrice());
+
+            if ($shouldSkipExecution) {
                 continue;
             }
 
@@ -112,6 +114,8 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
             $quoteTransfer = $this->updateShipmentExpense($quoteTransfer, $shipmentGroupTransfer);
         }
+
+        $quoteTransfer->setItems(new ArrayObject());
 
         return $cartChangeTransfer->setQuote($quoteTransfer);
     }

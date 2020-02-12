@@ -60,7 +60,10 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     public function updateShipmentPrice(CartChangeTransfer $cartChangeTransfer)
     {
         $quoteTransfer = $cartChangeTransfer->getQuote();
-        if (!$quoteTransfer->getShipment() || !$this->isCurrencyChanged($quoteTransfer)) {
+        $shouldSkipExecution = !$quoteTransfer->getShipment()
+            || (!$this->isCurrencyChanged($quoteTransfer) && !$quoteTransfer->getShipment()->getMethod()->getSourcePrice());
+
+        if ($shouldSkipExecution) {
             return $cartChangeTransfer;
         }
 
@@ -72,10 +75,10 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return $cartChangeTransfer;
         }
 
-        $this->updateShipmentExpenses($quoteTransfer, $shipmentMethodTransfer);
-
         $shipmentMethodTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $shipmentMethodTransfer->setSourcePrice($quoteTransfer->getShipment()->getMethod()->getSourcePrice());
+
+        $this->updateShipmentExpenses($quoteTransfer, $shipmentMethodTransfer);
 
         $quoteTransfer->getShipment()->setMethod($shipmentMethodTransfer);
 
