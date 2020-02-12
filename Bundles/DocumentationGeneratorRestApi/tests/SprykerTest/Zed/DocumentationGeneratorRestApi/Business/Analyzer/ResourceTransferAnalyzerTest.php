@@ -73,8 +73,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testIsTransferValidShouldReturnFalseForInvalidTransferClassName(): void
     {
+        //Act
         $result = $this->resourceTransferAnalyzer->isTransferValid('RestTestAttributesTransfer');
 
+        //Assert
         $this->assertFalse($result);
     }
 
