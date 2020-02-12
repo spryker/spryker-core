@@ -248,7 +248,9 @@ interface ProductStorageClientInterface
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Finds product abstract data by array of product abstract ids and locale name and store name.
+     * - Result will be indexed by product abstract id, e.g. `[%product_abstract_id% => [%product_abstract_storage_data%]]`.
      *
      * @api
      *
