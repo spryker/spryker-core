@@ -99,7 +99,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::addItemAction()
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::addShoppingListItemAction()
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
