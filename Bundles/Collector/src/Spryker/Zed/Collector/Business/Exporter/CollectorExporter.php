@@ -76,6 +76,7 @@ class CollectorExporter
         foreach ($availableTypes as $type) {
             if (!in_array($type, $types)) {
                 $output->writeln('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> <fg=white>N/A</fg=white>');
+
                 continue;
             }
 

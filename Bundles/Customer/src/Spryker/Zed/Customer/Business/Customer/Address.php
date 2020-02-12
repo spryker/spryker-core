@@ -558,6 +558,7 @@ class Address implements AddressInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 
@@ -591,6 +592,7 @@ class Address implements AddressInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 

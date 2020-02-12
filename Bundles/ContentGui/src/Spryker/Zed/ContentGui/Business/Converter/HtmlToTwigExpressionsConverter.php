@@ -148,6 +148,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
         foreach ($replaceableNodes as $key => $replacement) {
             if ($replacement['oldNode']->parentNode->tagName === 'html') {
                 $this->replaceElementsWithoutWrappers($replacement);
+
                 continue;
             }
 
