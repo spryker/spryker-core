@@ -78,9 +78,12 @@ class MerchantProductOfferSearchFacadeTest extends Unit
         $this->assertEquals($merchantNames, $expectedResult);
     }
 
-    public function testGetMerchantReferencesByProductAbstractIds()
+    /**
+     * @return void
+     */
+    public function testGetMerchantReferencesByProductAbstractIds(): void
     {
-// Arrange
+        // Arrange
         $productConcrete1 = $this->tester->haveProduct([
             ProductConcreteTransfer::IS_ACTIVE => true,
         ]);
