@@ -43,11 +43,7 @@ class EntityTransferGeneratorConsole extends Console
         $transferFacade = $this->getFactory()->getTransferFacade();
         $messenger = $this->getMessenger();
 
-        $result = $this->runDependingCommand(EntityTransferRemoverConsole::COMMAND_NAME);
-        if ($result != static::CODE_SUCCESS) {
-            return $result;
-        }
-
+        $transferFacade->deleteGeneratedEntityTransferObjects();
         $transferFacade->generateEntityTransferObjects($messenger);
 
         return static::CODE_SUCCESS;

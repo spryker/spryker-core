@@ -43,11 +43,7 @@ class TransferGeneratorConsole extends Console
         $transferFacade = $this->getFacade();
         $messenger = $this->getMessenger();
 
-        $result = $this->runDependingCommand(TransferRemoverConsole::COMMAND_NAME);
-        if ($result != static::CODE_SUCCESS) {
-            return $result;
-        }
-
+        $transferFacade->deleteGeneratedDataTransferObjects();
         $transferFacade->generateTransferObjects($messenger);
 
         return static::CODE_SUCCESS;
