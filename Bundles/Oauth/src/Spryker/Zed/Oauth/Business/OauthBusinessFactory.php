@@ -226,6 +226,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new OauthRefreshTokenRevoker(
             $this->createRepositoryBuilder()->createRefreshTokenRepository(),
             $this->getRepository(),
+            $this->getUtilEncodingService(),
             $this->getConfig()
         );
     }

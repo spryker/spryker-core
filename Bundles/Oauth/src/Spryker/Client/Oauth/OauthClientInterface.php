@@ -45,7 +45,8 @@ interface OauthClientInterface
 
     /**
      * Specification:
-     *  - Revokes refresh token by identifier and customer reference.
+     * - Revokes refresh token by identifier and customer reference.
+     * - Makes Zed request.
      *
      * @api
      *
@@ -56,8 +57,9 @@ interface OauthClientInterface
     public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
 
     /**
-     *  Specification:
-     *  - Revokes all refresh tokens for the given customer reference.
+     * Specification:
+     * - Revokes all refresh tokens for the given customer reference.
+     * - Makes Zed request.
      *
      * @api
      *
