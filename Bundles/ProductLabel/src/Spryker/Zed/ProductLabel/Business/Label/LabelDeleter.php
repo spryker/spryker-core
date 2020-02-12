@@ -79,6 +79,7 @@ class LabelDeleter implements LabelDeleterInterface
     {
         $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations($productLabelTransfer->getIdProductLabel());
         $this->productLabelEntityManager->deleteProductLabelLocalizedAttributes($productLabelTransfer->getIdProductLabel());
+        $this->productLabelEntityManager->deleteProductLabelStoreRelations($productLabelTransfer->getIdProductLabel());
         $this->productLabelEntityManager->deleteProductLabel($productLabelTransfer->getIdProductLabel());
     }
 

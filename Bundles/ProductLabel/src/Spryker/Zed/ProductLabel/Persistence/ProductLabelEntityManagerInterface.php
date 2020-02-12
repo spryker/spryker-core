@@ -21,6 +21,13 @@ interface ProductLabelEntityManagerInterface
      *
      * @return void
      */
+    public function deleteProductLabelStoreRelations(int $idProductLabel): void;
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
     public function deleteProductLabelLocalizedAttributes(int $idProductLabel): void;
 
     /**

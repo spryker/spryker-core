@@ -33,6 +33,19 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      *
      * @return void
      */
+    public function deleteProductLabelStoreRelations(int $idProductLabel): void
+    {
+        $this->getFactory()
+            ->createProductLabelStoreQuery()
+            ->findByFkProductLabel($idProductLabel)
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
     public function deleteProductLabelLocalizedAttributes(int $idProductLabel): void
     {
         $this->getFactory()
