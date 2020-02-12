@@ -21,6 +21,10 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     protected const KEY_OPENAPI = 'openapi';
     protected const KEY_INFO = 'info';
     protected const KEY_VERSION = 'version';
+    protected const KEY_CONTACT = 'contact';
+    protected const KEY_CONTACT_NAME = 'name';
+    protected const KEY_CONTACT_URL = 'url';
+    protected const KEY_CONTACT_EMAIL = 'email';
     protected const KEY_TITLE = 'title';
     protected const KEY_LICENSE = 'license';
     protected const KEY_NAME = 'name';
@@ -98,6 +102,11 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
             static::KEY_OPENAPI => static::OPENAPI_VERSION,
             static::KEY_INFO => [
                 static::KEY_VERSION => $this->documentationGeneratorRestApiConfig->getApiDocumentationVersionInfo(),
+                static::KEY_CONTACT => [
+                    static::KEY_CONTACT_NAME => $this->documentationGeneratorRestApiConfig->getApiDocumentationContactName(),
+                    static::KEY_CONTACT_URL => $this->documentationGeneratorRestApiConfig->getApiDocumentationContactUrl(),
+                    static::KEY_CONTACT_EMAIL => $this->documentationGeneratorRestApiConfig->getApiDocumentationContactEmail(),
+                ],
                 static::KEY_TITLE => $this->documentationGeneratorRestApiConfig->getApiDocumentationTitleInfo(),
                 static::KEY_LICENSE => [
                     static::KEY_NAME => $this->documentationGeneratorRestApiConfig->getApiDocumentationLicenceNameInfo(),
