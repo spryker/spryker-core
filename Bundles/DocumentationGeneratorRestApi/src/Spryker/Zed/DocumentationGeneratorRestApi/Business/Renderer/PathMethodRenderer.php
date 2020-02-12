@@ -79,6 +79,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
 
         $pathMethodComponentTransfer->setSummary($this->getFormattedSummary($pathMethodDataTransfer));
         $pathMethodComponentTransfer->addTag($pathMethodDataTransfer->getResource());
+        $pathMethodComponentTransfer->setOperationId($pathMethodDataTransfer->getOperationId());
 
         $this->addResponseComponents($pathMethodComponentTransfer, $pathMethodDataTransfer->getResponseSchemas());
         $this->addIdParametersFromPath($pathMethodComponentTransfer, $pathMethodDataTransfer->getPath());

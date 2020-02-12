@@ -23,6 +23,11 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     protected const PATTERN_SUMMARY_PATCH_RESOURCE = 'Update %s.';
     protected const PATTERN_SUMMARY_DELETE_RESOURCE = 'Delete %s.';
 
+    protected const ACTION_PREFIX_POST = 'post';
+    protected const ACTION_PREFIX_PATCH = 'patch';
+    protected const ACTION_PREFIX_GET = 'get';
+    protected const ACTION_PREFIX_GET_BY_ID = 'get-by-id';
+    protected const ACTION_PREFIX_DELETE = 'delete';
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
      */
@@ -98,6 +103,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
+            static::ACTION_PREFIX_GET_BY_ID,
             $errorSchema,
             $annotationTransfer
         );
@@ -126,6 +132,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
+            static::ACTION_PREFIX_GET,
             $errorSchema,
             $annotationTransfer
         );
@@ -155,6 +162,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
+            static::ACTION_PREFIX_POST,
             $errorSchema,
             $annotationTransfer
         );
@@ -190,6 +198,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
+            static::ACTION_PREFIX_PATCH,
             $errorSchema,
             $annotationTransfer
         );
@@ -223,6 +232,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
+            static::ACTION_PREFIX_DELETE,
             $errorSchema,
             $annotationTransfer
         );
@@ -291,6 +301,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      * @param string $resource
      * @param string $path
      * @param bool $isProtected
+     * @param string $actionPrefix
      * @param \Generated\Shared\Transfer\PathSchemaDataTransfer $errorSchema
      * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
@@ -300,6 +311,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         string $resource,
         string $path,
         bool $isProtected,
+        string $actionPrefix,
         PathSchemaDataTransfer $errorSchema,
         ?AnnotationTransfer $annotationTransfer
     ): PathMethodDataTransfer {
@@ -307,6 +319,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         $pathDataTransfer->setResource($resource);
         $pathDataTransfer->setPath($path);
         $pathDataTransfer->setIsProtected($isProtected);
+        $pathDataTransfer->setOperationId($actionPrefix . '-' . $resource);
 
         if ($annotationTransfer) {
             $pathDataTransfer->fromArray($annotationTransfer->modifiedToArray(), true);
