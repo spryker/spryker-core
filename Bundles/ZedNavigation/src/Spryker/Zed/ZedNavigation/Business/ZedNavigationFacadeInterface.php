@@ -15,6 +15,7 @@ interface ZedNavigationFacadeInterface
     /**
      * Specification:
      * - Returns an array with all navigation entries.
+     * - Calls a stack of `NavigationItemFilterPluginInterface` to hide not visible navigation items.
      * - When navigation cache is enabled it returns cached navigation.
      *
      * @api

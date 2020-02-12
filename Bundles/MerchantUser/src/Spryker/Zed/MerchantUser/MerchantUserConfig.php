@@ -67,7 +67,7 @@ class MerchantUserConfig extends AbstractBundleConfig
     /**
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
-    public function getMerchantAdminRole(): RoleTransfer
+    protected function getMerchantAdminRole(): RoleTransfer
     {
         return (new RoleTransfer())
             ->setName(static::MERCHANT_PORTAL_ADMIN_ROLE)
