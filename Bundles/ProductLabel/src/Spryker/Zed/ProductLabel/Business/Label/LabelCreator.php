@@ -81,8 +81,7 @@ class LabelCreator implements LabelCreatorInterface
         $productLabelTransfer
             ->requireName()
             ->requireIsActive()
-            ->requireIsExclusive()
-            ->requireStoreRelation();
+            ->requireIsExclusive();
     }
 
     /**
@@ -186,6 +185,10 @@ class LabelCreator implements LabelCreatorInterface
      */
     protected function persistStoreRelation(ProductLabelTransfer $productLabelTransfer): void
     {
+        if (!$productLabelTransfer->getStoreRelation()) {
+            return;
+        }
+
         $productLabelTransfer
             ->getStoreRelation()
             ->setIdEntity($productLabelTransfer->getIdProductLabel());

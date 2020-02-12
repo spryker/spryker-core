@@ -13,9 +13,14 @@ use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductLabelProductAbstractRelationsBuilder;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
+use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
@@ -36,9 +41,12 @@ use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 class ProductLabelFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\ProductLabel\BusinessTester
+     * @var \SprykerTest\Zed\ProductLabel\ProductLabelBusinessTester
      */
     protected $tester;
+
+    public const STORE_NAME_DE = 'DE';
+    public const STORE_NAME_AT = 'AT';
 
     /**
      * @return void
@@ -185,6 +193,93 @@ class ProductLabelFacadeTest extends Unit
         $localizedAttributesList = $persistedProductLabelTransfer->getLocalizedAttributesCollection()->getArrayCopy();
         $this->assertSame($productLabelTransfer->getIdProductLabel(), $localizedAttributesList[0]->getFkProductLabel());
         $this->assertSame($localeTransfer->getIdLocale(), $localizedAttributesList[0]->getFkLocale());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateLabelShouldPersistStoreRelations(): void
+    {
+        //Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => 'AT']);
+        $storeRelationSeedData = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferDE->getIdStore(),
+                $storeTransferAT->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransferDE,
+                $storeTransferAT,
+
+            ],
+        ];
+
+        //Act
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
+        ]);
+
+        //Assert
+        $productLabelStoreRelationExists = SpyProductLabelStoreQuery::create()
+            ->filterByFkProductLabel($productLabelTransfer->getIdProductLabel())
+            ->exists();
+
+        $this->assertTrue($productLabelStoreRelationExists, 'Relation between store and product label should exists');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateLabelShouldUpdateStoreRelations()
+    {
+        //Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $storeRelationSeedDataForDE = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferDE->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransferDE,
+
+            ],
+        ];
+        $storeRelationSeedDataForAT = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferAT->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransferAT,
+
+            ],
+        ];
+
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedDataForDE,
+        ]);
+
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed($storeRelationSeedDataForAT)->build();
+
+        //Act
+        $productLabelTransfer->setStoreRelation($storeRelationTransfer);
+        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
+
+        //Assert
+        $productLabelStoreRelationAfterUpdate = SpyProductLabelStoreQuery::create()
+            ->filterByFkProductLabel($productLabelTransfer->getIdProductLabel())
+            ->find();
+
+        $this->assertCount(
+            1,
+            $productLabelStoreRelationAfterUpdate,
+            'Product label store relation data should be relevant'
+        );
+        $this->assertEquals(
+            $storeTransferAT->getIdStore(),
+            $productLabelStoreRelationAfterUpdate->offsetGet(0)->getFkStore(),
+            'Product label store relation'
+        );
     }
 
     /**

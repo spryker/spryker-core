@@ -95,8 +95,7 @@ class LabelUpdater implements LabelUpdaterInterface
             ->requireName()
             ->requireIsActive()
             ->requireIsExclusive()
-            ->requirePosition()
-            ->requireStoreRelation();
+            ->requirePosition();
     }
 
     /**
@@ -221,6 +220,10 @@ class LabelUpdater implements LabelUpdaterInterface
      */
     protected function persistStoreRelation(ProductLabelTransfer $productLabelTransfer): void
     {
+        if (!$productLabelTransfer->getStoreRelation()) {
+            return;
+        }
+
         $productLabelTransfer
             ->getStoreRelation()
             ->setIdEntity($productLabelTransfer->getIdProductLabel());
