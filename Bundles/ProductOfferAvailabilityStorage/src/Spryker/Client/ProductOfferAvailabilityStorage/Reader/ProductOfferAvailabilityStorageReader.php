@@ -72,7 +72,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
         $productOfferAvailabilityStorageTransfer->fromArray($productOfferAvailabilityStorageTransferData, true);
 
         $productOfferAvailabilityStorageTransfer->setIsAvailable(
-            $this->isAvailableProductOffer($productOfferAvailabilityStorageTransfer)
+            $this->isProductOfferAvailable($productOfferAvailabilityStorageTransfer)
         );
 
         return $productOfferAvailabilityStorageTransfer;
@@ -100,7 +100,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
      *
      * @return bool
      */
-    protected function isAvailableProductOffer(ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer): bool
+    protected function isProductOfferAvailable(ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer): bool
     {
         $availability = $productOfferAvailabilityStorageTransfer->getAvailability();
         $isAvailable = $availability && $availability->isPositive();

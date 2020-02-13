@@ -42,25 +42,6 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     /**
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
      *
-     * @return bool
-     */
-    public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
-    {
-        $productOfferStockTransfer = $this->getProductOfferStockTransfer($productOfferAvailabilityRequestTransfer);
-
-        if ($productOfferStockTransfer->getIsNeverOutOfStock()) {
-            return true;
-        }
-
-        return $productOfferAvailabilityRequestTransfer->getQuantity()
-            ->lessThanOrEquals(
-                $this->calculateAvailabilityForRequest($productOfferStockTransfer, $productOfferAvailabilityRequestTransfer)
-            );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     public function findProductConcreteAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ?ProductConcreteAvailabilityTransfer
