@@ -29,7 +29,7 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
     {
         $this->getFactory()
             ->createProductConcreteProductOffersStorageWriter()
-            ->writeProductConcreteProductOffersStorageCollectionByProductSkuEvents($eventTransfers);
+            ->writeCollectionByProductSkuEvents($eventTransfers);
     }
 
     /**
@@ -45,7 +45,7 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
     {
         $this->getFactory()
             ->createProductConcreteProductOffersStorageDeleter()
-            ->deleteProductConcreteProductOffersStorageCollectionByProductSkuEvents($eventTransfers);
+            ->deleteCollectionByProductSkuEvents($eventTransfers);
     }
 
     /**
@@ -61,7 +61,7 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
     {
         $this->getFactory()
             ->createProductOfferStorageWriter()
-            ->writeProductOfferStorageCollectionByProductOfferReferenceEvents($eventTransfers);
+            ->writeCollectionByProductOfferReferenceEvents($eventTransfers);
     }
 
     /**
@@ -77,6 +77,6 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
     {
         $this->getFactory()
             ->createProductOfferStorageDeleter()
-            ->deleteProductOfferStorageCollectionByProductOfferReferenceEvents($eventTransfers);
+            ->deleteCollectionByProductOfferReferenceEvents($eventTransfers);
     }
 }

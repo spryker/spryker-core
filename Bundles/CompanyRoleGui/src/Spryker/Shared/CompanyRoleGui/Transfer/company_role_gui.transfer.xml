@@ -50,4 +50,7 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="CompanyUserCollection">
+    </transfer>
+
 </transfers>

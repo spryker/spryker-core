@@ -191,6 +191,7 @@ class ImageSetForm extends AbstractSubForm
                         foreach ($images as $valueSet) {
                             if (!empty($valueSet['value'])) {
                                 $selectedAttributes[] = $valueSet['value'];
+
                                 break;
                             }
                         }

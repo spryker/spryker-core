@@ -98,6 +98,7 @@ class PriceManager implements PriceManagerInterface
 
             if ($this->hasSourceUnitPrices($itemTransfer)) {
                 $itemTransfer = $this->applySourceUnitPrices($itemTransfer);
+
                 continue;
             }
 
