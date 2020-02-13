@@ -57,6 +57,6 @@ class TemplateNameBuilderZed implements NamespacedTemplateNameBuilderInterface
 
         $presentationLayerPosition = array_search('Presentation', $pathsParts);
 
-        return $template = array_slice($pathsParts, $presentationLayerPosition + 1);
+        return array_slice($pathsParts, $presentationLayerPosition + 1);
     }
 }

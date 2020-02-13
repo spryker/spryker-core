@@ -19,7 +19,7 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
  */
 class TwigConfig extends AbstractBundleConfig
 {
-    protected const THEME_NAME_DEFAULT = 'default';
+    protected const THEME_DEFAULT = 'default';
 
     /**
      * @return string
@@ -254,7 +254,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getThemeNameDefault(): string
     {
-        return static::THEME_NAME_DEFAULT;
+        return static::THEME_DEFAULT;
     }
 
     /**

@@ -63,7 +63,7 @@ interface TwigConstants
      *
      * @api
      */
-    public const ZED_THEME = 'ZED_THEME';
+    public const ZED_THEME = 'TWIG:ZED_THEME';
 
     /**
      * Specification:
