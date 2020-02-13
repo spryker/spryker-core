@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -54,6 +56,34 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $this->hydrateAddressTransferFromEntity($this->createOrderAddressTransfer(), $addressEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        $orderListTransfer->requireCustomer();
+
+        $salesOrderQuery = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->joinWithItem();
+
+        $customerReference = $orderListTransfer->getCustomer()->getCustomerReference();
+
+        if ($customerReference) {
+            $salesOrderQuery->filterByCustomerReference($customerReference);
+        }
+
+        $salesOrderEntityCollection = $this->buildQueryFromCriteria($salesOrderQuery, $orderListTransfer->getFilter())
+            ->setFormatter(ObjectFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createSalesOrderMapper()
+            ->mapSalesOrderEntityCollectionToOrderListTransfer($salesOrderEntityCollection, $orderListTransfer);
     }
 
     /**
