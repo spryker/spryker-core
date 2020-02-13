@@ -22,6 +22,7 @@ class ShopContextDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
+
         $container = $this->addShopContextExpanderPlugins($container);
 
         return $container;

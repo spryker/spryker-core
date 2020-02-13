@@ -21,7 +21,7 @@ class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductVi
 {
     /**
      * {@inheritDoc}
-     * - Expands the transfer object with the product offer reference according provided criteria.
+     * - Expands the transfer object with the product offer reference according to provided criteria.
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
@@ -41,7 +41,7 @@ class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductVi
         }
 
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())->fromArray(
-            $productStorageCriteriaTransfer->toArray(),
+            $productStorageCriteriaTransfer->modifiedToArray(),
             true
         );
 

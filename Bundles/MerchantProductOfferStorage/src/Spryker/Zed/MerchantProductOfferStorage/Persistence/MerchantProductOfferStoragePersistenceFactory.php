@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Persistence;
 
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependencyProvider;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\Propel\Mapper\ProductOfferStorageMapper;
@@ -47,7 +48,7 @@ class MerchantProductOfferStoragePersistenceFactory extends AbstractPersistenceF
     /**
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    public function getProductOfferPropelQuery()
+    public function getProductOfferPropelQuery(): SpyProductOfferQuery
     {
         return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::PROPEL_QUERY_PRODUCT_OFFER);
     }

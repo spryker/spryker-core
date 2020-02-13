@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Persistence\Propel\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
-use Orm\Zed\Store\Persistence\SpyStore;
 
 class ProductOfferStorageMapper
 {
@@ -50,20 +50,23 @@ class ProductOfferStorageMapper
         );
 
         $productOfferTransfer = $productOfferTransfer->setMerchantReference($productOfferEntity->getSpyMerchant()->getMerchantReference());
+        $productOfferTransfer->setStores($this->getStoresByProductOfferEntity($productOfferEntity));
 
         return $productOfferTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $productOfferEntity
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject
      */
-    public function mapStoreEntityToStoreTransfer(
-        SpyStore $storeEntity,
-        StoreTransfer $storeTransfer
-    ): StoreTransfer {
-        return $storeTransfer->fromArray($storeEntity->toArray(), true);
+    protected function getStoresByProductOfferEntity(SpyProductOffer $productOfferEntity): ArrayObject
+    {
+        $storeTransfers = [];
+        foreach ($productOfferEntity->getSpyStores() as $storeEntity) {
+            $storeTransfers[] = (new StoreTransfer())->fromArray($storeEntity->toArray(), true);
+        }
+
+        return new ArrayObject($storeTransfers);
     }
 }

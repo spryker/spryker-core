@@ -38,9 +38,10 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListenerTest
 {
     /**
-     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DECLINED
      */
     protected const STATUS_DECLINED = 'declined';
+
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
      */

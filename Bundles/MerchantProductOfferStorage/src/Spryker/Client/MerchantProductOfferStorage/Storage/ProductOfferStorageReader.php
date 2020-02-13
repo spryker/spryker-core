@@ -82,35 +82,35 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      */
     public function getProductOfferStorageCollection(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ProductOfferStorageCollectionTransfer
     {
-        $productOfferStorageCollection = new ProductOfferStorageCollectionTransfer();
+        $productOfferStorageCollectionTransfer = new ProductOfferStorageCollectionTransfer();
 
-        $concreteProductOfferReferences = $this->getProductOfferReferences($productOfferStorageCriteriaTransfer->getSku());
+        $productOfferReferences = $this->getProductOfferReferences($productOfferStorageCriteriaTransfer->getSku());
 
-        if ($concreteProductOfferReferences) {
-            foreach ($concreteProductOfferReferences as $key => $concreteProductOfferReference) {
-                if ($key === '_timestamp') {
-                    continue;
-                }
-
-                $productOfferStorageTransfer = $this->findProductOfferStorageByReference($concreteProductOfferReference);
-
-                if ($productOfferStorageTransfer === null) {
-                    continue;
-                }
-
-                if (
-                    $productOfferStorageTransfer->getMerchantReference()
-                    && $productOfferStorageTransfer->getMerchantReference() !== $productOfferStorageCriteriaTransfer->getMerchantReference()
-                    && $productOfferStorageCriteriaTransfer->getMerchantReference() !== null
-                ) {
-                    continue;
-                }
-
-                $productOfferStorageCollection->addProductOfferStorage($productOfferStorageTransfer);
-            }
+        if (!$productOfferReferences) {
+            return $productOfferStorageCollectionTransfer;
         }
 
-        return $productOfferStorageCollection;
+        foreach ($productOfferReferences as $key => $productOfferReference) {
+            if ($key == '_timestamp') {
+                continue;
+            }
+
+            $productOfferStorageTransfer = $this->findProductOfferStorageByReference($productOfferReference);
+
+            if ($productOfferStorageTransfer === null) {
+                continue;
+            }
+            if (
+                $productOfferStorageCriteriaTransfer->getMerchantReference() !== null
+                && $productOfferStorageTransfer->getMerchantReference() !== $productOfferStorageCriteriaTransfer->getMerchantReference()
+            ) {
+                continue;
+            }
+
+            $productOfferStorageCollectionTransfer->addProductOfferStorage($productOfferStorageTransfer);
+        }
+
+        return $productOfferStorageCollectionTransfer;
     }
 
     /**

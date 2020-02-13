@@ -22,7 +22,7 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 class ProductStorageDataMapper implements ProductStorageDataMapperInterface
 {
     /**
-     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]|\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface[]
+     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface[]
      */
     protected $productStorageExpanderPlugins;
 
@@ -34,7 +34,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     /**
      * @uses ProductStorageDataMapper::filterProductStorageExpanderPlugins()
      *
-     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]|\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface[] $storageProductExpanderPlugins
+     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface[] $storageProductExpanderPlugins
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
      */
     public function __construct(
