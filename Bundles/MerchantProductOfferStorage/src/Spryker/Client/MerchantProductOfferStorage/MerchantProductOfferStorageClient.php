@@ -8,8 +8,8 @@
 namespace Spryker\Client\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -22,15 +22,15 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @api
      *
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer
+    public function getProductOfferStorageCollection(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ProductOfferStorageCollectionTransfer
     {
         return $this->getFactory()
             ->createProductOfferStorageReader()
-            ->getProductOfferStorageCollection($productSku);
+            ->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
     }
 
     /**
@@ -38,13 +38,13 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return string|null
      */
-    public function findProductConcreteDefaultProductOffer(ProductViewTransfer $productViewTransfer): ?string
+    public function findProductConcreteDefaultProductOffer(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string
     {
-        return $this->getFactory()->createProductConcreteDefaultProductOffer()->findProductOfferReference($productViewTransfer);
+        return $this->getFactory()->createProductConcreteDefaultProductOffer()->findProductOfferReference($productOfferStorageCriteriaTransfer);
     }
 
     /**
