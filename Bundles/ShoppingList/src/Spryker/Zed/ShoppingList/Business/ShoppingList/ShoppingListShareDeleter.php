@@ -77,11 +77,12 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
         $shoppingListDismissRequest->requireIdCompanyUser()
             ->requireIdShoppingList();
 
-        if (!$this->can(
-            'ReadShoppingListPermissionPlugin',
-            $shoppingListDismissRequest->getIdCompanyUser(),
-            $shoppingListDismissRequest->getIdShoppingList()
-        )
+        if (
+            !$this->can(
+                'ReadShoppingListPermissionPlugin',
+                $shoppingListDismissRequest->getIdCompanyUser(),
+                $shoppingListDismissRequest->getIdShoppingList()
+            )
         ) {
             return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
         }

@@ -25,17 +25,11 @@ class PriceProductOfferWriterStep extends PublishAwareStep implements DataImport
     {
         $priceProductOfferEntity = SpyPriceProductOfferQuery::create()
             ->filterByFkProductOffer($dataSet[PriceProductOfferDataSetInterface::FK_PRODUCT_OFFER])
-            ->filterByFkPriceType($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_TYPE])
-            ->filterByFkStore($dataSet[PriceProductOfferDataSetInterface::FK_STORE])
-            ->filterByFkCurrency($dataSet[PriceProductOfferDataSetInterface::FK_CURRENCY])
+            ->filterByFkPriceProductStore($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT_STORE])
             ->findOneOrCreate();
-
-        $priceProductOfferEntity
-            ->setNetPrice($dataSet[PriceProductOfferDataSetInterface::VALUE_NET])
-            ->setGrossPrice($dataSet[PriceProductOfferDataSetInterface::VALUE_GROSS]);
 
         $priceProductOfferEntity->save();
 
-        $this->addPublishEvents(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH, $priceProductOfferEntity->getIdPriceProductOffer());
+        $this->addPublishEvents(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH, (int)$priceProductOfferEntity->getIdPriceProductOffer());
     }
 }

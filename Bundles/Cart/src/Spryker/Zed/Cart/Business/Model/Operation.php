@@ -327,11 +327,13 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->recalculate($quoteTransfer);
         $quoteTransfer = $this->executePostReloadItemsPlugins($quoteTransfer);
 
-        if ($this->isTerminated(
-            static::TERMINATION_EVENT_NAME_RELOAD,
-            $cartChangeTransfer,
-            $quoteTransfer
-        )) {
+        if (
+            $this->isTerminated(
+                static::TERMINATION_EVENT_NAME_RELOAD,
+                $cartChangeTransfer,
+                $quoteTransfer
+            )
+        ) {
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
 
