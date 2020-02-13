@@ -52,7 +52,7 @@ class TwigConfig extends AbstractBundleConfig
         $storeName = $this->getStoreName();
 
         $themeName = $this->getThemeName();
-        $themeNameDefault = $this->getThemeNameDefault();
+        $themeNameDefault = $this->getThemeDefault();
 
         foreach ($namespaces as $namespace) {
             if ($this->getIsThemeDefined($themeName, $themeNameDefault)) {
@@ -78,7 +78,7 @@ class TwigConfig extends AbstractBundleConfig
     {
         $namespaces = $this->getCoreNamespaces();
         $themeName = $this->getThemeName();
-        $themeNameDefault = $this->getThemeNameDefault();
+        $themeNameDefault = $this->getThemeDefault();
         $isThemeDefined = $this->getIsThemeDefined($themeName, $themeNameDefault);
 
         foreach ($namespaces as $namespace) {
@@ -164,7 +164,7 @@ class TwigConfig extends AbstractBundleConfig
     public function getZedDirectoryPathPattern()
     {
         $themeName = $this->getThemeName();
-        $themeNameDefault = $this->getThemeNameDefault();
+        $themeNameDefault = $this->getThemeDefault();
 
         if (!$this->getIsThemeDefined($themeName, $themeNameDefault)) {
             $themeName = $themeNameDefault;
@@ -252,7 +252,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getThemeNameDefault(): string
+    public function getThemeDefault(): string
     {
         return static::THEME_DEFAULT;
     }
