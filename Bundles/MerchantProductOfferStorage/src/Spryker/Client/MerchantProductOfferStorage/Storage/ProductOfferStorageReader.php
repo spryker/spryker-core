@@ -94,12 +94,12 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
             if ($key == '_timestamp') {
                 continue;
             }
-
             $productOfferStorageTransfer = $this->findProductOfferStorageByReference($productOfferReference);
 
             if ($productOfferStorageTransfer === null) {
                 continue;
             }
+
             if (
                 $productOfferStorageCriteriaTransfer->getMerchantReference() !== null
                 && $productOfferStorageTransfer->getMerchantReference() !== $productOfferStorageCriteriaTransfer->getMerchantReference()

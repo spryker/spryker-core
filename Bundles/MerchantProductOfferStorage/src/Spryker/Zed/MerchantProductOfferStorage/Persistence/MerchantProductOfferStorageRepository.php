@@ -29,7 +29,8 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     public function getActiveProductOffersByFilterCriteria(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
-        $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery()
+        $productOfferPropelQuery = $this->getFactory()
+            ->getProductOfferPropelQuery()
             ->joinWithSpyMerchant()
             ->useSpyProductOfferStoreQuery()
                 ->joinWithSpyStore()
