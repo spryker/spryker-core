@@ -17,7 +17,7 @@ class DashboardController extends AbstractController
      *
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): array
     {
         return [];
     }
