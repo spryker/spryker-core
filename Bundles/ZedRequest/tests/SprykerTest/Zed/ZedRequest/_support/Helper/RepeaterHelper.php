@@ -24,10 +24,6 @@ class RepeaterHelper extends Module
     public const CONTROLLER = 'controller';
     public const ACTION = 'action';
 
-    public const BUNDLE_WITH_FORBIDDEN_SYMBOLS = '../module?';
-    public const CONTROLLER_WITH_FORBIDDEN_SYMBOLS = 'controller/';
-    public const ACTION_WITH_FORBIDDEN_SYMBOLS = 'action&';
-
     /**
      * @param \Codeception\TestInterface $test
      *
@@ -129,6 +125,20 @@ class RepeaterHelper extends Module
     }
 
     /**
+     * @return string
+     */
+    public function getInvalidBundleControllerAction(): string
+    {
+        $mvc = implode('_', [
+            static::BUNDLE,
+            'controller-',
+            static::ACTION,
+        ]);
+
+        return $mvc;
+    }
+
+    /**
      * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
      */
     public function getTransferRequest(): AbstractRequest
@@ -155,12 +165,38 @@ class RepeaterHelper extends Module
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    public function getHttpRequestWithForbiddenSymbolsInMvcPartsNames(): Request
+    public function getHttpRequestWithInvalidBundleAttribute(): Request
     {
         $httpRequest = new Request();
-        $httpRequest->attributes->set(static::BUNDLE, static::BUNDLE_WITH_FORBIDDEN_SYMBOLS);
-        $httpRequest->attributes->set(static::CONTROLLER, static::CONTROLLER_WITH_FORBIDDEN_SYMBOLS);
-        $httpRequest->attributes->set(static::ACTION, static::ACTION_WITH_FORBIDDEN_SYMBOLS);
+        $httpRequest->attributes->set(static::BUNDLE, '../module?');
+        $httpRequest->attributes->set(static::CONTROLLER, static::CONTROLLER);
+        $httpRequest->attributes->set(static::ACTION, static::ACTION);
+
+        return $httpRequest;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getHttpRequestWithInvalidControllerAttribute(): Request
+    {
+        $httpRequest = new Request();
+        $httpRequest->attributes->set(static::BUNDLE, static::BUNDLE);
+        $httpRequest->attributes->set(static::CONTROLLER, 'CONTROLLER/');
+        $httpRequest->attributes->set(static::ACTION, static::ACTION);
+
+        return $httpRequest;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getHttpRequestWithInvalidActionAttribute(): Request
+    {
+        $httpRequest = new Request();
+        $httpRequest->attributes->set(static::BUNDLE, static::BUNDLE);
+        $httpRequest->attributes->set(static::CONTROLLER, static::CONTROLLER);
+        $httpRequest->attributes->set(static::ACTION, 'action&');
 
         return $httpRequest;
     }

@@ -9,6 +9,6 @@ namespace Spryker\Zed\ZedRequest\Business\Exception;
 
 use Exception;
 
-class ActionPathHasForbiddenSymbolsException extends Exception
+class InvalidActionPathException extends Exception
 {
 }
