@@ -315,6 +315,7 @@
     "spryker/merchant-opening-hours-storage": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/merchant-product-offer-data-import": "*",
+    "spryker/merchant-product-offer-search": "*",
     "spryker/merchant-product-offer-storage": "*",
     "spryker/merchant-product-offer-storage-extension": "*",
     "spryker/merchant-profile": "*",

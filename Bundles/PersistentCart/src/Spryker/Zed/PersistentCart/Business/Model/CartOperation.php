@@ -317,6 +317,7 @@ class CartOperation implements CartOperationInterface
 
             if ($changeItem->getQuantity() === 0) {
                 $itemsToRemove[] = $quoteItem;
+
                 continue;
             }
 

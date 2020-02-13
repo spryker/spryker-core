@@ -83,6 +83,7 @@ class UrlCollector extends AbstractStoragePropelCollector
             $resourceArguments = $this->findResourceArguments($url);
             if (isset($localeUrls[$resourceArguments[static::RESOURCE_TYPE]])) {
                 $localeUrls[$resourceArguments[static::RESOURCE_TYPE]][] = $resourceArguments[static::RESOURCE_VALUE];
+
                 continue;
             }
 
