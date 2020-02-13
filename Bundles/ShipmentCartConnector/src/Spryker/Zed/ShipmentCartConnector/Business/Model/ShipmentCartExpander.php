@@ -61,7 +61,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     {
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
-        if (!$this->shipmentExpenseNeedsUpdate($quoteTransfer)) {
+        if (!$this->isShipmentExpenseUpdateNeeded($quoteTransfer)) {
             return $cartChangeTransfer;
         }
 
@@ -88,7 +88,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
      *
      * @return bool
      */
-    protected function shipmentExpenseNeedsUpdate(QuoteTransfer $quoteTransfer): bool
+    protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getShipment()
             && $this->isCurrencyChanged($quoteTransfer)

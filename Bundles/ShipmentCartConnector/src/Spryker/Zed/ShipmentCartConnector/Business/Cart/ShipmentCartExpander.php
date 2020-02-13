@@ -79,7 +79,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            if (!$this->shipmentExpenseNeedsUpdate($quoteTransfer, $shipmentTransfer)) {
+            if (!$this->isShipmentExpenseUpdateNeeded($quoteTransfer, $shipmentTransfer)) {
                 continue;
             }
 
@@ -118,7 +118,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
      *
      * @return bool
      */
-    protected function shipmentExpenseNeedsUpdate(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
+    protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
     {
         $shipmentMethodTransfer = $shipmentTransfer->getMethod();
 
