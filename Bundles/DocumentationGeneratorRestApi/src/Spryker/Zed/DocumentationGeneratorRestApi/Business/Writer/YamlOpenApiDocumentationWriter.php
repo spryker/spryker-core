@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer;
 
+use Generated\Shared\Transfer\PathMethodComponentTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFilesystemInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToSymfonyYamlAdapter;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToYamlDumperInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
+use Symfony\Component\HttpFoundation\Request;
 
 class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
 {
@@ -34,6 +36,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     protected const KEY_COMPONENTS = 'components';
     protected const KEY_SCHEMAS = 'schemas';
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
+    protected const KEY_TAGS = 'tags';
 
     protected const YAML_NESTING_LEVEL = 9;
     protected const YAML_INDENT = 4;
@@ -77,6 +80,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     {
         $dataStructure = $this->getDefaultDataStructure();
         $dataStructure[static::KEY_PATHS] = $data[static::KEY_PATHS];
+        $dataStructure[static::KEY_TAGS] = $this->getTagsFromData($data[static::KEY_PATHS]);
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $data[static::KEY_SCHEMAS];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SECURITY_SCHEMES] = $data[static::KEY_SECURITY_SCHEMES];
 
@@ -112,6 +116,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
                     static::KEY_NAME => $this->documentationGeneratorRestApiConfig->getApiDocumentationLicenceNameInfo(),
                 ],
             ],
+            static::KEY_TAGS => [],
             static::KEY_SERVERS => [
                 [
                     static::KEY_URL => $this->documentationGeneratorRestApiConfig->getRestApplicationDomain(),
@@ -134,5 +139,38 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
             . DIRECTORY_SEPARATOR
             . $this->documentationGeneratorRestApiConfig->getGeneratedFilePrefix()
             . static::GENERATED_FILE_POSTFIX;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return string[]
+     */
+    protected function getTagsFromData(array $data): array
+    {
+        $tags = [];
+
+        $requestMethods = [
+            strtolower(Request::METHOD_POST),
+            strtolower(Request::METHOD_PATCH),
+            strtolower(Request::METHOD_GET),
+            strtolower(Request::METHOD_DELETE),
+        ];
+
+        foreach ($data as $path) {
+            foreach ($requestMethods as $requestMethod) {
+                if (!empty($path[$requestMethod][PathMethodComponentTransfer::TAGS])) {
+                    $tags = array_merge($tags, $path[$requestMethod][PathMethodComponentTransfer::TAGS]);
+                }
+            }
+        }
+
+        asort($tags);
+
+        return array_values(
+            array_map(function ($item) {
+                return ['name' => $item];
+            }, array_unique($tags))
+        );
     }
 }
