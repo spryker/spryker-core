@@ -24,7 +24,8 @@ class ContentBannersResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }],
      *          "responses": {
      *              "400": "Content key is missing.",

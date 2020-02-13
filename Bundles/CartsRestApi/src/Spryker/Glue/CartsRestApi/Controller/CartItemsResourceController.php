@@ -25,7 +25,8 @@ class CartItemsResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
@@ -61,7 +62,8 @@ class CartItemsResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
@@ -97,7 +99,8 @@ class CartItemsResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }],
      *          "responses": {
      *              "400": "Cart id or item id is not specified.",

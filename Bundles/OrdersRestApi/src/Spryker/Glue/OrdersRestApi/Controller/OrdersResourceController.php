@@ -24,7 +24,8 @@ class OrdersResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestOrderDetailsAttributesTransfer",
      *          "responses": {
@@ -37,7 +38,8 @@ class OrdersResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }]
      *     }
      * })

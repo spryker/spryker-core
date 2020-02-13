@@ -26,7 +26,8 @@ class WishlistItemsResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }],
      *          "responses": {
      *              "404": "Wishlist not found.",
@@ -54,7 +55,8 @@ class WishlistItemsResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }],
      *          "responses": {
      *              "400": "Can't add an item.",

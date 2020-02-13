@@ -24,7 +24,8 @@ class ConcreteProductImageSetsResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
      *          }],
      *          "responses": {
      *              "400": "Concrete product id is not specified.",

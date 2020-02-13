@@ -26,7 +26,8 @@ class CheckoutResourceController extends AbstractController
      *          "parameters": [
      *              {
      *                  "name": "Accept-Language",
-     *                  "in": "header"
+     *                  "in": "header",
+     *                  "description": "Locale value relevant for the store."
      *              },
      *              {
      *                  "name": "X-Anonymous-Customer-Unique-Id",
