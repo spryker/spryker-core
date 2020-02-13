@@ -15,6 +15,7 @@
         <property name="currencyIsoCode" type="string"/>
         <property name="name" type="string"/>
         <property name="carrierName" type="string"/>
+        <property name="sourcePrice" type="MoneyValue"/>
     </transfer>
 
     <transfer name="Order">
