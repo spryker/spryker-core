@@ -372,4 +372,18 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
             ->createQuoteShareDetailsReader()
             ->getCustomerCollectionByQuote($quoteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function addDefaultSharedQuoteChangedMessage(QuoteTransfer $quoteTransfer): void
+    {
+        $this->getFactory()->createSharedCartMessenger()->addDefaultSharedQuoteChangedMessage($quoteTransfer);
+    }
 }

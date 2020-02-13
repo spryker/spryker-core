@@ -53,6 +53,7 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
         foreach ($this->customerAccessConfig->getContentTypes() as $contentType) {
             if ($this->customerAccessReader->findCustomerAccessByContentType($contentType) !== null) {
                 print sprintf(static::ALERT_MESSAGE . PHP_EOL, $contentType);
+
                 continue;
             }
 

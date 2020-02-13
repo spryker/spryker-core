@@ -12,6 +12,7 @@ use Orm\Zed\Vault\Persistence\SpyVaultDepositQuery;
 use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured;
 use Spryker\Shared\Vault\VaultConfig as VaultSharedConfig;
 use Spryker\Shared\Vault\VaultConstants;
+use Spryker\Zed\Vault\VaultConfig;
 
 /**
  * Auto-generated group annotations
@@ -52,6 +53,31 @@ class VaultFacadeTest extends Unit
 
         //Assert
         $this->assertSame(true, $isSuccessful);
+
+        $vaultDepositsCount = SpyVaultDepositQuery::create()
+            ->filterByDataType(static::TEST_DATA_TYPE)
+            ->filterByDataKey(static::TEST_DATA_KEY)
+            ->find()
+            ->count();
+
+        $this->assertSame(1, $vaultDepositsCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testStoreStoresStringUsingByteStringAsInitVectorShouldStoreString(): void
+    {
+        //Arrange
+        $vaultFacade = $this->tester->getVaultFacadeWithConfig(
+            $this->createVaultConfigMock(true, static::TEST_ENCRYPTION_KEY)
+        );
+
+        //Act
+        $isSuccessful = $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
+
+        //Assert
+        $this->assertTrue($isSuccessful);
 
         $vaultDepositsCount = SpyVaultDepositQuery::create()
             ->filterByDataType(static::TEST_DATA_TYPE)
@@ -132,6 +158,23 @@ class VaultFacadeTest extends Unit
         $data = $vaultFacade->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
 
         $this->assertSame($data, static::TEST_UPDATED_DATA);
+    }
+
+    /**
+     * @param bool $useByteStringForEncryptionInitializationVector
+     * @param string $encryptionKey
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Vault\VaultConfig
+     */
+    protected function createVaultConfigMock(bool $useByteStringForEncryptionInitializationVector, string $encryptionKey): VaultConfig
+    {
+        $vaultConfigMock = $this->getMockBuilder(VaultConfig::class)->getMock();
+        $vaultConfigMock->method('useByteStringForEncryptionInitializationVector')
+            ->willReturn($useByteStringForEncryptionInitializationVector);
+        $vaultConfigMock->method('getEncryptionKey')
+            ->willReturn($encryptionKey);
+
+        return $vaultConfigMock;
     }
 
     /**

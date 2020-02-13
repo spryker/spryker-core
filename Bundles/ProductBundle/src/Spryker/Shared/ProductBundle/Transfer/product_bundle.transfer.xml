@@ -100,6 +100,7 @@
         <property name="fkProductAbstract" type="int"/>
         <property name="abstractSku" type="string"/>
         <property name="stocks" type="StockProduct[]" singular="stock"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="ProductBundleGroup">
@@ -178,6 +179,9 @@
     </transfer>
 
     <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="ProductImage">
     </transfer>
 
 </transfers>

@@ -106,4 +106,18 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     {
         return $this->getFactory()->createQuoteCollectionReader()->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function addDefaultQuoteChangedMessage(QuoteTransfer $quoteTransfer): void
+    {
+        $this->getFactory()->createMultiCartMessenger()->addDefaultQuoteChangedMessage($quoteTransfer);
+    }
 }

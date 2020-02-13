@@ -164,6 +164,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
             if (isset($availableAttributes[$attributeKey])) {
                 $availableAttributes[$attributeKey] = array_intersect($availableAttributes[$attributeKey], $availableValues);
+
                 continue;
             }
 

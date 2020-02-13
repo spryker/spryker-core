@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -19,6 +18,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductConcreteOffersStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
+     * {@inheritDoc}
+     * - Deletes product concrete product offer data from storage by provided product sku events.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
@@ -26,13 +30,6 @@ class ProductConcreteOffersStorageUnpublishListener extends AbstractPlugin imple
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $productSkus = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
-
-        if (!$productSkus) {
-            return;
-        }
-        $this->getFacade()->unpublishProductConcreteProductOffersStorage($productSkus);
+        $this->getFacade()->deleteProductConcreteProductOffersStorageCollectionByProductSkuEvents($transfers);
     }
 }

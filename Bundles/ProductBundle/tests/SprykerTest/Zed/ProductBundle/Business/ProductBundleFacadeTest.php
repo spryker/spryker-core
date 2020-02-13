@@ -508,6 +508,22 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeactivateRelatedProductBundlesWithInactiveProductConcrete(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, false);
+
+        // Act
+        $productConcreteTransfer = $this->getProductBundleFacade()
+            ->deactivateRelatedProductBundles($productConcreteTransfer);
+
+        // Assert
+        $this->assertFalse($productConcreteTransfer->getIsActive());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface
      */
     protected function getProductBundleFacade()

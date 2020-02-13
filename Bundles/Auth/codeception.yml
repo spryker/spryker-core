@@ -4,11 +4,9 @@ include:
     - tests/SprykerTest/Zed/Auth
 
 paths:
-    tests: tests
-    support: .
-    log: tests/_output
-    data: tests/_data
-    envs: tests/_envs
+    tests: tests/
+    log: tests/_output/
+    data: tests/_data/
 
 settings:
     suite_class: \PHPUnit\Framework\TestSuite
@@ -16,13 +14,10 @@ settings:
     memory_limit: 1024M
     log: true
 
-coverage:
-    enabled: true
-    whitelist: { include: ['src/*'] }
-
 extensions:
     enabled:
         - Codeception\Extension\Phantoman
     config:
         Codeception\Extension\Phantoman:
-            suites: ['Presentation']
+            suites:
+                - Presentation
