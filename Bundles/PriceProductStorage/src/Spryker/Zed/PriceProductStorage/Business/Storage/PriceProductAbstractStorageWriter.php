@@ -234,6 +234,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         foreach ($productAbstractIds as $idProductAbstract) {
             if (!isset($priceGroups[$idProductAbstract])) {
                 $this->getLogger()->warning(sprintf('Product abstract `%s` has no default price', $idProductAbstract));
+
                 continue;
             }
 

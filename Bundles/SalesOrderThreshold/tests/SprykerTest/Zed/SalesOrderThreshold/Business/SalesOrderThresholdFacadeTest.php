@@ -258,6 +258,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         foreach ($globalThresholds as $globalThreshold) {
             if ($globalThreshold->getSalesOrderThresholdValue()->getSalesOrderThresholdType() === SalesOrderThresholdConfig::GROUP_SOFT) {
                 $this->assertEquals($salesOrderThresholdTransfer, $globalThreshold);
+
                 break;
             }
         }

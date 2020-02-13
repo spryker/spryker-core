@@ -129,12 +129,15 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
             case self::ABSOLUTE_URL:
             case self::NETWORK_PATH:
                 $url = $this->buildUrl($pathInfo, $referenceType);
+
                 break;
             case self::ABSOLUTE_PATH:
                 $url = $pathInfo;
+
                 break;
             case self::RELATIVE_PATH:
                 $url = UrlGenerator::getRelativePath($this->context->getPathInfo(), $pathInfo);
+
                 break;
         }
 
