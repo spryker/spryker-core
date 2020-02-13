@@ -211,14 +211,17 @@ class ProductReviewTable extends AbstractTable
         switch ($productReviewEntity->getStatus()) {
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_REJECTED:
                 $buttonGroupItems[] = $this->generateApproveButtonGroupItem($productReviewEntity);
+
                 break;
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_APPROVED:
                 $buttonGroupItems[] = $this->generateRejectButtonGroupItem($productReviewEntity);
+
                 break;
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_PENDING:
             default:
                 $buttonGroupItems[] = $this->generateApproveButtonGroupItem($productReviewEntity);
                 $buttonGroupItems[] = $this->generateRejectButtonGroupItem($productReviewEntity);
+
                 break;
         }
 

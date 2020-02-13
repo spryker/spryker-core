@@ -112,6 +112,7 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
                 );
 
                 unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
+
                 continue;
             }
 

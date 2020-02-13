@@ -29,6 +29,7 @@ class TestEventBulkListenerPluginStub implements EventBulkHandlerInterface
     {
         if (static::$exceptionThrownCount < 2) {
             static::$exceptionThrownCount++;
+
             throw new Exception('Error during message handling');
         }
     }
