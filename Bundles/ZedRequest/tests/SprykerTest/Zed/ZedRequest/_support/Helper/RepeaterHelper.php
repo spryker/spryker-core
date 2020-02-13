@@ -182,7 +182,7 @@ class RepeaterHelper extends Module
     {
         $httpRequest = new Request();
         $httpRequest->attributes->set(static::BUNDLE, static::BUNDLE);
-        $httpRequest->attributes->set(static::CONTROLLER, 'CONTROLLER/');
+        $httpRequest->attributes->set(static::CONTROLLER, 'controller/');
         $httpRequest->attributes->set(static::ACTION, static::ACTION);
 
         return $httpRequest;
