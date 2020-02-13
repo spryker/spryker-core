@@ -112,6 +112,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testUpdateShipmentPriceWithShipmentMethodSourcePrices(): void
     {
+        // Arrange
         $sourcePrice = 322;
         $shipmentCartConnectorFacade = $this->tester->getFacade();
         $storeTransfer = $this->tester->haveStore([
@@ -125,8 +126,10 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
         $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
 
+        // Act
         $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
 
+        // Assert
         $this->assertSame(
             $sourcePrice,
             $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice()

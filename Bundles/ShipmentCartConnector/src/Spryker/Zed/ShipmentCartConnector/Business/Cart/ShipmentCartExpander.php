@@ -71,7 +71,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
         $availableShipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
-        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($cartChangeTransfer->getItems());
+        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $shipmentTransfer = $shipmentGroupTransfer->getShipment();
@@ -79,12 +79,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            $cartShipmentMethodTransfer = $shipmentTransfer->getMethod();
-            $shouldSkipExecution = $cartShipmentMethodTransfer === null
-                || $cartShipmentMethodTransfer->getIdShipmentMethod() === null
-                || ($this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false && !$cartShipmentMethodTransfer->getSourcePrice());
-
-            if ($shouldSkipExecution) {
+            if (!$this->shipmentExpenseNeedsUpdate($quoteTransfer, $shipmentTransfer)) {
                 continue;
             }
 
@@ -97,6 +92,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
+            $cartShipmentMethodTransfer = $shipmentTransfer->getMethod();
             $shipmentMethodTransfer = $this->findAvailableShipmentMethodByIdShipmentMethod(
                 $availableShipmentMethods,
                 $cartShipmentMethodTransfer->getIdShipmentMethod()
@@ -114,6 +110,22 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         }
 
         return $cartChangeTransfer->setQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return bool
+     */
+    protected function shipmentExpenseNeedsUpdate(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
+    {
+        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+
+        return $shipmentMethodTransfer
+            && $shipmentMethodTransfer->getIdShipmentMethod()
+            && $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer)
+            || $shipmentMethodTransfer->getSourcePrice();
     }
 
     /**

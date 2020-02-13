@@ -287,11 +287,11 @@ class QuoteRequestFacadeTest extends Unit
 
         // Act
         $quoteRequestResponseTransfer = $this->tester->getFacade()->updateQuoteRequest($quoteRequestTransfer);
+        $quoteTransfer = $quoteRequestResponseTransfer->getQuoteRequest()->getLatestVersion()->getQuote();
+        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
 
         // Assert
-        $quoteTransfer = $quoteRequestResponseTransfer->getQuoteRequest()->getLatestVersion()->getQuote();
         $this->assertEmpty($quoteTransfer->getShipment()->getMethod()->getSourcePrice());
-        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
         $this->assertEmpty($itemTransfer->getShipment()->getMethod()->getSourcePrice());
         $this->assertEmpty($itemTransfer->getSourceUnitGrossPrice());
     }

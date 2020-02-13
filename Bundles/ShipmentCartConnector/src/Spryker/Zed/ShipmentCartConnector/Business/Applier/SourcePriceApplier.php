@@ -50,10 +50,6 @@ class SourcePriceApplier implements SourcePriceApplierInterface
             return false;
         }
 
-        if ($sourcePrice->getGrossAmount() !== null || $sourcePrice->getNetAmount() !== null) {
-            return true;
-        }
-
-        return false;
+        return $sourcePrice->getGrossAmount() !== null || $sourcePrice->getNetAmount() !== null;
     }
 }
