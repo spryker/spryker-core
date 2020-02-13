@@ -58,8 +58,18 @@ class RouterHelper extends Module
      *
      * @return void
      */
-    public function addRoute(string $name, string $path, callable $controller, array $defaults = [], array $requirements = [], array $options = [], ?string $host = '', $schemes = [], $methods = [], ?string $condition = ''): void
-    {
+    public function addRoute(
+        string $name,
+        string $path,
+        callable $controller,
+        array $defaults = [],
+        array $requirements = [],
+        array $options = [],
+        ?string $host = '',
+        $schemes = [],
+        $methods = [],
+        ?string $condition = ''
+    ): void {
         $defaults['_controller'] = $controller;
         $route = new Route($path, $defaults, $requirements, $options, $host, $schemes, $methods, $condition);
 
