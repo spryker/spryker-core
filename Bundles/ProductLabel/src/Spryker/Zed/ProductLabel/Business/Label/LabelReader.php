@@ -8,34 +8,31 @@
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface;
-use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
 
 class LabelReader implements LabelReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
-     */
-    protected $queryContainer;
-
     /**
      * @var \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface
      */
     protected $localizedAttributesCollectionReader;
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface
+     */
+    protected $productLabelRepository;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface $localizedAttributesCollectionReader
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface $productLabelRepository
      */
     public function __construct(
-        ProductLabelQueryContainerInterface $queryContainer,
-        LocalizedAttributesCollectionReaderInterface $localizedAttributesCollectionReader
+        LocalizedAttributesCollectionReaderInterface $localizedAttributesCollectionReader,
+        ProductLabelRepositoryInterface $productLabelRepository
     ) {
-        $this->queryContainer = $queryContainer;
         $this->localizedAttributesCollectionReader = $localizedAttributesCollectionReader;
+        $this->productLabelRepository = $productLabelRepository;
     }
 
     /**
@@ -45,14 +42,13 @@ class LabelReader implements LabelReaderInterface
      */
     public function findByIdProductLabel($idProductLabel)
     {
-        $productLabelEntity = $this->findEntityByIdProductLabel($idProductLabel);
+        $productLabelTransfer = $this->productLabelRepository->findProductLabelByIdProductLabel($idProductLabel);
 
-        if (!$productLabelEntity) {
+        if (!$productLabelTransfer) {
             return null;
         }
 
-        $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);
-        $this->addLocalizedAttributes($productLabelTransfer);
+        $this->assertProductLabelTransferRelations($productLabelTransfer);
 
         return $productLabelTransfer;
     }
@@ -64,42 +60,15 @@ class LabelReader implements LabelReaderInterface
      */
     public function findProductLabelByName($labelName): ?ProductLabelTransfer
     {
-        $productLabelEntity = $this->findEntityByNameProductLabel($labelName);
+        $productLabelTransfer = $this->productLabelRepository->findProductLabelByNameProductLabel($labelName);
 
-        if (!$productLabelEntity) {
+        if (!$productLabelTransfer) {
             return null;
         }
 
-        $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);
-        $this->addLocalizedAttributes($productLabelTransfer);
+        $this->assertProductLabelTransferRelations($productLabelTransfer);
 
         return $productLabelTransfer;
-    }
-
-    /**
-     * @param int $idProductLabel
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null
-     */
-    protected function findEntityByIdProductLabel($idProductLabel)
-    {
-        return $this
-            ->queryContainer
-            ->queryProductLabelById($idProductLabel)
-            ->findOne();
-    }
-
-    /**
-     * @param string $labelName
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null
-     */
-    protected function findEntityByNameProductLabel($labelName): ?SpyProductLabel
-    {
-        return $this
-            ->queryContainer
-            ->queryProductLabelByName($labelName)
-            ->findOne();
     }
 
     /**
@@ -107,21 +76,10 @@ class LabelReader implements LabelReaderInterface
      */
     public function findAll()
     {
-        $productLabelEntities = $this->findAllEntitiesSortedByPosition();
-        $productLabelTransferCollection = $this->createTransferCollectionForEntities($productLabelEntities);
+        $productLabelTransferCollection = $this->productLabelRepository->getAllProductLabelsSortedByPosition();
+        $this->assertProductLabelTransferCollectionRelations($productLabelTransferCollection);
 
         return $productLabelTransferCollection;
-    }
-
-    /**
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function findAllEntitiesSortedByPosition()
-    {
-        return $this
-            ->queryContainer
-            ->queryProductLabelsSortedByPosition()
-            ->find();
     }
 
     /**
@@ -131,8 +89,8 @@ class LabelReader implements LabelReaderInterface
      */
     public function findAllByIdProductAbstract($idProductAbstract)
     {
-        $productLabelEntities = $this->findEntitiesByIdProductAbstract($idProductAbstract);
-        $productLabelTransferCollection = $this->createTransferCollectionForEntities($productLabelEntities);
+        $productLabelTransferCollection = $this->productLabelRepository->getAllProductLabelsByIdProductAbstract($idProductAbstract);
+        $this->assertProductLabelTransferCollectionRelations($productLabelTransferCollection);
 
         return $productLabelTransferCollection;
     }
@@ -144,10 +102,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findAllLabelIdsByIdProductAbstract($idProductAbstract)
     {
-        $productLabelEntities = $this->findEntitiesByIdProductAbstract($idProductAbstract);
-        $productLabelIds = $productLabelEntities->getColumnValues(ProductLabelTransfer::ID_PRODUCT_LABEL);
-
-        return $productLabelIds;
+        return $this->productLabelRepository->getAllLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -157,75 +112,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract)
     {
-        $productLabelEntities = $this->findActiveEntitiesByIdProductAbstract($idProductAbstract);
-        $productLabelIds = $productLabelEntities->getColumnValues(ProductLabelTransfer::ID_PRODUCT_LABEL);
-
-        return $productLabelIds;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function findEntitiesByIdProductAbstract($idProductAbstract)
-    {
-        return $this
-            ->queryContainer
-            ->queryProductsLabelByIdProductAbstract($idProductAbstract)
-            ->find();
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function findActiveEntitiesByIdProductAbstract($idProductAbstract)
-    {
-        return $this
-            ->queryContainer
-            ->queryActiveProductsLabelByIdProductAbstract($idProductAbstract)
-            ->find();
-    }
-
-    /**
-     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelEntities
-     *
-     * @return array
-     */
-    protected function createTransferCollectionForEntities(ObjectCollection $productLabelEntities)
-    {
-        $productLabelTransferCollection = [];
-
-        foreach ($productLabelEntities as $productLabelEntity) {
-            $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);
-            $this->addLocalizedAttributes($productLabelTransfer);
-
-            $productLabelTransferCollection[] = $productLabelTransfer;
-        }
-
-        return $productLabelTransferCollection;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
-     */
-    protected function createTransferFromEntity(SpyProductLabel $productLabelEntity)
-    {
-        $productLabelTransfer = new ProductLabelTransfer();
-        $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
-
-        $productLabelTransfer->setValidFrom(
-            $productLabelEntity->getValidFrom(ProductLabelConstants::VALIDITY_DATE_FORMAT)
-        );
-        $productLabelTransfer->setValidTo(
-            $productLabelEntity->getValidTo(ProductLabelConstants::VALIDITY_DATE_FORMAT)
-        );
-
-        return $productLabelTransfer;
+        return $this->productLabelRepository->getAllActiveProductLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -240,5 +127,41 @@ class LabelReader implements LabelReaderInterface
                 ->localizedAttributesCollectionReader
                 ->findAllByIdProductLabel($productLabelTransfer->getIdProductLabel())
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function addStoreRelations(ProductLabelTransfer $productLabelTransfer): void
+    {
+        $storeRelationTransfer = $this->productLabelRepository
+            ->getStoreRelationByIdProductLabel($productLabelTransfer->getIdProductLabel());
+
+        $productLabelTransfer->setStoreRelation($storeRelationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function assertProductLabelTransferRelations(ProductLabelTransfer $productLabelTransfer): void
+    {
+        $this->addLocalizedAttributes($productLabelTransfer);
+        $this->addStoreRelations($productLabelTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransferCollection
+     *
+     * @return void
+     */
+    protected function assertProductLabelTransferCollectionRelations(array $productLabelTransferCollection): void
+    {
+        foreach ($productLabelTransferCollection as $productLabelTransfer) {
+            $this->assertProductLabelTransferRelations($productLabelTransfer);
+        }
     }
 }

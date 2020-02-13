@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 class ProductLabelMapper
 {
@@ -26,7 +27,16 @@ class ProductLabelMapper
         SpyProductLabel $productLabelEntity,
         ProductLabelTransfer $productLabelTransfer
     ): ProductLabelTransfer {
-        return $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
+        $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
+
+        $productLabelTransfer->setValidFrom(
+            $productLabelEntity->getValidFrom(ProductLabelConstants::VALIDITY_DATE_FORMAT)
+        );
+        $productLabelTransfer->setValidTo(
+            $productLabelEntity->getValidTo(ProductLabelConstants::VALIDITY_DATE_FORMAT)
+        );
+
+        return $productLabelTransfer;
     }
 
     /**
@@ -58,5 +68,22 @@ class ProductLabelMapper
     public function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
     {
         return $storeTransfer->fromArray($storeEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelEntities
+     * @param array $transferCollection
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function mapProductLabelEntitiesToProductLabelTransfers(
+        ObjectCollection $productLabelEntities,
+        array $transferCollection = []
+    ): array {
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $transferCollection[] = $this->mapProductLabelEntityToProductLabelTransfer($productLabelEntity, new ProductLabelTransfer());
+        }
+
+        return $transferCollection;
     }
 }

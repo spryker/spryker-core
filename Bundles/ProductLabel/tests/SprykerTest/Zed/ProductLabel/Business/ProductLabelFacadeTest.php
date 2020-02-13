@@ -231,7 +231,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateLabelShouldUpdateStoreRelations()
+    public function testUpdateLabelShouldUpdateStoreRelations(): void
     {
         //Arrange
         $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);

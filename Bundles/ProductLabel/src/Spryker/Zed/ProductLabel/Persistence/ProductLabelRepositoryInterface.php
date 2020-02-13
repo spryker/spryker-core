@@ -20,6 +20,39 @@ interface ProductLabelRepositoryInterface
     public function findProductLabelByIdProductLabel(int $idProductLabel): ?ProductLabelTransfer;
 
     /**
+     * @param string $labelName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    public function findProductLabelByNameProductLabel(string $labelName): ?ProductLabelTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function getAllProductLabelsSortedByPosition(): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function getAllProductLabelsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getAllLabelIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getAllActiveProductLabelIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
      * @param int $idProductLabel
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

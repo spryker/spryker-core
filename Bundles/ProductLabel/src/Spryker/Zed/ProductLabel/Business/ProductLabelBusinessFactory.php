@@ -68,8 +68,8 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     public function createLabelReader()
     {
         return new LabelReader(
-            $this->getQueryContainer(),
-            $this->createLocalizedAttributesCollectionReader()
+            $this->createLocalizedAttributesCollectionReader(),
+            $this->getRepository()
         );
     }
 
