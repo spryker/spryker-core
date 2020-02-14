@@ -250,6 +250,7 @@ class ProductRuleTable extends AbstractProductTable
         foreach ($productUrl->getUrls() as $localizedProductUrl) {
             if ($localizedProductUrl->getLocale()->getIdLocale() === $this->localeTransfer->getIdLocale()) {
                 $url = $this->yvesHostUrl . $localizedProductUrl->getUrl();
+
                 break;
             }
         }

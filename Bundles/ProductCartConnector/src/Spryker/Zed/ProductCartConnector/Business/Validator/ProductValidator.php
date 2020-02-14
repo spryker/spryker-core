@@ -49,6 +49,7 @@ class ProductValidator implements ProductValidatorInterface
                     continue;
                 }
                 $this->productStatusCheck($itemTransfer, $responseTransfer);
+
                 continue;
             }
 

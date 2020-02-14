@@ -6,10 +6,6 @@
 >
     <transfer name="PriceProductOffer">
         <property name="fkProductOffer" dataBuilderRule="="/>
-        <property name="fkPriceType" dataBuilderRule="="/>
-        <property name="fkStore" dataBuilderRule="="/>
-        <property name="fkCurrency" dataBuilderRule="="/>
-        <property name="netPrice" dataBuilderRule="=100"/>
-        <property name="grossPrice" dataBuilderRule="=100"/>
+        <property name="fkPriceProductStore" dataBuilderRule="="/>
     </transfer>
 </transfers>

@@ -594,6 +594,7 @@ class Reader implements ReaderInterface
                 if ($priceProductTransfer->getMoneyValue()->getNetAmount() === null) {
                     return false;
                 }
+
                 continue;
             }
 

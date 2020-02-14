@@ -234,6 +234,7 @@ class ViewController extends AddController
             foreach ($imageSetTransferCollection as $imageSetTransfer) {
                 if ($imageSetTransfer->getLocale() === null) {
                     $defaults[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
+
                     continue;
                 }
 

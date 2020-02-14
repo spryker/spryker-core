@@ -91,10 +91,11 @@ class RuleValidator implements RuleValidatorInterface
         switch ($rule->getType()) {
             case 'allow':
                 $this->addAllowedRule($rule);
-                break;
 
+                break;
             case 'deny':
                 $this->addDeniedRule($rule);
+
                 break;
         }
     }
