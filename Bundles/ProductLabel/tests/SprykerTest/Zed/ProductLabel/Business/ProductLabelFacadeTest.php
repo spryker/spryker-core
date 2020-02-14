@@ -285,6 +285,70 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindLabelByIdShouldReturnProductLabelTransferForSpecificStore(): void
+    {
+        //Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::NAME => 'test1',
+            ProductLabelTransfer::STORE_RELATION => [
+                StoreRelationTransfer::ID_STORES => [
+                    $storeTransferDE->getIdStore(),
+                ],
+                StoreRelationTransfer::STORES => [
+                    $storeTransferDE,
+
+                ],
+            ],
+        ]);
+
+        $productLabelFacade = $this->getProductLabelFacade();
+        //Act
+        $productLabelTransfer = $productLabelFacade->findLabelById($productLabelTransfer->getIdProductLabel());
+
+        //Assert
+        $this->tester->assertEquals(
+            $storeTransferDE->getName(),
+            $productLabelTransfer->getStoreRelation()->getStores()->offsetGet(0)->getName(),
+            'Given store is invalid for this relation'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindLabelByLabelNameShouldReturnProductLabelTransferForSpecificStore(): void
+    {
+        //Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::NAME => 'test1',
+            ProductLabelTransfer::STORE_RELATION => [
+                StoreRelationTransfer::ID_STORES => [
+                    $storeTransferDE->getIdStore(),
+                ],
+                StoreRelationTransfer::STORES => [
+                    $storeTransferDE,
+
+                ],
+            ],
+        ]);
+
+        $productLabelFacade = $this->getProductLabelFacade();
+        //Act
+        $productLabelTransfer = $productLabelFacade->findLabelByLabelName($productLabelTransfer->getName());
+
+        //Assert
+        $this->tester->assertEquals(
+            $storeTransferDE->getName(),
+            $productLabelTransfer->getStoreRelation()->getStores()->offsetGet(0)->getName(),
+            'Given store is invalid for this relation'
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateLabelShouldTouchDictionaryActive(): void
     {
         $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
