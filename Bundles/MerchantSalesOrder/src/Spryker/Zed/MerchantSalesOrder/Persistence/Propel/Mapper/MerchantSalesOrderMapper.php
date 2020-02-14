@@ -7,36 +7,172 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\MerchantSalesOrderTransfer;
+use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder;
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantSalesOrderMapper
 {
     /**
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder $merchantSalesOrderEntity
-     * @param \Generated\Shared\Transfer\MerchantSalesOrderTransfer $merchantSalesOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantSalesOrderTransfer
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function mapMerchantSalesOrderEntityToMerchantSalesOrderTransfer(
+    public function mapMerchantSalesOrderEntityToMerchantOrderTransfer(
         SpyMerchantSalesOrder $merchantSalesOrderEntity,
-        MerchantSalesOrderTransfer $merchantSalesOrderTransfer
-    ): MerchantSalesOrderTransfer {
-        return $merchantSalesOrderTransfer->fromArray($merchantSalesOrderEntity->toArray(), true);
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): MerchantOrderTransfer {
+        $merchantOrderTransfer = $merchantOrderTransfer
+            ->fromArray($merchantSalesOrderEntity->toArray(), true)
+            ->setIdSalesOrder($merchantSalesOrderEntity->getFkSalesOrder());
+
+        $merchantOrderTransfer->setTotals(
+            $this->findTotalsTransferInMerchantSalesOrderEntity($merchantSalesOrderEntity)
+        );
+
+        $merchantSalesOrderEntity->initMerchantSalesOrderItems(false);
+
+        if ($merchantSalesOrderEntity->countMerchantSalesOrderItems()) {
+            foreach ($merchantSalesOrderEntity->getMerchantSalesOrderItems() as $merchantSalesOrderItemEntity) {
+                $merchantOrderTransfer->addMerchantOrderItem(
+                    $this->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
+                        $merchantSalesOrderItemEntity,
+                        new MerchantOrderItemTransfer()
+                    )
+                );
+            }
+        }
+
+        return $merchantOrderTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantSalesOrderTransfer $merchantSalesOrderTransfer
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder $merchantSalesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer|null
+     */
+    protected function findTotalsTransferInMerchantSalesOrderEntity(
+        SpyMerchantSalesOrder $merchantSalesOrderEntity
+    ): ?TotalsTransfer {
+        if (count($merchantSalesOrderEntity->getVirtualColumns()) !== 0) {
+            return (new TotalsTransfer())->fromArray($merchantSalesOrderEntity->getVirtualColumns(), true);
+        }
+
+        $merchantSalesOrderEntity->initMerchantSalesOrderTotals(false);
+
+        if ($merchantSalesOrderEntity->countMerchantSalesOrderTotals()) {
+            return $this->mapMerchantSalesOrderTotalsEntityToTotalsTransfer(
+                $merchantSalesOrderEntity->getMerchantSalesOrderTotals()->getFirst(),
+                new TotalsTransfer()
+            );
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder $merchantSalesOrderEntity
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder
      */
-    public function mapMerchantSalesOrderTransferToMerchantSalesOrderEntity(
-        MerchantSalesOrderTransfer $merchantSalesOrderTransfer,
+    public function mapMerchantOrderTransferToMerchantSalesOrderEntity(
+        MerchantOrderTransfer $merchantOrderTransfer,
         SpyMerchantSalesOrder $merchantSalesOrderEntity
     ): SpyMerchantSalesOrder {
-        $merchantSalesOrderEntity->fromArray($merchantSalesOrderTransfer->modifiedToArray());
+        $merchantSalesOrderEntity->fromArray($merchantOrderTransfer->modifiedToArray());
+        $merchantSalesOrderEntity->setFkSalesOrder($merchantOrderTransfer->getIdSalesOrder());
 
         return $merchantSalesOrderEntity;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $merchantSalesOrderEntityList
+     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
+     */
+    public function mapMerchantSalesOrderEntityCollectionToMerchantOrderCollectionTransfer(
+        ObjectCollection $merchantSalesOrderEntityList,
+        MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+    ): MerchantOrderCollectionTransfer {
+        foreach ($merchantSalesOrderEntityList as $merchantSalesOrderEntityTransfer) {
+            $merchantOrderCollectionTransfer->addOrder(
+                $this->mapMerchantSalesOrderEntityToMerchantOrderTransfer(
+                    $merchantSalesOrderEntityTransfer,
+                    new MerchantOrderTransfer()
+                )
+            );
+        }
+
+        return $merchantOrderCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer
+     */
+    public function mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
+        SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity,
+        MerchantOrderItemTransfer $merchantOrderItemTransfer
+    ): MerchantOrderItemTransfer {
+        return $merchantOrderItemTransfer
+            ->setIdSalesOrderItem($merchantSalesOrderItemEntity->getFkSalesOrderItem())
+            ->setIdMerchantSalesOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity
+     *
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem
+     */
+    public function mapMerchantOrderItemTransferToMerchantSalesOrderItemEntity(
+        MerchantOrderItemTransfer $merchantOrderItemTransfer,
+        SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity
+    ): SpyMerchantSalesOrderItem {
+        $merchantSalesOrderItemEntity->setFkSalesOrderItem($merchantOrderItemTransfer->getIdSalesOrderItem());
+        $merchantSalesOrderItemEntity->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantSalesOrder());
+
+        return $merchantSalesOrderItemEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals $merchantSalesOrderTotalsEntity
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    public function mapMerchantSalesOrderTotalsEntityToTotalsTransfer(
+        SpyMerchantSalesOrderTotals $merchantSalesOrderTotalsEntity,
+        TotalsTransfer $totalsTransfer
+    ): TotalsTransfer {
+        return $totalsTransfer
+            ->fromArray($merchantSalesOrderTotalsEntity->toArray(), true)
+            ->setIdMerchantSalesOrder($merchantSalesOrderTotalsEntity->getFkMerchantSalesOrder());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals $merchantSalesOrderTotalsEntity
+     *
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals
+     */
+    public function mapTotalsTransferToMerchantSalesOrderTotalsEntity(
+        TotalsTransfer $totalsTransfer,
+        SpyMerchantSalesOrderTotals $merchantSalesOrderTotalsEntity
+    ): SpyMerchantSalesOrderTotals {
+        $merchantSalesOrderTotalsEntity->fromArray($totalsTransfer->modifiedToArray());
+        $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($totalsTransfer->getIdMerchantSalesOrder());
+
+        return $merchantSalesOrderTotalsEntity;
     }
 }

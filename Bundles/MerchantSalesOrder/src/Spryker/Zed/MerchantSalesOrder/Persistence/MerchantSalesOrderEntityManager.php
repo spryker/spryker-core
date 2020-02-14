@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 
-use Generated\Shared\Transfer\MerchantSalesOrderTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder;
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -17,24 +21,69 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantSalesOrderEntityManager extends AbstractEntityManager implements MerchantSalesOrderEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantSalesOrderTransfer $merchantSalesOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantSalesOrderTransfer
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function createMerchantSalesOrder(MerchantSalesOrderTransfer $merchantSalesOrderTransfer): MerchantSalesOrderTransfer
+    public function createMerchantSalesOrder(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
         $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 
-        $merchantSalesOrderEntity = $merchantSalesOrderMapper->mapMerchantSalesOrderTransferToMerchantSalesOrderEntity(
-            $merchantSalesOrderTransfer,
+        $merchantSalesOrderEntity = $merchantSalesOrderMapper->mapMerchantOrderTransferToMerchantSalesOrderEntity(
+            $merchantOrderTransfer,
             new SpyMerchantSalesOrder()
         );
 
         $merchantSalesOrderEntity->save();
 
-        return $merchantSalesOrderMapper->mapMerchantSalesOrderEntityToMerchantSalesOrderTransfer(
+        return $merchantSalesOrderMapper->mapMerchantSalesOrderEntityToMerchantOrderTransfer(
             $merchantSalesOrderEntity,
-            $merchantSalesOrderTransfer
+            $merchantOrderTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer
+     */
+    public function createMerchantSalesOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemTransfer
+    {
+        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
+
+        $merchantSalesOrderItemEntity = $merchantSalesOrderMapper
+            ->mapMerchantOrderItemTransferToMerchantSalesOrderItemEntity(
+                $merchantOrderItemTransfer,
+                new SpyMerchantSalesOrderItem()
+            );
+
+        $merchantSalesOrderItemEntity->save();
+
+        return $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
+            $merchantSalesOrderItemEntity,
+            $merchantOrderItemTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    public function createMerchantSalesOrderTotals(TotalsTransfer $totalsTransfer): TotalsTransfer
+    {
+        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
+
+        $merchantSalesOrderTotalsEntity = $merchantSalesOrderMapper->mapTotalsTransferToMerchantSalesOrderTotalsEntity(
+            $totalsTransfer,
+            new SpyMerchantSalesOrderTotals()
+        );
+
+        $merchantSalesOrderTotalsEntity->save();
+
+        return $merchantSalesOrderMapper->mapMerchantSalesOrderTotalsEntityToTotalsTransfer(
+            $merchantSalesOrderTotalsEntity,
+            $totalsTransfer
         );
     }
 }
