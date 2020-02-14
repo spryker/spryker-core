@@ -33,17 +33,7 @@ function addSlotTableRowClickHandler() {
     var $slotTable = $slotTableWrapper.find('.dataTables_scrollBody table').first().DataTable();
 
     $slotTable.on('click', 'tbody tr[role="row"]', function () {
-        var rowData = $slotTable.row(this).data();
-        var idSlot = rowData[config.slotTableColumnsMapping.idSlot];
-
-        if (idSlot === selectedIdSlot) {
-            return;
-        }
-
-        selectedIdSlot = idSlot;
-        loadSlotProductsTable();
-        markSelectedRow($(this));
-        $slotProductsTableName.text(rowData[config.slotTableColumnsMapping.slotName]);
+        updateSlotProductsTable(this, $slotTable);
     });
 }
 
@@ -110,20 +100,31 @@ function performInitialDraw($slotTable, $rows) {
     var initialSelectedIdSlot = getInitialSelectedIdSlot();
 
     if (!initialSelectedIdSlot) {
-        $rows.first().click();
+        updateSlotProductsTable($rows.first(), $slotTable);
 
         return;
     }
 
     $.each($rows, function (index, row) {
         if ($slotTable.row(row).data()[config.slotTableColumnsMapping.idSlot] === initialSelectedIdSlot) {
-            $(row).click();
-
-            return;
+            updateSlotProductsTable(row, $slotTable);
         }
     });
 }
 
+function updateSlotProductsTable(row, $slotTable) {
+    var rowData = $slotTable.row(row).data();
+    var idSlot = rowData[config.slotTableColumnsMapping.idSlot];
+
+    if (idSlot === selectedIdSlot) {
+        return;
+    }
+
+    selectedIdSlot = idSlot;
+    loadSlotProductsTable();
+    markSelectedRow($(row));
+    $slotProductsTableName.text(rowData[config.slotTableColumnsMapping.slotName]);
+}
 
 /**
  * Open public methods
