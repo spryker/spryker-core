@@ -96,5 +96,8 @@
     <transfer name="Currency">
     </transfer>
 
+    <transfer name="QuoteError">
+    </transfer>
+
 </transfers>
 

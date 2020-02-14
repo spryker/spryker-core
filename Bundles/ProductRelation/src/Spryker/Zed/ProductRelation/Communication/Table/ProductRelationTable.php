@@ -308,6 +308,7 @@ class ProductRelationTable extends AbstractTable
         foreach ($productUrl->getUrls() as $localizedProductUrl) {
             if ($localizedProductUrl->getLocale()->getIdLocale() === $idLocale) {
                 $url = $this->productRelationConfig->findYvesHost() . $localizedProductUrl->getUrl();
+
                 break;
             }
         }

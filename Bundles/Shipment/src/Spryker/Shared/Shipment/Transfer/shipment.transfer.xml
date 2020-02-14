@@ -231,4 +231,10 @@
         <property name="shipmentTotal" type="int"/>
     </transfer>
 
+    <transfer name="CheckoutError">
+    </transfer>
+
+    <transfer name="Message">
+    </transfer>
+
 </transfers>

@@ -112,6 +112,7 @@ class MerchantProfileFormDataProvider
         foreach ($merchantProfileUrlCollection as $urlTransfer) {
             if ($urlTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
                 $urlTransfer->fromArray($urlTransfer->toArray(), true);
+
                 break;
             }
         }

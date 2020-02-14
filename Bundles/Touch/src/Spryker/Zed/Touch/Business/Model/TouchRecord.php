@@ -269,6 +269,7 @@ class TouchRecord implements TouchRecordInterface
             $deletedCount = $this->removeTouchEntries($touchListQuery);
         } catch (Throwable $throwable) {
             $this->touchQueryContainer->getConnection()->rollBack();
+
             throw $throwable;
         }
 
