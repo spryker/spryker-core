@@ -20,9 +20,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
 class MerchantProductAbstractMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
-    protected const KEY_MERCHANT_REFERENCES = 'merchant_references';
     protected const KEY_MERCHANT_NAME = 'merchant_name';
-    protected const KEY_MERCHANT_REFERENCE = 'merchant_reference';
 
     /**
      * {@inheritDoc}
@@ -37,8 +35,12 @@ class MerchantProductAbstractMapExpanderPlugin implements ProductAbstractMapExpa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    public function expandProductMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         if (is_array($productData[static::KEY_MERCHANT_NAMES])) {
             foreach ($productData[static::KEY_MERCHANT_NAMES] as $merchantName) {
                 $pageMapBuilder
@@ -49,11 +51,8 @@ class MerchantProductAbstractMapExpanderPlugin implements ProductAbstractMapExpa
             }
         }
 
-        if (is_array($productData[static::KEY_MERCHANT_REFERENCES])) {
-            foreach ($productData[static::KEY_MERCHANT_REFERENCES] as $merchantReference) {
-                $pageMapBuilder
-                    ->addStringFacet($pageMapTransfer, static::KEY_MERCHANT_REFERENCE, $merchantReference);
-            }
+        if (is_array($productData['merchant_references'])) {
+            $pageMapTransfer->setMerchantReferences($productData['merchant_references']);
         }
 
         return $pageMapTransfer;

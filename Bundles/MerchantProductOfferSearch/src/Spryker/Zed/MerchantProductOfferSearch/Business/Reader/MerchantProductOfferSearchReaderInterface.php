@@ -12,14 +12,7 @@ interface MerchantProductOfferSearchReaderInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return string[][]
+     * @return \Generated\Shared\Transfer\MerchantProductAbstractTransfer[]
      */
-    public function getMerchantNamesByProductAbstractIds(array $productAbstractIds): array;
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return string[][]
-     */
-    public function getMerchantReferencesByProductAbstractIds(array $productAbstractIds): array;
+    public function getMerchantProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
 }

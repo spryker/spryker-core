@@ -19,6 +19,7 @@
   "require-dev": {
     "spryker/category": "*",
     "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/product-attribute": "*",
@@ -29,6 +30,7 @@
   },
   "suggest": {
     "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
+    "spryker/elastica": "ADD SUGGEST DESCRIPTION",
     "spryker/event": "To use event behavior.",
     "spryker/merchant-product-offer": "Required for using the listeners.",
     "spryker/search": "If you want to use Search plugins."

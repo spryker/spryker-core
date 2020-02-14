@@ -59,25 +59,13 @@ interface MerchantProductOfferSearchFacadeInterface
 
     /**
      * Specification:
-     * - Returns a list of merchant names grouped by product abstract ids.
+     * - Returns a list of MerchantProductAbstractTransfers with data about merchant by product abstract ids.
      *
      * @api
      *
      * @param int[] $productAbstractIds
      *
-     * @return string[][]
+     * @return \Generated\Shared\Transfer\MerchantProductAbstractTransfer[]
      */
-    public function getMerchantNamesByProductAbstractIds(array $productAbstractIds): array;
-
-    /**
-     * Specification:
-     * - Returns a list of merchant references grouped by product abstract ids.
-     *
-     * @api
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return string[][]
-     */
-    public function getMerchantReferencesByProductAbstractIds(array $productAbstractIds): array;
+    public function getMerchantProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
 }

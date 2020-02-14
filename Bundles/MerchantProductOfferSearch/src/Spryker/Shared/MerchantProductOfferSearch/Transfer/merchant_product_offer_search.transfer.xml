@@ -23,6 +23,7 @@
     </transfer>
 
     <transfer name="PageMap">
+        <property name="merchantReferences" type="array" singular="merchantReference"/>
     </transfer>
 
     <transfer name="FacetConfig">
@@ -35,6 +36,12 @@
 
     <transfer name="SearchConfigExtension">
         <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig"/>
+    </transfer>
+
+    <transfer name="MerchantProductAbstract">
+        <property name="merchantNames" type="array" singular="merchantName"/>
+        <property name="merchantReferences" type="array" singular="merchantReference"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
 </transfers>
