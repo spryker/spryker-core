@@ -91,8 +91,8 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getShipment()
-            && $this->isCurrencyChanged($quoteTransfer)
-            || !$quoteTransfer->getShipment()->getMethod()->getSourcePrice();
+            && $quoteTransfer->getShipment()->getMethod()
+            && ($this->isCurrencyChanged($quoteTransfer) || !$quoteTransfer->getShipment()->getMethod()->getSourcePrice());
     }
 
     /**
