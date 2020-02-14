@@ -235,6 +235,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
             if (!$priceDimension) {
                 $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
+
                 continue;
             }
 

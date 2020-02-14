@@ -94,6 +94,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
         if (count($childArray) !== 1) {
             $fileIdentifier = $schemaFiles[0]->getFilename();
+
             throw new SchemaMergeException('Ambiguous use of name, package and namespace in schema file "' . $fileIdentifier . '"');
         }
     }
@@ -476,10 +477,12 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $columnName = $node->attributes['name']->value;
             if (strpos($columnName, 'id_') === 0) {
                 $idColumns[$columnName] = $node;
+
                 continue;
             }
             if (strpos($columnName, 'fk_') === 0) {
                 $fkColumns[$columnName] = $node;
+
                 continue;
             }
 
