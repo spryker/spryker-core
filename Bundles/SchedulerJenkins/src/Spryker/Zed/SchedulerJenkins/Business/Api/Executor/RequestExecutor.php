@@ -25,9 +25,8 @@ class RequestExecutor implements RequestExecutorInterface
     /**
      * @param \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface $client
      */
-    public function __construct(
-        SchedulerJenkinsToGuzzleInterface $client
-    ) {
+    public function __construct(SchedulerJenkinsToGuzzleInterface $client)
+    {
         $this->client = $client;
     }
 

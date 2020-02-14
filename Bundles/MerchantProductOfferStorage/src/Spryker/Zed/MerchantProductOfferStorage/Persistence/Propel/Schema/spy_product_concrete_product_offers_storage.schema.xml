@@ -21,6 +21,7 @@
             <parameter name="resource" value="product_concrete_product_offers"/>
             <parameter name="key_suffix_column" value="concrete_sku"/>
             <parameter name="queue_group" value="sync.storage.merchant_product_offer"/>
+            <parameter name="store" required="true"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

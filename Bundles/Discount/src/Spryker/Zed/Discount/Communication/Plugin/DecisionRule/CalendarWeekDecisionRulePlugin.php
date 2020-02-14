@@ -36,7 +36,6 @@ class CalendarWeekDecisionRulePlugin extends AbstractPlugin implements DecisionR
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isCalendarWeekSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }

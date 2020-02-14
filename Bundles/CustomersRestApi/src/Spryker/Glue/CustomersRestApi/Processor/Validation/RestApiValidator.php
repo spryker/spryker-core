@@ -73,8 +73,10 @@ class RestApiValidator implements RestApiValidatorInterface
             return $restResponse;
         }
 
-        if ($restCustomersAttributesTransfer->isPropertyModified(CustomerTransfer::GENDER) &&
-            !in_array($restCustomersAttributesTransfer->getGender(), static::CUSTOMERS_GENDERS_ENUM)) {
+        if (
+            $restCustomersAttributesTransfer->isPropertyModified(CustomerTransfer::GENDER) &&
+            !in_array($restCustomersAttributesTransfer->getGender(), static::CUSTOMERS_GENDERS_ENUM)
+        ) {
             return $this->apiErrors->addNotValidGenderError($restResponse);
         }
 

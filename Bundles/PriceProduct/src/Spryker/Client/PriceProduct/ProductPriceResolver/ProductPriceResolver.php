@@ -249,6 +249,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                     }
                     if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
                         $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
+
                         continue;
                     }
 
