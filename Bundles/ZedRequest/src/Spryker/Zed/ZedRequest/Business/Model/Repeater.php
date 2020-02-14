@@ -27,7 +27,7 @@ class Repeater implements RepeaterInterface
      */
     use BundleConfigResolverAwareTrait;
 
-    protected const MODULE_CONTROLLER_ACTION_REGEXP = '/^[\w]+$/';
+    protected const MODULE_CONTROLLER_ACTION_REGEXP = '/^[a-zA-Z0-9_-]+$/';
 
     /**
      * @var bool
