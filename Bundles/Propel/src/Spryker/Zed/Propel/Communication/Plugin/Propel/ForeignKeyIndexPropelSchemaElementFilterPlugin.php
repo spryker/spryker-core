@@ -73,7 +73,10 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     {
         $fkFieldNames = [];
         foreach ($uniqueIndexElements as $uniqueIndexElement) {
-            $fkFieldNames = $this->getFkFieldNamesFromUniqueIndex($uniqueIndexElement, $fkFieldNames);
+            $fkFieldName = $this->findFirstFkFieldNamesFromUniqueIndex($uniqueIndexElement);
+            if ($fkFieldName) {
+                $fkFieldNames[] = $fkFieldName;
+            }
         }
 
         return $fkFieldNames;
@@ -81,20 +84,19 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
 
     /**
      * @param \SimpleXMLElement $uniqueIndexElement
-     * @param string[] $fkFieldNames
      *
-     * @return string[]
+     * @return string|null
      */
-    protected function getFkFieldNamesFromUniqueIndex(SimpleXMLElement $uniqueIndexElement, array $fkFieldNames): array
+    protected function findFirstFkFieldNamesFromUniqueIndex(SimpleXMLElement $uniqueIndexElement): ?string
     {
         foreach ($uniqueIndexElement->children() as $uniqueIndexField) {
             $fieldName = (string)$uniqueIndexField->attributes()['name'];
             if ($this->isFkField($fieldName)) {
-                $fkFieldNames[] = $fieldName;
+                return $fieldName;
             }
-        }
 
-        return $fkFieldNames;
+            return null;
+        }
     }
 
     /**
