@@ -58,7 +58,7 @@
         <property name="filter" type="Filter"/>
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
-        <property name="filterFields" type="FilterField[]"/>
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
     </transfer>
 
     <transfer name="FilterField">
