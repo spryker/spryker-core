@@ -19,6 +19,8 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
  */
 class TwigConfig extends AbstractBundleConfig
 {
+    protected const THEME_DEFAULT = 'default';
+
     /**
      * @return string
      */
@@ -49,7 +51,17 @@ class TwigConfig extends AbstractBundleConfig
         $namespaces = $this->getProjectNamespaces();
         $storeName = $this->getStoreName();
 
+        $themeName = $this->getThemeName();
+        $themeNameDefault = $this->getThemeDefault();
+
         foreach ($namespaces as $namespace) {
+            if ($this->getIsThemeDefined($themeName, $themeNameDefault)) {
+                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/Theme/' . $themeName;
+                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/Theme/' . $themeName;
+            }
+
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/Theme/' . $themeNameDefault;
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/Theme/' . $themeNameDefault;
             $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
             $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
         }
@@ -65,11 +77,24 @@ class TwigConfig extends AbstractBundleConfig
     protected function addCoreTemplatePaths(array $paths)
     {
         $namespaces = $this->getCoreNamespaces();
+        $themeName = $this->getThemeName();
+        $themeNameDefault = $this->getThemeDefault();
+        $isThemeDefined = $this->getIsThemeDefined($themeName, $themeNameDefault);
 
         foreach ($namespaces as $namespace) {
+            if ($isThemeDefined) {
+                $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/Theme/' . $themeName;
+            }
+
+            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/Theme/' . $themeNameDefault;
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
         }
 
+        if ($isThemeDefined) {
+            $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Zed/%s/Presentation/Theme/' . $themeName;
+        }
+
+        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Zed/%s/Presentation/Theme/' . $themeNameDefault;
         $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Zed/%s/Presentation/';
 
         return $paths;
@@ -138,9 +163,20 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getZedDirectoryPathPattern()
     {
+        $themeName = $this->getThemeName();
+        $themeNameDefault = $this->getThemeDefault();
+
+        if (!$this->getIsThemeDefined($themeName, $themeNameDefault)) {
+            $themeName = $themeNameDefault;
+        }
+
         $directories = array_merge(
             glob('vendor/*/*/src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT),
-            glob('src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT)
+            glob('vendor/*/*/src/*/Zed/*/Presentation/Theme/' . $themeNameDefault, GLOB_ONLYDIR | GLOB_NOSORT),
+            glob('vendor/*/*/src/*/Zed/*/Presentation/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT),
+            glob('src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT),
+            glob('src/*/Zed/*/Presentation/Theme/' . $themeNameDefault, GLOB_ONLYDIR | GLOB_NOSORT),
+            glob('src/*/Zed/*/Presentation/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT)
         );
 
         return $directories;
@@ -203,5 +239,32 @@ class TwigConfig extends AbstractBundleConfig
         return [
             dirname($reflectedFormExtension->getFileName()) . '/../Resources/views/Form',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getThemeName(): string
+    {
+        return $this->get(TwigConstants::ZED_THEME, '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getThemeDefault(): string
+    {
+        return static::THEME_DEFAULT;
+    }
+
+    /**
+     * @param string $themeName
+     * @param string $themeNameDefault
+     *
+     * @return bool
+     */
+    protected function getIsThemeDefined(string $themeName, string $themeNameDefault): bool
+    {
+        return $themeName !== '' && $themeName !== $themeNameDefault;
     }
 }

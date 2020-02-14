@@ -21,8 +21,7 @@ class TemplateNameBuilderZed implements NamespacedTemplateNameBuilderInterface
         $pathsParts = explode(DIRECTORY_SEPARATOR, $filePath);
         $applicationPosition = array_search('Zed', $pathsParts);
         $module = $pathsParts[$applicationPosition + 1];
-        $presentationLayerPosition = array_search('Presentation', $pathsParts);
-        $template = array_slice($pathsParts, $presentationLayerPosition + 1);
+        $template = $this->getTemplate($pathsParts);
 
         return sprintf('@%s/%s', $module, implode('/', $template));
     }
@@ -38,9 +37,26 @@ class TemplateNameBuilderZed implements NamespacedTemplateNameBuilderInterface
         $applicationPosition = array_search('Zed', $pathsParts);
         $module = $pathsParts[$applicationPosition + 1];
         $organization = $pathsParts[$applicationPosition - 1];
-        $presentationLayerPosition = array_search('Presentation', $pathsParts);
-        $template = array_slice($pathsParts, $presentationLayerPosition + 1);
+        $template = $this->getTemplate($pathsParts);
 
         return sprintf('@%s:%s/%s', $organization, $module, implode('/', $template));
+    }
+
+    /**
+     * @param string[] $pathsParts
+     *
+     * @return string[]
+     */
+    protected function getTemplate(array $pathsParts): array
+    {
+        $themePosition = array_search('Theme', $pathsParts);
+
+        if ($themePosition) {
+            return array_slice($pathsParts, $themePosition + 2);
+        }
+
+        $presentationLayerPosition = array_search('Presentation', $pathsParts);
+
+        return array_slice($pathsParts, $presentationLayerPosition + 1);
     }
 }
