@@ -123,6 +123,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
                     $productAlternativeTransfer
                 );
                 $productAlternativeListTransfer->addProductAlternative($productAlternativeListItemTransfer);
+
                 continue;
             }
 

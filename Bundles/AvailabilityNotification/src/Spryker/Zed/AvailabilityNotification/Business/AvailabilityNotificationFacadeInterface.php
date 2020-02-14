@@ -54,7 +54,9 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeByCustomerReferenceAndSku(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
+    public function unsubscribeByCustomerReferenceAndSku(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer;
 
     /**
      * Specification:

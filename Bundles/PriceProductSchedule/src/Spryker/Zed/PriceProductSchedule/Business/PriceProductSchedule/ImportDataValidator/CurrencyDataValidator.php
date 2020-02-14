@@ -23,9 +23,8 @@ class CurrencyDataValidator extends AbstractImportDataValidator
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface $currencyFinder
      */
-    public function __construct(
-        CurrencyFinderInterface $currencyFinder
-    ) {
+    public function __construct(CurrencyFinderInterface $currencyFinder)
+    {
         $this->currencyFinder = $currencyFinder;
     }
 

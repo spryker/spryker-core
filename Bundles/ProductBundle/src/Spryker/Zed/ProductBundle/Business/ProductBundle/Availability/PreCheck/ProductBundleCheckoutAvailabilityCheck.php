@@ -124,6 +124,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if (!isset($uniqueBundledItems[$bundleItemTransfer->getSku()])) {
                 $uniqueBundledItems[$bundleItemTransfer->getSku()] = $bundleItemTransfer;
+
                 continue;
             }
         }
