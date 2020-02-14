@@ -72,6 +72,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
                         if ($priceMode === SharedPriceProductMerchantRelationshipStorageConfig::PRICE_GROSS_MODE) {
                             $priceProductTransfer->getMoneyValue()->setGrossAmount($priceAmount);
+
                             continue;
                         }
 

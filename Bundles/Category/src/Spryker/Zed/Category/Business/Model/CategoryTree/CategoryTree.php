@@ -66,11 +66,13 @@ class CategoryTree implements CategoryTreeInterface
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
             if ($childNodeEntity->getFkCategory() === $destinationCategoryNodeEntity->getFkCategory()) {
                 $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
+
                 continue;
             }
 
             if (in_array($childNodeEntity->getFkCategory(), $destinationChildrenIds)) {
                 $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
+
                 continue;
             }
 
@@ -78,6 +80,7 @@ class CategoryTree implements CategoryTreeInterface
 
             if ($childNodeEntity->getIsMain()) {
                 $this->moveMainCategoryNodeSubTree($categoryTransfer, $idDestinationCategoryNode);
+
                 continue;
             }
 

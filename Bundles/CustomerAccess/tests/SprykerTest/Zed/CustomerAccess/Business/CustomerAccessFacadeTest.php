@@ -157,6 +157,7 @@ class CustomerAccessFacadeTest extends Unit
         foreach ($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {
                 $this->assertTrue($removedContentTypeAccess->getIsRestricted());
+
                 continue;
             }
 

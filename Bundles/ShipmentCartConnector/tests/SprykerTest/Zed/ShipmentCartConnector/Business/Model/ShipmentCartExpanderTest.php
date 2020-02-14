@@ -349,8 +349,10 @@ class ShipmentCartExpanderTest extends Test
     protected function haveAvailableShipmentMethods(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getQuote()->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getShipment() === null
-                || $expenseTransfer->getShipment()->getMethod() === null) {
+            if (
+                $expenseTransfer->getShipment() === null
+                || $expenseTransfer->getShipment()->getMethod() === null
+            ) {
                 continue;
             }
 

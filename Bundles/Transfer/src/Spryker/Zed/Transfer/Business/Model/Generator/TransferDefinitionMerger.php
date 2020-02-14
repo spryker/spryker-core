@@ -97,6 +97,7 @@ class TransferDefinitionMerger implements MergerInterface
         foreach ($propertiesToMerge as $propertyToMerge) {
             if (!array_key_exists($propertyToMerge['name'], $mergedProperties)) {
                 $mergedProperties[$propertyToMerge['name']] = $propertyToMerge;
+
                 continue;
             }
 
@@ -124,18 +125,19 @@ class TransferDefinitionMerger implements MergerInterface
         foreach ($propertyToMerge as $propertyName => $propertyValue) {
             if (!array_key_exists($propertyName, $property)) {
                 $property[$propertyName] = $propertyValue;
+
                 continue;
             }
 
             switch ($propertyName) {
                 case 'bundles':
                     $property[$propertyName] = $this->mergePropertyBundles($property[$propertyName], $propertyValue);
-                    break;
 
+                    break;
                 case 'deprecated':
                     $property[$propertyName] = $this->mergeDeprecatedAttributes($property[$propertyName], $propertyValue);
-                    break;
 
+                    break;
                 default:
                     if ($propertyValue !== $property[$propertyName]) {
                         throw new Exception(sprintf(
@@ -146,6 +148,7 @@ class TransferDefinitionMerger implements MergerInterface
                             $propertyValue
                         ));
                     }
+
                     break;
             }
         }

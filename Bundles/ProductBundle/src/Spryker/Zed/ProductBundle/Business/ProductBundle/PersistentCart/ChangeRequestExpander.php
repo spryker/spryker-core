@@ -30,6 +30,7 @@ class ChangeRequestExpander implements ChangeRequestExpanderInterface
             $bundledItemTransferList = $this->getBundledItems($cartChangeTransfer->getQuote(), $itemTransfer->getGroupKey(), $itemTransfer->getQuantity());
             if (count($bundledItemTransferList)) {
                 $itemTransferList = array_merge($itemTransferList, $bundledItemTransferList);
+
                 continue;
             }
             $itemTransferList[] = $itemTransfer;
