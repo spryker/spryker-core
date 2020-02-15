@@ -131,7 +131,7 @@ class RepeaterHelper extends Module
     {
         $mvc = implode('_', [
             static::BUNDLE,
-            'controller-',
+            'controller^',
             static::ACTION,
         ]);
 
