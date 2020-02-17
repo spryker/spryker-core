@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Persistence;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -65,17 +66,11 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer->requireCustomer();
+        $orderListTransfer->requireFormat();
 
-        $salesOrderQuery = $this->getFactory()
-            ->createSalesOrderQuery()
-            ->joinWithItem();
+        $salesOrderQuery = $this->getFactory()->createSalesOrderQuery();
 
-        $customerReference = $orderListTransfer->getCustomer()->getCustomerReference();
-
-        if ($customerReference) {
-            $salesOrderQuery->filterByCustomerReference($customerReference);
-        }
+        $salesOrderQuery = $this->setSalesOrderSearchFilters($salesOrderQuery, $orderListTransfer);
 
         $salesOrderEntityCollection = $this->buildQueryFromCriteria($salesOrderQuery, $orderListTransfer->getFilter())
             ->setFormatter(ObjectFormatter::class)
@@ -83,7 +78,37 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
 
         return $this->getFactory()
             ->createSalesOrderMapper()
-            ->mapSalesOrderEntityCollectionToOrderListTransfer($salesOrderEntityCollection, $orderListTransfer);
+            ->mapSalesOrderEntityCollectionToOrderListTransfer(
+                $salesOrderEntityCollection,
+                $orderListTransfer,
+                $orderListTransfer->getFormat()->getExpandWithItems()
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function setSalesOrderSearchFilters(
+        SpySalesOrderQuery $salesOrderQuery,
+        OrderListTransfer $orderListTransfer
+    ): SpySalesOrderQuery {
+        $orderListTransfer->requireFormat();
+        $orderListTransfer->requireCustomer();
+
+        $customerReference = $orderListTransfer->getCustomer()->getCustomerReference();
+
+        if ($customerReference) {
+            $salesOrderQuery->filterByCustomerReference($customerReference);
+        }
+
+        if ($orderListTransfer->getFormat()->getExpandWithItems()) {
+            $salesOrderQuery->joinWithItem();
+        }
+
+        return $salesOrderQuery;
     }
 
     /**

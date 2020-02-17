@@ -19,22 +19,26 @@ class SalesOrderMapper
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $salesOrderEntityCollection
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param bool $isOrderItemsMappingEnabled
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function mapSalesOrderEntityCollectionToOrderListTransfer(
         ObjectCollection $salesOrderEntityCollection,
-        OrderListTransfer $orderListTransfer
+        OrderListTransfer $orderListTransfer,
+        bool $isOrderItemsMappingEnabled
     ): OrderListTransfer {
         foreach ($salesOrderEntityCollection as $salesOrderEntity) {
             $orderTransfer = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
 
-            $itemTransfers = $this->mapSalesOrderItemEntityCollectionToItemTransfers(
-                $salesOrderEntity->getItems(),
-                new ArrayObject()
-            );
+            if ($isOrderItemsMappingEnabled) {
+                $itemTransfers = $this->mapSalesOrderItemEntityCollectionToItemTransfers(
+                    $salesOrderEntity->getItems(),
+                    new ArrayObject()
+                );
 
-            $orderTransfer->setItems($itemTransfers);
+                $orderTransfer->setItems($itemTransfers);
+            }
 
             $salesOrderTotalsEntity = $salesOrderEntity->getLastOrderTotals();
 
