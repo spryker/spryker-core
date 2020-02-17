@@ -13,7 +13,6 @@ use Generated\Shared\DataBuilder\PaymentProviderBuilder;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
-use Orm\Zed\Payment\Persistence\SpyPaymentMethodStore;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
 
@@ -92,9 +91,10 @@ class PaymentDataHelper extends Module
         }
 
         foreach ($storeRelationTransfer->getIdStores() as $idStore) {
-            (new SpyPaymentMethodStore())
-                ->setFkPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
-                ->setFkStore($idStore)
+            SpyPaymentMethodStoreQuery::create()
+                ->filterByFkPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
+                ->filterByFkStore($idStore)
+                ->findOneOrCreate()
                 ->save();
         }
 
