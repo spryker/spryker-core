@@ -17,7 +17,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
-class MerchantProductAbstractMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
+class MerchantNamesProductAbstractMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
     protected const KEY_MERCHANT_NAME = 'merchant_name';
@@ -41,18 +41,16 @@ class MerchantProductAbstractMapExpanderPlugin implements ProductAbstractMapExpa
         array $productData,
         LocaleTransfer $localeTransfer
     ) {
-        if (is_array($productData[static::KEY_MERCHANT_NAMES])) {
-            foreach ($productData[static::KEY_MERCHANT_NAMES] as $merchantName) {
-                $pageMapBuilder
-                    ->addStringFacet($pageMapTransfer, static::KEY_MERCHANT_NAME, $merchantName)
-                    ->addFullTextBoosted($pageMapTransfer, $merchantName)
-                    ->addSuggestionTerms($pageMapTransfer, $merchantName)
-                    ->addCompletionTerms($pageMapTransfer, $merchantName);
-            }
+        if (!is_array($productData[static::KEY_MERCHANT_NAMES])) {
+            return $pageMapTransfer;
         }
 
-        if (is_array($productData['merchant_references'])) {
-            $pageMapTransfer->setMerchantReferences($productData['merchant_references']);
+        foreach ($productData[static::KEY_MERCHANT_NAMES] as $merchantName) {
+            $pageMapBuilder
+                ->addStringFacet($pageMapTransfer, static::KEY_MERCHANT_NAME, $merchantName)
+                ->addFullTextBoosted($pageMapTransfer, $merchantName)
+                ->addSuggestionTerms($pageMapTransfer, $merchantName)
+                ->addCompletionTerms($pageMapTransfer, $merchantName);
         }
 
         return $pageMapTransfer;

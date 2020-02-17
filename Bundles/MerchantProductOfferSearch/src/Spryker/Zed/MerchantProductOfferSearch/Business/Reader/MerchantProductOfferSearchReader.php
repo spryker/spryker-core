@@ -70,15 +70,15 @@ class MerchantProductOfferSearchReader implements MerchantProductOfferSearchRead
      */
     protected function mapGroupedMerchantsToMerchantProductAbstractTransfers(array $groupedMerchantProductAbstractData): array
     {
-        $MerchantProductAbstractTransfers = [];
+        $merchantProductAbstractTransfers = [];
 
         foreach ($groupedMerchantProductAbstractData as $idProductAbstract => $merchantProductAbstractData) {
-            $MerchantProductAbstractTransfers[] = (new MerchantProductAbstractTransfer())
+            $merchantProductAbstractTransfers[] = (new MerchantProductAbstractTransfer())
                 ->setIdProductAbstract($idProductAbstract)
                 ->setMerchantNames($merchantProductAbstractData[static::KEY_MERCHANT_NAMES])
                 ->setMerchantReferences($merchantProductAbstractData[static::KEY_MERCHANT_REFERENCES]);
         }
 
-        return $MerchantProductAbstractTransfers;
+        return $merchantProductAbstractTransfers;
     }
 }
