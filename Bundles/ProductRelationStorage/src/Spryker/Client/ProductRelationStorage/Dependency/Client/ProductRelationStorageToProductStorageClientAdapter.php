@@ -34,6 +34,41 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
     }
 
     /**
+     * The method check for `method_exists` is for BC for supporting old majors of `ProductStorage` module.
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    {
+        if (!method_exists($this->productStorageClient, 'getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName')) {
+            return $this->getProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+        }
+
+        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    {
+        $productAbstractStorageData = [];
+        foreach ($productAbstractIds as $productAbstractId) {
+            $productAbstractStorageData[] = $this->productStorageClient->getProductAbstractStorageData($productAbstractId, $localeName);
+        }
+
+        return $productAbstractStorageData;
+    }
+
+    /**
      * @param int[] $productAbstractIds
      * @param string $localeName
      * @param string|null $storeName
@@ -42,6 +77,10 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
      */
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStore(array $productAbstractIds, string $localeName, ?string $storeName = null): array
     {
-        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName($productAbstractIds, $localeName, $storeName);
+        if (method_exists($this->productStorageClient, 'getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName')) {
+            return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName($productAbstractIds, $localeName, $storeName);
+        }
+
+        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 }
