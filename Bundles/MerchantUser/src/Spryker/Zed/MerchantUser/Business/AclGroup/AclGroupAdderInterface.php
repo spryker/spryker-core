@@ -17,7 +17,7 @@ interface AclGroupAdderInterface
      *
      * @throws \Spryker\Zed\MerchantUser\Business\Exception\AclGroupNotFoundException
      *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     * @return void
      */
-    public function addMerchantAdminToGroupByReference(MerchantUserTransfer $merchantUserTransfer, string $reference): MerchantUserTransfer;
+    public function addMerchantAdminToGroup(MerchantUserTransfer $merchantUserTransfer, string $reference): void;
 }

@@ -158,7 +158,12 @@ interface AclQueryContainerInterface
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
-    public function queryRuleByPathAndRoles(RolesTransfer $roles, $bundle = AclConstants::VALIDATOR_WILDCARD, $controller = AclConstants::VALIDATOR_WILDCARD, $action = AclConstants::VALIDATOR_WILDCARD);
+    public function queryRuleByPathAndRoles(
+        RolesTransfer $roles,
+        $bundle = AclConstants::VALIDATOR_WILDCARD,
+        $controller = AclConstants::VALIDATOR_WILDCARD,
+        $action = AclConstants::VALIDATOR_WILDCARD
+    );
 
     /**
      * @api

@@ -33,9 +33,9 @@ class AclGroupAdder implements AclGroupAdderInterface
      *
      * @throws \Spryker\Zed\MerchantUser\Business\Exception\AclGroupNotFoundException
      *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     * @return void
      */
-    public function addMerchantAdminToGroupByReference(MerchantUserTransfer $merchantUserTransfer, string $reference): MerchantUserTransfer
+    public function addMerchantAdminToGroup(MerchantUserTransfer $merchantUserTransfer, string $reference): void
     {
         $groupTransfer = $this->aclFacade->findGroup((new GroupCriteriaFilterTransfer())->setReference($reference));
 
@@ -48,8 +48,5 @@ class AclGroupAdder implements AclGroupAdderInterface
         }
 
         $this->aclFacade->addUserToGroup($merchantUserTransfer->getUser()->getIdUser(), $groupTransfer->getIdAclGroup());
-        $merchantUserTransfer->getUser()->addAclGroup($groupTransfer);
-
-        return $merchantUserTransfer;
     }
 }

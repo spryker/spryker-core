@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
  */
-class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements AclInstallerPluginInterface
+class MerchantUserAclInstallerPlugin extends AbstractPlugin implements AclInstallerPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -26,7 +26,7 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
      */
     public function getRoles(): array
     {
-        return $this->getConfig()->getInstallRoles();
+        return $this->getConfig()->getInstallAclRoles();
     }
 
     /**
@@ -39,6 +39,6 @@ class MerchantPortalAdminAclInstallerPlugin extends AbstractPlugin implements Ac
      */
     public function getGroups(): array
     {
-        return $this->getConfig()->getInstallGroups();
+        return $this->getConfig()->getInstallAclGroups();
     }
 }

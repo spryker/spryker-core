@@ -7,6 +7,7 @@
         <property name="idMerchant" type="int"/>
         <property name="merchantProfile" type="MerchantProfile"/>
         <property name="email" type="string"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfile">
@@ -46,7 +47,6 @@
         <property name="username" type="string"/>
         <property name="status" type="string"/>
         <property name="lastName" type="string"/>
-        <property name="aclGroups" type="Group[]" singular="aclGroup"/>
     </transfer>
 
     <transfer name="MerchantResponse">
