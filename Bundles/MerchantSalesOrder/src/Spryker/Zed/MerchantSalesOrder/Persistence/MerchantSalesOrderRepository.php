@@ -119,15 +119,15 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
         MerchantOrderCriteriaFilterTransfer $merchantOrderCriteriaFilterTransfer
     ): SpyMerchantSalesOrderQuery {
-        if ($merchantOrderCriteriaFilterTransfer->getIdMerchantSalesOrder() !== null) {
+        if ($merchantOrderCriteriaFilterTransfer->getIdMerchantOrder() !== null) {
             $merchantSalesOrderQuery->filterByIdMerchantSalesOrder(
-                $merchantOrderCriteriaFilterTransfer->getIdMerchantSalesOrder()
+                $merchantOrderCriteriaFilterTransfer->getIdMerchantOrder()
             );
         }
 
-        if ($merchantOrderCriteriaFilterTransfer->getMerchantSalesOrderReference() !== null) {
+        if ($merchantOrderCriteriaFilterTransfer->getMerchantOrderReference() !== null) {
             $merchantSalesOrderQuery->filterByMerchantSalesOrderReference(
-                $merchantOrderCriteriaFilterTransfer->getMerchantSalesOrderReference()
+                $merchantOrderCriteriaFilterTransfer->getMerchantOrderReference()
             );
         }
 
@@ -137,9 +137,9 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             );
         }
 
-        if ($merchantOrderCriteriaFilterTransfer->getIdSalesOrder() !== null) {
+        if ($merchantOrderCriteriaFilterTransfer->getIdOrder() !== null) {
             $merchantSalesOrderQuery->filterByFkSalesOrder(
-                $merchantOrderCriteriaFilterTransfer->getIdSalesOrder()
+                $merchantOrderCriteriaFilterTransfer->getIdOrder()
             );
         }
 

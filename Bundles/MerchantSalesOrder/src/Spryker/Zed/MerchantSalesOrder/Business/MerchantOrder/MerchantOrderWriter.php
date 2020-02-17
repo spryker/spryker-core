@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrder;
+namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface;
 
-class MerchantSalesOrderWriter implements MerchantSalesOrderWriterInterface
+class MerchantOrderWriter implements MerchantOrderWriterInterface
 {
-    protected const FORMAT_MERCHANT_SALES_ORDER_REFERENCE = '%s--%s';
-
     /**
      * @var \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface
      */
@@ -23,9 +21,8 @@ class MerchantSalesOrderWriter implements MerchantSalesOrderWriterInterface
     /**
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
      */
-    public function __construct(
-        MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
-    ) {
+    public function __construct(MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager)
+    {
         $this->merchantSalesOrderEntityManager = $merchantSalesOrderEntityManager;
     }
 
@@ -35,24 +32,19 @@ class MerchantSalesOrderWriter implements MerchantSalesOrderWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function createMerchantSalesOrder(
-        OrderTransfer $orderTransfer,
-        string $merchantReference
-    ): MerchantOrderTransfer {
-        $orderTransfer->requireIdSalesOrder();
-        $orderTransfer->requireOrderReference();
-
-        $merchantSalesOrderReference = $this->generateMerchantSalesOrderReference(
+    public function createMerchantOrder(OrderTransfer $orderTransfer, string $merchantReference): MerchantOrderTransfer
+    {
+        $merchantOrderReference = $this->generateMerchantOrderReference(
             $orderTransfer->getOrderReference(),
             $merchantReference
         );
 
         $merchantOrderTransfer = new MerchantOrderTransfer();
         $merchantOrderTransfer->setMerchantReference($merchantReference);
-        $merchantOrderTransfer->setIdSalesOrder($orderTransfer->getIdSalesOrder());
-        $merchantOrderTransfer->setMerchantSalesOrderReference($merchantSalesOrderReference);
+        $merchantOrderTransfer->setIdOrder($orderTransfer->getIdSalesOrder());
+        $merchantOrderTransfer->setMerchantOrderReference($merchantOrderReference);
 
-        return $this->merchantSalesOrderEntityManager->createMerchantSalesOrder($merchantOrderTransfer);
+        return $this->merchantSalesOrderEntityManager->createMerchantOrder($merchantOrderTransfer);
     }
 
     /**
@@ -61,8 +53,8 @@ class MerchantSalesOrderWriter implements MerchantSalesOrderWriterInterface
      *
      * @return string
      */
-    protected function generateMerchantSalesOrderReference(string $orderReference, string $merchantReference): string
+    protected function generateMerchantOrderReference(string $orderReference, string $merchantReference): string
     {
-        return sprintf(static::FORMAT_MERCHANT_SALES_ORDER_REFERENCE, $orderReference, $merchantReference);
+        return sprintf('%s--%s', $orderReference, $merchantReference);
     }
 }

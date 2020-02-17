@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderTotals;
+namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface;
 
-class MerchantSalesOrderTotalsWriter implements MerchantSalesOrderTotalsWriterInterface
+class MerchantOrderTotalsWriter implements MerchantOrderTotalsWriterInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface
@@ -34,25 +34,9 @@ class MerchantSalesOrderTotalsWriter implements MerchantSalesOrderTotalsWriterIn
      */
     public function createMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): TotalsTransfer
     {
-        $totalsTransfer = $this->getTotalsTransfer($merchantOrderTransfer);
-
-        return $this->merchantSalesOrderEntityManager->createMerchantSalesOrderTotals($totalsTransfer);
-    }
-
-    /**
-     * Dummy method, must be replaced/deleted at the step of totals counting implementation.
-     * Do not forget
-     *
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\TotalsTransfer
-     */
-    protected function getTotalsTransfer(MerchantOrderTransfer $merchantOrderTransfer): TotalsTransfer
-    {
         $total = rand(1000, 9999);
-
-        return (new TotalsTransfer())
-            ->setIdMerchantSalesOrder($merchantOrderTransfer->getIdMerchantSalesOrder())
+        $totalsTransfer = (new TotalsTransfer())
+            ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
             ->setRefundTotal(0)
             ->setGrandTotal($total)
             ->setTaxTotal((new TaxTotalTransfer()))
@@ -60,5 +44,7 @@ class MerchantSalesOrderTotalsWriter implements MerchantSalesOrderTotalsWriterIn
             ->setSubtotal($total)
             ->setDiscountTotal(0)
             ->setCanceledTotal(0);
+
+        return $this->merchantSalesOrderEntityManager->createMerchantOrderTotals($totalsTransfer);
     }
 }

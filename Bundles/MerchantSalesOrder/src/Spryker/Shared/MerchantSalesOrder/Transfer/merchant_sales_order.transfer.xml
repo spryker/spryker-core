@@ -16,29 +16,29 @@
     </transfer>
 
     <transfer name="MerchantOrder">
-        <property name="idMerchantSalesOrder" type="int"/>
-        <property name="merchantSalesOrderReference" type="string"/>
-        <property name="idSalesOrder" type="int"/>
+        <property name="idMerchantOrder" type="int"/>
+        <property name="merchantOrderReference" type="string"/>
+        <property name="idOrder" type="int"/>
         <property name="merchantReference" type="string"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="totals" type="Totals"/>
     </transfer>
 
     <transfer name="MerchantOrderCollection">
-        <property name="orders" type="MerchantOrder[]" singular="order"/>
+        <property name="merchantOrders" type="MerchantOrder[]" singular="merchantOrder"/>
     </transfer>
 
     <transfer name="MerchantOrderItem">
-        <property name="idMerchantSalesOrderItem" type="int"/>
-        <property name="idSalesOrderItem" type="int"/>
-        <property name="idMerchantSalesOrder" type="int"/>
-        <property name="item" type="Item"/>
+        <property name="idMerchantOrderItem" type="int"/>
+        <property name="idOrderItem" type="int"/>
+        <property name="idMerchantOrder" type="int"/>
+        <property name="orderItem" type="Item"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteriaFilter">
-        <property name="idMerchantSalesOrder" type="int"/>
-        <property name="merchantSalesOrderReference" type="string"/>
-        <property name="idSalesOrder" type="int"/>
+        <property name="idMerchantOrder" type="int"/>
+        <property name="merchantOrderReference" type="string"/>
+        <property name="idOrder" type="int"/>
         <property name="idMerchant" type="int"/>
         <property name="merchantReference" type="string"/>
         <property name="withItems" type="bool"/>
@@ -69,7 +69,7 @@
     </transfer>
 
     <transfer name="Totals">
-        <property name="idMerchantSalesOrder" type="int"/>
+        <property name="idMerchantOrder" type="int"/>
         <property name="refundTotal" type="int"/>
         <property name="grandTotal" type="int"/>
         <property name="taxTotal" type="TaxTotal"/>

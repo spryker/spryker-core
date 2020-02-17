@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderTotals;
+namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
-interface MerchantSalesOrderTotalsWriterInterface
+interface MerchantOrderTotalsWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer

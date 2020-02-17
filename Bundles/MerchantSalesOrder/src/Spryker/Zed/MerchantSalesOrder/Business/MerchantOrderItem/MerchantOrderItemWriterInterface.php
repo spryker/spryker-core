@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderItem;
+namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderItem;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
-interface MerchantSalesOrderItemWriterInterface
+interface MerchantOrderItemWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -19,7 +19,7 @@ interface MerchantSalesOrderItemWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer
      */
-    public function createMerchantSalesOrderItem(
+    public function createMerchantOrderItem(
         ItemTransfer $itemTransfer,
         MerchantOrderTransfer $merchantOrderTransfer
     ): MerchantOrderItemTransfer;

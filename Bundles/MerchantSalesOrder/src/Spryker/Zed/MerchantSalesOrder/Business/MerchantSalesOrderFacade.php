@@ -29,11 +29,9 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
-    public function createMerchantSalesOrders(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer
+    public function createMerchantOrderCollection(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer
     {
-        return $this->getFactory()
-            ->createMerchantSalesOrderCreator()
-            ->createMerchantSalesOrders($orderTransfer);
+        return $this->getFactory()->createMerchantOrderCreator()->createMerchantOrderCollection($orderTransfer);
     }
 
     /**
@@ -48,8 +46,7 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     public function getMerchantOrderCollection(
         MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
     ): MerchantOrderCollectionTransfer {
-        return $this->getRepository()
-            ->getMerchantOrderCollection($merchantCriteriaFilterTransfer);
+        return $this->getRepository()->getMerchantOrderCollection($merchantCriteriaFilterTransfer);
     }
 
     /**
@@ -64,7 +61,6 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     public function findMerchantOrder(
         MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
     ): ?MerchantOrderTransfer {
-        return $this->getRepository()
-            ->findMerchantOrder($merchantCriteriaFilterTransfer);
+        return $this->getRepository()->findMerchantOrder($merchantCriteriaFilterTransfer);
     }
 }
