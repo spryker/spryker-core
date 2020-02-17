@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CreateController extends BaseProductRelationController
 {
+    protected const REDIRECT_URL = '/product-relation-gui/edit/index';
+    protected const MESSAGE_SUCCESS = 'Product relation successfully created';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -36,10 +39,10 @@ class CreateController extends BaseProductRelationController
                 ->getProductRelationFacade()
                 ->createProductRelation($productRelationForm->getData());
 
-            $this->addSuccessMessage('Product relation successfully created');
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS);
 
             $editProductRelationUrl = Url::generate(
-                '/product-relation-gui/edit/',
+                static::REDIRECT_URL,
                 [
                     EditController::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
                 ]

@@ -31,7 +31,9 @@ class ProductRelationTable extends AbstractTable
     public const URL_RELATION_DEACTIVATE = '/product-relation-gui/edit/deactivate';
     public const URL_RELATION_DELETE = '/product-relation-gui/delete/index';
     public const URL_RELATION_ACTIVATE = '/product-relation-gui/edit/activate';
-    public const URL_PRODUCT_RELATION_LIST = '/product-relation-gui/list';
+    public const URL_PRODUCT_RELATION_LIST = '/product-relation-gui/list/index';
+    public const URL_PRODUCT_RELATION_EDIT = '/product-relation-gui/edit/index';
+    public const URL_PRODUCT_RELATION_VIEW = '/product-relation-gui/view/index';
 
     /**
      * @var \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -257,7 +259,7 @@ class ProductRelationTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate(
-                '/product-relation-gui/view/index',
+                static::URL_PRODUCT_RELATION_VIEW,
                 [
                     ViewController::URL_PARAM_ID_PRODUCT_RELATION => $item[SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION],
                 ]
@@ -289,7 +291,7 @@ class ProductRelationTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate(
-                '/product-relation-gui/edit/index',
+                static::URL_PRODUCT_RELATION_EDIT,
                 [
                     'id-product-relation' => $item[SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION],
                 ]

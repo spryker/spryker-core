@@ -20,8 +20,8 @@ class EditController extends BaseProductRelationController
     protected const MESSAGE_ACTIVATE_SUCCESS = 'Relation successfully activated.';
     protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
 
-    protected const REDIRECT_URL_EDIT = '/product-relation-gui/edit/';
-    protected const REDIRECT_URL_LIST = '/product-relation-gui/list';
+    protected const REDIRECT_URL_EDIT = '/product-relation-gui/edit/index';
+    protected const REDIRECT_URL_LIST = '/product-relation-gui/list/index';
 
     protected const ERROR_MESSAGE = 'Product relation with id "%d" not found.';
 

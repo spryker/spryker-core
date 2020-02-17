@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductSelectorTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -25,7 +26,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductRelationRepository extends AbstractRepository implements ProductRelationRepositoryInterface
 {
     protected const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
-    protected const COL_PRICE_PRODUCT = 'spy_price_product.price';
     protected const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
 
     /**
@@ -61,7 +61,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     public function findProductAttributes(): array
     {
         $productAttributeKeyEntities = $this->getFactory()
-            ->createProductAttributeQuery()
+            ->getProductAttributeQuery()
             ->find();
 
         if ($productAttributeKeyEntities->getData() === []) {
@@ -86,14 +86,14 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     {
         $productSelectorTransfer = new ProductSelectorTransfer();
         $productAbstractEntity = $this->getFactory()
-            ->createProductAbstractQuery()
+            ->getProductAbstractQuery()
             ->leftJoinSpyProduct()
             ->select([
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 SpyProductAbstractTableMap::COL_SKU,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION,
-                static::COL_PRICE_PRODUCT,
+                SpyPriceProductTableMap::COL_PRICE,
                 SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL,
             ])
             ->withColumn(
@@ -129,7 +129,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
             ->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->addGroupByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
             ->addGroupByColumn(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->addGroupByColumn(static::COL_PRICE_PRODUCT)
+            ->addGroupByColumn(SpyPriceProductTableMap::COL_PRICE)
             ->findOne();
 
         if (!$productAbstractEntity) {

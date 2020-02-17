@@ -90,9 +90,9 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function createProductAttributeQuery(): SpyProductAttributeKeyQuery
+    public function getProductAttributeQuery(): SpyProductAttributeKeyQuery
     {
-        return SpyProductAttributeKeyQuery::create();
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY);
     }
 
     /**
@@ -114,9 +114,9 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function createProductAbstractQuery(): SpyProductAbstractQuery
+    public function getProductAbstractQuery(): SpyProductAbstractQuery
     {
-        return SpyProductAbstractQuery::create();
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::PROPEL_QUERY_SPY_PRODUCT_ABSTRACT);
     }
 
     /**

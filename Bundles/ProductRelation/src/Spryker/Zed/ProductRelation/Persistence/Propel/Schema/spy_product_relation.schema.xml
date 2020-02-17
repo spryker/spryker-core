@@ -64,11 +64,11 @@
         <column name="fk_product_relation" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
 
-        <foreign-key name="spy_product_relation_store-fk_product_relation" foreignTable="spy_product_relation">
+        <foreign-key name="spy_product_relation_store-fk_product_relation" foreignTable="spy_product_relation" phpName="ProductRelation" refPhpName="ProductRelationStore">
             <reference local="fk_product_relation" foreign="id_product_relation"/>
         </foreign-key>
 
-        <foreign-key name="spy_product_relation_store-fk_store" foreignTable="spy_store">
+        <foreign-key name="spy_product_relation_store-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="ProductRelationStore">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 

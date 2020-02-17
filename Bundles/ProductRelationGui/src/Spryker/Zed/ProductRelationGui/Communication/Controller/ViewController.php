@@ -17,7 +17,7 @@ class ViewController extends AbstractController
 {
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
     protected const ERROR_MESSAGE = 'Product relation not found';
-    protected const REDIRECT_URL = '/product-relation-gui/list';
+    protected const REDIRECT_URL = '/product-relation-gui/list/index';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
