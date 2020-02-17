@@ -89,7 +89,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
             return [];
         }
 
-        return $this->getBulkProductMeasurementUnitStorageDataByProductMeasurementIds($productMeasurementUnitIds);
+        return $this->getProductMeasurementUnitStorageCollection($productMeasurementUnitIds);
     }
 
     /**
@@ -97,23 +97,30 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
      */
-    public function getBulkProductMeasurementUnitStorageDataByProductMeasurementIds(array $productMeasurementUnitIds): array
+    public function getProductMeasurementUnitStorageCollection(array $productMeasurementUnitIds): array
     {
         if (!$productMeasurementUnitIds) {
             return [];
         }
 
+        return $this->mapProductMeasurementUnitStorageDataToProductMeasurementUnitStorageTransfers(
+            $this->storageClient->getMulti($this->generateKeys($productMeasurementUnitIds))
+        );
+    }
+
+    /**
+     * @param array $productMeasurementUnitIds
+     *
+     * @return array
+     */
+    protected function generateKeys(array $productMeasurementUnitIds): array
+    {
         $productMeasurementUnitStorageKeys = [];
         foreach ($productMeasurementUnitIds as $idProductMeasurementUnit) {
             $productMeasurementUnitStorageKeys[] = $this->generateKey($idProductMeasurementUnit);
         }
-        $productMeasurementUnitsStorageData = $this->storageClient->getMulti($productMeasurementUnitStorageKeys);
-        $productMeasurementUnitStorageTransfers = $this
-            ->mapProductMeasurementUnitStorageDataToProductMeasurementUnitStorageTransfers(
-                $productMeasurementUnitsStorageData
-            );
 
-        return $productMeasurementUnitStorageTransfers;
+        return $productMeasurementUnitStorageKeys;
     }
 
     /**
@@ -125,13 +132,14 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
         array $productMeasurementUnitsStorageData
     ): array {
         $productConcreteMeasurementUnitStorageTransfers = [];
-        foreach ($productMeasurementUnitsStorageData as $storageKey => $data) {
-            if (!$data) {
+        foreach ($productMeasurementUnitsStorageData as $dataItem) {
+            if (!$dataItem) {
                 continue;
             }
 
-            $productConcreteMeasurementUnitStorageTransfers[] =
-                $this->mapToProductMeasurementUnitStorage(json_decode($data, true));
+            $productConcreteMeasurementUnitStorageTransfers[] = $this->mapToProductMeasurementUnitStorage(
+                $this->utilEncodingService->decodeJson($dataItem, true)
+            );
         }
 
         return $productConcreteMeasurementUnitStorageTransfers;

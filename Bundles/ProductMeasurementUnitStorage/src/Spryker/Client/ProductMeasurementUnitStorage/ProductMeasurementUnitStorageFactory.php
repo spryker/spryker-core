@@ -44,7 +44,8 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
         return new ProductConcreteMeasurementUnitStorageReader(
             $this->getStorageClient(),
             $this->getStore(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncodingService()
         );
     }
 

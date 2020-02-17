@@ -23,5 +23,5 @@ interface ProductConcreteMeasurementUnitStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
      */
-    public function getBulkProductConcreteMeasurementUnitStorage(array $productConcreteIds): array;
+    public function getProductConcreteMeasurementUnitStorageCollection(array $productConcreteIds): array;
 }

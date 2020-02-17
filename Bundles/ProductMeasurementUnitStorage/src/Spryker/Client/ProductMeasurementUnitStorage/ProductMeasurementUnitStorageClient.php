@@ -120,7 +120,7 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[][]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array
     {

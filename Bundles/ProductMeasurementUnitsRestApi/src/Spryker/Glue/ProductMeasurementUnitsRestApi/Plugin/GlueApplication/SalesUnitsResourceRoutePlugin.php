@@ -40,7 +40,7 @@ class SalesUnitsResourceRoutePlugin extends AbstractPlugin implements ResourceRo
      */
     public function getController(): string
     {
-        return ProductMeasurementUnitsRestApiConfig::CONTROLLER_SALES_UNITS;
+        return 'sales-units-resource';
     }
 
     /**

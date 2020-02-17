@@ -11,16 +11,12 @@ use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 
 class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeasurementUnitStorageReaderInterface
 {
-    /**
-     * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
-     */
-    protected const KV_PREFIX = 'kv:';
-
     /**
      * @var \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface
      */
@@ -37,18 +33,27 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+
+    /**
      * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface $storageClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ProductMeasurementUnitStorageToStorageClientInterface $storageClient,
         Store $store,
-        ProductMeasurementUnitStorageToSynchronizationServiceInterface $synchronizationService
+        ProductMeasurementUnitStorageToSynchronizationServiceInterface $synchronizationService,
+        ProductMeasurementUnitStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
         $this->store = $store;
         $this->synchronizationService = $synchronizationService;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -73,24 +78,23 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
      */
-    public function getBulkProductConcreteMeasurementUnitStorage(array $productConcreteIds): array
+    public function getProductConcreteMeasurementUnitStorageCollection(array $productConcreteIds): array
     {
         if (!$productConcreteIds) {
             return [];
         }
 
         $productConcreteMeasurementUnitStorageKeys = [];
-        foreach ($productConcreteIds as $productConcreteSku => $idProductConcrete) {
-            $productConcreteMeasurementUnitStorageKeys[$productConcreteSku] = $this->generateKey($idProductConcrete);
+        foreach ($productConcreteIds as $idProductConcrete) {
+            $productConcreteMeasurementUnitStorageKeys[] = $this->generateKey($idProductConcrete);
         }
         $productConcreteMeasurementUnitsStorageData = $this->storageClient
             ->getMulti($productConcreteMeasurementUnitStorageKeys);
-        $productConcreteMeasurementUnitStorageTransfers = $this
+
+        return $this
             ->mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
                 $productConcreteMeasurementUnitsStorageData
             );
-
-        return $productConcreteMeasurementUnitStorageTransfers;
     }
 
     /**
@@ -102,14 +106,14 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
         array $productConcreteMeasurementUnitsStorageData
     ): array {
         $productConcreteMeasurementUnitStorageTransfers = [];
-        foreach ($productConcreteMeasurementUnitsStorageData as $storageKey => $data) {
-            if (!$data) {
+        foreach ($productConcreteMeasurementUnitsStorageData as $storageKey => $dataItem) {
+            if (!$dataItem) {
                 continue;
             }
 
             $idProductConcrete = $this->getIdProductConcrete($storageKey);
             $productConcreteMeasurementUnitStorageTransfers[$idProductConcrete] =
-                $this->mapToProductConcreteMeasurementUnitStorage(json_decode($data, true));
+                $this->mapToProductConcreteMeasurementUnitStorage($this->utilEncodingService->decodeJson($dataItem, true));
         }
 
         return $productConcreteMeasurementUnitStorageTransfers;

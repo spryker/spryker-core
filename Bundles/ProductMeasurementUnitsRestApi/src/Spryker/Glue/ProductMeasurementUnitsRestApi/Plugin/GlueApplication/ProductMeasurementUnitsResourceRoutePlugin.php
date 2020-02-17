@@ -39,7 +39,7 @@ class ProductMeasurementUnitsResourceRoutePlugin extends AbstractPlugin implemen
      */
     public function getController(): string
     {
-        return ProductMeasurementUnitsRestApiConfig::CONTROLLER_PRODUCT_MEASUREMENT_UNITS;
+        return 'product-measurement-units-resource';
     }
 
     /**

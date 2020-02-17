@@ -31,5 +31,5 @@ interface ProductMeasurementUnitStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
      */
-    public function getBulkProductMeasurementUnitStorageDataByProductMeasurementIds(array $productMeasurementUnitIds): array;
+    public function getProductMeasurementUnitStorageCollection(array $productMeasurementUnitIds): array;
 }

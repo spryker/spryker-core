@@ -64,7 +64,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         }
 
         $productConcreteMeasurementUnitStorageTransfers = $this->productConcreteMeasurementUnitStorageReader
-            ->getBulkProductConcreteMeasurementUnitStorage($productConcreteIds);
+            ->getProductConcreteMeasurementUnitStorageCollection($productConcreteIds);
 
         if (!$productConcreteMeasurementUnitStorageTransfers) {
             return [];

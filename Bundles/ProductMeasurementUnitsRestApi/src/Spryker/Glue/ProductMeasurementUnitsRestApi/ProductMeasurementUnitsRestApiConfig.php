@@ -39,9 +39,6 @@ class ProductMeasurementUnitsRestApiConfig extends AbstractBundleConfig
      */
     public const RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED = 'Concrete product sku is not specified.';
 
-    public const CONTROLLER_PRODUCT_MEASUREMENT_UNITS = 'product-measurement-units-resource';
-    public const CONTROLLER_SALES_UNITS = 'sales-units-resource';
-
     public const RESPONSE_CODE_PRODUCT_MEASUREMENT_UNIT_CODE_IS_NOT_SPECIFIED = '3401';
     public const RESPONSE_CODE_PRODUCT_MEASUREMENT_UNIT_NOT_FOUND = '3402';
 

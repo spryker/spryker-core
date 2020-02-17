@@ -23,5 +23,5 @@ interface ProductMeasurementUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function getBulkProductMeasurementUnits(array $productMeasurementUnitIds): array;
+    public function getProductMeasurementUnits(array $productMeasurementUnitIds): array;
 }

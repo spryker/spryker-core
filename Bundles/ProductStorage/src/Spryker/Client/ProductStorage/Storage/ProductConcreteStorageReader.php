@@ -133,11 +133,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $identifiersByStorageKey = $this->getIdentifiersIndexedByStorageKey($storageKeys);
         $productConcreteIds = [];
         foreach ($mappingData as $storageKey => $mappingDataItem) {
-            $decodedMappingDataItem = json_decode($mappingDataItem, true);
+            $decodedMappingDataItem = $this->utilEncodingService->decodeJson($mappingDataItem, true);
             $productConcreteIds[$identifiersByStorageKey[$storageKey]] = $decodedMappingDataItem[static::KEY_ID] ?? null;
         }
 
-        return $productConcreteIds;
+        return $this->filterRestrictedProductConcreteIds($productConcreteIds);
     }
 
     /**
