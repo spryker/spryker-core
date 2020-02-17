@@ -10,9 +10,6 @@ namespace Spryker\Zed\ProductRelation;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleBridge;
-use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToMoneyBridge;
-use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeBridge;
-use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToProductBridge as FacadeProductRelationToProductBridge;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchBridge;
 use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProductBridge as QueryContainerProductRelationToProductBridge;
 use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToPropelQueryBuilderBridge;
@@ -25,9 +22,6 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'locale facade';
     public const FACADE_TOUCH = 'touch facade';
-    public const FACADE_MONEY = 'money facade';
-    public const FACADE_PRODUCT = 'product facade';
-    public const FACADE_PRICE_PRODUCT = 'price product facade';
 
     public const QUERY_CONTAINER_PRODUCT = 'product query container';
     public const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'query propel rule container';
@@ -43,23 +37,6 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addFacadeLocale($container);
         $container = $this->addFacadeTouch($container);
-
-        $container = $this->addServiceUtilEncoding($container);
-
-        return $container;
-    }
-
-     /**
-      * @param \Spryker\Zed\Kernel\Container $container
-      *
-      * @return \Spryker\Zed\Kernel\Container
-      */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $container = $this->addFacadeLocale($container);
-        $container = $this->addFacadeMoney($container);
-        $container = $this->addFacadeProduct($container);
-        $container = $this->addPriceProductFacade($container);
 
         $container = $this->addServiceUtilEncoding($container);
 
@@ -134,22 +111,6 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeMoney(Container $container)
-    {
-        $container[static::FACADE_MONEY] = function (Container $container) {
-            return new ProductRelationToMoneyBridge(
-                $container->getLocator()->money()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addServiceUtilEncoding(Container $container)
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
@@ -166,43 +127,11 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeProduct(Container $container)
-    {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new FacadeProductRelationToProductBridge(
-                $container->getLocator()->product()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFacadeTouch(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductRelationToTouchBridge(
                 $container->getLocator()->touch()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPriceProductFacade(Container $container)
-    {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
-            return new ProductRelationToPriceProductFacadeBridge(
-                $container->getLocator()->priceProduct()->facade()
             );
         };
 

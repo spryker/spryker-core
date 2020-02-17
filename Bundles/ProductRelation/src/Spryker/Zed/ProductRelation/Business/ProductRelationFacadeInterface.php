@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductRelation\Business;
 
+use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
+use Generated\Shared\Transfer\ProductSelectorTransfer;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationBusinessFactory getFactory()
@@ -120,4 +122,41 @@ interface ProductRelationFacadeInterface
      * @return bool
      */
     public function deleteProductRelation($idProductRelation);
+
+    /**
+     * Specification:
+     * - Finds unique product relation by given criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findUniqueProductRelation(
+        ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+    ): ?ProductRelationTransfer;
+
+    /**
+     * Specification:
+     * - Gets filters for javascript.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getJavascriptFilters(): array;
+
+    /**
+     * Specification:
+     * - Finds product with information needed by product selector.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductSelectorTransfer
+     */
+    public function findProductForProductSelector(int $idProductAbstract, int $idLocale): ProductSelectorTransfer;
 }

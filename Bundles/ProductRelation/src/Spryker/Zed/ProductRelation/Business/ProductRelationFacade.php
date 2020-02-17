@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\ProductRelation\Business;
 
+use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
+use Generated\Shared\Transfer\ProductSelectorTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
  */
 class ProductRelationFacade extends AbstractFacade implements ProductRelationFacadeInterface
 {
@@ -145,5 +148,49 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
         $this->getFactory()
             ->createProductRelationUpdater()
             ->rebuildRelations();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findUniqueProductRelation(
+        ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+    ): ?ProductRelationTransfer {
+        return $this->getRepository()->findUniqueProductRelation($productRelationCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getJavascriptFilters(): array
+    {
+        return $this->getFactory()
+            ->createFilterProvider()
+            ->getFilters();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductSelectorTransfer
+     */
+    public function findProductForProductSelector(int $idProductAbstract, int $idLocale): ProductSelectorTransfer
+    {
+        return $this->getRepository()->findProductWithCategoriesByFkLocale($idProductAbstract, $idLocale);
     }
 }
