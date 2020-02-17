@@ -25,13 +25,20 @@
     <div class="spryker-login">
         <div class="wrapper wrapper-content loginColumns">
             {% include '@Messenger/Partials/flash-messages.twig' %}
-            {% block content %}{% endblock %}
+           46436
+            <mp-login></mp-login>
+            {#{% block content %}{% endblock %}#}
+
         </div>
     </div>
 </div>
 
 {% block footer_js %}
-    <script src="{{ assetsPath('js/spryker-zed-gui-commons.js') }}"></script>
+    <script src="{{ assetsPath('js/polyfills-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/vendor-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/styles-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/main-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/runtime-es5.js') }}"></script>
 {% endblock %}
 
 </body>

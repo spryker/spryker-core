@@ -7,13 +7,18 @@
       "projectType": "library",
       "root": "projects/zed-layout-central",
       "sourceRoot": "projects/zed-layout-central/src",
-      "prefix": "lib",
+      "prefix": "zed",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "projects/zed-layout-central/tsconfig.lib.json",
             "project": "projects/zed-layout-central/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/zed-layout-central/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -37,6 +42,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "zed-layout-central"
+    }
+  },
+  "defaultProject": "zed-layout-central",
+  "cli": {
+    "analytics": false
+  }
 }
