@@ -48,7 +48,8 @@ class LabelReader implements LabelReaderInterface
             return null;
         }
 
-        $this->assertProductLabelTransferRelations($productLabelTransfer);
+        $this->addLocalizedAttributes($productLabelTransfer);
+        $this->addStoreRelations($productLabelTransfer);
 
         return $productLabelTransfer;
     }
@@ -66,7 +67,8 @@ class LabelReader implements LabelReaderInterface
             return null;
         }
 
-        $this->assertProductLabelTransferRelations($productLabelTransfer);
+        $this->addLocalizedAttributes($productLabelTransfer);
+        $this->addStoreRelations($productLabelTransfer);
 
         return $productLabelTransfer;
     }
@@ -77,7 +79,7 @@ class LabelReader implements LabelReaderInterface
     public function findAll()
     {
         $productLabelTransferCollection = $this->productLabelRepository->getAllProductLabelsSortedByPosition();
-        $this->assertProductLabelTransferCollectionRelations($productLabelTransferCollection);
+        $this->expandProductLabelTransferCollectionRelations($productLabelTransferCollection);
 
         return $productLabelTransferCollection;
     }
@@ -90,7 +92,7 @@ class LabelReader implements LabelReaderInterface
     public function findAllByIdProductAbstract($idProductAbstract)
     {
         $productLabelTransferCollection = $this->productLabelRepository->getAllProductLabelsByIdProductAbstract($idProductAbstract);
-        $this->assertProductLabelTransferCollectionRelations($productLabelTransferCollection);
+        $this->expandProductLabelTransferCollectionRelations($productLabelTransferCollection);
 
         return $productLabelTransferCollection;
     }
@@ -120,7 +122,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return void
      */
-    protected function addLocalizedAttributes(ProductLabelTransfer $productLabelTransfer)
+    protected function addLocalizedAttributes(ProductLabelTransfer $productLabelTransfer): void
     {
         $productLabelTransfer->setLocalizedAttributesCollection(
             $this
@@ -143,25 +145,15 @@ class LabelReader implements LabelReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return void
-     */
-    protected function assertProductLabelTransferRelations(ProductLabelTransfer $productLabelTransfer): void
-    {
-        $this->addLocalizedAttributes($productLabelTransfer);
-        $this->addStoreRelations($productLabelTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransferCollection
      *
      * @return void
      */
-    protected function assertProductLabelTransferCollectionRelations(array $productLabelTransferCollection): void
+    protected function expandProductLabelTransferCollectionRelations(array $productLabelTransferCollection): void
     {
         foreach ($productLabelTransferCollection as $productLabelTransfer) {
-            $this->assertProductLabelTransferRelations($productLabelTransfer);
+            $this->addLocalizedAttributes($productLabelTransfer);
+            $this->addStoreRelations($productLabelTransfer);
         }
     }
 }

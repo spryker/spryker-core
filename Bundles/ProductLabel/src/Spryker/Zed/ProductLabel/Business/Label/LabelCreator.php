@@ -37,24 +37,24 @@ class LabelCreator implements LabelCreatorInterface
     /**
      * @var \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface
      */
-    protected $storeRelationUpdater;
+    protected $productLabelStoreRelationUpdater;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
-     * @param \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater
+     * @param \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface $productLabelStoreRelationUpdater
      */
     public function __construct(
         LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
         ProductLabelQueryContainerInterface $queryContainer,
         LabelDictionaryTouchManagerInterface $dictionaryTouchManager,
-        ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater
+        ProductLabelStoreRelationUpdaterInterface $productLabelStoreRelationUpdater
     ) {
         $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
         $this->queryContainer = $queryContainer;
         $this->dictionaryTouchManager = $dictionaryTouchManager;
-        $this->storeRelationUpdater = $storeRelationUpdater;
+        $this->productLabelStoreRelationUpdater = $productLabelStoreRelationUpdater;
     }
 
     /**
@@ -171,6 +171,6 @@ class LabelCreator implements LabelCreatorInterface
             ->getStoreRelation()
             ->setIdEntity($productLabelTransfer->getIdProductLabel());
 
-        $this->storeRelationUpdater->update($productLabelTransfer->getStoreRelation());
+        $this->productLabelStoreRelationUpdater->update($productLabelTransfer->getStoreRelation());
     }
 }

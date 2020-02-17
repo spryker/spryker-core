@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Spryker\Shared\ProductLabel\ProductLabelConstants;
+use Spryker\Zed\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -277,7 +277,7 @@ class ProductLabelFormType extends AbstractType
                         return null;
                     }
 
-                    return $dateAsObject->format(ProductLabelConstants::VALIDITY_DATE_FORMAT);
+                    return $dateAsObject->format(ProductLabelConfig::VALIDITY_DATE_FORMAT);
                 }
             ));
     }

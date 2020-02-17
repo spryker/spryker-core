@@ -201,8 +201,8 @@ class ProductLabelFacadeTest extends Unit
     public function testCreateLabelShouldPersistStoreRelations(): void
     {
         //Arrange
-        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => 'AT']);
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
         $storeRelationSeedData = [
             StoreRelationTransfer::ID_STORES => [
                 $storeTransferDE->getIdStore(),

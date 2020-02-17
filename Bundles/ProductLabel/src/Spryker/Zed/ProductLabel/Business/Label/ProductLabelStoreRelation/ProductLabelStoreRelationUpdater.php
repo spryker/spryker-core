@@ -46,7 +46,7 @@ class ProductLabelStoreRelationUpdater implements ProductLabelStoreRelationUpdat
     public function update(StoreRelationTransfer $storeRelationTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($storeRelationTransfer) {
-            $this->executeCreateTransaction($storeRelationTransfer);
+            $this->executeUpdateTransaction($storeRelationTransfer);
         });
     }
 
@@ -55,7 +55,7 @@ class ProductLabelStoreRelationUpdater implements ProductLabelStoreRelationUpdat
      *
      * @return void
      */
-    protected function executeCreateTransaction(StoreRelationTransfer $storeRelationTransfer): void
+    protected function executeUpdateTransaction(StoreRelationTransfer $storeRelationTransfer): void
     {
         $storeRelationTransfer->requireIdEntity();
 

@@ -105,9 +105,10 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->useSpyProductLabelProductAbstractQuery()
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
+            ->select(ProductLabelTransfer::ID_PRODUCT_LABEL)
             ->find();
 
-        return $productLabelEntities->getColumnValues(ProductLabelTransfer::ID_PRODUCT_LABEL);
+        return $productLabelEntities->getData();
     }
 
     /**
@@ -123,9 +124,10 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->useSpyProductLabelProductAbstractQuery()
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
+            ->select(ProductLabelTransfer::ID_PRODUCT_LABEL)
             ->find();
 
-        return $productLabelEntities->getColumnValues(ProductLabelTransfer::ID_PRODUCT_LABEL);
+        return $productLabelEntities->getData();
     }
 
     /**

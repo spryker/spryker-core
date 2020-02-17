@@ -83,6 +83,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
             ->createProductLabelStoreQuery()
             ->filterByFkProductLabel($idProductLabel)
             ->filterByFkStore_In($idStores)
+            ->find()
             ->delete();
     }
 
