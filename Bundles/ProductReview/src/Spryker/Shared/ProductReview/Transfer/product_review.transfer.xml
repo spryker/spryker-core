@@ -113,7 +113,7 @@
     </transfer>
 
     <transfer name="RatingAggregation">
-        <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
+        <property name="ratingAggregation" type="int[]" singular="ratingAggregation"/>
     </transfer>
 
 </transfers>
