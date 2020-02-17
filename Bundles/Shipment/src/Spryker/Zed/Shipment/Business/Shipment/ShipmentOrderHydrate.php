@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Shipment;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -138,7 +139,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             );
         }
 
-        return $orderTransfer;
+        return $this->sortOrderItemsByIdShipment($orderTransfer);
     }
 
     /**
@@ -154,7 +155,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         array $idSalesOrderItemList
     ): OrderTransfer {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if (!in_array($itemTransfer->getIdSalesOrderItem(), $idSalesOrderItemList)) {
+            if (!in_array($itemTransfer->getIdSalesOrderItem(), $idSalesOrderItemList, true)) {
                 continue;
             }
 
@@ -274,5 +275,32 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function sortOrderItemsByIdShipment(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $orderItemTransfers = $orderTransfer->getItems();
+        if ($orderItemTransfers->count() === 0) {
+            return $orderTransfer;
+        }
+
+        $salesShipmentIdsIndexed = [];
+        foreach ($orderItemTransfers as $orderItemIndex => $orderItemTransfer) {
+            $salesShipmentIdsIndexed[$orderItemIndex] = $orderItemTransfer->getShipment()->getIdSalesShipment();
+        }
+
+        asort($salesShipmentIdsIndexed);
+
+        $sortedOrderItemTransfers = new ArrayObject();
+        foreach (array_keys($salesShipmentIdsIndexed) as $orderItemIndex) {
+            $sortedOrderItemTransfers->append($orderItemTransfers->offsetGet($orderItemIndex));
+        }
+
+        return $orderTransfer->setItems($sortedOrderItemTransfers);
     }
 }
