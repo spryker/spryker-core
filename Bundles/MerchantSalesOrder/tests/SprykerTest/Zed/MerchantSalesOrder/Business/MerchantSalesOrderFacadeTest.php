@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantSalesOrder\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
@@ -15,6 +16,7 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
 /**
@@ -278,6 +280,55 @@ class MerchantSalesOrderFacadeTest extends Unit
 
         //Assert
         $this->assertNull($foundMerchantOrderTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderItemWithMerchantReturnsUpdatedTransferWithCorrectData(): void
+    {
+        // Arrange
+        $merchantReference = 'test-merchant-reference';
+        $itemTransfer = $this->getItemTransfer([
+            ItemTransfer::MERCHANT_REFERENCE => $merchantReference,
+        ]);
+        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
+
+        // Act
+        $newSalesOrderItemEntityTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
+
+        // Assert
+        $this->assertEquals($newSalesOrderItemEntityTransfer->getMerchantReference(), $merchantReference);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderItemWithMerchantDoesNothingWithIncorrectData(): void
+    {
+        // Arrange
+        $itemTransfer = $this->getItemTransfer();
+        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
+
+        // Act
+        $newSalesOrderItemEntityTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
+
+        // Assert
+        $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     */
+    protected function getItemTransfer(array $seedData = []): ItemTransfer
+    {
+        return (new ItemBuilder($seedData))->build();
     }
 
     /**

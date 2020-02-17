@@ -79,4 +79,7 @@
         <property name="canceledTotal" type="int"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>

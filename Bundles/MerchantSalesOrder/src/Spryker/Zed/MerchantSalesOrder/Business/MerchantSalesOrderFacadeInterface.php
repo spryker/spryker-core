@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface MerchantSalesOrderFacadeInterface
 {
@@ -63,4 +65,21 @@ interface MerchantSalesOrderFacadeInterface
     public function findMerchantOrder(
         MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
     ): ?MerchantOrderTransfer;
+    public function createMerchantSalesOrder(MerchantSalesOrderTransfer $merchantSalesOrderTransfer): MerchantSalesOrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer::getMerchantReference() if exists.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function expandOrderItemWithMerchant(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
+        ItemTransfer $itemTransfer
+    ): SpySalesOrderItemEntityTransfer;
 }
