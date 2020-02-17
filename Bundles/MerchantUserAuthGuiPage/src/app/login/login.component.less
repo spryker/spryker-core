@@ -1,0 +1,32 @@
+@import './login.component.theme.less';
+
+:host {
+    --spy-logo-full: '/assets/images/logo.svg';
+}
+
+:host,
+mp-login {
+    width: 100%;
+}
+
+.login {
+    max-width: 420px;
+    margin: 0 auto;
+
+    &__logo {
+        padding-bottom: 30px;
+        width: 193px;
+        margin: 0 auto;
+        text-align: right;
+
+        &-image {
+            height: 74px;
+        }
+
+        &-text {
+            color: @primary-color;
+            letter-spacing: 0.11px;
+            font: @font-weight-semi-bold @font-size-lg @font-family;
+        }
+    }
+}

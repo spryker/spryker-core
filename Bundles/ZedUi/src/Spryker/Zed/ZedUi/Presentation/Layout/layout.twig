@@ -7,14 +7,11 @@
     <title>{% block headTitle %}{% if title is defined %}{{ title | trans }}{% endif %}{% endblock %}</title>
 
     {% block headCss %}
-        {#<link rel="stylesheet" href="{{ assetsPath('css/reset.css') }}">#}
+        <link rel="stylesheet" href="{{ assetsPath('css/reset.css') }}">
     {% endblock %}
 </head>
     <body>
         {% block body %}{% endblock %}
-        {% block footerJs %}
-            {#<script src="{{ assetsPath('button/polyfills-es5.js') }}"></script>#}
-            {#<script src="{{ assetsPath('button/main-es5.js') }}"></script>#}
-        {% endblock %}
+        {% block footerJs %}{% endblock %}
     </body>
 </html>
