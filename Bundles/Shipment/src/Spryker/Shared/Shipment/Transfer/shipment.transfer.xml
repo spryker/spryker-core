@@ -189,6 +189,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalQuote" type="Quote"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
     </transfer>
 
     <transfer name="Mail">
@@ -224,6 +225,10 @@
         <property name="idEntity" type="int"/>
         <property name="idStores" type="int[]" singular="idStores"/>
         <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="shipmentTotal" type="int"/>
     </transfer>
 
     <transfer name="CheckoutError">
