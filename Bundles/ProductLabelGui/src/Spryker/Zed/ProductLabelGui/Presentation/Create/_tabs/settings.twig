@@ -1,0 +1,54 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <label class="control-label">{{ 'General' | trans }}</label>
+    </div>
+    <div class="panel-body">
+    {{ form_row(productLabelForm.name) }}
+    {{ form_row(productLabelForm.frontEndReference) }}
+    {{ form_row(productLabelForm.position) }}
+    {{ form_row(productLabelForm.isActive) }}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <label class="control-label">{{ 'Behavior' | trans }}</label>
+    </div>
+    <div class="panel-body">
+        {{ form_row(productLabelForm.validFrom) }}
+        {{ form_row(productLabelForm.validTo) }}
+        {{ form_row(productLabelForm.isDynamic) }}
+        {{ form_row(productLabelForm.isExclusive) }}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <label class="control-label">{{ 'Store relation' | trans }}</label>
+    </div>
+    <div class="panel-body">
+        {{ form_row(productLabelForm.storeRelation) }}
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <label class="control-label">{{ 'Translations' | trans }}</label>
+    </div>
+    <div class="panel-body">
+        {% for localizedAttributes in productLabelForm.localizedAttributes %}
+            {% set localeName = localizedAttributes.vars.value.getLocale().getLocaleName() %}
+
+            {% embed '@Gui/Partials/localized-ibox.twig' with {
+                localeName: localeName,
+                collapsed: false
+            } %}
+                {% block content %}
+                    {{ form_errors(localizedAttributes) }}
+                    {{ form_widget(localizedAttributes) }}
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
+    </div>
+</div>

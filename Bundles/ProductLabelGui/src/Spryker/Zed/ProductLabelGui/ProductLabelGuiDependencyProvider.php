@@ -8,11 +8,13 @@
 namespace Spryker\Zed\ProductLabelGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelBridge;
+use Spryker\Zed\ProductLabelGui\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerBridge;
 
 /**
@@ -27,6 +29,8 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
+    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -39,6 +43,7 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyFacade($container);
         $container = $this->addProductQueryContainer($container);
         $container = $this->addPriceProductFacade($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
     }
@@ -127,5 +132,36 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container)
+    {
+        $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return $this->getStoreRelationFormTypePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\CmsBlockGui\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin()
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own ProductLabelGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage product labels.',
+                FormTypeInterface::class
+            )
+        );
     }
 }

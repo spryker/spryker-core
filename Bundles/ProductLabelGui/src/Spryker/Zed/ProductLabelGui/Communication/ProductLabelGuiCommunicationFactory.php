@@ -171,6 +171,14 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin()
+    {
+        return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
     public function createProductLabelFormTabs()

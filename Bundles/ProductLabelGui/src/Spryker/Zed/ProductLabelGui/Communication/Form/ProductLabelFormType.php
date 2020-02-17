@@ -15,10 +15,12 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Positive;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
@@ -30,6 +32,9 @@ class ProductLabelFormType extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
+    public const FIELD_DYNAMIC_FLAG = 'isDynamic';
+    public const FIELD_PRIORITY = 'position';
+    public const FIELD_STORE_RELATION = 'storeRelation';
     public const FIELD_STATUS_FLAG = 'isActive';
     public const FIELD_VALID_FROM_DATE = 'validFrom';
     public const FIELD_VALID_TO_DATE = 'validTo';
@@ -66,9 +71,12 @@ class ProductLabelFormType extends AbstractType
             ->addStatusFlagField($builder)
             ->addExclusiveFlagField($builder)
             ->addValidFromField($builder)
+            ->addPriorityField($builder)
             ->addValidToField($builder)
             ->addFontEndReferenceField($builder)
-            ->addLocalizedAttributesSubForm($builder);
+            ->addLocalizedAttributesSubForm($builder)
+            ->addDynamicFlagField($builder)
+            ->addStoreRelationField($builder);
     }
 
     /**
@@ -104,7 +112,7 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_EXCLUSIVE_FLAG,
             CheckboxType::class,
             [
-                'label' => 'Is Exclusive',
+                'label' => 'Is exclusive',
                 'required' => false,
             ]
         );
@@ -123,12 +131,62 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_STATUS_FLAG,
             CheckboxType::class,
             [
-                'label' => 'Is Active',
+                'label' => 'Is active',
                 'required' => false,
             ]
         );
 
         return $this;
+    }
+
+    protected function addDynamicFlagField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+          static::FIELD_DYNAMIC_FLAG,
+          CheckboxType::class,
+          [
+              'label' => 'Is dynamic',
+              'required' => false,
+              'disabled' => true,
+              'attr' => [
+                  'readonly' => true,
+              ],
+          ]
+        );
+
+        return $this;
+    }
+
+    protected function addPriorityField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_PRIORITY,
+            NumberType::class,
+            [
+                'label' => 'Priority',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                    new Positive()
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    protected function addStoreRelationField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+                'required' => false,
+            ]
+        );
+
+        return $builder;
     }
 
     /**

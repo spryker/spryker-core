@@ -106,7 +106,6 @@ class LabelCreator implements LabelCreatorInterface
     protected function persistLabel(ProductLabelTransfer $productLabelTransfer)
     {
         $productLabelEntity = $this->createEntityFromTransfer($productLabelTransfer);
-        $this->setPosition($productLabelEntity);
 
         $productLabelEntity->save();
 
@@ -139,27 +138,6 @@ class LabelCreator implements LabelCreatorInterface
         $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
 
         return $productLabelTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
-     *
-     * @return void
-     */
-    protected function setPosition(SpyProductLabel $productLabelEntity)
-    {
-        $productLabelEntity->setPosition($this->getMaxPosition() + 1);
-    }
-
-    /**
-     * @return int
-     */
-    protected function getMaxPosition()
-    {
-        return (int)$this
-            ->queryContainer
-            ->queryMaxPosition()
-            ->findOne();
     }
 
     /**
