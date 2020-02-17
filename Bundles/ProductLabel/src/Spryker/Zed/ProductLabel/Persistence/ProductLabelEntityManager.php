@@ -73,7 +73,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      *
      * @return void
      */
-    public function removeProductLabelStoreRelationsForStores(array $idStores, int $idProductLabel): void
+    public function removeProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void
     {
         if ($idStores === []) {
             return;
@@ -92,7 +92,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      *
      * @return void
      */
-    public function addProductLabelStoreRelationsForStores(array $idStores, int $idProductLabel): void
+    public function addProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void
     {
         foreach ($idStores as $idStore) {
             $productLabelStoreEntity = new SpyProductLabelStore();

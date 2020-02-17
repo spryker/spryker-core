@@ -65,8 +65,8 @@ class ProductLabelStoreRelationUpdater implements ProductLabelStoreRelationUpdat
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
         $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
 
-        $this->productLabelEntityManager->addProductLabelStoreRelationsForStores($saveIdStores, $storeRelationTransfer->getIdEntity());
-        $this->productLabelEntityManager->removeProductLabelStoreRelationsForStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
+        $this->productLabelEntityManager->addProductLabelStoreRelationForStores($saveIdStores, $storeRelationTransfer->getIdEntity());
+        $this->productLabelEntityManager->removeProductLabelStoreRelationForStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
     }
 
     /**
