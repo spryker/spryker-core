@@ -30,7 +30,7 @@
   },
   "suggest": {
     "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
-    "spryker/elastica": "ADD SUGGEST DESCRIPTION",
+    "spryker/elastica": "If you want to use ElasticSearch query expander.",
     "spryker/event": "To use event behavior.",
     "spryker/merchant-product-offer": "Required for using the listeners.",
     "spryker/search": "If you want to use Search plugins."
