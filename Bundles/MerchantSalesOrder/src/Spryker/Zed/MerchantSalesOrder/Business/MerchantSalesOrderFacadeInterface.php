@@ -65,7 +65,6 @@ interface MerchantSalesOrderFacadeInterface
     public function findMerchantOrder(
         MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
     ): ?MerchantOrderTransfer;
-    public function createMerchantSalesOrder(MerchantSalesOrderTransfer $merchantSalesOrderTransfer): MerchantSalesOrderTransfer;
 
     /**
      * Specification:
