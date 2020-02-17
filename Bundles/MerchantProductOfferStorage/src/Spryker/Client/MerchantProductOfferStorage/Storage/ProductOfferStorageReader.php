@@ -91,7 +91,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         }
 
         foreach ($productOfferReferences as $key => $productOfferReference) {
-            if ($key == '_timestamp') {
+            if ($key === '_timestamp') {
                 continue;
             }
             $productOfferStorageTransfer = $this->findProductOfferStorageByReference($productOfferReference);

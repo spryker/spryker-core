@@ -30,9 +30,13 @@ class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductVi
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName, ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null): ProductViewTransfer
-    {
-        if (!$productStorageCriteriaTransfer || !$productStorageCriteriaTransfer->getMerchantReference()) {
+    public function expandProductViewTransfer(
+        ProductViewTransfer $productViewTransfer,
+        array $productData,
+        $localeName,
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    ): ProductViewTransfer {
+        if (!$productStorageCriteriaTransfer) {
             return $productViewTransfer;
         }
 
