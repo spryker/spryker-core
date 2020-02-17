@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListNote\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
@@ -55,11 +56,25 @@ interface ShoppingListNoteFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `expandShoppingListItemCollection()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function expandShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     *  - Expands shopping list item collection with item notes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
 
     /**
      * Specification:

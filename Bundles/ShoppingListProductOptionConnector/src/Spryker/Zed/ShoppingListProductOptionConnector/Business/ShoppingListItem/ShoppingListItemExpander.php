@@ -41,6 +41,8 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     }
 
     /**
+     * @deprecated Use `expandShoppingListItemCollectionWithProductOptions()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -65,33 +67,59 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
         $shoppingListProductOptionCollectionTransfer = $this->shoppingListProductOptionReader
             ->getShoppingListProductOptionCollectionByShoppingListItemCollection($shoppingListItemCollectionTransfer);
 
-        $keyedUniqueProductOptionTransfers = $this
-            ->getKeyedUniqueProductOptionTransfers(
-                $shoppingListProductOptionCollectionTransfer,
-                $shoppingListItemCollectionTransfer->getCurrencyIsoCode(),
-                $shoppingListItemCollectionTransfer->getPriceMode()
-            );
+        $uniqueProductOptionIds = $this
+            ->getUniqueProductOptionIdsFromShoppingListProductOptionCollectionTransfer($shoppingListProductOptionCollectionTransfer);
 
-        $shoppingListItemIdsToProductOptionIdsMap = $this->getShoppingListItemIdsToProductOptionIdsMap($shoppingListProductOptionCollectionTransfer);
+        $indexedByIdsUniqueProductOptionTransfers = $this->getUniqueProductOptionTransfersIndexedByIds(
+            $uniqueProductOptionIds,
+            $shoppingListItemCollectionTransfer
+        );
 
+        $groupedProductOptionIdsByShoppingListItemIds = $this
+            ->groupProductOptionIdsByShoppingListItemIds($shoppingListProductOptionCollectionTransfer);
+
+        $expandedShoppingListItemTransfers = new ArrayObject();
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
-            $productOptions = new ArrayObject();
-            if (!isset($shoppingListItemIdsToProductOptionIdsMap[$shoppingListItemTransfer->getIdShoppingListItem()])) {
+            $expandedShoppingListItemTransfers->append(
+                $this->mapShoppingListItemTransferWithProductOptions(
+                    $shoppingListItemTransfer,
+                    $groupedProductOptionIdsByShoppingListItemIds,
+                    $indexedByIdsUniqueProductOptionTransfers
+                )
+            );
+        }
+
+        $shoppingListItemCollectionTransfer->setItems($expandedShoppingListItemTransfers);
+
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param int[][] $groupedProductOptionIdsByShoppingListItemIds
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $indexedByIdsUniqueProductOptionTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function mapShoppingListItemTransferWithProductOptions(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        array $groupedProductOptionIdsByShoppingListItemIds,
+        array $indexedByIdsUniqueProductOptionTransfers
+    ): ShoppingListItemTransfer {
+        $shoppingListItemTransfer->setProductOptions(new ArrayObject());
+        if (!isset($groupedProductOptionIdsByShoppingListItemIds[$shoppingListItemTransfer->getIdShoppingListItem()])) {
+            return $shoppingListItemTransfer;
+        }
+
+        foreach ($groupedProductOptionIdsByShoppingListItemIds[$shoppingListItemTransfer->getIdShoppingListItem()] as $productOptionId) {
+            if (!isset($indexedByIdsUniqueProductOptionTransfers[$productOptionId])) {
                 continue;
             }
 
-            foreach ($shoppingListItemIdsToProductOptionIdsMap[$shoppingListItemTransfer->getIdShoppingListItem()] as $productOptionId) {
-                if (!isset($keyedUniqueProductOptionTransfers[$productOptionId])) {
-                    continue;
-                }
-
-                $productOptions->append($keyedUniqueProductOptionTransfers[$productOptionId]);
-            }
-
-            $shoppingListItemTransfer->setProductOptions($productOptions);
+            $shoppingListItemTransfer->getProductOptions()->append($indexedByIdsUniqueProductOptionTransfers[$productOptionId]);
         }
 
-        return $shoppingListItemCollectionTransfer;
+        return $shoppingListItemTransfer;
     }
 
     /**
@@ -99,35 +127,35 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return int[][]
      */
-    protected function getShoppingListItemIdsToProductOptionIdsMap(ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer): array
+    protected function groupProductOptionIdsByShoppingListItemIds(ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer): array
     {
-        $shoppingListItemIdsToProductOptionIdsMap = [];
+        $groupedProductOptionIdsByShoppingListItemIds = [];
         foreach ($shoppingListProductOptionCollectionTransfer->getShoppingListProductOptions() as $shoppingListProductOptionTransfer) {
-            if (!isset($shoppingListItemIdsToProductOptionIdsMap[$shoppingListProductOptionTransfer->getIdShoppingListItem()])) {
-                $shoppingListItemIdsToProductOptionIdsMap[$shoppingListProductOptionTransfer->getIdShoppingListItem()] = [];
+            if (!isset($groupedProductOptionIdsByShoppingListItemIds[$shoppingListProductOptionTransfer->getIdShoppingListItem()])) {
+                $groupedProductOptionIdsByShoppingListItemIds[$shoppingListProductOptionTransfer->getIdShoppingListItem()] = [];
             }
 
-            $shoppingListItemIdsToProductOptionIdsMap[$shoppingListProductOptionTransfer->getIdShoppingListItem()][]
+            $groupedProductOptionIdsByShoppingListItemIds[$shoppingListProductOptionTransfer->getIdShoppingListItem()][]
                 = $shoppingListProductOptionTransfer->getIdProductOptionValue();
         }
 
-        return $shoppingListItemIdsToProductOptionIdsMap;
+        return $groupedProductOptionIdsByShoppingListItemIds;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
-     * @param string|null $currencyIsoCode
-     * @param string|null $priceMode
+     * @param int[] $uniqueProductOptionIds
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
      */
-    protected function getKeyedUniqueProductOptionTransfers(
-        ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer,
-        ?string $currencyIsoCode,
-        ?string $priceMode
+    protected function getUniqueProductOptionTransfersIndexedByIds(
+        array $uniqueProductOptionIds,
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
     ): array {
-        $uniqueProductOptionIds = $this
-            ->getUniqueProductOptionIdsFromShoppingListProductOptionCollection($shoppingListProductOptionCollectionTransfer);
+        $shoppingListItemCollectionTransfer->requireItems();
+        $firstShoppingListItemTransfer = $shoppingListItemCollectionTransfer->getItems()->getIterator()->current();
+        $currencyIsoCode = $firstShoppingListItemTransfer->getCurrencyIsoCode();
+        $priceMode = $firstShoppingListItemTransfer->getPriceMode();
 
         $productOptionCriteria = (new ProductOptionCriteriaTransfer())
             ->setCurrencyIsoCode($currencyIsoCode)
@@ -138,7 +166,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
         $productOptionCollection = $this->productOptionFacade
             ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteria);
 
-        return $this->getKeyedProductOptionTransfers($productOptionCollection);
+        return $this->getProductOptionTransfersIndexedByIds($productOptionCollection);
     }
 
     /**
@@ -146,14 +174,14 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
      */
-    protected function getKeyedProductOptionTransfers(ProductOptionCollectionTransfer $productOptionCollectionTransfer): array
+    protected function getProductOptionTransfersIndexedByIds(ProductOptionCollectionTransfer $productOptionCollectionTransfer): array
     {
-        $keyedProductOptionTransfers = [];
+        $indexedByIdsProductOptionTransfers = [];
         foreach ($productOptionCollectionTransfer->getProductOptions() as $productOptionTransfer) {
-            $keyedProductOptionTransfers[$productOptionTransfer->getIdProductOptionValue()] = $productOptionTransfer;
+            $indexedByIdsProductOptionTransfers[$productOptionTransfer->getIdProductOptionValue()] = $productOptionTransfer;
         }
 
-        return $keyedProductOptionTransfers;
+        return $indexedByIdsProductOptionTransfers;
     }
 
     /**
@@ -161,7 +189,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return int[]
      */
-    protected function getUniqueProductOptionIdsFromShoppingListProductOptionCollection(ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer): array
+    protected function getUniqueProductOptionIdsFromShoppingListProductOptionCollectionTransfer(ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer): array
     {
         $productOptionIds = [];
         foreach ($shoppingListProductOptionCollectionTransfer->getShoppingListProductOptions() as $shoppingListProductOptionTransfer) {

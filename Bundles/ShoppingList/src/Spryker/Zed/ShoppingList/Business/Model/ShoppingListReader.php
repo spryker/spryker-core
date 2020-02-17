@@ -108,7 +108,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
      */
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        $shoppingListTransfer = $this->getNotExpandedShoppingList($shoppingListTransfer);
+        $shoppingListTransfer = $this->getShoppingListTransferWithCompanyData($shoppingListTransfer);
 
         if (!$shoppingListTransfer->getIdShoppingList()) {
             return $shoppingListTransfer;
@@ -117,7 +117,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListItemCollectionTransfer = (new ShoppingListItemCollectionTransfer())
             ->setItems($shoppingListTransfer->getItems());
 
-        $shoppingListItemCollectionTransfer = $this->expandProducts($shoppingListItemCollectionTransfer);
+        $shoppingListItemCollectionTransfer = $this->expandShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
         $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
 
         return $shoppingListTransfer;
@@ -136,7 +136,8 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListOverviewResponseTransfer = (new ShoppingListOverviewResponseTransfer())
             ->setShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
-        $shoppingListTransfer = $this->getNotExpandedShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
+        $shoppingListTransfer = $this
+            ->getShoppingListTransferWithCompanyData($shoppingListOverviewRequestTransfer->getShoppingList());
 
         if (!$shoppingListTransfer->getIdShoppingList()) {
             $shoppingListOverviewResponseTransfer->setIsSuccess(false);
@@ -145,15 +146,19 @@ class ShoppingListReader implements ShoppingListReaderInterface
         }
 
         $shoppingListOverviewRequestTransfer->setShoppingList($shoppingListTransfer);
-        $shoppingListOverviewResponseTransfer = $this->shoppingListRepository->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);
-        $shoppingListOverviewResponseTransfer->getItemsCollection()
-            ->setCurrencyIsoCode($shoppingListOverviewRequestTransfer->getCurrencyIsoCode())
-            ->setPriceMode($shoppingListOverviewRequestTransfer->getPriceMode());
+        $shoppingListOverviewResponseTransfer = $this->shoppingListRepository
+            ->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);
 
-        $this->expandProducts($shoppingListOverviewResponseTransfer->getItemsCollection());
+        $shoppingListItemCollection = $this->expandShoppingListItemCollectionTransfer(
+            $shoppingListOverviewResponseTransfer->getItemsCollection(),
+            $shoppingListOverviewRequestTransfer->getCurrencyIsoCode(),
+            $shoppingListOverviewRequestTransfer->getPriceMode()
+        );
+        $shoppingListOverviewResponseTransfer->setItemsCollection($shoppingListItemCollection);
 
         $customerTransfer = new CustomerTransfer();
-        $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getIdCompanyUser());
+        $requestCompanyUserTransfer = $this->companyUserFacade
+            ->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getIdCompanyUser());
 
         $customerTransfer->setCustomerReference($requestCompanyUserTransfer->getCustomer()->getCustomerReference());
         $customerTransfer->setCompanyUserTransfer($requestCompanyUserTransfer);
@@ -215,7 +220,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findCustomerShoppingListsItemsByIds($shoppingListIds);
 
-        return $this->expandProducts($shoppingListItemCollectionTransfer);
+        return $this->expandShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
     }
 
     /**
@@ -233,7 +238,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIds($shoppingListItemIds);
 
-        return $this->expandProducts($shoppingListItemCollectionTransfer);
+        return $this->expandShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
     }
 
     /**
@@ -348,7 +353,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function getNotExpandedShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    protected function getShoppingListTransferWithCompanyData(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
@@ -371,52 +376,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
             ->setSharedCompanyUsers($shoppingListCompanyUsers)
             ->setSharedCompanyBusinessUnits($shoppingListCompanyBusinessUnits);
 
-        $shoppingListItemCollectionTransfer = $this->shoppingListRepository
-            ->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
-
-        $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
-
         return $shoppingListTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
-     */
-    protected function expandProducts(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
-        $shoppingListItemsSkus = $this->getShoppingListItemsSkus($shoppingListItemCollectionTransfer);
-
-        if (empty($shoppingListItemsSkus)) {
-            return $shoppingListItemCollectionTransfer;
-        }
-
-        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
-        $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
-        $shoppingListItemTransfers = $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $keyedProductConcreteTransfers);
-        $shoppingListItemCollectionTransfer->setItems($shoppingListItemTransfers);
-
-        return $this->expandShoppingListItemCollection($shoppingListItemCollectionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
-     */
-    protected function expandShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
-        $shoppingListItemCollectionTransfer = $this->executeShoppingListItemExpanderPlugins(
-            $shoppingListItemCollectionTransfer,
-            $shoppingListItemCollectionTransfer->getCurrencyIsoCode(),
-            $shoppingListItemCollectionTransfer->getPriceMode()
-        );
-
-        $shoppingListItemCollectionTransfer = $this->pluginExecutor
-            ->executeShoppingListItemCollectionExpanderPlugins($shoppingListItemCollectionTransfer);
-
-        return $shoppingListItemCollectionTransfer;
     }
 
     /**
@@ -426,18 +386,87 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    protected function executeShoppingListItemExpanderPlugins(
+    protected function expandShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ?string $currencyIsoCode = null,
+        ?string $priceMode = null
+    ): ShoppingListItemCollectionTransfer {
+        $shoppingListItemsSkus = $this->getShoppingListItemsSkus($shoppingListItemCollectionTransfer);
+
+        if (empty($shoppingListItemsSkus)) {
+            return $shoppingListItemCollectionTransfer;
+        }
+
+        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
+        $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
+        $shoppingListItemTransfers = $this->mapProductConcreteIdToShoppingListItem(
+            $shoppingListItemCollectionTransfer->getItems(),
+            $keyedProductConcreteTransfers
+        );
+        $shoppingListItemCollectionTransfer->setItems($shoppingListItemTransfers);
+
+        $shoppingListItemCollectionTransfer = $this->expandShoppingListItemCollectionTransferWithCurrencyParameters(
+            $shoppingListItemCollectionTransfer,
+            $currencyIsoCode,
+            $priceMode
+        );
+
+        return $this->expandShoppingListItemCollectionTransferWithPlugins($shoppingListItemCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param string|null $currencyIsoCode
+     * @param string|null $priceMode
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function expandShoppingListItemCollectionTransferWithCurrencyParameters(
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
         ?string $currencyIsoCode,
         ?string $priceMode
     ): ShoppingListItemCollectionTransfer {
-        $expandedShoppingListItemTransfers = new ArrayObject();
+        if ($currencyIsoCode === null && $priceMode === null) {
+            return $shoppingListItemCollectionTransfer;
+        }
 
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemTransfer
                 ->setCurrencyIsoCode($currencyIsoCode)
                 ->setPriceMode($priceMode);
+        }
 
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function expandShoppingListItemCollectionTransferWithPlugins(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemCollectionTransfer = $this
+            ->executeShoppingListItemExpanderPlugins($shoppingListItemCollectionTransfer);
+
+        $shoppingListItemCollectionTransfer = $this->pluginExecutor
+            ->executeShoppingListItemCollectionExpanderPlugins($shoppingListItemCollectionTransfer);
+
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @deprecated Added for BC reasons, will be removed in next major release.
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function executeShoppingListItemExpanderPlugins(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        $expandedShoppingListItemTransfers = new ArrayObject();
+
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
             $expandedShoppingListItemTransfers->append(
                 $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer)
             );

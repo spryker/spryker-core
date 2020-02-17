@@ -108,9 +108,10 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      * - Removes shopping list item by id from the database, using transaction.
-     * - Returns ShoppingListItemResponseTransfer with 'isSuccess=false' if item does not exist.
+     * - Returns `ShoppingListItemResponseTransfer` with 'isSuccess=false' if item does not exist.
      * - Loads shopping list with items by shopping list id from the database.
-     * - Executes ItemExpanderPluginInterface plugins before deletion.
+     * - Executes `ShoppingListItemExpanderPluginInterface` plugin stack before deletion.
+     * - Executes `ShoppingListItemCollectionExpanderPluginInterface` plugin stack before deletion.
      *
      * @api
      *
@@ -122,7 +123,10 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Load shopping list by id.
+     * - Loads shopping list by id.
+     * - Expands shopping list items with currency iso code and price mode data.
+     * - Executes `ShoppingListItemExpanderPluginInterface` plugin stack.
+     * - Executes `ShoppingListItemCollectionExpanderPluginInterface` plugin stack.
      *
      * @api
      *
@@ -136,7 +140,8 @@ interface ShoppingListFacadeInterface
      * Specification:
      * - Gets shopping list detail information.
      * - Expands shopping list items with currency iso code and price mode data.
-     * - Executes ItemExpanderPluginInterface plugin stack.
+     * - Executes `ShoppingListItemExpanderPluginInterface` plugin stack.
+     * - Executes `ShoppingListItemCollectionExpanderPluginInterface` plugin stack.
      *
      * @api
      *

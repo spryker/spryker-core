@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
 {
@@ -40,5 +42,25 @@ class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
         $shoppingListItemNoteEntity->fromArray($shoppingListItemNoteTransfer->modifiedToArray());
 
         return $shoppingListItemNoteEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListItemEntityCollection
+     * @param \Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer $shoppingListItemNoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer
+     */
+    public function mapShoppingListItemEntityCollectionToCollectionTransfer(
+        ObjectCollection $shoppingListItemEntityCollection,
+        ShoppingListItemNoteCollectionTransfer $shoppingListItemNoteCollectionTransfer
+    ): ShoppingListItemNoteCollectionTransfer {
+        foreach ($shoppingListItemEntityCollection as $shoppingListItemNoteEntity) {
+            $shoppingListItemNoteTransfer = $this
+                ->mapShoppingListItemNoteTransfer($shoppingListItemNoteEntity, new ShoppingListItemNoteTransfer());
+
+            $shoppingListItemNoteCollectionTransfer->addNote($shoppingListItemNoteTransfer);
+        }
+
+        return $shoppingListItemNoteCollectionTransfer;
     }
 }

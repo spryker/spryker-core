@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
@@ -25,6 +29,8 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     }
 
     /**
+     * @deprecated Use `expandItemCollection()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -37,5 +43,46 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
         $shoppingListItemTransfer->setShoppingListItemNote($shoppingListItemNoteTransfer);
 
         return $shoppingListItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemNoteCollectionTransfer = $this->shoppingLisItemNoteReader
+            ->getShoppingListItemNoteCollectionByShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        $indexedShoppingListItemNoteTransfers = $this
+            ->getShoppingListItemNoteTransfersIndexedByIds($shoppingListItemNoteCollectionTransfer);
+
+        $expandedShoppingListItemTransfers = new ArrayObject();
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemTransfer->setShoppingListItemNote(
+                $indexedShoppingListItemNoteTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] ?? new ShoppingListItemNoteTransfer()
+            );
+            $expandedShoppingListItemTransfers->append($shoppingListItemTransfer);
+        }
+
+        $shoppingListItemCollectionTransfer->setItems($expandedShoppingListItemTransfers);
+
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer $shoppingListItemNoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]
+     */
+    protected function getShoppingListItemNoteTransfersIndexedByIds(ShoppingListItemNoteCollectionTransfer $shoppingListItemNoteCollectionTransfer): array
+    {
+        $indexedShoppingListItemNoteTransfers = [];
+        foreach ($shoppingListItemNoteCollectionTransfer->getNotes() as $shoppingListItemNoteTransfer) {
+            $indexedShoppingListItemNoteTransfers[$shoppingListItemNoteTransfer->getFkShoppingListItem()] = $shoppingListItemNoteTransfer;
+        }
+
+        return $indexedShoppingListItemNoteTransfers;
     }
 }

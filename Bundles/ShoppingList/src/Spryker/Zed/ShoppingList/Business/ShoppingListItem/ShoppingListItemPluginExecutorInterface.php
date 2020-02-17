@@ -27,6 +27,8 @@ interface ShoppingListItemPluginExecutorInterface
     public function executePostSavePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
+     * @deprecated Use `executeShoppingListItemCollectionExpanderPlugins()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer

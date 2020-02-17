@@ -97,6 +97,8 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     }
 
     /**
+     * @deprecated Use `executeShoppingListItemCollectionExpanderPlugins()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer

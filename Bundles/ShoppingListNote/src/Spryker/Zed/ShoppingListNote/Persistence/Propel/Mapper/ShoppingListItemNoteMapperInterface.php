@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface ShoppingListItemNoteMapperInterface
 {
@@ -33,4 +35,15 @@ interface ShoppingListItemNoteMapperInterface
         ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer,
         SpyShoppingListItemNote $shoppingListItemNoteEntity
     ): SpyShoppingListItemNote;
+
+    /**
+     * @param \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListItemEntityCollection
+     * @param \Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer $shoppingListItemNoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer
+     */
+    public function mapShoppingListItemEntityCollectionToCollectionTransfer(
+        ObjectCollection $shoppingListItemEntityCollection,
+        ShoppingListItemNoteCollectionTransfer $shoppingListItemNoteCollectionTransfer
+    ): ShoppingListItemNoteCollectionTransfer;
 }

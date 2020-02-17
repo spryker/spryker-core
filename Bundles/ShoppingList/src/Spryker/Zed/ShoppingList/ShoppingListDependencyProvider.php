@@ -166,9 +166,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addItemCollectionExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ITEM_COLLECTION_EXPANDER] = function () {
+        $container->set(static::PLUGINS_ITEM_COLLECTION_EXPANDER, function (Container $container) {
             return $this->getItemCollectionExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -210,7 +210,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[]
      */
     protected function getItemCollectionExpanderPlugins(): array
     {

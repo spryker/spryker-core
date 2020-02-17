@@ -51,8 +51,6 @@
 
     <transfer name="ShoppingListItemCollection">
         <property name="items" type="ShoppingListItem[]" singular="item"/>
-        <property name="currencyIsoCode" type="string"/>
-        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListItemResponse">

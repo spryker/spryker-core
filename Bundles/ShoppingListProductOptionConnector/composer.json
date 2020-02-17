@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.30.0",
+    "spryker/product": "*",
     "spryker/product-option": "^6.11.0 || ^8.5.0",
     "spryker/product-option-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
@@ -19,7 +20,6 @@
     "spryker/company-user": "*",
     "spryker/customer": "*",
     "spryker/permission": "*",
-    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

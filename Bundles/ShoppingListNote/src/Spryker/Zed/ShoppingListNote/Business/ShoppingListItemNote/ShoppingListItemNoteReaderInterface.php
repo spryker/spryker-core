@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 
 interface ShoppingListItemNoteReaderInterface
@@ -17,4 +19,11 @@ interface ShoppingListItemNoteReaderInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
      */
     public function getShoppingListItemNoteByIdShoppingListItem(int $idShoppingListItem): ShoppingListItemNoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer
+     */
+    public function getShoppingListItemNoteCollectionByShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemNoteCollectionTransfer;
 }

@@ -13,7 +13,8 @@ interface ShoppingListItemCollectionExpanderPluginInterface
 {
     /**
      * Specification:
-     * - This plugin is executed when shopping list items are fetched
+     * - This plugin stack is used for expanding ShoppingListItemCollectionTransfer with additional items data
+     * - This plugin is executed when shopping list items are fetched.
      *
      * @api
      *
