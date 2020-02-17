@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\MerchantOms\Persistence" package="src.Orm.Zed.MerchantOms.Persistence">
+
+    <table name="spy_merchant_oms_process" idMethod="native" class="SpyMerchantOmsProcess">
+        <column name="id_merchant_oms_process" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="process_name" required="true" type="VARCHAR" size="200"/>
+
+        <id-method-parameter value="spy_merchant_oms_process_pk_seq"/>
+    </table>
+
+</database>
