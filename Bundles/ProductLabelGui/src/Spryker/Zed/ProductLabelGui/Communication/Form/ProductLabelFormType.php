@@ -139,6 +139,11 @@ class ProductLabelFormType extends AbstractType
         return $this;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return $this
+     */
     protected function addDynamicFlagField(FormBuilderInterface $builder)
     {
         $builder->add(
@@ -157,6 +162,11 @@ class ProductLabelFormType extends AbstractType
         return $this;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return $this
+     */
     protected function addPriorityField(FormBuilderInterface $builder)
     {
         $builder->add(
@@ -175,6 +185,11 @@ class ProductLabelFormType extends AbstractType
         return $this;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return FormBuilderInterface
+     */
     protected function addStoreRelationField(FormBuilderInterface $builder)
     {
         $builder->add(
