@@ -44,6 +44,8 @@ class OrderCustomReferenceSaver implements OrderCustomReferenceSaverInterface
      */
     public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
+        $saveOrderTransfer->requireIdSalesOrder();
+
         $isOrderCustomReferenceLengthValid = $this->orderCustomReferenceValidator
             ->isOrderCustomReferenceLengthValid($quoteTransfer->getOrderCustomReference());
 

@@ -15,6 +15,7 @@ interface OrderCustomReferenceFacadeInterface
     /**
      * Specification:
      * - Persists `orderCustomReference` in `spy_sales_order` schema.
+     * - Expects SaveOrderTransfer::idSalesOrder to be provided.
      *
      * @api
      *

@@ -14,9 +14,9 @@ interface OrderCustomReferenceClientInterface
 {
     /**
      * Specification:
-     * - Updates Quote with `QuoteTransfer::$orderCustomReference`.
-     * - Expects QuoteTransfer.idQuote to be provided.
-     * - Expects QuoteTransfer.customer to be provided.
+     * - Sets Quote with QuoteTransfer::orderCustomReference.
+     * - Expects QuoteTransfer::idQuote to be provided.
+     * - Expects QuoteTransfer::customer to be provided.
      *
      * @api
      *
