@@ -22,7 +22,7 @@ class MerchantOrderItemMapper implements MerchantOrderItemMapperInterface
         MerchantOrderItemTransfer $merchantOrderItemTransfer,
         StateMachineItemTransfer $stateMachineItemTransfer
     ): StateMachineItemTransfer {
-        return $stateMachineItemTransfer->setIdItemState($merchantOrderItemTransfer->getIdStateMachineItemState())
+        return $stateMachineItemTransfer->setIdItemState($merchantOrderItemTransfer->getFkStateMachineItemState())
             ->setIdentifier($merchantOrderItemTransfer->getIdMerchantOrderItem());
     }
 }

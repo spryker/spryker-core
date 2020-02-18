@@ -30,6 +30,15 @@ interface MerchantSalesOrderEntityManagerInterface
     ): MerchantOrderItemTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer
+     */
+    public function updateMerchantOrderItem(
+        MerchantOrderItemTransfer $merchantOrderItemTransfer
+    ): MerchantOrderItemTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer

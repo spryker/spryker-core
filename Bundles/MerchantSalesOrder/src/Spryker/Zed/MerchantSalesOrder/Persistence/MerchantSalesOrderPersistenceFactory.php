@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper\MerchantSalesOrderMapper;
@@ -32,5 +33,13 @@ class MerchantSalesOrderPersistenceFactory extends AbstractPersistenceFactory
     public function createMerchantSalesOrderMapper(): MerchantSalesOrderMapper
     {
         return new MerchantSalesOrderMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
+     */
+    public function createMerchantSalesOrderItemQuery(): SpyMerchantSalesOrderItemQuery
+    {
+        return SpyMerchantSalesOrderItemQuery::create();
     }
 }

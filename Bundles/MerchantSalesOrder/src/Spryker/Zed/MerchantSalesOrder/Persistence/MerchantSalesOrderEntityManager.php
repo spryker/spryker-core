@@ -86,4 +86,30 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
             $totalsTransfer
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemTransfer
+    {
+        $merchantOrderItemTransfer->requireIdMerchantOrderItem();
+
+        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
+
+        $merchantSalesOrderItemEntity = $this->getFactory()->createMerchantSalesOrderItemQuery()
+            ->filterByIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem())
+            ->findOne();
+
+        $merchantOrderItemEntity = $merchantSalesOrderMapper->mapMerchantOrderItemTransferToMerchantSalesOrderItemEntity(
+            $merchantOrderItemTransfer,
+            $merchantSalesOrderItemEntity
+        );
+
+        $merchantOrderItemEntity->save();
+
+        return $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
+            $merchantSalesOrderItemEntity,
+            $merchantOrderItemTransfer
+        );
+    }
 }
