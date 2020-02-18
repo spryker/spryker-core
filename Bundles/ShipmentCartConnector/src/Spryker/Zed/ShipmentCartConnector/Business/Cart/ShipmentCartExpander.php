@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Zed\ShipmentCartConnector\Business\Applier\SourcePriceApplierInterface;
+use Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface;
@@ -39,7 +39,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     protected $shipmentService;
 
     /**
-     * @var \Spryker\Zed\ShipmentCartConnector\Business\Applier\SourcePriceApplierInterface
+     * @var \Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface
      */
     protected $sourcePriceApplier;
 
@@ -47,13 +47,13 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface $shipmentService
-     * @param \Spryker\Zed\ShipmentCartConnector\Business\Applier\SourcePriceApplierInterface $sourcePriceApplier
+     * @param \Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface $sourcePriceApplier
      */
     public function __construct(
         ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade,
         ShipmentCartConnectorToPriceFacadeInterface $priceFacade,
         ShipmentCartConnectorToShipmentServiceInterface $shipmentService,
-        SourcePriceApplierInterface $sourcePriceApplier
+        ShipmentSourcePriceApplierInterface $sourcePriceApplier
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->priceFacade = $priceFacade;
@@ -122,10 +122,15 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     {
         $shipmentMethodTransfer = $shipmentTransfer->getMethod();
 
-        return $shipmentMethodTransfer
-            && $shipmentMethodTransfer->getIdShipmentMethod()
-            && $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer)
-            || $shipmentMethodTransfer->getSourcePrice();
+        if (!$shipmentMethodTransfer) {
+            return false;
+        }
+
+        if (!$this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) && !$shipmentMethodTransfer->getSourcePrice()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

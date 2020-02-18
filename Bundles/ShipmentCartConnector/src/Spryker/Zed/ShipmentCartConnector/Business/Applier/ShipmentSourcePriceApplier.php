@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentCartConnector\Business\Applier;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
-class SourcePriceApplier implements SourcePriceApplierInterface
+class ShipmentSourcePriceApplier implements ShipmentSourcePriceApplierInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer

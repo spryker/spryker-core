@@ -139,6 +139,35 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateShipmentPriceWithQuoteShipmentMethodSourcePrice(): void
+    {
+        // Arrange
+        $sourcePrice = 322;
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+
+        $shipmentMethodTransfer->setCurrencyIsoCode(static::CURRENCY_ISO_CODE)
+            ->setSourcePrice((new MoneyValueBuilder([MoneyValueTransfer::GROSS_AMOUNT => $sourcePrice]))->build());
+
+        $cartChangeTransfer = $this->createCartChangeTransferWithQuoteLevelShipment($shipmentMethodTransfer, $storeTransfer);
+
+        // Act
+        $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
+
+        // Assert
+        $this->assertSame(
+            $sourcePrice,
+            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPrice(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
@@ -295,5 +324,36 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function createCartChangeTransferWithQuoteLevelShipment(ShipmentMethodTransfer $shipmentMethodTransfer, StoreTransfer $storeTransfer): CartChangeTransfer
+    {
+        $shipmentTransfer = (new ShipmentBuilder())->build()
+            ->setMethod($shipmentMethodTransfer);
+
+        $shipmentExpense = (new ExpenseBuilder())->build()
+            ->setType(ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE)
+            ->setShipment($shipmentTransfer);
+
+        $itemTransfer = (new ItemBuilder())->build()
+            ->setSku(static::SKU)
+            ->setGroupKey(static::SKU);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withStore($storeTransfer->toArray())
+            ->withCurrency()
+            ->build()
+            ->addItem($itemTransfer)
+            ->addExpense($shipmentExpense)
+            ->setShipment($shipmentTransfer);
+
+        return (new CartChangeBuilder())->build()
+            ->setQuote($quoteTransfer);
     }
 }

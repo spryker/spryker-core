@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ShipmentCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShipmentCartConnector\Business\Applier\SourcePriceApplier;
-use Spryker\Zed\ShipmentCartConnector\Business\Applier\SourcePriceApplierInterface;
+use Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplier;
+use Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander as ShipmentCartExpanderWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator as ShipmentCartValidatorWithMultiShippingAddress;
@@ -142,10 +142,10 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\Applier\SourcePriceApplierInterface
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface
      */
-    public function createSourcePriceApplier(): SourcePriceApplierInterface
+    public function createSourcePriceApplier(): ShipmentSourcePriceApplierInterface
     {
-        return new SourcePriceApplier();
+        return new ShipmentSourcePriceApplier();
     }
 }
