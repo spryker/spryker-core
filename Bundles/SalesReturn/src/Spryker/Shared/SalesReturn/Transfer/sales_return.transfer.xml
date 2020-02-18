@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ReturnReason">
+        <property name="idSalesReturnReason" type="int"/>
+        <property name="key" type="string"/>
+        <property name="glossaryKeyReason" type="string"/>
+    </transfer>
+
+    <transfer name="Return">
+        <property name="idSalesReturn" type="int"/>
+        <property name="returnReference" type="string"/>
+        <property name="store" type="string"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="returnTotals" type="ReturnTotals"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="idSalesReturnItem" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="reason" type="string"/>
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="ReturnTotals">
+        <property name="refundTotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="remunerationTotal" type="int"/>
+    </transfer>
+
+    <transfer name="ReturnFilter">
+        <property name="customerReference" type="string"/>
+        <property name="returnReference" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnReasonFilter">
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="CreateReturnRequest">
+        <property name="store" type="string"/>
+        <property name="Customer" type="Customer"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnReasonCollection">
+        <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="ReturnCollection">
+        <property name="returns" type="Return[]" singular="return"/>
+    </transfer>
+
+    <transfer name="ReturnResponse">
+        <property name="return" type="Return"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+</transfers>
