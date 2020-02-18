@@ -11,4 +11,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OrderCustomReferenceConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string[]
+     */
+    public function getOrderCustomReferenceQuoteFieldsAllowedForSaving(): array
+    {
+        return [];
+    }
 }

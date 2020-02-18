@@ -8,9 +8,23 @@
 namespace Spryker\Zed\OrderCustomReference\Business\Provider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig;
 
 class QuoteFieldsProvider implements QuoteFieldsProviderInterface
 {
+    /**
+     * @var \Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig
+     */
+    protected $orderCustomReferenceConfig;
+
+    /**
+     * @param \Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig $orderCustomReferenceConfig
+     */
+    public function __construct(OrderCustomReferenceConfig $orderCustomReferenceConfig)
+    {
+        $this->orderCustomReferenceConfig = $orderCustomReferenceConfig;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -18,8 +32,6 @@ class QuoteFieldsProvider implements QuoteFieldsProviderInterface
      */
     public function getOrderCustomReferenceQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
-        return [
-            QuoteTransfer::ORDER_CUSTOM_REFERENCE,
-        ];
+        return $this->orderCustomReferenceConfig->getOrderCustomReferenceQuoteFieldsAllowedForSaving();
     }
 }

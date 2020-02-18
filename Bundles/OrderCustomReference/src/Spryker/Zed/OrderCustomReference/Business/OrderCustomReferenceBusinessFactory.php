@@ -45,6 +45,6 @@ class OrderCustomReferenceBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteFieldsProvider(): QuoteFieldsProviderInterface
     {
-        return new QuoteFieldsProvider();
+        return new QuoteFieldsProvider($this->getConfig());
     }
 }
