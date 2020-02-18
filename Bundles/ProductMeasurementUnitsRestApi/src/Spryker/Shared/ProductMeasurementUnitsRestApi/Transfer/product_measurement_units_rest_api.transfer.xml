@@ -6,7 +6,7 @@
     <transfer name="RestProductMeasurementUnitsAttributes">
         <property name="name" type="string"/>
         <property name="defaultPrecision" type="int"/>
-        <property name="measurementUnitCode" type="string"/>
+        <property name="productMeasurementUnitCode" type="string"/>
     </transfer>
 
     <transfer name="RestSalesUnitsAttributes">
@@ -14,7 +14,7 @@
         <property name="precision" type="int"/>
         <property name="isDisplayed" type="bool"/>
         <property name="isDefault" type="bool"/>
-        <property name="measurementUnitCode" type="string"/>
+        <property name="productMeasurementUnitCode" type="string"/>
     </transfer>
 
     <transfer name="ProductMeasurementUnit">

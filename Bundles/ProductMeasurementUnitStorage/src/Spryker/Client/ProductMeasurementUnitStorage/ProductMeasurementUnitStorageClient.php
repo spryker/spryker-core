@@ -137,12 +137,12 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      * @param string $mappingType
      * @param string[] $identifiers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array
     {
         return $this->getFactory()
-            ->createProductMeasurementUnitStorageReader()
+            ->createProductMeasurementUnitReader()
             ->getProductMeasurementUnitsByMapping($mappingType, $identifiers);
     }
 

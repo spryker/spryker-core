@@ -30,7 +30,7 @@ class SalesUnitMapper implements SalesUnitMapperInterface
     ): RestSalesUnitsAttributesTransfer {
         return $restSalesUnitsAttributesTransfer
             ->fromArray($productMeasurementSalesUnitTransfer->toArray(), true)
-            ->setMeasurementUnitCode($productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getCode());
+            ->setProductMeasurementUnitCode($productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getCode());
     }
 
     /**

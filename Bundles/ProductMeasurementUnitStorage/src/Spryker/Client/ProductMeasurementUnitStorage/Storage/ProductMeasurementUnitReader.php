@@ -72,6 +72,32 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     }
 
     /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array
+    {
+        $productMeasurementUnitStorageTransfers = $this->productMeasurementUnitStorageReader
+            ->getProductMeasurementUnitsByMapping($mappingType, $identifiers);
+
+        if (!$productMeasurementUnitStorageTransfers) {
+            return [];
+        }
+
+        $productMeasurementUnitTransfers = [];
+        foreach ($productMeasurementUnitStorageTransfers as $productMeasurementUnitStorageTransfer) {
+            $productMeasurementUnitTransfers[] = $this->mapProductMeasurementUnit(
+                $productMeasurementUnitStorageTransfer,
+                new ProductMeasurementUnitTransfer()
+            );
+        }
+
+        return $productMeasurementUnitTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer $measurementUnitStorageTransfer
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $measurementUnitTransfer
      *

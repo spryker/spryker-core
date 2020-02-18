@@ -19,7 +19,7 @@ class ProductMeasurementUnitsByProductConcreteResourceRelationshipPlugin extends
 {
     /**
      * {@inheritDoc}
-     * - Adds `product-measurement-units` resource as a relationship by quote.
+     * - Adds `product-measurement-units` resource as a relationship by product concrete.
      *
      * @api
      *

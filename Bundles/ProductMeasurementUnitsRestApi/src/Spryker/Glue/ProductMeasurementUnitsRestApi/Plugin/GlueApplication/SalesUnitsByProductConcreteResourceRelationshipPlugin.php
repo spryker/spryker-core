@@ -19,7 +19,7 @@ class SalesUnitsByProductConcreteResourceRelationshipPlugin extends AbstractPlug
 {
     /**
      * {@inheritDoc}
-     * - Adds `sales-units` resource as a relationship by quote.
+     * - Adds `sales-units` resource as a relationship by product concrete.
      *
      * @api
      *

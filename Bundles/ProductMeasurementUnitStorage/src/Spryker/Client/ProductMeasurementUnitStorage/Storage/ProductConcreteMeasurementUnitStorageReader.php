@@ -37,7 +37,6 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      */
     protected $utilEncodingService;
 
-
     /**
      * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface $storageClient
      * @param \Spryker\Shared\Kernel\Store $store

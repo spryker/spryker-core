@@ -16,5 +16,14 @@ interface ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface
      *
      * @return string
      */
-    public function translate(string $id, string $localeName, array $parameters = []);
+    public function translate($id, $localeName, array $parameters = []);
+
+    /**
+     * @param string[] $keyNames
+     * @param string $localeName
+     * @param string[][] $parameters
+     *
+     * @return string[]
+     */
+    public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array;
 }

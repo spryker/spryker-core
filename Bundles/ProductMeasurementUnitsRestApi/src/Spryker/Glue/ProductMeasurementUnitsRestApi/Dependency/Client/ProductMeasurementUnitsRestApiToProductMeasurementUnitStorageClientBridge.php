@@ -48,7 +48,7 @@ class ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientBridge 
      * @param string $mappingType
      * @param string[] $identifiers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array
     {

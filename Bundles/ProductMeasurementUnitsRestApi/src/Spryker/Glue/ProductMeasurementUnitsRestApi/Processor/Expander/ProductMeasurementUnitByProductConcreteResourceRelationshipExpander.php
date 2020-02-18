@@ -11,6 +11,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface;
 
 class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implements ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface
 {
@@ -32,18 +33,26 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
     protected $productMeasurementUnitStorageClient;
 
     /**
+     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface
+     */
+    protected $productMeasurementUnitNameTranslator;
+
+    /**
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
+     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface $productMeasurementUnitNameTranslator
      */
     public function __construct(
         ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder,
         ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient,
-        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
+        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient,
+        ProductMeasurementUnitNameTranslatorInterface $productMeasurementUnitNameTranslator
     ) {
         $this->productMeasurementUnitRestResponseBuilder = $productMeasurementUnitRestResponseBuilder;
         $this->productStorageClient = $productStorageClient;
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
+        $this->productMeasurementUnitNameTranslator = $productMeasurementUnitNameTranslator;
     }
 
     /**
@@ -55,24 +64,23 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $productConcreteSkus = $this->getAllSkus($resources);
+        $localeName = $restRequest->getMetadata()->getLocale();
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
-            $restRequest->getMetadata()->getLocale()
+            $localeName
         );
 
         $productMeasurementUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementBaseUnitsByProductConcreteIds($productConcreteIds);
 
+        $productMeasurementUnitTransfersWithTranslatedNames = $this->productMeasurementUnitNameTranslator
+            ->getProductMeasurementUnitTransfersWithTranslatedNames($productMeasurementUnitTransfers, $localeName);
         $productConcreteSkus = array_flip($productConcreteIds);
         $restProductMeasurementUnitsResources = [];
-        foreach ($productMeasurementUnitTransfers as $idProductConcrete => $productMeasurementUnitTransfer) {
-            $productConcreteSku = $productConcreteSkus[$idProductConcrete];
-            $restProductMeasurementUnitsResources[$productConcreteSku] =
-                $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResource(
-                    $productMeasurementUnitTransfer,
-                    $restRequest->getMetadata()->getLocale()
-                );
+        foreach ($productMeasurementUnitTransfersWithTranslatedNames as $idProductConcrete => $productMeasurementUnitTransfer) {
+            $restProductMeasurementUnitsResources[$productConcreteSkus[$idProductConcrete]] =
+                $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer);
         }
 
         foreach ($resources as $resource) {

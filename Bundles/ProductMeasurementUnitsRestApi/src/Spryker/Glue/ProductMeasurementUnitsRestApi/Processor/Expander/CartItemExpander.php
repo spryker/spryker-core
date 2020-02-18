@@ -9,25 +9,9 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
 
 class CartItemExpander implements CartItemExpanderInterface
 {
-    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
-
-    /**
-     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface
-     */
-    protected $productStorageClient;
-
-    /**
-     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient
-     */
-    public function __construct(ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient)
-    {
-        $this->productStorageClient = $productStorageClient;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer

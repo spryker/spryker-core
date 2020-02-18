@@ -33,6 +33,8 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\Pr
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilder;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslator;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface;
 
 /**
  * @method \Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig getConfig()
@@ -46,8 +48,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     {
         return new ProductMeasurementUnitReader(
             $this->createProductMEasurementUnitRestResponseBuilder(),
-            $this->getProductMeasurementUnitStorageClient(),
-            $this->getConfig()
+            $this->getProductMeasurementUnitStorageClient()
         );
     }
 
@@ -59,8 +60,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
         return new SalesUnitReader(
             $this->createSalesUnitRestResponseBuilder(),
             $this->getProductMeasurementUnitStorageClient(),
-            $this->getProductStorageClient(),
-            $this->getConfig()
+            $this->getProductStorageClient()
         );
     }
 
@@ -72,7 +72,8 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
         return new ProductMeasurementUnitByProductConcreteResourceRelationshipExpander(
             $this->createProductMeasurementUnitRestResponseBuilder(),
             $this->getProductStorageClient(),
-            $this->getProductMeasurementUnitStorageClient()
+            $this->getProductMeasurementUnitStorageClient(),
+            $this->createProductMeasurementUnitNameTranslator()
         );
     }
 
@@ -95,8 +96,8 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     {
         return new ProductMeasurementUnitBySalesUnitResourceRelationshipExpander(
             $this->createProductMeasurementUnitRestResponseBuilder(),
-            $this->getProductStorageClient(),
-            $this->getProductMeasurementUnitStorageClient()
+            $this->getProductMeasurementUnitStorageClient(),
+            $this->createProductMeasurementUnitNameTranslator()
         );
     }
 
@@ -117,7 +118,15 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
      */
     public function createCartItemExpander(): CartItemExpanderInterface
     {
-        return new CartItemExpander($this->getProductStorageClient());
+        return new CartItemExpander();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface
+     */
+    public function createProductMeasurementUnitNameTranslator(): ProductMeasurementUnitNameTranslatorInterface
+    {
+        return new ProductMeasurementUnitNameTranslator($this->getGlossaryStorageClient());
     }
 
     /**

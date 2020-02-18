@@ -42,12 +42,12 @@ class SalesUnitMapper implements SalesUnitMapperInterface
                 continue;
             }
 
-            if (!$this->productPackagingUnitFacade->findProductPackagingUnitByProductSku($itemTransfer->getSku())) {
+            $idProductMeasurementSalesUnit = $cartItemRequestTransfer->getIdProductMeasurementSalesUnit();
+            if (!$idProductMeasurementSalesUnit) {
                 continue;
             }
 
-            $idProductMeasurementSalesUnit = $cartItemRequestTransfer->getIdProductMeasurementSalesUnit();
-            if (!$idProductMeasurementSalesUnit) {
+            if (!$this->productPackagingUnitFacade->findProductPackagingUnitByProductSku($itemTransfer->getSku())) {
                 continue;
             }
 

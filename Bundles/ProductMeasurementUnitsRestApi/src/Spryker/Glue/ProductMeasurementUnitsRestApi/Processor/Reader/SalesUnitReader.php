@@ -34,26 +34,18 @@ class SalesUnitReader implements SalesUnitReaderInterface
     protected $productStorageClient;
 
     /**
-     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig
-     */
-    protected $productMeasurementUnitsRestApiConfig;
-
-    /**
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilderInterface $salesUnitRestResponseBuilder
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient
-     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig $productMeasurementUnitsRestApiConfig
      */
     public function __construct(
         SalesUnitRestResponseBuilderInterface $salesUnitRestResponseBuilder,
         ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient,
-        ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient,
-        ProductMeasurementUnitsRestApiConfig $productMeasurementUnitsRestApiConfig
+        ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient
     ) {
         $this->salesUnitRestResponseBuilder = $salesUnitRestResponseBuilder;
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
         $this->productStorageClient = $productStorageClient;
-        $this->productMeasurementUnitsRestApiConfig = $productMeasurementUnitsRestApiConfig;
     }
     
     /**
@@ -78,12 +70,10 @@ class SalesUnitReader implements SalesUnitReaderInterface
             return $this->salesUnitRestResponseBuilder->createProductConcreteNotFoundErrorResponse();
         }
 
-        $restResponse = $this->salesUnitRestResponseBuilder->createRestResponse();
-
         $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
         if (!$productMeasurementSalesUnitTransfers) {
-            return $restResponse;
+            return $this->salesUnitRestResponseBuilder->createRestResponse();
         }
 
         return $this->salesUnitRestResponseBuilder->createSalesUnitResourceCollectionResponse(

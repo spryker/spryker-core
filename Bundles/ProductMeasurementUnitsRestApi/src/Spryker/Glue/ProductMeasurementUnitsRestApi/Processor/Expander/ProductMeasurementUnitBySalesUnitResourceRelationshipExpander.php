@@ -7,12 +7,11 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
-use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface;
 
 class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface
 {
@@ -25,28 +24,28 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     protected $productMeasurementUnitRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface
-     */
-    protected $productStorageClient;
-
-    /**
      * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface
      */
     protected $productMeasurementUnitStorageClient;
 
     /**
+     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface
+     */
+    protected $productMeasurementUnitNameTranslator;
+
+    /**
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder
-     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
+     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface $productMeasurementUnitNameTranslator
      */
     public function __construct(
         ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder,
-        ProductMeasurementUnitsRestApiToProductStorageClientInterface $productStorageClient,
-        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
+        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient,
+        ProductMeasurementUnitNameTranslatorInterface $productMeasurementUnitNameTranslator
     ) {
         $this->productMeasurementUnitRestResponseBuilder = $productMeasurementUnitRestResponseBuilder;
-        $this->productStorageClient = $productStorageClient;
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
+        $this->productMeasurementUnitNameTranslator = $productMeasurementUnitNameTranslator;
     }
 
     /**
@@ -58,7 +57,7 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $codes = $this->getAllCodes($resources);
-        $productMeasurementUnitStorageTransfers = $this->productMeasurementUnitStorageClient
+        $productMeasurementUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementUnitsByMapping(
                 static::PRODUCT_MEASUREMENT_UNIT_MAPPING_TYPE,
                 $codes
@@ -66,7 +65,7 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
 
         foreach ($resources as $resource) {
             $this->addProductMeasurementUnitResourceRelationships(
-                $productMeasurementUnitStorageTransfers,
+                $productMeasurementUnitTransfers,
                 $resource,
                 $restRequest->getMetadata()->getLocale()
             );
@@ -74,26 +73,24 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[] $productMeasurementUnitStorageTransfers
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $productMeasurementUnitTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      * @param string $localeName
      *
      * @return void
      */
     protected function addProductMeasurementUnitResourceRelationships(
-        array $productMeasurementUnitStorageTransfers,
+        array $productMeasurementUnitTransfers,
         RestResourceInterface $resource,
         string $localeName
     ): void {
-        foreach ($productMeasurementUnitStorageTransfers as $productMeasurementUnitStorageTransfer) {
-            $measurementUnitCode = $this->getMeasurementUnitCode($resource);
-            if ($measurementUnitCode === $productMeasurementUnitStorageTransfer->getCode()) {
+        $productMeasurementUnitTransfersWithTranslatedNames = $this->productMeasurementUnitNameTranslator
+            ->getProductMeasurementUnitTransfersWithTranslatedNames($productMeasurementUnitTransfers, $localeName);
+        foreach ($productMeasurementUnitTransfersWithTranslatedNames as $productMeasurementUnitTransfer) {
+            $productMeasurementUnitCode = $this->getProductMeasurementUnitCode($resource);
+            if ($productMeasurementUnitCode === $productMeasurementUnitTransfer->getCode()) {
                 $productMeasurementUnitRestResource = $this->productMeasurementUnitRestResponseBuilder
-                    ->createProductMeasurementUnitRestResource(
-                        (new ProductMeasurementUnitTransfer())
-                            ->fromArray($productMeasurementUnitStorageTransfer->toArray(), true),
-                        $localeName
-                    );
+                    ->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer);
 
                 $resource->addRelationship($productMeasurementUnitRestResource);
             }
@@ -109,7 +106,7 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     {
         $codes = [];
         foreach ($resources as $resource) {
-            $codes[$resource->getId()] = $this->getMeasurementUnitCode($resource);
+            $codes[$resource->getId()] = $this->getProductMeasurementUnitCode($resource);
         }
 
         return $codes;
@@ -120,11 +117,11 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
      *
      * @return string
      */
-    protected function getMeasurementUnitCode(RestResourceInterface $resource): string
+    protected function getProductMeasurementUnitCode(RestResourceInterface $resource): string
     {
         /** @var \Generated\Shared\Transfer\RestSalesUnitsAttributesTransfer $restSalesUnitsAttributesTransfer */
         $restSalesUnitsAttributesTransfer = $resource->getAttributes();
 
-        return $restSalesUnitsAttributesTransfer->getMeasurementUnitCode();
+        return $restSalesUnitsAttributesTransfer->getProductMeasurementUnitCode();
     }
 }

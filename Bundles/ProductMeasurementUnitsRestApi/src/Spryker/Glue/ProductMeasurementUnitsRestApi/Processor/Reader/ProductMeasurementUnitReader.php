@@ -7,12 +7,10 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig;
 
 class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterface
 {
@@ -29,23 +27,15 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     protected $productMeasurementUnitStorageClient;
 
     /**
-     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig
-     */
-    protected $productMeasurementUnitsRestApiConfig;
-
-    /**
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
-     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig $productMeasurementUnitsRestApiConfig
      */
     public function __construct(
         ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder,
-        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient,
-        ProductMeasurementUnitsRestApiConfig $productMeasurementUnitsRestApiConfig
+        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
     ) {
         $this->productMeasurementUnitRestResponseBuilder = $productMeasurementUnitRestResponseBuilder;
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
-        $this->productMeasurementUnitsRestApiConfig = $productMeasurementUnitsRestApiConfig;
     }
     
     /**
@@ -59,17 +49,17 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
             return $this->productMeasurementUnitRestResponseBuilder->createCodeMissingErrorResponse();
         }
 
-        $productMeasurementUnitStorageTransfers = $this->productMeasurementUnitStorageClient->getProductMeasurementUnitsByMapping(
+        $productMeasurementUnitTransfers = $this->productMeasurementUnitStorageClient->getProductMeasurementUnitsByMapping(
             static::PRODUCT_MEASUREMENT_UNIT_MAPPING_TYPE,
             [$restRequest->getResource()->getId()]
         );
 
-        if (!$productMeasurementUnitStorageTransfers) {
+        if (!$productMeasurementUnitTransfers) {
             return $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitNotFoundErrorResponse();
         }
 
         return $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResponse(
-            (new ProductMeasurementUnitTransfer())->fromArray($productMeasurementUnitStorageTransfers[0]->toArray(), true),
+            $productMeasurementUnitTransfers[0],
             $restRequest->getMetadata()->getLocale()
         );
     }
