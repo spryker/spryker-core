@@ -25,5 +25,10 @@ interface ProductViewExpanderByCriteriaPluginInterface extends ProductViewExpand
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName, ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null): ProductViewTransfer;
+    public function expandProductViewTransfer(
+        ProductViewTransfer $productViewTransfer,
+        array $productData,
+        $localeName,
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    ): ProductViewTransfer;
 }
