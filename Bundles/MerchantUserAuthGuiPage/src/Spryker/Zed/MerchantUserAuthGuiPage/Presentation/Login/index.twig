@@ -17,9 +17,13 @@
 {% endblock %}
 
 {% block footerJs %}
+    <script src="{{ assetsPath('js/zed-ui/polyfills-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/zed-ui/vendor-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/zed-ui/main-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/zed-ui/runtime-es5.js') }}"></script>
+
     <script src="{{ assetsPath('js/mp-login/polyfills-es5.js') }}"></script>
     <script src="{{ assetsPath('js/mp-login/vendor-es5.js') }}"></script>
-    <script src="{{ assetsPath('js/mp-login/styles-es5.js') }}"></script>
     <script src="{{ assetsPath('js/mp-login/main-es5.js') }}"></script>
     <script src="{{ assetsPath('js/mp-login/runtime-es5.js') }}"></script>
 {% endblock %}

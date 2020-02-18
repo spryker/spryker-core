@@ -3,20 +3,29 @@ import { NgModule } from '@angular/core';
 import { CustomElementModule } from '@spryker/web-components';
 
 import { AppComponent } from './app.component';
-import { ZedAuthFooterComponent } from './zed-auth-footer/zed-auth-footer.component';
 import { ZedLayoutCentralComponent } from './zed-layout-central/zed-layout-central.component';
+import { ZedLayoutCentralModule } from './zed-layout-central/zed-layout-central.module';
 
 @NgModule({
     declarations: [
         AppComponent,
-        ZedAuthFooterComponent,
-        ZedLayoutCentralComponent
     ],
     imports: [
-        BrowserModule
+        BrowserModule,
+        ZedLayoutCentralModule
     ],
     providers: [],
 })
 export class AppModule extends CustomElementModule {
-    protected components = [ZedAuthFooterComponent, ZedLayoutCentralComponent];
+    protected components = [
+        {
+            selector: 'zed-layout-central',
+            component: ZedLayoutCentralComponent
+        }
+    ];
+
+    ngDoBootstrap(): void {
+        console.log('init zed ui');
+        super.ngDoBootstrap();
+    }
 }

@@ -6,8 +6,6 @@ import { InputModule, InputComponent } from '@spryker/input';
 import { CardModule, CardComponent } from '@spryker/card';
 import { LogoModule, LogoComponent } from '@spryker/logo';
 import { CustomElementModule } from '@spryker/web-components';
-import { ZedLayoutCentralComponent } from '../../../ZedUi/src/app/zed-layout-central/zed-layout-central.component';
-import { ZedLayoutCentralModule } from '../../../ZedUi/src/app/zed-layout-central/zed-layout-central.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -24,7 +22,6 @@ import { LoginComponent } from './login/login.component';
         InputModule,
         CardModule,
         LogoModule,
-        ZedLayoutCentralModule,
     ],
     providers: [],
 })
@@ -54,9 +51,5 @@ export class AppModule extends CustomElementModule {
             selector: 'spy-logo',
             component: LogoComponent
         },
-        {
-            selector: 'zed-layout-central',
-            component: ZedLayoutCentralComponent
-        }
     ];
 }
