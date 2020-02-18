@@ -64,7 +64,8 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
      */
     protected function assureDefaultProductSetKeyExists(DataSetInterface $dataSet): void
     {
-        if (!isset($dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT])
+        if (
+            !isset($dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT])
             || !$dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT]
         ) {
             $parameters = [

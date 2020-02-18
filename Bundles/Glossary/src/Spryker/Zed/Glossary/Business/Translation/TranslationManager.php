@@ -420,6 +420,7 @@ class TranslationManager implements TranslationManagerInterface
             Propel::getConnection()->commit();
         } catch (Exception $e) {
             Propel::getConnection()->rollBack();
+
             throw $e;
         }
 

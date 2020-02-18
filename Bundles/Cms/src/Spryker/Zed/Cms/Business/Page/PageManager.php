@@ -61,8 +61,13 @@ class PageManager implements PageManagerInterface
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface $urlFacade
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, CmsToGlossaryFacadeInterface $glossaryFacade, CmsToTouchFacadeInterface $touchFacade, CmsToUrlFacadeInterface $urlFacade)
-    {
+    public function __construct(
+        CmsQueryContainerInterface $cmsQueryContainer,
+        TemplateManagerInterface $templateManager,
+        CmsToGlossaryFacadeInterface $glossaryFacade,
+        CmsToTouchFacadeInterface $touchFacade,
+        CmsToUrlFacadeInterface $urlFacade
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
         $this->glossaryFacade = $glossaryFacade;

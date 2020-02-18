@@ -228,8 +228,13 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, string $placeholder, string $value, ?LocaleTransfer $localeTransfer = null, bool $autoGlossaryKeyIncrement = true): PageKeyMappingTransfer
-    {
+    public function addPlaceholderText(
+        PageTransfer $pageTransfer,
+        string $placeholder,
+        string $value,
+        ?LocaleTransfer $localeTransfer = null,
+        bool $autoGlossaryKeyIncrement = true
+    ): PageKeyMappingTransfer {
         $template = $this->templateManager->getTemplateById($pageTransfer->getFkTemplate());
 
         $uniquePlaceholder = $placeholder . '-' . $pageTransfer->getIdCmsPage();
