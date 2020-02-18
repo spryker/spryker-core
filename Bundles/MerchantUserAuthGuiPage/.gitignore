@@ -1,5 +1,3 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
 # compiled output
 /dist
 /tmp
@@ -13,23 +11,6 @@
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
 
 # misc
 /.sass-cache
@@ -52,6 +33,14 @@ nbproject/
 .buildpath/
 .settings/
 *.sublime-*
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
 
 # OS
 .DS_Store
@@ -81,4 +70,3 @@ src/*/Zed/*/Persistence/Propel/Map/*
 tests/**/_generated/
 tests/_output/*
 !tests/_output/.gitkeep
-

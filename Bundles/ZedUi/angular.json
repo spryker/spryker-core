@@ -18,12 +18,14 @@
           "builder": "ngx-build-plus:browser",
           "options": {
             "outputPath": "../../../../../public/Zed/assets/js/zed-ui",
-            "index": "src/index.html",
+            "index": "",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [],
+            "assets": [
+              "src/assets"
+            ],
             "styles": [],
             "singleBundle": true,
             "scripts": []
@@ -83,13 +85,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.less"
-            ],
+            "assets": [],
+            "styles": [],
             "scripts": []
           }
         },

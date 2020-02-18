@@ -1,5 +1,3 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
 # compiled output
 /dist
 /tmp
@@ -13,23 +11,6 @@
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
 
 # misc
 /.sass-cache
@@ -45,24 +26,47 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# IDEs
-/.idea
-/.project
-/nbproject
-/.buildpath
-/.settings
+# IDE
+.idea/
+.project/
+nbproject/
+.buildpath/
+.settings/
 *.sublime-*
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# OS
+.DS_Store
 *.AppleDouble
 *.AppleDB
 *.AppleDesktop
 
-# OS
-.DS_Store
+# grunt stuff
+.grunt
+.sass-cache
+/node_modules/
 
-/vendor
+# tooling
+vendor/
 composer.lock
 .phpunit.result.cache
 
-/tests/_output/*
-!/tests/_output/.gitkeep
+# built client resources
+src/*/Zed/*/Static/Public
+src/*/Zed/*/Static/Assets/sprite
 
+# Propel classes
+src/*/Zed/*/Persistence/Propel/Base/*
+src/*/Zed/*/Persistence/Propel/Map/*
+
+# tests
+tests/**/_generated/
+tests/_output/*
+!tests/_output/.gitkeep

@@ -3,25 +3,18 @@ import { NgModule } from '@angular/core';
 import { ButtonModule, ButtonComponent } from '@spryker/button';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 import { InputModule, InputComponent } from '@spryker/input';
-import { CardModule, CardComponent } from '@spryker/card';
-import { LogoModule, LogoComponent } from '@spryker/logo';
 import { CustomElementModule } from '@spryker/web-components';
 
-import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        LoginComponent,
-    ],
     imports: [
         BrowserModule,
         ButtonModule,
         FormItemModule,
         InputModule,
-        CardModule,
-        LogoModule,
+        LoginModule
     ],
     providers: [],
 })
@@ -42,14 +35,6 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'spy-input',
             component: InputComponent
-        },
-        {
-            selector: 'spy-card',
-            component: CardComponent
-        },
-        {
-            selector: 'spy-logo',
-            component: LogoComponent
-        },
+        }
     ];
 }

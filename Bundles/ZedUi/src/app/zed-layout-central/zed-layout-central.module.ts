@@ -8,4 +8,5 @@ import { ZedLayoutCentralComponent } from './zed-layout-central.component';
     declarations: [ZedLayoutCentralComponent],
     exports: [ZedLayoutCentralComponent],
 })
-export class ZedLayoutCentralModule {}
+export class ZedLayoutCentralModule {
+}
