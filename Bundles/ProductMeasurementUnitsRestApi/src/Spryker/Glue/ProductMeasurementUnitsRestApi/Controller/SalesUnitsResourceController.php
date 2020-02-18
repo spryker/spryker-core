@@ -18,7 +18,7 @@ class SalesUnitsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResourceById": {
+     *     "getCollection": {
      *          "summary": [
      *              "Retrieves a collection of sales units."
      *          ],
@@ -27,8 +27,8 @@ class SalesUnitsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Abstract product id is not specified.",
-     *              "404": "Abstract product not found."
+     *              "400": "Concrete product id is not specified.",
+     *              "404": "Concrete product not found."
      *          }
      *     }
      * })

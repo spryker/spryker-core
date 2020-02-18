@@ -79,21 +79,25 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
         }
 
         foreach ($resources as $resource) {
-            $this->addSalesUnitResourceRelationships($restSalesUnitsResources, $resource);
+            $this->addSalesUnitResourceRelationships($resource, $restSalesUnitsResources);
         }
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $restSalesUnitsResources
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $restSalesUnitsResources
      *
      * @return void
      */
     protected function addSalesUnitResourceRelationships(
-        array $restSalesUnitsResources,
-        RestResourceInterface $resource
+        RestResourceInterface $resource,
+        array $restSalesUnitsResources
     ): void {
         foreach ($restSalesUnitsResources as $productConcreteSku => $productConcreteRestSalesUnitsResources) {
+            if (!$resource->getAttributes()->offsetExists(static::ATTRIBUTE_SKU)) {
+                continue;
+            }
+
             if ($productConcreteSku !== $resource->getAttributes()->offsetGet(static::ATTRIBUTE_SKU)) {
                 continue;
             }
@@ -113,6 +117,10 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
     {
         $skus = [];
         foreach ($resources as $resource) {
+            if (!$resource->getAttributes()->offsetExists(static::ATTRIBUTE_SKU)) {
+                continue;
+            }
+
             $skus[] = $resource->getAttributes()->offsetGet(static::ATTRIBUTE_SKU);
         }
 

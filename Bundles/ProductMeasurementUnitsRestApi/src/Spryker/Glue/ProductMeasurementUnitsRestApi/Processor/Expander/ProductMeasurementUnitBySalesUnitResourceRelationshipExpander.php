@@ -15,7 +15,6 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeas
 
 class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface
 {
-    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const PRODUCT_MEASUREMENT_UNIT_MAPPING_TYPE = 'code';
 
     /**
@@ -88,12 +87,14 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
             ->getProductMeasurementUnitTransfersWithTranslatedNames($productMeasurementUnitTransfers, $localeName);
         foreach ($productMeasurementUnitTransfersWithTranslatedNames as $productMeasurementUnitTransfer) {
             $productMeasurementUnitCode = $this->getProductMeasurementUnitCode($resource);
-            if ($productMeasurementUnitCode === $productMeasurementUnitTransfer->getCode()) {
-                $productMeasurementUnitRestResource = $this->productMeasurementUnitRestResponseBuilder
-                    ->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer);
-
-                $resource->addRelationship($productMeasurementUnitRestResource);
+            if ($productMeasurementUnitCode !== $productMeasurementUnitTransfer->getCode()) {
+                continue;
             }
+
+            $productMeasurementUnitRestResource = $this->productMeasurementUnitRestResponseBuilder
+                ->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer);
+
+            $resource->addRelationship($productMeasurementUnitRestResource);
         }
     }
 

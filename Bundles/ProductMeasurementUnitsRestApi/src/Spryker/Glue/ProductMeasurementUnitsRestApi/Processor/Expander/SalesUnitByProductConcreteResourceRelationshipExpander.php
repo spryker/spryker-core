@@ -68,9 +68,8 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         $productConcreteSkus = array_flip($productConcreteIds);
         $restSalesUnitsResources = [];
         foreach ($productMeasurementSalesUnitTransfers as $idProductConcrete => $productConcreteProductMeasurementSalesUnitTransfers) {
-            $productConcreteSku = $productConcreteSkus[$idProductConcrete];
             foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
-                $restSalesUnitsResources[$productConcreteSku][] =
+                $restSalesUnitsResources[$productConcreteSkus[$idProductConcrete]][] =
                     $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
                         $productConcreteProductMeasurementSalesUnitTransfer
                     );
@@ -78,19 +77,19 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         }
 
         foreach ($resources as $resource) {
-            $this->addSalesUnitResourceRelationships($restSalesUnitsResources, $resource);
+            $this->addSalesUnitResourceRelationships($resource, $restSalesUnitsResources);
         }
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $restSalesUnitsResources
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $restSalesUnitsResources
      *
      * @return void
      */
     protected function addSalesUnitResourceRelationships(
-        array $restSalesUnitsResources,
-        RestResourceInterface $resource
+        RestResourceInterface $resource,
+        array $restSalesUnitsResources
     ): void {
         if (!isset($restSalesUnitsResources[$resource->getId()])) {
             return;
