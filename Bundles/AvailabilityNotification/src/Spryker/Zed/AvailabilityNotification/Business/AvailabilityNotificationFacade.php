@@ -65,8 +65,9 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeByCustomerReferenceAndSku(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    public function unsubscribeByCustomerReferenceAndSku(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         $subscriptionResponse = $this->getFactory()
             ->createAvailabilityNotificationUnsubscriber()
             ->unsubscribeByCustomerReferenceAndSku($availabilityNotificationSubscriptionTransfer);

@@ -49,7 +49,9 @@ interface ConfigurableBundlePageSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer
      */
-    public function getConfigurableBundleTemplatePageSearchCollection(ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer): ConfigurableBundleTemplatePageSearchCollectionTransfer;
+    public function getConfigurableBundleTemplatePageSearchCollection(
+        ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer
+    ): ConfigurableBundleTemplatePageSearchCollectionTransfer;
 
     /**
      * Specification:

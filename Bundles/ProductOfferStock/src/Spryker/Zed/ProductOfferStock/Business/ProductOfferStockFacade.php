@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ProductOfferStock\Business;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
-use Spryker\DecimalObject\Decimal;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductOfferStock\Business\ProductOfferStockBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface getRepository()
  */
 class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStockFacadeInterface
 {
@@ -24,11 +24,14 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal
+     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
-    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal
+    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer
     {
-        return $this->getRepository()
-            ->getProductOfferStockForRequest($productOfferStockRequestTransfer);
+        return $this->getFactory()
+            ->createProductOfferStockReader()
+            ->getProductOfferStock($productOfferStockRequestTransfer);
     }
 }
