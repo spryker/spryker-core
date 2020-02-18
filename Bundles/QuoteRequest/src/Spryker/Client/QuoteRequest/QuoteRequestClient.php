@@ -240,4 +240,36 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     {
         return $this->getFactory()->createQuoteRequestStub();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteChecker()
+            ->isQuoteInQuoteRequestProcess($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteChecker()
+            ->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
+    }
 }
