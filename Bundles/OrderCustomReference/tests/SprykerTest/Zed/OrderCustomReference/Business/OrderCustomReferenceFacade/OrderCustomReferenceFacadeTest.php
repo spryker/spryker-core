@@ -40,14 +40,20 @@ class OrderCustomReferenceFacadeTest extends Unit
     protected $saveOrderTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected $quoteTransfer;
+
+    /**
      * @return void
      */
-    protected function _setUp(): void
+    protected function setUp(): void
     {
-        parent::_setUp();
+        parent::setUp();
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
         $this->saveOrderTransfer = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $this->quoteTransfer = (new QuoteTransfer())->setOrderCustomReference(static::ORDER_CUSTOM_REFERENCE);
     }
 
     /**
@@ -57,14 +63,14 @@ class OrderCustomReferenceFacadeTest extends Unit
     {
         // Act
         $this->tester->getFacade()->saveOrderCustomReference(
-            static::ORDER_CUSTOM_REFERENCE,
-            $this->saveOrderTransfer->getIdSalesOrder()
+            $this->quoteTransfer,
+            $this->saveOrderTransfer
         );
 
         $orderTransfer = $this->findOrder($this->saveOrderTransfer);
 
         // Assert
-        $this->assertEquals(static::ORDER_CUSTOM_REFERENCE, $orderTransfer->getOrderCustomReference());
+        $this->assertEquals($this->quoteTransfer->getOrderCustomReference(), $orderTransfer->getOrderCustomReference());
     }
 
     /**
@@ -72,39 +78,22 @@ class OrderCustomReferenceFacadeTest extends Unit
      */
     public function testSaveOrderWithEmptyOrderCustomReferenceLength(): void
     {
-        // Act
+        // Arrange
         $this->tester->getFacade()->saveOrderCustomReference(
-            static::ORDER_CUSTOM_REFERENCE,
-            $this->saveOrderTransfer->getIdSalesOrder()
+            $this->quoteTransfer,
+            $this->saveOrderTransfer
         );
 
+        // Act
         $this->tester->getFacade()->saveOrderCustomReference(
-            '',
-            $this->saveOrderTransfer->getIdSalesOrder()
+            (new QuoteTransfer()),
+            $this->saveOrderTransfer
         );
 
         $orderTransfer = $this->findOrder($this->saveOrderTransfer);
 
         // Assert
-        $this->assertEquals(static::ORDER_CUSTOM_REFERENCE, $orderTransfer->getOrderCustomReference());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetOrderCustomReferenceQuoteFieldsAllowedForSaving()
-    {
-        // Act
-        $orderCustomReferenceQuoteFieldsAllowedForSaving = $this->tester->getFacade()
-            ->getOrderCustomReferenceQuoteFieldsAllowedForSaving(new QuoteTransfer());
-
-        // Assert
-        $this->assertTrue(
-            in_array(
-                QuoteTransfer::ORDER_CUSTOM_REFERENCE,
-                $orderCustomReferenceQuoteFieldsAllowedForSaving
-            )
-        );
+        $this->assertEquals($this->quoteTransfer->getOrderCustomReference(), $orderTransfer->getOrderCustomReference());
     }
 
     /**

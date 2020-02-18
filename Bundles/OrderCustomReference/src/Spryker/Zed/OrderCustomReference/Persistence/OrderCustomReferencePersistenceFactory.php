@@ -20,7 +20,7 @@ class OrderCustomReferencePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function getSalesOrderQuery(): SpySalesOrderQuery
+    public function getSalesOrderPropelQuery(): SpySalesOrderQuery
     {
         return $this->getProvidedDependency(OrderCustomReferenceDependencyProvider::PROPEL_QUERY_SALES_ORDER);
     }

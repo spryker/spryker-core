@@ -26,7 +26,7 @@ class OrderCustomReferenceDependencyProvider extends AbstractBundleDependencyPro
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addSalesOrderQuery($container);
+        $container = $this->addSalesOrderPropelQuery($container);
 
         return $container;
     }
@@ -38,7 +38,7 @@ class OrderCustomReferenceDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesOrderQuery(Container $container): Container
+    protected function addSalesOrderPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_SALES_ORDER, $container->factory(function () {
             return SpySalesOrderQuery::create();

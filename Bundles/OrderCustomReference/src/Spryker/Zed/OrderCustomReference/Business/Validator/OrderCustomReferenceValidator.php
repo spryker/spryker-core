@@ -13,12 +13,16 @@ class OrderCustomReferenceValidator implements OrderCustomReferenceValidatorInte
     protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
 
     /**
-     * @param string $orderCustomReference
+     * @param string|null $orderCustomReference
      *
      * @return bool
      */
-    public function isOrderCustomReferenceLengthValid(string $orderCustomReference): bool
+    public function isOrderCustomReferenceLengthValid(?string $orderCustomReference): bool
     {
+        if (!$orderCustomReference) {
+            return false;
+        }
+
         $orderCustomReferenceLength = mb_strlen($orderCustomReference);
 
         return $orderCustomReferenceLength >= static::ORDER_CUSTOM_REFERENCE_MIN_LENGTH

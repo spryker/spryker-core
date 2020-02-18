@@ -10,9 +10,9 @@ namespace Spryker\Zed\OrderCustomReference\Business\Validator;
 interface OrderCustomReferenceValidatorInterface
 {
     /**
-     * @param string $orderCustomReference
+     * @param string|null $orderCustomReference
      *
      * @return bool
      */
-    public function isOrderCustomReferenceLengthValid(string $orderCustomReference): bool;
+    public function isOrderCustomReferenceLengthValid(?string $orderCustomReference): bool;
 }

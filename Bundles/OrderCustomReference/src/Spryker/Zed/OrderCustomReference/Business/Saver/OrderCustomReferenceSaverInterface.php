@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business\Saver;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+
 interface OrderCustomReferenceSaverInterface
 {
     /**
-     * @param string $orderCustomReference
-     * @param int $idSalesOrder
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function saveOrderCustomReference(string $orderCustomReference, int $idSalesOrder): void;
+    public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 }
