@@ -49,7 +49,7 @@
 
     <transfer name="CreateReturnRequest">
         <property name="store" type="string"/>
-        <property name="Customer" type="Customer"/>
+        <property name="customer" type="Customer"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
     </transfer>
 
