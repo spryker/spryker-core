@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
  */
-class MerchantForm extends AbstractType
+class MerchantCreateForm extends AbstractType
 {
     public const OPTION_CURRENT_ID = 'current_id';
 
@@ -150,11 +150,13 @@ class MerchantForm extends AbstractType
         $builder
             ->add(static::FIELD_MERCHANT_REFERENCE, TextType::class, [
                 'label' => static::LABEL_MERCHANT_REFERENCE,
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new Length([
                         'max' => 255,
                     ]),
+                    new Required(),
+                    new NotBlank(),
                     new UniqueMerchantReference([
                         UniqueMerchantReference::OPTION_CURRENT_MERCHANT_ID => $currentMerchantId,
                         UniqueMerchantReference::OPTION_MERCHANT_FACADE => $this->getFactory()->getMerchantFacade(),

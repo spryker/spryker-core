@@ -14,18 +14,6 @@ interface ProductOfferAvailabilityFacadeInterface
 {
     /**
      * Specification:
-     * - Returns true if input quantity is larger than reserved quantity for this request.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-     *
-     * @return bool
-     */
-    public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool;
-
-    /**
-     * Specification:
      * - Calculates product offer availability by product offer stock and concrete product reserved amount.
      * - Expects ProductOfferAvailabilityFacadeInterface.sku to be provided.
      * - Expects ProductOfferAvailabilityFacadeInterface.productOfferReference to be provided.
