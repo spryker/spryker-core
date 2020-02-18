@@ -25,7 +25,7 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function createMerchantSalesOrder(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    public function createMerchantOrder(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
         $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 
@@ -47,7 +47,7 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer
      */
-    public function createMerchantSalesOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemTransfer
+    public function createMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemTransfer
     {
         $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 
@@ -70,7 +70,7 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
-    public function createMerchantSalesOrderTotals(TotalsTransfer $totalsTransfer): TotalsTransfer
+    public function createMerchantOrderTotals(TotalsTransfer $totalsTransfer): TotalsTransfer
     {
         $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 

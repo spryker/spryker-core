@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -29,11 +31,9 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
-    public function createMerchantSalesOrders(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer
+    public function createMerchantOrderCollection(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer
     {
-        return $this->getFactory()
-            ->createMerchantSalesOrderCreator()
-            ->createMerchantSalesOrders($orderTransfer);
+        return $this->getFactory()->createMerchantOrderCreator()->createMerchantOrderCollection($orderTransfer);
     }
 
     /**
@@ -48,8 +48,7 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     public function getMerchantOrderCollection(
         MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
     ): MerchantOrderCollectionTransfer {
-        return $this->getRepository()
-            ->getMerchantOrderCollection($merchantCriteriaFilterTransfer);
+        return $this->getRepository()->getMerchantOrderCollection($merchantCriteriaFilterTransfer);
     }
 
     /**
@@ -64,7 +63,25 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     public function findMerchantOrder(
         MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
     ): ?MerchantOrderTransfer {
-        return $this->getRepository()
-            ->findMerchantOrder($merchantCriteriaFilterTransfer);
+        return $this->getRepository()->findMerchantOrder($merchantCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function expandOrderItemWithMerchant(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
+        ItemTransfer $itemTransfer
+    ): SpySalesOrderItemEntityTransfer {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
     }
 }

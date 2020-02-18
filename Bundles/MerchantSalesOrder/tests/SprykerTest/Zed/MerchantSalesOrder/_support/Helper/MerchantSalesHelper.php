@@ -31,11 +31,12 @@ class MerchantSalesHelper extends Module
     public function haveMerchantOrder(array $seedData = []): MerchantOrderTransfer
     {
         $merchantOrderTransfer = (new MerchantOrderBuilder($seedData))->build();
-        $merchantOrderTransfer->setIdMerchantSalesOrder(null);
+        $merchantOrderTransfer->setIdMerchantOrder(null);
 
         $merchantSalesOrderEntity = (new SpyMerchantSalesOrder());
         $merchantSalesOrderEntity->fromArray($merchantOrderTransfer->modifiedToArray());
-        $merchantSalesOrderEntity->setFkSalesOrder($merchantOrderTransfer->getIdSalesOrder());
+        $merchantSalesOrderEntity->setMerchantSalesOrderReference($merchantOrderTransfer->getMerchantOrderReference());
+        $merchantSalesOrderEntity->setFkSalesOrder($merchantOrderTransfer->getIdOrder());
         $merchantSalesOrderEntity->save();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantSalesOrderEntity): void {
@@ -43,7 +44,9 @@ class MerchantSalesHelper extends Module
         });
 
         $merchantOrderTransfer->fromArray($merchantSalesOrderEntity->toArray(), true);
-        $merchantOrderTransfer->setIdSalesOrder($merchantSalesOrderEntity->getFkSalesOrder());
+        $merchantOrderTransfer->setMerchantOrderReference($merchantSalesOrderEntity->getMerchantSalesOrderReference());
+        $merchantOrderTransfer->setIdMerchantOrder($merchantSalesOrderEntity->getIdMerchantSalesOrder());
+        $merchantOrderTransfer->setIdOrder($merchantSalesOrderEntity->getFkSalesOrder());
 
         return $merchantOrderTransfer;
     }
@@ -56,12 +59,12 @@ class MerchantSalesHelper extends Module
     public function haveMerchantOrderItem(array $seedData = []): MerchantOrderItemTransfer
     {
         $merchantOrderItemTransfer = (new MerchantOrderItemBuilder($seedData))->build();
-        $merchantOrderItemTransfer->setIdMerchantSalesOrderItem(null);
+        $merchantOrderItemTransfer->setIdMerchantOrderItem(null);
 
         $merchantSalesOrderItemEntity = (new SpyMerchantSalesOrderItem());
         $merchantSalesOrderItemEntity->fromArray($merchantOrderItemTransfer->modifiedToArray());
-        $merchantSalesOrderItemEntity->setFkSalesOrderItem($merchantOrderItemTransfer->getIdSalesOrderItem());
-        $merchantSalesOrderItemEntity->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantSalesOrder());
+        $merchantSalesOrderItemEntity->setFkSalesOrderItem($merchantOrderItemTransfer->getIdOrderItem());
+        $merchantSalesOrderItemEntity->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantOrder());
         $merchantSalesOrderItemEntity->save();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantSalesOrderItemEntity): void {
@@ -69,8 +72,8 @@ class MerchantSalesHelper extends Module
         });
 
         $merchantOrderItemTransfer->fromArray($merchantSalesOrderItemEntity->toArray(), true);
-        $merchantOrderItemTransfer->setIdSalesOrderItem($merchantSalesOrderItemEntity->getFkSalesOrderItem());
-        $merchantOrderItemTransfer->setIdMerchantSalesOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder());
+        $merchantOrderItemTransfer->setIdOrderItem($merchantSalesOrderItemEntity->getFkSalesOrderItem());
+        $merchantOrderItemTransfer->setIdMerchantOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder());
 
         return $merchantOrderItemTransfer;
     }
@@ -86,7 +89,7 @@ class MerchantSalesHelper extends Module
 
         $merchantSalesOrderTotalsEntity = (new SpyMerchantSalesOrderTotals());
         $merchantSalesOrderTotalsEntity->fromArray($totalsTransfer->modifiedToArray());
-        $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($totalsTransfer->getIdMerchantSalesOrder());
+        $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($totalsTransfer->getIdMerchantOrder());
         $merchantSalesOrderTotalsEntity->save();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantSalesOrderTotalsEntity): void {
@@ -94,7 +97,7 @@ class MerchantSalesHelper extends Module
         });
 
         $totalsTransfer->fromArray($merchantSalesOrderTotalsEntity->toArray(), true);
-        $totalsTransfer->setIdMerchantSalesOrder($merchantSalesOrderTotalsEntity->getFkMerchantSalesOrder());
+        $totalsTransfer->setIdMerchantOrder($merchantSalesOrderTotalsEntity->getFkMerchantSalesOrder());
 
         return $totalsTransfer;
     }

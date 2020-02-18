@@ -8,7 +8,8 @@
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^11.0.0"
+    "spryker/sales": "^11.0.0",
+    "spryker/sales-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -191,8 +191,10 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]
      */
-    protected function getMappedConfigurableBundleTemplatePageSearchTransfers(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer, array $configurableBundleTemplatePageSearchTransfers): array
-    {
+    protected function getMappedConfigurableBundleTemplatePageSearchTransfers(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        array $configurableBundleTemplatePageSearchTransfers
+    ): array {
         $mappedConfigurableBundleTemplatePageSearchTransfers = [];
 
         foreach ($configurableBundleTemplateTransfer->getTranslations() as $configurableBundleTemplateTranslationTransfer) {

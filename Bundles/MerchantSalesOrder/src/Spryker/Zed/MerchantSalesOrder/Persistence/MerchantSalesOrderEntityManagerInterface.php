@@ -18,14 +18,14 @@ interface MerchantSalesOrderEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function createMerchantSalesOrder(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
+    public function createMerchantOrder(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer
      */
-    public function createMerchantSalesOrderItem(
+    public function createMerchantOrderItem(
         MerchantOrderItemTransfer $merchantOrderItemTransfer
     ): MerchantOrderItemTransfer;
 
@@ -34,5 +34,5 @@ interface MerchantSalesOrderEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
-    public function createMerchantSalesOrderTotals(TotalsTransfer $totalsTransfer): TotalsTransfer;
+    public function createMerchantOrderTotals(TotalsTransfer $totalsTransfer): TotalsTransfer;
 }
