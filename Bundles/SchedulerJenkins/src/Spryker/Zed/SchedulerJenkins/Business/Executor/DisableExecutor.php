@@ -22,9 +22,8 @@ class DisableExecutor implements ExecutorInterface
     /**
      * @param \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface $jenkinsApi
      */
-    public function __construct(
-        JenkinsApiInterface $jenkinsApi
-    ) {
+    public function __construct(JenkinsApiInterface $jenkinsApi)
+    {
         $this->jenkinsApi = $jenkinsApi;
     }
 

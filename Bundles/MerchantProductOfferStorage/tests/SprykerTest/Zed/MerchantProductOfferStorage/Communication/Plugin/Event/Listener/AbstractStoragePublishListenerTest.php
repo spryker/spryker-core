@@ -52,8 +52,9 @@ class AbstractStoragePublishListenerTest extends Unit
      *
      * @return \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMerchantProductOfferStorageToProductOfferFacadeInterfaceMock(ProductOfferCollectionTransfer $productOfferCollectionTransfer): MerchantProductOfferStorageToProductOfferFacadeInterface
-    {
+    protected function getMerchantProductOfferStorageToProductOfferFacadeInterfaceMock(
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer
+    ): MerchantProductOfferStorageToProductOfferFacadeInterface {
         $productOfferFacade = $this->getMockBuilder(MerchantProductOfferStorageToProductOfferFacadeInterface::class)->getMock();
         $productOfferFacade->method('find')->willReturn($productOfferCollectionTransfer);
 

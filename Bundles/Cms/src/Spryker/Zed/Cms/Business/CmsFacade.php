@@ -186,8 +186,13 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, string $placeholder, string $value, ?LocaleTransfer $localeTransfer = null, bool $autoGlossaryKeyIncrement = true): PageKeyMappingTransfer
-    {
+    public function addPlaceholderText(
+        PageTransfer $pageTransfer,
+        string $placeholder,
+        string $value,
+        ?LocaleTransfer $localeTransfer = null,
+        bool $autoGlossaryKeyIncrement = true
+    ): PageKeyMappingTransfer {
         $glossaryKeyMappingManager = $this->getFactory()->createGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->addPlaceholderText($pageTransfer, $placeholder, $value, $localeTransfer, $autoGlossaryKeyIncrement);
