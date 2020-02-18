@@ -4,6 +4,17 @@
   "description": "MerchantProfileGuiPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.2",
+    "spryker/country": "^3.0.0",
+    "spryker/glossary": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/merchant": "^2.1.0",
+    "spryker/merchant-profile": "^0.1.4",
+    "spryker/merchant-user": "^0.2.1",
+    "spryker/symfony": "^3.0.0",
+    "spryker/url": "^3.0.0",
+    "spryker/zed-ui": "^0.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

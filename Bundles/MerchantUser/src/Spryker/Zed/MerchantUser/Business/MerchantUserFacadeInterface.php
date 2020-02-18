@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 
 interface MerchantUserFacadeInterface
 {
@@ -56,4 +57,15 @@ interface MerchantUserFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
     public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer;
+
+    /**
+     * Specification:
+     * - Returns current logged in user.
+     * - Throws UserNotFoundException exception if user is not stored in the session.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser(): UserTransfer;
 }

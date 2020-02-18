@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
- * @method \Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig getConfig()
  */
 class MerchantForm extends AbstractType
 {
@@ -34,8 +33,9 @@ class MerchantForm extends AbstractType
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
     protected const FIELD_EMAIL = 'email';
     protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
+    protected const FIELD_MERCHANT_PROFILE = 'merchantProfile';
 
-    protected const LABEL_NAME = 'Name';
+    protected const LABEL_NAME = 'Company Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
     protected const LABEL_EMAIL = 'Email';
     protected const LABEL_MERCHANT_REFERENCE = 'Merchant Reference';
@@ -73,9 +73,8 @@ class MerchantForm extends AbstractType
             ->addNameField($builder)
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)
-            ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID]);
-
-        $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
+            ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID])
+            ->addMerchantProfileFieldSubform($builder);
     }
 
     /**
@@ -170,21 +169,44 @@ class MerchantForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
      */
-    protected function getTextFieldConstraints(): array
+    protected function addMerchantProfileFieldSubform(FormBuilderInterface $builder)
     {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 255]),
-        ];
+        $options = $this->getMerchantProfileFormOptions($builder);
+        $builder->add(
+            static::FIELD_MERCHANT_PROFILE,
+            MerchantProfileFormType::class,
+            $options
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return array
+     */
+    protected function getMerchantProfileFormOptions(FormBuilderInterface $builder): array
+    {
+        $merchantProfileDataProvider = $this->getFactory()
+            ->createMerchantProfileFormDataProvider();
+
+        $options = $merchantProfileDataProvider->getOptions();
+        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
+        $merchantTransfer = $builder->getForm()->getData();
+        $options['data'] = $merchantProfileDataProvider->getData($merchantTransfer->getMerchantProfile());
+
+        return $options;
     }
 
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    protected function getPhoneFieldConstraints(): array
+    protected function getTextFieldConstraints(): array
     {
         return [
             new Required(),
@@ -201,8 +223,6 @@ class MerchantForm extends AbstractType
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
         return [
-            new Required(),
-            new NotBlank(),
             new Email(),
             new Length(['max' => 255]),
             new UniqueEmail([
@@ -225,20 +245,5 @@ class MerchantForm extends AbstractType
             new Length(['max' => 64]),
             new Choice(['choices' => array_keys($choices)]),
         ];
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function executeMerchantProfileFormExpanderPlugins(FormBuilderInterface $builder, array $options)
-    {
-        foreach ($this->getFactory()->getMerchantProfileFormExpanderPlugins() as $formExpanderPlugin) {
-            $builder = $formExpanderPlugin->expand($builder, $options);
-        }
-
-        return $this;
     }
 }

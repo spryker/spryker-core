@@ -9,8 +9,12 @@ namespace Spryker\Zed\MerchantProfileGuiPage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantProfileGui\Communication\Plugin\MerchantGui\MerchantProfileFormExpanderPlugin;
+use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToCountryFacadeBridge;
+use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToGlossaryFacadeBridge;
+use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToLocaleFacadeBridge;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeBridge;
+use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantUserFacadeBridge;
+use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToUrlFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
@@ -18,7 +22,11 @@ use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageT
 class MerchantProfileGuiPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
-    public const PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER = 'PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER';
+    public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_URL = 'FACADE_URL';
+    public const FACADE_COUNTRY = 'FACADE_COUNTRY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,7 +38,11 @@ class MerchantProfileGuiPageDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addMerchantFacade($container);
-        $container = $this->addMerchantProfileFormExpanderPlugins($container);
+        $container = $this->addMerchantUserFacade($container);
+        $container = $this->addGlossaryFacade($container);
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addUrlFacade($container);
+        $container = $this->addCountryFacade($container);
 
         return $container;
     }
@@ -54,20 +66,68 @@ class MerchantProfileGuiPageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMerchantProfileFormExpanderPlugins(Container $container): Container
+    protected function addMerchantUserFacade(Container $container): Container
     {
-        $container->set(static::PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER, function () {
-            return $this->getMerchantProfileFormExpanderPlugins();
+        $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
+            return new MerchantProfileGuiPageToMerchantUserFacadeBridge($container->getLocator()->merchantUser()->facade());
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormExpanderPluginInterface[]
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getMerchantProfileFormExpanderPlugins(): array
+    protected function addGlossaryFacade(Container $container): Container
     {
-        return [new MerchantProfileFormExpanderPlugin(),];
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
+            return new MerchantProfileGuiPageToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new MerchantProfileGuiPageToLocaleFacadeBridge($container->getLocator()->locale()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUrlFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_URL, function (Container $container) {
+            return new MerchantProfileGuiPageToUrlFacadeBridge($container->getLocator()->url()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCountryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_COUNTRY, function (Container $container) {
+            return new MerchantProfileGuiPageToCountryFacadeBridge($container->getLocator()->country()->facade());
+        });
+
+        return $container;
     }
 }

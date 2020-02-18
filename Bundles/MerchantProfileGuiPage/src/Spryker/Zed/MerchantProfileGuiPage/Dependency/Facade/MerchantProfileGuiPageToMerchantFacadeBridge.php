@@ -31,16 +31,6 @@ class MerchantProfileGuiPageToMerchantFacadeBridge implements MerchantProfileGui
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
-    {
-        return $this->merchantFacade->createMerchant($merchantTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
     public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->merchantFacade->updateMerchant($merchantTransfer);
@@ -54,15 +44,5 @@ class MerchantProfileGuiPageToMerchantFacadeBridge implements MerchantProfileGui
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
     {
         return $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
-    }
-
-    /**
-     * @param string $currentStatus
-     *
-     * @return string[]
-     */
-    public function getApplicableMerchantStatuses(string $currentStatus): array
-    {
-        return $this->merchantFacade->getApplicableMerchantStatuses($currentStatus);
     }
 }

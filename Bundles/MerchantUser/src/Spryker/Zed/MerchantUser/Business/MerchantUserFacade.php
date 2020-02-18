@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -64,5 +65,17 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
     {
         return $this->getRepository()->findOne($merchantUserCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser(): UserTransfer
+    {
+        return $this->getFactory()->getUserFacade()->getCurrentUser();
     }
 }
