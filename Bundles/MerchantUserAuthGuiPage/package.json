@@ -31,6 +31,7 @@
     "@spryker/utils": "^0.1.0-next.0",
     "@spryker/web-components": "^0.1.2-next.2",
     "ng-zorro-antd": "^8.5.2",
+    "ngx-build-plus": "^9.0.6",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

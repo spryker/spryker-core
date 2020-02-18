@@ -5,7 +5,7 @@ import { ZedLayoutCentralComponent } from './zed-layout-central.component';
 
 @NgModule({
     imports: [ZedAuthFooterModule],
-    exports: [ZedLayoutCentralComponent],
     declarations: [ZedLayoutCentralComponent],
+    exports: [ZedLayoutCentralComponent],
 })
 export class ZedLayoutCentralModule {}

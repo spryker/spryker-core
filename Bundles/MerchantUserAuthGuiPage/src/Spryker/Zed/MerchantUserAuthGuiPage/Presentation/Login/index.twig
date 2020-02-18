@@ -5,25 +5,19 @@
         <form action="">
             <spy-form-item error="error" for="form-email">
                 Email
-                <spy-input control attrs="{id: 'form-email'}" required="true" name="email" value="" placeholder="example@spryker.com"></spy-input>
+                <spy-input control required="true" name="email" value="" placeholder="example@spryker.com"></spy-input>
             </spy-form-item>
             <spy-form-item for="form-password">
                 Password
-                <spy-input control attrs="{id: 'form-password'}" required="true" type="password" name="password" value="" placeholder="Enter password"></spy-input>
+                <spy-input control required="true" type="password" name="password" value="" placeholder="Enter password"></spy-input>
             </spy-form-item>
-            <spy-button type="submit" block="true">Login</spy-button>
+            <spy-button type="submit">Login</spy-button>
         </form>
     </mp-login>
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/zed-ui/polyfills-es5.js') }}"></script>
-    <script src="{{ assetsPath('js/zed-ui/vendor-es5.js') }}"></script>
-    <script src="{{ assetsPath('js/zed-ui/main-es5.js') }}"></script>
-    <script src="{{ assetsPath('js/zed-ui/runtime-es5.js') }}"></script>
-
+    {{ parent() }}
     <script src="{{ assetsPath('js/mp-login/polyfills-es5.js') }}"></script>
-    <script src="{{ assetsPath('js/mp-login/vendor-es5.js') }}"></script>
     <script src="{{ assetsPath('js/mp-login/main-es5.js') }}"></script>
-    <script src="{{ assetsPath('js/mp-login/runtime-es5.js') }}"></script>
 {% endblock %}

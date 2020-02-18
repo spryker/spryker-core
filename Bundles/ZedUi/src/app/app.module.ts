@@ -23,9 +23,4 @@ export class AppModule extends CustomElementModule {
             component: ZedLayoutCentralComponent
         }
     ];
-
-    ngDoBootstrap(): void {
-        console.log('init zed ui');
-        super.ngDoBootstrap();
-    }
 }
