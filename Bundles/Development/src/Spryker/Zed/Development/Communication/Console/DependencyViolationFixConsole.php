@@ -99,6 +99,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
             if ($composerNameToFix === null) {
                 $this->output->writeln(sprintf('Could not get a composer name for "%s"', $moduleDependencyTransfer->getModuleName()));
                 $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
+
                 continue;
             }
 

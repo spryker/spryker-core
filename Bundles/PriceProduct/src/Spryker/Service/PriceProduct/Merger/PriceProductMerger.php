@@ -33,6 +33,7 @@ class PriceProductMerger implements PriceProductMergerInterface
         foreach ($abstractPriceProductTransfers as $abstractPriceProductTransferKey => $abstractPriceProductTransfer) {
             if (array_key_exists($abstractPriceProductTransferKey, $concretePriceProductTransfers)) {
                 $priceProductTransfers[$abstractPriceProductTransferKey] = $this->resolveConcreteProductPrice($abstractPriceProductTransfer, $concretePriceProductTransfers[$abstractPriceProductTransferKey]);
+
                 continue;
             }
 

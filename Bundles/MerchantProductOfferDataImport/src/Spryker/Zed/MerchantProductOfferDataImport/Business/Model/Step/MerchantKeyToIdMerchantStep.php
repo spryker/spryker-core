@@ -41,7 +41,7 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
             $this->idMerchantCache[$merchantKey] = $this->getIdMerchant($merchantKey);
         }
 
-        $dataSet[MerchantProductOfferDataSetInterface::FK_MERCHANT] = $this->idMerchantCache[$merchantKey];
+        $dataSet[MerchantProductOfferDataSetInterface::ID_MERCHANT] = $this->idMerchantCache[$merchantKey];
     }
 
     /**

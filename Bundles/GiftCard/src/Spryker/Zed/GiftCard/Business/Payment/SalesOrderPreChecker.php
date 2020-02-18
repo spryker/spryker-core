@@ -76,6 +76,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
             if (!($paymentTransfer->getPaymentProvider() === $this->giftCardConfig->getPaymentProviderName())) {
                 $validPayments[] = $paymentTransfer;
+
                 continue;
             }
 
@@ -83,6 +84,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
 
             if ($errors->count() === 0) {
                 $validPayments[] = $paymentTransfer;
+
                 continue;
             }
 

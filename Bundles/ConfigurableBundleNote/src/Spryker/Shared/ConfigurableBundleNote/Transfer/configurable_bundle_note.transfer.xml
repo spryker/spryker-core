@@ -32,5 +32,8 @@
         <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
 
