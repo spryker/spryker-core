@@ -331,4 +331,19 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array;
+
+    /**
+     * Specification:
+     * - Finds orders by criteria from OrderListTransfer.
+     * - Requires OrderListTransfer::customer to be set.
+     * - Filters orders by OrderListTransfer::customer::customerReference if provided.
+     * - Filters orders by OrderListTransfer::filter if provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
 }
