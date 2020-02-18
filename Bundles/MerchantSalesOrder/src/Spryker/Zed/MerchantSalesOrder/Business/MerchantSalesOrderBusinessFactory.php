@@ -36,7 +36,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
             $this->createMerchantOrderWriter(),
             $this->createMerchantOrderItemWriter(),
             $this->createMerchantOrderTotalsWriter(),
-            $this->getMerchantSalesOrderPostCreatePlugins()
+            $this->getMerchantOrderPostCreatePlugins()
         );
     }
 
@@ -75,8 +75,8 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
      */
-    public function getMerchantSalesOrderPostCreatePlugins(): array
+    public function getMerchantOrderPostCreatePlugins(): array
     {
-        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_SALES_ORDER_POST_CREATE);
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_POST_CREATE);
     }
 }
