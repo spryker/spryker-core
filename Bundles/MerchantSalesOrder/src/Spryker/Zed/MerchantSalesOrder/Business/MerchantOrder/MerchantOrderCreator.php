@@ -31,18 +31,26 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     protected $merchantOrderTotalsWriter;
 
     /**
+     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
+     */
+    protected $merchantSalesOrderPostCreatePlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderWriterInterface $merchantOrderWriter
      * @param \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderItem\MerchantOrderItemWriterInterface $merchantOrderItemWriter
      * @param \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTotalsWriterInterface $merchantOrderTotalsWriter
+     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[] $merchantSalesOrderPostCreatePlugins
      */
     public function __construct(
         MerchantOrderWriterInterface $merchantOrderWriter,
         MerchantOrderItemWriterInterface $merchantOrderItemWriter,
-        MerchantOrderTotalsWriterInterface $merchantOrderTotalsWriter
+        MerchantOrderTotalsWriterInterface $merchantOrderTotalsWriter,
+        array $merchantSalesOrderPostCreatePlugins
     ) {
         $this->merchantOrderWriter = $merchantOrderWriter;
         $this->merchantOrderItemWriter = $merchantOrderItemWriter;
         $this->merchantOrderTotalsWriter = $merchantOrderTotalsWriter;
+        $this->merchantSalesOrderPostCreatePlugins = $merchantSalesOrderPostCreatePlugins;
     }
 
     /**
@@ -65,7 +73,23 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
             );
         }
 
+        $this->executePostCreatePlugins($merchantOrderCollectionTransfer);
+
         return $merchantOrderCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+     *
+     * @return void
+     */
+    protected function executePostCreatePlugins(MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer): void
+    {
+        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
+            foreach ($this->merchantSalesOrderPostCreatePlugins as $merchantSalesOrderPostCreatePlugin) {
+                $merchantSalesOrderPostCreatePlugin->postCreate($merchantOrderTransfer);
+            }
+        }
     }
 
     /**

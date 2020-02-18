@@ -4,8 +4,7 @@
   "description": "MerchantSalesOrderExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "php": ">=7.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

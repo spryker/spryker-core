@@ -18,6 +18,7 @@ use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTot
 use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTotalsWriterInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface getEntityManager()
@@ -34,7 +35,8 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
         return new MerchantOrderCreator(
             $this->createMerchantOrderWriter(),
             $this->createMerchantOrderItemWriter(),
-            $this->createMerchantOrderTotalsWriter()
+            $this->createMerchantOrderTotalsWriter(),
+            $this->getMerchantSalesOrderPostCreatePlugins()
         );
     }
 
@@ -68,5 +70,13 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
         return new OrderItemExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
+     */
+    public function getMerchantSalesOrderPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_SALES_ORDER_POST_CREATE);
     }
 }

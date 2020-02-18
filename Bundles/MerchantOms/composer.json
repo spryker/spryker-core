@@ -6,11 +6,11 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.30.0",
+    "spryker/merchant-sales-order-extension": "^0.1.0",
     "spryker/state-machine": "^2.7.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
