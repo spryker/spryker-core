@@ -5,35 +5,36 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder;
+namespace Spryker\Zed\MerchantSalesOrder\Business\Creator;
 
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderItem\MerchantOrderItemWriterInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTotalsWriterInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface;
 
 class MerchantOrderCreator implements MerchantOrderCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderWriterInterface
+     * @var \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface
      */
     protected $merchantOrderWriter;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderItem\MerchantOrderItemWriterInterface
+     * @var \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface
      */
     protected $merchantOrderItemWriter;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTotalsWriterInterface
+     * @var \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface
      */
     protected $merchantOrderTotalsWriter;
 
     /**
-     * @param \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderWriterInterface $merchantOrderWriter
-     * @param \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderItem\MerchantOrderItemWriterInterface $merchantOrderItemWriter
-     * @param \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTotalsWriterInterface $merchantOrderTotalsWriter
+     * @param \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface $merchantOrderWriter
+     * @param \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface $merchantOrderItemWriter
+     * @param \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface $merchantOrderTotalsWriter
      */
     public function __construct(
         MerchantOrderWriterInterface $merchantOrderWriter,
@@ -61,7 +62,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
 
         foreach ($orderItemsGroupedByMerchantReference as $merchantReference => $itemTransferList) {
             $merchantOrderCollectionTransfer->addMerchantOrder(
-                $this->createCompleteMerchantOrder($orderTransfer, $merchantReference, $itemTransferList)
+                $this->createMerchantOrderWithItemsAndTotals($orderTransfer, $merchantReference, $itemTransferList)
             );
         }
 
@@ -95,7 +96,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    protected function createCompleteMerchantOrder(
+    protected function createMerchantOrderWithItemsAndTotals(
         OrderTransfer $orderTransfer,
         string $merchantReference,
         array $itemTransferList

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals;
+namespace Spryker\Zed\MerchantSalesOrder\Business\Writer;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\TaxTotalTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface;
 
-class MerchantOrderTotalsWriter implements MerchantOrderTotalsWriterInterface
+class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface
@@ -28,23 +28,19 @@ class MerchantOrderTotalsWriter implements MerchantOrderTotalsWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\TotalsTransfer
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer
      */
-    public function createMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): TotalsTransfer
-    {
-        $total = rand(1000, 9999);
-        $totalsTransfer = (new TotalsTransfer())
+    public function createMerchantOrderItem(
+        ItemTransfer $itemTransfer,
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): MerchantOrderItemTransfer {
+        $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
             ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
-            ->setRefundTotal(0)
-            ->setGrandTotal($total)
-            ->setTaxTotal((new TaxTotalTransfer()))
-            ->setExpenseTotal(0)
-            ->setSubtotal($total)
-            ->setDiscountTotal(0)
-            ->setCanceledTotal(0);
+            ->setIdOrderItem($itemTransfer->getIdSalesOrderItem());
 
-        return $this->merchantSalesOrderEntityManager->createMerchantOrderTotals($totalsTransfer);
+        return $this->merchantSalesOrderEntityManager->createMerchantOrderItem($merchantOrderItemTransfer);
     }
 }

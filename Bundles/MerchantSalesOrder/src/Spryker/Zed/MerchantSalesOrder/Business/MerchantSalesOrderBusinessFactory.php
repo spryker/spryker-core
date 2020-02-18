@@ -8,16 +8,16 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderCreator;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderCreatorInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderWriter;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderWriterInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderItem\MerchantOrderItemWriter;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderItem\MerchantOrderItemWriterInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTotalsWriter;
-use Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTotalsWriterInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderCreator;
+use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderCreatorInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriter;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriter;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriter;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface getEntityManager()
@@ -27,7 +27,7 @@ use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface
 class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderCreatorInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderCreatorInterface
      */
     public function createMerchantOrderCreator(): MerchantOrderCreatorInterface
     {
@@ -39,7 +39,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrder\MerchantOrderWriterInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface
      */
     public function createMerchantOrderWriter(): MerchantOrderWriterInterface
     {
@@ -47,7 +47,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderItem\MerchantOrderItemWriterInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface
      */
     public function createMerchantOrderItemWriter(): MerchantOrderItemWriterInterface
     {
@@ -55,7 +55,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals\MerchantOrderTotalsWriterInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface
      */
     public function createMerchantOrderTotalsWriter(): MerchantOrderTotalsWriterInterface
     {

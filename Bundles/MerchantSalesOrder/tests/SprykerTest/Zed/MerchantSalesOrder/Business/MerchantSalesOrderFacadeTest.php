@@ -8,14 +8,9 @@
 namespace SprykerTest\Zed\MerchantSalesOrder\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
@@ -33,6 +28,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 class MerchantSalesOrderFacadeTest extends Unit
 {
     protected const TEST_STATE_MACHINE = 'Test01';
+    protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesOrder\MerchantSalesOrderBusinessTester
@@ -45,12 +41,10 @@ class MerchantSalesOrderFacadeTest extends Unit
     public function testCreateMerchantOrderCollectionReturnsFilledCollectionTransferWithCorrectData(): void
     {
         //Arrange
-        $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::MERCHANT_REFERENCE => 'test-merchant-reference',
-        ]);
-        $saveOrderTransfer = $this->getSaveOrderTransfer($merchantTransfer);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
 
-        $merchantOrderReference = $this->getMerchantOrderReference(
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
             $saveOrderTransfer->getOrderReference(),
             $merchantTransfer->getMerchantReference()
         );
@@ -90,18 +84,16 @@ class MerchantSalesOrderFacadeTest extends Unit
         int $merchantOrderItemsCount
     ): void {
         //Arrange
-        $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::MERCHANT_REFERENCE => 'test-merchant-reference',
-        ]);
-        $saveOrderTransfer = $this->getSaveOrderTransfer($merchantTransfer);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
 
-        $merchantOrderReference = $this->getMerchantOrderReference(
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
             $saveOrderTransfer->getOrderReference(),
             $merchantTransfer->getMerchantReference()
         );
-        $merchantOrderTransfer = $this->createMerchantSalesOrderWithRelatedData(
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
             $merchantTransfer,
             $itemTransfer,
@@ -144,18 +136,16 @@ class MerchantSalesOrderFacadeTest extends Unit
         array $merchantOrderCriteriaFilterData
     ): void {
         //Arrange
-        $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::MERCHANT_REFERENCE => 'test-merchant-reference',
-        ]);
-        $saveOrderTransfer = $this->getSaveOrderTransfer($merchantTransfer);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
 
-        $merchantOrderReference = $this->getMerchantOrderReference(
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
             $saveOrderTransfer->getOrderReference(),
             $merchantTransfer->getMerchantReference()
         );
-        $merchantOrderTransfer = $this->createMerchantSalesOrderWithRelatedData(
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
             $merchantTransfer,
             $itemTransfer,
@@ -196,18 +186,16 @@ class MerchantSalesOrderFacadeTest extends Unit
         int $merchantOrderItemsCount
     ): void {
         //Arrange
-        $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::MERCHANT_REFERENCE => 'test-merchant-reference',
-        ]);
-        $saveOrderTransfer = $this->getSaveOrderTransfer($merchantTransfer);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
 
-        $merchantOrderReference = $this->getMerchantOrderReference(
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
             $saveOrderTransfer->getOrderReference(),
             $merchantTransfer->getMerchantReference()
         );
-        $merchantOrderTransfer = $this->createMerchantSalesOrderWithRelatedData(
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
             $merchantTransfer,
             $itemTransfer,
@@ -247,18 +235,16 @@ class MerchantSalesOrderFacadeTest extends Unit
     public function testFindMerchantOrderReturnsNullWithWrongCriteria(array $merchantOrderCriteriaFilterData): void
     {
         //Arrange
-        $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::MERCHANT_REFERENCE => 'test-merchant-reference',
-        ]);
-        $saveOrderTransfer = $this->getSaveOrderTransfer($merchantTransfer);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
 
-        $merchantOrderReference = $this->getMerchantOrderReference(
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
             $saveOrderTransfer->getOrderReference(),
             $merchantTransfer->getMerchantReference()
         );
-        $merchantOrderTransfer = $this->createMerchantSalesOrderWithRelatedData(
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
             $merchantTransfer,
             $itemTransfer,
@@ -288,9 +274,8 @@ class MerchantSalesOrderFacadeTest extends Unit
     public function testExpandOrderItemWithMerchantReturnsUpdatedTransferWithCorrectData(): void
     {
         // Arrange
-        $merchantReference = 'test-merchant-reference';
-        $itemTransfer = $this->getItemTransfer([
-            ItemTransfer::MERCHANT_REFERENCE => $merchantReference,
+        $itemTransfer = $this->tester->getItemTransfer([
+            ItemTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE,
         ]);
         $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
 
@@ -300,7 +285,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
 
         // Assert
-        $this->assertEquals($newSalesOrderItemEntityTransfer->getMerchantReference(), $merchantReference);
+        $this->assertSame(static::TEST_MERCHANT_REFERENCE, $newSalesOrderItemEntityTransfer->getMerchantReference());
     }
 
     /**
@@ -309,7 +294,7 @@ class MerchantSalesOrderFacadeTest extends Unit
     public function testExpandOrderItemWithMerchantDoesNothingWithIncorrectData(): void
     {
         // Arrange
-        $itemTransfer = $this->getItemTransfer();
+        $itemTransfer = $this->tester->getItemTransfer();
         $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
 
         // Act
@@ -319,79 +304,6 @@ class MerchantSalesOrderFacadeTest extends Unit
 
         // Assert
         $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
-    }
-
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
-     */
-    protected function getItemTransfer(array $seedData = []): ItemTransfer
-    {
-        return (new ItemBuilder($seedData))->build();
-    }
-
-    /**
-     * @param string $orderReference
-     * @param string $merchantReference
-     *
-     * @return string
-     */
-    protected function getMerchantOrderReference(string $orderReference, string $merchantReference): string
-    {
-        return sprintf(
-            '%s--%s',
-            $orderReference,
-            $merchantReference
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
-     */
-    protected function getSaveOrderTransfer(MerchantTransfer $merchantTransfer): SaveOrderTransfer
-    {
-        $this->tester->configureTestStateMachine([static::TEST_STATE_MACHINE]);
-
-        return $this->tester->haveOrder([
-            ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
-            ItemTransfer::UNIT_PRICE => 100,
-            ItemTransfer::SUM_PRICE => 100,
-        ], static::TEST_STATE_MACHINE);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $merchantOrderReference
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
-     */
-    protected function createMerchantSalesOrderWithRelatedData(
-        SaveOrderTransfer $saveOrderTransfer,
-        MerchantTransfer $merchantTransfer,
-        ItemTransfer $itemTransfer,
-        string $merchantOrderReference
-    ): MerchantOrderTransfer {
-        $merchantOrderTransfer = $this->tester->haveMerchantOrder([
-            MerchantOrderTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
-            MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder(),
-            MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
-        ]);
-
-        $this->tester->haveMerchantOrderItem([
-            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
-            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
-        ]);
-
-        $this->tester->haveMerchantOrderTotals([
-            TotalsTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
-        ]);
-
-        return $merchantOrderTransfer;
     }
 
     /**

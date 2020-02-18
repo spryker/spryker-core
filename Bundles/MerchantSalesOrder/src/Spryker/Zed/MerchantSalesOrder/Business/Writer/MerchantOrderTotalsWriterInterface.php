@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantOrderTotals;
+namespace Spryker\Zed\MerchantSalesOrder\Business\Writer;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
