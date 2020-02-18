@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOfferSearch\Business\Reader;
+namespace Spryker\Zed\MerchantProductOfferSearch\Business\Mapper;
 
-interface MerchantProductOfferSearchReaderInterface
+interface ProductAbstractMerchantMapperInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array $productAbstractMerchantData
      *
      * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
      */
-    public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array;
+    public function mapProductAbstractMerchantDataToProductAbstractMerchantTransfers(array $productAbstractMerchantData): array;
 }

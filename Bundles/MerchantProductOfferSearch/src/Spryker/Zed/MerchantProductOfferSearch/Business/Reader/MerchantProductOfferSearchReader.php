@@ -7,92 +7,44 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Business\Reader;
 
-use Generated\Shared\Transfer\MerchantProductAbstractTransfer;
+use Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapperInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepositoryInterface;
 
 class MerchantProductOfferSearchReader implements MerchantProductOfferSearchReaderInterface
 {
-    /**
-     * @uses Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID
-     */
-    protected const KEY_ABSTRACT_PRODUCT_ID = 'id';
-
-    /**
-     * @uses Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME
-     */
-    protected const KEY_MERCHANT_NAME = 'name';
-
-    /**
-     * @uses Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_REFERENCE
-     */
-    protected const KEY_MERCHANT_REFERENCE = 'reference';
-
-    protected const KEY_MERCHANT_NAMES = 'names';
-    protected const KEY_MERCHANT_REFERENCES = 'references';
-
     /**
      * @var \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepositoryInterface
      */
     protected $merchantProductOfferSearchRepository;
 
     /**
-     * @param \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepositoryInterface $merchantProductOfferSearchRepository
+     * @var \Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapperInterface
      */
-    public function __construct(MerchantProductOfferSearchRepositoryInterface $merchantProductOfferSearchRepository)
-    {
+    protected $productAbstractMerchantMapper;
+
+    /**
+     * @param \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepositoryInterface $merchantProductOfferSearchRepository
+     * @param \Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapperInterface $productAbstractMerchantMapper
+     */
+    public function __construct(
+        MerchantProductOfferSearchRepositoryInterface $merchantProductOfferSearchRepository,
+        ProductAbstractMerchantMapperInterface $productAbstractMerchantMapper
+    ) {
         $this->merchantProductOfferSearchRepository = $merchantProductOfferSearchRepository;
+        $this->productAbstractMerchantMapper = $productAbstractMerchantMapper;
     }
 
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\MerchantProductAbstractTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
      */
     public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array
     {
-        $merchantProductAbstractData = $this->merchantProductOfferSearchRepository
+        $productAbstractMerchantData = $this->merchantProductOfferSearchRepository
             ->getMerchantDataByProductAbstractIds($productAbstractIds);
 
-        return $this->mapMerchantProductAbstractDataToMerchantProductAbstractTransfers($merchantProductAbstractData);
-    }
-
-    /**
-     * @param array $merchantProductAbstractData
-     *
-     * @return \Generated\Shared\Transfer\MerchantProductAbstractTransfer[]
-     */
-    protected function mapMerchantProductAbstractDataToMerchantProductAbstractTransfers(array $merchantProductAbstractData): array
-    {
-        $groupedMerchantProductAbstractData = [];
-
-        foreach ($merchantProductAbstractData as $merchantProductAbstract) {
-            $idProductAbstract = $merchantProductAbstract[static::KEY_ABSTRACT_PRODUCT_ID];
-            $merchantName = $merchantProductAbstract[static::KEY_MERCHANT_NAME];
-            $merchantReference = $merchantProductAbstract[static::KEY_MERCHANT_REFERENCE];
-
-            $groupedMerchantProductAbstractData[$idProductAbstract][static::KEY_MERCHANT_NAMES][] = $merchantName;
-            $groupedMerchantProductAbstractData[$idProductAbstract][static::KEY_MERCHANT_REFERENCES][] = $merchantReference;
-        }
-
-        return $this->mapGroupedMerchantsToMerchantProductAbstractTransfers($groupedMerchantProductAbstractData);
-    }
-
-    /**
-     * @param array $groupedMerchantProductAbstractData
-     *
-     * @return \Generated\Shared\Transfer\MerchantProductAbstractTransfer[]
-     */
-    protected function mapGroupedMerchantsToMerchantProductAbstractTransfers(array $groupedMerchantProductAbstractData): array
-    {
-        $merchantProductAbstractTransfers = [];
-
-        foreach ($groupedMerchantProductAbstractData as $idProductAbstract => $merchantProductAbstractData) {
-            $merchantProductAbstractTransfers[] = (new MerchantProductAbstractTransfer())
-                ->setIdProductAbstract($idProductAbstract)
-                ->setMerchantNames($merchantProductAbstractData[static::KEY_MERCHANT_NAMES])
-                ->setMerchantReferences($merchantProductAbstractData[static::KEY_MERCHANT_REFERENCES]);
-        }
-
-        return $merchantProductAbstractTransfers;
+        return $this->productAbstractMerchantMapper
+            ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfers($productAbstractMerchantData);
     }
 }

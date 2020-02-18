@@ -38,7 +38,7 @@
         <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig"/>
     </transfer>
 
-    <transfer name="MerchantProductAbstract">
+    <transfer name="ProductAbstractMerchant">
         <property name="merchantNames" type="array" singular="merchantName"/>
         <property name="merchantReferences" type="array" singular="merchantReference"/>
         <property name="idProductAbstract" type="int"/>

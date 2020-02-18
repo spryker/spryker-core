@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProductOfferSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapper;
+use Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapperInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Reader\MerchantProductOfferSearchReader;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Reader\MerchantProductOfferSearchReaderInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Writer\MerchantProductOfferSearchWriter;
@@ -39,7 +41,18 @@ class MerchantProductOfferSearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantProductOfferSearchReader(): MerchantProductOfferSearchReaderInterface
     {
-        return new MerchantProductOfferSearchReader($this->getRepository());
+        return new MerchantProductOfferSearchReader(
+            $this->getRepository(),
+            $this->createProductAbstractMerchantMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapperInterface
+     */
+    public function createProductAbstractMerchantMapper(): ProductAbstractMerchantMapperInterface
+    {
+        return new ProductAbstractMerchantMapper();
     }
 
     /**

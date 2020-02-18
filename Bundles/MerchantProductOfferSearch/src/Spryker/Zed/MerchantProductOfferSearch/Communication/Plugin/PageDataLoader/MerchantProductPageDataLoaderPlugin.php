@@ -41,7 +41,7 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
 
     /**
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
-     * @param \Generated\Shared\Transfer\MerchantProductAbstractTransfer[] $productAbstractMerchantData
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[] $productAbstractMerchantData
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
@@ -60,7 +60,7 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
 
     /**
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer
-     * @param \Generated\Shared\Transfer\MerchantProductAbstractTransfer[] $productAbstractMerchantData
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[] $productAbstractMerchantData
      *
      * @return \Generated\Shared\Transfer\ProductPayloadTransfer
      */
@@ -68,13 +68,13 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
         ProductPayloadTransfer $payloadTransfer,
         array $productAbstractMerchantData
     ): ProductPayloadTransfer {
-        foreach ($productAbstractMerchantData as $merchantProductAbstractTransfer) {
-            if ($payloadTransfer->getIdProductAbstract() !== $merchantProductAbstractTransfer->getIdProductAbstract()) {
+        foreach ($productAbstractMerchantData as $productAbstractMerchantTransfer) {
+            if ($payloadTransfer->getIdProductAbstract() !== $productAbstractMerchantTransfer->getIdProductAbstract()) {
                 continue;
             }
 
-            $payloadTransfer->setMerchantNames($merchantProductAbstractTransfer->getMerchantNames())
-                ->setMerchantReferences($merchantProductAbstractTransfer->getMerchantReferences());
+            $payloadTransfer->setMerchantNames($productAbstractMerchantTransfer->getMerchantNames())
+                ->setMerchantReferences($productAbstractMerchantTransfer->getMerchantReferences());
         }
 
         return $payloadTransfer;
