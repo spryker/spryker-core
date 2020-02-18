@@ -4,6 +4,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
+
+    <transfer name="Merchant">
+        <property name="merchantReference" dataBuilderRule="unique()->word"/>
+    </transfer>
+
     <transfer name="MerchantOrder">
         <property name="merchantOrderReference" dataBuilderRule="unique()->word"/>
         <property name="idOrder" dataBuilderRule="randomNumber(3)"/>
