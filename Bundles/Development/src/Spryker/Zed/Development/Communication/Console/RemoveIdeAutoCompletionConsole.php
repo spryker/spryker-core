@@ -49,6 +49,7 @@ class RemoveIdeAutoCompletionConsole extends Console
         foreach ($dependingCommands as $commandName) {
             if (!$this->getApplication()->has($commandName)) {
                 $this->showCommandNotFoundMessage($commandName);
+
                 continue;
             }
             $this->runDependingCommand($commandName);
