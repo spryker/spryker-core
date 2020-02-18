@@ -20,9 +20,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductOfferSearchRepository extends AbstractRepository implements MerchantProductOfferSearchRepositoryInterface
 {
-    public const KEY_ABSTRACT_PRODUCT_ID = 'id';
-    public const KEY_MERCHANT_NAME = 'name';
-    public const KEY_MERCHANT_REFERENCE = 'reference';
+    protected const KEY_ABSTRACT_PRODUCT_ID = 'id';
+    protected const KEY_MERCHANT_NAME = 'name';
+    protected const KEY_MERCHANT_REFERENCE = 'reference';
 
     /**
      * @param int[] $productAbstractIds

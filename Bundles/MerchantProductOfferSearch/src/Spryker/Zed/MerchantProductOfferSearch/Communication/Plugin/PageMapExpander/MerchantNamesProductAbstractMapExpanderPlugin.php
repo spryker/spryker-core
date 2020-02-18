@@ -40,7 +40,7 @@ class MerchantNamesProductAbstractMapExpanderPlugin implements ProductAbstractMa
         PageMapBuilderInterface $pageMapBuilder,
         array $productData,
         LocaleTransfer $localeTransfer
-    ) {
+    ): PageMapTransfer {
         if (!is_array($productData[static::KEY_MERCHANT_NAMES])) {
             return $pageMapTransfer;
         }

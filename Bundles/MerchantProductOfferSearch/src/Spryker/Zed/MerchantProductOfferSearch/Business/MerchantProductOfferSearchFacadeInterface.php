@@ -67,5 +67,5 @@ interface MerchantProductOfferSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantProductAbstractTransfer[]
      */
-    public function getMerchantProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array;
 }

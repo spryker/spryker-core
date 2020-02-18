@@ -27,7 +27,14 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
  */
 class MerchantProductOfferSearchFacadeTest extends Unit
 {
+    /**
+     * @uses \Spryker\Zed\MerchantProductOfferSearch\Business\ReaderMerchantProductOfferSearchReader::KEY_MERCHANT_NAMES
+     */
     protected const KEY_MERCHANT_NAMES = 'names';
+
+    /**
+     * @uses \Spryker\Zed\MerchantProductOfferSearch\Business\ReaderMerchantProductOfferSearchReader::KEY_MERCHANT_REFERENCES
+     */
     protected const KEY_MERCHANT_REFERENCES = 'references';
 
     /**
@@ -83,7 +90,7 @@ class MerchantProductOfferSearchFacadeTest extends Unit
         // Act
         $merchantProductAbstractTransfers = $this->tester
             ->getFacade()
-            ->getMerchantProductAbstractsByProductAbstractIds([
+            ->getProductAbstractMerchantDataByProductAbstractIds([
                 $productConcrete1->getFkProductAbstract(),
                 $productConcrete2->getFkProductAbstract(),
             ]);

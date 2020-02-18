@@ -34,7 +34,7 @@ class MerchantReferencesProductAbstractsMapExpanderPlugin implements ProductAbst
         PageMapBuilderInterface $pageMapBuilder,
         array $productData,
         LocaleTransfer $localeTransfer
-    ) {
+    ): PageMapTransfer {
         if (!is_array($productData[static::KEY_MERCHANT_REFERENCES])) {
             return $pageMapTransfer;
         }

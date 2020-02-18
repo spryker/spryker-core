@@ -33,26 +33,26 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
     {
         $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
 
-        $merchantProductAbstractTransfers = $this->getFacade()
-            ->getMerchantProductAbstractsByProductAbstractIds($productAbstractIds);
+        $productAbstractMerchantData = $this->getFacade()
+            ->getProductAbstractMerchantDataByProductAbstractIds($productAbstractIds);
 
-        return $this->setMerchantsToPayloadTransfers($productPageLoadTransfer, $merchantProductAbstractTransfers);
+        return $this->setMerchantDataToPayloadTransfers($productPageLoadTransfer, $productAbstractMerchantData);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
-     * @param \Generated\Shared\Transfer\MerchantProductAbstractTransfer[] $merchantProductAbstractTransfers
+     * @param \Generated\Shared\Transfer\MerchantProductAbstractTransfer[] $productAbstractMerchantData
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    protected function setMerchantsToPayloadTransfers(
+    protected function setMerchantDataToPayloadTransfers(
         ProductPageLoadTransfer $productPageLoadTransfer,
-        array $merchantProductAbstractTransfers
+        array $productAbstractMerchantData
     ): ProductPageLoadTransfer {
         $updatedPayLoadTransfers = [];
 
         foreach ($productPageLoadTransfer->getPayloadTransfers() as $payloadTransfer) {
-            $updatedPayLoadTransfers[$payloadTransfer->getIdProductAbstract()] = $this->setMerchantToPayloadTransfer($payloadTransfer, $merchantProductAbstractTransfers);
+            $updatedPayLoadTransfers[$payloadTransfer->getIdProductAbstract()] = $this->setMerchantDataToPayloadTransfer($payloadTransfer, $productAbstractMerchantData);
         }
 
         return $productPageLoadTransfer->setPayloadTransfers($updatedPayLoadTransfers);
@@ -60,21 +60,21 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
 
     /**
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer
-     * @param \Generated\Shared\Transfer\MerchantProductAbstractTransfer[] $merchantProductAbstractTransfers
+     * @param \Generated\Shared\Transfer\MerchantProductAbstractTransfer[] $productAbstractMerchantData
      *
      * @return \Generated\Shared\Transfer\ProductPayloadTransfer
      */
-    protected function setMerchantToPayloadTransfer(
+    protected function setMerchantDataToPayloadTransfer(
         ProductPayloadTransfer $payloadTransfer,
-        array $merchantProductAbstractTransfers
+        array $productAbstractMerchantData
     ): ProductPayloadTransfer {
-        foreach ($merchantProductAbstractTransfers as $merchantProductAbstractTransfer) {
+        foreach ($productAbstractMerchantData as $merchantProductAbstractTransfer) {
             if ($payloadTransfer->getIdProductAbstract() !== $merchantProductAbstractTransfer->getIdProductAbstract()) {
                 continue;
             }
 
-            $payloadTransfer->setMerchantNames($merchantProductAbstractTransfer->getMerchantNames());
-            $payloadTransfer->setMerchantReferences($merchantProductAbstractTransfer->getMerchantReferences());
+            $payloadTransfer->setMerchantNames($merchantProductAbstractTransfer->getMerchantNames())
+                ->setMerchantReferences($merchantProductAbstractTransfer->getMerchantReferences());
         }
 
         return $payloadTransfer;

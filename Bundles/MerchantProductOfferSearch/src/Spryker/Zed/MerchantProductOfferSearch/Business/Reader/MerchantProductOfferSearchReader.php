@@ -8,13 +8,27 @@
 namespace Spryker\Zed\MerchantProductOfferSearch\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantProductAbstractTransfer;
-use Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository;
 use Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepositoryInterface;
 
 class MerchantProductOfferSearchReader implements MerchantProductOfferSearchReaderInterface
 {
-    public const KEY_MERCHANT_NAMES = 'names';
-    public const KEY_MERCHANT_REFERENCES = 'references';
+    /**
+     * @uses Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID
+     */
+    protected const KEY_ABSTRACT_PRODUCT_ID = 'id';
+
+    /**
+     * @uses Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME
+     */
+    protected const KEY_MERCHANT_NAME = 'name';
+
+    /**
+     * @uses Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_REFERENCE
+     */
+    protected const KEY_MERCHANT_REFERENCE = 'reference';
+
+    protected const KEY_MERCHANT_NAMES = 'names';
+    protected const KEY_MERCHANT_REFERENCES = 'references';
 
     /**
      * @var \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepositoryInterface
@@ -34,7 +48,7 @@ class MerchantProductOfferSearchReader implements MerchantProductOfferSearchRead
      *
      * @return \Generated\Shared\Transfer\MerchantProductAbstractTransfer[]
      */
-    public function getMerchantProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array
     {
         $merchantProductAbstractData = $this->merchantProductOfferSearchRepository
             ->getMerchantDataByProductAbstractIds($productAbstractIds);
@@ -52,9 +66,9 @@ class MerchantProductOfferSearchReader implements MerchantProductOfferSearchRead
         $groupedMerchantProductAbstractData = [];
 
         foreach ($merchantProductAbstractData as $merchantProductAbstract) {
-            $idProductAbstract = $merchantProductAbstract[MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID];
-            $merchantName = $merchantProductAbstract[MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME];
-            $merchantReference = $merchantProductAbstract[MerchantProductOfferSearchRepository::KEY_MERCHANT_REFERENCE];
+            $idProductAbstract = $merchantProductAbstract[static::KEY_ABSTRACT_PRODUCT_ID];
+            $merchantName = $merchantProductAbstract[static::KEY_MERCHANT_NAME];
+            $merchantReference = $merchantProductAbstract[static::KEY_MERCHANT_REFERENCE];
 
             $groupedMerchantProductAbstractData[$idProductAbstract][static::KEY_MERCHANT_NAMES][] = $merchantName;
             $groupedMerchantProductAbstractData[$idProductAbstract][static::KEY_MERCHANT_REFERENCES][] = $merchantReference;

@@ -72,10 +72,10 @@ class MerchantProductOfferSearchFacade extends AbstractFacade implements Merchan
      *
      * @return \Generated\Shared\Transfer\MerchantProductAbstractTransfer[]
      */
-    public function getMerchantProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array
     {
         return $this->getFactory()
             ->createMerchantProductOfferSearchReader()
-            ->getMerchantProductAbstractsByProductAbstractIds($productAbstractIds);
+            ->getProductAbstractMerchantDataByProductAbstractIds($productAbstractIds);
     }
 }
