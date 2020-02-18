@@ -88,8 +88,10 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
-    protected function validatePayments(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, RestErrorCollectionTransfer $restErrorCollectionTransfer): RestErrorCollectionTransfer
-    {
+    protected function validatePayments(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        RestErrorCollectionTransfer $restErrorCollectionTransfer
+    ): RestErrorCollectionTransfer {
         $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
         foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
             if (!isset($paymentProviderMethodToStateMachineMapping[$restPaymentTransfer->getPaymentProviderName()][$restPaymentTransfer->getPaymentMethodName()])) {
