@@ -100,12 +100,12 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
             ->filterByIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem())
             ->findOne();
 
-        $merchantOrderItemEntity = $merchantSalesOrderMapper->mapMerchantOrderItemTransferToMerchantSalesOrderItemEntity(
+        $merchantSalesOrderItemEntity = $merchantSalesOrderMapper->mapMerchantOrderItemTransferToMerchantSalesOrderItemEntity(
             $merchantOrderItemTransfer,
             $merchantSalesOrderItemEntity
         );
 
-        $merchantOrderItemEntity->save();
+        $merchantSalesOrderItemEntity->save();
 
         return $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
             $merchantSalesOrderItemEntity,

@@ -98,7 +98,7 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemTransfer
     {
         return $this->getFactory()
-            ->getEntityManager()
-            ->updateMerchantOrderItem($merchantOrderItemTransfer);
+            ->createMerchantOrderItemWriter()
+            ->update($merchantOrderItemTransfer);
     }
 }

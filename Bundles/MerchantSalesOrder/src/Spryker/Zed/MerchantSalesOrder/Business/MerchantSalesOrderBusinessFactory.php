@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderItem\MerchantOrderItemWriter;
+use Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderItem\MerchantOrderItemWriterInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
@@ -52,6 +54,14 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     public function createMerchantOrderTotalsCreator(): MerchantOrderTotalsCreatorInterface
     {
         return new MerchantOrderTotalsCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderItem\MerchantOrderItemWriterInterface
+     */
+    public function createMerchantOrderItemWriter(): MerchantOrderItemWriterInterface
+    {
+        return new MerchantOrderItemWriter($this->getEntityManager());
     }
 
     /**
