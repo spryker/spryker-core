@@ -10,7 +10,7 @@ namespace Spryker\Zed\ZedNavigationExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\NavigationItemTransfer;
 
 /**
- * Plugin interface allows to filter visible menu items in navigation.
+ * Allows to filter visible menu items in navigation.
  * Use this plugin if navigation items need to be filtered before displaying them.
  */
 interface NavigationItemFilterPluginInterface

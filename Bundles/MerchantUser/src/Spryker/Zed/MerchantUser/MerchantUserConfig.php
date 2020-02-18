@@ -27,8 +27,8 @@ class MerchantUserConfig extends AbstractBundleConfig
      * @uses \Spryker\Shared\Acl\AclConstants::ALLOW
      */
     protected const RULE_TYPE_ALLOW = 'allow';
-    protected const MERCHANT_PORTAL_ADMIN_ROLE_NAME = 'merchant_portal_admin_role';
-    protected const MERCHANT_PORTAL_ADMIN_GROUP_NAME = 'merchant_portal_admin_group';
+    protected const MERCHANT_PORTAL_ADMIN_ROLE_NAME = 'Merchant Portal Admin';
+    protected const MERCHANT_PORTAL_ADMIN_GROUP_NAME = 'Merchant Portal Admin';
     protected const MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
 
     /**
@@ -77,25 +77,25 @@ class MerchantUserConfig extends AbstractBundleConfig
     public function getInstallAclRoles(): array
     {
         return [
-            $this->getMerchantAdminRole(),
+            $this->getMerchantAdminAclRole(),
         ];
     }
 
     /**
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
-    protected function getMerchantAdminRole(): RoleTransfer
+    protected function getMerchantAdminAclRole(): RoleTransfer
     {
         return (new RoleTransfer())
             ->setName($this->getMerchantAdminRoleName())
             ->setAclGroup((new GroupTransfer())->setName($this->getMerchantAdminGroupName()))
-            ->setAclRules(new ArrayObject($this->getMerchantAdminRules()));
+            ->setAclRules(new ArrayObject($this->getMerchantAdminAclRules()));
     }
 
     /**
      * @return array
      */
-    protected function getMerchantAdminRules(): array
+    protected function getMerchantAdminAclRules(): array
     {
         return [
             (new RuleTransfer())
