@@ -10,14 +10,12 @@ namespace Spryker\Zed\MerchantSalesOrder\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderCreatorInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreator;
+use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreator;
+use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriter;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriter;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriter;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface getEntityManager()
@@ -32,34 +30,26 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     public function createMerchantOrderCreator(): MerchantOrderCreatorInterface
     {
         return new MerchantOrderCreator(
-            $this->createMerchantOrderWriter(),
-            $this->createMerchantOrderItemWriter(),
-            $this->createMerchantOrderTotalsWriter()
+            $this->getEntityManager(),
+            $this->createMerchantOrderItemCreator(),
+            $this->createMerchantOrderTotalsCreator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface
      */
-    public function createMerchantOrderWriter(): MerchantOrderWriterInterface
+    public function createMerchantOrderItemCreator(): MerchantOrderItemCreatorInterface
     {
-        return new MerchantOrderWriter($this->getEntityManager());
+        return new MerchantOrderItemCreator($this->getEntityManager());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface
      */
-    public function createMerchantOrderItemWriter(): MerchantOrderItemWriterInterface
+    public function createMerchantOrderTotalsCreator(): MerchantOrderTotalsCreatorInterface
     {
-        return new MerchantOrderItemWriter($this->getEntityManager());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface
-     */
-    public function createMerchantOrderTotalsWriter(): MerchantOrderTotalsWriterInterface
-    {
-        return new MerchantOrderTotalsWriter($this->getEntityManager());
+        return new MerchantOrderTotalsCreator($this->getEntityManager());
     }
 
     /**

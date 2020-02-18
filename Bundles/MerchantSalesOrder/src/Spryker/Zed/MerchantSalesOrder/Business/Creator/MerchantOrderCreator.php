@@ -10,40 +10,38 @@ namespace Spryker\Zed\MerchantSalesOrder\Business\Creator;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface;
+use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface;
 
 class MerchantOrderCreator implements MerchantOrderCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface
+     * @var \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface
      */
-    protected $merchantOrderWriter;
+    protected $merchantSalesOrderEntityManager;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface
+     * @var \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface
      */
-    protected $merchantOrderItemWriter;
+    protected $merchantOrderItemCreator;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface
+     * @var \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface
      */
-    protected $merchantOrderTotalsWriter;
+    protected $merchantOrderTotalsCreator;
 
     /**
-     * @param \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderWriterInterface $merchantOrderWriter
-     * @param \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface $merchantOrderItemWriter
-     * @param \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderTotalsWriterInterface $merchantOrderTotalsWriter
+     * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
+     * @param \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface $merchantOrderItemCreator
+     * @param \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface $merchantOrderTotalsCreator
      */
     public function __construct(
-        MerchantOrderWriterInterface $merchantOrderWriter,
-        MerchantOrderItemWriterInterface $merchantOrderItemWriter,
-        MerchantOrderTotalsWriterInterface $merchantOrderTotalsWriter
+        MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager,
+        MerchantOrderItemCreatorInterface $merchantOrderItemCreator,
+        MerchantOrderTotalsCreatorInterface $merchantOrderTotalsCreator
     ) {
-        $this->merchantOrderWriter = $merchantOrderWriter;
-        $this->merchantOrderItemWriter = $merchantOrderItemWriter;
-        $this->merchantOrderTotalsWriter = $merchantOrderTotalsWriter;
+        $this->merchantSalesOrderEntityManager = $merchantSalesOrderEntityManager;
+        $this->merchantOrderItemCreator = $merchantOrderItemCreator;
+        $this->merchantOrderTotalsCreator = $merchantOrderTotalsCreator;
     }
 
     /**
@@ -101,7 +99,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
         string $merchantReference,
         array $itemTransferList
     ): MerchantOrderTransfer {
-        $merchantOrderTransfer = $this->merchantOrderWriter->createMerchantOrder(
+        $merchantOrderTransfer = $this->createMerchantOrder(
             $orderTransfer,
             $merchantReference
         );
@@ -111,7 +109,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
         );
 
         return $merchantOrderTransfer->setTotals(
-            $this->merchantOrderTotalsWriter->createMerchantOrderTotals($merchantOrderTransfer)
+            $this->merchantOrderTotalsCreator->createMerchantOrderTotals($merchantOrderTransfer)
         );
     }
 
@@ -127,10 +125,28 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     ): MerchantOrderTransfer {
         foreach ($itemTransferList as $itemTransfer) {
             $merchantOrderTransfer->addMerchantOrderItem(
-                $this->merchantOrderItemWriter->createMerchantOrderItem($itemTransfer, $merchantOrderTransfer)
+                $this->merchantOrderItemCreator->createMerchantOrderItem($itemTransfer, $merchantOrderTransfer)
             );
         }
 
         return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    public function createMerchantOrder(OrderTransfer $orderTransfer, string $merchantReference): MerchantOrderTransfer
+    {
+        $merchantOrderTransfer = (new MerchantOrderTransfer())
+            ->setMerchantReference($merchantReference)
+            ->setIdOrder($orderTransfer->getIdSalesOrder())
+            ->setMerchantOrderReference(
+                sprintf('%s--%s', $orderTransfer->getOrderReference(), $merchantReference)
+            );
+
+        return $this->merchantSalesOrderEntityManager->createMerchantOrder($merchantOrderTransfer);
     }
 }
