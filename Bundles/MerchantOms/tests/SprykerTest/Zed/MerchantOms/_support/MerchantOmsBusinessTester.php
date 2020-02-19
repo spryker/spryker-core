@@ -43,9 +43,9 @@ class MerchantOmsBusinessTester extends Actor
 {
     use _generated\MerchantOmsBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
 
     /**
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler

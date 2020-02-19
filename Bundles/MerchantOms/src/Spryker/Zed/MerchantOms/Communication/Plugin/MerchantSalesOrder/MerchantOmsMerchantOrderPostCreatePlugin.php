@@ -20,7 +20,7 @@ class MerchantOmsMerchantOrderPostCreatePlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Dispatch initial oms event for each merchant order item.
+     * - Dispatches initial oms event for each merchant order item.
      * - Returns MerchantOrderResponse::isSuccessful = true if at least one transition has been completed.
      * - Returns MerchantOrderResponse::isSuccessful = false otherwise.
      *

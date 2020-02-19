@@ -19,7 +19,7 @@ interface MerchantOmsFacadeInterface
     /**
      * Specification:
      * - Requires MerchantOrderTransfer::merchantOrderItems.
-     * - Dispatch initial oms event for each merchant order item.
+     * - Dispatches initial oms event for each merchant order item.
      * - Returns MerchantOrderResponse::isSuccessful = true if at least one transition has been completed.
      * - Returns MerchantOrderResponse::isSuccessful = false otherwise.
      *
@@ -35,7 +35,7 @@ interface MerchantOmsFacadeInterface
      * Specification:
      * - Requires MerchantOrderItemTransfer::idMerchantOrderItem.
      * - Requires MerchantOmsEventTransfer::eventName.
-     * - Dispatch specific oms event for merchant order item.
+     * - Dispatches oms event for merchant order item.
      * - Returns MerchantOrderItemResponse::isSuccessful = true if at least one transition has been completed.
      * - Returns MerchantOrderItemResponse::isSuccessful = false otherwise.
      *
@@ -55,7 +55,7 @@ interface MerchantOmsFacadeInterface
      * Specification:
      * - Requires MerchantOrderItemCollectionTransfer::merchantOrderItems.
      * - Requires MerchantOmsEventTransfer::eventName.
-     * - Dispatch specific oms event for merchant order item collection.
+     * - Dispatches oms event for merchant order item collection.
      * - Returns MerchantOrderItemResponse::isSuccessful = true if at least one transition has been completed.
      * - Returns MerchantOrderItemResponse::isSuccessful = false otherwise.
      *
