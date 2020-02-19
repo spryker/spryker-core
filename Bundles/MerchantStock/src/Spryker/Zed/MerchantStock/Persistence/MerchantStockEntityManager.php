@@ -24,31 +24,10 @@ class MerchantStockEntityManager extends AbstractEntityManager implements Mercha
      */
     public function createMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): void
     {
-        $merchantTransfer->requireIdMerchant();
-        $stockTransfer->requireIdStock();
-
         $this->getFactory()->createMerchantStockEntity()
             ->setFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
             ->setFkStock($stockTransfer->requireIdStock()->getIdStock())
             ->setIsDefault(true)
             ->save();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     *
-     * @return void
-     */
-    public function deleteMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): void
-    {
-        $merchantTransfer->requireIdMerchant();
-        $stockTransfer->requireIdStock();
-
-        $this->getFactory()->createMerchantStockQuery()
-            ->filterByFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
-            ->filterByFkStock($stockTransfer->requireIdStock()->getIdStock())
-            ->findOne()
-            ->delete();
     }
 }

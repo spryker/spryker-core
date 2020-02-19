@@ -26,8 +26,7 @@ class MerchantStockBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantStockWriter(
             $this->getStockFacade(),
-            $this->getEntityManager(),
-            $this->getRepository()
+            $this->getEntityManager()
         );
     }
 

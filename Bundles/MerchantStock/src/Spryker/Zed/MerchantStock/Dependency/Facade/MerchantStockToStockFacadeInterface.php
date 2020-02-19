@@ -18,11 +18,4 @@ interface MerchantStockToStockFacadeInterface
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     public function createStock(StockTransfer $stockTransfer): StockResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     *
-     * @return \Generated\Shared\Transfer\StockResponseTransfer
-     */
-    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer;
 }

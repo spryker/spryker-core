@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\MerchantStock\Dependency\Facade\MerchantStockToStockFacadeInterface;
 use Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface;
-use Spryker\Zed\MerchantStock\Persistence\MerchantStockRepositoryInterface;
 
 class MerchantStockWriter implements MerchantStockWriterInterface
 {
@@ -28,23 +27,15 @@ class MerchantStockWriter implements MerchantStockWriterInterface
     protected $merchantStockEntityManager;
 
     /**
-     * @var \Spryker\Zed\MerchantStock\Persistence\MerchantStockRepositoryInterface
-     */
-    protected $merchantStockRepository;
-
-    /**
      * @param \Spryker\Zed\MerchantStock\Dependency\Facade\MerchantStockToStockFacadeInterface $stockFacade
      * @param \Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface $merchantStockEntityManager
-     * @param \Spryker\Zed\MerchantStock\Persistence\MerchantStockRepositoryInterface $merchantStockRepository
      */
     public function __construct(
         MerchantStockToStockFacadeInterface $stockFacade,
-        MerchantStockEntityManagerInterface $merchantStockEntityManager,
-        MerchantStockRepositoryInterface $merchantStockRepository
+        MerchantStockEntityManagerInterface $merchantStockEntityManager
     ) {
         $this->stockFacade = $stockFacade;
         $this->merchantStockEntityManager = $merchantStockEntityManager;
-        $this->merchantStockRepository = $merchantStockRepository;
     }
 
     /**
@@ -63,68 +54,6 @@ class MerchantStockWriter implements MerchantStockWriterInterface
         $merchantTransfer->addStock($stockTransfer);
 
         return $this->createMerchantResponseTransfer($merchantTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
-    public function updateMerchantStocksByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
-    {
-        if ($merchantTransfer->getStockCollection()->count() < 1) {
-            return $this->createMerchantResponseTransfer($merchantTransfer);
-        }
-
-        $existedMerchantStocks = $this->merchantStockRepository->getMerchantStocksByMerchant($merchantTransfer);
-
-        $existedStockIdsForMerchant = [];
-
-        foreach ($existedMerchantStocks as $merchantStock) {
-            $existedStockIdsForMerchant[] = $merchantStock->getFkStock();
-        }
-
-        $this->createMerchantStocks($existedStockIdsForMerchant, $merchantTransfer);
-        $this->deleteMerchantStocks($existedStockIdsForMerchant, $merchantTransfer);
-
-        return $this->createMerchantResponseTransfer($merchantTransfer);
-    }
-
-    /**
-     * @param int[] $existedStockIdsForMerchant
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    protected function createMerchantStocks(array $existedStockIdsForMerchant, MerchantTransfer $merchantTransfer): void
-    {
-        foreach ($merchantTransfer->getStockCollection() as $stockTransfer) {
-            if (in_array($stockTransfer->getIdStock(), $existedStockIdsForMerchant, true)) {
-                continue;
-            }
-
-            $this->merchantStockEntityManager->createMerchantStock($merchantTransfer, $stockTransfer);
-        }
-    }
-
-    /**
-     * @param int[] $existedStockIdsForMerchant
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    protected function deleteMerchantStocks(array $existedStockIdsForMerchant, MerchantTransfer $merchantTransfer): void
-    {
-        foreach ($merchantTransfer->getStockCollection() as $stockTransfer) {
-            if ($key = array_search($stockTransfer->getIdStock(), $existedStockIdsForMerchant, true)) {
-                unset($existedStockIdsForMerchant[$key]);
-            }
-        }
-
-        foreach ($existedStockIdsForMerchant as $item) {
-            $stockTransfer = (new StockTransfer())->setIdStock($item);
-            $this->merchantStockEntityManager->deleteMerchantStock($merchantTransfer, $stockTransfer);
-        }
     }
 
     /**

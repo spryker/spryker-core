@@ -34,14 +34,4 @@ class MerchantStockToStockFacadeBridge implements MerchantStockToStockFacadeInte
     {
         return $this->stockFacade->createStock($stockTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     *
-     * @return \Generated\Shared\Transfer\StockResponseTransfer
-     */
-    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer
-    {
-        return $this->stockFacade->updateStock($stockTransfer);
-    }
 }

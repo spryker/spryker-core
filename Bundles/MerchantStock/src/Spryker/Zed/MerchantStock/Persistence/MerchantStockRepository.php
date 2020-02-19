@@ -22,6 +22,8 @@ class MerchantStockRepository implements MerchantStockRepositoryInterface
      */
     public function getMerchantStocksByMerchant(MerchantTransfer $merchantTransfer): ObjectCollection
     {
-        return $this->getFactory()->createMerchantStockQuery()->findByFkMerchant($merchantTransfer->getIdMerchant());
+        return $this->getFactory()
+            ->createMerchantStockQuery()
+            ->findByFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant());
     }
 }

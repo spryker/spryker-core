@@ -19,12 +19,4 @@ interface MerchantStockEntityManagerInterface
      * @return void
      */
     public function createMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     *
-     * @return void
-     */
-    public function deleteMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): void;
 }
