@@ -20,7 +20,7 @@ class ProductRelationDataImportConfig extends DataImportConfig
      */
     public function getProductRelationDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
-        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+        $moduleDataImportDirectory = $this->getModuleDataImportDirectoryPath();
 
         return $this->buildImporterConfiguration($moduleDataImportDirectory . 'product_relation.csv', static::IMPORT_TYPE_PRODUCT_RELATION);
     }
@@ -30,9 +30,17 @@ class ProductRelationDataImportConfig extends DataImportConfig
      */
     public function getProductRelationStoreDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
-        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+        $moduleDataImportDirectory = $this->getModuleDataImportDirectoryPath();
 
         return $this->buildImporterConfiguration($moduleDataImportDirectory . 'product_relation_store.csv', static::IMPORT_TYPE_PRODUCT_RELATION_STORE);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModuleDataImportDirectoryPath(): string
+    {
+        return $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
     }
 
     /**

@@ -21,7 +21,7 @@ class ProductRelationStoreDataImportPlugin extends AbstractPlugin implements Dat
 {
     /**
      * {@inheritDoc}
-     * - Imports product relations data.
+     * - Imports relationships between product relations and stores.
      *
      * @api
      *
