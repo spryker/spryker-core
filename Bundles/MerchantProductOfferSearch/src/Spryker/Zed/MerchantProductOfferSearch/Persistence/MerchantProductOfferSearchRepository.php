@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Persistence;
 
+use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantProfile\Persistence\Map\SpyMerchantProfileTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -23,6 +24,8 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     protected const KEY_ABSTRACT_PRODUCT_ID = 'id';
     protected const KEY_MERCHANT_NAME = 'name';
     protected const KEY_MERCHANT_REFERENCE = 'reference';
+    protected const KEY_MERCHANT_NAMES = 'names';
+    protected const KEY_MERCHANT_REFERENCES = 'references';
 
     /**
      * @param int[] $productAbstractIds
@@ -42,13 +45,15 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addJoin(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, Criteria::INNER_JOIN)
             ->addAnd($productOfferPropelQuery->getNewCriterion(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $productAbstractIds, Criteria::IN));
 
-        return $productOfferPropelQuery
+        $merchantData = $productOfferPropelQuery
             ->select([static::KEY_ABSTRACT_PRODUCT_ID, static::KEY_MERCHANT_NAME, static::KEY_MERCHANT_REFERENCE])
             ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_MERCHANT_NAME)
             ->withColumn(SpyMerchantTableMap::COL_MERCHANT_REFERENCE, static::KEY_MERCHANT_REFERENCE)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
             ->find()
             ->getData();
+
+        return $this->getMappedMerchantDataByProductAbstract($merchantData);
     }
 
     /**
@@ -112,5 +117,49 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
+    }
+
+    /**
+     * @param array $merchantData
+     *
+     * @return array
+     */
+    protected function getMappedMerchantDataByProductAbstract(array $merchantData): array
+    {
+        $groupedMerchantDataByProductAbstractId = $this->groupMerchantDataByProductAbstractId($merchantData);
+        $productAbstractMerchantTransfers = [];
+
+        foreach ($groupedMerchantDataByProductAbstractId as $idProductAbstract => $productAbstractMerchantData) {
+            $productAbstractMerchantTransfers[] = $this->getFactory()
+                ->createProductAbstractMerchantMapper()
+                ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
+                    $productAbstractMerchantData,
+                    new ProductAbstractMerchantTransfer()
+                );
+        }
+
+        return $productAbstractMerchantTransfers;
+    }
+
+    /**
+     * @param array $merchantData
+     *
+     * @return array
+     */
+    protected function groupMerchantDataByProductAbstractId(array $merchantData): array
+    {
+        $groupedProductAbstractMerchantData = [];
+
+        foreach ($merchantData as $productAbstractMerchant) {
+            $idProductAbstract = $productAbstractMerchant[static::KEY_ABSTRACT_PRODUCT_ID];
+            $merchantName = $productAbstractMerchant[static::KEY_MERCHANT_NAME];
+            $merchantReference = $productAbstractMerchant[static::KEY_MERCHANT_REFERENCE];
+
+            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_NAMES][] = $merchantName;
+            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_REFERENCES][] = $merchantReference;
+            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_ABSTRACT_PRODUCT_ID][] = $idProductAbstract;
+        }
+
+        return $groupedProductAbstractMerchantData;
     }
 }

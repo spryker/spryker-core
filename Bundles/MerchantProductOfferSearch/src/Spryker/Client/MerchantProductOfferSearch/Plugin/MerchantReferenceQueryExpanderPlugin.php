@@ -48,7 +48,7 @@ class MerchantReferenceQueryExpanderPlugin extends AbstractPlugin implements Que
     {
         $boolQuery = $this->getBoolQuery($query);
 
-        $merchantReference = $requestParameters[static::MERCHANT_REFERENCE];
+        $merchantReference = $requestParameters[static::MERCHANT_REFERENCE] ?? null;
 
         if ($merchantReference) {
             $matchQuery = (new Match())->setField(PageIndexMap::MERCHANT_REFERENCES, $merchantReference);
