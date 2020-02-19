@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<statemachine
+    xmlns="spryker:oms-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:state-machine-01 http://static.spryker.com/state-machine-01.xsd">
+
+    <process name="Test01" main="true">
+        <states>
+            <state name="new" reserved="true"/>
+            <state name="pending" reserved="true"/>
+            <state name="exported" reserved="true"/>
+            <state name="shipped"/>
+            <state name="delivered"/>
+            <state name="closed"/>
+        </states>
+
+        <transitions>
+            <transition happy="true">
+                <source>new</source>
+                <target>pending</target>
+                <event>prepare</event>
+            </transition>
+
+            <transition happy="true">
+                <source>pending</source>
+                <target>exported</target>
+                <event>export</event>
+            </transition>
+
+            <transition happy="true">
+                <source>exported</source>
+                <target>shipped</target>
+                <event>ship</event>
+            </transition>
+
+            <transition happy="true" >
+                <source>shipped</source>
+                <target>delivered</target>
+                <event>deliver</event>
+            </transition>
+
+            <transition happy="true" >
+                <source>delivered</source>
+                <target>closed</target>
+                <event>close</event>
+            </transition>
+
+        </transitions>
+
+        <events>
+            <event name="prepare" onEnter="true"/>
+            <event name="export" manual="true"/>
+            <event name="ship" manual="true"/>
+            <event name="deliver" manual="true"/>
+            <event name="close" onEnter="true"/>
+        </events>
+    </process>
+
+</statemachine>
