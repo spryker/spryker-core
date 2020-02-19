@@ -46,6 +46,16 @@
         <property name="pagination" type="Pagination"/>
     </transfer>
 
+    <transfer name="MerchantOrderItemCriteriaFilter">
+        <property name="idMerchantOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="merchantOrderItem" type="MerchantOrderItem"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
         <property name="orderReference" type="string"/>

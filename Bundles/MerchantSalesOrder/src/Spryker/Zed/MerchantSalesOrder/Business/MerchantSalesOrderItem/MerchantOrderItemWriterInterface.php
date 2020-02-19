@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderItem;
 
+use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 
 interface MerchantOrderItemWriterInterface
@@ -14,7 +15,7 @@ interface MerchantOrderItemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer
+     * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
      */
-    public function update(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemTransfer;
+    public function update(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemResponseTransfer;
 }

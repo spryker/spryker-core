@@ -61,7 +61,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantOrderItemWriter(): MerchantOrderItemWriterInterface
     {
-        return new MerchantOrderItemWriter($this->getEntityManager());
+        return new MerchantOrderItemWriter($this->getEntityManager(), $this->getRepository());
     }
 
     /**

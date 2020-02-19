@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\MerchantSalesOrder\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -29,6 +30,7 @@ class MerchantSalesOrderFacadeTest extends Unit
 {
     protected const TEST_STATE_MACHINE = 'Test01';
     protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
+    protected const TEST_MERCHANT_ORDER_ITEM_ID = 1;
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesOrder\MerchantSalesOrderBusinessTester
@@ -304,6 +306,58 @@ class MerchantSalesOrderFacadeTest extends Unit
 
         // Assert
         $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateMerchantOrderItemReturnsCorrectUpdatedTransfer(): void
+    {
+        //Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
+            $saveOrderTransfer->getOrderReference(),
+            $merchantTransfer->getMerchantReference()
+        );
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
+            $saveOrderTransfer,
+            $merchantTransfer,
+            $itemTransfer,
+            $merchantOrderReference
+        );
+        $merchantOrderItemTransfer = $merchantOrderTransfer->getMerchantOrderItems()->offsetGet(0);
+        $secondOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        $secondOrderItemTransfer = $secondOrderTransfer->getOrderItems()->offsetGet(0);
+        $merchantOrderItemTransfer->setIdOrderItem($secondOrderItemTransfer->getIdSalesOrderItem());
+
+        //Act
+        $merchantOrderItemTransferResponseTransfer = $this->tester
+            ->getFacade()
+            ->updateMerchantOrderItem($merchantOrderItemTransfer);
+
+        //Assert
+        $this->assertSame($secondOrderItemTransfer->getIdSalesOrderItem(), $merchantOrderItemTransferResponseTransfer->getMerchantOrderItem()->getIdOrderItem());
+        $this->assertTrue($merchantOrderItemTransferResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateMerchantOrderItemReturnsExceptionWhenMerchantOrderItemNotExists(): void
+    {
+        //Arrange
+        $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
+            ->setIdMerchantOrderItem(static::TEST_MERCHANT_ORDER_ITEM_ID);
+
+        //Act
+        $merchantOrderItemTransferResponseTransfer = $this->tester->getFacade()->updateMerchantOrderItem($merchantOrderItemTransfer);
+
+        //Assert
+        $this->assertFalse($merchantOrderItemTransferResponseTransfer->getIsSuccessful());
     }
 
     /**

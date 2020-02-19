@@ -92,8 +92,6 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
      */
     public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemTransfer
     {
-        $merchantOrderItemTransfer->requireIdMerchantOrderItem();
-
         $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 
         $merchantSalesOrderItemEntity = $this->getFactory()->createMerchantSalesOrderItemQuery()

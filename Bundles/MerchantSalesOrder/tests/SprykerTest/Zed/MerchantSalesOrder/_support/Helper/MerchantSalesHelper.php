@@ -72,6 +72,7 @@ class MerchantSalesHelper extends Module
         });
 
         $merchantOrderItemTransfer->fromArray($merchantSalesOrderItemEntity->toArray(), true);
+        $merchantOrderItemTransfer->setIdMerchantOrderItem($merchantSalesOrderItemEntity->getIdMerchantSalesOrderItem());
         $merchantOrderItemTransfer->setIdOrderItem($merchantSalesOrderItemEntity->getFkSalesOrderItem());
         $merchantOrderItemTransfer->setIdMerchantOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder());
 
