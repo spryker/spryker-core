@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @see \Spryker\Zed\Transfer\Communication\Console\DataBuilderRemoverConsole
  * @see \Spryker\Zed\RestRequestValidator\Communication\Console\RemoveValidationCacheConsole
  * @see \Spryker\Zed\Search\Communication\Console\RemoveSourceMapConsole
- * @see \Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationConsole
+ * @see \Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */

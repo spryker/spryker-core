@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
  */
-class RemoveNavigationConsole extends Console
+class RemoveNavigationCacheConsole extends Console
 {
     public const COMMAND_NAME = 'navigation:remove-cache';
     public const DESCRIPTION = 'Build the navigation tree and persist it';
