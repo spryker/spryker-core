@@ -48,7 +48,8 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     {
         return new ProductMeasurementUnitReader(
             $this->createProductMEasurementUnitRestResponseBuilder(),
-            $this->getProductMeasurementUnitStorageClient()
+            $this->getProductMeasurementUnitStorageClient(),
+            $this->createProductMeasurementUnitNameTranslator()
         );
     }
 

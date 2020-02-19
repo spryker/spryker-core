@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator;
 
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface;
 
 class ProductMeasurementUnitNameTranslator implements ProductMeasurementUnitNameTranslatorInterface
@@ -30,8 +31,10 @@ class ProductMeasurementUnitNameTranslator implements ProductMeasurementUnitName
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function getProductMeasurementUnitTransfersWithTranslatedNames(array $productMeasurementUnitTransfers, string $localeName): array
-    {
+    public function getProductMeasurementUnitTransfersWithTranslatedNames(
+        array $productMeasurementUnitTransfers,
+        string $localeName
+    ): array {
         $names = [];
         foreach ($productMeasurementUnitTransfers as $productMeasurementUnitTransfer) {
             $names[] = $productMeasurementUnitTransfer->getName();
@@ -43,5 +46,19 @@ class ProductMeasurementUnitNameTranslator implements ProductMeasurementUnitName
         }
 
         return $productMeasurementUnitTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
+     */
+    public function getProductMeasurementUnitTransferWithTranslatedName(
+        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
+        string $localeName
+    ): ProductMeasurementUnitTransfer {
+        return $productMeasurementUnitTransfer
+            ->setName($this->glossaryStorageClient->translate($productMeasurementUnitTransfer->getName(), $localeName));
     }
 }

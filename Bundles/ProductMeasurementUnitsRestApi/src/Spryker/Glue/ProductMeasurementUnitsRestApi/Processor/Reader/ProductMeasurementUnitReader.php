@@ -11,6 +11,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface;
 
 class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterface
 {
@@ -27,15 +28,23 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     protected $productMeasurementUnitStorageClient;
 
     /**
+     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface
+     */
+    protected $productMeasurementUnitNameTranslator;
+
+    /**
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder
      * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
+     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeasurementUnitNameTranslatorInterface $productMeasurementUnitNameTranslator
      */
     public function __construct(
         ProductMeasurementUnitRestResponseBuilderInterface $productMeasurementUnitRestResponseBuilder,
-        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
+        ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient,
+        ProductMeasurementUnitNameTranslatorInterface $productMeasurementUnitNameTranslator
     ) {
         $this->productMeasurementUnitRestResponseBuilder = $productMeasurementUnitRestResponseBuilder;
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
+        $this->productMeasurementUnitNameTranslator = $productMeasurementUnitNameTranslator;
     }
     
     /**
@@ -58,8 +67,14 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
             return $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitNotFoundErrorResponse();
         }
 
+        $productMeasurementUnitTransfer = $this->productMeasurementUnitNameTranslator
+            ->getProductMeasurementUnitTransferWithTranslatedName(
+                $productMeasurementUnitTransfers[0],
+                $restRequest->getMetadata()->getLocale()
+            );
+
         return $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResponse(
-            $productMeasurementUnitTransfers[0],
+            $productMeasurementUnitTransfer,
             $restRequest->getMetadata()->getLocale()
         );
     }
