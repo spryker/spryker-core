@@ -592,44 +592,4 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return static::TIMEOUT_DEFAULT;
     }
-
-    /**
-     * @return string
-     */
-    public function getYvesIdeAutocompletionGeneratedFilePattern(): string
-    {
-        return '/.*\.php/';
-    }
-
-    /**
-     * @return string
-     */
-    public function getZedIdeAutocompletionGeneratedFilePattern(): string
-    {
-        return '/.*\.php/';
-    }
-
-    /**
-     * @return string
-     */
-    public function getGlueIdeAutocompletionGeneratedFilePattern(): string
-    {
-        return '/.*\.php/';
-    }
-
-    /**
-     * @return string
-     */
-    public function getClientIdeAutocompletionGeneratedFilePattern(): string
-    {
-        return '/.*\.php/';
-    }
-
-    /**
-     * @return string
-     */
-    public function getServiceIdeAutocompletionGeneratedFilePattern(): string
-    {
-        return '/.*\.php/';
-    }
 }

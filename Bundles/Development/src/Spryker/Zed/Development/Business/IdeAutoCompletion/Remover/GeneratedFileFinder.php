@@ -8,9 +8,8 @@
 namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Remover;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
-abstract class AbstractDirectoryFileFinder implements GeneratedFileFinderInterface
+class GeneratedFileFinder implements GeneratedFileFinderInterface
 {
     /**
      * @var \Symfony\Component\Finder\Finder
@@ -35,9 +34,7 @@ abstract class AbstractDirectoryFileFinder implements GeneratedFileFinderInterfa
         $finder = clone $this->finder;
         $finder->in($directoryPath)
             ->depth(0)
-            ->filter(function (SplFileInfo $fileEntry) {
-                return $this->filterFile($fileEntry);
-            });
+            ->name('/.*\.php/');
 
         return $finder;
     }
@@ -56,11 +53,4 @@ abstract class AbstractDirectoryFileFinder implements GeneratedFileFinderInterfa
                 ->exclude(['.', '..'])
                 ->count() === 0;
     }
-
-    /**
-     * @param \Symfony\Component\Finder\SplFileInfo $fileEntry
-     *
-     * @return bool
-     */
-    abstract protected function filterFile(SplFileInfo $fileEntry): bool;
 }
