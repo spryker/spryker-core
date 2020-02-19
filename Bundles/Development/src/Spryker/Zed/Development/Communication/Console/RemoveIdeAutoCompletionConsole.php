@@ -69,10 +69,7 @@ class RemoveIdeAutoCompletionConsole extends Console
      */
     protected function showCommandNotFoundMessage(string $commandName): void
     {
-        $message = sprintf(
-            "Can not find %s in your project." . PHP_EOL . "You can fix this by adding the missing command to your project ConsoleDependencyProvider.",
-            $commandName
-        );
-        $this->output->writeln("<comment>$message</comment>");
+        $this->output->writeln(sprintf('<comment>Can not find %s in your project.</comment>', $commandName));
+        $this->output->writeln('You can fix this by adding the missing command to your project ConsoleDependencyProvider.');
     }
 }
