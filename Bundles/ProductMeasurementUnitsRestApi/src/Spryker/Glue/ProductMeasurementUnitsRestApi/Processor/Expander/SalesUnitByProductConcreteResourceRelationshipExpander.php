@@ -71,7 +71,8 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
             foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
                 $restSalesUnitsResources[$productConcreteSkus[$idProductConcrete]][] =
                     $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
-                        $productConcreteProductMeasurementSalesUnitTransfer
+                        $productConcreteProductMeasurementSalesUnitTransfer,
+                        $restRequest->getResource()->getId()
                     );
             }
         }

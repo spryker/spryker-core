@@ -20,10 +20,14 @@ interface SalesUnitRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+     * @param string $concreteProductResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createSalesUnitRestResource(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResourceInterface;
+    public function createSalesUnitRestResource(
+        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
+        string $concreteProductResourceId
+    ): RestResourceInterface;
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers

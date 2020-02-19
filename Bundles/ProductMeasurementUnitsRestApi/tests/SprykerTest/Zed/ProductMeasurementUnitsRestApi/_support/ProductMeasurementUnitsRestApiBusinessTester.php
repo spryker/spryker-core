@@ -11,13 +11,11 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\CartItemRequestBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PersistentCartChangeBuilder;
-use Generated\Shared\DataBuilder\ProductPackagingUnitBuilder;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
-use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Spryker\DecimalObject\Decimal;
 
 /**
@@ -116,13 +114,5 @@ class ProductMeasurementUnitsRestApiBusinessTester extends Actor
             ->setProductMeasurementBaseUnit($productMeasurementBaseUnit);
 
         return $quantitySalesUnit;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
-     */
-    public function buildProductPackagingUnitTransfer(): ProductPackagingUnitTransfer
-    {
-        return (new ProductPackagingUnitBuilder())->build();
     }
 }

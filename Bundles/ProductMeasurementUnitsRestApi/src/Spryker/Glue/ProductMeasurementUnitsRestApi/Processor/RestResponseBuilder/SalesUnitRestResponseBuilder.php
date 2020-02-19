@@ -52,11 +52,14 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+     * @param string $concreteProductResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createSalesUnitRestResource(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): RestResourceInterface
-    {
+    public function createSalesUnitRestResource(
+        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
+        string $concreteProductResourceId
+    ): RestResourceInterface {
         $restProductMeasurementUnitsAttributesTransfer = $this->salesUnitMapper
             ->mapProductMeasurementSalesUnitTransferToRestSalesUnitsAttributesTransfer(
                 $productMeasurementSalesUnitTransfer,
@@ -65,10 +68,15 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
 
         $resourceId = (string)$productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
 
-        return $this->restResourceBuilder->createRestResource(
+        $salesUnitResource = $this->restResourceBuilder->createRestResource(
             ProductMeasurementUnitsRestApiConfig::RESOURCE_SALES_UNITS,
             $resourceId,
             $restProductMeasurementUnitsAttributesTransfer
+        );
+
+        return $salesUnitResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->createSelfLink($salesUnitResource->getId(), $concreteProductResourceId)
         );
     }
 
@@ -84,12 +92,7 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
     ): RestResponseInterface {
         $restResponse = $this->createRestResponse();
         foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
-            $salesUnitResource = $this->createSalesUnitRestResource($productMeasurementSalesUnitTransfer);
-            $salesUnitResource->addLink(
-                RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($salesUnitResource->getId(), $parentResourceId)
-            );
-
+            $salesUnitResource = $this->createSalesUnitRestResource($productMeasurementSalesUnitTransfer, $parentResourceId);
             $restResponse->addResource($salesUnitResource);
         }
 
