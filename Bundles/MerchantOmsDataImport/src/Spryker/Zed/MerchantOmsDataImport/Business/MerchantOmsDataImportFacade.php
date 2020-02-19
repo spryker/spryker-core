@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\MerchantOmsDataImport\Business;
+
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+
+/**
+ * @method \Spryker\Zed\MerchantOmsDataImport\Business\MerchantOmsDataImportBusinessFactory getFactory()
+ */
+class MerchantOmsDataImportFacade extends AbstractFacade implements MerchantOmsDataImportFacadeInterface
+{
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importMerchantOmsProcess(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()->getMerchantOmsProcessDataImporter()->import($dataImporterConfigurationTransfer);
+    }
+}
