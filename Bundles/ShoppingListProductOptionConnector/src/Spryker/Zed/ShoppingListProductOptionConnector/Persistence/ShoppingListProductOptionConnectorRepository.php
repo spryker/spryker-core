@@ -34,6 +34,10 @@ class ShoppingListProductOptionConnectorRepository extends AbstractRepository im
     }
 
     /**
+     * @module Product
+     * @module ProductOption
+     * @module ShoppingList
+     *
      * @param int[] $shoppingListItemIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer

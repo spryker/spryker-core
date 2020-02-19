@@ -14,10 +14,6 @@
         <property name="note" type="string"/>
     </transfer>
 
-    <transfer name="ShoppingListItemNoteCollection">
-        <property name="notes" type="ShoppingListItemNote[]" singular="note"/>
-    </transfer>
-
     <transfer name="Item">
         <property name="cartNote" type="string"/>
         <property name="sku" type="string"/>

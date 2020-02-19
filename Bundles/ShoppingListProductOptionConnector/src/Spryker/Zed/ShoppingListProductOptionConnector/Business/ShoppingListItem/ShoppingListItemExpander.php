@@ -41,7 +41,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     }
 
     /**
-     * @deprecated Use `expandShoppingListItemCollectionWithProductOptions()` instead.
+     * @deprecated Use `ShoppingListItemExpander::expandShoppingListItemCollectionWithProductOptions()` instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -70,7 +70,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
         $uniqueProductOptionIds = $this
             ->getUniqueProductOptionIdsFromShoppingListProductOptionCollectionTransfer($shoppingListProductOptionCollectionTransfer);
 
-        $indexedByIdsUniqueProductOptionTransfers = $this->getUniqueProductOptionTransfersIndexedByIds(
+        $indexedByIdsUniqueProductOptionTransfers = $this->indexUniqueProductOptionTransfersByIds(
             $uniqueProductOptionIds,
             $shoppingListItemCollectionTransfer
         );
@@ -148,25 +148,44 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
      */
-    protected function getUniqueProductOptionTransfersIndexedByIds(
+    protected function indexUniqueProductOptionTransfersByIds(
         array $uniqueProductOptionIds,
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
     ): array {
-        $shoppingListItemCollectionTransfer->requireItems();
-        $firstShoppingListItemTransfer = $shoppingListItemCollectionTransfer->getItems()->getIterator()->current();
-        $currencyIsoCode = $firstShoppingListItemTransfer->getCurrencyIsoCode();
-        $priceMode = $firstShoppingListItemTransfer->getPriceMode();
+        $productOptionCriteriaTransfer = $this->expandProductOptionCriteriaTransferWithCurrencyParameters(
+            new ProductOptionCriteriaTransfer(),
+            $shoppingListItemCollectionTransfer
+        );
 
-        $productOptionCriteria = (new ProductOptionCriteriaTransfer())
-            ->setCurrencyIsoCode($currencyIsoCode)
-            ->setPriceMode($priceMode)
+        $productOptionCriteriaTransfer
             ->setProductOptionGroupIsActive(true)
             ->setProductOptionIds($uniqueProductOptionIds);
 
         $productOptionCollection = $this->productOptionFacade
-            ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteria);
+            ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
 
-        return $this->getProductOptionTransfersIndexedByIds($productOptionCollection);
+        return $this->indexProductOptionTransfersByIds($productOptionCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCriteriaTransfer
+     */
+    protected function expandProductOptionCriteriaTransferWithCurrencyParameters(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ProductOptionCriteriaTransfer {
+        $shoppingListItemCollectionTransfer->requireItems();
+        /** @var \Generated\Shared\Transfer\ShoppingListItemTransfer $firstShoppingListItemTransfer */
+        $firstShoppingListItemTransfer = $shoppingListItemCollectionTransfer->getItems()->getIterator()->current();
+
+        $productOptionCriteriaTransfer
+            ->setCurrencyIsoCode($firstShoppingListItemTransfer->getCurrencyIsoCode())
+            ->setPriceMode($firstShoppingListItemTransfer->getPriceMode());
+
+        return $productOptionCriteriaTransfer;
     }
 
     /**
@@ -174,7 +193,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
      */
-    protected function getProductOptionTransfersIndexedByIds(ProductOptionCollectionTransfer $productOptionCollectionTransfer): array
+    protected function indexProductOptionTransfersByIds(ProductOptionCollectionTransfer $productOptionCollectionTransfer): array
     {
         $indexedByIdsProductOptionTransfers = [];
         foreach ($productOptionCollectionTransfer->getProductOptions() as $productOptionTransfer) {

@@ -56,7 +56,7 @@ interface ShoppingListNoteFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `expandShoppingListItemCollection()` instead.
+     * @deprecated Use `ShoppingListNoteFacadeInterface::expandShoppingListItemCollection()` instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

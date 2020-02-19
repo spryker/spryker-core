@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
@@ -29,7 +28,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     }
 
     /**
-     * @deprecated Use `expandItemCollection()` instead.
+     * @deprecated Use `ShoppingListItemExpander::expandItemCollection()` instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -52,11 +51,11 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      */
     public function expandItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        $shoppingListItemNoteCollectionTransfer = $this->shoppingLisItemNoteReader
-            ->getShoppingListItemNoteCollectionByShoppingListItemCollection($shoppingListItemCollectionTransfer);
+        $shoppingListItemNoteTransfers = $this->shoppingLisItemNoteReader
+            ->getShoppingListItemNoteTransfersByShoppingListItemCollection($shoppingListItemCollectionTransfer);
 
         $indexedShoppingListItemNoteTransfers = $this
-            ->getShoppingListItemNoteTransfersIndexedByIds($shoppingListItemNoteCollectionTransfer);
+            ->indexShoppingListItemNoteTransfersByShoppingListItemIds($shoppingListItemNoteTransfers);
 
         $expandedShoppingListItemTransfers = new ArrayObject();
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
@@ -72,14 +71,14 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteCollectionTransfer $shoppingListItemNoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject $shoppingListItemNoteTransfers
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]
      */
-    protected function getShoppingListItemNoteTransfersIndexedByIds(ShoppingListItemNoteCollectionTransfer $shoppingListItemNoteCollectionTransfer): array
+    protected function indexShoppingListItemNoteTransfersByShoppingListItemIds(ArrayObject $shoppingListItemNoteTransfers): array
     {
         $indexedShoppingListItemNoteTransfers = [];
-        foreach ($shoppingListItemNoteCollectionTransfer->getNotes() as $shoppingListItemNoteTransfer) {
+        foreach ($shoppingListItemNoteTransfers as $shoppingListItemNoteTransfer) {
             $indexedShoppingListItemNoteTransfers[$shoppingListItemNoteTransfer->getFkShoppingListItem()] = $shoppingListItemNoteTransfer;
         }
 

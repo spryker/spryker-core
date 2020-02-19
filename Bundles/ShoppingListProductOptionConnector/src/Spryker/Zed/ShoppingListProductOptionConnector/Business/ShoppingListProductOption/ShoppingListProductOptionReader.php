@@ -40,7 +40,7 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -82,7 +82,7 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

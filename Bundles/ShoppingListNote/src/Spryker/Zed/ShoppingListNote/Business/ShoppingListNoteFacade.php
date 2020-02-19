@@ -69,7 +69,7 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @api
      *
-     * @deprecated Use `expandShoppingListItemCollection()` instead.
+     * @deprecated Use `ShoppingListNoteFacade::expandShoppingListItemCollection()` instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

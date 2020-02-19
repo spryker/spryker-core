@@ -456,7 +456,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @deprecated Added for BC reasons, will be removed in next major release.
+     * @deprecated Added for BC reasons, will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *

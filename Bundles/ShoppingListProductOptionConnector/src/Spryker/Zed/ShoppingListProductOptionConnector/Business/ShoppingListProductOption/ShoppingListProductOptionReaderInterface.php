@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer;
 interface ShoppingListProductOptionReaderInterface
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

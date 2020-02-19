@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 interface ShoppingListItemExpanderInterface
 {
     /**
-     * @deprecated Use `expandShoppingListItemCollectionWithProductOptions()` instead.
+     * @deprecated Use `ShoppingListItemExpanderInterface::expandShoppingListItemCollectionWithProductOptions()` instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

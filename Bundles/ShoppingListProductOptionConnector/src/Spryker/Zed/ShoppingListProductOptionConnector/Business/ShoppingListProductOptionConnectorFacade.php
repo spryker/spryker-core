@@ -57,7 +57,7 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
      *
      * @api
      *
-     * @deprecated Use `expandShoppingListItemCollectionWithProductOptions()` instead.
+     * @deprecated Use `ShoppingListProductOptionConnectorFacade::expandShoppingListItemCollectionWithProductOptions()` instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
