@@ -31,6 +31,8 @@ class SalesReturnStub implements SalesReturnStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\SalesReturn\Communication\Controller\GatewayController::getReturnReasonsAction()
+     *
      * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
@@ -47,6 +49,8 @@ class SalesReturnStub implements SalesReturnStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\SalesReturn\Communication\Controller\GatewayController::getReturnsAction()
+     *
      * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
@@ -63,6 +67,8 @@ class SalesReturnStub implements SalesReturnStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\SalesReturn\Communication\Controller\GatewayController::createReturnAction()
+     *
      * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
