@@ -76,6 +76,10 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
                 continue;
             }
 
+            if (!isset($productPackagingUnitAmountTransferMapBySku[$productSku])) {
+                continue;
+            }
+
             $cartPreCheckResponseTransfer = $this->validateItem($productSku, $cartAmount, $productPackagingUnitAmountTransferMapBySku[$productSku], $cartPreCheckResponseTransfer);
         }
 
