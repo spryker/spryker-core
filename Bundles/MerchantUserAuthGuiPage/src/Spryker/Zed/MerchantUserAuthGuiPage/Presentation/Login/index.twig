@@ -3,7 +3,7 @@
 {% block content %}
     {% set formData = {
         actionUrl: 'actionUrl',
-        children: [
+        childrens: [
             {
                 for: 'form-email',
                 errorMessage: 'error',
@@ -12,7 +12,8 @@
                 name: 'email',
                 value: '',
                 type: 'email',
-                placeholder: 'example@spryker.com'
+                placeholder: 'example@spryker.com',
+                label: "Email",
             },
             {
                 for: 'form-password',
@@ -22,29 +23,30 @@
                 name: 'password',
                 value: '',
                 type: 'password',
-                placeholder: 'Enter password placeholder'
-            }
-        ]
+                placeholder: 'Enter password placeholder',
+                label: "Password",
+            },
+        ],
     } %}
 
     <mp-login>
         <form action="{{ formData.actionUrl }}">
-            {% for formField in formData.children %}
+            {% for formField in formData.childrens %}
                 <spy-form-item error="{{ formField.errorMessage }}" for="{{ formField.for }}">
-                    Email
+                    {{ formField.label }}
                     <spy-input
-                            control
-                            attrs={{ formField.attrs }}
-                            required="{{ formField.required }}"
-                            name="{{ formField.name }}"
-                            value="{{ formField.value }}"
-                            type="{{ formField.type }}"
-                            placeholder="{{ formField.placeholder }}"
+                        control
+                        attrs="{{ formField.attrs }}"
+                        required="{{ formField.required }}"
+                        name="{{ formField.name }}"
+                        value="{{ formField.value }}"
+                        type="{{ formField.type }}"
+                        placeholder="{{ formField.placeholder }}"
                     ></spy-input>
                 </spy-form-item>
             {% endfor %}
 
-            <spy-button type="submit">Login</spy-button>
+            <spy-button style="width: 100%;" type="submit">Login</spy-button>
         </form>
     </mp-login>
 {% endblock %}
