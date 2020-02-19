@@ -79,7 +79,10 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
             return [];
         }
 
-        return $this->productMeasurementUnitReader->getProductMeasurementUnits($productMeasurementUnitIds);
+        $productMeasurementUnitTransfers = $this->productMeasurementUnitReader
+            ->getProductMeasurementUnits($productMeasurementUnitIds);
+
+        return $this->getIndexedProductMeasurementUnitTransfers($productMeasurementUnitTransfers, $productMeasurementUnitIds);
     }
 
     /**
@@ -102,5 +105,24 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
         }
 
         return $productConcreteTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $productMeasurementUnitTransfers
+     * @param array $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    protected function getIndexedProductMeasurementUnitTransfers(
+        array $productMeasurementUnitTransfers,
+        array $productMeasurementUnitIds
+    ): array {
+        $indexedProductMeasurementUnitTransfers = [];
+        foreach ($productMeasurementUnitTransfers as $productMeasurementUnitTransfer) {
+            $idProductConcrete = array_search($productMeasurementUnitTransfer->getIdProductMeasurementUnit(), $productMeasurementUnitIds);
+            $indexedProductMeasurementUnitTransfers[$idProductConcrete] = $productMeasurementUnitTransfer;
+        }
+
+        return $indexedProductMeasurementUnitTransfers;
     }
 }

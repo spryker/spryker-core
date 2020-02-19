@@ -61,8 +61,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
 
         $productMeasurementUnitTransfers = [];
         foreach ($productMeasurementUnitStorageTransfers as $productMeasurementUnitStorageTransfer) {
-            $idProductConcrete = array_search($productMeasurementUnitStorageTransfer->getIdProductMeasurementUnit(), $productMeasurementUnitIds);
-            $productMeasurementUnitTransfers[$idProductConcrete] = $this->mapProductMeasurementUnit(
+            $productMeasurementUnitTransfers[] = $this->mapProductMeasurementUnit(
                 $productMeasurementUnitStorageTransfer,
                 new ProductMeasurementUnitTransfer()
             );

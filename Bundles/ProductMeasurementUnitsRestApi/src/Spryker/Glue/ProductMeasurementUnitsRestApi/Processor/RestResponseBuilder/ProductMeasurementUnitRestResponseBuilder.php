@@ -54,7 +54,7 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         return $restResponse->addResource(
-            $this->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer, $localeName)
+            $this->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer)
         );
     }
 
