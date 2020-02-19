@@ -53,7 +53,19 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->find()
             ->getData();
 
-        return $this->getMappedMerchantDataByProductAbstract($merchantData);
+        $groupedMerchantDataByProductAbstractId = $this->groupMerchantDataByProductAbstractId($merchantData);
+        $productAbstractMerchantTransfers = [];
+
+        foreach ($groupedMerchantDataByProductAbstractId as $idProductAbstract => $productAbstractMerchantData) {
+            $productAbstractMerchantTransfers[] = $this->getFactory()
+                ->createProductAbstractMerchantMapper()
+                ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
+                    $productAbstractMerchantData,
+                    new ProductAbstractMerchantTransfer()
+                );
+        }
+
+        return $productAbstractMerchantTransfers;
     }
 
     /**
@@ -117,28 +129,6 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
-    }
-
-    /**
-     * @param array $merchantData
-     *
-     * @return array
-     */
-    protected function getMappedMerchantDataByProductAbstract(array $merchantData): array
-    {
-        $groupedMerchantDataByProductAbstractId = $this->groupMerchantDataByProductAbstractId($merchantData);
-        $productAbstractMerchantTransfers = [];
-
-        foreach ($groupedMerchantDataByProductAbstractId as $idProductAbstract => $productAbstractMerchantData) {
-            $productAbstractMerchantTransfers[] = $this->getFactory()
-                ->createProductAbstractMerchantMapper()
-                ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
-                    $productAbstractMerchantData,
-                    new ProductAbstractMerchantTransfer()
-                );
-        }
-
-        return $productAbstractMerchantTransfers;
     }
 
     /**
