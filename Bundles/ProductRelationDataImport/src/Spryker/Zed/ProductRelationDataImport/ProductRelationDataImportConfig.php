@@ -49,11 +49,7 @@ class ProductRelationDataImportConfig extends DataImportConfig
     protected function getModuleRoot(): string
     {
         $moduleRoot = realpath(
-            __DIR__
-            . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            dirname(__DIR__, 4)
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;
