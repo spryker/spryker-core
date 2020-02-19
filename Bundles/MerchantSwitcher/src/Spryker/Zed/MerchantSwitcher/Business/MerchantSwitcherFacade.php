@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantSwitcher\Business;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -18,22 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MerchantSwitcherFacade extends AbstractFacade implements MerchantSwitcherFacadeInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
-    public function checkMerchantReference(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantReferenceChecker()
-            ->check($cartChangeTransfer);
-    }
-
     /**
      * {@inheritDoc}
      *

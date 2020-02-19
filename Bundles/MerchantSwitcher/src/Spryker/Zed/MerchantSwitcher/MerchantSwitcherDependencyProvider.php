@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToCartFacadeBridge;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToMerchantProductOfferFacadeBridge;
-use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToMessengerFacadeBridge;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToQuoteFacadeBridge;
 
 /**
@@ -19,7 +18,6 @@ use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToQuoteFacade
  */
 class MerchantSwitcherDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_MERCHANT_PRODUCT_OFFER = 'FACADE_MERCHANT_PRODUCT_OFFER';
@@ -33,24 +31,9 @@ class MerchantSwitcherDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addMessengerFacade($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addCartFacade($container);
         $container = $this->addMerchantProductOfferFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMessengerFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_MESSENGER, function (Container $container) {
-            return new MerchantSwitcherToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        });
 
         return $container;
     }

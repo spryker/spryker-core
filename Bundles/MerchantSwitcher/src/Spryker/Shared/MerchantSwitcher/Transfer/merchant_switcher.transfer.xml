@@ -33,6 +33,7 @@
 
     <transfer name="CartPreCheckResponse">
         <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">
@@ -54,6 +55,14 @@
     <transfer name="ProductOffer">
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
 </transfers>

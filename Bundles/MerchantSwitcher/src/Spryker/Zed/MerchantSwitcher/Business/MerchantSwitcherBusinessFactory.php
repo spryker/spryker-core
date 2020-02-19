@@ -8,13 +8,10 @@
 namespace Spryker\Zed\MerchantSwitcher\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantSwitcher\Business\MerchantReferenceChecker\MerchantReferenceChecker;
-use Spryker\Zed\MerchantSwitcher\Business\MerchantReferenceChecker\MerchantReferenceCheckerInterface;
 use Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\MerchantSwitcher;
 use Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\MerchantSwitcherInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToCartFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToMerchantProductOfferFacadeInterface;
-use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToMessengerFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToQuoteFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\MerchantSwitcherDependencyProvider;
 
@@ -23,16 +20,6 @@ use Spryker\Zed\MerchantSwitcher\MerchantSwitcherDependencyProvider;
  */
 class MerchantSwitcherBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\MerchantSwitcher\Business\MerchantReferenceChecker\MerchantReferenceCheckerInterface
-     */
-    public function createMerchantReferenceChecker(): MerchantReferenceCheckerInterface
-    {
-        return new MerchantReferenceChecker(
-            $this->getMessengerFacade()
-        );
-    }
-
     /**
      * @return \Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\MerchantSwitcherInterface
      */
@@ -43,14 +30,6 @@ class MerchantSwitcherBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->getCartFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToMessengerFacadeInterface
-     */
-    public function getMessengerFacade(): MerchantSwitcherToMessengerFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantSwitcherDependencyProvider::FACADE_MESSENGER);
     }
 
     /**
