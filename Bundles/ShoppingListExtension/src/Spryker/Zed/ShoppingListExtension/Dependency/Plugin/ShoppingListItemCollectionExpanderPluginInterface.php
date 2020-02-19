@@ -13,7 +13,7 @@ interface ShoppingListItemCollectionExpanderPluginInterface
 {
     /**
      * Specification:
-     * - This plugin stack is used for expanding ShoppingListItemCollectionTransfer with additional items data.
+     * - This plugin stack is used for expanding `ShoppingListItemCollectionTransfer` with additional items data.
      *
      * @api
      *
