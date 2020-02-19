@@ -5,20 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductOffer;
+namespace Spryker\Zed\MerchantSwitcher\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 
-interface MerchantProductOfferClientInterface
+interface MerchantSwitcherToMerchantProductOfferFacadeInterface
 {
     /**
-     * Specification:
-     * - Makes Zed request.
-     * - Gets ProductOfferCollectionTransfer filtered by MerchantProductOfferCriteriaFilterTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer

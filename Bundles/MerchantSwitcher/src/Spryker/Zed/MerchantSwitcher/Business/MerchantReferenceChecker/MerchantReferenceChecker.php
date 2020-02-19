@@ -44,7 +44,7 @@ class MerchantReferenceChecker implements MerchantReferenceCheckerInterface
         $cartPreCheckResponseTransfer->setIsSuccess(true);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getMerchantReference() !== $merchantReference) {
+            if ($merchantReference && $itemTransfer->getMerchantReference() && $itemTransfer->getMerchantReference() !== $merchantReference) {
                 $this->messengerFacade->addErrorMessage(
                     (new MessageTransfer())
                         ->setValue(static::GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE)

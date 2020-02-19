@@ -14,9 +14,11 @@ interface MerchantSwitcherClientInterface
 {
     /**
      * Specification:
-     * - Goes through quote items and replaces ItemTransfer.merchantReference values depends on selected merchantReference values.
-     * - Skips items which doesn't have replacement.
-     * - Requires MerchantSwitchRequestTransfer.Quote.
+     * - Makes Zed request.
+     * - Switch ItemTransfer.OfferReference property according to selected merchant reference.
+     * - Switch ItemTransfer.MerchantReference property according to selected merchant reference.
+     * - Set update QuoteTransfer to session.
+     * - Update persistence cart if database strategy is selected.
      *
      * @api
      *

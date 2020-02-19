@@ -8,27 +8,27 @@
 namespace Spryker\Client\MerchantSwitcher;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\MerchantSwitcher\Dependency\Client\MerchantSwitcherToMerchantProductOfferClientInterface;
-use Spryker\Client\MerchantSwitcher\MerchantReferenceSwitcher\MerchantReferenceSwitcher;
-use Spryker\Client\MerchantSwitcher\MerchantReferenceSwitcher\MerchantReferenceSwitcherInterface;
+use Spryker\Client\MerchantSwitcher\Dependency\Client\MerchantSwitcherToZedRequestClientInterface;
+use Spryker\Client\MerchantSwitcher\Zed\MerchantSwitcherStub;
+use Spryker\Client\MerchantSwitcher\Zed\MerchantSwitcherStubInterface;
 
 class MerchantSwitcherFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\MerchantSwitcher\MerchantReferenceSwitcher\MerchantReferenceSwitcherInterface
+     * @return \Spryker\Client\MerchantSwitcher\Zed\MerchantSwitcherStubInterface
      */
-    public function createMerchantReferenceSwitcher(): MerchantReferenceSwitcherInterface
+    public function createMerchantSwitcherStub(): MerchantSwitcherStubInterface
     {
-        return new MerchantReferenceSwitcher(
-            $this->getMerchantProductOfferClient()
+        return new MerchantSwitcherStub(
+            $this->getZedRequestClient()
         );
     }
 
     /**
-     * @return \Spryker\Client\MerchantSwitcher\Dependency\Client\MerchantSwitcherToMerchantProductOfferClientInterface
+     * @return \Spryker\Client\MerchantSwitcher\Dependency\Client\MerchantSwitcherToZedRequestClientInterface
      */
-    public function getMerchantProductOfferClient(): MerchantSwitcherToMerchantProductOfferClientInterface
+    public function getZedRequestClient(): MerchantSwitcherToZedRequestClientInterface
     {
-        return $this->getProvidedDependency(MerchantSwitcherDependencyProvider::CLIENT_MERCHANT_PRODUCT_OFFER);
+        return $this->getProvidedDependency(MerchantSwitcherDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

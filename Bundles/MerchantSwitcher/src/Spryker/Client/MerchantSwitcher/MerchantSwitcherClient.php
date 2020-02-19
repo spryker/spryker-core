@@ -28,7 +28,7 @@ class MerchantSwitcherClient extends AbstractClient implements MerchantSwitcherC
     public function switchMerchant(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantReferenceSwitcher()
-            ->switch($merchantSwitchRequestTransfer);
+            ->createMerchantSwitcherStub()
+            ->switchMerchant($merchantSwitchRequestTransfer);
     }
 }

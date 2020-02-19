@@ -9,11 +9,11 @@ namespace Spryker\Client\MerchantSwitcher;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\MerchantSwitcher\Dependency\Client\MerchantSwitcherToMerchantProductOfferClientBridge;
+use Spryker\Client\MerchantSwitcher\Dependency\Client\MerchantSwitcherToZedRequestClientBridge;
 
 class MerchantSwitcherDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_MERCHANT_PRODUCT_OFFER = 'CLIENT_MERCHANT_PRODUCT_OFFER';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,7 +24,7 @@ class MerchantSwitcherDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container = $this->addMerchantProductOfferClient($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -34,10 +34,10 @@ class MerchantSwitcherDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addMerchantProductOfferClient(Container $container): Container
+    protected function addZedRequestClient(Container $container): Container
     {
-        $container->set(static::CLIENT_MERCHANT_PRODUCT_OFFER, function (Container $container) {
-            return new MerchantSwitcherToMerchantProductOfferClientBridge($container->getLocator()->merchantProductOffer()->client());
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
+            return new MerchantSwitcherToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         });
 
         return $container;

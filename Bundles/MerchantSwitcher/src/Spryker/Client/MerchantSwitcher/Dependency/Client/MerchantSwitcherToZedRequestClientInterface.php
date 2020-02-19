@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductOffer\Dependency\Client;
+namespace Spryker\Client\MerchantSwitcher\Dependency\Client;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-interface MerchantProductOfferToZedRequestClientInterface
+interface MerchantSwitcherToZedRequestClientInterface
 {
     /**
      * @param string $url
