@@ -22,7 +22,7 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
      *
      * @return int[]
      */
-    public function getProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array
+    public function getActiveProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array
     {
         $query = $this->applyFilters(
             $merchantProductOfferCriteriaFilterTransfer,

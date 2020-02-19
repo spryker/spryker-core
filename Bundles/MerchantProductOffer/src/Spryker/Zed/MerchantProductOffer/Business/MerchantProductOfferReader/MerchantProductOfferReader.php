@@ -23,7 +23,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     /**
      * @var \Spryker\Zed\MerchantProductOffer\Persistence\MerchantProductOfferRepositoryInterface
      */
-    protected $repository;
+    protected $merchantProductOfferRepository;
 
     /**
      * @param \Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToProductOfferFacadeInterface $productOfferFacade
@@ -34,7 +34,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         MerchantProductOfferRepositoryInterface $merchantProductOfferRepository
     ) {
         $this->productOfferFacade = $productOfferFacade;
-        $this->repository = $merchantProductOfferRepository;
+        $this->merchantProductOfferRepository = $merchantProductOfferRepository;
     }
 
     /**
@@ -44,7 +44,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
      */
     public function getMerchantProductOfferCollection(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): ProductOfferCollectionTransfer
     {
-        $productOfferIds = $this->repository->getProductOfferIds($merchantProductOfferCriteriaFilterTransfer);
+        $productOfferIds = $this->merchantProductOfferRepository->getActiveProductOfferIds($merchantProductOfferCriteriaFilterTransfer);
 
         if (!$productOfferIds) {
             return new ProductOfferCollectionTransfer();

@@ -71,8 +71,7 @@ class MerchantSwitcher implements MerchantSwitcherInterface
             $this->quoteFacade->updateQuote($quoteTransfer)->getQuoteTransfer();
         }
 
-        return (new MerchantSwitchResponseTransfer())
-            ->setQuote($quoteTransfer);
+        return (new MerchantSwitchResponseTransfer())->setQuote($quoteTransfer);
     }
 
     /**
