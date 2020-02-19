@@ -539,5 +539,15 @@
       "type": "http",
       "scheme": "bearer"
     }
+  },
+  "parameters": {
+    "acceptLanguage": {
+      "name": "Accept-Language",
+      "in": "header",
+      "scheme": {
+          "type": "string"
+      },
+      "description": "Locale value relevant for the store."
+    }
   }
 }

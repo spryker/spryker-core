@@ -37,6 +37,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     protected const KEY_SCHEMAS = 'schemas';
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
     protected const KEY_TAGS = 'tags';
+    protected const KEY_PARAMETERS = 'parameters';
 
     protected const YAML_NESTING_LEVEL = 9;
     protected const YAML_INDENT = 4;
@@ -83,6 +84,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
         $dataStructure[static::KEY_TAGS] = $this->getTagsFromData($data[static::KEY_PATHS]);
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $data[static::KEY_SCHEMAS];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SECURITY_SCHEMES] = $data[static::KEY_SECURITY_SCHEMES];
+        $dataStructure[static::KEY_COMPONENTS][static::KEY_PARAMETERS] = $data[static::KEY_PARAMETERS];
 
         $fileName = $this->resolveGeneratedFileName();
         $yaml = $this->yamlDumper->dump(
@@ -126,6 +128,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
             static::KEY_COMPONENTS => [
                 static::KEY_SECURITY_SCHEMES => [],
                 static::KEY_SCHEMAS => [],
+                static::KEY_PARAMETERS => (object)[],
             ],
         ];
     }

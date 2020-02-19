@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PathMethodDataTransfer;
 use Generated\Shared\Transfer\PathSchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
@@ -45,18 +46,26 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     protected $securitySchemeGenerator;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface
+     */
+    protected $parametersGenerator;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface $pathGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface $schemaGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface $securitySchemeGenerator
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface $parametersGenerator
      */
     public function __construct(
         PathGeneratorInterface $pathGenerator,
         SchemaGeneratorInterface $schemaGenerator,
-        SecuritySchemeGeneratorInterface $securitySchemeGenerator
+        SecuritySchemeGeneratorInterface $securitySchemeGenerator,
+        ParameterGeneratorInterface $parametersGenerator
     ) {
         $this->pathGenerator = $pathGenerator;
         $this->schemaGenerator = $schemaGenerator;
         $this->securitySchemeGenerator = $securitySchemeGenerator;
+        $this->parametersGenerator = $parametersGenerator;
     }
 
     /**
@@ -81,6 +90,14 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     public function getGeneratedSecuritySchemes(): array
     {
         return $this->securitySchemeGenerator->getSecuritySchemes();
+    }
+
+    /**
+     * @return array
+     */
+    public function getGeneratedParameters(): array
+    {
+        return $this->parametersGenerator->getParameters();
     }
 
     /**

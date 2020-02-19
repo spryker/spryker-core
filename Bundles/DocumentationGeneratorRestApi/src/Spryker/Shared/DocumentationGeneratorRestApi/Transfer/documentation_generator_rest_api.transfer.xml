@@ -38,6 +38,19 @@
         <property name="required" type="string[]" singular="required"/>
     </transfer>
 
+    <transfer name="Parameter">
+        <property name="refName" type="string"/>
+        <property name="name" type="string"/>
+        <property name="in" type="string"/>
+        <property name="description" type="string"/>
+        <property name="required" type="bool"/>
+        <property name="schema" type="ParameterSchema"/>
+    </transfer>
+
+    <transfer name="ParameterSchema">
+        <property name="type" type="string"/>
+    </transfer>
+
     <transfer name="SchemaProperty">
         <property name="name" type="string"/>
         <property name="type" type="string"/>
@@ -90,6 +103,15 @@
         <property name="name" type="string"/>
         <property name="properties" type="array" singular="property"/>
         <property name="required" type="string[]" singular="required"/>
+    </transfer>
+
+    <transfer name="ParameterComponent">
+        <property name="refName" type="string"/>
+        <property name="name" type="string"/>
+        <property name="in" type="string"/>
+        <property name="description" type="string"/>
+        <property name="required" type="bool"/>
+        <property name="schema" type="ParameterSchema"/>
     </transfer>
 
     <transfer name="SchemaPropertyComponent">
