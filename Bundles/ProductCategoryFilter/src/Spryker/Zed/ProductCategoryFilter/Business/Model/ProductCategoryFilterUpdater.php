@@ -35,8 +35,11 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
      * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
      * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator
      */
-    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTouchInterface $productCategoryFilterTouch, ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator)
-    {
+    public function __construct(
+        ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer,
+        ProductCategoryFilterTouchInterface $productCategoryFilterTouch,
+        ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator
+    ) {
         $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
         $this->productCategoryFilterTouch = $productCategoryFilterTouch;
         $this->productCategoryFilterTransferGenerator = $productCategoryFilterTransferGenerator;
