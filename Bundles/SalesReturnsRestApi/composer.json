@@ -1,7 +1,7 @@
 {
-  "name": "spryker/returns-rest-api",
+  "name": "spryker/sales-returns-rest-api",
   "type": "library",
-  "description": "ReturnsRestApi module",
+  "description": "SalesReturnsRestApi module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2"

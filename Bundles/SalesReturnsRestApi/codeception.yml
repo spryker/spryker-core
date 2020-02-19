@@ -1,4 +1,4 @@
-namespace: ReturnsRestApi
+namespace: SalesReturnsRestApi
 actor: Tester
 paths:
     tests: tests
