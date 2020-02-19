@@ -1,8 +1,6 @@
 @import '~@spryker/styles/src/lib/themes/default/external-variables.less';
 
-:host {
-    --spy-logo-full: url('/assets/images/logo.svg');
-}
+@letter-spacing-base: 0.11px;
 
 :host,
 mp-login {
@@ -25,8 +23,12 @@ mp-login {
 
         &-text {
             color: @primary-color;
-            letter-spacing: 0.11px;
+            letter-spacing: @letter-spacing-base;
             font: @font-weight-semi-bold @font-size-lg @font-family;
         }
+    }
+
+    spy-button {
+        width: 100%;
     }
 }
