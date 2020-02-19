@@ -1,17 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'zed-auth-footer',
-  templateUrl: './zed-auth-footer.component.html',
-  styleUrls: ['./zed-auth-footer.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.ShadowDom
+    selector: 'zed-auth-footer',
+    templateUrl: './zed-auth-footer.component.html',
+    styleUrls: ['./zed-auth-footer.component.less'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.ShadowDom
 })
-export class ZedAuthFooterComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class ZedAuthFooterComponent {
 }

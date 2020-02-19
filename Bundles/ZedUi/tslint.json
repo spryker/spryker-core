@@ -12,13 +12,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "mp",
+      "zed",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "mp",
+      "zed",
       "kebab-case"
     ],
     "import-blacklist": [
