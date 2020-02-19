@@ -14,11 +14,10 @@ interface ProductAbstractStorageReaderInterface
      *
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return array
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName, ?string $storeName = null);
+    public function getProductAbstractStorageData($idProductAbstract, $localeName);
 
     /**
      * @param int $idProductAbstract
@@ -65,11 +64,11 @@ interface ProductAbstractStorageReaderInterface
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName(array $productAbstractIds, string $localeName, ?string $storeName = null): array;
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(array $productAbstractIds, string $localeName, string $storeName): array;
 
     /**
      * @param string $mappingType

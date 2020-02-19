@@ -23,11 +23,10 @@ interface ProductStorageClientInterface
      *
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return array
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName, ?string $storeName = null);
+    public function getProductAbstractStorageData($idProductAbstract, $localeName);
 
     /**
      * Specification:
@@ -249,18 +248,18 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * - Finds product abstract data by array of product abstract ids and locale name and store name.
+     * - Finds product abstract data by the list of product abstract ids for given locale name and store name.
      * - Result will be indexed by product abstract id, e.g. `[%product_abstract_id% => [%product_abstract_storage_data%]]`.
      *
      * @api
      *
      * @param array $productAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName(array $productAbstractIds, string $localeName, ?string $storeName = null): array;
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(array $productAbstractIds, string $localeName, string $storeName): array;
 
     /**
      * Specification:

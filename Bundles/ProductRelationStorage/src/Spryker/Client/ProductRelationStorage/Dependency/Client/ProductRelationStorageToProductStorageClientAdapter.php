@@ -75,12 +75,12 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
      *
      * @return array
      */
-    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStore(array $productAbstractIds, string $localeName, ?string $storeName = null): array
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(array $productAbstractIds, string $localeName, ?string $storeName = null): array
     {
-        if (method_exists($this->productStorageClient, 'getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName')) {
-            return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStoreName($productAbstractIds, $localeName, $storeName);
+        if (method_exists($this->productStorageClient, 'getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore')) {
+            return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore($productAbstractIds, $localeName, $storeName);
         }
 
-        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+        return $this->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 }

@@ -60,7 +60,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
         $relatedProductAbstractIds = $this->findRelatedAbstractProductIds($idProductAbstract);
         $productStorageDataCollection = $this
             ->productStorageClient
-            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStore($relatedProductAbstractIds, $localeName, $storeName);
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore($relatedProductAbstractIds, $localeName, $storeName);
 
         return $this->mapProductViewTransfers($productStorageDataCollection, $localeName);
     }
