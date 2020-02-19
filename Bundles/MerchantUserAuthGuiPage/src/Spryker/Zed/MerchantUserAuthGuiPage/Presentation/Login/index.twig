@@ -1,16 +1,49 @@
 {% extends '@ZedUi/LayoutCentral/layout-central.twig' %}
 
 {% block content %}
+    {% set formData = {
+        actionUrl: 'actionUrl',
+        children: [
+            {
+                for: 'form-email',
+                errorMessage: 'error',
+                attrs: '{"id":"form-email"}',
+                required: true,
+                name: 'email',
+                value: '',
+                type: 'email',
+                placeholder: 'example@spryker.com'
+            },
+            {
+                for: 'form-password',
+                errorMessage: '',
+                attrs: '{"id":"form-password"}',
+                required: true,
+                name: 'password',
+                value: '',
+                type: 'password',
+                placeholder: 'Enter password placeholder'
+            }
+        ]
+    } %}
+
     <mp-login>
-        <form action="">
-            <spy-form-item error="error" for="form-email">
-                Email
-                <spy-input control required="true" name="email" value="" placeholder="example@spryker.com"></spy-input>
-            </spy-form-item>
-            <spy-form-item for="form-password">
-                Password
-                <spy-input control required="true" type="password" name="password" value="" placeholder="Enter password"></spy-input>
-            </spy-form-item>
+        <form action="{{ formData.actionUrl }}">
+            {% for formField in formData.children %}
+                <spy-form-item error="{{ formField.errorMessage }}" for="{{ formField.for }}">
+                    Email
+                    <spy-input
+                            control
+                            attrs={{ formField.attrs }}
+                            required="{{ formField.required }}"
+                            name="{{ formField.name }}"
+                            value="{{ formField.value }}"
+                            type="{{ formField.type }}"
+                            placeholder="{{ formField.placeholder }}"
+                    ></spy-input>
+                </spy-form-item>
+            {% endfor %}
+
             <spy-button type="submit">Login</spy-button>
         </form>
     </mp-login>
