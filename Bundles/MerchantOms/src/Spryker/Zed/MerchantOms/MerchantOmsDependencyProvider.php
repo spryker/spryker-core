@@ -39,9 +39,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStateMachineFacade(Container $container): Container
     {
         $container->set(static::FACADE_STATE_MACHINE, function (Container $container) {
-            return new MerchantOmsToStateMachineFacadeBridge(
-                $container->getLocator()->stateMachine()->facade()
-            );
+            return new MerchantOmsToStateMachineFacadeBridge($container->getLocator()->stateMachine()->facade());
         });
 
         return $container;

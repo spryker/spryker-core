@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-oms.svg)](https://travis-ci.org/spryker/merchant-oms)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-MerchantOms module provides Oms functionality for merchant orders.
+MerchantOms module provides oms functionality for merchant orders.
 
 ## Installation
 

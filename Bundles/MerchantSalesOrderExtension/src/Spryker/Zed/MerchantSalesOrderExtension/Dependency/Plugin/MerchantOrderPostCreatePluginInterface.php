@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantOrderResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 /**
- * Allows to add logic after merchant order with its items are created
+ * Allows to add logic after merchant order with its items are created.
  */
 interface MerchantOrderPostCreatePluginInterface
 {

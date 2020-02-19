@@ -37,17 +37,22 @@ class MerchantOmsProcessReader implements MerchantOmsProcessReaderInterface
     }
 
     /**
-     * @inheritDoc
+     * @param \Generated\Shared\Transfer\MerchantOmsProcessCriteriaFilterTransfer $merchantOmsProcessCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOmsProcessTransfer
      */
     public function getMerchantOmsProcess(MerchantOmsProcessCriteriaFilterTransfer $merchantOmsProcessCriteriaFilterTransfer): MerchantOmsProcessTransfer
     {
         $merchantOmsProcessTransfer = $this->merchantOmsRepository->findMerchantOmsProcess($merchantOmsProcessCriteriaFilterTransfer);
 
-        if (!$merchantOmsProcessTransfer) {
-            $merchantOmsProcessTransfer = (new MerchantOmsProcessTransfer())
-                ->setProcessName($this->merchantOmsConfig->getMerchantOmsDefaultProcessName());
-        }
+        return $merchantOmsProcessTransfer ?: $this->createDefaultMerchantOmsProcessTransfer();
+    }
 
-        return $merchantOmsProcessTransfer;
+    /**
+     * @return \Generated\Shared\Transfer\MerchantOmsProcessTransfer
+     */
+    protected function createDefaultMerchantOmsProcessTransfer(): MerchantOmsProcessTransfer
+    {
+        return (new MerchantOmsProcessTransfer())->setProcessName($this->merchantOmsConfig->getMerchantOmsDefaultProcessName());
     }
 }

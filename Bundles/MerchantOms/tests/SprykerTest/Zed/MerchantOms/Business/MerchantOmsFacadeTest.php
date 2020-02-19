@@ -54,7 +54,7 @@ class MerchantOmsFacadeTest extends Unit
 
         // Act
         $merchantOrderResponseTransfer = $merchantOmsFacade->dispatchNewMerchantOrderEvent($merchantOrderTransfer);
-        $stateMachineItemTransfer = $testStateMachineHandler->getItemStateUpdated();
+        $stateMachineItemTransfer = $testStateMachineHandler->getStateMachineItemTransfer();
 
         // Assert
         $this->assertTrue($merchantOrderResponseTransfer->getIsSuccessful());
@@ -93,9 +93,10 @@ class MerchantOmsFacadeTest extends Unit
         $merchantOmsEventTransfer = (new MerchantOmsEventTransfer())->setEventName(static::EVENT_NAME_EXPORT);
 
         $merchantOmsFacade->dispatchNewMerchantOrderEvent($merchantOrderTransfer);
-        $stateMachineItemTransfer = $testStateMachineHandler->getItemStateUpdated();
+        $stateMachineItemTransfer = $testStateMachineHandler->getStateMachineItemTransfer();
 
         $merchantOrderItemTransfer->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState());
+
         // Act
         $merchantOrderItemResponseTransfer = $merchantOmsFacade->dispatchMerchantOrderItemEvent($merchantOrderItemTransfer, $merchantOmsEventTransfer);
 
@@ -117,9 +118,10 @@ class MerchantOmsFacadeTest extends Unit
         $merchantOmsEventTransfer = (new MerchantOmsEventTransfer())->setEventName(static::EVENT_NAME_DELIVER);
 
         $merchantOmsFacade->dispatchNewMerchantOrderEvent($merchantOrderTransfer);
-        $stateMachineItemTransfer = $testStateMachineHandler->getItemStateUpdated();
+        $stateMachineItemTransfer = $testStateMachineHandler->getStateMachineItemTransfer();
 
         $merchantOrderItemTransfer->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState());
+
         // Act
         $merchantOrderItemResponseTransfer = $merchantOmsFacade->dispatchMerchantOrderItemEvent($merchantOrderItemTransfer, $merchantOmsEventTransfer);
 
@@ -141,12 +143,13 @@ class MerchantOmsFacadeTest extends Unit
         $merchantOmsEventTransfer = (new MerchantOmsEventTransfer())->setEventName(static::EVENT_NAME_EXPORT);
 
         $merchantOmsFacade->dispatchNewMerchantOrderEvent($merchantOrderTransfer);
-        $stateMachineItemTransfer = $testStateMachineHandler->getItemStateUpdated();
+        $stateMachineItemTransfer = $testStateMachineHandler->getStateMachineItemTransfer();
 
         $merchantOrderItemTransfer->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState());
 
         $merchantOrderItemCollectionTransfer = new MerchantOrderItemCollectionTransfer();
         $merchantOrderItemCollectionTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
+
         // Act
         $merchantOrderItemResponseTransfer = $merchantOmsFacade->dispatchMerchantOrderItemsEvent($merchantOrderItemCollectionTransfer, $merchantOmsEventTransfer);
 
@@ -168,12 +171,13 @@ class MerchantOmsFacadeTest extends Unit
         $merchantOmsEventTransfer = (new MerchantOmsEventTransfer())->setEventName(static::EVENT_NAME_DELIVER);
 
         $merchantOmsFacade->dispatchNewMerchantOrderEvent($merchantOrderTransfer);
-        $stateMachineItemTransfer = $testStateMachineHandler->getItemStateUpdated();
+        $stateMachineItemTransfer = $testStateMachineHandler->getStateMachineItemTransfer();
 
         $merchantOrderItemTransfer->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState());
 
         $merchantOrderItemCollectionTransfer = new MerchantOrderItemCollectionTransfer();
         $merchantOrderItemCollectionTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
+
         // Act
         $merchantOrderItemResponseTransfer = $merchantOmsFacade->dispatchMerchantOrderItemsEvent($merchantOrderItemCollectionTransfer, $merchantOmsEventTransfer);
 

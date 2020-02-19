@@ -15,11 +15,9 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * @var \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    protected $itemStateUpdated;
+    protected $stateMachineItemTransfer;
 
     /**
-     * List of command plugins for this state machine for all processes.
-     *
      * @return array
      */
     public function getCommandPlugins(): array
@@ -28,8 +26,6 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * List of condition plugins for this state machine for all processes.
-     *
      * @return array
      */
     public function getConditionPlugins(): array
@@ -38,8 +34,6 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * Name of state machine used by this handler.
-     *
      * @return string
      */
     public function getStateMachineName(): string
@@ -48,8 +42,6 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * List of active processes used for this state machine
-     *
      * @return string[]
      */
     public function getActiveProcesses(): array
@@ -58,8 +50,6 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * Provide initial state name for item when state machine initialized. Useing proces name.
-     *
      * @param string $processName
      *
      * @return string
@@ -70,37 +60,32 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * This method is called when state of item was changed, client can create custom logic for example update it's related table with new state id/name.
-     * StateMachineItemTransfer:identifier is id of entity from implementor.
-     *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool
      */
     public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer)
     {
-        $this->itemStateUpdated = $stateMachineItemTransfer;
+        $this->stateMachineItemTransfer = $stateMachineItemTransfer;
 
         return true;
     }
 
     /**
-     * This method should return all item identifiers which are in passed state ids.
-     *
      * @param int[] $stateIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateMachineItemsByStateIds(array $stateIds = []): array
     {
-        return [$this->itemStateUpdated];
+        return [$this->stateMachineItemTransfer];
     }
 
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    public function getItemStateUpdated(): StateMachineItemTransfer
+    public function getStateMachineItemTransfer(): StateMachineItemTransfer
     {
-        return $this->itemStateUpdated;
+        return $this->stateMachineItemTransfer;
     }
 }
