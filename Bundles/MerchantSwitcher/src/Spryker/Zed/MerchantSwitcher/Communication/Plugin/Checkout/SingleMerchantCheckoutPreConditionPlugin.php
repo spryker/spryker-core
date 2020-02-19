@@ -46,7 +46,8 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
                 $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
                     ->setMessage(static::GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE)
                     ->setParameters([
-                        static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getSku()]);
+                        static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getSku(),
+                    ]);
             }
         }
 

@@ -8,8 +8,7 @@
     "spryker/kernel": "*",
     "spryker/merchant": "^2.0.0",
     "spryker/product-offer": "^0.3.0",
-    "spryker/store": "^1.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/store": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

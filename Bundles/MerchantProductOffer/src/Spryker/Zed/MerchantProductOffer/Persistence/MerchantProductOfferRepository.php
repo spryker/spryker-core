@@ -29,6 +29,8 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
             $this->getFactory()->getProductOfferPropelQuery()
         );
 
+        $query->filterByIsActive(true);
+
         $query->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER]);
 
         return $query->find()->getData();
@@ -51,7 +53,7 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
         if ($merchantProductOfferCriteriaFilterTransfer->getMerchantReference()) {
             $productOfferQuery
                 ->useSpyMerchantQuery()
-                ->filterByMerchantReference($merchantProductOfferCriteriaFilterTransfer->getMerchantReference())
+                    ->filterByMerchantReference($merchantProductOfferCriteriaFilterTransfer->getMerchantReference())
                 ->endUse();
         }
 
