@@ -30,7 +30,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     {
         $this->validateDataSet($dataSet);
 
-        $merchantEntity = $this->createMerchantQuery()
+        $merchantEntity = $this->createMerchantPropelQuery()
             ->filterByMerchantKey($dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_KEY])
             ->findOne();
 
@@ -41,7 +41,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
-    protected function createMerchantQuery(): SpyMerchantQuery
+    protected function createMerchantPropelQuery(): SpyMerchantQuery
     {
         return SpyMerchantQuery::create();
     }

@@ -31,7 +31,7 @@ class MerchantOmsProcessWriterStep extends PublishAwareStep implements DataImpor
 
         $merchantOmsProcessName = $dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_OMS_PROCESS_NAME];
 
-        $merchantOmsProcessEntity = $this->createMerchantOmsProcessQuery()
+        $merchantOmsProcessEntity = $this->createMerchantOmsProcessPropelQuery()
             ->filterByProcessName($merchantOmsProcessName)
             ->findOneOrCreate();
 
@@ -47,7 +47,7 @@ class MerchantOmsProcessWriterStep extends PublishAwareStep implements DataImpor
     /**
      * @return \Orm\Zed\MerchantOms\Persistence\Base\SpyMerchantOmsProcessQuery
      */
-    protected function createMerchantOmsProcessQuery(): SpyMerchantOmsProcessQuery
+    protected function createMerchantOmsProcessPropelQuery(): SpyMerchantOmsProcessQuery
     {
         return SpyMerchantOmsProcessQuery::create();
     }
