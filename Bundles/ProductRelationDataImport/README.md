@@ -1,7 +1,7 @@
 # ProductRelationDataImport Module
 [![Build Status](https://travis-ci.org/spryker/product-relation-data-import.svg)](https://travis-ci.org/spryker/product-relation-data-import)
 
-{{ADD DESCRIPTION HERE}}
+This module has demo data and importer for product relations.
 
 ## Installation
 
