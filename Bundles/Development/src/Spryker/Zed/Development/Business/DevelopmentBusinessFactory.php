@@ -1623,7 +1623,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createYvesIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
-        return $this->createGeneratedFileFinder(
+        return new PatternFileFinder(
+            $this->getFinder(),
             $this->getConfig()->getYvesIdeAutocompletionGeneratedFilePattern()
         );
     }
@@ -1656,7 +1657,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createZedIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
-        return $this->createGeneratedFileFinder(
+        return new PatternFileFinder(
+            $this->getFinder(),
             $this->getConfig()->getZedIdeAutocompletionGeneratedFilePattern()
         );
     }
@@ -1711,7 +1713,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createGlueIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
-        return $this->createGeneratedFileFinder(
+        return new PatternFileFinder(
+            $this->getFinder(),
             $this->getConfig()->getGlueIdeAutocompletionGeneratedFilePattern()
         );
     }
@@ -1744,7 +1747,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createClientIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
-        return $this->createGeneratedFileFinder(
+        return new PatternFileFinder(
+            $this->getFinder(),
             $this->getConfig()->getClientIdeAutocompletionGeneratedFilePattern()
         );
     }
@@ -1788,7 +1792,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createServiceIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
-        return $this->createGeneratedFileFinder(
+        return new PatternFileFinder(
+            $this->getFinder(),
             $this->getConfig()->getServiceIdeAutocompletionGeneratedFilePattern()
         );
     }
@@ -2171,18 +2176,5 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerNameFinder(): ComposerNameFinderInterface
     {
         return new ComposerNameFinder($this->getModuleFinderFacade());
-    }
-
-    /**
-     * @param string $pattern
-     *
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
-     */
-    public function createGeneratedFileFinder(string $pattern): GeneratedFileFinderInterface
-    {
-        return new PatternFileFinder(
-            $this->getFinder(),
-            $pattern
-        );
     }
 }
