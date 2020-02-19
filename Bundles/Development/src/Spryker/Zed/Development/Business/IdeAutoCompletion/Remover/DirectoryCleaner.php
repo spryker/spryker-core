@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\FileGeneration;
+namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Remover;
 
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
@@ -24,14 +24,14 @@ class DirectoryCleaner implements DirectoryCleanerInterface
     protected $fileSystem;
 
     /**
-     * @var \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface $fileFinder
+     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface $fileFinder
      */
     protected $fileFinder;
 
     /**
      * @param array $options
      * @param \Symfony\Component\Filesystem\Filesystem $fileSystem
-     * @param \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface $fileFinder
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface $fileFinder
      */
     public function __construct(array $options, Filesystem $fileSystem, GeneratedFileFinderInterface $fileFinder)
     {

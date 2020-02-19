@@ -134,10 +134,6 @@ use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\BundleUsesCo
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignConstants;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignException;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinder;
-use Spryker\Zed\Development\Business\FileGeneration\DirectoryCleaner;
-use Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface;
-use Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface;
-use Spryker\Zed\Development\Business\FileGeneration\PatternFileFinder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilder as IdeAutoCompletionBundleBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
@@ -152,6 +148,10 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleaner;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\PatternFileFinder;
 use Spryker\Zed\Development\Business\Integration\DependencyProviderUsedPluginFinder;
 use Spryker\Zed\Development\Business\Integration\DependencyProviderUsedPluginFinderInterface;
 use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinder;
@@ -1607,7 +1607,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
      */
     public function createYvesIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
     {
@@ -1619,7 +1619,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
      */
     public function createYvesIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
@@ -1640,7 +1640,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
      */
     public function createZedIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
     {
@@ -1652,7 +1652,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
      */
     public function createZedIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
@@ -1695,7 +1695,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
      */
     public function createGlueIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
     {
@@ -1707,7 +1707,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
      */
     public function createGlueIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
@@ -1728,7 +1728,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
      */
     public function createClientIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
     {
@@ -1740,7 +1740,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
      */
     public function createClientIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
@@ -1772,7 +1772,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
      */
     public function createServiceIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
     {
@@ -1784,7 +1784,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
      */
     public function createServiceIdeAutoCompletionGeneratedFileFinder(): GeneratedFileFinderInterface
     {
@@ -2176,7 +2176,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $pattern
      *
-     * @return \Spryker\Zed\Development\Business\FileGeneration\GeneratedFileFinderInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
      */
     public function createGeneratedFileFinder(string $pattern): GeneratedFileFinderInterface
     {
