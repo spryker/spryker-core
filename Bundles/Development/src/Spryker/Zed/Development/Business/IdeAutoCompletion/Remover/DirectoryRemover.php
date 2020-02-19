@@ -11,7 +11,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstant
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
 use Symfony\Component\Filesystem\Filesystem;
 
-class DirectoryCleaner implements DirectoryCleanerInterface
+class DirectoryRemover implements DirectoryRemoverInterface
 {
     /**
      * @var array
@@ -43,7 +43,7 @@ class DirectoryCleaner implements DirectoryCleanerInterface
     /**
      * @return void
      */
-    public function clear(): void
+    public function remove(): void
     {
         $baseDirectory = rtrim(
             $this->options[IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY],

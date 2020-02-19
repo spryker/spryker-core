@@ -369,7 +369,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeYvesIdeAutoCompletion(): void
     {
-        $this->getFactory()->createYvesIdeAutoCompletionDirectoryCleaner()->clear();
+        $this->getFactory()->createYvesIdeAutoCompletionDirectoryRemover()->remove();
     }
 
     /**
@@ -393,7 +393,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeZedIdeAutoCompletion(): void
     {
-        $this->getFactory()->createZedIdeAutoCompletionDirectoryCleaner()->clear();
+        $this->getFactory()->createZedIdeAutoCompletionDirectoryRemover()->remove();
     }
 
     /**
@@ -417,7 +417,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeClientIdeAutoCompletion(): void
     {
-        $this->getFactory()->createClientIdeAutoCompletionDirectoryCleaner()->clear();
+        $this->getFactory()->createClientIdeAutoCompletionDirectoryRemover()->remove();
     }
 
     /**
@@ -441,7 +441,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeServiceIdeAutoCompletion(): void
     {
-        $this->getFactory()->createServiceIdeAutoCompletionDirectoryCleaner()->clear();
+        $this->getFactory()->createServiceIdeAutoCompletionDirectoryRemover()->remove();
     }
 
     /**
@@ -465,7 +465,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeGlueIdeAutoCompletion(): void
     {
-        $this->getFactory()->createGlueIdeAutoCompletionDirectoryCleaner()->clear();
+        $this->getFactory()->createGlueIdeAutoCompletionDirectoryRemover()->remove();
     }
 
     /**

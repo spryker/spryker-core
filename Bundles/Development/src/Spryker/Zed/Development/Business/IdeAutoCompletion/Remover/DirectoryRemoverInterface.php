@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Remover;
 
-interface DirectoryCleanerInterface
+interface DirectoryRemoverInterface
 {
     /**
      * @return void
      */
-    public function clear(): void;
+    public function remove(): void;
 }

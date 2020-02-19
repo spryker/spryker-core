@@ -148,8 +148,8 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
-use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleaner;
-use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemover;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\PatternFileFinder;
 use Spryker\Zed\Development\Business\Integration\DependencyProviderUsedPluginFinder;
@@ -1607,11 +1607,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
      */
-    public function createYvesIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    public function createYvesIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
     {
-        return new DirectoryCleaner(
+        return new DirectoryRemover(
             $this->getConfig()->getYvesIdeAutoCompletionOptions(),
             $this->getFilesystem(),
             $this->createYvesIdeAutoCompletionGeneratedFileFinder()
@@ -1640,11 +1640,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
      */
-    public function createZedIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    public function createZedIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
     {
-        return new DirectoryCleaner(
+        return new DirectoryRemover(
             $this->getConfig()->getZedIdeAutoCompletionOptions(),
             $this->getFilesystem(),
             $this->createZedIdeAutoCompletionGeneratedFileFinder()
@@ -1695,11 +1695,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
      */
-    public function createGlueIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    public function createGlueIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
     {
-        return new DirectoryCleaner(
+        return new DirectoryRemover(
             $this->getConfig()->getGlueIdeAutoCompletionOptions(),
             $this->getFilesystem(),
             $this->createGlueIdeAutoCompletionGeneratedFileFinder()
@@ -1728,11 +1728,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
      */
-    public function createClientIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    public function createClientIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
     {
-        return new DirectoryCleaner(
+        return new DirectoryRemover(
             $this->getConfig()->getClientIdeAutoCompletionOptions(),
             $this->getFilesystem(),
             $this->createClientIdeAutoCompletionGeneratedFileFinder()
@@ -1772,11 +1772,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryCleanerInterface
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
      */
-    public function createServiceIdeAutoCompletionDirectoryCleaner(): DirectoryCleanerInterface
+    public function createServiceIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
     {
-        return new DirectoryCleaner(
+        return new DirectoryRemover(
             $this->getConfig()->getServiceIdeAutoCompletionOptions(),
             $this->getFilesystem(),
             $this->createServiceIdeAutoCompletionGeneratedFileFinder()
