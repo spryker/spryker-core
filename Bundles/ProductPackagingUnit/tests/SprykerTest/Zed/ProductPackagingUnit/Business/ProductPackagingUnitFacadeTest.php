@@ -68,7 +68,6 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
     protected const ABSTRACT_PRODUCT_SKU = 'ABSTRACT_PRODUCT_SKU';
     protected const CONCRETE_PRODUCT_SKU = 'CONCRETE_PRODUCT_SKU';
-    protected const NON_EXISTENT_SKU = 'NON_EXISTENT_SKU';
 
     protected const STORE_NAME_DE = 'DE';
 
@@ -1178,44 +1177,6 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             $result->toString(),
             $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString()
         );
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindProductPackagingUnitByProductSkuWithExistingPackagingUnit(): void
-    {
-        // Arrange
-        $itemProductConcreteTransfer = $this->tester->haveProduct();
-        $boxProductConcreteTransfer = $this->tester->haveProduct();
-        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE]);
-
-        $this->tester->haveProductPackagingUnit([
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
-            SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
-            SpyProductPackagingUnitEntityTransfer::DEFAULT_AMOUNT => static::PACKAGE_AMOUNT,
-        ]);
-
-        // Act
-        $productPackagingUnitTransfer = $this->getFacade()
-            ->findProductPackagingUnitByProductSku($boxProductConcreteTransfer->getSku());
-
-        // Assert
-        $this->assertNotNull($productPackagingUnitTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindProductPackagingUnitByProductSkuWithNonExistentPackagingUnit(): void
-    {
-        // Act
-        $productPackagingUnitTransfer = $this->getFacade()
-            ->findProductPackagingUnitByProductSku(static::NON_EXISTENT_SKU);
-
-        // Assert
-        $this->assertNull($productPackagingUnitTransfer);
     }
 
     /**
