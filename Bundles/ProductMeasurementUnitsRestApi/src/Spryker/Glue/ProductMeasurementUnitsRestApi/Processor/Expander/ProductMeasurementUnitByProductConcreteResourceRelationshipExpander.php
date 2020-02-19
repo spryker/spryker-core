@@ -63,7 +63,7 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $productConcreteSkus = $this->getAllSkus($resources);
+        $productConcreteSkus = $this->getProductConcreteSkus($resources);
         $localeName = $restRequest->getMetadata()->getLocale();
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
@@ -73,7 +73,6 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
 
         $productMeasurementUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementBaseUnitsByProductConcreteIds($productConcreteIds);
-
         $productMeasurementUnitTransfersWithTranslatedNames = $this->productMeasurementUnitNameTranslator
             ->getProductMeasurementUnitTransfersWithTranslatedNames($productMeasurementUnitTransfers, $localeName);
         $productConcreteSkus = array_flip($productConcreteIds);
@@ -97,7 +96,7 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
      *
      * @return string[]
      */
-    protected function getAllSkus(array $resources): array
+    protected function getProductConcreteSkus(array $resources): array
     {
         $skus = [];
         foreach ($resources as $resource) {

@@ -55,7 +55,7 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $productConcreteSkus = $this->getAllSkus($resources);
+        $productConcreteSkus = $this->getProductConcreteSkus($resources);
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
@@ -68,11 +68,12 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         $productConcreteSkus = array_flip($productConcreteIds);
         $restSalesUnitsResources = [];
         foreach ($productMeasurementSalesUnitTransfers as $idProductConcrete => $productConcreteProductMeasurementSalesUnitTransfers) {
+            $productConcreteSku = $productConcreteSkus[$idProductConcrete];
             foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
-                $restSalesUnitsResources[$productConcreteSkus[$idProductConcrete]][] =
+                $restSalesUnitsResources[$productConcreteSku][] =
                     $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
                         $productConcreteProductMeasurementSalesUnitTransfer,
-                        $restRequest->getResource()->getId()
+                        $productConcreteSku
                     );
             }
         }
@@ -106,7 +107,7 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
      *
      * @return string[]
      */
-    protected function getAllSkus(array $resources): array
+    protected function getProductConcreteSkus(array $resources): array
     {
         $skus = [];
         foreach ($resources as $resource) {

@@ -31,13 +31,13 @@ interface SalesUnitRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
-     * @param string $parentResourceId
+     * @param string $concreteProductResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createSalesUnitResourceCollectionResponse(
         array $productMeasurementSalesUnitTransfers,
-        string $parentResourceId
+        string $concreteProductResourceId
     ): RestResponseInterface;
 
     /**

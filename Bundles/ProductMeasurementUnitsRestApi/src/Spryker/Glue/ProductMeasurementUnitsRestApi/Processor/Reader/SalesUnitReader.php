@@ -60,10 +60,10 @@ class SalesUnitReader implements SalesUnitReaderInterface
             return $this->salesUnitRestResponseBuilder->createProductConcreteSkuMissingErrorResponse();
         }
 
-        $parentResourceId = $parentResource->getId();
+        $concreteProductResourceId = $parentResource->getId();
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
-            [$parentResourceId],
+            [$concreteProductResourceId],
             $restRequest->getMetadata()->getLocale()
         );
         if (!$productConcreteIds) {
@@ -78,7 +78,7 @@ class SalesUnitReader implements SalesUnitReaderInterface
 
         return $this->salesUnitRestResponseBuilder->createSalesUnitResourceCollectionResponse(
             reset($productMeasurementSalesUnitTransfers),
-            $parentResourceId
+            $concreteProductResourceId
         );
     }
 }

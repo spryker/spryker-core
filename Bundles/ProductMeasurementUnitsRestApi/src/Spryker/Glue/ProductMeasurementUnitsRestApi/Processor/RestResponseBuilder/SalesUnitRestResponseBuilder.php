@@ -82,17 +82,17 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
-     * @param string $parentResourceId
+     * @param string $concreteProductResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createSalesUnitResourceCollectionResponse(
         array $productMeasurementSalesUnitTransfers,
-        string $parentResourceId
+        string $concreteProductResourceId
     ): RestResponseInterface {
         $restResponse = $this->createRestResponse();
         foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
-            $salesUnitResource = $this->createSalesUnitRestResource($productMeasurementSalesUnitTransfer, $parentResourceId);
+            $salesUnitResource = $this->createSalesUnitRestResource($productMeasurementSalesUnitTransfer, $concreteProductResourceId);
             $restResponse->addResource($salesUnitResource);
         }
 
@@ -127,16 +127,16 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
 
     /**
      * @param string $resourceId
-     * @param string $parentResourceId
+     * @param string $concreteProductResourceId
      *
      * @return string
      */
-    protected function createSelfLink(string $resourceId, string $parentResourceId): string
+    protected function createSelfLink(string $resourceId, string $concreteProductResourceId): string
     {
         return sprintf(
             '%s/%s/%s/%s',
             ProductMeasurementUnitsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $parentResourceId,
+            $concreteProductResourceId,
             ProductMeasurementUnitsRestApiConfig::RESOURCE_SALES_UNITS,
             $resourceId
         );

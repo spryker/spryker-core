@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface;
@@ -17,6 +18,7 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const ATTRIBUTE_SKU = 'sku';
+    protected const ATTRIBUTE_SALES_UNIT = 'salesUnit';
 
     /**
      * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilderInterface
@@ -56,7 +58,7 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $productConcreteSkus = $this->getAllSkus($resources);
+        $productConcreteSkus = $this->getProductConcreteSkus($resources);
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
@@ -74,7 +76,7 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
                 $restSalesUnitsResources[$productConcreteSku][] =
                     $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
                         $productConcreteProductMeasurementSalesUnitTransfer,
-                        $restRequest->getResource()->getId()
+                        $productConcreteSku
                     );
             }
         }
@@ -95,17 +97,41 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
         array $restSalesUnitsResources
     ): void {
         foreach ($restSalesUnitsResources as $productConcreteSku => $productConcreteRestSalesUnitsResources) {
-            if (!$resource->getAttributes()->offsetExists(static::ATTRIBUTE_SKU)) {
+            $restCartItemsAttributesTransfer = $resource->getAttributes();
+            if (!$restCartItemsAttributesTransfer instanceof RestItemsAttributesTransfer) {
                 continue;
             }
 
-            if ($productConcreteSku !== $resource->getAttributes()->offsetGet(static::ATTRIBUTE_SKU)) {
+            if ($productConcreteSku !== $restCartItemsAttributesTransfer->getSku()) {
                 continue;
             }
 
-            foreach ($productConcreteRestSalesUnitsResources as $productConcreteRestSalesUnitsResource) {
-                $resource->addRelationship($productConcreteRestSalesUnitsResource);
+            $this->addResourceRelationship(
+                $resource,
+                $productConcreteRestSalesUnitsResources,
+                $restCartItemsAttributesTransfer->getSalesUnit()->getId()
+            );
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param array $productConcreteRestSalesUnitsResources
+     * @param int $salesUnitId
+     *
+     * @return void
+     */
+    protected function addResourceRelationship(
+        RestResourceInterface $resource,
+        array $productConcreteRestSalesUnitsResources,
+        int $salesUnitId
+    ): void {
+        foreach ($productConcreteRestSalesUnitsResources as $productConcreteRestSalesUnitsResource) {
+            if ($salesUnitId !== (int)$productConcreteRestSalesUnitsResource->getId()) {
+                continue;
             }
+
+            $resource->addRelationship($productConcreteRestSalesUnitsResource);
         }
     }
 
@@ -114,7 +140,7 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
      *
      * @return string[]
      */
-    protected function getAllSkus(array $resources): array
+    protected function getProductConcreteSkus(array $resources): array
     {
         $skus = [];
         foreach ($resources as $resource) {
