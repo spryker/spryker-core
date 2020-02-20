@@ -1,44 +1,5 @@
-{% set navigation = navigation() %}
+{% set navigationConfig = render_navigation_component_config(navigation.menu) %}
 
-{%- macro getNodeIconJson(node) -%}
-    {%- set defaultIcon = 'fa-angle-double-right' -%}
-    {%- if node.icon is defined and node.icon != '' -%}
-        {{ node.icon }}
-    {%- else -%}
-        {{ defaultIcon }}
-    {%- endif -%}
-{%- endmacro -%}
-
-{%- macro getJsonTree(node) -%}
-    {%- import _self as menu -%}
-    [
-    {%- for child in node -%}
-        {
-        {%- if child.children is defined and child.children is not empty -%}
-            "title": "{{ child.label }}",
-            "url": "{{ child.uri }}",
-            "icon": "{{ menu.getNodeIconJson(child) }}",
-            "isActive": {{ child.is_active is defined and child.is_active ? 'true' : 'false' }},
-            "subItems": {{ menu.getJsonTree(child.children) }}
-        {%- else -%}
-            "title": "{{ child.label }}",
-            "url": "{{ child.uri }}",
-            "icon": "{{ menu.getNodeIconJson(child) }}",
-            "isActive": {{ child.is_active is defined and child.is_active ? 'true' : 'false' }},
-            "subItems": []
-        {%- endif -%}
-        }{%- if not loop.last -%},{% endif %}
-    {%- endfor -%}
-    ]
-{%- endmacro -%}
-
-{%- import _self as menu -%}
-
-{# Example of usage #}
-{#<script>#}
-{#    let n = {{ menu.getJsonTree(navigation.menu) }};#}
-{#    console.log(n);#}
-{#</script>#}
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul tabindex="0" class="nav metismenu" id="side-menu">
@@ -55,7 +16,6 @@
                     SP
                 </div>
             </li>
-            {{ menu.tree(navigation.menu) }}
         </ul>
     </div>
 </nav>

@@ -17,7 +17,9 @@
 <div id="wrapper">
 
     {% block body_menu %}
-        {% include '@ZedUi/Partials/menu.twig' %}
+        {% if app.twig.getFunction('navigation') == true %}
+            {% include '@ZedUi/Partials/menu.twig' %}
+        {% endif %}
     {% endblock %}
 
     <div id="page-wrapper" class="gray-bg">

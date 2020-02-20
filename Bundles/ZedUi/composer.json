@@ -3,6 +3,9 @@
   "type": "library",
   "description": "ZedUi module",
   "license": "proprietary",
+  "require": {
+    "spryker/twig": "*"
+  },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
