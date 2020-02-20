@@ -35,7 +35,7 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $checkoutResponseTransfer->setIsSuccess(true);
         $checkoutErrorTransfers = [];
