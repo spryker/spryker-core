@@ -17,7 +17,7 @@ use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageT
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToUrlFacadeBridge;
 
 /**
- * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig getConfig()
  */
 class MerchantProfileGuiPageDependencyProvider extends AbstractBundleDependencyProvider
 {
