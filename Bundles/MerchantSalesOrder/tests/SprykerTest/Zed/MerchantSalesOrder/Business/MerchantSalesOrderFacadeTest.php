@@ -74,13 +74,13 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @dataProvider getMerchantOrderPositiveScenarioDataProvider
      *
-     * @param array $merchantOrderCriteriaFilterData
+     * @param array $merchantOrderCriteriaFilterDataKeys
      * @param int $merchantOrderItemsCount
      *
      * @return void
      */
     public function testGetMerchantOrderCollectionReturnsFilledCollectionTransferWithCorrectCriteria(
-        array $merchantOrderCriteriaFilterData,
+        array $merchantOrderCriteriaFilterDataKeys,
         int $merchantOrderItemsCount
     ): void {
         //Arrange
@@ -100,13 +100,20 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
+        $merchantOrderCriteriaFilterData = [
+            MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+            MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
+            MerchantOrderCriteriaFilterTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder(),
+            MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantOrderCriteriaFilterTransfer::WITH_ITEMS => true,
+        ];
+        $merchantOrderCriteriaFilterData = array_intersect_key(
+            $merchantOrderCriteriaFilterData,
+            array_flip($merchantOrderCriteriaFilterDataKeys)
+        );
         $merchantCriteriaFilterTransfer = (new MerchantOrderCriteriaFilterTransfer())
-            ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
-            ->setMerchantOrderReference($merchantOrderReference)
-            ->setIdOrder($saveOrderTransfer->getIdSalesOrder())
-            ->setMerchantReference($merchantTransfer->getMerchantReference())
-            ->setIdMerchant($merchantTransfer->getIdMerchant());
-        $merchantCriteriaFilterTransfer->fromArray($merchantOrderCriteriaFilterData, true);
+            ->fromArray($merchantOrderCriteriaFilterData);
 
         //Act
         $merchantOrderCollectionTransfer = $this->tester
@@ -155,14 +162,8 @@ class MerchantSalesOrderFacadeTest extends Unit
         $this->tester->haveMerchantOrderTotals([
             TotalsTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
         ]);
-
         $merchantCriteriaFilterTransfer = (new MerchantOrderCriteriaFilterTransfer())
-            ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
-            ->setMerchantOrderReference($merchantOrderReference)
-            ->setIdOrder($saveOrderTransfer->getIdSalesOrder())
-            ->setMerchantReference($merchantTransfer->getMerchantReference())
-            ->setIdMerchant($merchantTransfer->getIdMerchant());
-        $merchantCriteriaFilterTransfer->fromArray($merchantOrderCriteriaFilterData, true);
+            ->fromArray($merchantOrderCriteriaFilterData);
 
         //Act
         $merchantOrderCollectionTransfer = $this->tester
@@ -176,13 +177,13 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @dataProvider getMerchantOrderPositiveScenarioDataProvider
      *
-     * @param array $merchantOrderCriteriaFilterData
+     * @param array $merchantOrderCriteriaFilterDataKeys
      * @param int $merchantOrderItemsCount
      *
      * @return void
      */
     public function testFindMerchantOrderReturnsTransferWithCorrectCriteria(
-        array $merchantOrderCriteriaFilterData,
+        array $merchantOrderCriteriaFilterDataKeys,
         int $merchantOrderItemsCount
     ): void {
         //Arrange
@@ -202,13 +203,20 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
+        $merchantOrderCriteriaFilterData = [
+            MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+            MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
+            MerchantOrderCriteriaFilterTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder(),
+            MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantOrderCriteriaFilterTransfer::WITH_ITEMS => true,
+        ];
+        $merchantOrderCriteriaFilterData = array_intersect_key(
+            $merchantOrderCriteriaFilterData,
+            array_flip($merchantOrderCriteriaFilterDataKeys)
+        );
         $merchantCriteriaFilterTransfer = (new MerchantOrderCriteriaFilterTransfer())
-            ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
-            ->setMerchantOrderReference($merchantOrderReference)
-            ->setIdOrder($saveOrderTransfer->getIdSalesOrder())
-            ->setMerchantReference($merchantTransfer->getMerchantReference())
-            ->setIdMerchant($merchantTransfer->getIdMerchant());
-        $merchantCriteriaFilterTransfer->fromArray($merchantOrderCriteriaFilterData, true);
+            ->fromArray($merchantOrderCriteriaFilterData);
 
         //Act
         $foundMerchantOrderTransfer = $this->tester
@@ -244,7 +252,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             $saveOrderTransfer->getOrderReference(),
             $merchantTransfer->getMerchantReference()
         );
-        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
+        $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
             $merchantTransfer,
             $itemTransfer,
@@ -252,12 +260,7 @@ class MerchantSalesOrderFacadeTest extends Unit
         );
 
         $merchantCriteriaFilterTransfer = (new MerchantOrderCriteriaFilterTransfer())
-            ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
-            ->setMerchantOrderReference($merchantOrderReference)
-            ->setIdOrder($saveOrderTransfer->getIdSalesOrder())
-            ->setMerchantReference($merchantTransfer->getMerchantReference())
-            ->setIdMerchant($merchantTransfer->getIdMerchant());
-        $merchantCriteriaFilterTransfer->fromArray($merchantOrderCriteriaFilterData, true);
+            ->fromArray($merchantOrderCriteriaFilterData);
 
         //Act
         $foundMerchantOrderTransfer = $this->tester
@@ -312,43 +315,36 @@ class MerchantSalesOrderFacadeTest extends Unit
     public function getMerchantOrderPositiveScenarioDataProvider(): array
     {
         return [
-            'by id merchant sales order' => [
+            'by id merchant order' => [
                 [
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => null,
-                    MerchantOrderCriteriaFilterTransfer::ID_ORDER => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => null,
+                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER,
                 ],
                 0,
             ],
-            'by id sales order and id merchant' => [
+            'by id order and id merchant' => [
                 [
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => null,
+                    MerchantOrderCriteriaFilterTransfer::ID_ORDER,
+                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT,
                 ],
                 0,
             ],
-            'by id sales order and merchant reference' => [
+            'by id order and merchant reference' => [
                 [
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER => null,
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => null,
+                    MerchantOrderCriteriaFilterTransfer::ID_ORDER,
+                    MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE,
                 ],
                 0,
             ],
-            'by merchant sales order reference' => [
+            'by merchant order reference' => [
                 [
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => null,
-                    MerchantOrderCriteriaFilterTransfer::ID_ORDER => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => null,
+                    MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE,
                 ],
                 0,
             ],
             'with items' => [
                 [
-                    MerchantOrderCriteriaFilterTransfer::WITH_ITEMS => true,
+                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER,
+                    MerchantOrderCriteriaFilterTransfer::WITH_ITEMS,
                 ],
                 1,
             ],
@@ -361,39 +357,25 @@ class MerchantSalesOrderFacadeTest extends Unit
     public function getMerchantOrderNegativeScenarioDataProvider(): array
     {
         return [
-            'by id merchant sales order' => [
+            'by id merchant order' => [
                 [
                     MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER => 0,
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => null,
-                    MerchantOrderCriteriaFilterTransfer::ID_ORDER => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => null,
                 ],
             ],
-            'by id sales order and id merchant' => [
+            'by id order and id merchant' => [
                 [
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER => null,
                     MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => 0,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => null,
                     MerchantOrderCriteriaFilterTransfer::ID_ORDER => 0,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => null,
                 ],
             ],
-            'by id sales order and merchant reference' => [
+            'by id order and merchant reference' => [
                 [
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER => null,
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => null,
                     MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => 'wrong_merchant_reference',
                     MerchantOrderCriteriaFilterTransfer::ID_ORDER => 0,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => null,
                 ],
             ],
-            'by merchant sales order reference' => [
+            'by merchant order reference' => [
                 [
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT_ORDER => null,
-                    MerchantOrderCriteriaFilterTransfer::ID_MERCHANT => null,
-                    MerchantOrderCriteriaFilterTransfer::MERCHANT_REFERENCE => null,
-                    MerchantOrderCriteriaFilterTransfer::ID_ORDER => null,
                     MerchantOrderCriteriaFilterTransfer::MERCHANT_ORDER_REFERENCE => 'wrong_merchant_sales_order_reference',
                 ],
             ],

@@ -58,9 +58,9 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
         $merchantOrderCollectionTransfer = new MerchantOrderCollectionTransfer();
         $orderItemsGroupedByMerchantReference = $this->getOrderItemsGroupedByMerchantReference($orderTransfer);
 
-        foreach ($orderItemsGroupedByMerchantReference as $merchantReference => $itemTransferList) {
+        foreach ($orderItemsGroupedByMerchantReference as $merchantReference => $itemTransfers) {
             $merchantOrderCollectionTransfer->addMerchantOrder(
-                $this->createMerchantOrderWithItemsAndTotals($orderTransfer, $merchantReference, $itemTransferList)
+                $this->createMerchantOrderWithItemsAndTotals($orderTransfer, $merchantReference, $itemTransfers)
             );
         }
 
@@ -90,14 +90,14 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param string $merchantReference
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
     protected function createMerchantOrderWithItemsAndTotals(
         OrderTransfer $orderTransfer,
         string $merchantReference,
-        array $itemTransferList
+        array $itemTransfers
     ): MerchantOrderTransfer {
         $merchantOrderTransfer = $this->createMerchantOrder(
             $orderTransfer,
@@ -105,7 +105,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
         );
         $merchantOrderTransfer = $this->addMerchantOrderItemsToMerchantOrder(
             $merchantOrderTransfer,
-            $itemTransferList
+            $itemTransfers
         );
 
         return $merchantOrderTransfer->setTotals(
@@ -115,15 +115,15 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
     protected function addMerchantOrderItemsToMerchantOrder(
         MerchantOrderTransfer $merchantOrderTransfer,
-        array $itemTransferList
+        array $itemTransfers
     ): MerchantOrderTransfer {
-        foreach ($itemTransferList as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $merchantOrderTransfer->addMerchantOrderItem(
                 $this->merchantOrderItemCreator->createMerchantOrderItem($itemTransfer, $merchantOrderTransfer)
             );

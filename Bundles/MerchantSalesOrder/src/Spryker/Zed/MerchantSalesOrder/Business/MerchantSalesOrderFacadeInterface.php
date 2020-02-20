@@ -68,7 +68,7 @@ interface MerchantSalesOrderFacadeInterface
 
     /**
      * Specification:
-     * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer::getMerchantReference() if exists.
+     * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer.merchantReference if exists.
      *
      * @api
      *

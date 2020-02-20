@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -17,6 +19,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -34,11 +37,9 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         MerchantOrderCriteriaFilterTransfer $merchantOrderCriteriaFilterTransfer
     ): MerchantOrderCollectionTransfer {
         $merchantSalesOrderQuery = $this->getFactory()->createMerchantSalesOrderQuery();
-
-        if ($merchantOrderCriteriaFilterTransfer->getWithItems()) {
-            $merchantSalesOrderQuery->leftJoinWithMerchantSalesOrderItem();
-        }
-
+        $merchantSalesOrderQuery = $this->addMerchantSalesOrderTotalsDataToMerchantSalesOrderQuery(
+            $merchantSalesOrderQuery
+        );
         $merchantSalesOrderQuery = $this->applyFilters($merchantSalesOrderQuery, $merchantOrderCriteriaFilterTransfer);
         /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery */
         $merchantSalesOrderQuery = $this->buildQueryFromCriteria(
@@ -46,17 +47,70 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantOrderCriteriaFilterTransfer->getFilter()
         );
         $merchantSalesOrderQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
-        $merchantSalesOrderCollection = $this
+        $merchantSalesOrderEntityCollection = $this
             ->applyPagination($merchantSalesOrderQuery, $merchantOrderCriteriaFilterTransfer->getPagination())
-            ->leftJoinWithMerchantSalesOrderTotal()
             ->find();
 
-        return $this->getFactory()
-            ->createMerchantSalesOrderMapper()
-            ->mapMerchantSalesOrderEntityCollectionToMerchantOrderCollectionTransfer(
-                $merchantSalesOrderCollection,
-                new MerchantOrderCollectionTransfer()
+        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
+        /** @var \Generated\Shared\Transfer\MerchantOrderTransfer[] $merchantOrderTransfers */
+        $merchantOrderTransfers = [];
+
+        foreach ($merchantSalesOrderEntityCollection as $merchantSalesOrderEntity) {
+            $merchantOrderTransfers[$merchantSalesOrderEntity->getIdMerchantSalesOrder()] = $merchantSalesOrderMapper
+                ->mapMerchantSalesOrderEntityToMerchantOrderTransfer(
+                    $merchantSalesOrderEntity,
+                    new MerchantOrderTransfer()
+                );
+        }
+
+        if ($merchantOrderCriteriaFilterTransfer->getWithItems() && $merchantOrderTransfers) {
+            $merchantOrderTransfers = $this->addMerchantOrderItemsToMerchantOrders($merchantOrderTransfers);
+        }
+
+        return (new MerchantOrderCollectionTransfer())->setMerchantOrders(
+            new ArrayObject(array_values($merchantOrderTransfers))
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer[] $merchantOrderTransfers
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer[]
+     */
+    protected function addMerchantOrderItemsToMerchantOrders(array $merchantOrderTransfers): array
+    {
+        $merchantSalesOrderItemEntityCollection = $this->getMerchantSalesOrderItemEntityCollectionByMerchantOrderIds(
+            array_keys($merchantOrderTransfers)
+        );
+
+        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
+
+        foreach ($merchantSalesOrderItemEntityCollection as $merchantSalesOrderItemEntity) {
+            /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity */
+            $merchantOrderTransfers[$merchantSalesOrderItemEntity->getFkMerchantSalesOrder()]->addMerchantOrderItem(
+                $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
+                    $merchantSalesOrderItemEntity,
+                    new MerchantOrderItemTransfer()
+                )
             );
+        }
+
+        return $merchantOrderTransfers;
+    }
+
+    /**
+     * @param int[] $merchantOrderIds
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getMerchantSalesOrderItemEntityCollectionByMerchantOrderIds(
+        array $merchantOrderIds
+    ): ObjectCollection {
+        $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
+
+        return $merchantSalesOrderItemQuery
+            ->filterByFkMerchantSalesOrder_In($merchantOrderIds)
+            ->find();
     }
 
     /**
