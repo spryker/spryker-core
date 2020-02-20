@@ -306,6 +306,7 @@
     "spryker/manual-order-entry-gui": "*",
     "spryker/manual-order-entry-gui-extension": "*",
     "spryker/merchant": "*",
+    "spryker/merchant-dashboard-gui-page": "*",
     "spryker/merchant-data-import": "*",
     "spryker/merchant-extension": "*",
     "spryker/merchant-gui": "*",
@@ -653,6 +654,7 @@
     "spryker/wishlists-rest-api": "*",
     "spryker/zed-navigation": "*",
     "spryker/zed-request": "*",
+    "spryker/zed-ui": "*",
     "spryker/zend": "*"
   }
 }
