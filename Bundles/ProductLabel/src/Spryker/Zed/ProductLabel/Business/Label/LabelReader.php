@@ -49,7 +49,6 @@ class LabelReader implements LabelReaderInterface
         }
 
         $this->addLocalizedAttributes($productLabelTransfer);
-        $this->addStoreRelations($productLabelTransfer);
 
         return $productLabelTransfer;
     }
@@ -68,7 +67,6 @@ class LabelReader implements LabelReaderInterface
         }
 
         $this->addLocalizedAttributes($productLabelTransfer);
-        $this->addStoreRelations($productLabelTransfer);
 
         return $productLabelTransfer;
     }
@@ -79,7 +77,8 @@ class LabelReader implements LabelReaderInterface
     public function findAll()
     {
         $productLabelTransferCollection = $this->productLabelRepository->getAllProductLabelsSortedByPosition();
-        $this->expandProductLabelTransferCollectionRelations($productLabelTransferCollection);
+
+        $this->addLocalizedAttributesToProductLabels($productLabelTransferCollection);
 
         return $productLabelTransferCollection;
     }
@@ -92,7 +91,8 @@ class LabelReader implements LabelReaderInterface
     public function findAllByIdProductAbstract($idProductAbstract)
     {
         $productLabelTransferCollection = $this->productLabelRepository->getAllProductLabelsByIdProductAbstract($idProductAbstract);
-        $this->expandProductLabelTransferCollectionRelations($productLabelTransferCollection);
+
+        $this->addLocalizedAttributesToProductLabels($productLabelTransferCollection);
 
         return $productLabelTransferCollection;
     }
@@ -132,28 +132,14 @@ class LabelReader implements LabelReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransferCollection $productLabelTransferCollection
      *
      * @return void
      */
-    protected function addStoreRelations(ProductLabelTransfer $productLabelTransfer): void
-    {
-        $storeRelationTransfer = $this->productLabelRepository
-            ->getStoreRelationByIdProductLabel($productLabelTransfer->getIdProductLabel());
-
-        $productLabelTransfer->setStoreRelation($storeRelationTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransferCollection
-     *
-     * @return void
-     */
-    protected function expandProductLabelTransferCollectionRelations(array $productLabelTransferCollection): void
+    protected function addLocalizedAttributesToProductLabels(array $productLabelTransferCollection)
     {
         foreach ($productLabelTransferCollection as $productLabelTransfer) {
             $this->addLocalizedAttributes($productLabelTransfer);
-            $this->addStoreRelations($productLabelTransfer);
         }
     }
 }

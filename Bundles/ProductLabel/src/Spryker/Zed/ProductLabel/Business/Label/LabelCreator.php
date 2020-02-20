@@ -163,14 +163,15 @@ class LabelCreator implements LabelCreatorInterface
      */
     protected function persistStoreRelation(ProductLabelTransfer $productLabelTransfer): void
     {
-        if (!$productLabelTransfer->getStoreRelation()) {
+        $storeRelationTransfer = $productLabelTransfer->getStoreRelation();
+
+        if (!$storeRelationTransfer) {
             return;
         }
 
-        $productLabelTransfer
-            ->getStoreRelation()
+        $storeRelationTransfer
             ->setIdEntity($productLabelTransfer->getIdProductLabel());
 
-        $this->productLabelStoreRelationUpdater->update($productLabelTransfer->getStoreRelation());
+        $this->productLabelStoreRelationUpdater->update($storeRelationTransfer);
     }
 }

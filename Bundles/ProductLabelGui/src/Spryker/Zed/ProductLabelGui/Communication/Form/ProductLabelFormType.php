@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Spryker\Zed\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\ProductLabel\ProductLabelConfig;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -140,30 +140,30 @@ class ProductLabelFormType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
     protected function addDynamicFlagField(FormBuilderInterface $builder)
     {
         $builder->add(
-          static::FIELD_DYNAMIC_FLAG,
-          CheckboxType::class,
-          [
+            static::FIELD_DYNAMIC_FLAG,
+            CheckboxType::class,
+            [
               'label' => 'Is dynamic',
               'required' => false,
               'disabled' => true,
               'attr' => [
                   'readonly' => true,
               ],
-          ]
+            ]
         );
 
         return $this;
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -177,7 +177,7 @@ class ProductLabelFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
-                    new Positive()
+                    new Positive(),
                 ],
             ]
         );
@@ -186,9 +186,9 @@ class ProductLabelFormType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return FormBuilderInterface
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
     protected function addStoreRelationField(FormBuilderInterface $builder)
     {

@@ -117,19 +117,23 @@ class ProductLabelFacadeTest extends Unit
      */
     public function testFindAllLabelsShouldReturnCollectionSortedByPosition(): void
     {
-        $this->tester->haveProductLabel();
-        $this->tester->haveProductLabel();
-        $this->tester->haveProductLabel();
-        $this->tester->haveProductLabel();
+        $createdProductLabels[] = $this->tester->haveProductLabel([ProductLabelTransfer::POSITION => 1]);
+        $createdProductLabels[] = $this->tester->haveProductLabel([ProductLabelTransfer::POSITION => 2]);
+        $createdProductLabels[] = $this->tester->haveProductLabel([ProductLabelTransfer::POSITION => 3]);
+        $createdProductLabels[] = $this->tester->haveProductLabel([ProductLabelTransfer::POSITION => 4]);
 
         $productLabelFacade = $this->getProductLabelFacade();
-        /** @var \ArrayObject $productLabelTransferCollection */
+        /** @var \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransferCollection */
         $productLabelTransferCollection = $productLabelFacade->findAllLabels();
 
-        $this->assertSame(1, $productLabelTransferCollection[0]->getPosition());
-        $this->assertSame(2, $productLabelTransferCollection[1]->getPosition());
-        $this->assertSame(3, $productLabelTransferCollection[2]->getPosition());
-        $this->assertSame(4, $productLabelTransferCollection[3]->getPosition());
+        /** @var \Generated\Shared\Transfer\ProductLabelTransfer $createdProductLabel */
+        foreach ($createdProductLabels as $createdProductLabel) {
+            foreach ($productLabelTransferCollection as $productLabelTransfer) {
+                if ($createdProductLabel->getIdProductLabel() === $productLabelTransfer->getIdProductLabel()) {
+                    $this->assertSame($createdProductLabel->getPosition(), $productLabelTransfer->getPosition());
+                }
+            }
+        }
     }
 
     /**

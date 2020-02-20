@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabel\Persistence;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -27,7 +28,9 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         $productLabelEntity = $this->getFactory()
             ->createProductLabelQuery()
             ->filterByIdProductLabel($idProductLabel)
-            ->findOne();
+            ->leftJoinWithProductLabelStore()
+            ->find()
+            ->getFirst();
 
         if (!$productLabelEntity) {
             return null;
@@ -48,7 +51,9 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         $productLabelEntity = $this->getFactory()
             ->createProductLabelQuery()
             ->filterByName($labelName)
-            ->findOne();
+            ->leftJoinWithProductLabelStore()
+            ->find()
+            ->getFirst();
 
         if (!$productLabelEntity) {
             return null;
@@ -66,6 +71,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     {
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()
+            ->leftJoinWithProductLabelStore()
             ->orderByPosition(Criteria::ASC)
             ->find();
 
@@ -86,6 +92,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->useSpyProductLabelProductAbstractQuery()
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
+            ->leftJoinWithProductLabelStore()
             ->find();
 
         return $this->getFactory()
@@ -105,7 +112,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->useSpyProductLabelProductAbstractQuery()
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
-            ->select(ProductLabelTransfer::ID_PRODUCT_LABEL)
+            ->select(SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL)
             ->find();
 
         return $productLabelEntities->getData();
@@ -124,7 +131,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->useSpyProductLabelProductAbstractQuery()
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
-            ->select(ProductLabelTransfer::ID_PRODUCT_LABEL)
+            ->select(SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL)
             ->find();
 
         return $productLabelEntities->getData();
@@ -146,7 +153,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idProductLabel);
 
         return $this->getFactory()
-            ->createProductLabelMapper()
+            ->createProductLabelStoreRelationMapper()
             ->mapProductLabelStoreEntitiesToStoreRelationTransfer($productLabelStoreEntities, $storeRelationTransfer);
     }
 }

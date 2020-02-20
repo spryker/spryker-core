@@ -220,7 +220,9 @@ class LabelUpdater implements LabelUpdaterInterface
      */
     protected function persistStoreRelation(ProductLabelTransfer $productLabelTransfer): void
     {
-        if (!$productLabelTransfer->getStoreRelation()) {
+        $storeRelationTransfer = $productLabelTransfer->getStoreRelation();
+
+        if (!$storeRelationTransfer) {
             return;
         }
 
@@ -228,7 +230,7 @@ class LabelUpdater implements LabelUpdaterInterface
             ->getStoreRelation()
             ->setIdEntity($productLabelTransfer->getIdProductLabel());
 
-        $this->storeRelationUpdater->update($productLabelTransfer->getStoreRelation());
+        $this->storeRelationUpdater->update($storeRelationTransfer);
     }
 
     /**

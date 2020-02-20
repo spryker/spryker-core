@@ -13,11 +13,14 @@ use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductLabelDataHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @param array $seedData
@@ -33,12 +36,21 @@ class ProductLabelDataHelper extends Module
             ]))->build();
         $productLabelTransfer->setIdProductLabel(null);
 
+        $productLabelTransfer->setPosition($seedData[ProductLabelTransfer::POSITION] ?? 0);
+
         $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
             ProductLabelLocalizedAttributesTransfer::FK_LOCALE => $this->getLocator()->locale()->facade()->getCurrentLocale()->getIdLocale(),
         ]))->build();
         $productLabelTransfer->addLocalizedAttributes($productLabelLocalizedAttributesTransfer);
 
         $this->getProductLabelFacade()->createLabel($productLabelTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productLabelTransfer): void {
+            $this->cleanupProductLabelProductAbstractRelations($productLabelTransfer->getIdProductLabel());
+            $this->cleanupProductLabelLocalizedAttributes($productLabelTransfer->getIdProductLabel());
+            $this->cleanupProductLabelStoreRelations($productLabelTransfer->getIdProductLabel());
+            $this->cleanupProductLabel($productLabelTransfer->getIdProductLabel());
+        });
 
         return $productLabelTransfer;
     }
@@ -57,10 +69,70 @@ class ProductLabelDataHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     * @param int $idProductLabel
+     *
+     * @return void
      */
+    protected function cleanupProductLabelProductAbstractRelations(int $idProductLabel): void
+    {
+        $this->getProductLabelQuery()
+            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    protected function cleanupProductLabelLocalizedAttributes(int $idProductLabel): void
+    {
+        $this->getProductLabelQuery()
+            ->queryLocalizedAttributesByIdProductLabel($idProductLabel)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    protected function cleanupProductLabelStoreRelations(int $idProductLabel): void
+    {
+        $this->getProductLabelQuery()
+            ->queryProductLabelStoreRelationsByIdProductLabel($idProductLabel)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    protected function cleanupProductLabel(int $idProductLabel): void
+    {
+        $this->getProductLabelQuery()
+            ->queryProductLabelById($idProductLabel)
+            ->find()
+            ->delete();
+    }
+
+        /**
+         * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+         */
     protected function getProductLabelFacade(): ProductLabelFacadeInterface
     {
         return $this->getLocator()->productLabel()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
+     */
+    protected function getProductLabelQuery(): ProductLabelQueryContainerInterface
+    {
+        return $this->getLocator()->productLabel()->queryContainer();
     }
 }
