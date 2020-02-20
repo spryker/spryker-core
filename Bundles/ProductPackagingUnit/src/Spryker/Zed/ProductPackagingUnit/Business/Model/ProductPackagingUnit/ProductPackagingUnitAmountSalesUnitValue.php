@@ -24,8 +24,8 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $productMeasurementSalesUnitTransfer = $itemTransfer->getAmountSalesUnit();
-            if (!$productMeasurementSalesUnitTransfer || !$productMeasurementSalesUnitTransfer->getPrecision()
-                || !$productMeasurementSalesUnitTransfer->getConversion()
+            if (!$productMeasurementSalesUnitTransfer
+                || !$productMeasurementSalesUnitTransfer->getPrecision() || !$productMeasurementSalesUnitTransfer->getConversion()
             ) {
                 continue;
             }
