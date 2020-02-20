@@ -11,8 +11,5 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductLabelConfig extends AbstractBundleConfig
 {
-    /**
-     * @var string
-     */
     public const VALIDITY_DATE_FORMAT = 'Y-m-d';
 }
