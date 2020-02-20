@@ -147,7 +147,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
 
             $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_NAMES][] = $merchantName;
             $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_REFERENCES][] = $merchantReference;
-            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_ABSTRACT_PRODUCT_ID][] = $idProductAbstract;
+            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_ABSTRACT_PRODUCT_ID] = $idProductAbstract;
         }
 
         return $groupedProductAbstractMerchantData;
