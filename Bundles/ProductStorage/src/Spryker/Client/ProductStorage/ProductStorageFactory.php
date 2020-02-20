@@ -90,7 +90,6 @@ class ProductStorageFactory extends AbstractFactory
         return new ProductAbstractStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getStore(),
             $this->createProductAbstractAttributeMapRestrictionFilter(),
             $this->getProductAbstractRestrictionPlugins(),
             $this->getProductAbstractRestrictionFilterPlugins()
