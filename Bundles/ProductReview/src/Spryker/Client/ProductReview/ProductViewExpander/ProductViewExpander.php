@@ -15,6 +15,9 @@ use Spryker\Client\ProductReview\Search\ProductReviewSearchReaderInterface;
 
 class ProductViewExpander implements ProductViewExpanderInterface
 {
+    /**
+     * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin::NAME
+     */
     protected const KEY_RATING_AGGREGATION = 'ratingAggregation';
 
     /**
