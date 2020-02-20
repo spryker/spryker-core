@@ -14,7 +14,7 @@ interface SalesReturnDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports SalesReturnReasons data.
+     * - Imports return reasons.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface SalesReturnDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importSalesReturnReason(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+    public function importReturnReason(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
 }

@@ -12,18 +12,18 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class SalesReturnDataImportConfig extends DataImportConfig
 {
-    public const IMPORT_TYPE_SALES_RETURN_REASON = 'sales-return-reason';
+    public const IMPORT_TYPE_RETURN_REASON = 'return-reason';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
-    public function getSalesReturnReasonDataImporterConfiguration(): DataImporterConfigurationTransfer
+    public function getReturnReasonDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
         return $this->buildImporterConfiguration(
-            $moduleDataImportDirectory . 'sales_return_reason.csv',
-            static::IMPORT_TYPE_SALES_RETURN_REASON
+            $moduleDataImportDirectory . 'return_reason.csv',
+            static::IMPORT_TYPE_RETURN_REASON
         );
     }
 

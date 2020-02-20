@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\Zed\SalesReturnDataImport\Communication\Plugin\SalesReturnReasonDataImportPlugin;
+use Spryker\Zed\SalesReturnDataImport\Communication\Plugin\ReturnReasonDataImportPlugin;
 use Spryker\Zed\SalesReturnDataImport\SalesReturnDataImportConfig;
 
 /**
@@ -22,11 +22,11 @@ use Spryker\Zed\SalesReturnDataImport\SalesReturnDataImportConfig;
  * @group SalesReturnDataImport
  * @group Communication
  * @group Plugin
- * @group SalesReturnReasonDataImportPluginTest
+ * @group ReturnReasonDataImportPluginTest
  * Add your own group annotations below this line
  * @group SalesReturn
  */
-class SalesReturnReasonDataImportPluginTest extends Unit
+class ReturnReasonDataImportPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesReturnDataImport\SalesReturnDataImportCommunicationTester
@@ -40,7 +40,7 @@ class SalesReturnReasonDataImportPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->ensureSalesReturnReasonTablesIsEmpty();
+        $this->tester->ensureReturnReasonTablesIsEmpty();
     }
 
     /**
@@ -50,14 +50,14 @@ class SalesReturnReasonDataImportPluginTest extends Unit
     {
         // Arrange
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
-            ->setFileName(codecept_data_dir() . 'import/sales_return_reason.csv');
+            ->setFileName(codecept_data_dir() . 'import/return_reason.csv');
 
         $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         // Act
-        $salesReturnReasonDataImportPlugin = new SalesReturnReasonDataImportPlugin();
-        $dataImporterReportTransfer = $salesReturnReasonDataImportPlugin->import($dataImportConfigurationTransfer);
+        $returnReasonDataImportPlugin = new ReturnReasonDataImportPlugin();
+        $dataImporterReportTransfer = $returnReasonDataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
@@ -70,9 +70,9 @@ class SalesReturnReasonDataImportPluginTest extends Unit
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
         // Act
-        $salesReturnReasonDataImportPlugin = new SalesReturnReasonDataImportPlugin();
+        $returnReasonDataImportPlugin = new ReturnReasonDataImportPlugin();
 
         // Assert
-        $this->assertSame(SalesReturnDataImportConfig::IMPORT_TYPE_SALES_RETURN_REASON, $salesReturnReasonDataImportPlugin->getImportType());
+        $this->assertSame(SalesReturnDataImportConfig::IMPORT_TYPE_RETURN_REASON, $returnReasonDataImportPlugin->getImportType());
     }
 }

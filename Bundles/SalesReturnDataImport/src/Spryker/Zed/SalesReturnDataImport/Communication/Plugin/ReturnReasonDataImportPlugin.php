@@ -17,11 +17,11 @@ use Spryker\Zed\SalesReturnDataImport\SalesReturnDataImportConfig;
  * @method \Spryker\Zed\SalesReturnDataImport\Business\SalesReturnDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesReturnDataImport\SalesReturnDataImportConfig getConfig()
  */
-class SalesReturnReasonDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class ReturnReasonDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Imports SalesReturnReasons data.
+     * - Imports return reasons.
      *
      * @api
      *
@@ -32,7 +32,7 @@ class SalesReturnReasonDataImportPlugin extends AbstractPlugin implements DataIm
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importSalesReturnReason($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importReturnReason($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -44,6 +44,6 @@ class SalesReturnReasonDataImportPlugin extends AbstractPlugin implements DataIm
      */
     public function getImportType(): string
     {
-        return SalesReturnDataImportConfig::IMPORT_TYPE_SALES_RETURN_REASON;
+        return SalesReturnDataImportConfig::IMPORT_TYPE_RETURN_REASON;
     }
 }

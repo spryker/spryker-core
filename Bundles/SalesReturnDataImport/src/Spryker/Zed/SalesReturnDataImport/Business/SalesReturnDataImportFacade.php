@@ -25,10 +25,10 @@ class SalesReturnDataImportFacade extends AbstractFacade implements SalesReturnD
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importSalesReturnReason(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importReturnReason(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->getSalesReturnReasonDataImporter()
+            ->getReturnReasonDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
 }

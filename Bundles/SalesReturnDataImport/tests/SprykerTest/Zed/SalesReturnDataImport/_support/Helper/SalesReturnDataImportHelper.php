@@ -26,6 +26,8 @@ class SalesReturnDataImportHelper extends Module
     }
 
     /**
+     * @module SalesReturn
+     *
      * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery
      */
     protected function getSalesReturnReasonQuery(): SpySalesReturnReasonQuery

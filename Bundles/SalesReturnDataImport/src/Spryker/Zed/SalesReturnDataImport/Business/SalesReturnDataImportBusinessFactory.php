@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReturnDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\SalesReturnDataImport\Business\SalesReturnDataImportStep\SalesReturnReasonWriterStep;
+use Spryker\Zed\SalesReturnDataImport\Business\ReturnDataImportStep\ReturnReasonWriterStep;
 
 /**
  * @method \Spryker\Zed\SalesReturnDataImport\SalesReturnDataImportConfig getConfig()
@@ -22,13 +22,13 @@ class SalesReturnDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getSalesReturnReasonDataImporter(): DataImporterInterface
+    public function getReturnReasonDataImporter(): DataImporterInterface
     {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getSalesReturnReasonDataImporterConfiguration());
+        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getReturnReasonDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
-            ->addStep($this->createSalesReturnReasonWriterStep());
+            ->addStep($this->createReturnReasonWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -38,8 +38,8 @@ class SalesReturnDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createSalesReturnReasonWriterStep(): DataImportStepInterface
+    public function createReturnReasonWriterStep(): DataImportStepInterface
     {
-        return new SalesReturnReasonWriterStep();
+        return new ReturnReasonWriterStep();
     }
 }

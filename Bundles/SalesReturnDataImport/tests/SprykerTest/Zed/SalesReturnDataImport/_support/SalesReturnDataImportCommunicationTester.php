@@ -34,7 +34,7 @@ class SalesReturnDataImportCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function ensureSalesReturnReasonTablesIsEmpty(): void
+    public function ensureReturnReasonTablesIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getSalesReturnReasonQuery());
     }

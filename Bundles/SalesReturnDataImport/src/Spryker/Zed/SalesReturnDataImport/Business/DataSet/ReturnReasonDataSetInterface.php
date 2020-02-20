@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnDataImport\Business\DataSet;
 
-interface SalesReturnReasonDataSetInterface
+interface ReturnReasonDataSetInterface
 {
     public const COLUMN_REASON_KEY = 'reason_key';
     public const COLUMN_GLOSSARY_KEY_REASON = 'glossary_key_reason';
