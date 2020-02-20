@@ -113,13 +113,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      */
     protected function getTotalReview(array $ratingAggregation): int
     {
-        $totalReview = 0;
-
-        foreach ($ratingAggregation as $reviewCount) {
-            $totalReview += $reviewCount;
-        }
-
-        return $totalReview;
+        return array_sum($ratingAggregation);
     }
 
     /**
