@@ -9,6 +9,9 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver} instead.
+ */
 class BundleNameResolver
 {
     /**

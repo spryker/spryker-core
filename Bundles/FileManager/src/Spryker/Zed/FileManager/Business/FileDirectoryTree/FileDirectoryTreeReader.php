@@ -42,6 +42,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
 
             if ($fileDirectoryTransfer->getPosition() === null) {
                 $nodesWithoutPosition[] = $fileDirectoryTreeNodeTransfer;
+
                 continue;
             }
 

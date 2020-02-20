@@ -137,7 +137,8 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         array $productConcreteLocalizedEntities
     ): ?SpyProductLocalizedAttributes {
         foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
-            if ($productConcreteLocalizedEntity->getFkProduct() === $idProduct &&
+            if (
+                $productConcreteLocalizedEntity->getFkProduct() === $idProduct &&
                 $productConcreteLocalizedEntity->getLocale()->getLocaleName() === $localeName
             ) {
                 return $productConcreteLocalizedEntity;

@@ -52,7 +52,8 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
 
         $selectedAttributes = $productViewTransfer->getSelectedAttributes();
 
-        if (isset($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE])
+        if (
+            isset($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE])
             && in_array($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE], $productOfferReferences)
         ) {
             return $selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE];

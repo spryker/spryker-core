@@ -103,7 +103,8 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
             $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
 
-            if ($expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+            if (
+                $expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE
                 && $expenseShipmentKey === $itemShipmentKey
             ) {
                 return $expenseTransfer;
