@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\MerchantStock\Persistence\MerchantStockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantStock\MerchantStockConfig getConfig()
  */
 class MerchantStockPersistenceFactory extends AbstractPersistenceFactory
 {

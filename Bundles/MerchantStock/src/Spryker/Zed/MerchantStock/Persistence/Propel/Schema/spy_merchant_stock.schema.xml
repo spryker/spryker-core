@@ -16,7 +16,7 @@
         <foreign-key name="spy_merchant_stock-fk_merchant" foreignTable="spy_merchant" onDelete="CASCADE">
             <reference local="fk_merchant" foreign="id_merchant"/>
         </foreign-key>
-        <unique name="spy_merchant_stock-fk_stock-name-fk_merchant">
+        <unique name="spy_merchant_stock-fk_stock-fk_merchant">
             <unique-column name="fk_merchant"/>
             <unique-column name="fk_stock"/>
         </unique>

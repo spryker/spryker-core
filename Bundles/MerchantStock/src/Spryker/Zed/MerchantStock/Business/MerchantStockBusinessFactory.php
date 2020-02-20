@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantStock\MerchantStockDependencyProvider;
 /**
  * @method \Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\MerchantStock\Persistence\MerchantStockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantStock\MerchantStockConfig getConfig()
  */
 class MerchantStockBusinessFactory extends AbstractBusinessFactory
 {

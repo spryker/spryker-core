@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInte
 
 /**
  * @method \Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantStock\MerchantStockConfig getConfig()
  */
 class MerchantStockMerchantPostCreatePlugin extends AbstractPlugin implements MerchantPostCreatePluginInterface
 {

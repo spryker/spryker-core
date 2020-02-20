@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantStock\Dependency\Facade\MerchantStockToStockFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantStock\MerchantStockConfig getConfig()
+ */
 class MerchantStockDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_STOCK = 'FACADE_STOCK';
