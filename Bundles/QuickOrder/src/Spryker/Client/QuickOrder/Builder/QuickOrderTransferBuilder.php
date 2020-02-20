@@ -65,6 +65,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
             if (!$quickOrderItemTransfer->getSku()) {
                 $quickOrderItemTransfers->append($quickOrderItemTransfer);
+
                 continue;
             }
 

@@ -69,7 +69,13 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
         array $productOfferAvailabilityStorageTransferData,
         ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
     ): ProductOfferAvailabilityStorageTransfer {
-        return $productOfferAvailabilityStorageTransfer->fromArray($productOfferAvailabilityStorageTransferData, true);
+        $productOfferAvailabilityStorageTransfer->fromArray($productOfferAvailabilityStorageTransferData, true);
+
+        $productOfferAvailabilityStorageTransfer->setIsAvailable(
+            $this->isProductOfferAvailable($productOfferAvailabilityStorageTransfer)
+        );
+
+        return $productOfferAvailabilityStorageTransfer;
     }
 
     /**
@@ -87,5 +93,18 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductOfferAvailabilityStorageConfig::PRODUCT_OFFER_AVAILABILITY_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
+     *
+     * @return bool
+     */
+    protected function isProductOfferAvailable(ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer): bool
+    {
+        $availability = $productOfferAvailabilityStorageTransfer->getAvailability();
+        $isAvailable = $availability && $availability->isPositive();
+
+        return $productOfferAvailabilityStorageTransfer->getIsNeverOutOfStock() || $isAvailable;
     }
 }
