@@ -25,10 +25,9 @@ class RemoveNavigationCacheConsole extends Console
      */
     protected function configure(): void
     {
+        parent::configure();
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::DESCRIPTION);
-
-        parent::configure();
     }
 
     /**
