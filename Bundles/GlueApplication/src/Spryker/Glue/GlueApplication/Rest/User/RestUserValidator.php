@@ -40,5 +40,4 @@ class RestUserValidator implements RestUserValidatorInterface
 
         return null;
     }
-
 }

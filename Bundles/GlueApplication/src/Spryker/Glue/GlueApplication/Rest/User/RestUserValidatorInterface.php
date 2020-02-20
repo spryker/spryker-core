@@ -18,5 +18,4 @@ interface RestUserValidatorInterface
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
     public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer;
-
 }
