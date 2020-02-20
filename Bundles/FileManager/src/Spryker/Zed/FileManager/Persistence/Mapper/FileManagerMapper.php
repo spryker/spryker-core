@@ -160,8 +160,10 @@ class FileManagerMapper implements FileManagerMapperInterface
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes
      */
-    public function mapFileDirectoryLocalizedAttributesTransferToEntity(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer, SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes)
-    {
+    public function mapFileDirectoryLocalizedAttributesTransferToEntity(
+        FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer,
+        SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes
+    ) {
         $fileDirectoryLocalizedAttributes->fromArray($fileDirectoryLocalizedAttributesTransfer->toArray());
 
         return $fileDirectoryLocalizedAttributes;

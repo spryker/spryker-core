@@ -36,7 +36,6 @@ class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isSubTotalSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }

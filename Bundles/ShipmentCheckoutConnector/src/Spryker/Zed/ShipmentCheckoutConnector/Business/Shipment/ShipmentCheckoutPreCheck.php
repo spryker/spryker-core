@@ -62,7 +62,8 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
 
             $shipmentMethodTransfer = $shipmentTransfer->getMethod();
 
-            if ($shipmentMethodTransfer !== null
+            if (
+                $shipmentMethodTransfer !== null
                 && $shipmentMethodTransfer->getIdShipmentMethod()
                 && $this->shipmentFacade->isShipmentMethodActive($shipmentMethodTransfer->getIdShipmentMethod())
             ) {

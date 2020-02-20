@@ -26,9 +26,9 @@ class ClassInfo
     protected $callerClassParts = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver|null
+     * @var \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver|null
      */
-    protected $bundleNameResolver;
+    protected $moduleNameResolver;
 
     /**
      * @param object|string $callerClass
@@ -106,21 +106,21 @@ class ClassInfo
     public function getBundle()
     {
         $bundleName = $this->callerClassParts[self::KEY_BUNDLE];
-        $bundleName = $this->getBundleNameResolver()->resolve($bundleName);
+        $bundleName = $this->getModuleNameResolver()->resolve($bundleName);
 
         return $bundleName;
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver
      */
-    protected function getBundleNameResolver()
+    protected function getModuleNameResolver()
     {
-        if (!$this->bundleNameResolver) {
-            $this->bundleNameResolver = new BundleNameResolver();
+        if (!$this->moduleNameResolver) {
+            $this->moduleNameResolver = new ModuleNameResolver();
         }
 
-        return $this->bundleNameResolver;
+        return $this->moduleNameResolver;
     }
 
     /**

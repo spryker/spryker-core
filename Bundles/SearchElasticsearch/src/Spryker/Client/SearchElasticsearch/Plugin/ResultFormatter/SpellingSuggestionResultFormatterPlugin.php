@@ -61,6 +61,7 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
             if ($item['options']) {
                 $suggest = true;
                 $suggestionParts[] = $item['options'][0]['text'];
+
                 continue;
             }
 
