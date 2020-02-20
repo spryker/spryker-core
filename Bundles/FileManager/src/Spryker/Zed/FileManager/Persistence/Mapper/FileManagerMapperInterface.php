@@ -93,7 +93,10 @@ interface FileManagerMapperInterface
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes
      */
-    public function mapFileDirectoryLocalizedAttributesTransferToEntity(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer, SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes);
+    public function mapFileDirectoryLocalizedAttributesTransferToEntity(
+        FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer,
+        SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes
+    );
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyMimeType $mimeType

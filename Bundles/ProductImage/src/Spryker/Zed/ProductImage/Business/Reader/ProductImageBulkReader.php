@@ -66,6 +66,7 @@ class ProductImageBulkReader implements ProductImageBulkReaderInterface
         foreach ($productImageSetTransfers as $productImageSetTransfer) {
             if ($productImageSetTransfer->getName() === $productImageSetName) {
                 $productSetIds[$productImageSetTransfer->getIdProduct()] = $productImageSetTransfer->getIdProductImageSet();
+
                 continue;
             }
             if (!isset($productSetIds[$productImageSetTransfer->getIdProduct()])) {

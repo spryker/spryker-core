@@ -177,8 +177,10 @@ class VariantTable extends AbstractProductTable
      */
     protected function getIsBundleProduct(SpyProduct $productEntity)
     {
-        if ($productEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0 ||
-            $this->type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
+        if (
+            $productEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0 ||
+            $this->type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE
+        ) {
             return 'Yes';
         }
 
