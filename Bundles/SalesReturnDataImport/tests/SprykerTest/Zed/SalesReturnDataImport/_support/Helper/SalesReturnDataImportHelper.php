@@ -17,10 +17,10 @@ class SalesReturnDataImportHelper extends Module
      */
     public function assertSalesReturnReasonDatabaseTablesContainsData(): void
     {
-        $commentQuery = $this->getSalesReturnReasonQuery();
+        $salesReturnReasonQuery = $this->getSalesReturnReasonQuery();
 
         $this->assertTrue(
-            $commentQuery->find()->count() > 0,
+            $salesReturnReasonQuery->find()->count() > 0,
             'Expected at least one entry in the database table but database table is empty.'
         );
     }
