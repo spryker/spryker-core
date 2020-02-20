@@ -9,7 +9,6 @@ namespace Spryker\Zed\OrderCustomReference\Business\Validator;
 
 class OrderCustomReferenceValidator implements OrderCustomReferenceValidatorInterface
 {
-    protected const ORDER_CUSTOM_REFERENCE_MIN_LENGTH = 1;
     protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
 
     /**
@@ -20,12 +19,11 @@ class OrderCustomReferenceValidator implements OrderCustomReferenceValidatorInte
     public function isOrderCustomReferenceLengthValid(?string $orderCustomReference): bool
     {
         if (!$orderCustomReference) {
-            return false;
+            return true;
         }
 
         $orderCustomReferenceLength = mb_strlen($orderCustomReference);
 
-        return $orderCustomReferenceLength >= static::ORDER_CUSTOM_REFERENCE_MIN_LENGTH
-            && $orderCustomReferenceLength <= static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH;
+        return $orderCustomReferenceLength <= static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH;
     }
 }

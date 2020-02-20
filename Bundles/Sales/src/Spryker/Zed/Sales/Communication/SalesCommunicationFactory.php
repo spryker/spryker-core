@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Communication;
 
 use ArrayObject;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\OrderCustomReferenceGui\Communication\Form\OrderCustomReferenceForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
@@ -21,6 +22,7 @@ use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
@@ -197,6 +199,17 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createOrderItemSplitDataProvider()
     {
         return new OrderItemSplitDataProvider();
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createOrderCustomReferenceForm(array $data = [], array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(OrderCustomReferenceForm::class, $data, $options);
     }
 
     /**
