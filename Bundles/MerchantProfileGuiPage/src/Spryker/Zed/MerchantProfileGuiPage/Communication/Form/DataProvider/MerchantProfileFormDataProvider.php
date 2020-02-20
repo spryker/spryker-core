@@ -106,8 +106,10 @@ class MerchantProfileFormDataProvider
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function addUrlPrefixToUrlTransfer($merchantProfileUrlCollection, LocaleTransfer $localeTransfer): UrlTransfer
-    {
+    protected function addUrlPrefixToUrlTransfer(
+        $merchantProfileUrlCollection,
+        LocaleTransfer $localeTransfer
+    ): UrlTransfer {
         $urlTransfer = new UrlTransfer();
         foreach ($merchantProfileUrlCollection as $urlTransfer) {
             if ($urlTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
@@ -142,8 +144,9 @@ class MerchantProfileFormDataProvider
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    protected function addLocalizedGlossaryAttributes(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
-    {
+    protected function addLocalizedGlossaryAttributes(
+        MerchantProfileTransfer $merchantProfileTransfer
+    ): MerchantProfileTransfer {
         $merchantProfileGlossaryAttributeValues = new ArrayObject();
         $localeTransfers = $this->localeFacade->getLocaleCollection();
         foreach ($localeTransfers as $localeTransfer) {

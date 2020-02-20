@@ -26,7 +26,7 @@ class UniqueEmailValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($email, Constraint $uniqueEmailConstraint)
+    public function validate($email, Constraint $uniqueEmailConstraint): void
     {
         if (empty($email)) {
             return;

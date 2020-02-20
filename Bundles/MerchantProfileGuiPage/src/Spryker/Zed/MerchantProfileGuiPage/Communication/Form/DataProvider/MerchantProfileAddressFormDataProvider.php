@@ -40,7 +40,7 @@ class MerchantProfileAddressFormDataProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function prepareCountryChoices(): array
     {
