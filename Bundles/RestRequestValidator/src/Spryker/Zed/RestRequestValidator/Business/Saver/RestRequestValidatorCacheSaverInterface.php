@@ -16,12 +16,4 @@ interface RestRequestValidatorCacheSaverInterface
      * @return void
      */
     public function save(array $validatorConfig, string $storeName): void;
-
-    /**
-     * @param array $validatorConfig
-     * @param string $storeName
-     *
-     * @return void
-     */
-    public function remove(array $validatorConfig, string $storeName): void;
 }

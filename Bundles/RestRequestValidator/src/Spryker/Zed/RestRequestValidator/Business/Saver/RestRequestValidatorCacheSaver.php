@@ -51,26 +51,10 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
      */
     public function save(array $validatorConfig, string $storeName): void
     {
-        $this->remove($validatorConfig, $storeName);
-
         $this->filesystem->dumpFile(
             $this->getStoreCacheFilePath($storeName),
             $this->yaml->dump($validatorConfig)
         );
-    }
-
-    /**
-     * @param array $validatorConfig
-     * @param string $storeName
-     *
-     * @return void
-     */
-    public function remove(array $validatorConfig, string $storeName): void
-    {
-        $outdatedConfigFiles = $this->getOutdatedConfig($storeName);
-        if (!empty($outdatedConfigFiles)) {
-            $this->filesystem->remove($outdatedConfigFiles);
-        }
     }
 
     /**
@@ -81,15 +65,5 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     protected function getStoreCacheFilePath(string $storeName): string
     {
         return sprintf($this->config->getCacheFilePathPattern(), $storeName);
-    }
-
-    /**
-     * @param string $storeName
-     *
-     * @return array
-     */
-    protected function getOutdatedConfig(string $storeName): array
-    {
-        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeName));
     }
 }
