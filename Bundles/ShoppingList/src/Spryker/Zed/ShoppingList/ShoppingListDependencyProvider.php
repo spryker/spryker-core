@@ -146,6 +146,8 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ShoppingListDependencyProvider::addItemCollectionExpanderPlugins()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -202,6 +204,8 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ShoppingListDependencyProvider::getItemCollectionExpanderPlugins()` instead.
+     *
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected function getItemExpanderPlugins(): array
