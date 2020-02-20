@@ -31,7 +31,7 @@ class MerchantSwitcherFacadeTest extends Unit
      */
     protected $tester;
 
-    public function testSwitchMerchantIfThereIsReplacement(): void
+    public function testSwitchMerchantReplacesProductOffersInQuote(): void
     {
         // Arrange
         $merchantTransfer1 = $this->tester->haveMerchant();
