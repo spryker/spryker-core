@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form;
@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig getConfig()
  */
 class MerchantForm extends AbstractType
 {
@@ -132,6 +133,7 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => static::LABEL_EMAIL,
+            'required' => false,
             'constraints' => $this->getEmailFieldConstraints($currentId),
         ]);
 

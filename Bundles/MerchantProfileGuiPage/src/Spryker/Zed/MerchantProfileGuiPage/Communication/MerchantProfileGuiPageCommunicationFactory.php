@@ -10,17 +10,17 @@ namespace Spryker\Zed\MerchantProfileGuiPage\Communication;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint\UniqueUrl;
+use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileAddressFormDataProvider;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileFormDataProvider;
-use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantUpdateFormDataProvider;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToCountryFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToLocaleFacadeInterface;
+use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToUrlFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageDependencyProvider;
-use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -40,12 +40,11 @@ class MerchantProfileGuiPageCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantUpdateFormDataProvider
+     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProvider
      */
-    public function createMerchantUpdateFormDataProvider(): MerchantUpdateFormDataProvider
+    public function createMerchantFormDataProvider(): MerchantFormDataProvider
     {
-        return new MerchantUpdateFormDataProvider($this->getMerchantFacade()
-        );
+        return new MerchantFormDataProvider($this->getMerchantFacade());
     }
 
     /**

@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\MerchantProfileGuiPage\Communication\Exception\MerchantUserNotFoundException;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,42 +23,49 @@ class MyMerchantProfileController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): array
     {
-        $merchantUserFacade = $this->getFactory()->getMerchantUserFacade();
+        $idMerchant = $this->getIdMerchant();
 
-        $userTransfer = $merchantUserFacade->getCurrentUser();
-        $merchantUserTransfer = $merchantUserFacade->findOne(
-            (new MerchantUserCriteriaFilterTransfer())->setIdUser($userTransfer->getIdUser())
-        );
-
-        //throw exception
-        if (!$merchantUserTransfer) {
-            $idMerchant = 7;
-        } else {
-            $idMerchant  = $merchantUserTransfer->getIdMerchant();
-        }
-
-        $merchantUpdateFormDataProvider = $this->getFactory()->createMerchantUpdateFormDataProvider();
-        $merchantTransfer = $merchantUpdateFormDataProvider->getData($idMerchant);
+        $merchantFormDataProvider = $this->getFactory()->createMerchantFormDataProvider();
+        $merchantTransfer = $merchantFormDataProvider->getData($idMerchant);
 
         $merchantForm = $this->getFactory()
             ->getMerchantForm(
                 $merchantTransfer,
-                $merchantUpdateFormDataProvider->getOptions($merchantTransfer)
+                $merchantFormDataProvider->getOptions($merchantTransfer)
             )->handleRequest($request);
 
         if ($merchantForm->isSubmitted() && $merchantForm->isValid()) {
             $this->updateMerchant($merchantForm);
         }
 
-        dump($merchantForm->createView());
-
         return $this->viewResponse([
             'form' => $merchantForm->createView(),
         ]);
+    }
+
+    /**
+     * @throws \Spryker\Zed\MerchantProfileGuiPage\Communication\Exception\MerchantUserNotFoundException
+     *
+     * @return int
+     */
+    protected function getIdMerchant(): int
+    {
+        $merchantUserFacade = $this->getFactory()->getMerchantUserFacade();
+
+        $idUser = $merchantUserFacade->getCurrentUser()->getIdUser();
+        $merchantUserTransfer = $merchantUserFacade->findOne(
+            (new MerchantUserCriteriaFilterTransfer())->setIdUser($idUser)
+        );
+
+        if (!$merchantUserTransfer) {
+            throw new MerchantUserNotFoundException();
+        }
+
+        return $merchantUserTransfer->getIdMerchant();
     }
 
     /**
@@ -76,6 +83,8 @@ class MyMerchantProfileController extends AbstractController
 
         if ($merchantResponseTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::MESSAGE_MERCHANT_UPDATE_SUCCESS);
+
+            return;
         }
 
         foreach ($merchantResponseTransfer->getErrors() as $merchantErrorTransfer) {

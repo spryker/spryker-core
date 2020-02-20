@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints\Required;
 class MerchantProfileUrlCollectionFormType extends AbstractType
 {
     public const FIELD_URL = 'url';
+    protected const LABEL_URL = 'URL';
     protected const TEMPLATE_PATH = 'url';
     protected const FIELD_FK_LOCALE = 'fkLocale';
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
@@ -69,6 +70,7 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
     protected function addUrlField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_URL, TextType::class, [
+            'label' => static::LABEL_URL,
             'required' => false,
             'constraints' => [
                 new Required(),

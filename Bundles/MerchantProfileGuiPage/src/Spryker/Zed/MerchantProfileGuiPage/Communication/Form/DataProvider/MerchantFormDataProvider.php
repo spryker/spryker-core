@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface;
 
-class MerchantUpdateFormDataProvider
+class MerchantFormDataProvider
 {
     /**
      * @var \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface
