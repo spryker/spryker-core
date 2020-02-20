@@ -27,7 +27,7 @@ class ProductMeasurementUnitsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Resource id has not been specified."
+     *              "400": "Resource id has not been specified.",
      *              "404": "Product measurement unit not found."
      *          }
      *     }
