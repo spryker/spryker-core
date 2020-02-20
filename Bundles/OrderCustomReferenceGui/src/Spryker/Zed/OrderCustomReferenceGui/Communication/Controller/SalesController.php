@@ -40,19 +40,19 @@ class SalesController extends AbstractController
         $formDataIdSalesOrder = $formData[static::PARAM_ID_SALES_ORDER] ?? '';
         $formDataBackUrl = $formData[static::PARAM_BACK_URL] ?? '';
 
-        if ($formDataIdSalesOrder) {
-            $quoteTransfer = (new QuoteTransfer())
-                ->setOrderCustomReference($formData[static::PARAM_ORDER_CUSTOM_REFERENCE] ?? '');
-            $saveOrderTransfer = (new SaveOrderTransfer())->setIdSalesOrder($formDataIdSalesOrder);
-
-            $orderCustomReferenceFacade->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
-
-            $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
+        if (!$formDataIdSalesOrder) {
+            $this->addErrorMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED);
 
             return $this->redirectResponse($formDataBackUrl);
         }
 
-        $this->addErrorMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setOrderCustomReference($formData[static::PARAM_ORDER_CUSTOM_REFERENCE] ?? '');
+        $saveOrderTransfer = (new SaveOrderTransfer())->setIdSalesOrder($formDataIdSalesOrder);
+
+        $orderCustomReferenceFacade->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
+
+        $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
 
         return $this->redirectResponse($formDataBackUrl);
     }

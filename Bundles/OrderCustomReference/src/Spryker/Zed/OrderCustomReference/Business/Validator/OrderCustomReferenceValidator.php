@@ -18,10 +18,6 @@ class OrderCustomReferenceValidator implements OrderCustomReferenceValidatorInte
      */
     public function isOrderCustomReferenceLengthValid(?string $orderCustomReference): bool
     {
-        if (!$orderCustomReference) {
-            return true;
-        }
-
         return mb_strlen($orderCustomReference) <= static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH;
     }
 }
