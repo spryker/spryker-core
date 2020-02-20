@@ -10,6 +10,7 @@ namespace Spryker\Zed\OrderCustomReferenceGui\Communication\Controller;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,7 +32,7 @@ class SalesController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function saveAction(Request $request)
+    public function saveAction(Request $request): RedirectResponse
     {
         $orderCustomReferenceFacade = $this->getFactory()->getOrderCustomReferenceFacade();
         $formData = $request->get(static::FORM_NAME);

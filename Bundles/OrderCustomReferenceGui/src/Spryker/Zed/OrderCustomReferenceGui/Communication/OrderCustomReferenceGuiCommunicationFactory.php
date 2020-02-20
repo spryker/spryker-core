@@ -8,15 +8,15 @@
 namespace Spryker\Zed\OrderCustomReferenceGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGuiToOrderCustomReferenceInterface;
+use Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface;
 use Spryker\Zed\OrderCustomReferenceGui\OrderCustomReferenceGuiDependencyProvider;
 
 class OrderCustomReferenceGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGuiToOrderCustomReferenceInterface
+     * @return \Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface
      */
-    public function getOrderCustomReferenceFacade(): OrderCustomReferenceGuiToOrderCustomReferenceInterface
+    public function getOrderCustomReferenceFacade(): OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface
     {
         return $this->getProvidedDependency(OrderCustomReferenceGuiDependencyProvider::FACADE_ORDER_CUSTOM_REFERENCE);
     }

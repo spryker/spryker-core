@@ -10,7 +10,7 @@ namespace Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
-class OrderCustomReferenceGuiToOrderCustomReferenceBridge implements OrderCustomReferenceGuiToOrderCustomReferenceInterface
+class OrderCustomReferenceGuiToOrderCustomReferenceFacadeBridge implements OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface
 {
     /**
      * @var \Spryker\Zed\OrderCustomReference\Business\OrderCustomReferenceFacadeInterface

@@ -56,7 +56,7 @@ class OrderCustomReferenceForm extends AbstractType
     protected function addOrderCustomReferenceField(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_ORDER_CUSTOM_REFERENCE,
+            static::FIELD_ORDER_CUSTOM_REFERENCE,
             TextType::class,
             [
                 'label' => 'Order Custom Reference',

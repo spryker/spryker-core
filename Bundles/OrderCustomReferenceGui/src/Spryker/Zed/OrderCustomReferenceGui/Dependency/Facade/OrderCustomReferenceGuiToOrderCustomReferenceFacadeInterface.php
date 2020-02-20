@@ -10,7 +10,7 @@ namespace Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
-interface OrderCustomReferenceGuiToOrderCustomReferenceInterface
+interface OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

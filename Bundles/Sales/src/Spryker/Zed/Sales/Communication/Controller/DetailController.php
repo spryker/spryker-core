@@ -57,7 +57,7 @@ class DetailController extends AbstractController
         $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $orderCustomReferenceForm = $this->getFactory()
-            ->createOrderCustomReferenceForm(
+            ->getOrderCustomReferenceForm(
                 [
                     static::PARAM_ID_SALES_ORDER => $idSalesOrder,
                     static::PARAM_ORDER_CUSTOM_REFERENCE => $orderTransfer->getOrderCustomReference(),

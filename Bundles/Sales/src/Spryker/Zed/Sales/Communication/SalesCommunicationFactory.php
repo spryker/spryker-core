@@ -207,7 +207,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createOrderCustomReferenceForm(array $data = [], array $options = []): FormInterface
+    public function getOrderCustomReferenceForm(array $data = [], array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(OrderCustomReferenceForm::class, $data, $options);
     }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\OrderCustomReferenceGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGuiToOrderCustomReferenceBridge;
+use Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGuiToOrderCustomReferenceFacadeBridge;
 
 class OrderCustomReferenceGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,6 +22,7 @@ class OrderCustomReferenceGuiDependencyProvider extends AbstractBundleDependency
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addOrderCustomReferenceFacade($container);
 
         return $container;
@@ -35,7 +36,7 @@ class OrderCustomReferenceGuiDependencyProvider extends AbstractBundleDependency
     protected function addOrderCustomReferenceFacade(Container $container): Container
     {
         $container->set(static::FACADE_ORDER_CUSTOM_REFERENCE, function (Container $container) {
-            return new OrderCustomReferenceGuiToOrderCustomReferenceBridge(
+            return new OrderCustomReferenceGuiToOrderCustomReferenceFacadeBridge(
                 $container->getLocator()->orderCustomReference()->facade()
             );
         });
