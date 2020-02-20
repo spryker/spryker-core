@@ -15,4 +15,6 @@ interface SalesQuantityRepositoryInterface
      * @return bool
      */
     public function isProductQuantitySplittable(string $productConcreteSku): bool;
+
+    public function getIsProductQuantitySplittableByProductConcreteSkus(array $productConcreteSkus): array;
 }

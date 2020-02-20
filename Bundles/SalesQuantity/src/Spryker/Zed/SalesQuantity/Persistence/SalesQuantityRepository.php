@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesQuantity\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -27,5 +28,27 @@ class SalesQuantityRepository extends AbstractRepository implements SalesQuantit
             ->filterBySku($productConcreteSku)
             ->select(SpyProductTableMap::COL_IS_QUANTITY_SPLITTABLE)
             ->findOne();
+    }
+
+    public function getIsProductQuantitySplittableByProductConcreteSkus(array $productConcreteSkus): array
+    {
+        $result = $this->getFactory()
+            ->getProductPropelQuery()
+            ->filterBySku_In($productConcreteSkus)
+            ->select([SpyProductTableMap::COL_SKU, SpyProductTableMap::COL_IS_QUANTITY_SPLITTABLE])
+            ->setFormatter(ArrayFormatter::class)
+            ->find();
+
+        return $this->indexIsProductQuantitySplittableByProductConcreteSkus($result);
+    }
+
+    protected function indexIsProductQuantitySplittableByProductConcreteSkus(array $data): array
+    {
+        $indexeddata = [];
+        foreach ($data as $item) {
+            $indexeddata[$item[SpyProductTableMap::COL_SKU]] = $item[SpyProductTableMap::COL_IS_QUANTITY_SPLITTABLE];
+        }
+
+        return $indexeddata;
     }
 }
