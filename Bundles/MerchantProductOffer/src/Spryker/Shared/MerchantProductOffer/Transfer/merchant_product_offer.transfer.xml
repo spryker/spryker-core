@@ -11,5 +11,6 @@
     <transfer name="MerchantProductOfferCriteriaFilter">
         <property name="merchantReference" type="string"/>
         <property name="skus" type="[]"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 </transfers>

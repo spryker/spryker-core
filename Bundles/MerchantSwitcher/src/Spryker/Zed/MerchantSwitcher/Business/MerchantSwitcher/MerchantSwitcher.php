@@ -87,9 +87,10 @@ class MerchantSwitcher implements MerchantSwitcherInterface
             $skus[] = $itemTransfer->getSku();
         }
 
-        $merchantProductOfferCriteriaFilterTransfer = new MerchantProductOfferCriteriaFilterTransfer();
-        $merchantProductOfferCriteriaFilterTransfer->setMerchantReference($merchantReference);
-        $merchantProductOfferCriteriaFilterTransfer->setSkus($skus);
+        $merchantProductOfferCriteriaFilterTransfer = (new MerchantProductOfferCriteriaFilterTransfer())
+            ->setMerchantReference($merchantReference)
+            ->setSkus($skus)
+            ->setIsActive(true);
 
         $merchantProductOfferCollectionTransfer = $this->merchantProductOfferFacade->getProductOfferCollection($merchantProductOfferCriteriaFilterTransfer);
 

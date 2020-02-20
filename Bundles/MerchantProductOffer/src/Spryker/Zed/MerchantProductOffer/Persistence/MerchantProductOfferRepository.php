@@ -22,14 +22,12 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
      *
      * @return int[]
      */
-    public function getActiveProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array
+    public function getProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array
     {
         $query = $this->applyFilters(
             $merchantProductOfferCriteriaFilterTransfer,
             $this->getFactory()->getProductOfferPropelQuery()
         );
-
-        $query->filterByIsActive(true);
 
         $query->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER]);
 
@@ -48,6 +46,10 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
     ): SpyProductOfferQuery {
         if ($merchantProductOfferCriteriaFilterTransfer->getSkus()) {
             $productOfferQuery->filterByConcreteSku_In($merchantProductOfferCriteriaFilterTransfer->getSkus());
+        }
+
+        if ($merchantProductOfferCriteriaFilterTransfer->getIsActive()) {
+            $productOfferQuery->filterByIsActive($merchantProductOfferCriteriaFilterTransfer->getIsActive());
         }
 
         if ($merchantProductOfferCriteriaFilterTransfer->getMerchantReference()) {

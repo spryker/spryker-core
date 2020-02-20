@@ -16,5 +16,5 @@ interface MerchantProductOfferRepositoryInterface
      *
      * @return int[]
      */
-    public function getActiveProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array;
+    public function getProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array;
 }

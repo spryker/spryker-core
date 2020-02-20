@@ -44,7 +44,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
      */
     public function getMerchantProductOfferCollection(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): ProductOfferCollectionTransfer
     {
-        $productOfferIds = $this->merchantProductOfferRepository->getActiveProductOfferIds($merchantProductOfferCriteriaFilterTransfer);
+        $productOfferIds = $this->merchantProductOfferRepository->getProductOfferIds($merchantProductOfferCriteriaFilterTransfer);
 
         if (!$productOfferIds) {
             return new ProductOfferCollectionTransfer();
