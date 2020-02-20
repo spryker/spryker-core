@@ -31,7 +31,7 @@ class ProductLabelFormTabs extends AbstractTabs
     }
 
     /**
-     * @deprecated Use addSettingsTab() instead.
+     * @deprecated Use \Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs::addSettingsTab() instead.
      *
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *

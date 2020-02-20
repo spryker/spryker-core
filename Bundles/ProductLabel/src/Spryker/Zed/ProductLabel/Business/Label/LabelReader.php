@@ -136,7 +136,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return void
      */
-    protected function addLocalizedAttributesToProductLabels(array $productLabelTransferCollection)
+    protected function addLocalizedAttributesToProductLabels(array $productLabelTransferCollection): void
     {
         foreach ($productLabelTransferCollection as $productLabelTransfer) {
             $this->addLocalizedAttributes($productLabelTransfer);
