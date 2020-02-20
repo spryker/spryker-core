@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Communication\Console;
+namespace Spryker\Zed\Transfer\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
- * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
+ * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
-class EntityTransferRemoverConsole extends Console
+class RemoveTransferConsole extends Console
 {
-    public const COMMAND_NAME = 'transfer:entity:remove';
-    public const COMMAND_DESCRIPTION = 'Removes generated entity transfer objects';
+    public const COMMAND_NAME = 'transfer:remove';
+    public const COMMAND_DESCRIPTION = 'Remove all generated data transfer objects';
 
     /**
      * @return void
@@ -40,9 +40,9 @@ class EntityTransferRemoverConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $transferFacade = $this->getFactory()->getTransferFacade();
+        $transferFacade = $this->getFacade();
 
-        $transferFacade->deleteGeneratedEntityTransferObjects();
+        $transferFacade->deleteGeneratedDataTransferObjects();
 
         return static::CODE_SUCCESS;
     }

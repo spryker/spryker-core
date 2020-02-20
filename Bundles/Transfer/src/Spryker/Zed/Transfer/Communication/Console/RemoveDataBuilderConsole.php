@@ -15,10 +15,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
  * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
-class TransferRemoverConsole extends Console
+class RemoveDataBuilderConsole extends Console
 {
-    public const COMMAND_NAME = 'transfer:remove';
-    public const COMMAND_DESCRIPTION = 'Remove all generated data transfer objects';
+    public const COMMAND_NAME = 'transfer:databuilder:remove';
+    public const COMMAND_DESCRIPTION = 'Removes the generated data builders';
 
     /**
      * @return void
@@ -42,7 +42,7 @@ class TransferRemoverConsole extends Console
     {
         $transferFacade = $this->getFacade();
 
-        $transferFacade->deleteGeneratedDataTransferObjects();
+        $transferFacade->deleteGeneratedDataBuilderObjects();
 
         return static::CODE_SUCCESS;
     }
