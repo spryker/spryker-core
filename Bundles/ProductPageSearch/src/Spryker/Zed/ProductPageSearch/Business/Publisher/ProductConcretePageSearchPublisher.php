@@ -345,8 +345,10 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    protected function expandProductConcretePageSearchTransferWithPlugins(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
-    {
+    protected function expandProductConcretePageSearchTransferWithPlugins(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
         foreach ($this->pageDataExpanderPlugins as $pageDataExpanderPlugin) {
             $productConcretePageSearchTransfer = $pageDataExpanderPlugin->expand($productConcreteTransfer, $productConcretePageSearchTransfer);
         }

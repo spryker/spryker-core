@@ -25,9 +25,8 @@ class ProductDataValidator extends AbstractImportDataValidator
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface $productFinder
      */
-    public function __construct(
-        ProductFinderInterface $productFinder
-    ) {
+    public function __construct(ProductFinderInterface $productFinder)
+    {
         $this->productFinder = $productFinder;
     }
 

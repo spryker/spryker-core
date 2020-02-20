@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
@@ -59,7 +59,7 @@ class MerchantUpdateFormDataProvider
     {
         $options = [
             'data_class' => MerchantTransfer::class,
-            MerchantForm::OPTION_CURRENT_ID => $merchantTransfer->getIdMerchant(),
+            MerchantUpdateForm::OPTION_CURRENT_ID => $merchantTransfer->getIdMerchant(),
         ];
 
         return $options;
