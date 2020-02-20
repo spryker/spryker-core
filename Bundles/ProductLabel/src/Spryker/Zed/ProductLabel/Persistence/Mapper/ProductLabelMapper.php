@@ -18,7 +18,7 @@ class ProductLabelMapper
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper
      */
-    private $productLabelStoreRelationMapper;
+    protected $productLabelStoreRelationMapper;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper $productLabelStoreRelationMapper
