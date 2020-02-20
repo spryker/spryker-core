@@ -15,11 +15,11 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiFactory getFactory()
  */
-class CompanyUserValidatorPlugin extends AbstractPlugin implements RestUserValidatorPluginInterface
+class CompanyUserRestUserValidatorPlugin extends AbstractPlugin implements RestUserValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Checks that rest user is a company user.
+     * - Checks that Rest user is a company user.
      * - Returns null on successful validation and a collection of error messages on validation failure.
      *
      * @api

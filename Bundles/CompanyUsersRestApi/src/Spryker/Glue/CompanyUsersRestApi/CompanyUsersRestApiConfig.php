@@ -25,8 +25,8 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      */
     public const RESOURCE_COMPANY_ROLES = 'company-roles';
 
-    public const RESPONSE_CODE_USER_IS_NOT_A_COMPANY_USER = '1401';
-    public const RESPONSE_DETAIL_USER_IS_NOT_A_COMPANY_USER = 'User is not a company user.';
+    public const RESPONSE_CODE_REST_USER_IS_NOT_A_COMPANY_USER = '1401';
+    public const RESPONSE_DETAIL_REST_USER_IS_NOT_A_COMPANY_USER = 'Rest user is not a company user.';
 
     public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1403';
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED = 'Current company user is not set. You need to select the current company user with /company-user-access-tokens in order to access the resource collection.';

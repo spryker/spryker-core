@@ -46,8 +46,8 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
         return (new RestErrorCollectionTransfer())
             ->addRestError(
                 (new RestErrorMessageTransfer())
-                    ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_USER_IS_NOT_A_COMPANY_USER)
-                    ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_USER_IS_NOT_A_COMPANY_USER)
+                    ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_REST_USER_IS_NOT_A_COMPANY_USER)
+                    ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_REST_USER_IS_NOT_A_COMPANY_USER)
                     ->setStatus(Response::HTTP_BAD_REQUEST)
             );
     }
