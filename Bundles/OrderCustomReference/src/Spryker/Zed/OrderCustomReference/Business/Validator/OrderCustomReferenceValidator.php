@@ -22,8 +22,6 @@ class OrderCustomReferenceValidator implements OrderCustomReferenceValidatorInte
             return true;
         }
 
-        $orderCustomReferenceLength = mb_strlen($orderCustomReference);
-
-        return $orderCustomReferenceLength <= static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH;
+        return mb_strlen($orderCustomReference) <= static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH;
     }
 }
