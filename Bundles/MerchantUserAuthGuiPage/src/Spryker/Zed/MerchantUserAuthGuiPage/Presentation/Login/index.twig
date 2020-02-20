@@ -1,24 +1,58 @@
-{% extends '@MerchantUserAuthGuiPage/Layout/layout.twig' %}
-
-{% form_theme form '@MerchantUserAuthGuiPage/Layout/form.twig' %}
+{% extends '@ZedUi/LayoutCentral/layout-central.twig' %}
 
 {% block content %}
+    {% set formData = {
+        actionUrl: 'actionUrl',
+        childrens: [
+            {
+                for: 'form-email',
+                errorMessage: 'error',
+                attrs: '{"id":"form-email"}',
+                required: true,
+                name: 'email',
+                value: '',
+                type: 'email',
+                placeholder: 'example@spryker.com',
+                label: "Email",
+            },
+            {
+                for: 'form-password',
+                errorMessage: '',
+                attrs: '{"id":"form-password"}',
+                required: true,
+                name: 'password',
+                value: '',
+                type: 'password',
+                placeholder: 'Enter password placeholder',
+                label: "Password",
+            },
+        ],
+    } %}
 
-    <div>
-        {{ form_start(form) }}
+    <mp-login>
+        <form action="{{ formData.actionUrl }}">
+            {% for formField in formData.childrens %}
+                <spy-form-item error="{{ formField.errorMessage }}" for="{{ formField.for }}">
+                    {{ formField.label }}
+                    <spy-input
+                        control
+                        attrs="{{ formField.attrs }}"
+                        required="{{ formField.required }}"
+                        name="{{ formField.name }}"
+                        value="{{ formField.value }}"
+                        type="{{ formField.type }}"
+                        placeholder="{{ formField.placeholder }}"
+                    ></spy-input>
+                </spy-form-item>
+            {% endfor %}
 
-            {% include '@MerchantUserAuthGuiPage/Partial/form-message.twig' %}
+            <spy-button type="submit">Login</spy-button>
+        </form>
+    </mp-login>
+{% endblock %}
 
-            {{ form_errors(form) }}
-
-            {{ form_row(form.username) }}
-            {{ form_row(form.password) }}
-
-            <div class="form-group"><button class="btn btn-success btn-block btn-outline btn" type="submit">{{ 'Login' | trans }}</button></div>
-
-            {{ form_rest(form) }}
-
-        {{ form_end(form) }}
-    </div>
-
+{% block footerJs %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/mp-login/polyfills-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/mp-login/main-es5.js') }}"></script>
 {% endblock %}
