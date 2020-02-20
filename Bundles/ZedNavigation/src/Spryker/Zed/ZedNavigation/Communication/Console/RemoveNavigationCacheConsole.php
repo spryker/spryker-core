@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RemoveNavigationCacheConsole extends Console
 {
     public const COMMAND_NAME = 'navigation:remove-cache';
-    public const DESCRIPTION = 'Build the navigation tree and persist it';
+    public const DESCRIPTION = 'Removes the navigation cache';
 
     /**
      * @return void

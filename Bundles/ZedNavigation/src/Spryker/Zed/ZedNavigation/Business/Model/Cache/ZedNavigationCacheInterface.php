@@ -34,5 +34,5 @@ interface ZedNavigationCacheInterface
     /**
      * @return void
      */
-    public function removeNavigation(): void;
+    public function removeCache(): void;
 }

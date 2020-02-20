@@ -39,12 +39,4 @@ class ZedNavigationCacheBuilder
         $navigation = $this->navigationCollector->getNavigation();
         $this->navigationCache->setNavigation($navigation);
     }
-
-    /**
-     * @return void
-     */
-    public function removeNavigationCache(): void
-    {
-        $this->navigationCache->removeNavigation();
-    }
 }
