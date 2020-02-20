@@ -108,8 +108,7 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference((string)$idProductAbstract)
-            ->setStore($storeName);
+            ->setReference((string)$idProductAbstract);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(SharedProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME)
