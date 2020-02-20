@@ -55,9 +55,9 @@ class MerchantProductOfferDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductOfferPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, $container->factory(function () {
             return SpyProductOfferQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -69,9 +69,9 @@ class MerchantProductOfferDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductOfferFacade(Container $container): Container
     {
-        $container->set(static::FACADE_PRODUCT_OFFER, $container->factory(function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new MerchantProductOfferToProductOfferFacadeBridge($container->getLocator()->productOffer()->facade());
-        }));
+        });
 
         return $container;
     }
