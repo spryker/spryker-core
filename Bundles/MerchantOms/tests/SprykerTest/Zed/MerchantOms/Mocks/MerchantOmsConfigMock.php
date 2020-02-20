@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\MerchantOms\Mocks;
 
 use Spryker\Zed\MerchantOms\MerchantOmsConfig as SprykerMerchantOmsConfig;
 
-class TestMerchantOmsConfig extends SprykerMerchantOmsConfig
+class MerchantOmsConfigMock extends SprykerMerchantOmsConfig
 {
     /**
      * @var string

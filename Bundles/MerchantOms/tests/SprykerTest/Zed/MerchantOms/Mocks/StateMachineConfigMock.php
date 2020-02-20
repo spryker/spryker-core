@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\MerchantOms\Mocks;
 
 use Spryker\Zed\StateMachine\StateMachineConfig as SprykerStateMachineConfig;
 
-class TestStateMachineConfig extends SprykerStateMachineConfig
+class StateMachineConfigMock extends SprykerStateMachineConfig
 {
     /**
      * @return string

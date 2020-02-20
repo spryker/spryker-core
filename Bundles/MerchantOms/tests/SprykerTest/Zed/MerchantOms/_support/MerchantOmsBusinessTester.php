@@ -20,8 +20,8 @@ use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
-use SprykerTest\Zed\MerchantOms\Mocks\TestMerchantOmsConfig;
-use SprykerTest\Zed\MerchantOms\Mocks\TestStateMachineConfig;
+use SprykerTest\Zed\MerchantOms\Mocks\MerchantOmsConfigMock;
+use SprykerTest\Zed\MerchantOms\Mocks\StateMachineConfigMock;
 
 /**
  * Inherited Methods
@@ -56,7 +56,7 @@ class MerchantOmsBusinessTester extends Actor
     public function createMerchantOmsFacade(StateMachineHandlerInterface $stateMachineHandler, string $merchantOmsDefaultProcessName): MerchantOmsFacadeInterface
     {
         $merchantOmsFacade = new MerchantOmsFacade();
-        $merchantOmsConfig = new TestMerchantOmsConfig();
+        $merchantOmsConfig = new MerchantOmsConfigMock();
         $merchantOmsBusinessFactory = new MerchantOmsBusinessFactory();
         $container = new Container();
 
@@ -79,7 +79,7 @@ class MerchantOmsBusinessTester extends Actor
     protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler): StateMachineFacadeInterface
     {
         $stateMachineBusinessFactory = new StateMachineBusinessFactory();
-        $stateMachineConfig = new TestStateMachineConfig();
+        $stateMachineConfig = new StateMachineConfigMock();
         $stateMachineBusinessFactory->setConfig($stateMachineConfig);
 
         $container = new Container();
