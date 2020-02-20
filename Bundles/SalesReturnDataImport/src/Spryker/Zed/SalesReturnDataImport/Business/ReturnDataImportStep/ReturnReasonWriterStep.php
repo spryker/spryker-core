@@ -21,7 +21,7 @@ class ReturnReasonWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $salesReturnReasonEntity = $this->createSalesReturnReasonQuery()
+        $salesReturnReasonEntity = $this->getSalesReturnReasonQuery()
             ->filterByKey($dataSet[ReturnReasonDataSetInterface::COLUMN_REASON_KEY])
             ->findOneOrCreate();
 
@@ -35,7 +35,7 @@ class ReturnReasonWriterStep implements DataImportStepInterface
      *
      * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery
      */
-    protected function createSalesReturnReasonQuery(): SpySalesReturnReasonQuery
+    protected function getSalesReturnReasonQuery(): SpySalesReturnReasonQuery
     {
         return SpySalesReturnReasonQuery::create();
     }
