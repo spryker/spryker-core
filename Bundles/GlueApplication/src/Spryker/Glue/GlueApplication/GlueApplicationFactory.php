@@ -57,6 +57,8 @@ use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcher;
 use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParser;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
+use Spryker\Glue\GlueApplication\Rest\User\RestUserValidator;
+use Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\User\UserProvider;
 use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolver;
@@ -85,6 +87,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestResponseHeaders(),
             $this->createRestHttpRequestValidator(),
             $this->createRestRequestValidator(),
+            $this->createUserValidator(),
             $this->createRestResourceBuilder(),
             $this->createRestControllerCallbacks(),
             $this->getConfig(),
@@ -346,6 +349,16 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface
+     */
+    public function createUserValidator(): RestUserValidatorInterface
+    {
+        return new RestUserValidator(
+            $this->getRestUserValidatorPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidatorInterface
      */
     public function createPaginationParametersRequestValidator(): PaginationParametersHttpRequestValidatorInterface
@@ -359,6 +372,14 @@ class GlueApplicationFactory extends AbstractFactory
     public function getValidateRestRequestPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_VALIDATE_REST_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface[]
+     */
+    public function getRestUserValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_VALIDATE_REST_USER);
     }
 
     /**

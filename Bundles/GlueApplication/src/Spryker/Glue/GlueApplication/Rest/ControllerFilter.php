@@ -19,6 +19,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface;
+use Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 use Spryker\Shared\Log\LoggerTrait;
@@ -55,6 +56,11 @@ class ControllerFilter implements ControllerFilterInterface
     protected $restRequestValidator;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface
+     */
+    protected $restUserValidator;
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -80,6 +86,7 @@ class ControllerFilter implements ControllerFilterInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface $responseHeaders
      * @param \Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface $httpRequestValidator
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface $restRequestValidator
+     * @param \Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface $restUserValidator
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\GlueApplication\Rest\ControllerCallbacksInterface $controllerCallbacks
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $applicationConfig
@@ -91,6 +98,7 @@ class ControllerFilter implements ControllerFilterInterface
         ResponseHeadersInterface $responseHeaders,
         HttpRequestValidatorInterface $httpRequestValidator,
         RestRequestValidatorInterface $restRequestValidator,
+        RestUserValidatorInterface $restUserValidator,
         RestResourceBuilderInterface $restResourceBuilder,
         ControllerCallbacksInterface $controllerCallbacks,
         GlueApplicationConfig $applicationConfig,
@@ -101,6 +109,7 @@ class ControllerFilter implements ControllerFilterInterface
         $this->responseHeaders = $responseHeaders;
         $this->httpRequestValidator = $httpRequestValidator;
         $this->restRequestValidator = $restRequestValidator;
+        $this->restUserValidator = $restUserValidator;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->controllerCallbacks = $controllerCallbacks;
         $this->applicationConfig = $applicationConfig;
@@ -129,7 +138,12 @@ class ControllerFilter implements ControllerFilterInterface
             if (!$restErrorCollectionTransfer || !$restErrorCollectionTransfer->getRestErrors()->count()) {
                 $restRequest = $this->userProvider->setUserToRestRequest($restRequest);
 
-                $restResponse = $this->executeAction($controller, $action, $restRequest);
+                $restUserValidationRestErrorCollectionTransfer = $this->validateRestUser($restRequest);
+                if ($restUserValidationRestErrorCollectionTransfer) {
+                    $restResponse = $this->createErrorResponse($restUserValidationRestErrorCollectionTransfer);
+                } else {
+                    $restResponse = $this->executeAction($controller, $action, $restRequest);
+                }
             } else {
                 $restResponse = $this->createErrorResponse($restErrorCollectionTransfer);
             }
@@ -232,6 +246,16 @@ class ControllerFilter implements ControllerFilterInterface
         }
 
         return $restErrorCollectionTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
+     */
+    protected function validateRestUser(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
+    {
+        return $this->restUserValidator->validate($restRequest);
     }
 
     /**

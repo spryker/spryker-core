@@ -42,11 +42,9 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @inheritDoc
      */
-    public function before()
+    public function _before()
     {
         parent::_before();
-
-        $this->lastShoppingListName = null;
     }
 
     /**
