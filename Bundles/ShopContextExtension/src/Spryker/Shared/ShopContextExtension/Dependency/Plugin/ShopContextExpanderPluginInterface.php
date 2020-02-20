@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\ShopContextExtension\Dependency\Plugin;
+namespace Spryker\Shared\ShopContextExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ShopContextTransfer;
 
