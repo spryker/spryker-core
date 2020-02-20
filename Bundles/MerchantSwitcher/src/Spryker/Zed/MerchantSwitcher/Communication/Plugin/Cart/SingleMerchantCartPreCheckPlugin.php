@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSwitcher\Communication\Plugin\Cart;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -24,8 +25,8 @@ class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPre
 
     /**
      * {@inheritDoc}
-     * - Goes through QuoteTransfer.Items and compares ItemTransfer.merchantReference with QuoteTransfer.merchantReference.
-     * - If values are not equal the plugin returns a failure response and add an error flash message.
+     * - Goes through CartChangeTransfer.quoteTransfer.items and compares ItemTransfer.merchantReference with CartChangeTransfer.quoteTransfer.merchantReference.
+     * - If values are not equal the plugin returns a failure response with an error message inside.
      *
      * @api
      *
@@ -35,24 +36,30 @@ class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPre
      */
     public function check(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
+        $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
+            ->setIsSuccess(true);
 
-        $merchantReference = $cartChangeTransfer->getQuote()->getMerchantReference();
-        $cartPreCheckResponseTransfer->setIsSuccess(true);
+        if (!$this->getConfig()->isMerchantSwitcherEnabled()) {
+            return $cartPreCheckResponseTransfer;
+        }
 
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($merchantReference && $itemTransfer->getMerchantReference() && $itemTransfer->getMerchantReference() !== $merchantReference) {
-                $messageTransfer = (new MessageTransfer())
+        $quoteMerchantReference = $cartChangeTransfer->getQuote()->getMerchantReference();
+
+        $messageTransfers = [];
+        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
+            if (
+                $quoteMerchantReference
+                && $itemTransfer->getMerchantReference()
+                && $itemTransfer->getMerchantReference() !== $quoteMerchantReference
+            ) {
+                $messageTransfers[] = (new MessageTransfer())
                     ->setValue(static::GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE)
-                    ->setParameters([
-                        static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getName(),
-                    ]);
-
-                $cartPreCheckResponseTransfer->addMessage($messageTransfer);
-                $cartPreCheckResponseTransfer->setIsSuccess(false);
+                    ->setParameters([static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getName()]);
             }
         }
 
-        return $cartPreCheckResponseTransfer;
+        return (new CartPreCheckResponseTransfer())
+            ->setMessages(new ArrayObject($messageTransfers))
+            ->setIsSuccess(!$messageTransfers);
     }
 }

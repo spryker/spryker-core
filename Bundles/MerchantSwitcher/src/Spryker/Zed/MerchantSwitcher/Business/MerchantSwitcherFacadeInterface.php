@@ -14,9 +14,9 @@ interface MerchantSwitcherFacadeInterface
 {
     /**
      * Specification:
-     * - Switch ItemTransfer.OfferReference property according to selected merchant reference.
-     * - Switch ItemTransfer.MerchantReference property according to selected merchant reference.
-     * - Update persistence cart if database strategy is selected.
+     * - Switches ItemTransfer.productOfferReference property according to selected merchant reference.
+     * - Switches ItemTransfer.merchantReference property according to selected merchant reference.
+     * - Updates a quote in the database if a storage strategy is `database`.
      *
      * @api
      *

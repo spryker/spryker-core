@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Quote\QuoteConfig;
+use Spryker\Shared\MerchantSwitcher\MerchantSwitcherConfig;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToCartFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToMerchantProductOfferFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToQuoteFacadeInterface;
@@ -55,19 +57,22 @@ class MerchantSwitcher implements MerchantSwitcherInterface
      */
     public function switch(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
     {
-        $merchantSwitchRequestTransfer->requireQuote();
-        $merchantSwitchRequestTransfer->requireMerchantReference();
+        $merchantSwitchRequestTransfer
+            ->requireQuote()
+            ->requireMerchantReference();
 
         $quoteTransfer = $merchantSwitchRequestTransfer->getQuote();
         $merchantReference = $merchantSwitchRequestTransfer->getMerchantReference();
 
-        $quoteTransfer = $this->switchItemData($quoteTransfer, $merchantReference);
+        $quoteTransfer = $this->switchItemsData($quoteTransfer, $merchantReference);
 
+        // The merchant value is reset for validating the quote without errors if a replacement wasn't found.
+        // In another case, the quote is not saved while reloading items.
         $quoteTransfer->setMerchantReference(null);
         $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         $quoteTransfer->setMerchantReference($merchantReference);
 
-        if ($this->quoteFacade->getStorageStrategy() === QuoteConfig::STORAGE_STRATEGY_DATABASE) {
+        if ($this->quoteFacade->getStorageStrategy() === MerchantSwitcherConfig::STORAGE_STRATEGY_DATABASE) {
             $this->quoteFacade->updateQuote($quoteTransfer)->getQuoteTransfer();
         }
 
@@ -80,10 +85,15 @@ class MerchantSwitcher implements MerchantSwitcherInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function switchItemData(QuoteTransfer $quoteTransfer, string $merchantReference): QuoteTransfer
+    protected function switchItemsData(QuoteTransfer $quoteTransfer, string $merchantReference): QuoteTransfer
     {
+        $itemTransfers = $quoteTransfer->getItems();
+        if (!$itemTransfers->getIterator()->count()) {
+            return $quoteTransfer;
+        }
+
         $skus = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $skus[] = $itemTransfer->getSku();
         }
 
@@ -94,15 +104,31 @@ class MerchantSwitcher implements MerchantSwitcherInterface
 
         $merchantProductOfferCollectionTransfer = $this->merchantProductOfferFacade->getProductOfferCollection($merchantProductOfferCriteriaFilterTransfer);
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            foreach ($merchantProductOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-                if ($productOfferTransfer->getConcreteSku() === $itemTransfer->getSku()) {
-                    $itemTransfer->setMerchantReference($merchantReference);
-                    $itemTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
-                }
-            }
+        foreach ($itemTransfers as $itemTransfer) {
+            $this->switchItemData($itemTransfer, $merchantProductOfferCollectionTransfer, $merchantReference);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $merchantProductOfferCollectionTransfer
+     * @param string $merchantReference
+     *
+     * @return void
+     */
+    protected function switchItemData(
+        ItemTransfer $itemTransfer,
+        ProductOfferCollectionTransfer $merchantProductOfferCollectionTransfer,
+        string $merchantReference
+    ): void {
+        foreach ($merchantProductOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
+            if ($productOfferTransfer->getConcreteSku() === $itemTransfer->getSku()) {
+                $itemTransfer
+                    ->setMerchantReference($merchantReference)
+                    ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+            }
+        }
     }
 }

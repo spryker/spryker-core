@@ -69,9 +69,9 @@ class MerchantProductOfferDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductOfferFacade(Container $container): Container
     {
-        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_OFFER, $container->factory(function (Container $container) {
             return new MerchantProductOfferToProductOfferFacadeBridge($container->getLocator()->productOffer()->facade());
-        });
+        }));
 
         return $container;
     }

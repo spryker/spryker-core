@@ -25,8 +25,8 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
 
     /**
      * {@inheritDoc}
-     * - Goes through QuoteTransfer.Items and compares ItemTransfer.merchantReference with QuoteTransfer.merchantReference.
-     * - If values are not equal the plugin returns a failure response and add an error flash message.
+     * - Goes through QuoteTransfer.items and compares ItemTransfer.merchantReference with QuoteTransfer.merchantReference.
+     * - If values are not equal the plugin returns a failure response with an error message inside.
      *
      * @api
      *
@@ -37,12 +37,21 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
+        $checkoutResponseTransfer->setIsSuccess(true);
         $checkoutErrorTransfers = [];
 
-        $merchantReference = $quoteTransfer->getMerchantReference();
+        if (!$this->getConfig()->isMerchantSwitcherEnabled()) {
+            return true;
+        }
+
+        $quoteMerchantReference = $quoteTransfer->getMerchantReference();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($merchantReference && $itemTransfer->getMerchantReference() && $itemTransfer->getMerchantReference() !== $merchantReference) {
+            if (
+                $quoteMerchantReference
+                && $itemTransfer->getMerchantReference()
+                && $itemTransfer->getMerchantReference() !== $quoteMerchantReference
+            ) {
                 $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
                     ->setMessage(static::GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE)
                     ->setParameters([

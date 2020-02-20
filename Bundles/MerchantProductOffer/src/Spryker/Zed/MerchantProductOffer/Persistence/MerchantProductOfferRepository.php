@@ -24,14 +24,14 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
      */
     public function getProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array
     {
-        $query = $this->applyFilters(
+        $productOfferQuery = $this->applyFilters(
             $merchantProductOfferCriteriaFilterTransfer,
             $this->getFactory()->getProductOfferPropelQuery()
         );
 
-        $query->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER]);
+        $productOfferQuery->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER]);
 
-        return $query->find()->getData();
+        return $productOfferQuery->find()->getData();
     }
 
     /**

@@ -9,6 +9,16 @@ namespace Spryker\Zed\MerchantSwitcher;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\MerchantSwitcher\MerchantSwitcherConfig getSharedConfig()
+ */
 class MerchantSwitcherConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isMerchantSwitcherEnabled(): bool
+    {
+        return $this->getSharedConfig()->isMerchantSwitcherEnabled();
+    }
 }
