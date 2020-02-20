@@ -51,9 +51,13 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             ->applyPagination($merchantSalesOrderQuery, $merchantOrderCriteriaFilterTransfer->getPagination())
             ->find();
 
-        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
+        if ($merchantSalesOrderEntityCollection->count() === 0) {
+            return new MerchantOrderCollectionTransfer();
+        }
+
         /** @var \Generated\Shared\Transfer\MerchantOrderTransfer[] $merchantOrderTransfers */
         $merchantOrderTransfers = [];
+        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 
         foreach ($merchantSalesOrderEntityCollection as $merchantSalesOrderEntity) {
             $merchantOrderTransfers[$merchantSalesOrderEntity->getIdMerchantSalesOrder()] = $merchantSalesOrderMapper
@@ -63,7 +67,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
                 );
         }
 
-        if ($merchantOrderCriteriaFilterTransfer->getWithItems() && $merchantOrderTransfers) {
+        if ($merchantOrderCriteriaFilterTransfer->getWithItems()) {
             $merchantOrderTransfers = $this->addMerchantOrderItemsToMerchantOrders($merchantOrderTransfers);
         }
 

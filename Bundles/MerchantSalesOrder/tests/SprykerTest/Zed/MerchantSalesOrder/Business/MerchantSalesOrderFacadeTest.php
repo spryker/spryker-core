@@ -74,13 +74,13 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @dataProvider getMerchantOrderPositiveScenarioDataProvider
      *
-     * @param array $merchantOrderCriteriaFilterDataKeys
+     * @param array $merchantOrderCriteriaFilterKeys
      * @param int $merchantOrderItemsCount
      *
      * @return void
      */
     public function testGetMerchantOrderCollectionReturnsFilledCollectionTransferWithCorrectCriteria(
-        array $merchantOrderCriteriaFilterDataKeys,
+        array $merchantOrderCriteriaFilterKeys,
         int $merchantOrderItemsCount
     ): void {
         //Arrange
@@ -110,7 +110,7 @@ class MerchantSalesOrderFacadeTest extends Unit
         ];
         $merchantOrderCriteriaFilterData = array_intersect_key(
             $merchantOrderCriteriaFilterData,
-            array_flip($merchantOrderCriteriaFilterDataKeys)
+            array_flip($merchantOrderCriteriaFilterKeys)
         );
         $merchantCriteriaFilterTransfer = (new MerchantOrderCriteriaFilterTransfer())
             ->fromArray($merchantOrderCriteriaFilterData);
