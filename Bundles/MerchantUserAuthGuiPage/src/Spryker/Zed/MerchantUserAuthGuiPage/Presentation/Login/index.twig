@@ -5,9 +5,9 @@
         actionUrl: 'actionUrl',
         childrens: [
             {
-                for: 'form-email',
+                id: 'form-email',
                 errorMessage: 'error',
-                attrs: '{"id":"form-email"}',
+                attrs: '',
                 required: true,
                 name: 'email',
                 value: '',
@@ -16,9 +16,9 @@
                 label: "Email",
             },
             {
-                for: 'form-password',
+                id: 'form-password',
                 errorMessage: '',
-                attrs: '{"id":"form-password"}',
+                attrs: '',
                 required: true,
                 name: 'password',
                 value: '',
@@ -32,10 +32,11 @@
     <mp-login>
         <form action="{{ formData.actionUrl }}">
             {% for formField in formData.childrens %}
-                <spy-form-item error="{{ formField.errorMessage }}" for="{{ formField.for }}">
+                <spy-form-item error="{{ formField.errorMessage }}" for="{{ formField.id }}">
                     {{ formField.label }}
                     <spy-input
                         control
+                        id="{{ formField.id }}"
                         attrs="{{ formField.attrs }}"
                         required="{{ formField.required }}"
                         name="{{ formField.name }}"
