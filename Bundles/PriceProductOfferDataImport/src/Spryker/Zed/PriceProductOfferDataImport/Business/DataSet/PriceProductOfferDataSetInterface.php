@@ -16,6 +16,10 @@ interface PriceProductOfferDataSetInterface
     public const VALUE_NET = 'value_net';
     public const VALUE_GROSS = 'value_gross';
 
+    public const KEY_PRICE_DATA_PREFIX = 'price_data.';
+    public const KEY_PRICE_DATA = 'price_data';
+    public const KEY_PRICE_DATA_CHECKSUM = 'price_data_checksum';
+
     public const CONCRETE_SKU = 'concrete_sku';
     public const ID_PRODUCT_CONCRETE = 'id_product_concrete';
     public const FK_PRICE_PRODUCT_STORE = 'fk_price_product_store';

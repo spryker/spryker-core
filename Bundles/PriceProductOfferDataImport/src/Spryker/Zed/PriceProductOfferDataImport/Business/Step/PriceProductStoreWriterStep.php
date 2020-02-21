@@ -39,6 +39,9 @@ class PriceProductStoreWriterStep implements DataImportStepInterface
             ->filterByGrossPrice((int)$dataSet[PriceProductOfferDataSetInterface::VALUE_GROSS])
             ->findOneOrCreate();
 
+        $priceProductStoreEntity->setPriceData($dataSet[PriceProductOfferDataSetInterface::KEY_PRICE_DATA]);
+        $priceProductStoreEntity->setPriceDataChecksum($dataSet[PriceProductOfferDataSetInterface::KEY_PRICE_DATA_CHECKSUM]);
+
         $priceProductStoreEntity->save();
 
         return $priceProductStoreEntity->getIdPriceProductStore();
