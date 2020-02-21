@@ -79,7 +79,9 @@ class MerchantStockWriter implements MerchantStockWriterInterface
      */
     protected function createMerchantResponseTransfer(MerchantTransfer $merchantTransfer, string $message = ''): MerchantResponseTransfer
     {
-        $merchantResponseTransfer = (new MerchantResponseTransfer())->setMerchant($merchantTransfer);
+        $merchantResponseTransfer = (new MerchantResponseTransfer())
+            ->setMerchant($merchantTransfer)
+            ->setIsSuccess(true);
 
         if (!$message) {
             return $merchantResponseTransfer;
