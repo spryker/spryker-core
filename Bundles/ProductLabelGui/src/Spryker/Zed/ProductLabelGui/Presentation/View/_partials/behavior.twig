@@ -1,0 +1,28 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Behavior' } %}
+    {% set isDynamic = (productLabelTransfer.isDynamic()) ? ('Yes' | trans) : ('No' | trans) %}
+    {% set isExclusive = (productLabelTransfer.getIsExclusive()) ? ('Yes' | trans) : ('No' | trans) %}
+    {% set validFrom = (productLabelTransfer.getValidFrom()) ? (productLabelTransfer.getValidFrom() | formatDate) : ('N/A' | trans) %}
+    {% set validTo = (productLabelTransfer.getValidFrom()) ? (productLabelTransfer.getValidFrom() | formatDate) : ('N/A' | trans) %}
+
+    {% block widget_content %}
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Valid from' | trans }}</b></div>
+            <div class="col-xs-10">{{ validFrom }}</div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Valid to' | trans }}</b></div>
+            <div class="col-xs-10">{{ validTo }}</div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Is dynamic' | trans }}</b></div>
+            <div class="col-xs-10">{{ isDynamic }}</div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Is exclusive' | trans }}</b></div>
+            <div class="col-xs-10">{{ isExclusive }}</div>
+        </div>
+    {% endblock %}
+{% endembed %}

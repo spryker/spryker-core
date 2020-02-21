@@ -47,7 +47,15 @@
 
 {% block content %}
 
-    {% include '@ProductLabelGui/View/_partials/general-information.twig' with {
+    {% include '@ProductLabelGui/View/_partials/general.twig' with {
+        productLabelTransfer: productLabelTransfer
+    } %}
+
+    {% include '@ProductLabelGui/View/_partials/behavior.twig' with {
+        productLabelTransfer: productLabelTransfer
+    } %}
+
+    {% include '@ProductLabelGui/View/_partials/store-relation.twig' with {
         productLabelTransfer: productLabelTransfer
     } %}
 
