@@ -72,8 +72,7 @@ class MerchantSwitcher implements MerchantSwitcherInterface
         $quoteTransfer = $this->switchItemsData($quoteTransfer, $merchantReference);
 
         /**
-         * The merchant value is reset for validating the quote without errors if a replacement found.
-         * In another case, the quote stores while reloading items.
+         * Disables ItemTransfer.merchantReference validation.
          */
         $quoteTransfer->setMerchantReference(null);
         $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
