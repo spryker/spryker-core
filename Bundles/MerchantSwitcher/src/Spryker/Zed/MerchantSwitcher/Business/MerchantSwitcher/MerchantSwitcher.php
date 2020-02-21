@@ -78,8 +78,8 @@ class MerchantSwitcher implements MerchantSwitcherInterface
         $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         $quoteTransfer->setMerchantReference($merchantReference);
 
-        if ($this->quoteFacade->getStorageStrategy() === static::STORAGE_STRATEGY_DATABASE) {
-            $quoteTransfer = $this->quoteFacade->updateQuote($quoteTransfer)->getQuoteTransfer() ?? $quoteTransfer;
+        if ($this->quoteFacade->getStorageStrategy() === static::STORAGE_STRATEGY_DATABASE && $quoteTransfer->getIdQuote()) {
+            $quoteTransfer = $this->quoteFacade->updateQuote($quoteTransfer)->getQuoteTransfer();
         }
 
         return (new MerchantSwitchResponseTransfer())->setQuote($quoteTransfer);
