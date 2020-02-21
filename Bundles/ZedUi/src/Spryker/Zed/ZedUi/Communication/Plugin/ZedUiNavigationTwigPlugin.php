@@ -2,14 +2,16 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ZedUi\Communication\Plugin;
 
-use Spryker\Service\Twig\Plugin\AbstractTwigExtensionPlugin;
-use Spryker\Zed\ZedUi\Communication\Twig\NavigationComponentConfigFunction;
+use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
 
+/**
+ * @method \Spryker\Zed\ZedUi\Communication\ZedUiCommunicationFactory getFactory()
+ */
 class ZedUiNavigationTwigPlugin extends AbstractTwigExtensionPlugin
 {
     /**
@@ -20,7 +22,7 @@ class ZedUiNavigationTwigPlugin extends AbstractTwigExtensionPlugin
     public function getFunctions(): array
     {
         return [
-            new NavigationComponentConfigFunction(),
+            $this->getFactory()->createNavigationComponentConfigFunction(),
         ];
     }
 }
