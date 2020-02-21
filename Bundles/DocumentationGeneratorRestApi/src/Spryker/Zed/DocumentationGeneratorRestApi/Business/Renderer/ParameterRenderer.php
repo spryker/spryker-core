@@ -34,12 +34,7 @@ class ParameterRenderer implements ParameterRendererInterface
     public function render(ParameterTransfer $parameterTransfer): array
     {
         $parameterComponentTransfer = new ParameterComponentTransfer();
-        $parameterComponentTransfer->setRefName($parameterTransfer->getRefName());
-        $parameterComponentTransfer->setName($parameterTransfer->getName());
-        $parameterComponentTransfer->setIn($parameterTransfer->getIn());
-        $parameterComponentTransfer->setDescription($parameterTransfer->getDescription());
-        $parameterComponentTransfer->setRequired($parameterTransfer->getRequired());
-        $parameterComponentTransfer->setSchema($parameterTransfer->getSchema());
+        $parameterComponentTransfer->fromArray($parameterTransfer->toArray(), true);
 
         $this->parameterSpecificationComponent->setParameterComponentTransfer($parameterComponentTransfer);
 

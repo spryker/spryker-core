@@ -7,10 +7,19 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
+use Generated\Shared\Transfer\ParameterTransfer;
+
 interface ParameterGeneratorInterface
 {
     /**
      * @return array
      */
     public function getParameters(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ParameterTransfer $parameterTransfer
+     *
+     * @return void
+     */
+    public function addParameter(ParameterTransfer $parameterTransfer): void;
 }

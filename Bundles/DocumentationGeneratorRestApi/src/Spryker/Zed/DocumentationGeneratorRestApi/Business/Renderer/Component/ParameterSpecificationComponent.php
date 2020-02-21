@@ -36,25 +36,25 @@ class ParameterSpecificationComponent implements ParameterSpecificationComponent
      */
     public function getSpecificationComponentData(): array
     {
-        if (!$this->validateComponentTransfer()) {
+        if (!$this->requireComponentTransferData()) {
             return [];
         }
 
-        $propertyData = [];
-        $refName = $this->parameterComponentTransfer->getRefName();
-        $propertyData[$refName][ParameterComponentTransfer::NAME] = $this->parameterComponentTransfer->getName();
-        $propertyData[$refName][ParameterComponentTransfer::IN] = $this->parameterComponentTransfer->getIn();
-        $propertyData[$refName][ParameterComponentTransfer::DESCRIPTION] = $this->parameterComponentTransfer->getDescription();
-        $propertyData[$refName][ParameterComponentTransfer::SCHEMA] = $this->parameterComponentTransfer->getSchema()->toArray();
-        $propertyData[$refName][ParameterComponentTransfer::REQUIRED] = $this->parameterComponentTransfer->getRequired();
-
-        return $propertyData;
+        return [
+            $this->parameterComponentTransfer->getRefName() => [
+                ParameterComponentTransfer::NAME => $this->parameterComponentTransfer->getName(),
+                ParameterComponentTransfer::IN => $this->parameterComponentTransfer->getIn(),
+                ParameterComponentTransfer::DESCRIPTION => $this->parameterComponentTransfer->getDescription(),
+                ParameterComponentTransfer::SCHEMA => $this->parameterComponentTransfer->getSchema()->toArray(),
+                ParameterComponentTransfer::REQUIRED => $this->parameterComponentTransfer->getRequired(),
+            ],
+        ];
     }
 
     /**
      * @return bool
      */
-    protected function validateComponentTransfer(): bool
+    protected function requireComponentTransferData(): bool
     {
         if (!$this->parameterComponentTransfer) {
             return false;

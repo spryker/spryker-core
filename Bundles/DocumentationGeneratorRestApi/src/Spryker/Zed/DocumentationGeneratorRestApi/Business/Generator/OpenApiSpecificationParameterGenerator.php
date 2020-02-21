@@ -55,7 +55,7 @@ class OpenApiSpecificationParameterGenerator implements ParameterGeneratorInterf
      *
      * @return void
      */
-    protected function addParameter(ParameterTransfer $parameterTransfer): void
+    public function addParameter(ParameterTransfer $parameterTransfer): void
     {
         $this->parameters = array_replace_recursive($this->parameters, $this->parameterSchemeRenderer->render($parameterTransfer));
     }
