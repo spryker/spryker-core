@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -369,7 +370,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeYvesIdeAutoCompletion(): void
     {
-        $this->getFactory()->createYvesIdeAutoCompletionDirectoryRemover()->remove();
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::YVES);
     }
 
     /**
@@ -393,7 +394,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeZedIdeAutoCompletion(): void
     {
-        $this->getFactory()->createZedIdeAutoCompletionDirectoryRemover()->remove();
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::ZED);
     }
 
     /**
@@ -417,7 +418,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeClientIdeAutoCompletion(): void
     {
-        $this->getFactory()->createClientIdeAutoCompletionDirectoryRemover()->remove();
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::CLIENT);
     }
 
     /**
@@ -441,7 +442,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeServiceIdeAutoCompletion(): void
     {
-        $this->getFactory()->createServiceIdeAutoCompletionDirectoryRemover()->remove();
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::SERVICE);
     }
 
     /**
@@ -465,7 +466,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function removeGlueIdeAutoCompletion(): void
     {
-        $this->getFactory()->createGlueIdeAutoCompletionDirectoryRemover()->remove();
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::GLUE);
     }
 
     /**

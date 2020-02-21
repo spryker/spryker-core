@@ -152,6 +152,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemover;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\TargetDirectoryResolver;
 use Spryker\Zed\Development\Business\Integration\DependencyProviderUsedPluginFinder;
 use Spryker\Zed\Development\Business\Integration\DependencyProviderUsedPluginFinderInterface;
 use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinder;
@@ -1609,10 +1610,10 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
      */
-    public function createYvesIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
+    public function createIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
     {
         return new DirectoryRemover(
-            $this->getConfig()->getYvesIdeAutoCompletionOptions(),
+            $this->createTargetDirectoryResolver(),
             $this->getFilesystem(),
             $this->createGeneratedFileFinder()
         );
@@ -1626,18 +1627,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return $this->createIdeAutoCompletionWriter(
             $this->createZedIdeAutoCompletionBundleBuilder(),
             $this->getConfig()->getZedIdeAutoCompletionOptions()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
-     */
-    public function createZedIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
-    {
-        return new DirectoryRemover(
-            $this->getConfig()->getZedIdeAutoCompletionOptions(),
-            $this->getFilesystem(),
-            $this->createGeneratedFileFinder()
         );
     }
 
@@ -1675,18 +1664,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
-     */
-    public function createGlueIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
-    {
-        return new DirectoryRemover(
-            $this->getConfig()->getGlueIdeAutoCompletionOptions(),
-            $this->getFilesystem(),
-            $this->createGeneratedFileFinder()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
      */
     public function createGeneratedFileFinder(): GeneratedFileFinderInterface
@@ -1702,18 +1679,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return $this->createIdeAutoCompletionWriter(
             $this->createClientIdeAutoCompletionBundleBuilder(),
             $this->getConfig()->getClientIdeAutoCompletionOptions()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
-     */
-    public function createClientIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
-    {
-        return new DirectoryRemover(
-            $this->getConfig()->getClientIdeAutoCompletionOptions(),
-            $this->getFilesystem(),
-            $this->createGeneratedFileFinder()
         );
     }
 
@@ -1736,18 +1701,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return $this->createIdeAutoCompletionWriter(
             $this->createServiceIdeAutoCompletionBundleBuilder(),
             $this->getConfig()->getServiceIdeAutoCompletionOptions()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
-     */
-    public function createServiceIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
-    {
-        return new DirectoryRemover(
-            $this->getConfig()->getServiceIdeAutoCompletionOptions(),
-            $this->getFilesystem(),
-            $this->createGeneratedFileFinder()
         );
     }
 
@@ -2129,5 +2082,15 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerNameFinder(): ComposerNameFinderInterface
     {
         return new ComposerNameFinder($this->getModuleFinderFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\TargetDirectoryResolver
+     */
+    protected function createTargetDirectoryResolver(): TargetDirectoryResolver
+    {
+        return new TargetDirectoryResolver(
+            $this->getConfig()
+        );
     }
 }
