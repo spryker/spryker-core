@@ -28,18 +28,18 @@ class MerchantSalesOrderPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper\MerchantSalesOrderMapper
-     */
-    public function createMerchantSalesOrderMapper(): MerchantSalesOrderMapper
-    {
-        return new MerchantSalesOrderMapper();
-    }
-
-    /**
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
      */
     public function createMerchantSalesOrderItemQuery(): SpyMerchantSalesOrderItemQuery
     {
         return SpyMerchantSalesOrderItemQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper\MerchantSalesOrderMapper
+     */
+    public function createMerchantSalesOrderMapper(): MerchantSalesOrderMapper
+    {
+        return new MerchantSalesOrderMapper();
     }
 }

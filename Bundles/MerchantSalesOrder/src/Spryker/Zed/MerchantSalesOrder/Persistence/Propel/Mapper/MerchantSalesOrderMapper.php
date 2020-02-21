@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantSalesOrderMapper
 {
@@ -66,15 +64,6 @@ class MerchantSalesOrderMapper
             return (new TotalsTransfer())->fromArray($merchantSalesOrderEntity->getVirtualColumns(), true);
         }
 
-        $merchantSalesOrderEntity->initMerchantSalesOrderTotals(false);
-
-        if ($merchantSalesOrderEntity->countMerchantSalesOrderTotals()) {
-            return $this->mapMerchantSalesOrderTotalsEntityToTotalsTransfer(
-                $merchantSalesOrderEntity->getMerchantSalesOrderTotals()->getFirst(),
-                new TotalsTransfer()
-            );
-        }
-
         return null;
     }
 
@@ -94,28 +83,6 @@ class MerchantSalesOrderMapper
         $merchantSalesOrderEntity->setFkSalesOrder($merchantOrderTransfer->getIdOrder());
 
         return $merchantSalesOrderEntity;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $merchantSalesOrderEntityList
-     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
-     */
-    public function mapMerchantSalesOrderEntityCollectionToMerchantOrderCollectionTransfer(
-        ObjectCollection $merchantSalesOrderEntityList,
-        MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
-    ): MerchantOrderCollectionTransfer {
-        foreach ($merchantSalesOrderEntityList as $merchantSalesOrderEntityTransfer) {
-            $merchantOrderCollectionTransfer->addMerchantOrder(
-                $this->mapMerchantSalesOrderEntityToMerchantOrderTransfer(
-                    $merchantSalesOrderEntityTransfer,
-                    new MerchantOrderTransfer()
-                )
-            );
-        }
-
-        return $merchantOrderCollectionTransfer;
     }
 
     /**
