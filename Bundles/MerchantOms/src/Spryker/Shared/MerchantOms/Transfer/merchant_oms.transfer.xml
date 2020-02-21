@@ -10,6 +10,7 @@
 
     <transfer name="Merchant">
         <property name="fkStateMachineProcess" type="int"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderItem">
@@ -45,6 +46,7 @@
     </transfer>
 
     <transfer name="MerchantOmsTriggerRequest">
+        <property name="merchant" type="Merchant"/>
         <property name="merchantOmsEventName" type="string"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
