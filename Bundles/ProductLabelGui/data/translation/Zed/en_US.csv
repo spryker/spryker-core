@@ -11,6 +11,15 @@ Deactivate,Deactivate
 Edit,Edit
 "Edit Product Label","Edit Product Label"
 "Is Exclusive","Is Exclusive"
+"Is exclusive","Is exclusive"
+"Is dynamic","Is dynamic"
+"Front-end Reference","Front-end Reference"
+Name,Name
+Status,Status
+Stores,Stores
+Yes,Yes
+No,No
+N/A,N/A
 "List of Product Labels","List of Product Labels"
 "Missing or wrong request data","Missing or wrong request data"
 "Overview of Product Labels","Overview of Product Labels"
