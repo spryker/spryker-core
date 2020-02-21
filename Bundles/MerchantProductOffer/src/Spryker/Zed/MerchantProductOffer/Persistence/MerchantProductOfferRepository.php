@@ -48,7 +48,7 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
             $productOfferQuery->filterByConcreteSku_In($merchantProductOfferCriteriaFilterTransfer->getSkus());
         }
 
-        if ($merchantProductOfferCriteriaFilterTransfer->getIsActive()) {
+        if ($merchantProductOfferCriteriaFilterTransfer->getIsActive() !== null) {
             $productOfferQuery->filterByIsActive($merchantProductOfferCriteriaFilterTransfer->getIsActive());
         }
 

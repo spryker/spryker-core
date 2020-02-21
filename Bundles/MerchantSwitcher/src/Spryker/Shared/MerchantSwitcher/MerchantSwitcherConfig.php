@@ -12,11 +12,6 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class MerchantSwitcherConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
-     */
-    public const STORAGE_STRATEGY_DATABASE = 'database';
-
-    /**
      * @var bool
      */
     protected const ENABLE_MERCHANT_SWITCHER = true;

@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\MerchantSwitcher\Business;
@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group MerchantSwitcher
@@ -31,6 +32,9 @@ class MerchantSwitcherFacadeTest extends Unit
      */
     protected $tester;
 
+    /**
+     * @return void
+     */
     public function testSwitchMerchantIfThereIsReplacement(): void
     {
         // Arrange
@@ -68,7 +72,7 @@ class MerchantSwitcherFacadeTest extends Unit
         // Act
         $quoteTransfer = $this->tester->getFacade()->switchMerchant($merchantSwitchRequestTransfer)->getQuote();
 
-        /** @var ItemTransfer $itemTransfer */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
 
         //Assert
@@ -109,10 +113,9 @@ class MerchantSwitcherFacadeTest extends Unit
         // Act
         $quoteTransfer = $this->tester->getFacade()->switchMerchant($merchantSwitchRequestTransfer)->getQuote();
 
+        // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
-
-        // Assert
         $this->assertEquals($itemTransfer->getProductOfferReference(), $productOfferTransfer->getProductOfferReference());
         $this->assertEquals($itemTransfer->getMerchantReference(), $merchantTransfer->getMerchantReference());
     }

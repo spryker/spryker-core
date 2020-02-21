@@ -37,15 +37,13 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $checkoutResponseTransfer->setIsSuccess(true);
-        $checkoutErrorTransfers = [];
-
         if (!$this->getConfig()->isMerchantSwitcherEnabled()) {
             return true;
         }
 
         $quoteMerchantReference = $quoteTransfer->getMerchantReference();
 
+        $checkoutErrorTransfers = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (
                 $quoteMerchantReference

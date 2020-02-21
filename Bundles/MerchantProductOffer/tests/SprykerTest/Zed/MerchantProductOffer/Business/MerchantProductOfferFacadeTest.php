@@ -32,7 +32,7 @@ class MerchantProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProductOfferCollectionIsNotEmpty(): void
+    public function testGetProductOfferCollectionReturnsFilledCollection(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -50,6 +50,6 @@ class MerchantProductOfferFacadeTest extends Unit
         $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($merchantProductOfferCriteriaFilterTransfer);
 
         // Assert
-        $this->assertNotEmpty($productOfferCollectionTransfer->getProductOffers()->count());
+        $this->assertNotEmpty($productOfferCollectionTransfer->getProductOffers());
     }
 }

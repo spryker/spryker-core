@@ -1,8 +1,17 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\MerchantSwitcher;
+
+use Codeception\Actor;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -17,8 +26,8 @@ namespace SprykerTest\Zed\MerchantSwitcher;
  * @method \Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcherFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class MerchantSwitcherBusinessTester extends \Codeception\Actor
+ */
+class MerchantSwitcherBusinessTester extends Actor
 {
     use _generated\MerchantSwitcherBusinessTesterActions;
 
