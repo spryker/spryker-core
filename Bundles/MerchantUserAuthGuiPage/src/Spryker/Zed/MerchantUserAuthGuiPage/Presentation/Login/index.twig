@@ -2,52 +2,33 @@
 
 {% block content %}
     {% set formData = {
-        actionUrl: 'actionUrl',
-        childrens: [
-            {
-                id: 'form-email',
-                errorMessage: 'error',
-                attrs: '',
-                required: true,
-                name: 'email',
-                value: '',
-                type: 'email',
-                placeholder: 'example@spryker.com',
-                label: "Email",
-            },
-            {
-                id: 'form-password',
-                errorMessage: '',
-                attrs: '',
-                required: true,
-                name: 'password',
-                value: '',
-                type: 'password',
-                placeholder: 'Enter password placeholder',
-                label: "Password",
-            },
-        ],
+        actionUrl: form.vars.action,
+        name: form.vars.name,
+        method: form.vars.method,
+        children: form.children,
     } %}
 
     <mp-login>
-        <form action="{{ formData.actionUrl }}">
-            {% for formField in formData.childrens %}
-                <spy-form-item error="{{ formField.errorMessage }}" for="{{ formField.id }}">
-                    {{ formField.label }}
+        <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
+            {% for formField in formData.children if formField.vars.block_prefixes[1] != 'hidden' %}
+                <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default }}">
+                    {{ formField.vars.label | trans }}
                     <spy-input
                         control
-                        id="{{ formField.id }}"
-                        attrs="{{ formField.attrs }}"
-                        required="{{ formField.required }}"
-                        name="{{ formField.name }}"
-                        value="{{ formField.value }}"
-                        type="{{ formField.type }}"
-                        placeholder="{{ formField.placeholder }}"
+                        id="{{ formField.vars.id }}"
+                        attrs=""
+                        required="{{ formField.vars.required }}"
+                        name="{{ formField.vars.full_name }}"
+                        value="{{ formField.vars.value }}"
+                        type="{{ formField.vars.block_prefixes[2] }}"
+                        placeholder="{{ formField.vars.attr.placeholder | default }}"
                     ></spy-input>
                 </spy-form-item>
             {% endfor %}
 
-            <spy-button type="submit">Login</spy-button>
+            <input type="hidden" name="{{ formData.children._token.vars.full_name }}" value="{{ formData.children._token.vars.value }}">
+
+            <spy-button type="submit">{{ 'Login' | trans }}</spy-button>
         </form>
     </mp-login>
 {% endblock %}
