@@ -25,7 +25,7 @@ class SalesController extends AbstractController
     protected const PARAM_BACK_URL = 'back-url';
 
     protected const MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED = 'Order Custom Reference was successfully changed.';
-    protected const MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED = 'Order Custom Reference was not changed.';
+    protected const MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED = 'Order Custom Reference has not been changed.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -59,7 +59,7 @@ class OrderCustomReferenceForm extends AbstractType
             static::FIELD_ORDER_CUSTOM_REFERENCE,
             TextType::class,
             [
-                'label' => 'Order Custom Reference',
+                'label' => 'Custom Order Reference',
                 'constraints' => [
                     new Length(['max' => static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH]),
                 ],
