@@ -56,7 +56,6 @@ class PaymentDataHelper extends Module
 
         $paymentProviderEntity = SpyPaymentProviderQuery::create()
             ->filterByPaymentProviderKey($paymentProviderTransfer->getPaymentProviderKey())
-            ->filterByName($paymentProviderTransfer->getName())
             ->findOneOrCreate();
 
         $paymentProviderEntity->fromArray($paymentProviderTransfer->modifiedToArray());
