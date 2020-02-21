@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturn\Persistence;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,4 +15,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class SalesReturnEntityManager extends AbstractEntityManager implements SalesReturnEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function updateOrderItem(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $salesOrderItemEntity = $this->getFactory()
+            ->getSalesOrderItemPropelQuery()
+            ->filterByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem())
+            ->findOne();
+
+        $salesOrderItemEntity->fromArray($itemTransfer->modifiedToArray());
+
+        $salesOrderItemEntity->save();
+
+        return $itemTransfer;
+    }
 }

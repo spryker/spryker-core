@@ -331,4 +331,18 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array;
+
+    /**
+     * Specification:
+     * - Requires OrderTransfer::orderReference to be set.
+     * - Expands item with order reference information.
+     * - Copies OrderTransfer::orderReference to Item::orderReference for each order item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandItemWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 }

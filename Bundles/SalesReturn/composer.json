@@ -5,9 +5,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/calculation-extension": "^1.0.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/sales": "^11.0.0",
+    "spryker/sales": "^11.4.3",
     "spryker/sales-return-extension": "^1.0.0",
     "spryker/store": "^1.9.0",
     "spryker/uuid-behavior": "^1.0.0",
@@ -15,6 +16,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -40,5 +43,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/oms": "ADD SUGGEST DESCRIPTION"
   }
 }

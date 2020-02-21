@@ -60,6 +60,7 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int"/>
         <property name="uuid" type="string"/>
+        <property name="remunerationAmount" type="int"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">

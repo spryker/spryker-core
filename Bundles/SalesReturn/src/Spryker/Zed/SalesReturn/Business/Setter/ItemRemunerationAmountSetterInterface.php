@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReturn\Persistence;
+namespace Spryker\Zed\SalesReturn\Business\Setter;
 
 use Generated\Shared\Transfer\ItemTransfer;
 
-interface SalesReturnEntityManagerInterface
+interface ItemRemunerationAmountSetterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return void
      */
-    public function updateOrderItem(ItemTransfer $itemTransfer): ItemTransfer;
+    public function setItemRemunerationAmount(ItemTransfer $itemTransfer): void;
 }
