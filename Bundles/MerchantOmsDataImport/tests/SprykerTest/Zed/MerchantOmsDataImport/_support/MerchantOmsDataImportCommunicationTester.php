@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\MerchantOmsDataImport;
 
 use Codeception\Actor;
-use Orm\Zed\MerchantOms\Persistence\SpyMerchantOmsProcessQuery;
+use Orm\Zed\Merchant\Persistence\SpyMerchant;
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
 
 /**
  * Inherited Methods
@@ -33,16 +35,45 @@ class MerchantOmsDataImportCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function ensureMerchantOmsProcessTableIsEmpty(): void
+    public function ensureStateMachineProcessTableIsEmpty(): void
     {
-        $this->ensureDatabaseTableIsEmpty($this->getMerchantOmsProcessPropelQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getStateMachineProcessPropelQuery());
     }
 
     /**
-     * @return \Orm\Zed\MerchantOms\Persistence\SpyMerchantOmsProcessQuery
+     * @return void
      */
-    protected function getMerchantOmsProcessPropelQuery(): SpyMerchantOmsProcessQuery
+    public function assertStateMachineProcessDatabaseTableContainsData(): void
     {
-        return SpyMerchantOmsProcessQuery::create();
+        $this->assertTrue(
+            $this->getStateMachineProcessPropelQuery()->exists(),
+            'Expected at least one entry in the database table but database table is empty.'
+        );
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant|null
+     */
+    public function findMerchantByKey(string $key): ?SpyMerchant
+    {
+        return $this->getMerchantPropelQuery()->filterByMerchantKey($key)->findOne();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function getMerchantPropelQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery
+     */
+    protected function getStateMachineProcessPropelQuery(): SpyStateMachineProcessQuery
+    {
+        return SpyStateMachineProcessQuery::create();
     }
 }

@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\Zed\MerchantOmsDataImport\Communication\Plugin\MerchantOmsProcessDataImportPlugin;
+use Spryker\Zed\MerchantOmsDataImport\Communication\Plugin\DataImport\MerchantOmsProcessDataImportPlugin;
 
 /**
  * Auto-generated group annotations
@@ -40,7 +40,7 @@ class MerchantOmsProcessDataImportPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->ensureMerchantOmsProcessTableIsEmpty();
+        $this->tester->ensureStateMachineProcessTableIsEmpty();
     }
 
     /**
@@ -50,7 +50,7 @@ class MerchantOmsProcessDataImportPluginTest extends Unit
     {
         parent::tearDown();
 
-        $this->tester->ensureMerchantOmsProcessTableIsEmpty();
+        $this->tester->ensureStateMachineProcessTableIsEmpty();
     }
 
     /**
@@ -78,7 +78,7 @@ class MerchantOmsProcessDataImportPluginTest extends Unit
 
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertNotNull($merchantEntity->getFkMerchantOmsProcess());
-        $this->tester->assertMerchantOmsDatabaseTablesContainsData();
+        $this->assertNotNull($merchantEntity->getFkStateMachineProcess());
+        $this->tester->assertStateMachineProcessDatabaseTableContainsData();
     }
 }

@@ -252,7 +252,9 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     }
 
     /**
-     * @inheritDoc
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
      */
     public function findMerchantOrderItem(MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer): ?MerchantOrderItemTransfer
     {

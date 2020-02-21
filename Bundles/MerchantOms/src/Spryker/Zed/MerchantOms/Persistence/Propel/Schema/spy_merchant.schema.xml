@@ -5,10 +5,10 @@
           package="src.Orm.Zed.Merchant.Persistence">
 
     <table name="spy_merchant" identifierQuoting="true">
-        <column name="fk_merchant_oms_process" required="false" type="INTEGER"/>
+        <column name="fk_state_machine_process" required="false" type="INTEGER"/>
 
-        <foreign-key name="spy_merchant-fk_merchant_oms_process" foreignTable="spy_merchant_oms_process" phpName="SpyMerchantOmsProcess">
-            <reference local="fk_merchant_oms_process" foreign="id_merchant_oms_process"/>
+        <foreign-key name="spy_merchant-fk_state_machine_process" foreignTable="spy_state_machine_process" phpName="SpyStateMachineProcess">
+            <reference local="fk_state_machine_process" foreign="id_state_machine_process"/>
         </foreign-key>
     </table>
 

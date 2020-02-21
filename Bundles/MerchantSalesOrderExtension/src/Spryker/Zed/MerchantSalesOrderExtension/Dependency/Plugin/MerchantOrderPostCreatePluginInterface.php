@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\MerchantOrderResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 /**
@@ -23,7 +22,7 @@ interface MerchantOrderPostCreatePluginInterface
      *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderResponseTransfer
+     * @return void
      */
-    public function postCreate(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderResponseTransfer;
+    public function postCreate(MerchantOrderTransfer $merchantOrderTransfer): void;
 }

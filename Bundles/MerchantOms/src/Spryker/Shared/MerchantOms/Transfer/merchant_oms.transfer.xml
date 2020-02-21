@@ -8,6 +8,10 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
+    <transfer name="Merchant">
+        <property name="fkStateMachineProcess" type="int"/>
+    </transfer>
+
     <transfer name="MerchantOrderItem">
         <property name="fkStateMachineItemState" type="int"/>
         <property name="idMerchantOrderItem" type="int"/>
@@ -30,14 +34,6 @@
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
-    <transfer name="MerchantOrderItemResponse">
-        <property name="isSuccessful" type="bool"/>
-    </transfer>
-
-    <transfer name="MerchantOmsEvent">
-        <property name="eventName" type="string"/>
-    </transfer>
-
     <transfer name="StateMachineProcess">
         <property name="processName" type="string"/>
         <property name="stateMachineName" type="string"/>
@@ -46,6 +42,11 @@
     <transfer name="StateMachineItem">
         <property name="idItemState" type="int"/>
         <property name="identifier" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerRequest">
+        <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
 
 </transfers>

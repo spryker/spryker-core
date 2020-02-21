@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantOms;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeBridge;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeBridge;
 
 /**
@@ -16,6 +17,7 @@ use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeBri
  */
 class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const FACADE_STATE_MACHINE = 'FACADE_STATE_MACHINE';
 
     /**
@@ -26,6 +28,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addMerchantFacade($container);
         $container = $this->addStateMachineFacade($container);
 
         return $container;
@@ -40,6 +43,20 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STATE_MACHINE, function (Container $container) {
             return new MerchantOmsToStateMachineFacadeBridge($container->getLocator()->stateMachine()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
+            return new MerchantOmsToMerchantFacadeBridge($container->getLocator()->merchant()->facade());
         });
 
         return $container;

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Communication\Plugin\MerchantSalesOrder;
 
-use Generated\Shared\Transfer\MerchantOrderResponseTransfer;
+use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface;
@@ -16,22 +16,22 @@ use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostC
  * @method \Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
  */
-class MerchantOmsMerchantOrderPostCreatePlugin extends AbstractPlugin implements MerchantOrderPostCreatePluginInterface
+class EventTriggerMerchantOrderPostCreatePlugin extends AbstractPlugin implements MerchantOrderPostCreatePluginInterface
 {
     /**
      * {@inheritDoc}
      * - Dispatches initial oms event for each merchant order item.
-     * - Returns MerchantOrderResponse::isSuccessful = true if at least one transition has been completed.
-     * - Returns MerchantOrderResponse::isSuccessful = false otherwise.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderResponseTransfer
+     * @return void
      */
-    public function postCreate(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderResponseTransfer
+    public function postCreate(MerchantOrderTransfer $merchantOrderTransfer): void
     {
-        return $this->getFacade()->dispatchNewMerchantOrderEvent($merchantOrderTransfer);
+        $this->getFacade()->triggerForNewMerchantOrderItems(
+            (new MerchantOmsTriggerRequestTransfer())->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems())
+        );
     }
 }

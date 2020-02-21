@@ -58,8 +58,10 @@ class MerchantOmsBusinessTester extends Actor
         $merchantOmsFacade = new MerchantOmsFacade();
         $merchantOmsConfig = new MerchantOmsConfigMock();
         $merchantOmsBusinessFactory = new MerchantOmsBusinessFactory();
+        $merchantOmsDependencyProvider = new MerchantOmsDependencyProvider();
         $container = new Container();
 
+        $merchantOmsDependencyProvider->provideBusinessLayerDependencies($container);
         $merchantOmsConfig->setMerchantOmsDefaultProcessName($merchantOmsDefaultProcessName);
         $container->set(MerchantOmsDependencyProvider::FACADE_STATE_MACHINE, function () use ($stateMachineHandler) {
             return new MerchantOmsToStateMachineFacadeBridge($this->createStateMachineFacade($stateMachineHandler));

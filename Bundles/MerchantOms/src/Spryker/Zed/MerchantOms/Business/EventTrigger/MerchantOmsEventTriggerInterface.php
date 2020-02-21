@@ -5,19 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantOms\Business;
+namespace Spryker\Zed\MerchantOms\Business\EventTrigger;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 
-interface MerchantOmsFacadeInterface
+interface MerchantOmsEventTriggerInterface
 {
     /**
-     * Specification:
-     * - Requires MerchantOmsTriggerRequest.merchantOrderItems and MerchantOmsTriggerRequest.merchantOrderItems.orderItem.
-     * - Dispatches an initial merchant oms event for each merchant order item.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
      * @return void
@@ -25,13 +19,6 @@ interface MerchantOmsFacadeInterface
     public function triggerForNewMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void;
 
     /**
-     * Specification:
-     * - Requires MerchantOmsTriggerRequest.merchantOrderItems.
-     * - Requires MerchantOmsTriggerRequest.merchantOmsEventName.
-     * - Dispatches a merchant oms event for each merchant order item.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
      * @return void

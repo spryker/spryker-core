@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MerchantOmsDataImportFacade extends AbstractFacade implements MerchantOmsDataImportFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer

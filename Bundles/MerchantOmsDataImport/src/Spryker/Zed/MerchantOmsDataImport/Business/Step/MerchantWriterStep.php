@@ -5,24 +5,27 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\MerchantOmsDataImport\Business\MerchantOmsProcess\Step;
+namespace Spryker\Zed\MerchantOmsDataImport\Business\Step;
 
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantOmsDataImport\Business\MerchantOmsProcess\DataSet\MerchantOmsProcessDataSetInterface;
+use Spryker\Zed\MerchantOmsDataImport\Business\DataSet\MerchantOmsProcessDataSetInterface;
 
 class MerchantWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantOmsProcessDataSetInterface::MERCHANT_KEY,
-        MerchantOmsProcessDataSetInterface::FK_MERCHANT_OMS_PROCESS,
+        MerchantOmsProcessDataSetInterface::FK_STATE_MACHINE_PROCESS,
     ];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return void
      */
@@ -30,11 +33,16 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     {
         $this->validateDataSet($dataSet);
 
+        $merchantKey = $dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_KEY];
         $merchantEntity = $this->createMerchantPropelQuery()
-            ->filterByMerchantKey($dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_KEY])
+            ->filterByMerchantKey($merchantKey)
             ->findOne();
 
-        $merchantEntity->setFkMerchantOmsProcess($dataSet[MerchantOmsProcessDataSetInterface::FK_MERCHANT_OMS_PROCESS]);
+        if (!$merchantEntity) {
+            throw new EntityNotFoundException(sprintf('Could not find merchant by key "%s"', $merchantKey));
+        }
+
+        $merchantEntity->setFkStateMachineProcess($dataSet[MerchantOmsProcessDataSetInterface::FK_STATE_MACHINE_PROCESS]);
         $merchantEntity->save();
     }
 
@@ -49,27 +57,16 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
      * @return void
      */
     protected function validateDataSet(DataSetInterface $dataSet): void
     {
         foreach (static::REQUIRED_DATA_SET_KEYS as $requiredDataSetKey) {
-            $this->validateRequireDataSetByKey($dataSet, $requiredDataSetKey);
-        }
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param string $requiredDataSetKey
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
-     * @return void
-     */
-    protected function validateRequireDataSetByKey(DataSetInterface $dataSet, string $requiredDataSetKey): void
-    {
-        if (!$dataSet[$requiredDataSetKey]) {
-            throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
+            if (!$dataSet[$requiredDataSetKey]) {
+                throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
+            }
         }
     }
 }

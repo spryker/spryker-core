@@ -40,10 +40,10 @@ interface MerchantSalesOrderFacadeInterface
 
     /**
      * Specification
-     * - Requires MerchantOrderItem::idMerchantOrderItem.
-     * - Updates existing merchant order item in database.
-     * - Returns MerchantOrderItemResponseTransfer::isSuccessful = false when merchant order item not found.
-     * - Returns MerchantOrderItemResponseTransfer::isSuccessful = true otherwise.
+     * - Requires MerchantOrderItem.idMerchantOrderItem.
+     * - Updates existing merchant order item based on MerchantOrderItem.idMerchantOrderItem in database.
+     * - Returns MerchantOrderItemResponseTransfer.isSuccessful = false when merchant order item not found.
+     * - Returns MerchantOrderItemResponseTransfer.isSuccessful = true otherwise.
      *
      * @api
      *

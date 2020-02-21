@@ -7,17 +7,11 @@
 
 namespace Spryker\Zed\MerchantOms\Business;
 
-use Generated\Shared\Transfer\MerchantOmsEventTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemTransfer;
-use Generated\Shared\Transfer\MerchantOrderResponseTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\MerchantOms\Business\MerchantOmsBusinessFactory getFactory()
- * @method \Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface getRepository()
  */
 class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInterface
 {
@@ -26,15 +20,13 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderResponseTransfer
+     * @return void
      */
-    public function dispatchNewMerchantOrderEvent(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderResponseTransfer
+    public function triggerForNewMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void
     {
-        return $this->getFactory()
-            ->createMerchantOmsEventDispatcher()
-            ->dispatchNewMerchantOrderEvent($merchantOrderTransfer);
+        $this->getFactory()->createMerchantOmsEventTrigger()->triggerForNewMerchantOrderItems($merchantOmsTriggerRequestTransfer);
     }
 
     /**
@@ -42,36 +34,12 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
-     * @param \Generated\Shared\Transfer\MerchantOmsEventTransfer $merchantOmsEventTransfer
+     * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
+     * @return void
      */
-    public function dispatchMerchantOrderItemEvent(
-        MerchantOrderItemTransfer $merchantOrderItemTransfer,
-        MerchantOmsEventTransfer $merchantOmsEventTransfer
-    ): MerchantOrderItemResponseTransfer {
-        return $this->getFactory()
-            ->createMerchantOmsEventDispatcher()
-            ->dispatchMerchantOrderItemEvent($merchantOrderItemTransfer, $merchantOmsEventTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
-     * @param \Generated\Shared\Transfer\MerchantOmsEventTransfer $merchantOmsEventTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
-     */
-    public function dispatchMerchantOrderItemsEvent(
-        MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer,
-        MerchantOmsEventTransfer $merchantOmsEventTransfer
-    ): MerchantOrderItemResponseTransfer {
-        return $this->getFactory()
-            ->createMerchantOmsEventDispatcher()
-            ->dispatchMerchantOrderItemsEvent($merchantOrderItemCollectionTransfer, $merchantOmsEventTransfer);
+    public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void
+    {
+        $this->getFactory()->createMerchantOmsEventTrigger()->triggerEventForMerchantOrderItems($merchantOmsTriggerRequestTransfer);
     }
 }

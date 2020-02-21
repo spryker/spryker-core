@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderItem;
+namespace Spryker\Zed\MerchantSalesOrder\Business\Writer;
 
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
@@ -16,7 +16,7 @@ use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInter
 
 class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
 {
-    protected const MERCHANT_ORDER_ITEM_NOT_FOUND = 'Merchant order item not found';
+    protected const MESSAGE_MERCHANT_ORDER_ITEM_NOT_FOUND = 'Merchant order item not found.';
 
     /**
      * @var \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface
@@ -53,7 +53,7 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
             ->setIdMerchantOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
 
         if (!$this->merchantSalesOrderRepository->findMerchantOrderItem($merchantOrderItemCriteriaFilterTransfer)) {
-            return $this->addResponseMessage($merchantOrderItemResponseTransfer, static::MERCHANT_ORDER_ITEM_NOT_FOUND);
+            return $this->addErrorMessage($merchantOrderItemResponseTransfer, static::MESSAGE_MERCHANT_ORDER_ITEM_NOT_FOUND);
         }
 
         $merchantOrderItemTransfer = $this->merchantSalesOrderEntityManager->updateMerchantOrderItem($merchantOrderItemTransfer);
@@ -69,7 +69,7 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
      */
-    protected function addResponseMessage(MerchantOrderItemResponseTransfer $merchantOrderItemResponseTransfer, string $message): MerchantOrderItemResponseTransfer
+    protected function addErrorMessage(MerchantOrderItemResponseTransfer $merchantOrderItemResponseTransfer, string $message): MerchantOrderItemResponseTransfer
     {
         return $merchantOrderItemResponseTransfer
             ->setIsSuccessful(false)

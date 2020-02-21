@@ -9,8 +9,9 @@ namespace Spryker\Zed\MerchantOmsDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
-use Spryker\Zed\MerchantOmsDataImport\Business\MerchantOmsProcess\Step\MerchantOmsProcessWriterStep;
-use Spryker\Zed\MerchantOmsDataImport\Business\MerchantOmsProcess\Step\MerchantWriterStep;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\MerchantOmsDataImport\Business\Step\MerchantWriterStep;
+use Spryker\Zed\MerchantOmsDataImport\Business\Step\StateMachineProcessWriterStep;
 
 /**
  * @method \Spryker\Zed\MerchantOmsDataImport\MerchantOmsDataImportConfig getConfig()
@@ -18,17 +19,17 @@ use Spryker\Zed\MerchantOmsDataImport\Business\MerchantOmsProcess\Step\MerchantW
 class MerchantOmsDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantOmsDataImport\Business\MerchantOmsProcess\Step\MerchantOmsProcessWriterStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createMerchantOmsProcessWriterStep(): MerchantOmsProcessWriterStep
+    public function createStateMachineProcessWriterStep(): DataImportStepInterface
     {
-        return new MerchantOmsProcessWriterStep();
+        return new StateMachineProcessWriterStep();
     }
 
     /**
-     * @return \Spryker\Zed\MerchantOmsDataImport\Business\MerchantOmsProcess\Step\MerchantWriterStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createMerchantWriterStep(): MerchantWriterStep
+    public function createMerchantWriterStep(): DataImportStepInterface
     {
         return new MerchantWriterStep();
     }
@@ -42,7 +43,7 @@ class MerchantOmsDataImportBusinessFactory extends DataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
-            ->addStep($this->createMerchantOmsProcessWriterStep())
+            ->addStep($this->createStateMachineProcessWriterStep())
             ->addStep($this->createMerchantWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);

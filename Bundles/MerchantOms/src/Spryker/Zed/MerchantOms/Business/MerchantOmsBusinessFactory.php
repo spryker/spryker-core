@@ -8,21 +8,35 @@
 namespace Spryker\Zed\MerchantOms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantOms\Business\MerchantOms\MerchantOmsEventDispatcher;
-use Spryker\Zed\MerchantOms\Business\MerchantOms\MerchantOmsEventDispatcherInterface;
-use Spryker\Zed\MerchantOms\Business\MerchantOmsProcess\MerchantOmsProcessReader;
-use Spryker\Zed\MerchantOms\Business\MerchantOmsProcess\MerchantOmsProcessReaderInterface;
-use Spryker\Zed\MerchantOms\Business\MerchantOrderItem\MerchantOrderItemMapper;
-use Spryker\Zed\MerchantOms\Business\MerchantOrderItem\MerchantOrderItemMapperInterface;
+use Spryker\Zed\MerchantOms\Business\EventTrigger\MerchantOmsEventTrigger;
+use Spryker\Zed\MerchantOms\Business\EventTrigger\MerchantOmsEventTriggerInterface;
+use Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReader;
+use Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReaderInterface;
+use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
- * @method \Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface getRepository()
  */
 class MerchantOmsBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReaderInterface
+     */
+    public function createStateMachineProcessReader(): StateMachineProcessReaderInterface
+    {
+        return new StateMachineProcessReader($this->getMerchantFacade(), $this->getStateMachineFacade(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOms\Business\EventTrigger\MerchantOmsEventTriggerInterface
+     */
+    public function createMerchantOmsEventTrigger(): MerchantOmsEventTriggerInterface
+    {
+        return new MerchantOmsEventTrigger($this->getStateMachineFacade(), $this->createStateMachineProcessReader());
+    }
+
     /**
      * @return \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface
      */
@@ -32,31 +46,10 @@ class MerchantOmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantOms\Business\MerchantOrderItem\MerchantOrderItemMapperInterface
+     * @return \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface
      */
-    public function createMerchantOrderItemMapper(): MerchantOrderItemMapperInterface
+    public function getMerchantFacade(): MerchantOmsToMerchantFacadeInterface
     {
-        return new MerchantOrderItemMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantOms\Business\MerchantOmsProcess\MerchantOmsProcessReaderInterface
-     */
-    public function createMerchantOrderProcessReader(): MerchantOmsProcessReaderInterface
-    {
-        return new MerchantOmsProcessReader($this->getRepository(), $this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantOms\Business\MerchantOms\MerchantOmsEventDispatcherInterface
-     */
-    public function createMerchantOmsEventDispatcher(): MerchantOmsEventDispatcherInterface
-    {
-        return new MerchantOmsEventDispatcher(
-            $this->getStateMachineFacade(),
-            $this->createMerchantOrderItemMapper(),
-            $this->createMerchantOrderProcessReader(),
-            $this->getConfig()
-        );
+        return $this->getProvidedDependency(MerchantOmsDependencyProvider::FACADE_MERCHANT);
     }
 }

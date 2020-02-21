@@ -72,7 +72,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
             );
         }
 
-        $this->executePostCreatePlugins($merchantOrderCollectionTransfer);
+        $this->executeMerchantOrderPostCreatePlugins($merchantOrderCollectionTransfer);
 
         return $merchantOrderCollectionTransfer;
     }
@@ -82,7 +82,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
      *
      * @return void
      */
-    protected function executePostCreatePlugins(MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer): void
+    protected function executeMerchantOrderPostCreatePlugins(MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer): void
     {
         foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
             foreach ($this->merchantOrderPostCreatePlugins as $merchantOrderPostCreatePlugin) {
