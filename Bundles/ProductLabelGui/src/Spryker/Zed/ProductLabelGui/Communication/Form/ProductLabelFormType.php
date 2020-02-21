@@ -188,7 +188,7 @@ class ProductLabelFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @return $this
      */
     protected function addStoreRelationField(FormBuilderInterface $builder)
     {
@@ -201,7 +201,7 @@ class ProductLabelFormType extends AbstractType
             ]
         );
 
-        return $builder;
+        return $this;
     }
 
     /**
