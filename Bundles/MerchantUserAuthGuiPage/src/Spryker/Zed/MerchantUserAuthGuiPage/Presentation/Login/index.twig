@@ -14,14 +14,14 @@
                 <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default('') }}">
                     {{ formField.vars.label | trans }}
                     <spy-input
-                            control
-                            id="{{ formField.vars.id }}"
-                            attrs=""
-                            required="{{ formField.vars.required }}"
-                            name="{{ formField.vars.full_name }}"
-                            value="{{ formField.vars.value }}"
-                            type="{{ formField.vars.block_prefixes[2] }}"
-                            placeholder="{{ formField.vars.attr.placeholder | default('') }}"
+                        control
+                        id="{{ formField.vars.id }}"
+                        attrs=""
+                        required="{{ formField.vars.required }}"
+                        name="{{ formField.vars.full_name }}"
+                        value="{{ formField.vars.value }}"
+                        type="{{ formField.vars.block_prefixes[2] }}"
+                        placeholder="{{ formField.vars.attr.placeholder | default('') }}"
                     ></spy-input>
                 </spy-form-item>
             {% endfor %}
