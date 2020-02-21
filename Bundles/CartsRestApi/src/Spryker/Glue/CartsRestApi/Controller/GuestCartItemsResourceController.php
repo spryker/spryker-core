@@ -27,7 +27,7 @@ class GuestCartItemsResourceController extends AbstractController
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
      *              "required": true,
-     *              "description": "Guest customer unique ID"
+     *              "description": "Guest customer unique ID."
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
@@ -60,7 +60,7 @@ class GuestCartItemsResourceController extends AbstractController
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
      *              "required": true,
-     *              "description": "Guest customer unique ID"
+     *              "description": "Guest customer unique ID."
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
@@ -94,7 +94,7 @@ class GuestCartItemsResourceController extends AbstractController
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
      *              "required": true,
-     *              "description": "Guest customer unique ID"
+     *              "description": "Guest customer unique ID."
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {

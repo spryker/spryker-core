@@ -41,11 +41,12 @@ class ParameterSpecificationComponent implements ParameterSpecificationComponent
         }
 
         $propertyData = [];
-        $propertyData[$this->parameterComponentTransfer->getRefName()][ParameterComponentTransfer::NAME] = $this->parameterComponentTransfer->getName();
-        $propertyData[$this->parameterComponentTransfer->getRefName()][ParameterComponentTransfer::IN] = $this->parameterComponentTransfer->getIn();
-        $propertyData[$this->parameterComponentTransfer->getRefName()][ParameterComponentTransfer::DESCRIPTION] = $this->parameterComponentTransfer->getDescription();
-        $propertyData[$this->parameterComponentTransfer->getRefName()][ParameterComponentTransfer::SCHEMA] = $this->parameterComponentTransfer->getSchema()->toArray();
-        $propertyData[$this->parameterComponentTransfer->getRefName()][ParameterComponentTransfer::REQUIRED] = $this->parameterComponentTransfer->getRequired();
+        $refName = $this->parameterComponentTransfer->getRefName();
+        $propertyData[$refName][ParameterComponentTransfer::NAME] = $this->parameterComponentTransfer->getName();
+        $propertyData[$refName][ParameterComponentTransfer::IN] = $this->parameterComponentTransfer->getIn();
+        $propertyData[$refName][ParameterComponentTransfer::DESCRIPTION] = $this->parameterComponentTransfer->getDescription();
+        $propertyData[$refName][ParameterComponentTransfer::SCHEMA] = $this->parameterComponentTransfer->getSchema()->toArray();
+        $propertyData[$refName][ParameterComponentTransfer::REQUIRED] = $this->parameterComponentTransfer->getRequired();
 
         return $propertyData;
     }

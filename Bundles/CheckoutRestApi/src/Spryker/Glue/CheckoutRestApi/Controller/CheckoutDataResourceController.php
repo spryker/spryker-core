@@ -36,7 +36,7 @@ class CheckoutDataResourceController extends AbstractController
      *                  "name": "X-Anonymous-Customer-Unique-Id",
      *                  "in": "header",
      *                  "required": false,
-     *                  "description": "Guest customer unique ID"
+     *                  "description": "Guest customer unique ID."
      *              }
      *          ],
      *          "responses": {

@@ -153,27 +153,59 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     {
         $tags = [];
 
-        $requestMethods = [
+        foreach ($data as $path) {
+            $tags = array_merge($tags, $this->getTagFromPath($path));
+        }
+
+        $tags = array_unique($tags);
+        asort($tags);
+
+        return $this->formatTags($tags);
+    }
+
+    /**
+     * @param array $path
+     *
+     * @return string[]
+     */
+    protected function getTagFromPath(array $path): array
+    {
+        $tags = [];
+
+        foreach ($this->getRequestMethods() as $requestMethod) {
+            if (!empty($path[$requestMethod][PathMethodComponentTransfer::TAGS])) {
+                $tags = array_merge($tags, $path[$requestMethod][PathMethodComponentTransfer::TAGS]);
+            }
+        }
+
+        return $tags;
+    }
+
+    /**
+     * @param string[] $tags
+     *
+     * @return array
+     */
+    protected function formatTags(array $tags): array
+    {
+        $formattedTags = [];
+        foreach ($tags as $tag) {
+            $formattedTags[] = ['name' => $tag];
+        }
+
+        return $formattedTags;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getRequestMethods(): array
+    {
+        return [
             strtolower(Request::METHOD_POST),
             strtolower(Request::METHOD_PATCH),
             strtolower(Request::METHOD_GET),
             strtolower(Request::METHOD_DELETE),
         ];
-
-        foreach ($data as $path) {
-            foreach ($requestMethods as $requestMethod) {
-                if (!empty($path[$requestMethod][PathMethodComponentTransfer::TAGS])) {
-                    $tags = array_merge($tags, $path[$requestMethod][PathMethodComponentTransfer::TAGS]);
-                }
-            }
-        }
-
-        asort($tags);
-
-        return array_values(
-            array_map(function ($item) {
-                return ['name' => $item];
-            }, array_unique($tags))
-        );
     }
 }

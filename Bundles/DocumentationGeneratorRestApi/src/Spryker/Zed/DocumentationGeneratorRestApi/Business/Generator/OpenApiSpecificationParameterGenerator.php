@@ -91,8 +91,12 @@ class OpenApiSpecificationParameterGenerator implements ParameterGeneratorInterf
      *
      * @return \Generated\Shared\Transfer\ParameterTransfer
      */
-    protected function createParameter(string $refName, string $in, string $description, string $name): ParameterTransfer
-    {
+    protected function createParameter(
+        string $refName,
+        string $in,
+        string $description,
+        string $name
+    ): ParameterTransfer {
         $parameter = new ParameterTransfer();
         $parameter->setRefName($refName);
         $parameter->setIn($in);

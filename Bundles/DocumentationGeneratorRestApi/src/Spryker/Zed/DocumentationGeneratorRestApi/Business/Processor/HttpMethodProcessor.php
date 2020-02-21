@@ -48,24 +48,24 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface
      */
-    protected $parametersGenerator;
+    protected $parameterGenerator;
 
     /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface $pathGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface $schemaGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface $securitySchemeGenerator
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface $parametersGenerator
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface $parameterGenerator
      */
     public function __construct(
         PathGeneratorInterface $pathGenerator,
         SchemaGeneratorInterface $schemaGenerator,
         SecuritySchemeGeneratorInterface $securitySchemeGenerator,
-        ParameterGeneratorInterface $parametersGenerator
+        ParameterGeneratorInterface $parameterGenerator
     ) {
         $this->pathGenerator = $pathGenerator;
         $this->schemaGenerator = $schemaGenerator;
         $this->securitySchemeGenerator = $securitySchemeGenerator;
-        $this->parametersGenerator = $parametersGenerator;
+        $this->parameterGenerator = $parameterGenerator;
     }
 
     /**
@@ -97,7 +97,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      */
     public function getGeneratedParameters(): array
     {
-        return $this->parametersGenerator->getParameters();
+        return $this->parameterGenerator->getParameters();
     }
 
     /**
@@ -485,6 +485,6 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      */
     protected function getFullResource(string $parentResourceType, string $resource): string
     {
-        return $parentResourceType . ($parentResourceType ? '-' : '') . $resource;
+        return ($parentResourceType ? $parentResourceType . '-' : '') . $resource;
     }
 }
