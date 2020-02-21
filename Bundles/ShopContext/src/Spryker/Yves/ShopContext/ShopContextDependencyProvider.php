@@ -43,7 +43,7 @@ class ShopContextDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface[]
+     * @return \Spryker\Shared\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface[]
      */
     protected function getShopContextExpanderPlugins(): array
     {

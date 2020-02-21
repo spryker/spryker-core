@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ShopContextTransfer;
 class ShopContextProvider implements ShopContextProviderInterface
 {
     /**
-     * @var \Spryker\Glue\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface[]
+     * @var \Spryker\Shared\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface[]
      */
     protected $shopContextExpanderPlugins;
 
     /**
-     * @param \Spryker\Glue\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface[] $shopContextExpanderPlugins
+     * @param \Spryker\Shared\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface[] $shopContextExpanderPlugins
      */
     public function __construct(array $shopContextExpanderPlugins)
     {
