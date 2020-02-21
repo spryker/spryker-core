@@ -80,7 +80,7 @@ class MerchantSwitcher implements MerchantSwitcherInterface
         $quoteTransfer->setMerchantReference($merchantReference);
 
         if ($this->quoteFacade->getStorageStrategy() === static::STORAGE_STRATEGY_DATABASE) {
-            $quoteTransfer = $this->quoteFacade->updateQuote($quoteTransfer)->getQuoteTransfer();
+            $quoteTransfer = $this->quoteFacade->updateQuote($quoteTransfer)->getQuoteTransfer() ?? $quoteTransfer;
         }
 
         return (new MerchantSwitchResponseTransfer())->setQuote($quoteTransfer);
