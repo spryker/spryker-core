@@ -45,6 +45,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/oms": "ADD SUGGEST DESCRIPTION"
+    "spryker/oms": "If you want to use Oms command plugins."
   }
 }
