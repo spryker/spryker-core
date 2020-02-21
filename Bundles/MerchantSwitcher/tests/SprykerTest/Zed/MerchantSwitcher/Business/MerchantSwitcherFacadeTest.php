@@ -35,7 +35,7 @@ class MerchantSwitcherFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSwitchMerchantIfThereIsReplacement(): void
+    public function testSwitchMerchantReplacesProductOffersInQuote(): void
     {
         // Arrange
         $merchantTransfer1 = $this->tester->haveMerchant();
@@ -83,7 +83,7 @@ class MerchantSwitcherFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSwitchMerchantIfThereIsNotReplacement(): void
+    public function testSwitchMerchantDoesNothingIfNoReplacementFound(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();

@@ -26,7 +26,7 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
     /**
      * {@inheritDoc}
      * - Goes through QuoteTransfer.items and compares ItemTransfer.merchantReference with QuoteTransfer.merchantReference.
-     * - If values are not equal the plugin returns a failure response with an error message inside.
+     * - If values are not equal the plugin returns a failure response with an error messages inside.
      *
      * @api
      *
@@ -35,7 +35,7 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         if (!$this->getConfig()->isMerchantSwitcherEnabled()) {
             return true;
