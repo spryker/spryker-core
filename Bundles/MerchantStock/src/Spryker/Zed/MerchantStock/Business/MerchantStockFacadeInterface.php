@@ -25,4 +25,16 @@ interface MerchantStockFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
     public function createMerchantStockByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+
+    /**
+     * Specification:
+     * - Fills MerchantTransfer.stockCollection with related stocks.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function expandMerchantWithStocks(MerchantTransfer $merchantTransfer): MerchantTransfer;
 }
