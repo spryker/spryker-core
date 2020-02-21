@@ -32,13 +32,18 @@ class RestUserValidator implements RestUserValidatorInterface
      */
     public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
+        $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
         foreach ($this->restUserValidatorPlugins as $restUserValidatorPlugin) {
-            $restErrorCollectionTransfer = $restUserValidatorPlugin->validate($restRequest);
-            if ($restErrorCollectionTransfer) {
-                return $restErrorCollectionTransfer;
+            $restErrorMessageTransfer = $restUserValidatorPlugin->validate($restRequest);
+            if ($restErrorMessageTransfer) {
+                $restErrorCollectionTransfer->addRestError($restErrorMessageTransfer);
             }
         }
 
-        return null;
+        if (!$restErrorCollectionTransfer->getRestErrors()->count()) {
+            return null;
+        }
+
+        return $restErrorCollectionTransfer;
     }
 }

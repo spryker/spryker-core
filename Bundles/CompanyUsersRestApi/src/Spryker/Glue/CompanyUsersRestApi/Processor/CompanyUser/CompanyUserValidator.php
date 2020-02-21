@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser;
 
-use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -31,9 +30,9 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
+    public function validate(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
         if (!$this->isCompanyUserResource($restRequest)) {
             return null;
@@ -43,13 +42,10 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
             return null;
         }
 
-        return (new RestErrorCollectionTransfer())
-            ->addRestError(
-                (new RestErrorMessageTransfer())
-                    ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_REST_USER_IS_NOT_A_COMPANY_USER)
-                    ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_REST_USER_IS_NOT_A_COMPANY_USER)
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
-            );
+        return (new RestErrorMessageTransfer())
+            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_REST_USER_IS_NOT_A_COMPANY_USER)
+            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_REST_USER_IS_NOT_A_COMPANY_USER)
+            ->setStatus(Response::HTTP_BAD_REQUEST);
     }
 
     /**

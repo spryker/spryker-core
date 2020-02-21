@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\RestErrorCollectionTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface RestUserValidatorPluginInterface
@@ -21,7 +21,7 @@ interface RestUserValidatorPluginInterface
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer;
+    public function validate(RestRequestInterface $restRequest): ?RestErrorMessageTransfer;
 }

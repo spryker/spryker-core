@@ -87,7 +87,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestResponseHeaders(),
             $this->createRestHttpRequestValidator(),
             $this->createRestRequestValidator(),
-            $this->createUserValidator(),
+            $this->createRestUserValidator(),
             $this->createRestResourceBuilder(),
             $this->createRestControllerCallbacks(),
             $this->getConfig(),
@@ -351,7 +351,7 @@ class GlueApplicationFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface
      */
-    public function createUserValidator(): RestUserValidatorInterface
+    public function createRestUserValidator(): RestUserValidatorInterface
     {
         return new RestUserValidator(
             $this->getRestUserValidatorPlugins()
