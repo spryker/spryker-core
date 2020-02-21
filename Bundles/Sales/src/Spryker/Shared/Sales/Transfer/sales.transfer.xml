@@ -59,6 +59,11 @@
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
         <property name="filterFields" type="FilterField[]" singular="filterField"/>
+        <property name="format" type="OrderListFormat"/>
+    </transfer>
+
+    <transfer name="OrderListFormat">
+        <property name="expandWithItems" type="bool"/>
     </transfer>
 
     <transfer name="FilterField">
