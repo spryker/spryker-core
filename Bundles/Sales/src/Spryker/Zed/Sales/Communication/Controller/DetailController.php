@@ -41,8 +41,6 @@ class DetailController extends AbstractController
 
         $orderTransfer = $this->getFacade()->findOrderByIdSalesOrder($idSalesOrder);
 
-//        dd($orderTransfer->getTotals());
-
         if ($orderTransfer === null) {
             $this->addErrorMessage('Sales order #%d not found.', ['%d' => $idSalesOrder]);
 
