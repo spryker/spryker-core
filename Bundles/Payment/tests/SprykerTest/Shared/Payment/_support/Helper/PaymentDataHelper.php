@@ -59,6 +59,7 @@ class PaymentDataHelper extends Module
             ->filterByName($paymentProviderTransfer->getName())
             ->findOneOrCreate();
 
+        $paymentProviderEntity->fromArray($paymentProviderTransfer->modifiedToArray());
         $paymentProviderEntity->save();
 
         $paymentProviderTransfer->setIdPaymentProvider($paymentProviderEntity->getIdPaymentProvider());
