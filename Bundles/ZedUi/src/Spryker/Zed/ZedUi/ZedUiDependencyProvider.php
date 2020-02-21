@@ -2,13 +2,14 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ZedUi;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceBridge;
 
 class ZedUiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -34,7 +35,7 @@ class ZedUiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addUtilEncodingService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return $container->getLocator()->utilEncoding()->service();
+            return new ZedUiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

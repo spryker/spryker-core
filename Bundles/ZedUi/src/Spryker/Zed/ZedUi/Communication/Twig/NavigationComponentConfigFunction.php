@@ -2,13 +2,13 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ZedUi\Communication\Twig;
 
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface;
 
 class NavigationComponentConfigFunction extends TwigFunction
 {
@@ -16,14 +16,14 @@ class NavigationComponentConfigFunction extends TwigFunction
     protected const DEFAULT_ITEM_ICON = 'fa-angle-double-right';
 
     /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     * @var \Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(UtilEncodingServiceInterface $utilEncodingService)
+    public function __construct(ZedUiToUtilEncodingServiceInterface $utilEncodingService)
     {
         parent::__construct();
         $this->utilEncodingService = $utilEncodingService;
