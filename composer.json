@@ -337,6 +337,7 @@
     "spryker/merchant-sales-order": "*",
     "spryker/merchant-search": "*",
     "spryker/merchant-user": "*",
+    "spryker/merchant-user-auth-gui-page": "*",
     "spryker/messenger": "*",
     "spryker/messenger-extension": "*",
     "spryker/module-finder": "*",

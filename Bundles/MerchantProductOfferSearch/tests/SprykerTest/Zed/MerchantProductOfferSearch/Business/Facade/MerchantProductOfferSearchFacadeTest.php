@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantProductOfferSearch\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
@@ -27,6 +28,16 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 class MerchantProductOfferSearchFacadeTest extends Unit
 {
     /**
+     * @uses \Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapper::KEY_MERCHANT_NAMES
+     */
+    protected const KEY_MERCHANT_NAMES = 'names';
+
+    /**
+     * @uses \Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapper::KEY_MERCHANT_REFERENCES
+     */
+    protected const KEY_MERCHANT_REFERENCES = 'references';
+
+    /**
      * @var \SprykerTest\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchCommunicationTester
      */
     protected $tester;
@@ -34,7 +45,7 @@ class MerchantProductOfferSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetMerchantNamesByProductAbstractIds(): void
+    public function testGetProductAbstractMerchantsByProductAbstractIds(): void
     {
         // Arrange
         $productConcrete1 = $this->tester->haveProduct([
@@ -61,20 +72,31 @@ class MerchantProductOfferSearchFacadeTest extends Unit
             ProductOfferTransfer::IS_ACTIVE => true,
         ]);
 
+        $productAbstractMerchantTransfer1 = (new ProductAbstractMerchantTransfer())
+            ->setIdProductAbstract($productConcrete1->getFkProductAbstract())
+            ->setMerchantNames([$merchant->getName()])
+            ->setMerchantReferences([$merchant->getMerchantReference()]);
+
+        $productAbstractMerchantTransfer2 = (new ProductAbstractMerchantTransfer())
+            ->setIdProductAbstract($productConcrete2->getFkProductAbstract())
+            ->setMerchantNames([$merchant->getName()])
+            ->setMerchantReferences([$merchant->getMerchantReference()]);
+
         $expectedResult = [
-            $productConcrete1->getFkProductAbstract() => [$merchant->getName()],
-            $productConcrete2->getFkProductAbstract() => [$merchant->getName()],
+            $productAbstractMerchantTransfer2,
+            $productAbstractMerchantTransfer1,
         ];
 
         // Act
-        $merchantNames = $this->tester
+        $productAbstractMerchantTransfers = $this->tester
             ->getFacade()
-            ->getMerchantNamesByProductAbstractIds(
-                array_keys($expectedResult)
-            );
+            ->getProductAbstractMerchantDataByProductAbstractIds([
+                $productConcrete1->getFkProductAbstract(),
+                $productConcrete2->getFkProductAbstract(),
+            ]);
 
         // Assert
-        $this->assertIsArray($merchantNames);
-        $this->assertEquals($merchantNames, $expectedResult);
+        $this->assertIsArray($productAbstractMerchantTransfers);
+        $this->assertEquals($productAbstractMerchantTransfers, $expectedResult);
     }
 }
