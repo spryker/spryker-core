@@ -5,34 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OrderCustomReference\Business\Saver;
+namespace Spryker\Zed\OrderCustomReference\Business\Writer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface;
 use Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface;
 
-class OrderCustomReferenceSaver implements OrderCustomReferenceSaverInterface
+class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface
-     */
-    protected $orderCustomReferenceValidator;
-
     /**
      * @var \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface
      */
     protected $orderCustomReferenceEntityManager;
 
     /**
-     * @param \Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface $orderCustomReferenceValidator
      * @param \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager
      */
-    public function __construct(
-        OrderCustomReferenceValidatorInterface $orderCustomReferenceValidator,
-        OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager
-    ) {
-        $this->orderCustomReferenceValidator = $orderCustomReferenceValidator;
+    public function __construct(OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager)
+    {
         $this->orderCustomReferenceEntityManager = $orderCustomReferenceEntityManager;
     }
 
@@ -45,13 +35,6 @@ class OrderCustomReferenceSaver implements OrderCustomReferenceSaverInterface
     public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $saveOrderTransfer->requireIdSalesOrder();
-
-        $isOrderCustomReferenceLengthValid = $this->orderCustomReferenceValidator
-            ->isOrderCustomReferenceLengthValid($quoteTransfer->getOrderCustomReference());
-
-        if (!$isOrderCustomReferenceLengthValid) {
-            return;
-        }
 
         $this->orderCustomReferenceEntityManager->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
     }

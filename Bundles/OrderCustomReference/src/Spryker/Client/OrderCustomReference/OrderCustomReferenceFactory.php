@@ -11,6 +11,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface;
 use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetter;
 use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetterInterface;
+use Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidator;
+use Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface;
 
 class OrderCustomReferenceFactory extends AbstractFactory
 {
@@ -19,7 +21,18 @@ class OrderCustomReferenceFactory extends AbstractFactory
      */
     public function createOrderCustomReferenceSetter(): OrderCustomReferenceSetterInterface
     {
-        return new OrderCustomReferenceSetter($this->getPersistentCartClient());
+        return new OrderCustomReferenceSetter(
+            $this->getPersistentCartClient(),
+            $this->createOrderCustomReferenceValidator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface
+     */
+    public function createOrderCustomReferenceValidator(): OrderCustomReferenceValidatorInterface
+    {
+        return new OrderCustomReferenceValidator();
     }
 
     /**

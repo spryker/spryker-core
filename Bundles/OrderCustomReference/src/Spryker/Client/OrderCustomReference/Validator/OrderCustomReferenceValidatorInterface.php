@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OrderCustomReference\Business\Validator;
+namespace Spryker\Client\OrderCustomReference\Validator;
 
 interface OrderCustomReferenceValidatorInterface
 {

@@ -7,25 +7,38 @@
 
 namespace Spryker\Client\OrderCustomReference\Setter;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface;
+use Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface;
 
 class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
 {
+    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
+
     /**
      * @var \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface
      */
     protected $persistentCartClient;
 
     /**
-     * @param \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient
+     * @var \Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface
      */
-    public function __construct(OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient)
-    {
+    protected $orderCustomReferenceValidator;
+
+    /**
+     * @param \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface $orderCustomReferenceValidator
+     */
+    public function __construct(
+        OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient,
+        OrderCustomReferenceValidatorInterface $orderCustomReferenceValidator
+    ) {
         $this->persistentCartClient = $persistentCartClient;
+        $this->orderCustomReferenceValidator = $orderCustomReferenceValidator;
     }
 
     /**
@@ -37,6 +50,13 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
     {
         $quoteTransfer->requireIdQuote()
             ->requireCustomer();
+
+        $isOrderCustomReferenceLengthValid = $this->orderCustomReferenceValidator
+            ->isOrderCustomReferenceLengthValid($quoteTransfer->getOrderCustomReference());
+
+        if (!$isOrderCustomReferenceLengthValid) {
+            return $this->createQuoteResponseTransferWithError(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
+        }
 
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequestTransfer($quoteTransfer);
 
@@ -57,5 +77,19 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->setCustomer($quoteTransfer->getCustomer())
             ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function createQuoteResponseTransferWithError(string $message): QuoteResponseTransfer
+    {
+        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);
+
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addError($quoteErrorTransfer);
     }
 }

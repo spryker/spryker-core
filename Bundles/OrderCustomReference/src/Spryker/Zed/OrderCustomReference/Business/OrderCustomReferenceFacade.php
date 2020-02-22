@@ -30,7 +30,7 @@ class OrderCustomReferenceFacade extends AbstractFacade implements OrderCustomRe
     public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $this->getFactory()
-            ->createOrderCustomReferenceSaver()
+            ->createOrderCustomReferenceWriter()
             ->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
     }
 

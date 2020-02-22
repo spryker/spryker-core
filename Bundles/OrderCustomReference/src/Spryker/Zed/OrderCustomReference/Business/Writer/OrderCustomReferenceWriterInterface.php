@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OrderCustomReference\Business\Saver;
+namespace Spryker\Zed\OrderCustomReference\Business\Writer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
-interface OrderCustomReferenceSaverInterface
+interface OrderCustomReferenceWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

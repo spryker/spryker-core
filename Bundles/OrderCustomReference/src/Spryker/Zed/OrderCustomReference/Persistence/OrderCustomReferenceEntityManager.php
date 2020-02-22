@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class OrderCustomReferenceEntityManager extends AbstractEntityManager implements OrderCustomReferenceEntityManagerInterface
 {
+    protected const COLUMN_ORDER_CUSTOM_REFERENCE = 'OrderCustomReference';
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
@@ -24,14 +25,14 @@ class OrderCustomReferenceEntityManager extends AbstractEntityManager implements
      */
     public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $salesOrderQuery = $this->getFactory()->getSalesOrderPropelQuery();
-        $salesOrderEntity = $salesOrderQuery->filterByIdSalesOrder($saveOrderTransfer->getIdSalesOrder())->findOne();
+        $salesOrderQuery = $this->getFactory()
+            ->getSalesOrderPropelQuery()
+            ->filterByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
-        if (!$salesOrderEntity) {
+        if (!$salesOrderQuery->findOne()) {
             return;
         }
 
-        $salesOrderEntity->setOrderCustomReference($quoteTransfer->getOrderCustomReference());
-        $salesOrderEntity->save();
+        $salesOrderQuery->update([static::COLUMN_ORDER_CUSTOM_REFERENCE => $quoteTransfer->getOrderCustomReference()]);
     }
 }

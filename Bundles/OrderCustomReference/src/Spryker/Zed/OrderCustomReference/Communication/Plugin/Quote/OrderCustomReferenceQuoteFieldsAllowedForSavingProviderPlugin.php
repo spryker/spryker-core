@@ -19,7 +19,7 @@ class OrderCustomReferenceQuoteFieldsAllowedForSavingProviderPlugin extends Abst
 {
     /**
      * {@inheritDoc}
-     * - Returns order custom reference related Quote fields allowed for saving.
+     * - Returns QuoteTransfer fields related to order custom reference.
      *
      * @api
      *
