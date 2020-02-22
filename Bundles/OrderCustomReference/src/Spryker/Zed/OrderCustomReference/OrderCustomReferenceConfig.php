@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OrderCustomReference;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OrderCustomReferenceConfig extends AbstractBundleConfig
@@ -16,6 +17,8 @@ class OrderCustomReferenceConfig extends AbstractBundleConfig
      */
     public function getOrderCustomReferenceQuoteFieldsAllowedForSaving(): array
     {
-        return [];
+        return [
+            QuoteTransfer::ORDER_CUSTOM_REFERENCE,
+        ];
     }
 }
