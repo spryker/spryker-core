@@ -8,14 +8,13 @@
 namespace Spryker\Client\OrderCustomReference\Setter;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface OrderCustomReferenceSetterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $orderCustomReference
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function setOrderCustomReference(?string $orderCustomReference): QuoteResponseTransfer;
 }

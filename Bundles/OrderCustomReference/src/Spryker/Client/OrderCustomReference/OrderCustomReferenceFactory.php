@@ -9,6 +9,7 @@ namespace Spryker\Client\OrderCustomReference;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface;
+use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToQuoteClientInterface;
 use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetter;
 use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetterInterface;
 use Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidator;
@@ -23,7 +24,8 @@ class OrderCustomReferenceFactory extends AbstractFactory
     {
         return new OrderCustomReferenceSetter(
             $this->getPersistentCartClient(),
-            $this->createOrderCustomReferenceValidator()
+            $this->createOrderCustomReferenceValidator(),
+            $this->getQuoteClient()
         );
     }
 
@@ -41,5 +43,13 @@ class OrderCustomReferenceFactory extends AbstractFactory
     public function getPersistentCartClient(): OrderCustomReferenceToPersistentCartClientInterface
     {
         return $this->getProvidedDependency(OrderCustomReferenceDependencyProvider::CLIENT_PERSISTENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToQuoteClientInterface
+     */
+    public function getQuoteClient(): OrderCustomReferenceToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(OrderCustomReferenceDependencyProvider::CLIENT_QUOTE);
     }
 }

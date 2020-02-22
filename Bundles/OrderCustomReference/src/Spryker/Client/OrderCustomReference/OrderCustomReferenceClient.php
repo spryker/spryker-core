@@ -8,7 +8,6 @@
 namespace Spryker\Client\OrderCustomReference;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -21,14 +20,14 @@ class OrderCustomReferenceClient extends AbstractClient implements OrderCustomRe
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $orderCustomReference
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function setOrderCustomReference(?string $orderCustomReference): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createOrderCustomReferenceSetter()
-            ->setOrderCustomReference($quoteTransfer);
+            ->setOrderCustomReference($orderCustomReference);
     }
 }
