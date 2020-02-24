@@ -200,9 +200,14 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
-        $shoppingListTransfer = $this->resolveShoppingList(
-            $this->createShoppingListTransfer($shoppingListItemTransfer)
-        );
+        $shoppingListTransfer = $this->createShoppingListTransfer($shoppingListItemTransfer);
+        if (!$shoppingListTransfer->getIdShoppingList()) {
+            $shoppingListTransfer = $this->shoppingListResolver
+                ->createDefaultShoppingListIfNotExists($shoppingListTransfer->getCustomerReference())
+                ->setIdCompanyUser($shoppingListTransfer->getIdCompanyUser())
+                ->setItems($shoppingListTransfer->getItems());
+        }
+
         $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
 
         $shoppingListItemResponseTransferWithValidatedPermission = $this->permissionValidator
@@ -239,23 +244,6 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
         $shoppingListItemResponseTransfer->setIsSuccess(false);
 
         return $shoppingListItemResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
-     */
-    protected function resolveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
-    {
-        if (!$shoppingListTransfer->getIdShoppingList()) {
-            return $this->shoppingListResolver
-                ->createDefaultShoppingListIfNotExists($shoppingListTransfer->getCustomerReference())
-                ->setIdCompanyUser($shoppingListTransfer->getIdCompanyUser())
-                ->setItems($shoppingListTransfer->getItems());
-        }
-
-        return $shoppingListTransfer;
     }
 
     /**

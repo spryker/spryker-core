@@ -22,12 +22,18 @@ class ShoppingListItemRestRequestReader implements ShoppingListItemRestRequestRe
      */
     public function readShoppingListItemRequestTransferFromRequest(RestRequestInterface $restRequest): ShoppingListItemRequestTransfer
     {
+        $shoppingListItemRequestTransfer = new ShoppingListItemRequestTransfer();
         $uuidShoppingList = $this->readUuidShoppingList($restRequest);
+        if (!$uuidShoppingList) {
+            return $shoppingListItemRequestTransfer
+                ->addErrorCode(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED);
+        }
+
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
 
-        return (new ShoppingListItemRequestTransfer())
+        return $shoppingListItemRequestTransfer
             ->setShoppingListUuid($uuidShoppingList)
             ->setShoppingListItem($shoppingListItemTransfer);
     }
