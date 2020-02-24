@@ -9,11 +9,8 @@ namespace Spryker\Client\OrderCustomReference;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface;
-use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToQuoteClientInterface;
 use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetter;
 use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetterInterface;
-use Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidator;
-use Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface;
 
 class OrderCustomReferenceFactory extends AbstractFactory
 {
@@ -23,18 +20,8 @@ class OrderCustomReferenceFactory extends AbstractFactory
     public function createOrderCustomReferenceSetter(): OrderCustomReferenceSetterInterface
     {
         return new OrderCustomReferenceSetter(
-            $this->getPersistentCartClient(),
-            $this->createOrderCustomReferenceValidator(),
-            $this->getQuoteClient()
+            $this->getPersistentCartClient()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface
-     */
-    public function createOrderCustomReferenceValidator(): OrderCustomReferenceValidatorInterface
-    {
-        return new OrderCustomReferenceValidator();
     }
 
     /**
@@ -43,13 +30,5 @@ class OrderCustomReferenceFactory extends AbstractFactory
     public function getPersistentCartClient(): OrderCustomReferenceToPersistentCartClientInterface
     {
         return $this->getProvidedDependency(OrderCustomReferenceDependencyProvider::CLIENT_PERSISTENT_CART);
-    }
-
-    /**
-     * @return \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToQuoteClientInterface
-     */
-    public function getQuoteClient(): OrderCustomReferenceToQuoteClientInterface
-    {
-        return $this->getProvidedDependency(OrderCustomReferenceDependencyProvider::CLIENT_QUOTE);
     }
 }

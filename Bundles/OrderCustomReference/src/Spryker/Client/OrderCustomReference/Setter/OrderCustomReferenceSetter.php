@@ -7,14 +7,11 @@
 
 namespace Spryker\Client\OrderCustomReference\Setter;
 
-use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface;
-use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToQuoteClientInterface;
-use Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface;
 
 class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
 {
@@ -26,48 +23,25 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
     protected $persistentCartClient;
 
     /**
-     * @var \Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface
-     */
-    protected $orderCustomReferenceValidator;
-
-    /**
-     * @var \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToQuoteClientInterface
-     */
-    protected $quoteClient;
-
-    /**
      * @param \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient
-     * @param \Spryker\Client\OrderCustomReference\Validator\OrderCustomReferenceValidatorInterface $orderCustomReferenceValidator
-     * @param \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToQuoteClientInterface $quoteClient
      */
-    public function __construct(
-        OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient,
-        OrderCustomReferenceValidatorInterface $orderCustomReferenceValidator,
-        OrderCustomReferenceToQuoteClientInterface $quoteClient
-    ) {
+    public function __construct(OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient)
+    {
         $this->persistentCartClient = $persistentCartClient;
-        $this->orderCustomReferenceValidator = $orderCustomReferenceValidator;
-        $this->quoteClient = $quoteClient;
     }
 
     /**
-     * @param string|null $orderCustomReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $orderCustomReference
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(?string $orderCustomReference): QuoteResponseTransfer
-    {
-        $quoteTransfer = $this->quoteClient->getQuote();
-
+    public function setOrderCustomReference(
+        QuoteTransfer $quoteTransfer,
+        string $orderCustomReference
+    ): QuoteResponseTransfer {
         $quoteTransfer->requireIdQuote()
             ->requireCustomer();
-
-        $isOrderCustomReferenceLengthValid = $this->orderCustomReferenceValidator
-            ->isOrderCustomReferenceLengthValid($orderCustomReference);
-
-        if (!$isOrderCustomReferenceLengthValid) {
-            return $this->createQuoteResponseTransferWithError(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
-        }
 
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequestTransfer(
             $quoteTransfer->setOrderCustomReference($orderCustomReference)
@@ -90,19 +64,5 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->setCustomer($quoteTransfer->getCustomer())
             ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-    }
-
-    /**
-     * @param string $message
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function createQuoteResponseTransferWithError(string $message): QuoteResponseTransfer
-    {
-        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);
-
-        return (new QuoteResponseTransfer())
-            ->setIsSuccessful(false)
-            ->addError($quoteErrorTransfer);
     }
 }
