@@ -106,6 +106,7 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
         $refreshTokenData = json_decode($refreshToken, true);
         if ($refreshTokenData[static::KEY_CLIENT_ID] !== $clientId) {
             $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::REFRESH_TOKEN_CLIENT_FAILED, $request));
+
             throw OAuthServerException::invalidRefreshToken('Token is not linked to client');
         }
 

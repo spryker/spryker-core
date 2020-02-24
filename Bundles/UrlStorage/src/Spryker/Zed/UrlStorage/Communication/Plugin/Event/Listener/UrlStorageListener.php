@@ -37,7 +37,8 @@ class UrlStorageListener extends AbstractPlugin implements EventBulkHandlerInter
         $this->preventTransaction();
         $urlIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === UrlEvents::ENTITY_SPY_URL_DELETE ||
+        if (
+            $eventName === UrlEvents::ENTITY_SPY_URL_DELETE ||
             $eventName === UrlEvents::URL_UNPUBLISH
         ) {
             $this->getFacade()->unpublishUrl($urlIds);

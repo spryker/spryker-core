@@ -44,7 +44,8 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        if ($this->isFullTextSearch($searchQuery)
+        if (
+            $this->isFullTextSearch($searchQuery)
             || $this->hasActiveSortParam($requestParameters)
             || !$this->hasActiveCategoryFacet($requestParameters)
         ) {

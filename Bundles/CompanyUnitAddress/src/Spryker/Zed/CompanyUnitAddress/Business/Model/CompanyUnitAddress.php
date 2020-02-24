@@ -174,7 +174,8 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     ): void {
         $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
 
-        if ($companyUnitAddressTransfer->getFkCompanyBusinessUnit()
+        if (
+            $companyUnitAddressTransfer->getFkCompanyBusinessUnit()
             && $companyUnitAddressTransfer->getIsDefaultBilling()
         ) {
             $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();

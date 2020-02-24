@@ -27,8 +27,10 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
         $priceProductMerchantRelationshipEntity = $this->findExistingPriceProductStoreEntity($dataSet);
 
         $idPriceProductStore = $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRICE_PRODUCT_STORE];
-        if ($priceProductMerchantRelationshipEntity
-            && $priceProductMerchantRelationshipEntity->getFkPriceProductStore() === $idPriceProductStore) {
+        if (
+            $priceProductMerchantRelationshipEntity
+            && $priceProductMerchantRelationshipEntity->getFkPriceProductStore() === $idPriceProductStore
+        ) {
             return;
         }
 

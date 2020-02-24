@@ -34,9 +34,8 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
      */
-    public function __construct(
-        RowFormatterInterface $rowFormatter
-    ) {
+    public function __construct(RowFormatterInterface $rowFormatter)
+    {
         $this->rowFormatter = $rowFormatter;
     }
 
