@@ -22,8 +22,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SingleMerchantPreReloadItemsPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
 {
     /**
-     * Specification:
-     *   - This plugin is execute before reloading cart items, with this plugin you can modify quote before reloading it.
+     * {@inheritDoc}
+     * - Finds product offer substitution for items in cart depending on the selected merchant.
+     * - Changes ItemTransfer.productOfferReference to the value from the substitution merchant reference.
+     * - Changes ItemTransfer.merchantReference property to the value from the substitution product offer reference.
+     * - Requires MerchantSwitchRequestTransfer.quote.
      *
      * @api
      *

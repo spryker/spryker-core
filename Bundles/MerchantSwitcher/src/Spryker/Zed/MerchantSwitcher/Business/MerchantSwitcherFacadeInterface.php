@@ -14,8 +14,9 @@ interface MerchantSwitcherFacadeInterface
 {
     /**
      * Specification:
-     * - Switches ItemTransfer.productOfferReference property according to selected merchant reference.
-     * - Switches ItemTransfer.merchantReference property according to selected merchant reference.
+     * - Requires MerchantSwitchRequestTransfer.merchantReference.
+     * - Requires MerchantSwitchRequestTransfer.quote.
+     * - Sets QuoteTransfer.merchantReference with value from MerchantSwitchRequestTransfer.merchantReference.
      * - Updates a quote in the database if a storage strategy is `database`.
      *
      * @api
