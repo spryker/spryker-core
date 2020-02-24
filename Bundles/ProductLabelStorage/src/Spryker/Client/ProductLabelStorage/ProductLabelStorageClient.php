@@ -67,6 +67,13 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      */
     public function findLabels(array $idProductLabels, $localeName, ?string $storeName = null)
     {
+        if (!$storeName) {
+            trigger_error(
+                'Pass the $storeName parameter to be forward compatible with the next major version.',
+                E_USER_DEPRECATED
+            );
+        }
+
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
@@ -86,6 +93,13 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      */
     public function findLabelByName($labelName, $localeName, ?string $storeName = null)
     {
+        if (!$storeName) {
+            trigger_error(
+                'Pass the $storeName parameter to be forward compatible with the next major version.',
+                E_USER_DEPRECATED
+            );
+        }
+
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
