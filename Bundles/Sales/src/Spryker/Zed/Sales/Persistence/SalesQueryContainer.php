@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
+use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -314,5 +318,174 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->select(['Count'])
             ->groupBySku()
             ->orderByCount();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function setSalesOrderQuerySearchFilters(
+        SpySalesOrderQuery $salesOrderQuery,
+        OrderListTransfer $orderListTransfer
+    ): SpySalesOrderQuery {
+        $orderListTransfer->requireCustomer();
+
+        $customerReference = $orderListTransfer->getCustomer()->getCustomerReference();
+
+        if ($customerReference) {
+            $salesOrderQuery->filterByCustomerReference($customerReference);
+        }
+
+        $salesOrderQuery = $this->applyOrderSearchQueryJoins(
+            $salesOrderQuery,
+            $orderListTransfer->getQueryJoins()
+        );
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function applyOrderSearchQueryJoins(
+        SpySalesOrderQuery $salesOrderQuery,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): SpySalesOrderQuery {
+        $whereConditionGroups = [];
+
+        foreach ($queryJoinCollectionTransfer->getQueryJoins() as $queryJoinTransfer) {
+            $salesOrderQuery = $this->addSalesOrderQueryJoin($salesOrderQuery, $queryJoinTransfer);
+
+            if ($queryJoinTransfer->getWhereConditions()->count()) {
+                $salesOrderQuery = $this->addSalesOrderQueryWhereConditionGroup(
+                    $salesOrderQuery,
+                    $queryJoinTransfer->getWhereConditions(),
+                    $whereConditionGroups
+                );
+            }
+        }
+
+        if ($whereConditionGroups) {
+            $salesOrderQuery->where($whereConditionGroups, Criteria::LOGICAL_AND);
+        }
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\QueryJoinTransfer $queryJoinTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function addSalesOrderQueryJoin(
+        SpySalesOrderQuery $salesOrderQuery,
+        QueryJoinTransfer $queryJoinTransfer
+    ): SpySalesOrderQuery {
+        if ($queryJoinTransfer->getRelation()) {
+            return $this->addSalesOrderQueryRelationJoin($salesOrderQuery, $queryJoinTransfer);
+        }
+
+        $left = $queryJoinTransfer->getLeft();
+        $right = $queryJoinTransfer->getRight();
+
+        if ($left && $right) {
+            $salesOrderQuery->addJoin(
+                $left,
+                $right,
+                $queryJoinTransfer->getJoinType() ?? Criteria::LEFT_JOIN
+            );
+        }
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\QueryJoinTransfer $queryJoinTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function addSalesOrderQueryRelationJoin(
+        SpySalesOrderQuery $salesOrderQuery,
+        QueryJoinTransfer $queryJoinTransfer
+    ): SpySalesOrderQuery {
+        $salesOrderQuery->join(
+            $queryJoinTransfer->getRelation(),
+            $queryJoinTransfer->getJoinType() ?? Criteria::LEFT_JOIN
+        );
+
+        if ($queryJoinTransfer->getCondition()) {
+            $salesOrderQuery->addJoinCondition(
+                $queryJoinTransfer->getRelation(),
+                $queryJoinTransfer->getCondition()
+            );
+        }
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \ArrayObject|\Generated\Shared\Transfer\WhereConditionTransfer[] $whereConditionTransfers
+     * @param array $conditionGroups
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function addSalesOrderQueryWhereConditionGroup(
+        SpySalesOrderQuery $salesOrderQuery,
+        ArrayObject $whereConditionTransfers,
+        array &$conditionGroups
+    ): SpySalesOrderQuery {
+        $conditionGroupName = uniqid('', true);
+        $conditionGroups[] = $conditionGroupName;
+
+        $conditions = $this->createSalesOrderQueryWhereConditions($salesOrderQuery, $whereConditionTransfers);
+
+        $salesOrderQuery->combine(
+            $conditions,
+            Criteria::LOGICAL_OR,
+            $conditionGroupName
+        );
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \ArrayObject|\Generated\Shared\Transfer\WhereConditionTransfer[] $whereConditionTransfers
+     *
+     * @return string[]
+     */
+    protected function createSalesOrderQueryWhereConditions(
+        SpySalesOrderQuery $salesOrderQuery,
+        ArrayObject $whereConditionTransfers
+    ): array {
+        $conditions = [];
+
+        foreach ($whereConditionTransfers as $whereConditionTransfer) {
+            $column = $whereConditionTransfer->getColumn();
+            $conditionName = uniqid($column, true);
+
+            $salesOrderQuery->addCond(
+                $conditionName,
+                $column,
+                sprintf('%%%s%%', $whereConditionTransfer->getValue()),
+                $whereConditionTransfer->getComparison() ?? Criteria::ILIKE
+            );
+
+            $conditions[] = $conditionName;
+        }
+
+        return $conditions;
     }
 }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Sales\Persistence;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -68,9 +67,13 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     {
         $orderListTransfer->requireFormat();
 
-        $salesOrderQuery = $this->getFactory()->createSalesOrderQuery();
+        $salesOrderQuery = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->groupByIdSalesOrder();
 
-        $salesOrderQuery = $this->setSalesOrderSearchFilters($salesOrderQuery, $orderListTransfer);
+        $salesOrderQuery = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->setSalesOrderQuerySearchFilters($salesOrderQuery, $orderListTransfer);
 
         $salesOrderEntityCollection = $this->buildQueryFromCriteria($salesOrderQuery, $orderListTransfer->getFilter())
             ->setFormatter(ObjectFormatter::class)
@@ -83,32 +86,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
                 $orderListTransfer,
                 $orderListTransfer->getFormat()->getExpandWithItems()
             );
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    protected function setSalesOrderSearchFilters(
-        SpySalesOrderQuery $salesOrderQuery,
-        OrderListTransfer $orderListTransfer
-    ): SpySalesOrderQuery {
-        $orderListTransfer->requireFormat();
-        $orderListTransfer->requireCustomer();
-
-        $customerReference = $orderListTransfer->getCustomer()->getCustomerReference();
-
-        if ($customerReference) {
-            $salesOrderQuery->filterByCustomerReference($customerReference);
-        }
-
-        if ($orderListTransfer->getFormat()->getExpandWithItems()) {
-            $salesOrderQuery->joinWithItem();
-        }
-
-        return $salesOrderQuery;
     }
 
     /**
