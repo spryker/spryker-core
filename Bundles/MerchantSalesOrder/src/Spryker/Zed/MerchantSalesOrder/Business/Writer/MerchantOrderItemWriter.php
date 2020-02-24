@@ -52,7 +52,7 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
         $merchantOrderItemCriteriaFilterTransfer = (new MerchantOrderItemCriteriaFilterTransfer())
             ->setIdMerchantOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
 
-        if (!$this->merchantSalesOrderRepository->findMerchantOrderItem($merchantOrderItemCriteriaFilterTransfer)) {
+        if (!$this->merchantSalesOrderRepository->existsMerchantOrderItem($merchantOrderItemCriteriaFilterTransfer)) {
             return $this->addErrorMessage($merchantOrderItemResponseTransfer, static::MESSAGE_MERCHANT_ORDER_ITEM_NOT_FOUND);
         }
 

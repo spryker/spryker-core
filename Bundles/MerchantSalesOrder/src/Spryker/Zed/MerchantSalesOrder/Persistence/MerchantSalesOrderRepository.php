@@ -254,22 +254,14 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
+     * @return bool
      */
-    public function findMerchantOrderItem(MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer): ?MerchantOrderItemTransfer
+    public function existsMerchantOrderItem(MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer): bool
     {
         $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
         $merchantSalesOrderItemQuery = $this->applyMerchantOrderItemFilters($merchantOrderItemCriteriaFilterTransfer, $merchantSalesOrderItemQuery);
 
-        $merchantSalesOrderItemEntity = $merchantSalesOrderItemQuery->findOne();
-
-        if (!$merchantSalesOrderItemEntity) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createMerchantSalesOrderMapper()
-            ->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer($merchantSalesOrderItemEntity, new MerchantOrderItemTransfer());
+        return $merchantSalesOrderItemQuery->exists();
     }
 
     /**
