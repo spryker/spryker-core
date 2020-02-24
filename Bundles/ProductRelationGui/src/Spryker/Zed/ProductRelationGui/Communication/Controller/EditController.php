@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductRelationGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class EditController extends BaseProductRelationController
@@ -84,43 +83,5 @@ class EditController extends BaseProductRelationController
             'productRelation' => $productRelationTransfer,
             'productRuleTable' => $productRuleTable->render(),
         ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function activateAction(Request $request): RedirectResponse
-    {
-        $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
-
-        $this->getFactory()
-            ->getProductRelationFacade()
-            ->activateProductRelation($idProductRelation);
-
-        $this->addSuccessMessage(static::MESSAGE_ACTIVATE_SUCCESS);
-
-        return $this->redirectResponse($redirectUrl);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deactivateAction(Request $request): RedirectResponse
-    {
-        $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
-
-        $this->getFactory()
-            ->getProductRelationFacade()
-            ->deactivateProductRelation($idProductRelation);
-
-        $this->addSuccessMessage(static::MESSAGE_DEACTIVATE_SUCCESS);
-
-        return $this->redirectResponse($redirectUrl);
     }
 }

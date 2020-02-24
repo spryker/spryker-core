@@ -21,9 +21,9 @@ class QueryBuilderController extends AbstractController
     public function loadFilterSetAction(): JsonResponse
     {
         $filters = $this->getFactory()
-            ->getProductRelationFacade()
-            ->getJavascriptFilters();
+            ->createFilterProvider()
+            ->getFilters();
 
-        return new JsonResponse($filters);
+        return $this->jsonResponse($filters);
     }
 }

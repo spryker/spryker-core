@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductRelationGui;
 
-use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToMoneyFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToPriceProductFacadeBridge;
+use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerBridge;
@@ -28,10 +28,9 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-
-    public const PROPEL_QUERY_PRODUCT_RELATION = 'PROPER_QUERY_PRODUCT_RELATION';
 
     public const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
 
@@ -49,8 +48,24 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addMoneyFacade($container);
         $container = $this->addPriceProductFacade($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addProductRelationPropelQuery($container);
         $container = $this->addProductRelationQueryContainer($container);
+        $container = $this->addProductAttributeFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAttributeFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_ATTRIBUTE, function (Container $container) {
+            return new ProductRelationGuiToProductAttributeFacadeBridge(
+                $container->getLocator()->productAttribute()->facade()
+            );
+        });
 
         return $container;
     }
@@ -163,20 +178,6 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
                 $container->getLocator()->utilEncoding()->service()
             );
         });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductRelationPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_PRODUCT_RELATION, $container->factory(function () {
-            return SpyProductRelationQuery::create();
-        }));
 
         return $container;
     }

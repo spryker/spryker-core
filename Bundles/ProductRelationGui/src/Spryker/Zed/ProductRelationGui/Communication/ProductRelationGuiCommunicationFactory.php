@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductRelationGui\Communication;
 
 use Generated\Shared\Transfer\ProductRelationTransfer;
-use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProvider;
+use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
@@ -21,6 +22,7 @@ use Spryker\Zed\ProductRelationGui\Communication\Tabs\ProductRelationTabs;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToPriceProductFacadeInterface;
+use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface;
@@ -97,9 +99,9 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getProductFacade(),
             $this->getProductRelationQueryContainer(),
             $this->getUtilEncodingService(),
-            $productRelationTransfer,
             $this->getLocaleFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $productRelationTransfer
         );
     }
 
@@ -109,7 +111,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createProductRelationTable(): ProductRelationTable
     {
         return new ProductRelationTable(
-            $this->getProductRelationPropelQuery(),
+            $this->getProductRelationQueryContainer(),
             $this->getProductFacade(),
             $this->getConfig(),
             $this->getLocaleFacade()
@@ -131,6 +133,14 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getPriceProductFacade(),
             $idProductRelation
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProviderInterface
+     */
+    public function createFilterProvider(): FilterProviderInterface
+    {
+        return new FilterProvider($this->getProductAttributeFacade());
     }
 
     /**
@@ -174,14 +184,6 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
-     */
-    public function getProductRelationPropelQuery(): SpyProductRelationQuery
-    {
-        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_RELATION);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToMoneyFacadeInterface
      */
     public function getMoneyFacade(): ProductRelationGuiToMoneyFacadeInterface
@@ -195,5 +197,13 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getPriceProductFacade(): ProductRelationGuiToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeInterface
+     */
+    public function getProductAttributeFacade(): ProductRelationGuiToProductAttributeFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
     }
 }

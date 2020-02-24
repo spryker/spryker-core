@@ -21,6 +21,7 @@ use Spryker\Zed\ProductRelationGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface;
+use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface;
 use Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig;
 
 class ProductRelationTable extends AbstractTable
@@ -34,11 +35,6 @@ class ProductRelationTable extends AbstractTable
     public const URL_PRODUCT_RELATION_LIST = '/product-relation-gui/list/index';
     public const URL_PRODUCT_RELATION_EDIT = '/product-relation-gui/edit/index';
     public const URL_PRODUCT_RELATION_VIEW = '/product-relation-gui/view/index';
-
-    /**
-     * @var \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
-     */
-    protected $productRelationQuery;
 
     /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface
@@ -56,19 +52,23 @@ class ProductRelationTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery $productRelationQuery
+     * @var \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface
+     */
+    protected $productRelationQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig $productRelationGuiConfig
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        SpyProductRelationQuery $productRelationQuery,
+        ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer,
         ProductRelationGuiToProductFacadeInterface $productFacade,
         ProductRelationGuiConfig $productRelationGuiConfig,
         ProductRelationGuiToLocaleFacadeInterface $localeFacade
     ) {
-
-        $this->productRelationQuery = $productRelationQuery;
+        $this->productRelationQueryContainer = $productRelationQueryContainer;
         $this->productFacade = $productFacade;
         $this->productRelationGuiConfig = $productRelationGuiConfig;
         $this->localeFacade = $localeFacade;
@@ -194,25 +194,8 @@ class ProductRelationTable extends AbstractTable
      */
     protected function prepareQuery(int $idLocale): SpyProductRelationQuery
     {
-        return $this->productRelationQuery
-            ->select([
-                SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION,
-                SpyProductAbstractTableMap::COL_SKU,
-                SpyProductRelationTypeTableMap::COL_KEY,
-                SpyProductRelationTableMap::COL_IS_ACTIVE,
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-            ])
-            ->joinSpyProductAbstract()
-            ->joinSpyProductRelationProductAbstract('num_alias')
-            ->useSpyProductAbstractQuery()
-                ->useSpyProductAbstractLocalizedAttributesQuery()
-                    ->filterByFkLocale($idLocale)
-                ->endUse()
-            ->endUse()
-            ->withColumn("COUNT('num_alias')", static::COL_NUMBER_OF_RELATED_PRODUCTS)
-            ->joinSpyProductRelationType()
-            ->groupByIdProductRelation();
+        return $this->productRelationQueryContainer
+            ->queryProductRelationsWithProductCount($idLocale);
     }
 
     /**

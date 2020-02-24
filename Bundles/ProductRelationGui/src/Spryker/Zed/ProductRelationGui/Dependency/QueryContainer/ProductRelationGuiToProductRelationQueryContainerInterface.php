@@ -32,4 +32,11 @@ interface ProductRelationGuiToProductRelationQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
     public function queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation($idLocale, $idProductRelation);
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryProductRelationsWithProductCount($idLocale);
 }

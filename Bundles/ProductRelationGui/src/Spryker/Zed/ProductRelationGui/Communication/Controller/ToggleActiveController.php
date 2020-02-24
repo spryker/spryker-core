@@ -14,46 +14,49 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductRelationGui\Communication\ProductRelationGuiCommunicationFactory getFactory()
  */
-class DeleteController extends AbstractController
+class ToggleActiveController extends AbstractController
 {
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_SUCCESS = 'Relation successfully deleted.';
-    protected const MESSAGE_FAILURE = 'Failed to delete relation.';
+    protected const MESSAGE_ACTIVATE_SUCCESS = 'Relation successfully activated.';
+    protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request): RedirectResponse
+    public function activateAction(Request $request): RedirectResponse
     {
         $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
 
-        $deleted = $this->getFactory()
+        $this->getFactory()
             ->getProductRelationFacade()
-            ->deleteProductRelation($idProductRelation);
+            ->activateProductRelation($idProductRelation);
 
-        $this->addMessage($deleted);
+        $this->addSuccessMessage(static::MESSAGE_ACTIVATE_SUCCESS);
 
         return $this->redirectResponse($redirectUrl);
     }
 
     /**
-     * @param bool $deleted
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function addMessage(bool $deleted): void
+    public function deactivateAction(Request $request): RedirectResponse
     {
-        if ($deleted) {
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS);
+        $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
 
-            return;
-        }
+        $this->getFactory()
+            ->getProductRelationFacade()
+            ->deactivateProductRelation($idProductRelation);
 
-        $this->addErrorMessage(static::MESSAGE_FAILURE);
+        $this->addSuccessMessage(static::MESSAGE_DEACTIVATE_SUCCESS);
+
+        return $this->redirectResponse($redirectUrl);
     }
 }
