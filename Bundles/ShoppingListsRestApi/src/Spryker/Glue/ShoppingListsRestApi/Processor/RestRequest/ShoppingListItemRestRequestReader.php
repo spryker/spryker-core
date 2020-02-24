@@ -26,7 +26,7 @@ class ShoppingListItemRestRequestReader implements ShoppingListItemRestRequestRe
         $uuidShoppingList = $this->readUuidShoppingList($restRequest);
         if (!$uuidShoppingList) {
             return $shoppingListItemRequestTransfer
-                ->addErrorCode(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED);
+                ->addErrorIdentifier(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED);
         }
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
@@ -47,14 +47,14 @@ class ShoppingListItemRestRequestReader implements ShoppingListItemRestRequestRe
     {
         $uuidShoppingListItem = $restRequest->getResource()->getId();
         if (!$uuidShoppingListItem) {
-            return (new ShoppingListItemRequestTransfer())->addErrorCode(
-                SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED
+            return (new ShoppingListItemRequestTransfer())->addErrorIdentifier(
+                SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED
             );
         }
 
         $shoppingListItemRequestTransfer = $this->readShoppingListItemRequestTransferFromRequest($restRequest);
 
-        if (count($shoppingListItemRequestTransfer->getErrorCodes()) > 0) {
+        if (count($shoppingListItemRequestTransfer->getErrorIdentifiers()) > 0) {
             return $shoppingListItemRequestTransfer;
         }
 

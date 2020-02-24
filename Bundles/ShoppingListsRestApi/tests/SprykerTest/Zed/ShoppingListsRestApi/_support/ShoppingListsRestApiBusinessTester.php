@@ -171,7 +171,7 @@ class ShoppingListsRestApiBusinessTester extends Actor
 
         if ($shoppingListTransfer->getUuid() === static::BAD_SHOPPING_LIST_UUID) {
             $shoppingListResponseTransfer->setIsSuccess(false)
-                ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND);
+                ->addError(SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND);
 
             return $shoppingListResponseTransfer;
         }
@@ -207,7 +207,7 @@ class ShoppingListsRestApiBusinessTester extends Actor
 
         if ($shoppingListTransfer->getUuid() === static::BAD_SHOPPING_LIST_UUID) {
             $shoppingListResponseTransfer->setIsSuccess(false)
-                ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND);
+                ->addError(SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND);
 
             return $shoppingListResponseTransfer;
         }

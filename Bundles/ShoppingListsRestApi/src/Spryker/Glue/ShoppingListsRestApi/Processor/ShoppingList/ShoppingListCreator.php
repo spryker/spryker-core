@@ -63,7 +63,8 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
 
         $shoppingListResponseTransfer = $this->shoppingListsRestApiClient->createShoppingList($shoppingListTransfer);
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
-            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+            return $this->shoppingListRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
                 $shoppingListResponseTransfer->getErrors()
             );
         }

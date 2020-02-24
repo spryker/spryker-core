@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
@@ -27,14 +28,21 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
     protected $shoppingListItemMapper;
 
     /**
+     * @var \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface
+     */
+    protected $glossaryStorageClient;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapperInterface $shoppingListItemMapper
+     * @param \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        ShoppingListItemMapperInterface $shoppingListItemMapper
+        ShoppingListItemMapperInterface $shoppingListItemMapper,
+        ShoppingListsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
     ) {
-        parent::__construct($restResourceBuilder);
+        parent::__construct($restResourceBuilder, $glossaryStorageClient);
 
         $this->shoppingListItemMapper = $shoppingListItemMapper;
     }

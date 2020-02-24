@@ -48,7 +48,7 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
         }
 
         return $shoppingListItemResponseTransfer->setIsSuccess(false)
-            ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND);
+            ->addError(SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND);
     }
 
     /**
@@ -59,12 +59,12 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
     public function mapShoppingListResponseErrorsToRestCodes(
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
-        $errorCodes = [];
+        $errorIdentifiers = [];
         foreach ($shoppingListItemResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = ShoppingListsRestApiConfig::getResponseErrorMapping()[$error] ?? $error;
+            $errorIdentifiers[] = ShoppingListsRestApiConfig::getResponseErrorMapping()[$error] ?? $error;
         }
 
-        $shoppingListItemResponseTransfer->setErrors($errorCodes);
+        $shoppingListItemResponseTransfer->setErrors($errorIdentifiers);
 
         return $shoppingListItemResponseTransfer;
     }

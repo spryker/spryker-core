@@ -69,7 +69,7 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
 
         if (!$shoppingListItemTransfer) {
             return (new ShoppingListItemResponseTransfer())->setIsSuccess(false)
-                ->addError(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_NOT_FOUND);
+                ->addError(ShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_NOT_FOUND);
         }
 
         return (new ShoppingListItemResponseTransfer())->setIsSuccess(true)

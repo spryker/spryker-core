@@ -57,16 +57,18 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
             $restRequest
         );
 
-        if (count($shoppingListItemRequestTransfer->getErrorCodes()) > 0) {
-            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $shoppingListItemRequestTransfer->getErrorCodes()
+        if (count($shoppingListItemRequestTransfer->getErrorIdentifiers()) > 0) {
+            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
+                $shoppingListItemRequestTransfer->getErrorIdentifiers()
             );
         }
 
         $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->deleteShoppingListItem($shoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
-            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
                 $shoppingListItemResponseTransfer->getErrors()
             );
         }

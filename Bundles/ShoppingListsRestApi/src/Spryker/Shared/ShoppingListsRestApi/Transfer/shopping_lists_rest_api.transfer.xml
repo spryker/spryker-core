@@ -14,7 +14,7 @@
 
     <transfer name="RestShoppingListCollectionResponse">
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList"/>
-        <property name="errorCodes" type="string[]" singular="errorCode"/>
+        <property name="errorIdentifiers" type="string[]" singular="errorIdentifier"/>
     </transfer>
 
     <transfer name="RestShoppingListsAttributes">
@@ -36,7 +36,7 @@
         <property name="shoppingListItem" type="ShoppingListItem"/>
         <property name="shoppingListUuid" type="string"/>
         <property name="companyUserUuid" type="string"/>
-        <property name="errorCodes" type="string[]" singular="errorCode"/>
+        <property name="errorIdentifiers" type="string[]" singular="errorIdentifier"/>
     </transfer>
 
     <transfer name="RestShoppingListItemsAttributes">

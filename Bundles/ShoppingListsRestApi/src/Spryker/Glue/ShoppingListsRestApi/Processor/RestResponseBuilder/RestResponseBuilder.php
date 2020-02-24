@@ -10,24 +10,33 @@ namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class RestResponseBuilder implements RestResponseBuilderInterface
 {
-    protected const STATUS = 'status';
-    protected const DETAIL = 'detail';
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
+    protected $glossaryStorageClient;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
+     */
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        ShoppingListsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
+    ) {
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->glossaryStorageClient = $glossaryStorageClient;
     }
 
     /**
@@ -39,37 +48,49 @@ class RestResponseBuilder implements RestResponseBuilderInterface
     }
 
     /**
-     * @param string[] $errorCodes
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string[] $errorIdentifiers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildErrorRestResponseBasedOnErrorCodes(array $errorCodes): RestResponseInterface
+    public function buildErrorRestResponse(RestRequestInterface $restRequest, array $errorIdentifiers): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->createRestResponse();
 
-        foreach ($errorCodes as $errorCode) {
-            $restResponse->addError($this->createRestErrorMessageByErrorCode($errorCode));
+        $errorIdentifiersForTranslation = [];
+        foreach ($errorIdentifiers as $index => $errorIdentifier) {
+            $errorIdentifierMapping = ShoppingListsRestApiConfig::getErrorIdentifierToRestErrorMapping()[$errorIdentifier] ?? null;
+            if ($errorIdentifierMapping) {
+                $restResponse->addError((new RestErrorMessageTransfer())->fromArray($errorIdentifierMapping, true));
+
+                continue;
+            }
+
+            $errorIdentifiersForTranslation[] = $errorIdentifier;
+        }
+
+        $translatedErrors = $this->glossaryStorageClient->translateBulk(
+            $errorIdentifiersForTranslation,
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        foreach ($translatedErrors as $translatedError) {
+            $restResponse->addError($this->createErrorMessageTransfer($translatedError));
         }
 
         return $restResponse;
     }
 
     /**
-     * @param string $errorCode
+     * @param string $errorIdentifier
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createRestErrorMessageByErrorCode(string $errorCode): RestErrorMessageTransfer
+    protected function createErrorMessageTransfer(string $errorIdentifier): RestErrorMessageTransfer
     {
-        $errorSignature = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ??
-            [
-                static::STATUS => ShoppingListsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
-                static::DETAIL => $errorCode,
-            ];
-
         return (new RestErrorMessageTransfer())
-            ->setCode($errorCode)
-            ->setStatus($errorSignature[static::STATUS])
-            ->setDetail($errorSignature[static::DETAIL]);
+            ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_VALIDATION)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail($errorIdentifier);
     }
 }

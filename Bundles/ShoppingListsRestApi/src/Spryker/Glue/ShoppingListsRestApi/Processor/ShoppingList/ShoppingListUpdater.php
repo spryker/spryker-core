@@ -64,7 +64,8 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
         $shoppingListResponseTransfer = $this->shoppingListsRestApiClient->updateShoppingList($shoppingListTransfer);
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
-            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+            return $this->shoppingListRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
                 $shoppingListResponseTransfer->getErrors()
             );
         }

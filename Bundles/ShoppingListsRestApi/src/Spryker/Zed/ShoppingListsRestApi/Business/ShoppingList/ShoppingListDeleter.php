@@ -47,7 +47,7 @@ class ShoppingListDeleter implements ShoppingListDeleterInterface
         $shoppingListResponseTransferByUuid = $this->shoppingListFacade->findShoppingListByUuid($shoppingListTransfer);
 
         if ($shoppingListResponseTransferByUuid->getIsSuccess() === false) {
-            return $shoppingListResponseTransferByUuid->setErrors([ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND]);
+            return $shoppingListResponseTransferByUuid->setErrors([ShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND]);
         }
 
         $shoppingListTransfer = $this->shoppingListMapper->mapShoppingListResponseTransferToShoppingListTransfer(

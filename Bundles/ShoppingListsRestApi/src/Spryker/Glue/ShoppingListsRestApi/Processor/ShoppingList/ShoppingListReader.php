@@ -80,9 +80,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListCollectionResponseTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection($customerTransfer);
         $restShoppingListCollectionResponseTransfer = (new RestShoppingListCollectionResponseTransfer())
             ->setShoppingLists($shoppingListCollectionResponseTransfer->getShoppingLists());
-        if (count($restShoppingListCollectionResponseTransfer->getErrorCodes()) > 0) {
-            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $restShoppingListCollectionResponseTransfer->getErrorCodes()
+        if (count($restShoppingListCollectionResponseTransfer->getErrorIdentifiers()) > 0) {
+            return $this->shoppingListRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
+                $restShoppingListCollectionResponseTransfer->getErrorIdentifiers()
             );
         }
 
@@ -106,9 +107,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListResponseTransfer = $this->shoppingListClient->findShoppingListByUuid($shoppingListTransfer);
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
-            $errors = $shoppingListResponseTransfer->getErrors() ?: [ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND];
+            $errors = $shoppingListResponseTransfer->getErrors() ?: [ShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND];
 
-            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($errors);
+            return $this->shoppingListRestResponseBuilder->buildErrorRestResponse($restRequest, $errors);
         }
 
         return $this->shoppingListRestResponseBuilder->buildShoppingListRestResponse(

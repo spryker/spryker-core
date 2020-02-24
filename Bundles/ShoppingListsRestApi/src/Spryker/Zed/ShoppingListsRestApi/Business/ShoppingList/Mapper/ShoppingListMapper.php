@@ -37,12 +37,12 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     public function mapShoppingListResponseErrorsToRestCodes(
         ShoppingListResponseTransfer $shoppingListResponseTransfer
     ): ShoppingListResponseTransfer {
-        $errorCodes = [];
+        $errorIdentifiers = [];
         foreach ($shoppingListResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = ShoppingListsRestApiConfig::getResponseErrorMapping()[$error] ?? $error;
+            $errorIdentifiers[] = ShoppingListsRestApiConfig::getResponseErrorMapping()[$error] ?? $error;
         }
 
-        $shoppingListResponseTransfer->setErrors($errorCodes);
+        $shoppingListResponseTransfer->setErrors($errorIdentifiers);
 
         return $shoppingListResponseTransfer;
     }

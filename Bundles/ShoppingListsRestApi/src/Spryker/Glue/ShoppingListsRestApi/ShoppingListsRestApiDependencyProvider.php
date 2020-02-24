@@ -9,6 +9,7 @@ namespace Spryker\Glue\ShoppingListsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToShoppingListClientBridge;
 
 /**
@@ -17,6 +18,7 @@ use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToSh
 class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -27,6 +29,7 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = parent::provideDependencies($container);
         $container = $this->addShoppingListClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -41,6 +44,22 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
         $container->set(static::CLIENT_SHOPPING_LIST, function (Container $container) {
             return new ShoppingListsRestApiToShoppingListClientBridge(
                 $container->getLocator()->shoppingList()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new ShoppingListsRestApiToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
             );
         });
 

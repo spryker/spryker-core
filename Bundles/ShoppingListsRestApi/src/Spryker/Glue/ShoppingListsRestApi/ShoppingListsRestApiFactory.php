@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ShoppingListsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToShoppingListClientInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Expander\ShoppingListItemExpander;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Expander\ShoppingListItemExpanderInterface;
@@ -191,7 +192,8 @@ class ShoppingListsRestApiFactory extends AbstractFactory
         return new ShoppingListRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createShoppingListMapper(),
-            $this->createShoppingListItemRestResponseBuilder()
+            $this->createShoppingListItemRestResponseBuilder(),
+            $this->getGlossaryStorageClient()
         );
     }
 
@@ -202,7 +204,8 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     {
         return new ShoppingListItemRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createShoppingListItemMapper()
+            $this->createShoppingListItemMapper(),
+            $this->getGlossaryStorageClient()
         );
     }
 
@@ -212,5 +215,13 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function getShoppingListClient(): ShoppingListsRestApiToShoppingListClientInterface
     {
         return $this->getProvidedDependency(ShoppingListsRestApiDependencyProvider::CLIENT_SHOPPING_LIST);
+    }
+
+    /**
+     * @return \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): ShoppingListsRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

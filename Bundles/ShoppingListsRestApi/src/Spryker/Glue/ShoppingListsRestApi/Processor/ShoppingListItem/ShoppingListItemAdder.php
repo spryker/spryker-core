@@ -69,9 +69,10 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             $restRequest
         );
 
-        if (count($shoppingListItemRequestTransfer->getErrorCodes()) > 0) {
-            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $shoppingListItemRequestTransfer->getErrorCodes()
+        if (count($shoppingListItemRequestTransfer->getErrorIdentifiers()) > 0) {
+            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
+                $shoppingListItemRequestTransfer->getErrorIdentifiers()
             );
         }
 
@@ -83,7 +84,8 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addShoppingListItem($shoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
-            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
                 $shoppingListItemResponseTransfer->getErrors()
             );
         }

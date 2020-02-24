@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
@@ -34,16 +35,23 @@ class ShoppingListRestResponseBuilder extends RestResponseBuilder implements Sho
     protected $shoppingListItemRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface
+     */
+    protected $glossaryStorageClient;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface $shoppingListsResourceMapper
      * @param \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder
+     * @param \Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         ShoppingListMapperInterface $shoppingListsResourceMapper,
-        ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder
+        ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder,
+        ShoppingListsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
     ) {
-        parent::__construct($restResourceBuilder);
+        parent::__construct($restResourceBuilder, $glossaryStorageClient);
 
         $this->shoppingListsResourceMapper = $shoppingListsResourceMapper;
         $this->shoppingListItemRestResponseBuilder = $shoppingListItemRestResponseBuilder;

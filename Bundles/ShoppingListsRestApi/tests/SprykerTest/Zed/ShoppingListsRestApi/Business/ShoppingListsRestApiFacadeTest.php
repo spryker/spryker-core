@@ -109,7 +109,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_DUPLICATE_NAME,
         ], $shoppingListResponseTransfer->getErrors());
     }
 
@@ -161,7 +161,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_DUPLICATE_NAME,
         ], $shoppingListResponseTransfer->getErrors());
     }
 
@@ -184,7 +184,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND,
         ], $shoppingListResponseTransfer->getErrors());
     }
 
@@ -226,7 +226,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED,
         ], $shoppingListResponseTransfer->getErrors());
     }
 
@@ -248,7 +248,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND,
         ], $shoppingListResponseTransfer->getErrors());
     }
 
@@ -312,7 +312,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_WRONG_QUANTITY,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_WRONG_QUANTITY,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
 
@@ -339,7 +339,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRODUCT_NOT_FOUND,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
 
@@ -417,7 +417,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
 
@@ -445,7 +445,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_NOT_FOUND,
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_NOT_FOUND,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
 

@@ -69,9 +69,10 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
             $restRequest
         );
 
-        if (count($shoppingListItemRequestTransfer->getErrorCodes()) > 0) {
-            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $shoppingListItemRequestTransfer->getErrorCodes()
+        if (count($shoppingListItemRequestTransfer->getErrorIdentifiers()) > 0) {
+            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
+                $shoppingListItemRequestTransfer->getErrorIdentifiers()
             );
         }
 
@@ -83,7 +84,8 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
         $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->updateShoppingListItem($shoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
-            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
+                $restRequest,
                 $shoppingListItemResponseTransfer->getErrors()
             );
         }

@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface RestResponseBuilderInterface
 {
@@ -17,9 +18,10 @@ interface RestResponseBuilderInterface
     public function createRestResponse(): RestResponseInterface;
 
     /**
-     * @param string[] $errorCodes
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string[] $errorIdentifiers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildErrorRestResponseBasedOnErrorCodes(array $errorCodes): RestResponseInterface;
+    public function buildErrorRestResponse(RestRequestInterface $restRequest, array $errorIdentifiers): RestResponseInterface;
 }
