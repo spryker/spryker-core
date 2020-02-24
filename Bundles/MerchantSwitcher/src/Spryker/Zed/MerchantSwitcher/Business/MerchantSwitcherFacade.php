@@ -38,14 +38,14 @@ class MerchantSwitcherFacade extends AbstractFacade implements MerchantSwitcherF
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switchMerchantInQuoteItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function switchMerchantInQuoteItems(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantSwitcher()
-            ->switchMerchantInQuoteItems($quoteTransfer);
+            ->switchMerchantInQuoteItems($merchantSwitchRequestTransfer);
     }
 }

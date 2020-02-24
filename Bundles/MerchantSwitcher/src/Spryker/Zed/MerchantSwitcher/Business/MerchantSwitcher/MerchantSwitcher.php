@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToCartFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToMerchantProductOfferFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToQuoteFacadeInterface;
@@ -77,19 +76,26 @@ class MerchantSwitcher implements MerchantSwitcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switchMerchantInQuoteItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function switchMerchantInQuoteItems(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
     {
+        $merchantSwitchRequestTransfer
+            ->requireQuote()
+            ->requireMerchantReference();
+
+        $quoteTransfer = $merchantSwitchRequestTransfer->getQuote();
+        $merchantReference = $merchantSwitchRequestTransfer->getMerchantReference();
+
         $skus = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $skus[] = $itemTransfer->getSku();
         }
 
         $merchantProductOfferCriteriaFilterTransfer = (new MerchantProductOfferCriteriaFilterTransfer())
-            ->setMerchantReference($quoteTransfer->getMerchantReference())
+            ->setMerchantReference($merchantReference)
             ->setSkus($skus)
             ->setIsActive(true);
 
@@ -98,12 +104,13 @@ class MerchantSwitcher implements MerchantSwitcherInterface
 
         $switchedItemTransfers = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $switchedItemTransfers[] = $this->switchItemData($itemTransfer, $merchantProductOfferCollectionTransfer, $quoteTransfer->getMerchantReference());
+            $switchedItemTransfers[] = $this->switchItemData($itemTransfer, $merchantProductOfferCollectionTransfer, $merchantReference);
         }
 
         $quoteTransfer->setItems(new ArrayObject($switchedItemTransfers));
 
-        return $quoteTransfer;
+        return (new MerchantSwitchResponseTransfer())
+            ->setQuote($quoteTransfer);
     }
 
     /**

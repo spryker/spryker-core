@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSwitcher\Communication\Plugin\Cart;
 
+use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -22,7 +23,7 @@ class SingleMerchantPreReloadItemsPlugin extends AbstractPlugin implements PreRe
      * - Finds product offer substitution for items in cart depending on the selected merchant.
      * - Changes ItemTransfer.productOfferReference to the value from the substitution merchant reference.
      * - Changes ItemTransfer.merchantReference property to the value from the substitution product offer reference.
-     * - Requires MerchantSwitchRequestTransfer.quote.
+     * - Requires QuoteTransfer.merchantReference.
      *
      * @api
      *
@@ -32,6 +33,14 @@ class SingleMerchantPreReloadItemsPlugin extends AbstractPlugin implements PreRe
      */
     public function preReloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->switchMerchantInQuoteItems($quoteTransfer);
+        $quoteTransfer->requireMerchantReference();
+
+        $merchantSwitcherRequestTransfer = (new MerchantSwitchRequestTransfer())
+            ->setMerchantReference($quoteTransfer->getMerchantReference())
+            ->setQuote($quoteTransfer);
+
+        return $this->getFacade()
+            ->switchMerchantInQuoteItems($merchantSwitcherRequestTransfer)
+            ->getQuote();
     }
 }

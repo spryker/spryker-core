@@ -65,10 +65,14 @@ class MerchantSwitcherFacadeTest extends Unit
             ],
         ]);
 
-        $quoteTransfer->setMerchantReference($merchantTransfer2->getMerchantReference());
+        $merchantSwitchRequestTransfer = (new MerchantSwitchRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setMerchantReference($merchantTransfer2->getMerchantReference());
 
         // Act
-        $quoteTransfer = $this->tester->getFacade()->switchMerchantInQuoteItems($quoteTransfer);
+        $quoteTransfer = $this->tester->getFacade()
+            ->switchMerchantInQuoteItems($merchantSwitchRequestTransfer)
+            ->getQuote();
 
         //Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
@@ -92,7 +96,7 @@ class MerchantSwitcherFacadeTest extends Unit
 
         $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $this->tester->haveCustomer(),
-            QuoteTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            QuoteTransfer::MERCHANT_REFERENCE => uniqid(),
             QuoteTransfer::ITEMS => [
                 [
                     ItemTransfer::SKU => $productOfferTransfer->getConcreteSku(),
@@ -104,8 +108,14 @@ class MerchantSwitcherFacadeTest extends Unit
             ],
         ]);
 
+        $merchantSwitchRequestTransfer = (new MerchantSwitchRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setMerchantReference($merchantTransfer->getMerchantReference());
+
         // Act
-        $quoteTransfer = $this->tester->getFacade()->switchMerchantInQuoteItems($quoteTransfer);
+        $quoteTransfer = $this->tester->getFacade()
+            ->switchMerchantInQuoteItems($merchantSwitchRequestTransfer)
+            ->getQuote();
 
         // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */

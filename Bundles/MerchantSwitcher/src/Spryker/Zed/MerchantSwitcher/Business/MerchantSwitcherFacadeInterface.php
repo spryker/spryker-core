@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantSwitcher\Business;
 
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MerchantSwitcherFacadeInterface
 {
@@ -34,12 +33,13 @@ interface MerchantSwitcherFacadeInterface
      * - Changes ItemTransfer.productOfferReference to the value from the substitution merchant reference.
      * - Changes ItemTransfer.merchantReference property to the value from the substitution product offer reference.
      * - Requires MerchantSwitchRequestTransfer.quote.
+     * - Requires MerchantSwitchRequestTransfer.merchantReference.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switchMerchantInQuoteItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function switchMerchantInQuoteItems(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer;
 }
