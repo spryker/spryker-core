@@ -17,10 +17,8 @@ use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageBusinessFactory;
 use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade;
-use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryItemStorageUnpublishListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStoragePublishListener;
-use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageUnpublishListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelPublishStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelStorageListener;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -183,69 +181,6 @@ class ProductLabelStorageListenerTest extends Unit
         $data = $spyProductLabelDictionaryStorage->getData();
         $labelsCount = $this->tester->getProductLabelsCountByLocaleName($localeName);
         $this->assertSame($labelsCount, count($data['items']));
-    }
-
-    /**
-     * @return void
-     */
-    public function testProductLabelDictionaryStorageUnpublishListener(): void
-    {
-        // Arrange
-        $productLabelDictionaryStorageUnpublishListener = new ProductLabelDictionaryStorageUnpublishListener();
-        $productLabelDictionaryStorageUnpublishListener->setFacade($this->getProductLabelStorageFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer()),
-        ];
-
-        // Act
-        $productLabelDictionaryStorageUnpublishListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE);
-
-        // Assert
-        $localeName = $this->getLocaleFacade()->getCurrentLocale()->getLocaleName();
-        $this->getProductLabelFacade()->checkLabelValidityDateRangeAndTouch();
-        $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
-            ->filterByLocale($localeName)
-            ->findOne();
-        $this->assertNotNull($spyProductLabelDictionaryStorage);
-        $data = $spyProductLabelDictionaryStorage->getData();
-        $labelsCount = $this->tester->getProductLabelsCountByLocaleName($localeName);
-        $this->assertSame($labelsCount - 1, count($data['items']));
-    }
-
-    /**
-     * @return void
-     */
-    public function testProductLabelDictionaryItemStorageUnpublishListener(): void
-    {
-        //Arrange
-        $productLabelFacade = $this->getProductLabelFacade();
-        $productLabelStorageFacade = $this->getProductLabelStorageFacade();
-        $productLabelDictionaryItemStorageUnpublishListener = new ProductLabelDictionaryItemStorageUnpublishListener();
-        $productLabelDictionaryItemStorageUnpublishListener->setFacade($productLabelStorageFacade);
-
-        $productLabelStorageFacade->publishLabelDictionary();
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productLabelTransfer->getIdProductLabel()),
-        ];
-
-        // Act
-        $productLabelFacade->removeLabel($this->productLabelTransfer);
-        $productLabelDictionaryItemStorageUnpublishListener->handleBulk($eventTransfers, ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH);
-
-        // Assert
-        $productLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
-            ->find();
-
-        foreach ($productLabelDictionaryStorage as $productLabelDictionaryStorageItem) {
-            foreach ($productLabelDictionaryStorageItem->getData()['items'] as $item) {
-                $this->assertFalse(
-                    $this->productLabelTransfer->getIdProductLabel() == $item['id_product_label'],
-                    'Product label item should be deleted from dictionary'
-                );
-            }
-        }
     }
 
     /**

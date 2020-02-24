@@ -34,13 +34,6 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      */
     public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName, ?string $storeName = null)
     {
-        if (!$storeName) {
-            trigger_error(
-                'Pass the $storeName parameter for the forward compatibility with next major version.',
-                E_USER_DEPRECATED
-            );
-        }
-
         $productLabelCollection = $this->getProductLabelsFromDictionary($idsProductLabel, $localeName, $storeName);
         $productLabelCollection = $this->sortCollection($productLabelCollection);
         $productLabelCollection = $this->extractExclusive($productLabelCollection);
@@ -57,13 +50,6 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      */
     public function findLabelByIdProductLabel($idProductLabel, $localeName, ?string $storeName = null)
     {
-        if (!$storeName) {
-            trigger_error(
-                'Pass the $storeName parameter for the forward compatibility with next major version.',
-                E_USER_DEPRECATED
-            );
-        }
-
         return $this->dictionaryFactory
             ->createDictionaryByIdProductLabel()
             ->findLabel($idProductLabel, $localeName, $storeName);
@@ -78,13 +64,6 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      */
     public function findLabelByLocalizedName($labelName, $localeName, ?string $storeName = null)
     {
-        if (!$storeName) {
-            trigger_error(
-                'Pass the $storeName parameter for the forward compatibility with next major version.',
-                E_USER_DEPRECATED
-            );
-        }
-
         return $this->dictionaryFactory
             ->createDictionaryByLocalizedName()
             ->findLabel($labelName, $localeName, $storeName);
@@ -99,13 +78,6 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      */
     public function findLabelByName($labelName, $localeName, ?string $storeName = null)
     {
-        if (!$storeName) {
-            trigger_error(
-                'Pass the $storeName parameter for the forward compatibility with next major version.',
-                E_USER_DEPRECATED
-            );
-        }
-
         return $this->dictionaryFactory
             ->createDictionaryByName()
             ->findLabel($labelName, $localeName, $storeName);
