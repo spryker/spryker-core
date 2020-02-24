@@ -291,7 +291,9 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
 
         $salesShipmentIdsIndexed = [];
         foreach ($orderItemTransfers as $orderItemIndex => $orderItemTransfer) {
-            $salesShipmentIdsIndexed[$orderItemIndex] = $orderItemTransfer->getShipment()->getIdSalesShipment();
+            if ($orderItemTransfer->getShipment() !== null) {
+                $salesShipmentIdsIndexed[$orderItemIndex] = $orderItemTransfer->getShipment()->getIdSalesShipment();
+            }
         }
 
         asort($salesShipmentIdsIndexed);
