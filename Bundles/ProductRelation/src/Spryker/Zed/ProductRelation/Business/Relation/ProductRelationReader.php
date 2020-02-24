@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Business\Relation;
 
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationType;
-use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 
 class ProductRelationReader implements ProductRelationReaderInterface
@@ -20,21 +19,13 @@ class ProductRelationReader implements ProductRelationReaderInterface
     protected $productRelationQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface
-     */
-    protected $utilEncodingService;
-
-    /**
      * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface $productRelationQueryContainer
-     * @param \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface $utilEncodingService
      */
     public function __construct(
-        ProductRelationQueryContainerInterface $productRelationQueryContainer,
-        ProductRelationToUtilEncodingInterface $utilEncodingService
+        ProductRelationQueryContainerInterface $productRelationQueryContainer
     ) {
 
         $this->productRelationQueryContainer = $productRelationQueryContainer;
-        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**

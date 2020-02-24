@@ -39,7 +39,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductRelationReader()
     {
-        return new ProductRelationReader($this->getQueryContainer(), $this->getUtilEncodingService());
+        return new ProductRelationReader($this->getQueryContainer());
     }
 
     /**
