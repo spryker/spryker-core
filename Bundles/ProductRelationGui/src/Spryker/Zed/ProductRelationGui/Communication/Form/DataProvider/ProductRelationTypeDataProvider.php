@@ -68,12 +68,12 @@ class ProductRelationTypeDataProvider
     public function getData(?int $idProductRelation = null): ProductRelationTransfer
     {
         if ($idProductRelation === null) {
-            return $this->createInitialProductRelationTransfer();
+            return $this->createProductRelationTransfer();
         }
 
         $productRelationTransfer = $this->productRelationFacade->findProductRelationById($idProductRelation);
         if (!$productRelationTransfer) {
-            $productRelationTransfer = $this->createInitialProductRelationTransfer();
+            $productRelationTransfer = $this->createProductRelationTransfer();
         }
 
         return $productRelationTransfer;
@@ -82,7 +82,7 @@ class ProductRelationTypeDataProvider
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
-    protected function createInitialProductRelationTransfer(): ProductRelationTransfer
+    protected function createProductRelationTransfer(): ProductRelationTransfer
     {
         $productRelationTransfer = new ProductRelationTransfer();
         $productRelationTransfer->setIsActive(false);

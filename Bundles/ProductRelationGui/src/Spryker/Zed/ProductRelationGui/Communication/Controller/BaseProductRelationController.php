@@ -29,13 +29,10 @@ class BaseProductRelationController extends AbstractController
     {
         $ruleSetJson = $request->get(static::URL_PARAM_DATA);
 
-        $utilEncodingService = $this->getFactory()->getUtilEncodingService();
-        $ruleSet = $utilEncodingService->decodeJson($ruleSetJson, true);
+        $ruleSet = $this->getFactory()->getUtilEncodingService()
+            ->decodeJson($ruleSetJson, true);
 
-        $productRelationTransfer = new ProductRelationTransfer();
-        $propelQueryBuilderRuleSetTransfer = new PropelQueryBuilderRuleSetTransfer();
-        $propelQueryBuilderRuleSetTransfer->fromArray($ruleSet);
-        $productRelationTransfer->setQuerySet($propelQueryBuilderRuleSetTransfer);
+        $productRelationTransfer = $this->createProductRelationTransfer($ruleSet);
 
         $productRuleTable = $this->getFactory()
             ->createProductRuleTable($productRelationTransfer);
@@ -43,5 +40,20 @@ class BaseProductRelationController extends AbstractController
         return $this->jsonResponse(
             $productRuleTable->fetchData()
         );
+    }
+
+    /**
+     * @param array $ruleSet
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer
+     */
+    protected function createProductRelationTransfer(array $ruleSet): ProductRelationTransfer
+    {
+        $productRelationTransfer = new ProductRelationTransfer();
+        $propelQueryBuilderRuleSetTransfer = new PropelQueryBuilderRuleSetTransfer();
+        $propelQueryBuilderRuleSetTransfer->fromArray($ruleSet);
+        $productRelationTransfer->setQuerySet($propelQueryBuilderRuleSetTransfer);
+
+        return $productRelationTransfer;
     }
 }

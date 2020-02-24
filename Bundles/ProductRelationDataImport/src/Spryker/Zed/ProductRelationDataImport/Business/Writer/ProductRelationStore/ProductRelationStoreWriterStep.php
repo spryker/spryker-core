@@ -9,10 +9,12 @@ namespace Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationS
 
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\DataSet\ProductRelationStoreDataSetInterface;
 
-class ProductRelationStoreWriterStep implements DataImportStepInterface
+class ProductRelationStoreWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -21,10 +23,15 @@ class ProductRelationStoreWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        SpyProductRelationStoreQuery::create()
+        $productRelationStoreEntity = SpyProductRelationStoreQuery::create()
             ->filterByFkStore($dataSet[ProductRelationStoreDataSetInterface::COL_ID_STORE])
             ->filterByFkProductRelation($dataSet[ProductRelationStoreDataSetInterface::COL_ID_PRODUCT_RELATION])
-            ->findOneOrCreate()
-            ->save();
+            ->findOneOrCreate();
+
+        $productRelationStoreEntity->save();
+
+        $productRelationEntity = $productRelationStoreEntity->getProductRelation();
+
+        $this->addPublishEvents(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, $productRelationEntity->getFkProductAbstract());
     }
 }

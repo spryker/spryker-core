@@ -132,4 +132,15 @@
     <transfer name="Money">
     </transfer>
 
+    <transfer name="ProductSelector">
+        <property name="assignedCategories" type="string"/>
+        <property name="isActiveAggregation" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="price" type="int"/>
+        <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
 </transfers>

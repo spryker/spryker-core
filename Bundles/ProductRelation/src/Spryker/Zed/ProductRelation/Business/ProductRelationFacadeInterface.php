@@ -133,19 +133,9 @@ interface ProductRelationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
-    public function findUniqueProductRelation(
+    public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer;
-
-    /**
-     * Specification:
-     * - Gets filters for javascript.
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function getJavascriptFilters(): array;
 
     /**
      * Specification:

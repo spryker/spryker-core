@@ -57,7 +57,7 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
             ->setRelationTypeKey($productRelationTransfer->getProductRelationType()->getKey());
 
         $resultProductRelationTransfer = $uniqueRelationTypeForProductAbstract->getProductRelationFacade()
-            ->findUniqueProductRelation($productRelationCriteriaTransfer);
+            ->findProductRelationByCriteria($productRelationCriteriaTransfer);
 
         if (!$resultProductRelationTransfer) {
             return false;

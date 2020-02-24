@@ -55,4 +55,14 @@ class ProductRelationGuiToProductRelationQueryContainerBridge implements Product
     {
         return $this->productRelationQueryContainer->queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation($idLocale, $idProductRelation);
     }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryProductRelationsWithProductCount($idLocale)
+    {
+        return $this->productRelationQueryContainer->queryProductRelationsWithProductCount($idLocale);
+    }
 }

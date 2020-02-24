@@ -35,6 +35,6 @@ class ProductSelectorController extends AbstractController
             ->getProductRelationFacade()
             ->findProductForProductSelector($idProductAbstract, $localeTransfer->getIdLocale());
 
-        return new JsonResponse($productSelectorTransfer->toArray());
+        return $this->jsonResponse($productSelectorTransfer->toArray());
     }
 }
