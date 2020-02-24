@@ -49,7 +49,7 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             ->getMerchant()
                 ->requireMerchantReference();
 
-        $stateMachineProcessTransfer = $this->stateMachineProcessReader->getStateMachineProcessTransferByMerchant(
+        $stateMachineProcessTransfer = $this->stateMachineProcessReader->getStateMachineProcessByMerchant(
             $merchantOmsTriggerRequestTransfer->getMerchant()
         );
 

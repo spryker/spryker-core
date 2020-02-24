@@ -18,15 +18,6 @@
         <property name="idMerchantOrderItem" type="int"/>
     </transfer>
 
-    <transfer name="MerchantOmsProcess">
-        <property name="idMerchantOmsProcess" type="int"/>
-        <property name="processName" type="string"/>
-    </transfer>
-
-    <transfer name="MerchantOmsProcessCriteriaFilter">
-        <property name="merchantReference" type="string"/>
-    </transfer>
-
     <transfer name="StateMachineProcess">
         <property name="processName" type="string"/>
         <property name="stateMachineName" type="string"/>
