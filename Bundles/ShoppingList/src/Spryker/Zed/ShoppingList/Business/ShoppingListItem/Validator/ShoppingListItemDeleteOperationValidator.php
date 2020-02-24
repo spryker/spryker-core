@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator;
 
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface;
 
 class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDeleteOperationValidatorInterface
