@@ -35,7 +35,7 @@ class MerchantSwitcherFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSwitchMerchantReplacesProductOffersInQuote(): void
+    public function testSwitchMerchantInQuoteItemsReplacesProductOffersInQuote(): void
     {
         // Arrange
         $merchantTransfer1 = $this->tester->haveMerchant();
@@ -65,12 +65,10 @@ class MerchantSwitcherFacadeTest extends Unit
             ],
         ]);
 
-        $merchantSwitchRequestTransfer = (new MerchantSwitchRequestTransfer())
-            ->setQuote($quoteTransfer)
-            ->setMerchantReference($merchantTransfer2->getMerchantReference());
+        $quoteTransfer->setMerchantReference($merchantTransfer2->getMerchantReference());
 
         // Act
-        $quoteTransfer = $this->tester->getFacade()->switchMerchant($merchantSwitchRequestTransfer)->getQuote();
+        $quoteTransfer = $this->tester->getFacade()->switchMerchantInQuoteItems($quoteTransfer);
 
         //Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
@@ -83,7 +81,7 @@ class MerchantSwitcherFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSwitchMerchantDoesNothingIfNoReplacementFound(): void
+    public function testSwitchMerchantInQuoteItemsDoesNothingIfNoReplacementFound(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -106,12 +104,8 @@ class MerchantSwitcherFacadeTest extends Unit
             ],
         ]);
 
-        $merchantSwitchRequestTransfer = (new MerchantSwitchRequestTransfer())
-            ->setQuote($quoteTransfer)
-            ->setMerchantReference(uniqid());
-
         // Act
-        $quoteTransfer = $this->tester->getFacade()->switchMerchant($merchantSwitchRequestTransfer)->getQuote();
+        $quoteTransfer = $this->tester->getFacade()->switchMerchantInQuoteItems($quoteTransfer);
 
         // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
@@ -119,5 +113,41 @@ class MerchantSwitcherFacadeTest extends Unit
 
         $this->assertEquals($itemTransfer->getProductOfferReference(), $productOfferTransfer->getProductOfferReference());
         $this->assertEquals($itemTransfer->getMerchantReference(), $merchantTransfer->getMerchantReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSwitchMerchantInQuoteReplacesMerchantReferenceValue(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $this->tester->haveCustomer(),
+            QuoteTransfer::ITEMS => [
+                [
+                    ItemTransfer::SKU => $productOfferTransfer->getConcreteSku(),
+                    ItemTransfer::UNIT_PRICE => 1,
+                    ItemTransfer::QUANTITY => 1,
+                    ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+                    ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+                ],
+            ],
+        ]);
+
+        $merchantSwitchRequestTransfer = (new MerchantSwitchRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setMerchantReference($merchantTransfer->getMerchantReference());
+
+        // Act
+        $quoteTransfer = $this->tester->getFacade()->switchMerchantInQuote($merchantSwitchRequestTransfer)->getQuote();
+
+        // Assert
+        $this->assertEquals($quoteTransfer->getMerchantReference(), $merchantTransfer->getMerchantReference());
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher;
 
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MerchantSwitcherInterface
 {
@@ -17,5 +18,12 @@ interface MerchantSwitcherInterface
      *
      * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switch(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer;
+    public function switchMerchantInQuote(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function switchMerchantInQuoteItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
