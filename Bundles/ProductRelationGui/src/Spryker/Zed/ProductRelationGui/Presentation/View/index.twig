@@ -15,7 +15,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' | trans }  %}
         {% block widget_content %}
             <div class="row form-group">
                 <div class="col-xs-2"><b>{{ 'Product relation key' | trans }}</b></div>
@@ -45,7 +45,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product owning the relation' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product owning the relation' | trans } %}
         {% block widget_content %}
             {% set imageUrl = '' %}
             {% for imageSet in product.imageSets %}
@@ -69,7 +69,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Store relation' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Store relation' | trans } %}
         {% block widget_content %}
             <div class="row form-group">
                 <div class="col-xs-2"><b>{{ 'Stores' | trans }}</b></div>
