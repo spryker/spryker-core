@@ -27,16 +27,14 @@ class MyMerchantProfileController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        $idMerchant = $this->getIdMerchant();
+        $merchantId = $this->getMerchantIdByCurrentUserId();
 
         $merchantFormDataProvider = $this->getFactory()->createMerchantFormDataProvider();
-        $merchantTransfer = $merchantFormDataProvider->getData($idMerchant);
+        $merchantTransfer = $merchantFormDataProvider->getData($merchantId);
+        $formOptions = $merchantFormDataProvider->getOptions($merchantTransfer);
 
-        $merchantForm = $this->getFactory()
-            ->getMerchantForm(
-                $merchantTransfer,
-                $merchantFormDataProvider->getOptions($merchantTransfer)
-            )->handleRequest($request);
+        $merchantForm = $this->getFactory()->getMerchantForm($merchantTransfer, $formOptions);
+        $merchantForm->handleRequest($request);
 
         if ($merchantForm->isSubmitted() && $merchantForm->isValid()) {
             $this->updateMerchant($merchantForm);
@@ -52,13 +50,13 @@ class MyMerchantProfileController extends AbstractController
      *
      * @return int
      */
-    protected function getIdMerchant(): int
+    protected function getMerchantIdByCurrentUserId(): int
     {
         $merchantUserFacade = $this->getFactory()->getMerchantUserFacade();
 
-        $idUser = $merchantUserFacade->getCurrentUser()->getIdUser();
+        $userId = $merchantUserFacade->getCurrentUser()->getIdUser();
         $merchantUserTransfer = $merchantUserFacade->findOne(
-            (new MerchantUserCriteriaFilterTransfer())->setIdUser($idUser)
+            (new MerchantUserCriteriaFilterTransfer())->setIdUser($userId)
         );
 
         if (!$merchantUserTransfer) {

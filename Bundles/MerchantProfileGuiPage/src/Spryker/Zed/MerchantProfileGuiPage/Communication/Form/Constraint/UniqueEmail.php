@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint;
 
-use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueEmail extends SymfonyConstraint
@@ -26,11 +27,16 @@ class UniqueEmail extends SymfonyConstraint
     protected $currentIdMerchant;
 
     /**
-     * @return \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantFacade(): MerchantProfileGuiPageToMerchantFacadeInterface
+    public function findMerchantByEmail(string $email): ?MerchantTransfer
     {
-        return $this->merchantFacade;
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setEmail($email);
+
+        return $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
     }
 
     /**

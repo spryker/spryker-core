@@ -69,8 +69,7 @@ class MerchantForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this
-            ->addIdMerchantField($builder)
+        $this->addIdMerchantField($builder)
             ->addNameField($builder)
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)

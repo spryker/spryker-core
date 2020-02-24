@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint;
 
-use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToUrlFacadeInterface;
+use Generated\Shared\Transfer\UrlTransfer;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueUrl extends SymfonyConstraint
@@ -20,11 +20,27 @@ class UniqueUrl extends SymfonyConstraint
     protected $urlFacade;
 
     /**
-     * @return \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToUrlFacadeInterface
+     * @param string $url
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function getUrlFacade(): MerchantProfileGuiPageToUrlFacadeInterface
+    public function findExistingUrl(string $url): ?UrlTransfer
     {
-        return $this->urlFacade;
+        $urlTransfer = $this->createUrlTransfer($url);
+
+        return $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    public function hasUrlCaseInsensitive(string $url): bool
+    {
+        $urlTransfer = $this->createUrlTransfer($url);
+
+        return $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
     }
 
     /**
@@ -33,5 +49,18 @@ class UniqueUrl extends SymfonyConstraint
     public function getTargets(): string
     {
         return static::CLASS_CONSTRAINT;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function createUrlTransfer(string $url): UrlTransfer
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setUrl($url);
+
+        return $urlTransfer;
     }
 }

@@ -1,23 +1,40 @@
 
 {% set merchantProfileForm = form.children.merchantProfile %}
+{% set addressCollection = merchantProfileForm.children.addressCollection %}
 
+{% set businessInfoTab = {
+    contact_person_role: merchantProfileForm.children.contact_person_role,
+    contact_person_title: merchantProfileForm.children.contact_person_title,
+    contact_person_first_name: merchantProfileForm.children.contact_person_first_name,
+    contact_person_last_name: merchantProfileForm.children.contact_person_last_name,
+    email: form.children.email,
+    contact_person_phone: merchantProfileForm.children.contact_person_phone,
+    name: form.children.name,
+    registration_number: form.children.registration_number,
+    merchant_reference: form.children.merchant_reference,
+} %}
+
+{% set onlineProfileTab = {
+    public_email: merchantProfileForm.children.public_email,
+    public_phone: merchantProfileForm.children.public_phone,
+    logo_url: merchantProfileForm.children.logo_url,
+    is_active: merchantProfileForm.children.is_active,
+    urlCollection: merchantProfileForm.children.urlCollection,
+    merchantProfileLocalizedGlossaryAttributes: merchantProfileForm.children.merchantProfileLocalizedGlossaryAttributes,
+    fax_number: merchantProfileForm.children.fax_number,
+    latitude: merchantProfileForm.children.latitude,
+    longitude: merchantProfileForm.children.longitude,
+    fk_country: addressCollection.children.fk_country,
+    address1: addressCollection.children.address1,
+    address2: addressCollection.children.address2,
+    zip_code: addressCollection.children.zip_code,
+    city: addressCollection.children.city,
+    address3: addressCollection.children.address3,
+} %}
+
+{% set _token = form.children._token %}
 {% set id_merchant = form.children.id_merchant %}
-{% set name = form.children.name %}
-{% set email = form.children.email %}
-{% set registration_number = form.children.registration_number %}
-{% set merchant_reference = form.children.merchant_reference %}
-
 {% set id_merchant_profile = merchantProfileForm.children.id_merchant_profile %}
-{% set contact_person_phone = merchantProfileForm.children.contact_person_phone %}
-{% set contact_person_title = merchantProfileForm.children.contact_person_title %}
-{% set contact_person_first_name = merchantProfileForm.children.contact_person_first_name %}
-{% set contact_person_last_name = merchantProfileForm.children.contact_person_last_name %}
-{% set contact_person_role = merchantProfileForm.children.contact_person_role %}
-{% set public_email = merchantProfileForm.children.public_email %}
-{% set public_phone = merchantProfileForm.children.public_phone %}
-{% set logo_url = merchantProfileForm.children.logo_url %}
-{% set is_active = merchantProfileForm.children.is_active %}
-{% set urlCollection = merchantProfileForm.children.urlCollection %}
 {% set description_glossary_key = merchantProfileForm.children.description_glossary_key %}
 {% set banner_url_glossary_key = merchantProfileForm.children.banner_url_glossary_key %}
 {% set delivery_time_glossary_key = merchantProfileForm.children.delivery_time_glossary_key %}
@@ -25,20 +42,18 @@
 {% set cancellation_policy_glossary_key = merchantProfileForm.children.cancellation_policy_glossary_key %}
 {% set imprint_glossary_key = merchantProfileForm.children.imprint_glossary_key %}
 {% set data_privacy_glossary_key = merchantProfileForm.children.data_privacy_glossary_key %}
-{% set merchantProfileLocalizedGlossaryAttributes = merchantProfileForm.children.merchantProfileLocalizedGlossaryAttributes %}
-{% set fax_number = merchantProfileForm.children.fax_number %}
-{% set latitude = merchantProfileForm.children.latitude %}
-{% set longitude = merchantProfileForm.children.longitude %}
-{% set addressCollection = merchantProfileForm.children.addressCollection %}
 {% set id_merchant_profile_address = addressCollection.children.id_merchant_profile_address %}
-{% set fk_country = addressCollection.children.fk_country %}
-{% set address1 = addressCollection.children.address1 %}
-{% set address2 = addressCollection.children.address2 %}
-{% set zip_code = addressCollection.children.zip_code %}
-{% set city = addressCollection.children.city %}
-{% set address3 = addressCollection.children.address3 %}
-{% set _token = form.children._token %}
 
+{% set isBusinessInfoTabHasError = false %}
+{% set isOnlineProfileTabHasError = false %}
+
+{% for field in businessInfoTab if field.vars.valid == false %}
+    {% set isBusinessInfoTabHasError = true %}
+{% endfor %}
+
+{% for field in onlineProfileTab if field.vars.valid == false %}
+    {% set isOnlineProfileTabHasError = true %}
+{% endfor %}
 
 <form name="{{ form.vars.name }}" method="{{ form.vars.method }}">
 
@@ -52,410 +67,419 @@
     <input type="hidden" id="{{ data_privacy_glossary_key.vars.id }}" name="{{ data_privacy_glossary_key.vars.full_name }}" value="{{ data_privacy_glossary_key.vars.value }}" />
     <input type="hidden" id="{{ id_merchant_profile_address.vars.id }}" name="{{ id_merchant_profile_address.vars.full_name }}" value="{{ id_merchant_profile_address.vars.value }}" />
     <input type="hidden" id="{{ id_merchant_profile.vars.id }}" name="{{ id_merchant_profile.vars.full_name }}" value="{{ id_merchant_profile.vars.value }}" />
-    {% for form in merchantProfileLocalizedGlossaryAttributes.children %}
+    {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
         {% set localeForm = form.children.locale %}
 
         <input type="hidden" id="{{ localeForm.children.idLocale.vars.id }}" name="{{ localeForm.children.idLocale.vars.full_name }}" value="{{ localeForm.children.idLocale.vars.value }}" />
         <input type="hidden" id="{{ localeForm.children.localeName.vars.id }}" name="{{ localeForm.children.localeName.vars.full_name }}" value="{{ localeForm.children.localeName.vars.value }}" />
     {% endfor %}
 
-    {# Contact Person Details #}
-    <div>
-        <label for="{{ contact_person_role.vars.id }}"{% if contact_person_role.vars.required %} class="required"{% endif %}>{{ contact_person_role.vars.label | trans}}</label>
-        <input type="text" id="{{ contact_person_role.vars.id }}" name="{{ contact_person_role.vars.full_name }}" value="{{ contact_person_role.vars.value }}"{% if contact_person_role.vars.required %} required="required"{% endif %}/>
+    <div class="tab"{% if isBusinessInfoTabHasError %} has-error="true"{% endif %}>
 
-        {% if contact_person_role.vars.errors | length > 0 %}
-            {% for error in contact_person_role.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ contact_person_title.vars.id }}"{% if contact_person_title.vars.required %} class="required"{% endif %}>{{ contact_person_title.vars.label | trans}}</label>
-        <select id="{{ contact_person_title.vars.id }}" name="{{ contact_person_title.vars.full_name }}"{% if contact_person_title.vars.required %} required="required"{% endif %}>
-            <option>{{ contact_person_title.vars.placeholder | trans }}</option>
-            {% for name, choice in contact_person_title.vars.choices %}
-                <option value="{{ choice.value }}"{% if choice.data == contact_person_title.vars.data %} selected="selected"{% endif %}>{{ choice.label | trans }}</option>
-            {% endfor %}
-        </select>
-
-        {% if contact_person_title.vars.errors | length > 0 %}
-            {% for error in contact_person_title.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ contact_person_first_name.vars.id }}"{% if contact_person_first_name.vars.required %} class="required"{% endif %}>{{ contact_person_first_name.vars.label | trans}}</label>
-        <input type="text" id="{{ contact_person_first_name.vars.id }}" name="{{ contact_person_first_name.vars.full_name }}" value="{{ contact_person_first_name.vars.value }}"{% if contact_person_first_name.vars.required %} required="required"{% endif %}/>
-
-        {% if contact_person_first_name.vars.errors | length > 0 %}
-            {% for error in contact_person_first_name.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ contact_person_last_name.vars.id }}"{% if contact_person_last_name.vars.required %} class="required"{% endif %}>{{ contact_person_last_name.vars.label | trans}}</label>
-        <input type="text" id="{{ contact_person_last_name.vars.id }}" name="{{ contact_person_last_name.vars.full_name }}" value="{{ contact_person_last_name.vars.value }}"{% if contact_person_last_name.vars.required %} required="required"{% endif %}/>
-
-        {% if contact_person_last_name.vars.errors | length > 0 %}
-            {% for error in contact_person_last_name.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ email.vars.id }}"{% if email.vars.required %} class="required"{% endif %}>{{ email.vars.label | trans}}</label>
-        <input type="email" id="{{ email.vars.id }}" name="{{ email.vars.full_name }}" value="{{ email.vars.value }}"{% if email.vars.required %} required="required"{% endif %}/>
-
-        {% if email.vars.errors | length > 0 %}
-            {% for error in email.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ contact_person_phone.vars.id }}"{% if contact_person_phone.vars.required %} class="required"{% endif %}>{{ contact_person_phone.vars.label | trans}}</label>
-        <input type="text" id="{{ contact_person_phone.vars.id }}" name="{{ contact_person_phone.vars.full_name }}" value="{{ contact_person_phone.vars.value }}"{% if contact_person_phone.vars.required %} required="required"{% endif %}/>
-
-        {% if contact_person_phone.vars.errors | length > 0 %}
-            {% for error in contact_person_phone.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    {# Contact Person Details #}
-
-    {# Merchant company Details #}
-    <div>
-        <label for="{{ name.vars.id }}"{% if name.vars.required %} class="required"{% endif %}>{{ name.vars.label | trans}}</label>
-        <input type="text" id="{{ name.vars.id }}" name="{{ name.vars.full_name }}" value="{{ name.vars.value }}"{% if name.vars.required %} required="required"{% endif %}/>
-
-        {% if name.vars.errors | length > 0 %}
-            {% for error in name.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ registration_number.vars.id }}"{% if registration_number.vars.required %} class="required"{% endif %}>{{ registration_number.vars.label | trans}}</label>
-        <input type="text" id="{{ registration_number.vars.id }}" name="{{ registration_number.vars.full_name }}" value="{{ registration_number.vars.value }}"{% if registration_number.vars.required %} required="required"{% endif %}/>
-
-        {% if registration_number.vars.errors | length > 0 %}
-            {% for error in registration_number.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-
-    <div>
-        <label for="{{ merchant_reference.vars.id }}"{% if merchant_reference.vars.required %} class="required"{% endif %}>{{ merchant_reference.vars.label | trans}}</label>
-        <input type="text" id="{{ merchant_reference.vars.id }}" name="{{ merchant_reference.vars.full_name }}" value="{{ merchant_reference.vars.value }}"{% if merchant_reference.vars.required %} required="required"{% endif %}
-                {% if merchant_reference.vars.disabled %} disabled="disabled"{% endif %}
-                {% if merchant_reference.vars.attr.read_only | default(false) %} read_only="read_only"{% endif %}/>
-
-        {% if merchant_reference.vars.errors | length > 0 %}
-            {% for error in merchant_reference.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    {# Merchant company Details #}
-
-    {# About the store #}
-    {% for form in merchantProfileLocalizedGlossaryAttributes.children %}
-        {% set descriptionGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.descriptionGlossaryKey %}
-
+        {# Contact Person Details #}
         <div>
-            <label for="{{ descriptionGlossaryKey.vars.id }}"{% if descriptionGlossaryKey.vars.required %} class="required"{% endif %}>{{ descriptionGlossaryKey.vars.label | trans }}</label>
-            <textarea id="{{ descriptionGlossaryKey.vars.id }}" name="{{ descriptionGlossaryKey.vars.full_name }}"{% if descriptionGlossaryKey.vars.required %} required="required"{% endif %}>
-                        {{ descriptionGlossaryKey.vars.value }}
-                    </textarea>
+            <label for="{{ businessInfoTab.contact_person_role.vars.id }}"{% if businessInfoTab.contact_person_role.vars.required %} class="required"{% endif %}>{{ businessInfoTab.contact_person_role.vars.label | trans}}</label>
+            <input type="text" id="{{ businessInfoTab.contact_person_role.vars.id }}" name="{{ businessInfoTab.contact_person_role.vars.full_name }}" value="{{ businessInfoTab.contact_person_role.vars.value }}"{% if businessInfoTab.contact_person_role.vars.required %} required="required"{% endif %}/>
 
-            {% if descriptionGlossaryKey.vars.errors | length > 0 %}
-                {% for error in descriptionGlossaryKey.vars.errors %}
+            {% if businessInfoTab.contact_person_role.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.contact_person_role.vars.errors %}
                     {{ error.message }}
                 {% endfor %}
             {% endif %}
         </div>
-    {% endfor %}
-    {# About the store #}
-
-    {# Visual assets #}
-    <div>
-        <label for="{{ logo_url.vars.id }}"{% if logo_url.vars.required %} class="required"{% endif %}>{{ logo_url.vars.label | trans}}</label>
-        <input type="text" id="{{ logo_url.vars.id }}" name="{{ logo_url.vars.full_name }}" value="{{ logo_url.vars.value }}"{% if logo_url.vars.required %} required="required"{% endif %}/>
-
-        {% if logo_url.vars.errors | length > 0 %}
-            {% for error in logo_url.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-
-    {% for form in merchantProfileLocalizedGlossaryAttributes.children %}
-        {% set bannerUrlGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.bannerUrlGlossaryKey %}
-
         <div>
-            <label for="{{ bannerUrlGlossaryKey.vars.id }}"{% if bannerUrlGlossaryKey.vars.required %} class="required"{% endif %}>{{ bannerUrlGlossaryKey.vars.label | trans }}</label>
-            <input type="text" id="{{ bannerUrlGlossaryKey.vars.id }}" name="{{ bannerUrlGlossaryKey.vars.full_name }}" value="{{ bannerUrlGlossaryKey.vars.value }}"{% if bannerUrlGlossaryKey.vars.required %} required="required"{% endif %}/>
+            <label for="{{ businessInfoTab.contact_person_title.vars.id }}"{% if businessInfoTab.contact_person_title.vars.required %} class="required"{% endif %}>{{ businessInfoTab.contact_person_title.vars.label | trans}}</label>
+            <select id="{{ businessInfoTab.contact_person_title.vars.id }}" name="{{ businessInfoTab.contact_person_title.vars.full_name }}"{% if businessInfoTab.contact_person_title.vars.required %} required="required"{% endif %}>
+                <option>{{ businessInfoTab.contact_person_title.vars.placeholder | trans }}</option>
+                {% for name, choice in businessInfoTab.contact_person_title.vars.choices %}
+                    <option value="{{ choice.value }}"{% if choice.data == businessInfoTab.contact_person_title.vars.data %} selected="selected"{% endif %}>{{ choice.label | trans }}</option>
+                {% endfor %}
+            </select>
 
-            {% if bannerUrlGlossaryKey.vars.errors | length > 0 %}
-                {% for error in bannerUrlGlossaryKey.vars.errors %}
+            {% if businessInfoTab.contact_person_title.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.contact_person_title.vars.errors %}
                     {{ error.message }}
                 {% endfor %}
             {% endif %}
         </div>
-    {% endfor %}
-    {# Visual assets #}
-
-    {# Contact details & Address #}
-    <div>
-        <label for="{{ address1.vars.id }}"{% if address1.vars.required %} class="required"{% endif %}>{{ address1.vars.label | trans}}</label>
-        <input type="text" id="{{ address1.vars.id }}" name="{{ address1.vars.full_name }}" value="{{ address1.vars.value }}"{% if address1.vars.required %} required="required"{% endif %}/>
-
-        {% if address1.vars.errors | length > 0 %}
-            {% for error in address1.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ address3.vars.id }}"{% if address3.vars.required %} class="required"{% endif %}>{{ address3.vars.label | trans}}</label>
-        <input type="text" id="{{ address3.vars.id }}" name="{{ address3.vars.full_name }}" value="{{ address3.vars.value }}"{% if address3.vars.required %} required="required"{% endif %}/>
-
-        {% if address3.vars.errors | length > 0 %}
-            {% for error in address3.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ address2.vars.id }}"{% if address2.vars.required %} class="required"{% endif %}>{{ address2.vars.label | trans}}</label>
-        <input type="text" id="{{ address2.vars.id }}" name="{{ address2.vars.full_name }}" value="{{ address2.vars.value }}"{% if address2.vars.required %} required="required"{% endif %}/>
-
-        {% if address2.vars.errors | length > 0 %}
-            {% for error in address2.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ zip_code.vars.id }}"{% if zip_code.vars.required %} class="required"{% endif %}>{{ zip_code.vars.label | trans}}</label>
-        <input type="text" id="{{ zip_code.vars.id }}" name="{{ zip_code.vars.full_name }}" value="{{ zip_code.vars.value }}"{% if zip_code.vars.required %} required="required"{% endif %}/>
-
-        {% if zip_code.vars.errors | length > 0 %}
-            {% for error in zip_code.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ city.vars.id }}"{% if city.vars.required %} class="required"{% endif %}>{{ city.vars.label | trans}}</label>
-        <input type="text" id="{{ city.vars.id }}" name="{{ city.vars.full_name }}" value="{{ city.vars.value }}"{% if city.vars.required %} required="required"{% endif %}/>
-
-        {% if city.vars.errors | length > 0 %}
-            {% for error in city.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ fk_country.vars.id }}"{% if fk_country.vars.required %} class="required"{% endif %}>{{ fk_country.vars.label | trans}}</label>
-        <select id="{{ fk_country.vars.id }}" name="{{ fk_country.vars.full_name }}"{% if fk_country.vars.required %} required="required"{% endif %}>
-            <option>{{ fk_country.vars.placeholder | trans }}</option>
-            {% for name, choice in fk_country.vars.choices %}
-                <option value="{{ choice.value }}"{% if choice.data == fk_country.vars.data %} selected="selected"{% endif %}>{{ choice.label | trans }}</option>
-            {% endfor %}
-        </select>
-
-        {% if fk_country.vars.errors | length > 0 %}
-            {% for error in fk_country.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ latitude.vars.id }}"{% if latitude.vars.required %} class="required"{% endif %}>{{ latitude.vars.label | trans}}</label>
-        <input type="text" id="{{ latitude.vars.id }}" name="{{ latitude.vars.full_name }}" value="{{ latitude.vars.value }}"{% if latitude.vars.required %} required="required"{% endif %}/>
-
-        {% if latitude.vars.errors | length > 0 %}
-            {% for error in latitude.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-
-    <div>
-        <label for="{{ longitude.vars.id }}"{% if longitude.vars.required %} class="required"{% endif %}>{{ longitude.vars.label | trans}}</label>
-        <input type="text" id="{{ longitude.vars.id }}" name="{{ longitude.vars.full_name }}" value="{{ longitude.vars.value }}"{% if longitude.vars.required %} required="required"{% endif %}/>
-
-        {% if longitude.vars.errors | length > 0 %}
-            {% for error in longitude.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ public_email.vars.id }}"{% if public_email.vars.required %} class="required"{% endif %}>{{ public_email.vars.label | trans}}</label>
-        <input type="text" id="{{ public_email.vars.id }}" name="{{ public_email.vars.full_name }}" value="{{ public_email.vars.value }}"{% if public_email.vars.required %} required="required"{% endif %}/>
-
-        {% if public_email.vars.errors | length > 0 %}
-            {% for error in public_email.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-
-    <div>
-        <label for="{{ public_phone.vars.id }}"{% if public_phone.vars.required %} class="required"{% endif %}>{{ public_phone.vars.label | trans}}</label>
-        <input type="text" id="{{ public_phone.vars.id }}" name="{{ public_phone.vars.full_name }}" value="{{ public_phone.vars.value }}"{% if public_phone.vars.required %} required="required"{% endif %}/>
-
-        {% if public_phone.vars.errors | length > 0 %}
-            {% for error in public_phone.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        <label for="{{ fax_number.vars.id }}"{% if fax_number.vars.required %} class="required"{% endif %}>{{ fax_number.vars.label | trans}}</label>
-        <input type="text" id="{{ fax_number.vars.id }}" name="{{ fax_number.vars.full_name }}" value="{{ fax_number.vars.value }}"{% if fax_number.vars.required %} required="required"{% endif %}/>
-
-        {% if fax_number.vars.errors | length > 0 %}
-            {% for error in fax_number.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    {# Contact details & Address #}
-
-    {# Average Delivery Time #}
-    {% for form in merchantProfileLocalizedGlossaryAttributes.children %}
-        {% set deliveryTimeGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.deliveryTimeGlossaryKey %}
-
         <div>
-            <label for="{{ deliveryTimeGlossaryKey.vars.id }}"{% if deliveryTimeGlossaryKey.vars.required %} class="required"{% endif %}>{{ deliveryTimeGlossaryKey.vars.label | trans }}</label>
-            <input type="text" id="{{ deliveryTimeGlossaryKey.vars.id }}" name="{{ deliveryTimeGlossaryKey.vars.full_name }}" value="{{ deliveryTimeGlossaryKey.vars.value }}"{% if deliveryTimeGlossaryKey.vars.required %} required="required"{% endif %}/>
+            <label for="{{ businessInfoTab.contact_person_first_name.vars.id }}"{% if businessInfoTab.contact_person_first_name.vars.required %} class="required"{% endif %}>{{ businessInfoTab.contact_person_first_name.vars.label | trans}}</label>
+            <input type="text" id="{{ businessInfoTab.contact_person_first_name.vars.id }}" name="{{ businessInfoTab.contact_person_first_name.vars.full_name }}" value="{{ businessInfoTab.contact_person_first_name.vars.value }}"{% if businessInfoTab.contact_person_first_name.vars.required %} required="required"{% endif %}/>
 
-            {% if deliveryTimeGlossaryKey.vars.errors | length > 0 %}
-                {% for error in deliveryTimeGlossaryKey.vars.errors %}
+            {% if businessInfoTab.contact_person_first_name.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.contact_person_first_name.vars.errors %}
                     {{ error.message }}
                 {% endfor %}
             {% endif %}
         </div>
-    {% endfor %}
-    {# Average Delivery Time #}
+        <div>
+            <label for="{{ businessInfoTab.contact_person_last_name.vars.id }}"{% if businessInfoTab.contact_person_last_name.vars.required %} class="required"{% endif %}>{{ businessInfoTab.contact_person_last_name.vars.label | trans}}</label>
+            <input type="text" id="{{ businessInfoTab.contact_person_last_name.vars.id }}" name="{{ businessInfoTab.contact_person_last_name.vars.full_name }}" value="{{ businessInfoTab.contact_person_last_name.vars.value }}"{% if businessInfoTab.contact_person_last_name.vars.required %} required="required"{% endif %}/>
 
-    {# Store Profile URL #}
-    <div>
-        <label{% if urlCollection.vars.required %} class="required"{% endif %}>{{ urlCollection.vars.label | trans}}</label>
-        {% for urlForm in urlCollection.children %}
+            {% if businessInfoTab.contact_person_last_name.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.contact_person_last_name.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ businessInfoTab.email.vars.id }}"{% if businessInfoTab.email.vars.required %} class="required"{% endif %}>{{ businessInfoTab.email.vars.label | trans}}</label>
+            <input type="email" id="{{ businessInfoTab.email.vars.id }}" name="{{ businessInfoTab.email.vars.full_name }}" value="{{ businessInfoTab.email.vars.value }}"{% if businessInfoTab.email.vars.required %} required="required"{% endif %}/>
+
+            {% if businessInfoTab.email.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.email.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ businessInfoTab.contact_person_phone.vars.id }}"{% if businessInfoTab.contact_person_phone.vars.required %} class="required"{% endif %}>{{ businessInfoTab.contact_person_phone.vars.label | trans}}</label>
+            <input type="text" id="{{ businessInfoTab.contact_person_phone.vars.id }}" name="{{ businessInfoTab.contact_person_phone.vars.full_name }}" value="{{ businessInfoTab.contact_person_phone.vars.value }}"{% if businessInfoTab.contact_person_phone.vars.required %} required="required"{% endif %}/>
+
+            {% if businessInfoTab.contact_person_phone.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.contact_person_phone.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        {# Contact Person Details #}
+
+        {# Merchant company Details #}
+        <div>
+            <label for="{{ businessInfoTab.name.vars.id }}"{% if businessInfoTab.name.vars.required %} class="required"{% endif %}>{{ businessInfoTab.name.vars.label | trans}}</label>
+            <input type="text" id="{{ businessInfoTab.name.vars.id }}" name="{{ businessInfoTab.name.vars.full_name }}" value="{{ businessInfoTab.name.vars.value }}"{% if businessInfoTab.name.vars.required %} required="required"{% endif %}/>
+
+            {% if businessInfoTab.name.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.name.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ businessInfoTab.registration_number.vars.id }}"{% if businessInfoTab.registration_number.vars.required %} class="required"{% endif %}>{{ businessInfoTab.registration_number.vars.label | trans}}</label>
+            <input type="text" id="{{ businessInfoTab.registration_number.vars.id }}" name="{{ businessInfoTab.registration_number.vars.full_name }}" value="{{ businessInfoTab.registration_number.vars.value }}"{% if businessInfoTab.registration_number.vars.required %} required="required"{% endif %}/>
+
+            {% if businessInfoTab.registration_number.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.registration_number.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="{{ businessInfoTab.merchant_reference.vars.id }}"{% if businessInfoTab.merchant_reference.vars.required %} class="required"{% endif %}>{{ businessInfoTab.merchant_reference.vars.label | trans}}</label>
+            <input type="text" id="{{ businessInfoTab.merchant_reference.vars.id }}" name="{{ businessInfoTab.merchant_reference.vars.full_name }}" value="{{ businessInfoTab.merchant_reference.vars.value }}"{% if businessInfoTab.merchant_reference.vars.required %} required="required"{% endif %}
+                    {% if businessInfoTab.merchant_reference.vars.disabled %} disabled="disabled"{% endif %}
+                    {% if businessInfoTab.merchant_reference.vars.attr.read_only | default(false) %} read_only="read_only"{% endif %}/>
+
+            {% if businessInfoTab.merchant_reference.vars.errors | length > 0 %}
+                {% for error in businessInfoTab.merchant_reference.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        {# Merchant company Details #}
+
+    </div>
+
+    <div class="tab"{% if isOnlineProfileTabHasError %} has-error="true"{% endif %}>
+
+        {# About the store #}
+        {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+            {% set descriptionGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.descriptionGlossaryKey %}
+
             <div>
-                <label for="{{ urlForm.children.url.vars.id }}"{% if urlForm.children.url.vars.required %} class="required"{% endif %}>{{ urlForm.children.url.vars.label | trans }}</label>
-                <input type="text" id="{{ urlForm.children.url.vars.id }}" name="{{ urlForm.children.url.vars.full_name }}" value="{{ urlForm.children.url.vars.value }}"{% if urlForm.children.url.vars.required %} required="required"{% endif %}/>
-                <input type="hidden" id="{{ urlForm.children.fkLocale.vars.id }}" name="{{ urlForm.children.fkLocale.vars.full_name }}" value="{{ urlForm.children.fkLocale.vars.value }}" />
+                <label for="{{ descriptionGlossaryKey.vars.id }}"{% if descriptionGlossaryKey.vars.required %} class="required"{% endif %}>{{ descriptionGlossaryKey.vars.label | trans }}</label>
+                <textarea id="{{ descriptionGlossaryKey.vars.id }}" name="{{ descriptionGlossaryKey.vars.full_name }}"{% if descriptionGlossaryKey.vars.required %} required="required"{% endif %}>
+                {{ descriptionGlossaryKey.vars.value }}
+            </textarea>
 
-                {% if urlForm.children.url.vars.errors | length > 0 %}
-                    {% for error in urlForm.children.url.vars.errors %}
+                {% if descriptionGlossaryKey.vars.errors | length > 0 %}
+                    {% for error in descriptionGlossaryKey.vars.errors %}
                         {{ error.message }}
                     {% endfor %}
                 {% endif %}
             </div>
         {% endfor %}
-    </div>
-    {# Store Profile URL #}
+        {# About the store #}
 
-    {# Terms & Conditions #}
-    {% for form in merchantProfileLocalizedGlossaryAttributes.children %}
-        {% set termsConditionsGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.termsConditionsGlossaryKey %}
+        {# Visual assets #}
+        <div>
+            <label for="{{ onlineProfileTab.logo_url.vars.id }}"{% if onlineProfileTab.logo_url.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.logo_url.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.logo_url.vars.id }}" name="{{ onlineProfileTab.logo_url.vars.full_name }}" value="{{ onlineProfileTab.logo_url.vars.value }}"{% if onlineProfileTab.logo_url.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.logo_url.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.logo_url.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+            {% set bannerUrlGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.bannerUrlGlossaryKey %}
+
+            <div>
+                <label for="{{ bannerUrlGlossaryKey.vars.id }}"{% if bannerUrlGlossaryKey.vars.required %} class="required"{% endif %}>{{ bannerUrlGlossaryKey.vars.label | trans }}</label>
+                <input type="text" id="{{ bannerUrlGlossaryKey.vars.id }}" name="{{ bannerUrlGlossaryKey.vars.full_name }}" value="{{ bannerUrlGlossaryKey.vars.value }}"{% if bannerUrlGlossaryKey.vars.required %} required="required"{% endif %}/>
+
+                {% if bannerUrlGlossaryKey.vars.errors | length > 0 %}
+                    {% for error in bannerUrlGlossaryKey.vars.errors %}
+                        {{ error.message }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        {# Visual assets #}
+
+        {# Contact details & Address #}
+        <div>
+            <label for="{{ onlineProfileTab.address1.vars.id }}"{% if onlineProfileTab.address1.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.address1.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.address1.vars.id }}" name="{{ onlineProfileTab.address1.vars.full_name }}" value="{{ onlineProfileTab.address1.vars.value }}"{% if onlineProfileTab.address1.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.address1.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.address1.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ onlineProfileTab.address3.vars.id }}"{% if onlineProfileTab.address3.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.address3.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.address3.vars.id }}" name="{{ onlineProfileTab.address3.vars.full_name }}" value="{{ onlineProfileTab.address3.vars.value }}"{% if onlineProfileTab.address3.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.address3.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.address3.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ onlineProfileTab.address2.vars.id }}"{% if onlineProfileTab.address2.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.address2.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.address2.vars.id }}" name="{{ onlineProfileTab.address2.vars.full_name }}" value="{{ onlineProfileTab.address2.vars.value }}"{% if onlineProfileTab.address2.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.address2.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.address2.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ onlineProfileTab.zip_code.vars.id }}"{% if onlineProfileTab.zip_code.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.zip_code.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.zip_code.vars.id }}" name="{{ onlineProfileTab.zip_code.vars.full_name }}" value="{{ onlineProfileTab.zip_code.vars.value }}"{% if onlineProfileTab.zip_code.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.zip_code.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.zip_code.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ onlineProfileTab.city.vars.id }}"{% if onlineProfileTab.city.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.city.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.city.vars.id }}" name="{{ onlineProfileTab.city.vars.full_name }}" value="{{ onlineProfileTab.city.vars.value }}"{% if onlineProfileTab.city.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.city.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.city.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ onlineProfileTab.fk_country.vars.id }}"{% if onlineProfileTab.fk_country.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.fk_country.vars.label | trans}}</label>
+            <select id="{{ onlineProfileTab.fk_country.vars.id }}" name="{{ onlineProfileTab.fk_country.vars.full_name }}"{% if onlineProfileTab.fk_country.vars.required %} required="required"{% endif %}>
+                <option>{{ onlineProfileTab.fk_country.vars.placeholder | trans }}</option>
+                {% for name, choice in onlineProfileTab.fk_country.vars.choices %}
+                    <option value="{{ choice.value }}"{% if choice.data == onlineProfileTab.fk_country.vars.data %} selected="selected"{% endif %}>{{ choice.label | trans }}</option>
+                {% endfor %}
+            </select>
+
+            {% if onlineProfileTab.fk_country.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.fk_country.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ onlineProfileTab.latitude.vars.id }}"{% if onlineProfileTab.latitude.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.latitude.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.latitude.vars.id }}" name="{{ onlineProfileTab.latitude.vars.full_name }}" value="{{ onlineProfileTab.latitude.vars.value }}"{% if onlineProfileTab.latitude.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.latitude.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.latitude.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
 
         <div>
-            <label for="{{ termsConditionsGlossaryKey.vars.id }}"{% if termsConditionsGlossaryKey.vars.required %} class="required"{% endif %}>{{ termsConditionsGlossaryKey.vars.label | trans }}</label>
-            <textarea id="{{ termsConditionsGlossaryKey.vars.id }}" name="{{ termsConditionsGlossaryKey.vars.full_name }}"{% if termsConditionsGlossaryKey.vars.required %} required="required"{% endif %}>
+            <label for="{{ onlineProfileTab.longitude.vars.id }}"{% if onlineProfileTab.longitude.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.longitude.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.longitude.vars.id }}" name="{{ onlineProfileTab.longitude.vars.full_name }}" value="{{ onlineProfileTab.longitude.vars.value }}"{% if onlineProfileTab.longitude.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.longitude.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.longitude.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ onlineProfileTab.public_email.vars.id }}"{% if onlineProfileTab.public_email.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.public_email.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.public_email.vars.id }}" name="{{ onlineProfileTab.public_email.vars.full_name }}" value="{{ onlineProfileTab.public_email.vars.value }}"{% if onlineProfileTab.public_email.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.public_email.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.public_email.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="{{ onlineProfileTab.public_phone.vars.id }}"{% if onlineProfileTab.public_phone.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.public_phone.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.public_phone.vars.id }}" name="{{ onlineProfileTab.public_phone.vars.full_name }}" value="{{ onlineProfileTab.public_phone.vars.value }}"{% if onlineProfileTab.public_phone.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.public_phone.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.public_phone.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ onlineProfileTab.fax_number.vars.id }}"{% if onlineProfileTab.fax_number.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.fax_number.vars.label | trans}}</label>
+            <input type="text" id="{{ onlineProfileTab.fax_number.vars.id }}" name="{{ onlineProfileTab.fax_number.vars.full_name }}" value="{{ onlineProfileTab.fax_number.vars.value }}"{% if onlineProfileTab.fax_number.vars.required %} required="required"{% endif %}/>
+
+            {% if onlineProfileTab.fax_number.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.fax_number.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        {# Contact details & Address #}
+
+        {# Average Delivery Time #}
+        {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+            {% set deliveryTimeGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.deliveryTimeGlossaryKey %}
+
+            <div>
+                <label for="{{ deliveryTimeGlossaryKey.vars.id }}"{% if deliveryTimeGlossaryKey.vars.required %} class="required"{% endif %}>{{ deliveryTimeGlossaryKey.vars.label | trans }}</label>
+                <input type="text" id="{{ deliveryTimeGlossaryKey.vars.id }}" name="{{ deliveryTimeGlossaryKey.vars.full_name }}" value="{{ deliveryTimeGlossaryKey.vars.value }}"{% if deliveryTimeGlossaryKey.vars.required %} required="required"{% endif %}/>
+
+                {% if deliveryTimeGlossaryKey.vars.errors | length > 0 %}
+                    {% for error in deliveryTimeGlossaryKey.vars.errors %}
+                        {{ error.message }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        {# Average Delivery Time #}
+
+        {# Store Profile URL #}
+        <div>
+            <label{% if onlineProfileTab.urlCollection.vars.required %} class="required"{% endif %}>{{ onlineProfileTab.urlCollection.vars.label | trans}}</label>
+            {% for urlForm in onlineProfileTab.urlCollection.children %}
+                <div>
+                    <label for="{{ urlForm.children.url.vars.id }}"{% if urlForm.children.url.vars.required %} class="required"{% endif %}>{{ urlForm.children.url.vars.label | trans }}</label>
+                    <input type="text" id="{{ urlForm.children.url.vars.id }}" name="{{ urlForm.children.url.vars.full_name }}" value="{{ urlForm.children.url.vars.value }}"{% if urlForm.children.url.vars.required %} required="required"{% endif %}/>
+                    <input type="hidden" id="{{ urlForm.children.fkLocale.vars.id }}" name="{{ urlForm.children.fkLocale.vars.full_name }}" value="{{ urlForm.children.fkLocale.vars.value }}" />
+
+                    {% if urlForm.children.url.vars.errors | length > 0 %}
+                        {% for error in urlForm.children.url.vars.errors %}
+                            {{ error.message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        {# Store Profile URL #}
+
+        {# Terms & Conditions #}
+        {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+            {% set termsConditionsGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.termsConditionsGlossaryKey %}
+
+            <div>
+                <label for="{{ termsConditionsGlossaryKey.vars.id }}"{% if termsConditionsGlossaryKey.vars.required %} class="required"{% endif %}>{{ termsConditionsGlossaryKey.vars.label | trans }}</label>
+                <textarea id="{{ termsConditionsGlossaryKey.vars.id }}" name="{{ termsConditionsGlossaryKey.vars.full_name }}"{% if termsConditionsGlossaryKey.vars.required %} required="required"{% endif %}>
                         {{ termsConditionsGlossaryKey.vars.value }}
                     </textarea>
 
-            {% if termsConditionsGlossaryKey.vars.errors | length > 0 %}
-                {% for error in termsConditionsGlossaryKey.vars.errors %}
-                    {{ error.message }}
-                {% endfor %}
-            {% endif %}
-        </div>
-    {% endfor %}
-    {# Terms & Conditions #}
+                {% if termsConditionsGlossaryKey.vars.errors | length > 0 %}
+                    {% for error in termsConditionsGlossaryKey.vars.errors %}
+                        {{ error.message }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        {# Terms & Conditions #}
 
-    {# Return Policy #}
-    {% for form in merchantProfileLocalizedGlossaryAttributes.children %}
-        {% set cancellationPolicyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.cancellationPolicyGlossaryKey %}
+        {# Return Policy #}
+        {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+            {% set cancellationPolicyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.cancellationPolicyGlossaryKey %}
 
-        <div>
-            <label for="{{ cancellationPolicyGlossaryKey.vars.id }}"{% if cancellationPolicyGlossaryKey.vars.required %} class="required"{% endif %}>{{ cancellationPolicyGlossaryKey.vars.label | trans }}</label>
-            <textarea id="{{ cancellationPolicyGlossaryKey.vars.id }}" name="{{ cancellationPolicyGlossaryKey.vars.full_name }}"{% if cancellationPolicyGlossaryKey.vars.required %} required="required"{% endif %}>
+            <div>
+                <label for="{{ cancellationPolicyGlossaryKey.vars.id }}"{% if cancellationPolicyGlossaryKey.vars.required %} class="required"{% endif %}>{{ cancellationPolicyGlossaryKey.vars.label | trans }}</label>
+                <textarea id="{{ cancellationPolicyGlossaryKey.vars.id }}" name="{{ cancellationPolicyGlossaryKey.vars.full_name }}"{% if cancellationPolicyGlossaryKey.vars.required %} required="required"{% endif %}>
                         {{ cancellationPolicyGlossaryKey.vars.value }}
                     </textarea>
 
-            {% if cancellationPolicyGlossaryKey.vars.errors | length > 0 %}
-                {% for error in cancellationPolicyGlossaryKey.vars.errors %}
-                    {{ error.message }}
-                {% endfor %}
-            {% endif %}
-        </div>
-    {% endfor %}
-    {# Return Policy #}
+                {% if cancellationPolicyGlossaryKey.vars.errors | length > 0 %}
+                    {% for error in cancellationPolicyGlossaryKey.vars.errors %}
+                        {{ error.message }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        {# Return Policy #}
 
-    {# Imprint #}
-    {% for form in merchantProfileLocalizedGlossaryAttributes.children %}
-        {% set imprintGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.imprintGlossaryKey %}
+        {# Imprint #}
+        {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+            {% set imprintGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.imprintGlossaryKey %}
 
-        <div>
-            <label for="{{ imprintGlossaryKey.vars.id }}"{% if imprintGlossaryKey.vars.required %} class="required"{% endif %}>{{ imprintGlossaryKey.vars.label | trans }}</label>
-            <textarea id="{{ imprintGlossaryKey.vars.id }}" name="{{ imprintGlossaryKey.vars.full_name }}"{% if imprintGlossaryKey.vars.required %} required="required"{% endif %}>
+            <div>
+                <label for="{{ imprintGlossaryKey.vars.id }}"{% if imprintGlossaryKey.vars.required %} class="required"{% endif %}>{{ imprintGlossaryKey.vars.label | trans }}</label>
+                <textarea id="{{ imprintGlossaryKey.vars.id }}" name="{{ imprintGlossaryKey.vars.full_name }}"{% if imprintGlossaryKey.vars.required %} required="required"{% endif %}>
                         {{ imprintGlossaryKey.vars.value }}
                     </textarea>
 
-            {% if imprintGlossaryKey.vars.errors | length > 0 %}
-                {% for error in imprintGlossaryKey.vars.errors %}
-                    {{ error.message }}
-                {% endfor %}
-            {% endif %}
-        </div>
-    {% endfor %}
-    {# Imprint #}
+                {% if imprintGlossaryKey.vars.errors | length > 0 %}
+                    {% for error in imprintGlossaryKey.vars.errors %}
+                        {{ error.message }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        {# Imprint #}
 
-    {# Data Privacy #}
-    {% for form in merchantProfileLocalizedGlossaryAttributes.children %}
-        {% set dataPrivacyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.dataPrivacyGlossaryKey %}
+        {# Data Privacy #}
+        {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+            {% set dataPrivacyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.dataPrivacyGlossaryKey %}
 
-        <div>
-            <label for="{{ dataPrivacyGlossaryKey.vars.id }}"{% if dataPrivacyGlossaryKey.vars.required %} class="required"{% endif %}>{{ dataPrivacyGlossaryKey.vars.label | trans }}</label>
-            <textarea id="{{ dataPrivacyGlossaryKey.vars.id }}" name="{{ dataPrivacyGlossaryKey.vars.full_name }}"{% if dataPrivacyGlossaryKey.vars.required %} required="required"{% endif %}>
+            <div>
+                <label for="{{ dataPrivacyGlossaryKey.vars.id }}"{% if dataPrivacyGlossaryKey.vars.required %} class="required"{% endif %}>{{ dataPrivacyGlossaryKey.vars.label | trans }}</label>
+                <textarea id="{{ dataPrivacyGlossaryKey.vars.id }}" name="{{ dataPrivacyGlossaryKey.vars.full_name }}"{% if dataPrivacyGlossaryKey.vars.required %} required="required"{% endif %}>
                         {{ dataPrivacyGlossaryKey.vars.value }}
                     </textarea>
 
-            {% if dataPrivacyGlossaryKey.vars.errors | length > 0 %}
-                {% for error in dataPrivacyGlossaryKey.vars.errors %}
+                {% if dataPrivacyGlossaryKey.vars.errors | length > 0 %}
+                    {% for error in dataPrivacyGlossaryKey.vars.errors %}
+                        {{ error.message }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        {# Data Privacy #}
+
+        {# Online Status #}
+        <div>
+            <label for="{{ onlineProfileTab.is_active.vars.id }}"{% if onlineProfileTab.is_active.vars.required %} class="required"{% endif %}>
+                <input type="checkbox" id="{{ onlineProfileTab.is_active.vars.id }}" name="{{ onlineProfileTab.is_active.vars.full_name }}" value="{{ onlineProfileTab.is_active.vars.value }}"
+                        {% if onlineProfileTab.is_active.vars.required %} required="required"{% endif %}{% if onlineProfileTab.is_active.vars.checked %} checked="checked"{% endif %}>
+                {{ onlineProfileTab.is_active.vars.label | trans}}
+            </label>
+
+            {% if onlineProfileTab.is_active.vars.errors | length > 0 %}
+                {% for error in onlineProfileTab.is_active.vars.errors %}
                     {{ error.message }}
                 {% endfor %}
             {% endif %}
         </div>
-    {% endfor %}
-    {# Data Privacy #}
+        {# Online Status #}
 
-    {# Online Status #}
-    <div>
-        <label for="{{ is_active.vars.id }}"{% if is_active.vars.required %} class="required"{% endif %}>
-            <input type="checkbox" id="{{ is_active.vars.id }}" name="{{ is_active.vars.full_name }}" value="{{ is_active.vars.value }}"{% if is_active.vars.required %} required="required"{% endif %}{% if is_active.vars.checked %} checked="checked"{% endif %}>
-            {{ is_active.vars.label | trans}}
-        </label>
-
-        {% if is_active.vars.errors | length > 0 %}
-            {% for error in is_active.vars.errors %}
-                {{ error.message }}
-            {% endfor %}
-        {% endif %}
     </div>
-    {# Online Status #}
 
     <input type="submit" value="{{ 'Save' | trans }}"/>
 

@@ -11,8 +11,11 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProvider;
+use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProviderInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileAddressFormDataProvider;
+use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileAddressFormDataProviderInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileFormDataProvider;
+use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileFormDataProviderInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToCountryFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToGlossaryFacadeInterface;
@@ -40,17 +43,17 @@ class MerchantProfileGuiPageCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProvider
+     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProviderInterface
      */
-    public function createMerchantFormDataProvider(): MerchantFormDataProvider
+    public function createMerchantFormDataProvider(): MerchantFormDataProviderInterface
     {
         return new MerchantFormDataProvider($this->getMerchantFacade());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileFormDataProvider
+     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileFormDataProviderInterface
      */
-    public function createMerchantProfileFormDataProvider(): MerchantProfileFormDataProvider
+    public function createMerchantProfileFormDataProvider(): MerchantProfileFormDataProviderInterface
     {
         return new MerchantProfileFormDataProvider(
             $this->getConfig(),
@@ -60,13 +63,11 @@ class MerchantProfileGuiPageCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileAddressFormDataProvider
+     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileAddressFormDataProviderInterface
      */
-    public function createMerchantProfileAddressFormDataProvider(): MerchantProfileAddressFormDataProvider
+    public function createMerchantProfileAddressFormDataProvider(): MerchantProfileAddressFormDataProviderInterface
     {
-        return new MerchantProfileAddressFormDataProvider(
-            $this->getCountryFacade()
-        );
+        return new MerchantProfileAddressFormDataProvider($this->getCountryFacade());
     }
 
     /**

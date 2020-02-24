@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageT
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig;
 
-class MerchantProfileFormDataProvider
+class MerchantProfileFormDataProvider implements MerchantProfileFormDataProviderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig
@@ -144,9 +144,8 @@ class MerchantProfileFormDataProvider
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    protected function addLocalizedGlossaryAttributes(
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
+    protected function addLocalizedGlossaryAttributes(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    {
         $merchantProfileGlossaryAttributeValues = new ArrayObject();
         $localeTransfers = $this->localeFacade->getLocaleCollection();
         foreach ($localeTransfers as $localeTransfer) {

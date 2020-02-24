@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantProfileAddressFormType;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToCountryFacadeInterface;
 
-class MerchantProfileAddressFormDataProvider
+class MerchantProfileAddressFormDataProvider implements MerchantProfileAddressFormDataProviderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToCountryFacadeInterface

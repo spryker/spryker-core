@@ -20,7 +20,7 @@ class UniqueUrlValidator extends ConstraintValidator
      *
      * @api
      *
-     * @param mixed $value The value that should be validated
+     * @param \Generated\Shared\Transfer\UrlTransfer $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -29,17 +29,19 @@ class UniqueUrlValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        /** @var \Generated\Shared\Transfer\UrlTransfer $value */
         if (!$value->getUrl()) {
             return;
         }
+
         if (!$constraint instanceof UniqueUrl) {
             throw new UnexpectedTypeException($constraint, UniqueUrl::class);
         }
+
         if (!$this->isUrlChanged($value, $constraint)) {
             return;
         }
-        if ($this->hasUrl($value->getUrl(), $constraint)) {
+
+        if ($constraint->hasUrlCaseInsensitive($value->getUrl())) {
             $this->context
                 ->buildViolation(sprintf('Provided URL "%s" is already taken.', $value->getUrl()))
                 ->atPath(MerchantProfileUrlCollectionFormType::FIELD_URL)
@@ -55,45 +57,18 @@ class UniqueUrlValidator extends ConstraintValidator
      */
     protected function isUrlChanged(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
     {
-        $existingUrlTransfer = $this->findUrl($urlTransfer->getUrl(), $constraint);
-        if (
-            $existingUrlTransfer
-            && $existingUrlTransfer->getFkResourceMerchantProfile()
-            && (int)$existingUrlTransfer->getFkResourceMerchantProfile() === (int)$urlTransfer->getFkResourceMerchantProfile()
-        ) {
-            return false;
+        $existingUrlTransfer = $constraint->findExistingUrl($urlTransfer->getUrl());
+
+        if (!$existingUrlTransfer) {
+            return true;
         }
 
-        return true;
-    }
+        $merchantProfileId = $existingUrlTransfer->getFkResourceMerchantProfile();
 
-    /**
-     * @param string $url
-     * @param \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint\UniqueUrl $constraint
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
-    protected function findUrl(string $url, UniqueUrl $constraint): ?UrlTransfer
-    {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
-        $urlTransfer = $constraint->getUrlFacade()
-            ->findUrlCaseInsensitive($urlTransfer);
+        if (!$merchantProfileId) {
+            return true;
+        }
 
-        return $urlTransfer;
-    }
-
-    /**
-     * @param string $url
-     * @param \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint\UniqueUrl $constraint
-     *
-     * @return bool
-     */
-    protected function hasUrl(string $url, UniqueUrl $constraint): bool
-    {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
-
-        return $constraint->getUrlFacade()->hasUrlCaseInsensitive($urlTransfer);
+        return (int)$merchantProfileId !== (int)$urlTransfer->getFkResourceMerchantProfile();
     }
 }
