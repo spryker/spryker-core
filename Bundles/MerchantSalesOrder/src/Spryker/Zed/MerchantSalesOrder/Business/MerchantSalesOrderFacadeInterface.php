@@ -40,7 +40,7 @@ interface MerchantSalesOrderFacadeInterface
 
     /**
      * Specification
-     * - Requires MerchantOrderItem.idMerchantOrderItem.
+     * - Requires MerchantOrderItemTransfer.idMerchantOrderItem.
      * - Updates existing merchant order item based on MerchantOrderItem.idMerchantOrderItem in database.
      * - Returns MerchantOrderItemResponseTransfer.isSuccessful = false when merchant order item not found.
      * - Returns MerchantOrderItemResponseTransfer.isSuccessful = true otherwise.

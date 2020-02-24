@@ -21,8 +21,8 @@ class EventTriggerMerchantOrderPostCreatePlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
-     * - Requires MerchantOrder.merchantOrderItems.
-     * - Requires MerchantOrder.merchantReference.
+     * - Requires MerchantOrderTransfer.merchantOrderItems.
+     * - Requires MerchantOrderTransfer.merchantReference.
      * - Tries to find merchant state machine process by merchant reference, if not found takes process name from config.
      * - Dispatches an initial merchant OMS event of merchant state machine process for each merchant order item.
      *

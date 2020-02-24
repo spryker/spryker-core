@@ -13,8 +13,8 @@ interface MerchantOmsFacadeInterface
 {
     /**
      * Specification:
-     * - Requires MerchantOmsTriggerRequest.merchantOrderItems.
-     * - Requires MerchantOmsTriggerRequest.merchant.merchantReference.
+     * - Requires MerchantOmsTriggerRequestTransfer.merchantOrderItems.
+     * - Requires MerchantOmsTriggerRequestTransfer.merchant.merchantReference.
      * - Tries to find merchant state machine process by merchant reference, if not found takes process name from config.
      * - Dispatches an initial merchant OMS event of merchant state machine process for each merchant order item.
      *
@@ -28,8 +28,8 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
-     * - Requires MerchantOmsTriggerRequest.merchantOrderItems.
-     * - Requires MerchantOmsTriggerRequest.merchantOmsEventName.
+     * - Requires MerchantOmsTriggerRequestTransfer.merchantOrderItems.
+     * - Requires MerchantOmsTriggerRequestTransfer.merchantOmsEventName.
      * - Dispatches a merchant OMS event for each merchant order item.
      *
      * @api
