@@ -321,6 +321,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
@@ -349,14 +351,12 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @api
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function applyOrderSearchQueryJoins(
+    protected function applyOrderSearchQueryJoins(
         SpySalesOrderQuery $salesOrderQuery,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): SpySalesOrderQuery {

@@ -173,6 +173,10 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function queryCountUniqueProductsForOrder($idSalesOrder);
 
     /**
+     * Specification:
+     * - Adds filtering by customer reference using OrderListTransfer::customer.
+     * - Sets additional search filters using criteria from OrderListTransfer::queryJoins.
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
