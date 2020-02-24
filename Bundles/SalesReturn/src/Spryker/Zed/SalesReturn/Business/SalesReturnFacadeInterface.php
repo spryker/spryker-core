@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\SalesReturn\Business;
 
-use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
@@ -71,15 +71,15 @@ interface SalesReturnFacadeInterface
 
     /**
      * Specification:
-     * - Requires CalculableObjectTransfer::totals to be set.
-     * - Calculates remuneration amount total for given OrderTransfer.
+     * - Requires OrderTransfer::totals to be set.
+     * - Expands Totals with remuneration amount total.
      * - Sums each item remuneration amount to total.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function calculateRemunerationTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
+    public function expandTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer;
 }

@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
@@ -21,10 +21,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group SalesReturn
  * @group Business
  * @group SalesReturnFacade
- * @group CalculateRemunerationTotalTest
+ * @group ExpandTotalsWithRemunerationTotalTest
  * Add your own group annotations below this line
  */
-class CalculateRemunerationTotalTest extends Unit
+class ExpandTotalsWithRemunerationTotalTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesReturn\SalesReturnBusinessTester
@@ -34,48 +34,48 @@ class CalculateRemunerationTotalTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateRemunerationTotalCalculatesRemunerationTotal(): void
+    public function testExpandTotalsWithRemunerationTotalExpandsRemunerationTotal(): void
     {
         // Arrange
-        $calculableObjectTransfer = $this->tester->createCalculableObjectWithFakeRemuneration();
+        $orderTransfer = $this->tester->createOrderWithFakeRemuneration();
 
         // Act
-        $this->tester->getFacade()->calculateRemunerationTotal($calculableObjectTransfer);
+        $this->tester->getFacade()->expandTotalsWithRemunerationTotal($orderTransfer);
 
         // Assert
-        $this->assertSame(600, $calculableObjectTransfer->getTotals()->getRemunerationTotal());
+        $this->assertSame(600, $orderTransfer->getTotals()->getRemunerationTotal());
     }
 
     /**
      * @return void
      */
-    public function testCalculateRemunerationTotalCalculatesExpansesWithoutExpenses(): void
+    public function testExpandTotalsWithRemunerationTotalWithoutItems(): void
     {
         // Arrange
-        $calculableObjectTransfer = (new CalculableObjectTransfer())
+        $orderTransfer = (new OrderTransfer())
             ->setItems(new ArrayObject())
             ->setTotals(new TotalsTransfer());
 
         // Act
-        $this->tester->getFacade()->calculateRemunerationTotal($calculableObjectTransfer);
+        $this->tester->getFacade()->expandTotalsWithRemunerationTotal($orderTransfer);
 
         // Assert
-        $this->assertSame(0, $calculableObjectTransfer->getTotals()->getRemunerationTotal());
+        $this->assertSame(0, $orderTransfer->getTotals()->getRemunerationTotal());
     }
 
     /**
      * @return void
      */
-    public function testCalculateRemunerationTotalThrowsExceptionWithEmptyTotals(): void
+    public function testExpandTotalsWithRemunerationTotalThrowsExceptionWithEmptyTotals(): void
     {
         // Arrange
-        $calculableObjectTransfer = $this->tester->createCalculableObjectWithFakeRemuneration();
-        $calculableObjectTransfer->setTotals(null);
+        $orderTransfer = $this->tester->createOrderWithFakeRemuneration();
+        $orderTransfer->setTotals(null);
 
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->calculateRemunerationTotal($calculableObjectTransfer);
+        $this->tester->getFacade()->expandTotalsWithRemunerationTotal($orderTransfer);
     }
 }

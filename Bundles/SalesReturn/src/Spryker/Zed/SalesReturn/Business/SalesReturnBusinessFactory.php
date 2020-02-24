@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesReturn\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesReturn\Business\Calculator\RemunerationTotalCalculator;
-use Spryker\Zed\SalesReturn\Business\Calculator\RemunerationTotalCalculatorInterface;
+use Spryker\Zed\SalesReturn\Business\Expander\RemunerationTotalExpander;
+use Spryker\Zed\SalesReturn\Business\Expander\RemunerationTotalExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetter;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetterInterface;
 
@@ -32,10 +32,10 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturn\Business\Calculator\RemunerationTotalCalculatorInterface
+     * @return \Spryker\Zed\SalesReturn\Business\Expander\RemunerationTotalExpanderInterface
      */
-    public function createRemunerationTotalCalculator(): RemunerationTotalCalculatorInterface
+    public function createRemunerationTotalExpander(): RemunerationTotalExpanderInterface
     {
-        return new RemunerationTotalCalculator();
+        return new RemunerationTotalExpander();
     }
 }

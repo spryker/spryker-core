@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\SalesReturn;
 
 use ArrayObject;
 use Codeception\Actor;
-use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
 /**
@@ -35,9 +35,9 @@ class SalesReturnBusinessTester extends Actor
     use _generated\SalesReturnBusinessTesterActions;
 
     /**
-     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function createCalculableObjectWithFakeRemuneration(): CalculableObjectTransfer
+    public function createOrderWithFakeRemuneration(): OrderTransfer
     {
         $itemTransfers = [
             (new ItemTransfer())
@@ -48,7 +48,7 @@ class SalesReturnBusinessTester extends Actor
                 ->setRemunerationAmount(300),
         ];
 
-        return (new CalculableObjectTransfer())
+        return (new OrderTransfer())
             ->setItems(new ArrayObject($itemTransfers))
             ->setTotals(new TotalsTransfer());
     }
