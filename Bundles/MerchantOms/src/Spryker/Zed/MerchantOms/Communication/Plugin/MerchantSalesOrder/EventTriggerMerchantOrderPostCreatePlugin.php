@@ -23,7 +23,7 @@ class EventTriggerMerchantOrderPostCreatePlugin extends AbstractPlugin implement
      * {@inheritDoc}
      * - Requires MerchantOrder.merchantOrderItems.
      * - Requires MerchantOrder.merchantReference.
-     * - Dispatches initial oms event for each merchant order item.
+     * - Dispatches initial OMS event for each merchant order item.
      *
      * @api
      *
