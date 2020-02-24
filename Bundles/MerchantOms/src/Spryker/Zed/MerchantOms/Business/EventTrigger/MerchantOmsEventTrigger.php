@@ -45,20 +45,20 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
      */
     public function triggerForNewMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void
     {
-        $merchantOmsTriggerRequestTransfer->requireMerchantOrderItems();
+        $merchantOmsTriggerRequestTransfer
+            ->requireMerchantOrderItems()
+            ->requireMerchant()
+            ->getMerchant()
+                ->requireMerchantReference();
 
-        $stateMachineByMerchantReferenceBuffer = [];
+        $merchantReference = $merchantOmsTriggerRequestTransfer->getMerchant()->getMerchantReference();
+        $stateMachineProcessTransfer = $this->stateMachineProcessReader->getStateMachineProcessTransferByMerchant(
+            (new MerchantTransfer())->setMerchantReference($merchantReference)
+        );
 
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $merchantReference = $merchantOrderItemTransfer->getOrderItem()->getMerchantReference();
-            if (!isset($stateMachineByMerchantReferenceBuffer[$merchantReference])) {
-                $stateMachineByMerchantReferenceBuffer[$merchantReference] = $this->stateMachineProcessReader->getStateMachineProcessTransferByMerchant(
-                    (new MerchantTransfer())->setMerchantReference($merchantReference)
-                );
-            }
-
             $this->stateMachineFacade->triggerForNewStateMachineItem(
-                $stateMachineByMerchantReferenceBuffer[$merchantReference],
+                $stateMachineProcessTransfer,
                 $merchantOrderItemTransfer->getIdMerchantOrderItem()
             );
         }

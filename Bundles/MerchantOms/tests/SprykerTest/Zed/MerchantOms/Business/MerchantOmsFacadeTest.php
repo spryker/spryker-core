@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\MerchantOms\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
@@ -47,12 +46,13 @@ class MerchantOmsFacadeTest extends Unit
         // Arrange
         $testStateMachineHandler = new TestStateMachineHandler();
         $merchantOmsFacade = $this->tester->createMerchantOmsFacade($testStateMachineHandler, static::EXISTING_MERCHANT_OMS_PROCESS_NAME);
+        $merchant = $this->tester->haveMerchant();
 
         $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
-            ->setIdMerchantOrderItem(static::TEST_MERCHANT_ORDER_ITEM_ID)
-            ->setOrderItem(new ItemTransfer());
+            ->setIdMerchantOrderItem(static::TEST_MERCHANT_ORDER_ITEM_ID);
         $merchantOmsTriggerRequestTransfer = (new MerchantOmsTriggerRequestTransfer())
-            ->addMerchantOrderItem($merchantOrderItemTransfer);
+            ->addMerchantOrderItem($merchantOrderItemTransfer)
+            ->setMerchant($merchant);
 
         // Act
         $merchantOmsFacade->triggerForNewMerchantOrderItems($merchantOmsTriggerRequestTransfer);
@@ -69,12 +69,13 @@ class MerchantOmsFacadeTest extends Unit
     {
         // Arrange
         $merchantOmsFacade = $this->tester->createMerchantOmsFacade(new TestStateMachineHandler(), static::NOT_EXISTING_MERCHANT_OMS_PROCESS_NAME);
+        $merchant = $this->tester->haveMerchant();
 
         $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
-            ->setIdMerchantOrderItem(static::TEST_MERCHANT_ORDER_ITEM_ID)
-            ->setOrderItem(new ItemTransfer());
+            ->setIdMerchantOrderItem(static::TEST_MERCHANT_ORDER_ITEM_ID);
         $merchantOmsTriggerRequestTransfer = (new MerchantOmsTriggerRequestTransfer())
-            ->addMerchantOrderItem($merchantOrderItemTransfer);
+            ->addMerchantOrderItem($merchantOrderItemTransfer)
+            ->setMerchant($merchant);
 
         // Assert
         $this->expectException(StateMachineException::class);
@@ -91,12 +92,13 @@ class MerchantOmsFacadeTest extends Unit
         // Arrange
         $testStateMachineHandler = new TestStateMachineHandler();
         $merchantOmsFacade = $this->tester->createMerchantOmsFacade($testStateMachineHandler, static::EXISTING_MERCHANT_OMS_PROCESS_NAME);
+        $merchant = $this->tester->haveMerchant();
 
         $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
-            ->setIdMerchantOrderItem(static::TEST_MERCHANT_ORDER_ITEM_ID)
-            ->setOrderItem(new ItemTransfer());
+            ->setIdMerchantOrderItem(static::TEST_MERCHANT_ORDER_ITEM_ID);
         $merchantOmsTriggerRequestTransfer = (new MerchantOmsTriggerRequestTransfer())
-            ->addMerchantOrderItem($merchantOrderItemTransfer);
+            ->addMerchantOrderItem($merchantOrderItemTransfer)
+            ->setMerchant($merchant);
 
         $merchantOmsFacade->triggerForNewMerchantOrderItems($merchantOmsTriggerRequestTransfer);
 
