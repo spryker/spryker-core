@@ -29,7 +29,7 @@ interface MerchantSwitcherFacadeInterface
 
     /**
      * Specification:
-     * - Finds product offer substitution for items in cart depending on the selected merchant.
+     * - Finds product offer substitution for items in cart depending on the provided merchant reference.
      * - Changes ItemTransfer.productOfferReference to the value from the substitution merchant reference.
      * - Changes ItemTransfer.merchantReference property to the value from the substitution product offer reference.
      * - Requires MerchantSwitchRequestTransfer.quote.
