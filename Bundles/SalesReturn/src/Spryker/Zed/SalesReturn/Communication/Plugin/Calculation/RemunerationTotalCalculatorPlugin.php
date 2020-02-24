@@ -27,7 +27,7 @@ class RemunerationTotalCalculatorPlugin extends AbstractPlugin implements Calcul
      *
      * @return void
      */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFacade()
             ->calculateRemunerationTotal($calculableObjectTransfer);

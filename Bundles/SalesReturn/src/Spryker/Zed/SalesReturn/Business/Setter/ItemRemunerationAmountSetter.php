@@ -44,7 +44,7 @@ class ItemRemunerationAmountSetter implements ItemRemunerationAmountSetterInterf
     {
         $itemTransfer->requireIdSalesOrderItem();
 
-        $itemTransfer = $this->salesReturnRepository->findIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
+        $itemTransfer = $this->salesReturnRepository->findSalesOrderItemByIdSalesOrder($itemTransfer->getIdSalesOrderItem());
 
         if (!$itemTransfer) {
             return;

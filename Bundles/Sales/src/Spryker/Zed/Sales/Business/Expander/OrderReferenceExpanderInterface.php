@@ -16,5 +16,5 @@ interface OrderReferenceExpanderInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandItemWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandItemsWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 }

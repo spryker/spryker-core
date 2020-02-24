@@ -30,7 +30,7 @@ class StartReturnCommandPlugin extends AbstractPlugin implements CommandByItemIn
      *
      * @return array
      */
-    public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data)
+    public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data): array
     {
         $itemTransfer = (new ItemTransfer())
             ->setIdSalesOrderItem($orderItem->getIdSalesOrderItem());

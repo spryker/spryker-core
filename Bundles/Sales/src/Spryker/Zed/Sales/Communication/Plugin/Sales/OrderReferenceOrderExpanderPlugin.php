@@ -29,8 +29,8 @@ class OrderReferenceOrderExpanderPlugin extends AbstractPlugin implements OrderE
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrate(OrderTransfer $orderTransfer)
+    public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
     {
-        return $this->getFacade()->expandItemWithOrderReference($orderTransfer);
+        return $this->getFacade()->expandItemsWithOrderReference($orderTransfer);
     }
 }

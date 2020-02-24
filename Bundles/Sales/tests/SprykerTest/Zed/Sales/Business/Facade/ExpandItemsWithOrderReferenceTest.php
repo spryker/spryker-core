@@ -20,10 +20,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group Sales
  * @group Business
  * @group Facade
- * @group ExpandItemWithOrderReferenceTest
+ * @group ExpandItemsWithOrderReferenceTest
  * Add your own group annotations below this line
  */
-class ExpandItemWithOrderReferenceTest extends Test
+class ExpandItemsWithOrderReferenceTest extends Test
 {
     protected const FAKE_ORDER_REFERENCE = 'FAKE_ORDER_REFERENCE';
 
@@ -35,7 +35,7 @@ class ExpandItemWithOrderReferenceTest extends Test
     /**
      * @return void
      */
-    public function testExpandItemWithOrderReferenceCopyOrderReferenceToItems(): void
+    public function testExpandItemsWithOrderReferenceCopyOrderReferenceToItems(): void
     {
         // Arrange
         $orderTransfer = (new OrderTransfer())
@@ -44,7 +44,7 @@ class ExpandItemWithOrderReferenceTest extends Test
             ->addItem((new ItemTransfer()));
 
         // Act
-        $orderTransfer = $this->tester->getFacade()->expandItemWithOrderReference($orderTransfer);
+        $orderTransfer = $this->tester->getFacade()->expandItemsWithOrderReference($orderTransfer);
 
         // Assert
         $this->assertSame($orderTransfer->getOrderReference(), $orderTransfer->getItems()->offsetGet(0)->getOrderReference());
@@ -54,7 +54,7 @@ class ExpandItemWithOrderReferenceTest extends Test
     /**
      * @return void
      */
-    public function testExpandItemWithOrderReferenceThrowsExceptionWithEmptyOrderReference(): void
+    public function testExpandItemsWithOrderReferenceThrowsExceptionWithEmptyOrderReference(): void
     {
         // Arrange
         $orderTransfer = (new OrderTransfer())
@@ -66,6 +66,6 @@ class ExpandItemWithOrderReferenceTest extends Test
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->expandItemWithOrderReference($orderTransfer);
+        $this->tester->getFacade()->expandItemsWithOrderReference($orderTransfer);
     }
 }

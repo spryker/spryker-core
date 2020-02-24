@@ -20,10 +20,10 @@ class RemunerationTotalCalculator implements RemunerationTotalCalculatorInterfac
     {
         $calculableObjectTransfer->requireTotals();
 
-        $refundTotalAmount = $this->calculateItemRemunerationTotal($calculableObjectTransfer);
+        $remunerationTotal = $this->calculateItemRemunerationTotal($calculableObjectTransfer);
 
         $calculableObjectTransfer->getTotals()
-            ->setRemunerationTotal($refundTotalAmount);
+            ->setRemunerationTotal($remunerationTotal);
     }
 
     /**

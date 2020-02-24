@@ -407,10 +407,10 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandItemWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandItemsWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
             ->createOrderReferenceExpander()
-            ->expandItemWithOrderReference($orderTransfer);
+            ->expandItemsWithOrderReference($orderTransfer);
     }
 }
