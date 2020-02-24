@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductRelation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductRelation\Business\QueryBuilder\FilterProvider;
-use Spryker\Zed\ProductRelation\Business\QueryBuilder\FilterProviderInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationActivator;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationReader;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriter;
@@ -61,14 +59,6 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncodingService(),
             $this->createProductRelationWriter()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductRelation\Business\QueryBuilder\FilterProviderInterface
-     */
-    public function createFilterProvider(): FilterProviderInterface
-    {
-        return new FilterProvider($this->getRepository());
     }
 
     /**
