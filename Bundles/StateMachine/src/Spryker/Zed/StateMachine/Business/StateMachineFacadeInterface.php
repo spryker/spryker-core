@@ -258,7 +258,7 @@ interface StateMachineFacadeInterface
 
     /**
      * Specification:
-     * - Returns state machine process based on criteria filter.
+     * - Returns StateMachineProcess transfer based on criteria filter.
      * - Returns null if not found.
      *
      * @api

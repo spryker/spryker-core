@@ -28,8 +28,8 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
-     * - Requires MerchantOmsTriggerRequestTransfer.merchantOrderItems.
-     * - Requires MerchantOmsTriggerRequestTransfer.merchantOmsEventName.
+     * - Requires MerchantOmsTriggerRequest.merchantOrderItems transfer field to be set.
+     * - Requires MerchantOmsTriggerRequest.merchantOmsEventName transfer field to be set.
      * - Dispatches a merchant OMS event for each merchant order item.
      *
      * @api
