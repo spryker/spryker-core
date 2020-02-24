@@ -17,11 +17,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MerchantSwitcher\MerchantSwitcherConfig getConfig()
  * @method \Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcherFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantSwitcher\Communication\MerchantSwitcherCommunicationFactory getFactory()
  */
 class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
     protected const GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE = 'merchant_switcher.message.product_is_not_available';
     protected const GLOSSARY_PARAMETER_NAME = '%product_name%';
+    protected const GLOSSARY_PARAMETER_SKU = '%sku%';
 
     /**
      * {@inheritDoc}
@@ -53,7 +55,8 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
                 $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
                     ->setMessage(static::GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE)
                     ->setParameters([
-                        static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getSku(),
+                        static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getName(),
+                        static::GLOSSARY_PARAMETER_SKU => $itemTransfer->getSku(),
                     ]);
             }
         }

@@ -17,11 +17,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcherFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantSwitcher\MerchantSwitcherConfig getConfig()
+ * @method \Spryker\Zed\MerchantSwitcher\Communication\MerchantSwitcherCommunicationFactory getFactory()
  */
 class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
     protected const GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE = 'merchant_switcher.message.product_is_not_available';
     protected const GLOSSARY_PARAMETER_NAME = '%product_name%';
+    protected const GLOSSARY_PARAMETER_SKU = '%sku%';
 
     /**
      * {@inheritDoc}
@@ -46,7 +48,7 @@ class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPre
         $quoteMerchantReference = $cartChangeTransfer->getQuote()->getMerchantReference();
 
         $messageTransfers = [];
-        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (
                 $quoteMerchantReference
                 && $itemTransfer->getMerchantReference()
@@ -54,7 +56,10 @@ class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPre
             ) {
                 $messageTransfers[] = (new MessageTransfer())
                     ->setValue(static::GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE)
-                    ->setParameters([static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getName()]);
+                    ->setParameters([
+                        static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getName(),
+                        static::GLOSSARY_PARAMETER_SKU => $itemTransfer->getSku(),
+                    ]);
             }
         }
 
