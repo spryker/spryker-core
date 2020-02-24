@@ -19,6 +19,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
 {
     protected const KEY_REF = '$ref';
     protected const KEY_ITEMS = 'items';
+    protected const KEY_ONEOF = 'oneOf';
     protected const KEY_TYPE = 'type';
     protected const KEY_NULLABLE = 'nullable';
     protected const VALUE_TYPE_ARRAY = 'array';
@@ -84,7 +85,12 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
         if ($this->schemaPropertyComponentTransfer->getItemsType()) {
             $schemaProperty[static::KEY_ITEMS][static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getItemsType();
         }
-        if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && !$this->schemaPropertyComponentTransfer->getItemsType()) {
+        if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && $this->schemaPropertyComponentTransfer->getOneOf()) {
+            foreach ($this->schemaPropertyComponentTransfer->getOneOf() as $oneOfItem) {
+                $schemaProperty[static::KEY_ONEOF][] = [static::KEY_REF => $oneOfItem];
+            }
+        }
+        if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && !$this->schemaPropertyComponentTransfer->getItemsType() && !$this->schemaPropertyComponentTransfer->getOneOf()) {
             $schemaProperty[static::KEY_ITEMS] = new stdClass();
         }
         if ($this->schemaPropertyComponentTransfer->getIsNullable()) {

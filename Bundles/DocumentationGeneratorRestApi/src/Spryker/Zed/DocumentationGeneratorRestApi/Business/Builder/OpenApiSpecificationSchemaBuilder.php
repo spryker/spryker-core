@@ -16,6 +16,7 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     protected const KEY_ID = 'id';
     protected const KEY_LINKS = 'links';
     protected const KEY_RELATIONSHIPS = 'relationships';
+    protected const KEY_INCLUDED = 'included';
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
     protected const KEY_IS_NULLABLE = 'is_nullable';
     protected const KEY_SELF = 'self';
@@ -172,6 +173,20 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
 
     /**
      * @param string $schemaName
+     * @param string $ref
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function createIncludedBaseSchema(string $schemaName, string $ref): SchemaDataTransfer
+    {
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+        $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_INCLUDED, $ref));
+
+        return $schemaData;
+    }
+
+    /**
+     * @param string $schemaName
      * @param array $resourceRelationships
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
@@ -181,6 +196,22 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
         foreach ($resourceRelationships as $resourceRelationship) {
             $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer($resourceRelationship, static::SCHEMA_NAME_RELATIONSHIPS_DATA));
+        }
+
+        return $schemaData;
+    }
+
+    /**
+     * @param string $schemaName
+     * @param array $resourceRelationships
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function createIncludedDataSchema(string $schemaName, array $resourceRelationships): SchemaDataTransfer
+    {
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+        foreach ($resourceRelationships as $resourceRelationship) {
+            $schemaData->addProperty($this->schemaComponentBuilder->createOneOfArrayTransfer($resourceRelationship, static::SCHEMA_NAME_RELATIONSHIPS_DATA));
         }
 
         return $schemaData;

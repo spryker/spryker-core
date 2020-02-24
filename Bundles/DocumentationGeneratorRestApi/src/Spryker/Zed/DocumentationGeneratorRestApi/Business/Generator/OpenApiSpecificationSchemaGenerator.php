@@ -183,6 +183,11 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $resourceRelationshipsSchemaName = $this->resourceTransferAnalyzer->createResourceRelationshipSchemaNameFromTransferClassName($transferClassName);
         $this->addSchemaData($this->schemaBuilder->createRelationshipBaseSchema($responseDataSchemaName, $resourceRelationshipsSchemaName));
         $this->addSchemaData($this->schemaBuilder->createRelationshipDataSchema($resourceRelationshipsSchemaName, $resourceRelationships));
+        $this->addSchemaData($this->schemaBuilder->createRelationshipDataSchema($resourceRelationshipsSchemaName, $resourceRelationships));
+
+        $includedSchemaName = $this->resourceTransferAnalyzer->createIncludedSchemaNameFromTransferClassName($transferClassName);
+        $this->addSchemaData($this->schemaBuilder->createIncludedBaseSchema($responseDataSchemaName, $includedSchemaName));
+        $this->addSchemaData($this->schemaBuilder->createIncludedDataSchema($includedSchemaName, $resourceRelationships));
     }
 
     /**

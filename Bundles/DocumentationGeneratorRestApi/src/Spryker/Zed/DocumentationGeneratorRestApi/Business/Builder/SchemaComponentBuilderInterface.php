@@ -96,4 +96,12 @@ interface SchemaComponentBuilderInterface
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
     public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
+
+    /**
+     * @param string $resourceRelationship
+     * @param string $SCHEMA_NAME_RELATIONSHIPS_DATA
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    public function createOneOfArrayTransfer(string $resourceRelationship, string $SCHEMA_NAME_RELATIONSHIPS_DATA): SchemaPropertyTransfer;
 }
