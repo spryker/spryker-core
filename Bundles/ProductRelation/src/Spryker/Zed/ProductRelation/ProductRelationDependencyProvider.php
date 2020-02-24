@@ -61,6 +61,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFacadeLocale($container);
         $container = $this->addProductAttributeKeyPropelQuery($container);
         $container = $this->addProductAbstractPropelQuery($container);
+        $container = $this->addServiceUtilEncoding($container);
 
         return $container;
     }

@@ -13,11 +13,4 @@ interface ProductRelationReaderInterface
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
      */
     public function getProductRelationTypeList();
-
-    /**
-     * @param int $idProductRelation
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationById($idProductRelation);
 }

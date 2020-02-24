@@ -37,4 +37,11 @@ interface ProductRelationRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductSelectorTransfer
      */
     public function findProductWithCategoriesByFkLocale(int $idProductAbstract, int $idLocale): ProductSelectorTransfer;
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationById(int $idProductRelation): ?ProductRelationTransfer;
 }
