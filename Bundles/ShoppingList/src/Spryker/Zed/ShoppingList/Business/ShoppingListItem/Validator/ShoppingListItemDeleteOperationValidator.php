@@ -14,8 +14,6 @@ use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListIte
 
 class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDeleteOperationValidatorInterface
 {
-    use PermissionAwareTrait;
-
     /**
      * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface
      */

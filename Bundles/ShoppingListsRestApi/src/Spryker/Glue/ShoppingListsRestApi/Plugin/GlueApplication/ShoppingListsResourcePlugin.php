@@ -29,10 +29,10 @@ class ShoppingListsResourcePlugin extends AbstractPlugin implements ResourceRout
         ResourceRouteCollectionInterface $resourceRouteCollection
     ): ResourceRouteCollectionInterface {
         $resourceRouteCollection
-            ->addGet(ShoppingListsRestApiConfig::ACTION_SHOPPING_LISTS_GET)
-            ->addPost(ShoppingListsRestApiConfig::ACTION_SHOPPING_LISTS_POST)
-            ->addPatch(ShoppingListsRestApiConfig::ACTION_SHOPPING_LISTS_PATCH)
-            ->addDelete(ShoppingListsRestApiConfig::ACTION_SHOPPING_LISTS_DELETE);
+            ->addGet('get')
+            ->addPost('post')
+            ->addPatch('patch')
+            ->addDelete('delete');
 
         return $resourceRouteCollection;
     }
@@ -58,7 +58,7 @@ class ShoppingListsResourcePlugin extends AbstractPlugin implements ResourceRout
      */
     public function getController(): string
     {
-        return ShoppingListsRestApiConfig::CONTROLLER_SHOPPING_LISTS;
+        return 'shopping-lists-resource';
     }
 
     /**

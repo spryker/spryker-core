@@ -13,20 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ShoppingListsRestApiConfig extends AbstractBundleConfig
 {
-    public const CONTROLLER_SHOPPING_LIST_ITEMS = 'shopping-list-items-resource';
-    public const CONTROLLER_SHOPPING_LISTS = 'shopping-lists-resource';
-
     public const RESOURCE_SHOPPING_LISTS = 'shopping-lists';
     public const RESOURCE_SHOPPING_LIST_ITEMS = 'shopping-list-items';
-
-    public const ACTION_SHOPPING_LISTS_GET = 'get';
-    public const ACTION_SHOPPING_LISTS_POST = 'post';
-    public const ACTION_SHOPPING_LISTS_PATCH = 'patch';
-    public const ACTION_SHOPPING_LISTS_DELETE = 'delete';
-
-    public const ACTION_SHOPPING_LIST_ITEMS_POST = 'post';
-    public const ACTION_SHOPPING_LIST_ITEMS_DELETE = 'delete';
-    public const ACTION_SHOPPING_LIST_ITEMS_PATCH = 'patch';
 
     public const RESPONSE_UNEXPECTED_HTTP_STATUS = Response::HTTP_INTERNAL_SERVER_ERROR;
     public const RESPONSE_ERROR_MAP = [
