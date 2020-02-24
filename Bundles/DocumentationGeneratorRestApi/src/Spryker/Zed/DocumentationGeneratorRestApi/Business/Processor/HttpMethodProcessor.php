@@ -30,6 +30,8 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     protected const PATTERN_OPERATION_ID_POST_RESOURCE = 'create-%s';
     protected const PATTERN_OPERATION_ID_PATCH_RESOURCE = 'update-%s';
     protected const PATTERN_OPERATION_ID_DELETE_RESOURCE = 'delete-%s';
+
+    protected const SUFFIX_FOR_OPERATION_ID = '-for-guest';
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
      */
@@ -464,7 +466,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      */
     protected function getSuffixForOperationId(bool $isProtected): string
     {
-        return $isProtected ? '' : '-for-guest';
+        return $isProtected ? '' : static::SUFFIX_FOR_OPERATION_ID;
     }
 
     /**
