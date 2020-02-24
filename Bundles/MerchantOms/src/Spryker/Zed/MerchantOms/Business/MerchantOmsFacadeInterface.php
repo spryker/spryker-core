@@ -15,7 +15,7 @@ interface MerchantOmsFacadeInterface
      * Specification:
      * - Requires MerchantOmsTriggerRequest.merchantOrderItems transfer field to be set.
      * - Requires MerchantOmsTriggerRequest.merchant.merchantReference transfer field to be set.
-     * - Finds merchant state machine process by merchant reference, if not found takes process name from config.
+     * - Finds merchant state machine process by merchant reference, uses default process name from configuration as a fallback.
      * - Dispatches an initial merchant OMS event of merchant state machine process for each merchant order item.
      *
      * @api
