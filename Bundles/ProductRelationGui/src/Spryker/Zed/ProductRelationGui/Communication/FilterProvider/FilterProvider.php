@@ -5,25 +5,34 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelation\Business\QueryBuilder;
+namespace Spryker\Zed\ProductRelationGui\Communication\FilterProvider;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
+use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeInterface;
 
 class FilterProvider implements FilterProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface
+     * @see \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap::COL_ATTRIBUTES
      */
-    protected $productRelationRepository;
+    protected const COL_ATTRIBUTES = 'spy_product_abstract.attributes';
 
     /**
-     * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface $productRelationRepository
+     * @see \Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap::COL_NAME
      */
-    public function __construct(ProductRelationRepositoryInterface $productRelationRepository)
+    protected const COL_CATEGORY_NAME = 'spy_category_attribute.name';
+
+    protected const PATTERN_ATTRIBUTE_KEY = 'product.json.%s';
+    /**
+     * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeInterface
+     */
+    protected $productAttributeFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeInterface $productAttributeFacade
+     */
+    public function __construct(ProductRelationGuiToProductAttributeFacadeInterface $productAttributeFacade)
     {
-        $this->productRelationRepository = $productRelationRepository;
+        $this->productAttributeFacade = $productAttributeFacade;
     }
 
     /**
@@ -46,7 +55,7 @@ class FilterProvider implements FilterProviderInterface
         return [
             [
                 'id' => 'product_category_name',
-                'field' => SpyCategoryAttributeTableMap::COL_NAME,
+                'field' => static::COL_CATEGORY_NAME,
                 'label' => 'category',
                 'type' => 'string',
                 'input' => 'text',
@@ -118,14 +127,14 @@ class FilterProvider implements FilterProviderInterface
      */
     protected function buildProductAttributeFilters(): array
     {
-        $productAttributeKeys = $this->findProductAttributes();
+        $productManagementAttributeTransfers = $this->productAttributeFacade->getProductAttributeCollection();
 
         $filters = [];
-        foreach ($productAttributeKeys as $productAttributeKeyTransfer) {
+        foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
             $filters[] = [
-                'id' => $this->buildAttributeKey($productAttributeKeyTransfer->getKey()),
-                'field' => SpyProductAbstractTableMap::COL_ATTRIBUTES,
-                'label' => $productAttributeKeyTransfer->getKey(),
+                'id' => $this->buildAttributeKey($productManagementAttributeTransfer->getKey()),
+                'field' => static::COL_ATTRIBUTES,
+                'label' => $productManagementAttributeTransfer->getKey(),
                 'type' => 'string',
                 'input' => 'text',
                 'optgroup' => 'attributes',
@@ -137,20 +146,12 @@ class FilterProvider implements FilterProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer[]
-     */
-    protected function findProductAttributes(): array
-    {
-        return $this->productRelationRepository->findProductAttributes();
-    }
-
-    /**
      * @param string $persistedAttributeKey
      *
      * @return string
      */
-    protected function buildAttributeKey($persistedAttributeKey): string
+    protected function buildAttributeKey(string $persistedAttributeKey): string
     {
-        return 'product.json.' . $persistedAttributeKey;
+        return sprintf(static::PATTERN_ATTRIBUTE_KEY, $persistedAttributeKey);
     }
 }

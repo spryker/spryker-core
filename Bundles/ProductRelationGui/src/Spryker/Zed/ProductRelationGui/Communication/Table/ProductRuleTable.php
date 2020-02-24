@@ -81,17 +81,17 @@ class ProductRuleTable extends AbstractProductTable
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig $productRelationGuiConfig
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      */
     public function __construct(
         ProductRelationGuiToProductFacadeInterface $productFacade,
         ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer,
         ProductRelationGuiToUtilEncodingServiceInterface $utilEncodingService,
-        ProductRelationTransfer $productRelationTransfer,
         ProductRelationGuiToLocaleFacadeInterface $localeFacade,
-        ProductRelationGuiConfig $productRelationGuiConfig
+        ProductRelationGuiConfig $productRelationGuiConfig,
+        ProductRelationTransfer $productRelationTransfer
     ) {
 
         $this->productFacade = $productFacade;

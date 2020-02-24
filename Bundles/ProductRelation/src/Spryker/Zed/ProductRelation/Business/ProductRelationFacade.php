@@ -157,24 +157,10 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
-    public function findUniqueProductRelation(
+    public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer {
         return $this->getRepository()->findUniqueProductRelation($productRelationCriteriaTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function getJavascriptFilters(): array
-    {
-        return $this->getFactory()
-            ->createFilterProvider()
-            ->getFilters();
     }
 
     /**

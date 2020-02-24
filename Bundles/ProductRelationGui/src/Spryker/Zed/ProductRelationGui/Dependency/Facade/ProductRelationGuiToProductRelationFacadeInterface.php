@@ -25,7 +25,7 @@ interface ProductRelationGuiToProductRelationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
-    public function findUniqueProductRelation(
+    public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer;
 
@@ -79,9 +79,4 @@ interface ProductRelationGuiToProductRelationFacadeInterface
      * @return \Generated\Shared\Transfer\ProductSelectorTransfer
      */
     public function findProductForProductSelector(int $idProductAbstract, int $idLocale): ProductSelectorTransfer;
-
-    /**
-     * @return array
-     */
-    public function getJavascriptFilters(): array;
 }

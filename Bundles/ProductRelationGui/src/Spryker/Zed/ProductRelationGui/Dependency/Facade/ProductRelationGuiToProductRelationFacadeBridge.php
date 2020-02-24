@@ -41,9 +41,9 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
-    public function findUniqueProductRelation(ProductRelationCriteriaTransfer $productRelationCriteriaTransfer): ?ProductRelationTransfer
+    public function findProductRelationByCriteria(ProductRelationCriteriaTransfer $productRelationCriteriaTransfer): ?ProductRelationTransfer
     {
-        return $this->productRelationFacade->findUniqueProductRelation($productRelationCriteriaTransfer);
+        return $this->productRelationFacade->findProductRelationByCriteria($productRelationCriteriaTransfer);
     }
 
     /**
@@ -105,13 +105,5 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     public function findProductForProductSelector(int $idProductAbstract, int $idLocale): ProductSelectorTransfer
     {
         return $this->productRelationFacade->findProductForProductSelector($idProductAbstract, $idLocale);
-    }
-
-    /**
-     * @return array
-     */
-    public function getJavascriptFilters(): array
-    {
-        return $this->productRelationFacade->getJavascriptFilters();
     }
 }

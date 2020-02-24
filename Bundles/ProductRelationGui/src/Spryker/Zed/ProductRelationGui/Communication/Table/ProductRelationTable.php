@@ -45,11 +45,6 @@ class ProductRelationTable extends AbstractTable
     protected const LABEL_PRIMARY = 'label-primary';
 
     /**
-     * @var \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
-     */
-    protected $productRelationQuery;
-
-    /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface
      */
     protected $productFacade;
@@ -65,22 +60,26 @@ class ProductRelationTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery $productRelationQuery
+     * @var \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    protected $productRelationQuery;
+
+    /**
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig $productRelationGuiConfig
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface $localeFacade
+     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery $productRelationQuery
      */
     public function __construct(
-        SpyProductRelationQuery $productRelationQuery,
         ProductRelationGuiToProductFacadeInterface $productFacade,
         ProductRelationGuiConfig $productRelationGuiConfig,
-        ProductRelationGuiToLocaleFacadeInterface $localeFacade
+        ProductRelationGuiToLocaleFacadeInterface $localeFacade,
+        SpyProductRelationQuery $productRelationQuery
     ) {
-
-        $this->productRelationQuery = $productRelationQuery;
         $this->productFacade = $productFacade;
         $this->productRelationGuiConfig = $productRelationGuiConfig;
         $this->localeFacade = $localeFacade;
+        $this->productRelationQuery = $productRelationQuery;
 
         $this->setTableIdentifier('product-relation-table');
     }

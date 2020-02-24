@@ -10,18 +10,11 @@ namespace Spryker\Zed\ProductRelation\Persistence;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductSelectorTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationPersistenceFactory getFactory()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
  */
 class ProductRelationRepository extends AbstractRepository implements ProductRelationRepositoryInterface
 {
@@ -86,50 +79,9 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     {
         $productSelectorTransfer = new ProductSelectorTransfer();
         $productAbstractEntity = $this->getFactory()
-            ->getProductAbstractQuery()
-            ->leftJoinSpyProduct()
-            ->select([
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductAbstractTableMap::COL_SKU,
-                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-                SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION,
-                SpyPriceProductTableMap::COL_PRICE,
-                SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL,
-            ])
-            ->withColumn(
-                sprintf(
-                    'GROUP_CONCAT(%s)',
-                    SpyCategoryAttributeTableMap::COL_NAME
-                ),
-                static::COL_ASSIGNED_CATEGORIES
-            )
-            ->leftJoinPriceProduct()
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->leftJoinSpyProductCategory()
-            ->useSpyProductImageSetQuery()
-                ->filterByFkLocale($idLocale)
-                ->_or()
-                ->filterByFkLocale(null)
-                ->useSpyProductImageSetToProductImageQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinWithSpyProductImage()
-                ->endUse()
-            ->endUse()
-            ->addJoin(
-                [SpyProductCategoryTableMap::COL_FK_CATEGORY, $idLocale],
-                [SpyCategoryAttributeTableMap::COL_FK_CATEGORY, SpyCategoryAttributeTableMap::COL_FK_LOCALE],
-                Criteria::LEFT_JOIN
-            )
+            ->getQueryContainer()
+            ->queryProductsWithCategoriesByFkLocale($idLocale)
             ->filterByIdProductAbstract($idProductAbstract)
-            ->withColumn(
-                'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
-                static::COL_IS_ACTIVE_AGGREGATION
-            )
-            ->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
-            ->addGroupByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
-            ->addGroupByColumn(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->addGroupByColumn(SpyPriceProductTableMap::COL_PRICE)
             ->findOne();
 
         if (!$productAbstractEntity) {
