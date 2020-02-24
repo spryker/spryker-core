@@ -336,7 +336,7 @@ interface SalesFacadeInterface
      * Specification:
      * - Requires OrderTransfer::orderReference to be set.
      * - Expands item with order reference information.
-     * - Copies OrderTransfer::orderReference to Item::orderReference for each order item.
+     * - Copies OrderTransfer::orderReference to ItemTransfer::orderReference for each order item.
      *
      * @api
      *
