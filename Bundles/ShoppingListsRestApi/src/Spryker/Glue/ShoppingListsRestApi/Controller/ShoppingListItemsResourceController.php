@@ -27,12 +27,6 @@ class ShoppingListItemsResourceController extends AbstractController
      *              {
      *                  "name": "Accept-Language",
      *                  "in": "header"
-     *              },
-     *              {
-     *                  "name": "X-Company-User-Id",
-     *                  "in": "header",
-     *                  "required": true,
-     *                  "description": "Company user id"
      *              }
      *          ],
      *          "responses": {
@@ -41,7 +35,6 @@ class ShoppingListItemsResourceController extends AbstractController
      *              "404": "Shopping list not found.",
      *              "422": "Cannot add an item to shopping list"
      *          },
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListItemsAttributesTransfer"
      *     }
      * })
      *

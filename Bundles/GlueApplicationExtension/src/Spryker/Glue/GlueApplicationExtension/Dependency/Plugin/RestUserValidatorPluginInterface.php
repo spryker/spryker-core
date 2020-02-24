@@ -15,7 +15,7 @@ interface RestUserValidatorPluginInterface
     /**
      * Specification:
      * - Validates Rest user.
-     * - In case of error, returns a collection of rest error messages.
+     * - In case of error, returns an error messages.
      *
      * @api
      *

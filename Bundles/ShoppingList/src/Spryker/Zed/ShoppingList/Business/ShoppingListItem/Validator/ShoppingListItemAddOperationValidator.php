@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 
 class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperationValidatorInterface
@@ -39,7 +39,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     protected $shoppingListItemValidator;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface
      */
     protected $messageAdder;
 
@@ -50,7 +50,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
 
     /**
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface $shoppingListItemValidator
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface $messageAdder
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface $messageAdder
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface $permissionValidator

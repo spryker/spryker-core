@@ -10,14 +10,14 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface;
 
 class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDeleteOperationValidatorInterface
 {
     use PermissionAwareTrait;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface
      */
     protected $messageAdder;
 
@@ -27,23 +27,15 @@ class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDelete
     protected $shoppingListItemValidator;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface
-     */
-    protected $permissionValidator;
-
-    /**
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface $shoppingListItemValidator
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message\ShoppingListItemMessageAdderInterface $messageAdder
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface $permissionValidator
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface $messageAdder
      */
     public function __construct(
         ShoppingListItemValidatorInterface $shoppingListItemValidator,
-        ShoppingListItemMessageAdderInterface $messageAdder,
-        ShoppingListItemPermissionValidatorInterface $permissionValidator
+        ShoppingListItemMessageAdderInterface $messageAdder
     ) {
         $this->messageAdder = $messageAdder;
         $this->shoppingListItemValidator = $shoppingListItemValidator;
-        $this->permissionValidator = $permissionValidator;
     }
 
     /**

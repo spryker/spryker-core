@@ -379,7 +379,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function getRestUserValidatorPlugins(): array
     {
-        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_VALIDATE_REST_USER);
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_VALIDATE_REST_USER);
     }
 
     /**

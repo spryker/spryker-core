@@ -90,20 +90,10 @@ class ShoppingListRestResponseBuilder extends RestResponseBuilder implements Sho
             new RestShoppingListsAttributesTransfer()
         );
 
-        $shoppingListResource = $this->restResourceBuilder->createRestResource(
+        return $this->restResourceBuilder->createRestResource(
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS,
             $shoppingListTransfer->getUuid(),
             $restShoppingListsAttributesTransfer
-        );
-
-        $shoppingListItemResources = $this->shoppingListItemRestResponseBuilder->createShoppingListItemRestResourcesFromShoppingListTransfer(
-            $shoppingListTransfer
-        );
-
-        foreach ($shoppingListItemResources as $relation) {
-            $shoppingListResource->addRelationship($relation);
-        }
-
-        return $shoppingListResource;
+        )->setPayload($shoppingListTransfer);
     }
 }

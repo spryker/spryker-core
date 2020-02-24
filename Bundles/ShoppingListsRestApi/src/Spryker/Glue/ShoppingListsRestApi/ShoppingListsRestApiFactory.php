@@ -9,6 +9,8 @@ namespace Spryker\Glue\ShoppingListsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToShoppingListClientInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Expander\ShoppingListItemExpander;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Expander\ShoppingListItemExpanderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\CustomerMapper;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\CustomerMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemMapper;
@@ -34,6 +36,7 @@ use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListUpdater
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemAdderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemDeleter;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemDeleterInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemUpdater;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemUpdaterInterface;
 
@@ -75,7 +78,6 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     {
         return new ShoppingListUpdater(
             $this->getClient(),
-            $this->createShoppingListMapper(),
             $this->createShoppingListRestRequestReader(),
             $this->createShoppingListRestResponseBuilder()
         );
@@ -120,15 +122,23 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemDeleter
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemDeleterInterface
      */
-    public function createShoppingListItemDeleter(): ShoppingListItemDeleter
+    public function createShoppingListItemDeleter(): ShoppingListItemDeleterInterface
     {
         return new ShoppingListItemDeleter(
             $this->getClient(),
             $this->createShoppingListItemRestRequestReader(),
             $this->createShoppingListItemRestResponseBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\Expander\ShoppingListItemExpanderInterface
+     */
+    public function createShoppingListItemExpander(): ShoppingListItemExpanderInterface
+    {
+        return new ShoppingListItemExpander($this->createShoppingListItemRestResponseBuilder());
     }
 
     /**

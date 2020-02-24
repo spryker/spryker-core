@@ -61,7 +61,7 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
     ): ShoppingListItemResponseTransfer {
         $errorCodes = [];
         foreach ($shoppingListItemResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
+            $errorCodes[] = ShoppingListsRestApiConfig::getResponseErrorMapping()[$error] ?? $error;
         }
 
         $shoppingListItemResponseTransfer->setErrors($errorCodes);

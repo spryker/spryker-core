@@ -8,7 +8,7 @@
 namespace Spryker\Client\ShoppingListsRestApi\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
@@ -35,18 +35,18 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(
         CustomerTransfer $customerTransfer
-    ): RestShoppingListCollectionResponseTransfer {
-        /** @var \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer */
-        $restShoppingListCollectionResponseTransfer = $this->zedRequestClient->call(
+    ): ShoppingListCollectionTransfer {
+        /** @var \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionResponseTransfer */
+        $shoppingListCollectionResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/get-customer-shopping-list-collection',
             $customerTransfer
         );
 
-        return $restShoppingListCollectionResponseTransfer;
+        return $shoppingListCollectionResponseTransfer;
     }
 
     /**

@@ -24,7 +24,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_RESOURCE_RELATIONSHIP = 'PLUGIN_RESOURCE_RELATIONSHIP';
     public const PLUGIN_VALIDATE_HTTP_REQUEST = 'PLUGIN_VALIDATE_HTTP_REQUEST';
     public const PLUGIN_VALIDATE_REST_REQUEST = 'PLUGIN_VALIDATE_REST_REQUEST';
-    public const PLUGIN_VALIDATE_REST_USER = 'PLUGIN_VALIDATE_REST_USER';
+    public const PLUGINS_VALIDATE_REST_USER = 'PLUGIN_VALIDATE_REST_USER';
     public const PLUGIN_REST_REQUEST_VALIDATOR = 'PLUGIN_REST_REQUEST_VALIDATOR';
     public const PLUGIN_FORMAT_REQUEST = 'PLUGIN_FORMAT_REQUEST';
     public const PLUGIN_FORMAT_RESPONSE_DATA = 'PLUGIN_FORMAT_RESPONSE_DATA';
@@ -157,7 +157,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRestUserValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_VALIDATE_REST_USER, function (Container $container) {
+        $container->set(static::PLUGINS_VALIDATE_REST_USER, function (Container $container) {
             return $this->getRestUserValidatorPlugins();
         });
 

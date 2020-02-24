@@ -79,7 +79,7 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
             return $shoppingListItemResponseTransfer;
         }
 
-        if (!$this->findShoppingListItemById($shoppingListItemTransfer, $shoppingListTransfer)) {
+        if (!$this->checkShoppingListItem($shoppingListItemTransfer, $shoppingListTransfer)) {
             $shoppingListItemResponseTransfer
                 ->addError(static::ERROR_SHOPPING_LIST_ITEM_NOT_FOUND)
                 ->setIsSuccess(false);
@@ -146,18 +146,18 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
+     * @return bool
      */
-    protected function findShoppingListItemById(
+    protected function checkShoppingListItem(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListTransfer $shoppingListTransfer
-    ): ?ShoppingListItemTransfer {
+    ): bool {
         foreach ($shoppingListTransfer->getItems() as $ownShoppingListItemTransfer) {
             if ($ownShoppingListItemTransfer->getIdShoppingListItem() === $shoppingListItemTransfer->getIdShoppingListItem()) {
-                return $ownShoppingListItemTransfer;
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 }

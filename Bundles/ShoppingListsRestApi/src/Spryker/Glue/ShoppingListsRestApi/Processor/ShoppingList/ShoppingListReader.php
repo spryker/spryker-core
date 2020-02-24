@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -76,8 +77,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $restRequest->getRestUser(),
             new CustomerTransfer()
         );
-        $restShoppingListCollectionResponseTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection($customerTransfer);
-
+        $shoppingListCollectionResponseTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection($customerTransfer);
+        $restShoppingListCollectionResponseTransfer = (new RestShoppingListCollectionResponseTransfer())
+            ->setShoppingLists($shoppingListCollectionResponseTransfer->getShoppingLists());
         if (count($restShoppingListCollectionResponseTransfer->getErrorCodes()) > 0) {
             return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
                 $restShoppingListCollectionResponseTransfer->getErrorCodes()

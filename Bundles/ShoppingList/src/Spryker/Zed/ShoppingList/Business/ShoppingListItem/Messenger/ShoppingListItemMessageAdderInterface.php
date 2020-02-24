@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message;
+namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger;
 
 interface ShoppingListItemMessageAdderInterface
 {

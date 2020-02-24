@@ -8,14 +8,14 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 
 interface ShoppingListReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): RestShoppingListCollectionResponseTransfer;
+    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer;
 }

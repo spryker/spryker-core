@@ -7,29 +7,12 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper;
 
-use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class ShoppingListMapper implements ShoppingListMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
-     * @param \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
-     */
-    public function mapShoppingListCollectionTransferToRestShoppingListCollectionResponseTransfer(
-        ShoppingListCollectionTransfer $shoppingListCollectionTransfer,
-        RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
-    ): RestShoppingListCollectionResponseTransfer {
-        return $restShoppingListCollectionResponseTransfer->setShoppingLists(
-            $shoppingListCollectionTransfer->getShoppingLists()
-        );
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
@@ -56,7 +39,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     ): ShoppingListResponseTransfer {
         $errorCodes = [];
         foreach ($shoppingListResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
+            $errorCodes[] = ShoppingListsRestApiConfig::getResponseErrorMapping()[$error] ?? $error;
         }
 
         $shoppingListResponseTransfer->setErrors($errorCodes);

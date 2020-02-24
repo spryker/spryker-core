@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Message;
+namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;

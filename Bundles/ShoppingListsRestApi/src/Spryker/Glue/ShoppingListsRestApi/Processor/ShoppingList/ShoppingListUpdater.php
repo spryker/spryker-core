@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RestShoppingListsAttributesTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListRestResponseBuilderInterface;
 
@@ -21,11 +20,6 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
      * @var \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface
      */
     protected $shoppingListsRestApiClient;
-
-    /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface
-     */
-    protected $shoppingListMapper;
 
     /**
      * @var \Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface
@@ -39,18 +33,15 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
 
     /**
      * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListsRestApiClient
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface $shoppingListMapper
      * @param \Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest\ShoppingListRestRequestReaderInterface $shoppingListRestRequestReaderInterface
      * @param \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListRestResponseBuilderInterface $shoppingListRestResponseBuilderInterface
      */
     public function __construct(
         ShoppingListsRestApiClientInterface $shoppingListsRestApiClient,
-        ShoppingListMapperInterface $shoppingListMapper,
         ShoppingListRestRequestReaderInterface $shoppingListRestRequestReaderInterface,
         ShoppingListRestResponseBuilderInterface $shoppingListRestResponseBuilderInterface
     ) {
         $this->shoppingListsRestApiClient = $shoppingListsRestApiClient;
-        $this->shoppingListMapper = $shoppingListMapper;
         $this->shoppingListRestRequestReader = $shoppingListRestRequestReaderInterface;
         $this->shoppingListRestResponseBuilder = $shoppingListRestResponseBuilderInterface;
     }

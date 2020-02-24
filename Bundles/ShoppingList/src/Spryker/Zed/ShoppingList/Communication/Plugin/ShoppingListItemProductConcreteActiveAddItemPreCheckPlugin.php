@@ -17,7 +17,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInt
  * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
  */
-class ProductConcreteStatusShoppingListAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
+class ShoppingListItemProductConcreteActiveAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
 {
     /**
      * {@inheritDoc}
