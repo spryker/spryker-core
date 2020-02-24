@@ -14,7 +14,7 @@ interface MerchantOmsDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports data from a file specified in module config.
+     * - Gets data sets from a file specified in module config.
      * - Iterates over the data sets and imports the data into the database.
      *
      * @api

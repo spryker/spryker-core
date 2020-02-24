@@ -30,8 +30,8 @@ class MerchantOmsFacadeTest extends Unit
     protected const TEST_MERCHANT_ORDER_ITEM_ID = 1;
     protected const EXISTING_MERCHANT_OMS_PROCESS_NAME = 'MerchantOmsProcessName';
     protected const NOT_EXISTING_MERCHANT_OMS_PROCESS_NAME = 'NotExistingMerchantOmsProcessName';
-    protected const EVENT_NAME_EXPORT = 'export';
-    protected const EVENT_NAME_DELIVER = 'deliver';
+    protected const VALID_EVENT_NAME_EXPORT = 'export';
+    protected const INVALID_EVENT_NAME_DELIVER = 'deliver';
 
     /**
      * @var \SprykerTest\Zed\MerchantOms\MerchantOmsBusinessTester
@@ -87,7 +87,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDispatchMerchantOrderItemsEventReturnsSuccessWithCorrectEvent(): void
+    public function testTriggerEventForMerchantOrderItemsReturnsSuccessWithCorrectEvent(): void
     {
         // Arrange
         $testStateMachineHandler = new TestStateMachineHandler();
@@ -105,7 +105,7 @@ class MerchantOmsFacadeTest extends Unit
         $stateMachineItemTransfer = $testStateMachineHandler->getStateMachineItemTransfer();
         $merchantOrderItemTransfer->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState());
 
-        $merchantOmsTriggerRequestTransfer->setMerchantOmsEventName(static::EVENT_NAME_EXPORT);
+        $merchantOmsTriggerRequestTransfer->setMerchantOmsEventName(static::VALID_EVENT_NAME_EXPORT);
 
         // Act
         $merchantOmsFacade->triggerEventForMerchantOrderItems($merchantOmsTriggerRequestTransfer);

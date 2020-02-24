@@ -26,7 +26,9 @@ class MerchantOmsToMerchantFacadeBridge implements MerchantOmsToMerchantFacadeIn
     }
 
     /**
-     * @inheritDoc
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
     {

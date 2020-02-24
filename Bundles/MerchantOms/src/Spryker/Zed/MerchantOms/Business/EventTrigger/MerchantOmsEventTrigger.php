@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantOms\Business\EventTrigger;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReaderInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
@@ -51,9 +49,8 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             ->getMerchant()
                 ->requireMerchantReference();
 
-        $merchantReference = $merchantOmsTriggerRequestTransfer->getMerchant()->getMerchantReference();
         $stateMachineProcessTransfer = $this->stateMachineProcessReader->getStateMachineProcessTransferByMerchant(
-            (new MerchantTransfer())->setMerchantReference($merchantReference)
+            $merchantOmsTriggerRequestTransfer->getMerchant()
         );
 
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
@@ -77,30 +74,14 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
         $stateMachineItemTransfers = [];
 
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $stateMachineItemTransfers[] = $this->mapMerchantOrderItemTransferToStateMachineItemTransfer(
-                $merchantOrderItemTransfer,
-                new StateMachineItemTransfer()
-            );
+            $stateMachineItemTransfers[] = (new StateMachineItemTransfer())
+                ->setIdItemState($merchantOrderItemTransfer->getFkStateMachineItemState())
+                ->setIdentifier($merchantOrderItemTransfer->getIdMerchantOrderItem());
         }
 
         $this->stateMachineFacade->triggerEventForItems(
             $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName(),
             $stateMachineItemTransfers
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
-     */
-    protected function mapMerchantOrderItemTransferToStateMachineItemTransfer(
-        MerchantOrderItemTransfer $merchantOrderItemTransfer,
-        StateMachineItemTransfer $stateMachineItemTransfer
-    ): StateMachineItemTransfer {
-        return $stateMachineItemTransfer
-            ->setIdItemState($merchantOrderItemTransfer->getFkStateMachineItemState())
-            ->setIdentifier($merchantOrderItemTransfer->getIdMerchantOrderItem());
     }
 }
