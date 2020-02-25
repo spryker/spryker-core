@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesReturn\Business;
 
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
@@ -62,5 +64,37 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
     public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer
     {
         // TODO: Implement createReturn() method.
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    public function setItemRemunerationAmount(ItemTransfer $itemTransfer): void
+    {
+        $this->getFactory()
+            ->createItemRemunerationAmountSetter()
+            ->setItemRemunerationAmount($itemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createOrderRemunerationTotalExpander()
+            ->expandOrderTotalsWithRemunerationTotal($orderTransfer);
     }
 }

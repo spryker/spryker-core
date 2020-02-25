@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturn\Persistence;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,4 +15,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class SalesReturnRepository extends AbstractRepository implements SalesReturnRepositoryInterface
 {
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findSalesOrderItemByIdSalesOrder(int $idSalesOrderItem): ?ItemTransfer
+    {
+        $salesOrderItemEntity = $this->getFactory()
+            ->getSalesOrderItemPropelQuery()
+            ->filterByIdSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+
+        if (!$salesOrderItemEntity) {
+            return null;
+        }
+
+        return (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true);
+    }
 }

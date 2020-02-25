@@ -397,4 +397,20 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createSalesOrderItemGrouper()
             ->getUniqueItemsFromOrder($orderTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderItemsWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createOrderReferenceExpander()
+            ->expandOrderItemsWithOrderReference($orderTransfer);
+    }
 }
