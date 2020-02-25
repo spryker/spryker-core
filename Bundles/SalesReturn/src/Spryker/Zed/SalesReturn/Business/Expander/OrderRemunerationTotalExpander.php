@@ -9,14 +9,14 @@ namespace Spryker\Zed\SalesReturn\Business\Expander;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-class RemunerationTotalExpander implements RemunerationTotalExpanderInterface
+class OrderRemunerationTotalExpander implements OrderRemunerationTotalExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandOrderTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer
     {
         $orderTransfer->requireTotals();
         $remunerationTotal = $this->calculateItemRemunerationTotal($orderTransfer);

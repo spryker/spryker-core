@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesReturn\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesReturn\Business\Expander\RemunerationTotalExpander;
-use Spryker\Zed\SalesReturn\Business\Expander\RemunerationTotalExpanderInterface;
+use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpander;
+use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetter;
@@ -42,10 +42,10 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturn\Business\Expander\RemunerationTotalExpanderInterface
+     * @return \Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpanderInterface
      */
-    public function createRemunerationTotalExpander(): RemunerationTotalExpanderInterface
+    public function createOrderRemunerationTotalExpander(): OrderRemunerationTotalExpanderInterface
     {
-        return new RemunerationTotalExpander();
+        return new OrderRemunerationTotalExpander();
     }
 }

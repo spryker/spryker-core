@@ -20,10 +20,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group Sales
  * @group Business
  * @group Facade
- * @group ExpandItemsWithOrderReferenceTest
+ * @group ExpandOrderItemsWithOrderReferenceTest
  * Add your own group annotations below this line
  */
-class ExpandItemsWithOrderReferenceTest extends Test
+class ExpandOrderItemsWithOrderReferenceTest extends Test
 {
     protected const FAKE_ORDER_REFERENCE = 'FAKE_ORDER_REFERENCE';
 
@@ -35,7 +35,7 @@ class ExpandItemsWithOrderReferenceTest extends Test
     /**
      * @return void
      */
-    public function testExpandItemsWithOrderReferenceCopyOrderReferenceToItems(): void
+    public function testExpandOrderItemsWithOrderReferenceCopyOrderReferenceToItems(): void
     {
         // Arrange
         $orderTransfer = (new OrderTransfer())
@@ -44,7 +44,7 @@ class ExpandItemsWithOrderReferenceTest extends Test
             ->addItem((new ItemTransfer()));
 
         // Act
-        $orderTransfer = $this->tester->getFacade()->expandItemsWithOrderReference($orderTransfer);
+        $orderTransfer = $this->tester->getFacade()->expandOrderItemsWithOrderReference($orderTransfer);
 
         // Assert
         $this->assertSame($orderTransfer->getOrderReference(), $orderTransfer->getItems()->offsetGet(0)->getOrderReference());
@@ -54,7 +54,7 @@ class ExpandItemsWithOrderReferenceTest extends Test
     /**
      * @return void
      */
-    public function testExpandItemsWithOrderReferenceThrowsExceptionWithEmptyOrderReference(): void
+    public function testExpandOrderItemsWithOrderReferenceThrowsExceptionWithEmptyOrderReference(): void
     {
         // Arrange
         $orderTransfer = (new OrderTransfer())
@@ -66,6 +66,6 @@ class ExpandItemsWithOrderReferenceTest extends Test
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->expandItemsWithOrderReference($orderTransfer);
+        $this->tester->getFacade()->expandOrderItemsWithOrderReference($orderTransfer);
     }
 }

@@ -50,7 +50,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container = $this->addSalesOrderItemQuery($container);
+        $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
     }
@@ -104,7 +104,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesOrderItemQuery(Container $container): Container
+    protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function () {
             return SpySalesOrderItemQuery::create();

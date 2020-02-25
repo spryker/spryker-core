@@ -21,10 +21,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group SalesReturn
  * @group Business
  * @group SalesReturnFacade
- * @group ExpandTotalsWithRemunerationTotalTest
+ * @group ExpandOrderTotalsWithRemunerationTotalTest
  * Add your own group annotations below this line
  */
-class ExpandTotalsWithRemunerationTotalTest extends Unit
+class ExpandOrderTotalsWithRemunerationTotalTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesReturn\SalesReturnBusinessTester
@@ -34,13 +34,13 @@ class ExpandTotalsWithRemunerationTotalTest extends Unit
     /**
      * @return void
      */
-    public function testExpandTotalsWithRemunerationTotalExpandsRemunerationTotal(): void
+    public function testExpandOrderTotalsWithRemunerationTotalExpandsRemunerationTotal(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderWithFakeRemuneration();
 
         // Act
-        $this->tester->getFacade()->expandTotalsWithRemunerationTotal($orderTransfer);
+        $this->tester->getFacade()->expandOrderTotalsWithRemunerationTotal($orderTransfer);
 
         // Assert
         $this->assertSame(600, $orderTransfer->getTotals()->getRemunerationTotal());
@@ -49,7 +49,7 @@ class ExpandTotalsWithRemunerationTotalTest extends Unit
     /**
      * @return void
      */
-    public function testExpandTotalsWithRemunerationTotalWithoutItems(): void
+    public function testExpandOrderTotalsWithRemunerationTotalWithoutItems(): void
     {
         // Arrange
         $orderTransfer = (new OrderTransfer())
@@ -57,7 +57,7 @@ class ExpandTotalsWithRemunerationTotalTest extends Unit
             ->setTotals(new TotalsTransfer());
 
         // Act
-        $this->tester->getFacade()->expandTotalsWithRemunerationTotal($orderTransfer);
+        $this->tester->getFacade()->expandOrderTotalsWithRemunerationTotal($orderTransfer);
 
         // Assert
         $this->assertSame(0, $orderTransfer->getTotals()->getRemunerationTotal());
@@ -66,7 +66,7 @@ class ExpandTotalsWithRemunerationTotalTest extends Unit
     /**
      * @return void
      */
-    public function testExpandTotalsWithRemunerationTotalThrowsExceptionWithEmptyTotals(): void
+    public function testExpandOrderTotalsWithRemunerationTotalThrowsExceptionWithEmptyTotals(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderWithFakeRemuneration();
@@ -76,6 +76,6 @@ class ExpandTotalsWithRemunerationTotalTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->expandTotalsWithRemunerationTotal($orderTransfer);
+        $this->tester->getFacade()->expandOrderTotalsWithRemunerationTotal($orderTransfer);
     }
 }
