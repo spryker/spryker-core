@@ -27,7 +27,12 @@ class AuthRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_FORBIDDEN = '002';
     public const RESPONSE_INVALID_LOGIN = '003';
     public const RESPONSE_INVALID_REFRESH_TOKEN = '004';
-    
+
+    /**
+     * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
+     */
+    public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
+
     /**
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_AUTHORIZATION
      */

@@ -99,7 +99,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateResourceIdSpecified(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $method = $restRequest->getMetadata()->getMethod();
-        if (!in_array($method, [Request::METHOD_PATCH], true)) {
+        if (!in_array($method, [Request::METHOD_DELETE, Request::METHOD_PATCH], true)) {
             return null;
         }
 

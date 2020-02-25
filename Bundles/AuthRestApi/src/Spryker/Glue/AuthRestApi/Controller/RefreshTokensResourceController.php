@@ -82,12 +82,6 @@ class RefreshTokensResourceController extends AbstractController
      */
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $refreshTokenIdentifier = $restRequest->getResource()->getId();
-
-        if ($refreshTokenIdentifier !== null) {
-            return $this->getFactory()->createRefreshTokenRevoker()->revokeRefreshToken($refreshTokenIdentifier, $restRequest);
-        }
-
-        return $this->getFactory()->createRefreshTokenRevoker()->revokeCustomerRefreshTokens($restRequest);
+        return $this->getFactory()->createRefreshTokenRevoker()->revokeRefreshToken($restRequest);
     }
 }
