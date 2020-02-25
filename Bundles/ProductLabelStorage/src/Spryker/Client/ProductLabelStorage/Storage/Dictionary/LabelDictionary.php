@@ -125,7 +125,7 @@ class LabelDictionary implements LabelDictionaryInterface
      *
      * @return array|null
      */
-    protected function getStorageData($localeName)
+    protected function getStorageData(string $localeName)
     {
         if (ProductLabelStorageConfig::isCollectorCompatibilityMode()) {
             $productLabelConstantsClassName = '\Spryker\Shared\ProductLabel\ProductLabelConstants';

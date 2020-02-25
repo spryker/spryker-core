@@ -12,7 +12,6 @@ interface LabelDictionaryReaderInterface
     /**
      * @param int[] $idsProductLabel
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
@@ -21,7 +20,6 @@ interface LabelDictionaryReaderInterface
     /**
      * @param int $idProductLabel
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
@@ -30,7 +28,6 @@ interface LabelDictionaryReaderInterface
     /**
      * @param string $labelName
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
@@ -39,7 +36,6 @@ interface LabelDictionaryReaderInterface
     /**
      * @param string $labelName
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
