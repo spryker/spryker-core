@@ -8,6 +8,13 @@
 namespace SprykerTest\Zed\MerchantSalesOrder;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 
 /**
  * Inherited Methods
@@ -30,7 +37,77 @@ class MerchantSalesOrderBusinessTester extends Actor
 {
     use _generated\MerchantSalesOrderBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     */
+    public function getItemTransfer(array $seedData = []): ItemTransfer
+    {
+        return (new ItemBuilder($seedData))->build();
+    }
+
+    /**
+     * @param string $orderReference
+     * @param string $merchantReference
+     *
+     * @return string
+     */
+    public function getMerchantOrderReference(string $orderReference, string $merchantReference): string
+    {
+        return sprintf(
+            '%s--%s',
+            $orderReference,
+            $merchantReference
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $stateMachine
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function getSaveOrderTransfer(MerchantTransfer $merchantTransfer, string $stateMachine): SaveOrderTransfer
+    {
+        $this->configureTestStateMachine([$stateMachine]);
+
+        return $this->haveOrder([
+            ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            ItemTransfer::UNIT_PRICE => 100,
+            ItemTransfer::SUM_PRICE => 100,
+        ], $stateMachine);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $merchantOrderReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    public function createMerchantOrderWithRelatedData(
+        SaveOrderTransfer $saveOrderTransfer,
+        MerchantTransfer $merchantTransfer,
+        ItemTransfer $itemTransfer,
+        string $merchantOrderReference
+    ): MerchantOrderTransfer {
+        $merchantOrderTransfer = $this->haveMerchantOrder([
+            MerchantOrderTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
+            MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder(),
+            MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+        ]);
+
+        $this->haveMerchantOrderItem([
+            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
+            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+        ]);
+
+        $this->haveMerchantOrderTotals([
+            TotalsTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+        ]);
+
+        return $merchantOrderTransfer;
+    }
 }
