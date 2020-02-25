@@ -1,6 +1,27 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Custom Order Reference' } %}
     {% block widget_content %}
-        {{ form_start(orderCustomReferenceForm) }}
-        {{ form_end(orderCustomReferenceForm) }}
+        <div class="js-customer-order-reference">
+            <div class="row js-toggle-ta
+{#                    TODO: update reference #}
+                    <big>g43f43rf23rf23</big>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <button class="btn btn-default js-toggle-trigger">
+                        {{ 'Edit Reference' | trans }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="js-toggle-target hide">
+                {{ form_start(orderCustomReferenceForm) }}
+                {{ form_end(orderCustomReferenceForm) }}
+
+                <button type="submit" class="btn btn-primary safe-submit">{{ 'Save' | trans }}</button>
+                <button type="button" class="btn btn-default js-toggle-trigger">{{ 'Cancel' | trans }}</button>
+            </div>
+        </div>
+
+        {% block widget_content %}
+            <script src="{{ assetsPath('js/spryker-zed-order-reference-toggler.js') }}"></script>
     {% endblock %}
 {% endembed %}
