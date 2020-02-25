@@ -22,7 +22,7 @@ class StateMachineMapper
         SpyStateMachineProcess $stateMachineProcess,
         StateMachineProcessTransfer $stateMachineProcessTransfer
     ): StateMachineProcessTransfer {
-        $stateMachineProcessTransfer->fromArray($stateMachineProcess->toArray())
+        $stateMachineProcessTransfer->fromArray($stateMachineProcess->toArray(), true)
             ->setProcessName($stateMachineProcess->getName());
 
         return $stateMachineProcessTransfer;
