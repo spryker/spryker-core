@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -18,7 +17,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
-use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -252,32 +250,16 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer
+     * @param int $idMerchantOrderItem
      *
      * @return bool
      */
-    public function existsMerchantOrderItem(MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer): bool
+    public function existsMerchantOrderItem(int $idMerchantOrderItem): bool
     {
-        $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
-        $merchantSalesOrderItemQuery = $this->applyMerchantOrderItemFilters($merchantOrderItemCriteriaFilterTransfer, $merchantSalesOrderItemQuery);
+        $merchantSalesOrderItemQuery = $this->getFactory()
+            ->createMerchantSalesOrderItemQuery()
+            ->filterByIdMerchantSalesOrderItem($idMerchantOrderItem);
 
         return $merchantSalesOrderItemQuery->exists();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer
-     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
-     *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
-     */
-    protected function applyMerchantOrderItemFilters(
-        MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer,
-        SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
-    ): SpyMerchantSalesOrderItemQuery {
-        if ($merchantOrderItemCriteriaFilterTransfer->getIdMerchantOrderItem()) {
-            $merchantSalesOrderItemQuery->filterByIdMerchantSalesOrderItem($merchantOrderItemCriteriaFilterTransfer->getIdMerchantOrderItem());
-        }
-
-        return $merchantSalesOrderItemQuery;
     }
 }

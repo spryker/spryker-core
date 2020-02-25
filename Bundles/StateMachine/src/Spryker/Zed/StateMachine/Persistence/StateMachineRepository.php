@@ -51,7 +51,7 @@ class StateMachineRepository extends AbstractRepository implements StateMachineR
         SpyStateMachineProcessQuery $stateMachineProcessQuery,
         StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer
     ): SpyStateMachineProcessQuery {
-        if ($stateMachineProcessCriteriaFilterTransfer->getIdStateMachineProcess()) {
+        if ($stateMachineProcessCriteriaFilterTransfer->getIdStateMachineProcess() !== null) {
             $stateMachineProcessQuery->filterByIdStateMachineProcess($stateMachineProcessCriteriaFilterTransfer->getIdStateMachineProcess());
         }
 

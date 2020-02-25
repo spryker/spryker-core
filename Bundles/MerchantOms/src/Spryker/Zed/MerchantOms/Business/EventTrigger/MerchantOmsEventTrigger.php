@@ -9,12 +9,9 @@ namespace Spryker\Zed\MerchantOms\Business\EventTrigger;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
-use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReaderInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
-use Spryker\Zed\MerchantOms\MerchantOmsConfig;
 
 class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
 {
@@ -29,23 +26,15 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
     protected $stateMachineProcessReader;
 
     /**
-     * @var \Spryker\Zed\MerchantOms\MerchantOmsConfig
-     */
-    protected $merchantOmsConfig;
-
-    /**
      * @param \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface $stateMachineFacade
      * @param \Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReaderInterface $stateMachineProcessReader
-     * @param \Spryker\Zed\MerchantOms\MerchantOmsConfig $merchantOmsConfig
      */
     public function __construct(
         MerchantOmsToStateMachineFacadeInterface $stateMachineFacade,
-        StateMachineProcessReaderInterface $stateMachineProcessReader,
-        MerchantOmsConfig $merchantOmsConfig
+        StateMachineProcessReaderInterface $stateMachineProcessReader
     ) {
         $this->stateMachineFacade = $stateMachineFacade;
         $this->stateMachineProcessReader = $stateMachineProcessReader;
-        $this->merchantOmsConfig = $merchantOmsConfig;
     }
 
     /**
@@ -61,7 +50,8 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             ->getMerchant()
                 ->requireMerchantReference();
 
-        $stateMachineProcessTransfer = $this->resolveStateMachineProcess($merchantOmsTriggerRequestTransfer->getMerchant());
+        $stateMachineProcessTransfer = $this->stateMachineProcessReader
+            ->resolveMerchantStateMachineProcess($merchantOmsTriggerRequestTransfer->getMerchant());
 
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
             $this->stateMachineFacade->triggerForNewStateMachineItem(
@@ -78,8 +68,9 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
      */
     public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void
     {
-        $merchantOmsTriggerRequestTransfer->requireMerchantOrderItems();
-        $merchantOmsTriggerRequestTransfer->requireMerchantOmsEventName();
+        $merchantOmsTriggerRequestTransfer
+            ->requireMerchantOrderItems()
+            ->requireMerchantOmsEventName();
 
         $stateMachineItemTransfers = [];
 
@@ -91,24 +82,6 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName(),
             $stateMachineItemTransfers
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
-     */
-    protected function resolveStateMachineProcess(MerchantTransfer $merchantTransfer): StateMachineProcessTransfer
-    {
-        $stateMachineProcessTransfer = $this->stateMachineProcessReader->findStateMachineProcess($merchantTransfer);
-
-        if (!$stateMachineProcessTransfer) {
-            $stateMachineProcessTransfer = (new StateMachineProcessTransfer())
-                ->setStateMachineName($this->merchantOmsConfig->getMerchantOmsStateMachineName())
-                ->setProcessName($this->merchantOmsConfig->getMerchantOmsDefaultProcessName());
-        }
-
-        return $stateMachineProcessTransfer;
     }
 
     /**

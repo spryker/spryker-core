@@ -10,6 +10,10 @@
         <foreign-key name="spy_merchant-fk_state_machine_process" foreignTable="spy_state_machine_process" phpName="SpyStateMachineProcess">
             <reference local="fk_state_machine_process" foreign="id_state_machine_process"/>
         </foreign-key>
+
+        <index name="spy_merchant-fk_state_machine_process">
+            <index-column name="fk_state_machine_process"/>
+        </index>
     </table>
 
 </database>

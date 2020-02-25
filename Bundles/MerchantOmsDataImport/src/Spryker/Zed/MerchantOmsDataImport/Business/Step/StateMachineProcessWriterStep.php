@@ -16,9 +16,12 @@ use Spryker\Zed\MerchantOmsDataImport\Business\DataSet\MerchantOmsProcessDataSet
 
 class StateMachineProcessWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Zed\MerchantOms\MerchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME
+     */
+    protected const MERCHANT_OMS_STATE_MACHINE_NAME = 'Merchant';
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantOmsProcessDataSetInterface::MERCHANT_OMS_PROCESS_NAME,
-        MerchantOmsProcessDataSetInterface::MERCHANT_STATE_MACHINE_NAME,
     ];
 
     /**
@@ -31,15 +34,12 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
         $this->validateDataSet($dataSet);
 
         $merchantOmsProcessName = $dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_OMS_PROCESS_NAME];
-        $merchantStateMachineName = $dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_STATE_MACHINE_NAME];
 
         $stateMachineProcessEntity = $this->createStateMachineProcessPropelQuery()
-            ->filterByStateMachineName($merchantStateMachineName)
             ->filterByName($merchantOmsProcessName)
             ->findOneOrCreate();
 
-        $stateMachineProcessEntity->setName($merchantOmsProcessName);
-        $stateMachineProcessEntity->setStateMachineName($merchantStateMachineName);
+        $stateMachineProcessEntity->setStateMachineName(static::MERCHANT_OMS_STATE_MACHINE_NAME);
 
         if ($stateMachineProcessEntity->isNew() || $stateMachineProcessEntity->isModified()) {
             $stateMachineProcessEntity->save();
@@ -65,10 +65,8 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
      */
     protected function validateDataSet(DataSetInterface $dataSet): void
     {
-        foreach (static::REQUIRED_DATA_SET_KEYS as $requiredDataSetKey) {
-            if (!$dataSet[$requiredDataSetKey]) {
-                throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
-            }
+        if (!$dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_OMS_PROCESS_NAME]) {
+            throw new InvalidDataException(sprintf('"%s" is required.', MerchantOmsProcessDataSetInterface::MERCHANT_OMS_PROCESS_NAME));
         }
     }
 }

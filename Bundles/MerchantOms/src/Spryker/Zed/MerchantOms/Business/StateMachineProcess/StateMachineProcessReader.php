@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
+use Spryker\Zed\MerchantOms\MerchantOmsConfig;
 
 class StateMachineProcessReader implements StateMachineProcessReaderInterface
 {
@@ -27,15 +28,41 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
     protected $stateMachineFacade;
 
     /**
+     * @var \Spryker\Zed\MerchantOms\MerchantOmsConfig
+     */
+    protected $merchantOmsConfig;
+
+    /**
+     * @param \Spryker\Zed\MerchantOms\MerchantOmsConfig $merchantOmsConfig
      * @param \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface $stateMachineFacade
      */
     public function __construct(
+        MerchantOmsConfig $merchantOmsConfig,
         MerchantOmsToMerchantFacadeInterface $merchantFacade,
         MerchantOmsToStateMachineFacadeInterface $stateMachineFacade
     ) {
         $this->merchantFacade = $merchantFacade;
         $this->stateMachineFacade = $stateMachineFacade;
+        $this->merchantOmsConfig = $merchantOmsConfig;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
+     */
+    public function resolveMerchantStateMachineProcess(MerchantTransfer $merchantTransfer): StateMachineProcessTransfer
+    {
+        $stateMachineProcessTransfer = $this->findMerchantStateMachineProcess($merchantTransfer);
+
+        if (!$stateMachineProcessTransfer) {
+            $stateMachineProcessTransfer = (new StateMachineProcessTransfer())
+                ->setStateMachineName($this->merchantOmsConfig->getMerchantOmsStateMachineName())
+                ->setProcessName($this->merchantOmsConfig->getMerchantOmsDefaultProcessName());
+        }
+
+        return $stateMachineProcessTransfer;
     }
 
     /**
@@ -43,7 +70,7 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
      */
-    public function findStateMachineProcess(MerchantTransfer $merchantTransfer): ?StateMachineProcessTransfer
+    protected function findMerchantStateMachineProcess(MerchantTransfer $merchantTransfer): ?StateMachineProcessTransfer
     {
         $merchantTransfer = $this->merchantFacade->findOne(
             (new MerchantCriteriaFilterTransfer())->setMerchantReference($merchantTransfer->getMerchantReference())

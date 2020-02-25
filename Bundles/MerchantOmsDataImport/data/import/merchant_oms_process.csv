@@ -1,8 +1,8 @@
-merchant_key,merchant_state_machine_name,merchant_oms_process_name
-roan-gmbh-und-co-k-g,Merchant,MerchantDefaultStateMachine
-steenbok,Merchant,MerchantDefaultStateMachine
-kudu-merchant-1,Merchant,MerchantDefaultStateMachine
-impala-merchant-1,Merchant,MerchantDefaultStateMachine
-sugar-monster,Merchant,MerchantDefaultStateMachine
-restrictions-merchant,Merchant,MerchantDefaultStateMachine
-oryx-merchant-1,Merchant,MerchantDefaultStateMachine
+merchant_key,merchant_oms_process_name
+roan-gmbh-und-co-k-g,MerchantDefaultStateMachine
+steenbok,MerchantDefaultStateMachine
+kudu-merchant-1,MerchantDefaultStateMachine
+impala-merchant-1,MerchantDefaultStateMachine
+sugar-monster,MerchantDefaultStateMachine
+restrictions-merchant,MerchantDefaultStateMachine
+oryx-merchant-1,MerchantDefaultStateMachine

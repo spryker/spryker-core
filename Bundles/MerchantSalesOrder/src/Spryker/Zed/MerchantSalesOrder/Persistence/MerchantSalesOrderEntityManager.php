@@ -94,8 +94,6 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
      */
     public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemTransfer
     {
-        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
-
         $merchantSalesOrderItemEntity = $this->getFactory()->createMerchantSalesOrderItemQuery()
             ->filterByIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem())
             ->findOne();
@@ -103,6 +101,8 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
         if (!$merchantSalesOrderItemEntity) {
             return $merchantOrderItemTransfer;
         }
+
+        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 
         $merchantSalesOrderItemEntity = $merchantSalesOrderMapper->mapMerchantOrderItemTransferToMerchantSalesOrderItemEntity(
             $merchantOrderItemTransfer,

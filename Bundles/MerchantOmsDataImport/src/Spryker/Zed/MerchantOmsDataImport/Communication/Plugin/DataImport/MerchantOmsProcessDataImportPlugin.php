@@ -21,7 +21,8 @@ class MerchantOmsProcessDataImportPlugin extends AbstractPlugin implements DataI
 {
     /**
      * {@inheritDoc}
-     * - Imports state machine processes for merchants and connects them with merchants.
+     * - Imports data to state machine process table.
+     * - Updates merchant table with state machine process.
      *
      * @api
      *

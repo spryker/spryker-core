@@ -15,7 +15,7 @@ interface StateMachineProcessReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
      */
-    public function findStateMachineProcess(MerchantTransfer $merchantTransfer): ?StateMachineProcessTransfer;
+    public function resolveMerchantStateMachineProcess(MerchantTransfer $merchantTransfer): StateMachineProcessTransfer;
 }

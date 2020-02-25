@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 interface MerchantSalesOrderRepositoryInterface
@@ -33,9 +32,9 @@ interface MerchantSalesOrderRepositoryInterface
     ): ?MerchantOrderTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer
+     * @param int $idMerchantOrderItem
      *
      * @return bool
      */
-    public function existsMerchantOrderItem(MerchantOrderItemCriteriaFilterTransfer $merchantOrderItemCriteriaFilterTransfer): bool;
+    public function existsMerchantOrderItem(int $idMerchantOrderItem): bool;
 }

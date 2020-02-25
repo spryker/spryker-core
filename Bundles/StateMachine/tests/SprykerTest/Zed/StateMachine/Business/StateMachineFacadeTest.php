@@ -46,7 +46,7 @@ class StateMachineFacadeTest extends Unit
     public const TESTING_SM = 'TestingSm';
     public const TEST_PROCESS_NAME = 'TestProcess';
     public const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
-    public const TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID = 10;
+    public const TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID = 0;
 
     /**
      * @var \SprykerTest\Zed\StateMachine\StateMachineBusinessTester
