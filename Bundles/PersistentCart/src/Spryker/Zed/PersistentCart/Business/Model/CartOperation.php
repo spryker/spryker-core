@@ -465,7 +465,7 @@ class CartOperation implements CartOperationInterface
             return $persistentQuoteTransfer;
         }
 
-        $quoteTransfer->fromArray($persistentQuoteTransfer->toArray(), true);
+        $quoteTransfer->fromArray($persistentQuoteTransfer->modifiedToArray(), true);
 
         return $quoteTransfer;
     }
