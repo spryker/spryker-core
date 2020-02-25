@@ -106,10 +106,15 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
                 continue;
             }
 
+            $restCartItemsSalesUnitAttributesTransfer = $restCartItemsAttributesTransfer->getSalesUnit();
+            if (!$restCartItemsSalesUnitAttributesTransfer) {
+                continue;
+            }
+
             $this->addResourceRelationship(
                 $resource,
                 $productConcreteRestSalesUnitsResources,
-                $restCartItemsAttributesTransfer->getSalesUnit()->getId()
+                $restCartItemsSalesUnitAttributesTransfer->getId()
             );
         }
     }
