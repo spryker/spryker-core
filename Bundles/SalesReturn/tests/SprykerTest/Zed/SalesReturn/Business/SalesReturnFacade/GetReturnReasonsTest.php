@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 
 /**
@@ -62,6 +63,29 @@ class GetReturnReasonsTest extends Unit
             $returnReasonTransfers,
             $returnReasonCollectionTransfer->getReturnReasons()->getArrayCopy()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnReasonsRetrievesReturnReasonsWithFilter(): void
+    {
+        // Arrange
+        $this->tester->haveReturnReasons([
+            'return.return_reasons.fake_reason_1.name',
+            'return.return_reasons.fake_reason_2.name',
+        ]);
+
+        $returnReasonFilterTransfer = (new ReturnReasonFilterTransfer())
+            ->setFilter((new FilterTransfer())->setLimit(1));
+
+        // Act
+        $returnReasonCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturnReasons($returnReasonFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $returnReasonCollectionTransfer->getReturnReasons());
     }
 
     /**
