@@ -9,7 +9,6 @@ namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToGlossaryStorageClientInterface;
@@ -18,9 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RestResponseBuilder implements RestResponseBuilderInterface
 {
-    protected const MESSAGE_PARAM_SKU = '%sku%';
-    protected const KEY_SKU = 'sku';
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -79,8 +75,7 @@ class RestResponseBuilder implements RestResponseBuilderInterface
         );
 
         foreach ($translatedErrors as $translatedError) {
-            $sku = $this->findSku($restRequest->getResource());
-            $restResponse->addError($this->createErrorMessageTransfer($translatedError, $sku));
+            $restResponse->addError($this->createErrorMessageTransfer($translatedError));
         }
 
         return $restResponse;
@@ -88,30 +83,14 @@ class RestResponseBuilder implements RestResponseBuilderInterface
 
     /**
      * @param string $errorMessage
-     * @param string|null $sku
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createErrorMessageTransfer(string $errorMessage, ?string $sku): RestErrorMessageTransfer
+    protected function createErrorMessageTransfer(string $errorMessage): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
             ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_VALIDATION)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(str_replace(static::MESSAGE_PARAM_SKU, $sku, $errorMessage));
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
-     *
-     * @return string|null
-     */
-    protected function findSku(RestResourceInterface $restResource): ?string
-    {
-        $attributes = $restResource->getAttributes();
-        if (!$attributes) {
-            return null;
-        }
-
-        return $attributes->offsetExists(static::KEY_SKU) ? $attributes->offsetGet(static::KEY_SKU) : null;
+            ->setDetail($errorMessage);
     }
 }

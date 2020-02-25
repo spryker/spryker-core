@@ -48,6 +48,16 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND = 'customer.account.shopping_list_item.error.product_not_found';
 
     /**
+     * @see \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperation::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE
+     */
+    public const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE = 'customer.account.shopping_list_item.error.product_not_active';
+
+    /**
+     * @see \Spryker\Zed\ProductDiscontinued\Business\ShoppingListCheck\ShoppingListAddItemPreCheck::SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED
+     */
+    public const SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED = 'shopping_list.pre.check.product_discontinued';
+
+    /**
      * @return array
      */
     public static function getResponseErrorMapping(): array
@@ -60,6 +70,8 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
             static::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED => SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED,
             static::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID => SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_WRONG_QUANTITY,
             static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND => SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRODUCT_NOT_FOUND,
+            static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE => SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE,
+            static::SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED => SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED,
         ];
     }
 }

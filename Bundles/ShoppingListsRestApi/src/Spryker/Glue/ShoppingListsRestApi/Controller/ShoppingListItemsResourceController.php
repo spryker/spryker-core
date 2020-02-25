@@ -34,7 +34,7 @@ class ShoppingListItemsResourceController extends AbstractController
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list not found.",
      *              "422": "Cannot add an item to shopping list"
-     *          },
+     *          }
      *     }
      * })
      *

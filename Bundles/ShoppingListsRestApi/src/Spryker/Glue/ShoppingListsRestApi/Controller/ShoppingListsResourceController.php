@@ -145,8 +145,7 @@ class ShoppingListsResourceController extends AbstractController
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list not found.",
      *              "422": "Cannot patch a shopping list."
-     *          },
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListsAttributesTransfer"
+     *          }
      *     }
      * })
      *

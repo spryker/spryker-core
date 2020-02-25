@@ -43,6 +43,12 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_VALIDATION = '1509';
 
+    public const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED = '1510';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED = 'Product is discontinued';
+
+    public const RESPONSE_CODE_LIST_ITEM_PRODUCT_NOT_ACTIVE = '1511';
+    public const RESPONSE_DETAIL_LIST_ITEM_PRODUCT_NOT_ACTIVE = 'Product is not active.';
+
     /**
      * @return array
      */
@@ -88,6 +94,16 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_DETAIL_SHOPPING_LIST_PRODUCT_NOT_FOUND,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_LIST_ITEM_PRODUCT_NOT_ACTIVE,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_LIST_ITEM_PRODUCT_NOT_ACTIVE,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED,
             ],
         ];
     }
