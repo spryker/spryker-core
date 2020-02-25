@@ -8,8 +8,8 @@
 namespace SprykerTest\Shared\Kernel\ClassResolver;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver;
 
 /**
  * Auto-generated group annotations
@@ -49,7 +49,7 @@ class ClassInfoTest extends Unit
 
         $mock
             ->method('getBundleNameResolver')
-            ->will($this->returnValue($this->getBundleNameResolverMock($storeName)));
+            ->will($this->returnValue($this->getModuleNameResolverMock($storeName)));
 
         return $mock;
     }
@@ -57,12 +57,12 @@ class ClassInfoTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver
      */
-    protected function getBundleNameResolverMock(string $storeName): BundleNameResolver
+    protected function getModuleNameResolverMock(string $storeName): ModuleNameResolver
     {
         $mock = $this
-            ->getMockBuilder(BundleNameResolver::class)
+            ->getMockBuilder(ModuleNameResolver::class)
             ->setMethods(['getStoreName'])
             ->getMock();
 
