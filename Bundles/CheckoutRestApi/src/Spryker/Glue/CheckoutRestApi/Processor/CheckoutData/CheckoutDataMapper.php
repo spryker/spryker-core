@@ -59,13 +59,13 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        if ($this->config->isAllowPaymentProvidersInAttributes()) {
+        if ($this->config->isPaymentProvidersMappedToAttributes()) {
             $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentProviders(
                 $restCheckoutDataTransfer,
                 $restCheckoutDataResponseAttributesTransfer
             );
         }
-        if ($this->config->isAllowShipmentMethodsInAttributes()) {
+        if ($this->config->isShipmentMethodsMappedToAttributes()) {
             $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethods(
                 $restCheckoutDataTransfer,
                 $restCheckoutDataResponseAttributesTransfer
