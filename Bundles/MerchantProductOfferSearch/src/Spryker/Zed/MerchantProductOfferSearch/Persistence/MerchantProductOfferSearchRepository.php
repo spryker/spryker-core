@@ -50,6 +50,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_MERCHANT_NAME)
             ->withColumn(SpyMerchantTableMap::COL_MERCHANT_REFERENCE, static::KEY_MERCHANT_REFERENCE)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
+            ->orderBy(static::KEY_ABSTRACT_PRODUCT_ID)
             ->find()
             ->getData();
 

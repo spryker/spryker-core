@@ -83,8 +83,8 @@ class MerchantProductOfferSearchFacadeTest extends Unit
             ->setMerchantReferences([$merchant->getMerchantReference()]);
 
         $expectedResult = [
-            $productAbstractMerchantTransfer2,
             $productAbstractMerchantTransfer1,
+            $productAbstractMerchantTransfer2,
         ];
 
         // Act
