@@ -43,7 +43,7 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
      */
-    public function findStateMachineProcessByMerchant(MerchantTransfer $merchantTransfer): ?StateMachineProcessTransfer
+    public function findStateMachineProcess(MerchantTransfer $merchantTransfer): ?StateMachineProcessTransfer
     {
         $merchantTransfer = $this->merchantFacade->findOne(
             (new MerchantCriteriaFilterTransfer())->setMerchantReference($merchantTransfer->getMerchantReference())

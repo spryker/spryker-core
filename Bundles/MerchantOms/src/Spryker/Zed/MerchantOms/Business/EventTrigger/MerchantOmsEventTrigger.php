@@ -100,7 +100,7 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
      */
     protected function resolveStateMachineProcess(MerchantTransfer $merchantTransfer): StateMachineProcessTransfer
     {
-        $stateMachineProcessTransfer = $this->stateMachineProcessReader->findStateMachineProcessByMerchant($merchantTransfer);
+        $stateMachineProcessTransfer = $this->stateMachineProcessReader->findStateMachineProcess($merchantTransfer);
 
         if (!$stateMachineProcessTransfer) {
             $stateMachineProcessTransfer = (new StateMachineProcessTransfer())
