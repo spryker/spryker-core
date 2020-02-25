@@ -44,7 +44,7 @@ class GetReturnReasonsTest extends Unit
     public function testGetReturnReasonsRetrievesReturnReasons(): void
     {
         // Arrange
-        $returnReasonTransfers = $this->tester->createReturnReasons([
+        $returnReasonTransfers = $this->tester->haveReturnReasons([
             'return.return_reasons.fake_reason_1.name',
             'return.return_reasons.fake_reason_2.name',
         ]);

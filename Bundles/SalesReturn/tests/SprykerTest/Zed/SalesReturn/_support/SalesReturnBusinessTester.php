@@ -11,9 +11,7 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ReturnReasonTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReason;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 
 /**
@@ -54,27 +52,6 @@ class SalesReturnBusinessTester extends Actor
         return (new OrderTransfer())
             ->setItems(new ArrayObject($itemTransfers))
             ->setTotals(new TotalsTransfer());
-    }
-
-    /**
-     * @param string[] $glossaryKeyReasons
-     *
-     * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
-     */
-    public function createReturnReasons(array $glossaryKeyReasons): array
-    {
-        $returnReasonTransfers = [];
-
-        foreach ($glossaryKeyReasons as $glossaryKeyReason) {
-            $salesReturnReasonEntity = (new SpySalesReturnReason())
-                ->setGlossaryKeyReason($glossaryKeyReason);
-
-            $salesReturnReasonEntity->save();
-
-            $returnReasonTransfers[] = (new ReturnReasonTransfer())->fromArray($salesReturnReasonEntity->toArray(), true);
-        }
-
-        return $returnReasonTransfers;
     }
 
     /**
