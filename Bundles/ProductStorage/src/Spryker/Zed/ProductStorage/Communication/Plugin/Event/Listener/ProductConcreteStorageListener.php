@@ -37,7 +37,8 @@ class ProductConcreteStorageListener extends AbstractPlugin implements EventBulk
         $this->preventTransaction();
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE ||
+        if (
+            $eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE ||
             $eventName === ProductEvents::PRODUCT_CONCRETE_UNPUBLISH
         ) {
             $this->getFacade()->unpublishConcreteProducts($productIds);

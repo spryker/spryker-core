@@ -61,6 +61,7 @@ class ProductBundleExpander implements ProductBundleExpanderInterface
 
             if (!isset($calculatedOrderItems[$bundleItemIdentifier])) {
                 $uniqueItemTransfers[$bundleItemIdentifier] = clone $itemTransfer;
+
                 continue;
             }
 
