@@ -9,13 +9,17 @@
     } %}
 
     <mp-login>
+        {% for message in app.session.flashbag.get('flash.messages.error') %}
+            <spy-alert type="error">{{ message | trans }}</spy-alert>
+        {% endfor %}
+
         <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
             {% for formField in formData.children if formField.vars.block_prefixes[1] != 'hidden' %}
                 <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default }}">
                     {{ formField.vars.label | trans }}
                     <spy-input
                         control
-                        id="{{ formField.vars.id }}"
+                        spy-id="{{ formField.vars.id }}"
                         attrs=""
                         required="{{ formField.vars.required }}"
                         name="{{ formField.vars.full_name }}"
