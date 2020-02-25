@@ -5,7 +5,7 @@
 
 'use strict';
 
-$(document).ready( function () {
+$(document).ready(function () {
     var $wrapper = $('.js-customer-order-reference');
     var $target = $('.js-toggle-target');
     var triggerSelector = '.js-toggle-trigger';
