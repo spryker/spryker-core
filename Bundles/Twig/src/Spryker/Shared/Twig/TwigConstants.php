@@ -59,6 +59,14 @@ interface TwigConstants
 
     /**
      * Specification:
+     * - Defines the used theme name for Zed.
+     *
+     * @api
+     */
+    public const ZED_THEME = 'TWIG:ZED_THEME';
+
+    /**
+     * Specification:
      * - Path to cache file for resolved template directories.
      *
      * @api
