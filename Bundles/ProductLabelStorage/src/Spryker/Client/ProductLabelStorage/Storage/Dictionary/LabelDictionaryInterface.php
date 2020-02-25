@@ -12,17 +12,15 @@ interface LabelDictionaryInterface
     /**
      * @param string $dictionaryKey
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabel($dictionaryKey, $localeName, ?string $storeName = null);
+    public function findLabel($dictionaryKey, $localeName);
 
     /**
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function getDictionary($localeName, ?string $storeName = null);
+    public function getDictionary($localeName);
 }

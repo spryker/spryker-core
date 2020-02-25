@@ -19,6 +19,7 @@ use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageBusinessFactory;
 use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStoragePublishListener;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageUnpublishListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelPublishStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelStorageListener;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -181,6 +182,34 @@ class ProductLabelStorageListenerTest extends Unit
         $data = $spyProductLabelDictionaryStorage->getData();
         $labelsCount = $this->tester->getProductLabelsCountByLocaleName($localeName);
         $this->assertSame($labelsCount, count($data['items']));
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductLabelDictionaryStorageUnpublishListener(): void
+    {
+        // Arrange
+        $productLabelDictionaryStorageUnpublishListener = new ProductLabelDictionaryStorageUnpublishListener();
+        $productLabelDictionaryStorageUnpublishListener->setFacade($this->getProductLabelStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer()),
+        ];
+
+        // Act
+        $productLabelDictionaryStorageUnpublishListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE);
+
+        // Assert
+        $localeName = $this->getLocaleFacade()->getCurrentLocale()->getLocaleName();
+        $this->getProductLabelFacade()->checkLabelValidityDateRangeAndTouch();
+        $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
+            ->filterByLocale($localeName)
+            ->findOne();
+        $this->assertNotNull($spyProductLabelDictionaryStorage);
+        $data = $spyProductLabelDictionaryStorage->getData();
+        $labelsCount = $this->tester->getProductLabelsCountByLocaleName($localeName);
+        $this->assertSame($labelsCount - 1, count($data['items']));
     }
 
     /**

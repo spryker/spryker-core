@@ -28,13 +28,12 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     /**
      * @param int[] $idsProductLabel
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName, ?string $storeName = null)
+    public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName)
     {
-        $productLabelCollection = $this->getProductLabelsFromDictionary($idsProductLabel, $localeName, $storeName);
+        $productLabelCollection = $this->getProductLabelsFromDictionary($idsProductLabel, $localeName);
         $productLabelCollection = $this->sortCollection($productLabelCollection);
         $productLabelCollection = $this->extractExclusive($productLabelCollection);
 
@@ -44,57 +43,53 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     /**
      * @param int $idProductLabel
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByIdProductLabel($idProductLabel, $localeName, ?string $storeName = null)
+    public function findLabelByIdProductLabel($idProductLabel, $localeName)
     {
         return $this->dictionaryFactory
             ->createDictionaryByIdProductLabel()
-            ->findLabel($idProductLabel, $localeName, $storeName);
+            ->findLabel($idProductLabel, $localeName);
     }
 
     /**
      * @param string $labelName
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByLocalizedName($labelName, $localeName, ?string $storeName = null)
+    public function findLabelByLocalizedName($labelName, $localeName)
     {
         return $this->dictionaryFactory
             ->createDictionaryByLocalizedName()
-            ->findLabel($labelName, $localeName, $storeName);
+            ->findLabel($labelName, $localeName);
     }
 
     /**
      * @param string $labelName
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByName($labelName, $localeName, ?string $storeName = null)
+    public function findLabelByName($labelName, $localeName)
     {
         return $this->dictionaryFactory
             ->createDictionaryByName()
-            ->findLabel($labelName, $localeName, $storeName);
+            ->findLabel($labelName, $localeName);
     }
 
     /**
      * @param int[] $idsProductLabel
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName, ?string $storeName = null)
+    protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName)
     {
         $dictionary = $this->dictionaryFactory
             ->createDictionaryByIdProductLabel()
-            ->getDictionary($localeName, $storeName);
+            ->getDictionary($localeName);
 
         $productLabelCollection = [];
 

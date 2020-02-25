@@ -16,7 +16,7 @@ interface LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName, ?string $storeName = null);
+    public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName);
 
     /**
      * @param int $idProductLabel
@@ -25,7 +25,7 @@ interface LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByIdProductLabel($idProductLabel, $localeName, ?string $storeName = null);
+    public function findLabelByIdProductLabel($idProductLabel, $localeName);
 
     /**
      * @param string $labelName
@@ -34,7 +34,7 @@ interface LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByLocalizedName($labelName, $localeName, ?string $storeName = null);
+    public function findLabelByLocalizedName($labelName, $localeName);
 
     /**
      * @param string $labelName
@@ -43,5 +43,5 @@ interface LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByName($labelName, $localeName, ?string $storeName = null);
+    public function findLabelByName($labelName, $localeName);
 }

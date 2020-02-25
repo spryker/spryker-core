@@ -27,10 +27,17 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, ?string $storeName = null)
     {
+        if (!$storeName) {
+            trigger_error(
+                'Pass the $storeName parameter to be forward compatible with the next major version.',
+                E_USER_DEPRECATED
+            );
+        }
+
         return $this
             ->getFactory()
             ->createProductAbstractLabelStorageReader()
-            ->findLabelsByIdProductAbstract($idProductAbstract, $localeName, $storeName);
+            ->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
     }
 
     /**
@@ -49,9 +56,16 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
         string $localeName,
         ?string $storeName = null
     ): array {
+        if (!$storeName) {
+            trigger_error(
+                'Pass the $storeName parameter to be forward compatible with the next major version.',
+                E_USER_DEPRECATED
+            );
+        }
+
         return $this->getFactory()
             ->createProductAbstractLabelStorageReader()
-            ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName, $storeName);
+            ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName);
     }
 
     /**
@@ -77,7 +91,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
-            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName, $storeName);
+            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName);
     }
 
     /**
@@ -103,6 +117,6 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
-            ->findLabelByName($labelName, $localeName, $storeName);
+            ->findLabelByName($labelName, $localeName);
     }
 }

@@ -62,26 +62,18 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, ?string $storeName = null)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
     {
-        if (!$storeName) {
-            trigger_error(
-                'Pass the $storeName parameter for the forward compatibility with next major version.',
-                E_USER_DEPRECATED
-            );
-        }
-
         $productLabelIds = $this->findIdsProductLabelByIdAbstractProduct($idProductAbstract);
 
         if (!$productLabelIds) {
             return [];
         }
 
-        return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName, $storeName);
+        return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName);
     }
 
     /**
@@ -91,11 +83,8 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getProductLabelsByProductAbstractIds(
-        array $productAbstractIds,
-        string $localeName,
-        ?string $storeName = null
-    ): array {
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
+    {
         $productLabelIdsByProductAbstractIds = $this->getProductLabelIdsByProductAbstractIds($productAbstractIds);
 
         if (!$productLabelIdsByProductAbstractIds) {
@@ -104,26 +93,23 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
 
         return $this->getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
             $productLabelIdsByProductAbstractIds,
-            $localeName,
-            $storeName
+            $localeName
         );
     }
 
     /**
      * @param int[][] $productLabelIdsByProductAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
     protected function getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
         array $productLabelIdsByProductAbstractIds,
-        string $localeName,
-        ?string $storeName = null
+        string $localeName
     ): array {
         $uniqueProductLabelIds = array_unique(array_merge(...$productLabelIdsByProductAbstractIds));
         $productLabelDictionaryItemTransfers = $this->getProductLabelDictionaryItemTransfersGroupedById(
-            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName, $storeName)
+            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName)
         );
 
         $productLabelDictionaryItemTransfersByProductAbstractIds = [];
@@ -272,12 +258,11 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param int[] $productLabelIds
      * @param string $localeName
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName, ?string $storeName = null)
+    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName)
     {
-        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName, $storeName);
+        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName);
     }
 }

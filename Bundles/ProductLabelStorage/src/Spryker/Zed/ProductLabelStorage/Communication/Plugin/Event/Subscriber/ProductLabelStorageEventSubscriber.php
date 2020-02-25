@@ -12,6 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStoragePublishListener;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageUnpublishListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelPublishStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelStorageListener;
 
@@ -146,7 +147,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH, new ProductLabelDictionaryStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH, new ProductLabelDictionaryStorageUnpublishListener());
     }
 
     /**
