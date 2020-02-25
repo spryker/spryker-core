@@ -76,7 +76,7 @@ class NavigationComponentConfigFunction extends TwigFunction
      */
     protected function getNavigationItemIcon(array $navigationItem): string
     {
-        return isset($navigationItem['icon']) && empty($navigationItem['icon']) === false ? $navigationItem['icon'] : static::DEFAULT_ITEM_ICON;
+        return !empty($navigationItem['icon']) ? $navigationItem['icon'] : static::DEFAULT_ITEM_ICON;
     }
 
     /**
@@ -86,7 +86,7 @@ class NavigationComponentConfigFunction extends TwigFunction
      */
     protected function getNavigationItemSubItems(array $navigationItem): array
     {
-        return isset($navigationItem['children']) && empty($navigationItem['children']) === false ? $this->getMenuTree($navigationItem['children']) : [];
+        return !empty($navigationItem['children']) ? $this->getMenuTree($navigationItem['children']) : [];
     }
 
     /**
@@ -96,6 +96,6 @@ class NavigationComponentConfigFunction extends TwigFunction
      */
     protected function isNavigationItemActive(array $navigationItem): bool
     {
-        return isset($navigationItem['is_active']) && (bool)$navigationItem['is_active'];
+        return (bool)($navigationItem['is_active'] ?? false);
     }
 }
