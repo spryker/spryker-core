@@ -15,7 +15,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
  * @method \Spryker\Zed\SalesReturn\Business\SalesReturnFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesReturn\SalesReturnConfig getConfig()
  */
-class RemunerationTotalOrderExpanderPluginInterface extends AbstractPlugin implements OrderExpanderPluginInterface
+class RemunerationTotalOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -29,6 +29,6 @@ class RemunerationTotalOrderExpanderPluginInterface extends AbstractPlugin imple
      */
     public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
     {
-        return $this->getFacade()->expandTotalsWithRemunerationTotal($orderTransfer);
+        return $this->getFacade()->expandOrderTotalsWithRemunerationTotal($orderTransfer);
     }
 }

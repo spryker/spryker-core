@@ -21,7 +21,7 @@ class OrderReferenceOrderExpanderPlugin extends AbstractPlugin implements OrderE
 {
     /**
      * {@inheritDoc}
-     * - Expands item with order reference information.
+     * - Expands order item with order reference information.
      *
      * @api
      *
@@ -31,6 +31,6 @@ class OrderReferenceOrderExpanderPlugin extends AbstractPlugin implements OrderE
      */
     public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
     {
-        return $this->getFacade()->expandItemsWithOrderReference($orderTransfer);
+        return $this->getFacade()->expandOrderItemsWithOrderReference($orderTransfer);
     }
 }

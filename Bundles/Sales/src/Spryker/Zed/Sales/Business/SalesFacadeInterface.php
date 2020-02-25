@@ -344,5 +344,5 @@ interface SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandItemsWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderItemsWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 }

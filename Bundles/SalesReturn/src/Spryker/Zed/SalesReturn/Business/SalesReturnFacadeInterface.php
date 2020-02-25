@@ -72,8 +72,8 @@ interface SalesReturnFacadeInterface
     /**
      * Specification:
      * - Requires OrderTransfer::totals to be set.
-     * - Expands Totals with remuneration amount total.
      * - Sums each item remuneration amount to total.
+     * - Expands Totals with remuneration amount total.
      *
      * @api
      *
@@ -81,5 +81,5 @@ interface SalesReturnFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer;
 }

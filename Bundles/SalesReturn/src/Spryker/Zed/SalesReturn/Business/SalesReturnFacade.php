@@ -91,10 +91,10 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandOrderTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
-            ->createRemunerationTotalExpander()
-            ->expandTotalsWithRemunerationTotal($orderTransfer);
+            ->createOrderRemunerationTotalExpander()
+            ->expandOrderTotalsWithRemunerationTotal($orderTransfer);
     }
 }
