@@ -7,4 +7,21 @@
         <property name="reason" type="string"/>
     </transfer>
 
+    <transfer name="ReturnReason">
+        <property name="glossaryKeyReason" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnReasonCollection">
+        <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="ReturnReasonFilter">
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
 </transfers>
