@@ -31,9 +31,8 @@ interface ShoppingListsRestApiFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
-     *  - Checks that company user belongs to current customer.
      *  - Creates new shopping list if shopping list with given name does not already exist.
+     *  - Checks that company user belongs to current customer.
      *
      * @api
      *
@@ -45,9 +44,8 @@ interface ShoppingListsRestApiFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
-     *  - Checks that company user belongs to current customer.
      *  - Updates the shopping list's name if shopping list with given name does not already exist.
+     *  - Checks that company user belongs to current customer.
      *
      * @api
      *
@@ -59,10 +57,9 @@ interface ShoppingListsRestApiFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
+     *  - Deletes the shopping list.
      *  - Checks that company user belongs to current customer.
      *  - Checks that shopping list exists and belongs to the customer.
-     *  - Deletes the shopping list.
      *
      * @api
      *
@@ -74,10 +71,9 @@ interface ShoppingListsRestApiFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
+     *  - Adds item to shopping list.
      *  - Checks that company user belongs to current customer.
      *  - Checks that shopping list exists and belongs to the customer.
-     *  - Adds item to shopping list.
      *
      * @api
      *
@@ -91,7 +87,6 @@ interface ShoppingListsRestApiFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Retrieves shopping list by uuid.
      *  - Retrieves shopping list item by uuid.
@@ -110,7 +105,6 @@ interface ShoppingListsRestApiFacadeInterface
     /**
      *  Specification:
      *  - Expects uuid property to be set to the user UUID.
-     *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Retrieves shopping list by uuid.
      *  - Retrieves shopping list item by uuid.

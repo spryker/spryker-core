@@ -31,9 +31,8 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
-     *  - Checks that company user belongs to current customer.
      *  - Creates new shopping list if shopping list with given name does not already exist.
+     *  - Checks that company user belongs to current customer.
      *
      * @api
      *
@@ -45,7 +44,6 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Updates the shopping list's name if shopping list with given name does not already exist.
      *
@@ -59,7 +57,6 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Checks that shopping list exists and belongs to the customer.
      *  - Deletes the shopping list.
@@ -74,7 +71,6 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Checks that shopping list exists and belongs to the customer.
      *  - Adds item to shopping list.
@@ -91,7 +87,6 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Retrieves shopping list by uuid.
      *  - Retrieves shopping list item by uuid.
@@ -109,7 +104,6 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      *  Specification:
-     *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Retrieves shopping list by uuid.
      *  - Retrieves shopping list item by uuid.
