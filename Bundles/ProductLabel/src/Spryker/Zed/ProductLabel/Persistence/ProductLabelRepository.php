@@ -20,7 +20,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findProductLabelByIdProductLabel(int $idProductLabel): ?ProductLabelTransfer
+    public function findProductLabelById(int $idProductLabel): ?ProductLabelTransfer
     {
         $productLabelEntity = $this->getFactory()
             ->createProductLabelQuery()

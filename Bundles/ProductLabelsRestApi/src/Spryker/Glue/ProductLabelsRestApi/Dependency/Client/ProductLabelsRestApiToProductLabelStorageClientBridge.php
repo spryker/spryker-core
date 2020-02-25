@@ -25,11 +25,11 @@ class ProductLabelsRestApiToProductLabelStorageClientBridge implements ProductLa
     /**
      * @param array $idProductLabels
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName, ?string $storeName = null): array
+    public function findLabels(array $idProductLabels, $localeName, string $storeName): array
     {
         return $this->productLabelStorageClient->findLabels($idProductLabels, $localeName, $storeName);
     }
@@ -37,11 +37,11 @@ class ProductLabelsRestApiToProductLabelStorageClientBridge implements ProductLa
     /**
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, ?string $storeName = null): array
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName): array
     {
         return $this->productLabelStorageClient
             ->findLabelsByIdProductAbstract($idProductAbstract, $localeName, $storeName);
@@ -50,14 +50,14 @@ class ProductLabelsRestApiToProductLabelStorageClientBridge implements ProductLa
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
     public function getProductLabelsByProductAbstractIds(
         array $productAbstractIds,
         string $localeName,
-        ?string $storeName = null
+        string $storeName
     ): array {
         return $this->productLabelStorageClient
             ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName, $storeName);

@@ -130,7 +130,9 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface, S
      */
     protected function createNewProductsQuery()
     {
-        $store = $this->getFactory()->getStore();
+        $localeName = $this->getFactory()
+            ->getStore()
+            ->getCurrentLocale();
 
         $labelName = $this->getFactory()
             ->getConfig()
@@ -138,7 +140,7 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface, S
 
         $storageProductLabelTransfer = $this->getFactory()
             ->getProductLabelStorageClient()
-            ->findLabelByName($labelName, $store->getCurrentLocale(), $store->getStoreName());
+            ->findLabelByName($labelName, $localeName, APPLICATION_STORE);
 
         $labelId = $storageProductLabelTransfer ? $storageProductLabelTransfer->getIdProductLabel() : 0;
 

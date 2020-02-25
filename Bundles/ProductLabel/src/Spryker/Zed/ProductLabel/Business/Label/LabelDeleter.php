@@ -18,7 +18,7 @@ class LabelDeleter implements LabelDeleterInterface
 {
     use TransactionTrait;
 
-    protected const MESSAGE_PRODUCT_LABEL_NOT_FOUND = 'Product label not found';
+    protected const MESSAGE_PRODUCT_LABEL_NOT_FOUND = 'Product label #%d not found.';
 
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface
@@ -49,18 +49,20 @@ class LabelDeleter implements LabelDeleterInterface
      */
     public function remove(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer
     {
+        $productLabelId = $productLabelTransfer->getIdProductLabel();
+
         $this->assertProductLabel($productLabelTransfer);
 
         $productLabelResponseTransfer = (new ProductLabelResponseTransfer())
             ->setIsSuccessful(true);
 
         $productLabelTransfer = $this->productLabelRepository
-            ->findProductLabelByIdProductLabel($productLabelTransfer->getIdProductLabel());
+            ->findProductLabelById($productLabelTransfer->getIdProductLabel());
 
         if ($productLabelTransfer === null) {
             return $productLabelResponseTransfer
                 ->setIsSuccessful(false)
-                ->addMessage($this->createMessageTransfer(static::MESSAGE_PRODUCT_LABEL_NOT_FOUND));
+                ->addMessage($this->createMessageTransfer(static::MESSAGE_PRODUCT_LABEL_NOT_FOUND, [$productLabelId]));
         }
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
@@ -95,11 +97,14 @@ class LabelDeleter implements LabelDeleterInterface
 
     /**
      * @param string $message
+     * @param array $parameters
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessageTransfer(string $message): MessageTransfer
+    protected function createMessageTransfer(string $message, array $parameters = []): MessageTransfer
     {
-        return (new MessageTransfer())->setValue($message);
+        return (new MessageTransfer())
+            ->setValue($message)
+            ->setParameters($parameters);
     }
 }
