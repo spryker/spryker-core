@@ -13,7 +13,7 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="merchantReference" type="string" />
+        <property name="merchantReference" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="idQuote" type="int"/>
     </transfer>
