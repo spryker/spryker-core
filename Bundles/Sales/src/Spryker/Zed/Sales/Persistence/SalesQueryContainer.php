@@ -474,13 +474,16 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
         foreach ($whereConditionTransfers as $whereConditionTransfer) {
             $column = $whereConditionTransfer->getColumn();
+            $value = $whereConditionTransfer->getValue();
+
             $conditionName = uniqid($column, true);
+            $comparison = $whereConditionTransfer->getComparison() ?? Criteria::ILIKE;
 
             $salesOrderQuery->addCond(
                 $conditionName,
                 $column,
-                sprintf('%%%s%%', $whereConditionTransfer->getValue()),
-                $whereConditionTransfer->getComparison() ?? Criteria::ILIKE
+                $comparison === Criteria::ILIKE ? sprintf('%%%s%%', $value) : $value,
+                $comparison
             );
 
             $conditions[] = $conditionName;

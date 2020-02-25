@@ -16,15 +16,55 @@ use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class OrderSearchReader implements OrderSearchReaderInterface
 {
-    protected const ORDER_SEARCH_GROUP_TYPE_ORDER_REFERENCE = 'orderReference';
-    protected const ORDER_SEARCH_GROUP_TYPE_ITEM_NAME = 'itemName';
-    protected const ORDER_SEARCH_GROUP_TYPE_ITEM_SKU = 'itemSku';
-    protected const ORDER_SEARCH_GROUP_TYPE_ALL = 'all';
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\CustomerPageConfig::ORDER_SEARCH_GROUPS
+     */
+    protected const FILTER_FIELD_TYPE_ORDER_REFERENCE = 'orderReference';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\CustomerPageConfig::ORDER_SEARCH_GROUPS
+     */
+    protected const FILTER_FIELD_TYPE_ITEM_NAME = 'itemName';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\CustomerPageConfig::ORDER_SEARCH_GROUPS
+     */
+    protected const FILTER_FIELD_TYPE_ITEM_SKU = 'itemSku';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\CustomerPageConfig::ORDER_SEARCH_GROUPS
+     */
+    protected const FILTER_FIELD_TYPE_ALL = 'all';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Form\OrderSearchForm::FIELD_DATE_FROM
+     */
+    protected const FILTER_FIELD_TYPE_DATE_FROM = 'dateFrom';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Form\OrderSearchForm::FIELD_DATE_TO
+     */
+    protected const FILTER_FIELD_TYPE_DATE_TO = 'dateTo';
+
+    /**
+     * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_CREATED_AT
+     */
+    protected const COLUMN_CREATED_AT = 'spy_sales_order.created_at';
+
+    /**
+     * @uses \Propel\Runtime\ActiveQuery\Criteria::GREATER_EQUAL
+     */
+    protected const COMPARISON_GREATER_EQUAL = '>=';
+
+    /**
+     * @uses \Propel\Runtime\ActiveQuery\Criteria::LESS_EQUAL
+     */
+    protected const COMPARISON_LESS_EQUAL = '<=';
 
     protected const ORDER_SEARCH_GROUP_MAPPING = [
-        self::ORDER_SEARCH_GROUP_TYPE_ORDER_REFERENCE => 'spy_sales_order.order_reference',
-        self::ORDER_SEARCH_GROUP_TYPE_ITEM_NAME => 'spy_sales_order_item.name',
-        self::ORDER_SEARCH_GROUP_TYPE_ITEM_SKU => 'spy_sales_order_item.sku',
+        self::FILTER_FIELD_TYPE_ORDER_REFERENCE => 'spy_sales_order.order_reference',
+        self::FILTER_FIELD_TYPE_ITEM_NAME => 'spy_sales_order_item.name',
+        self::FILTER_FIELD_TYPE_ITEM_SKU => 'spy_sales_order_item.sku',
     ];
 
     protected const RELATION_ITEM = 'Item';
@@ -68,10 +108,25 @@ class OrderSearchReader implements OrderSearchReaderInterface
             $filterFieldType = $filterFieldTransfer->getType();
 
             if (
-                in_array($filterFieldType, $mappedSearchGroups, true)
-                || $filterFieldType === static::ORDER_SEARCH_GROUP_TYPE_ALL
+                $filterFieldType === static::FILTER_FIELD_TYPE_DATE_FROM
+                || $filterFieldType === static::FILTER_FIELD_TYPE_DATE_TO
             ) {
-                $queryJoinCollectionTransfer = $this->addOrderSearchGroupQueryJoin($filterFieldTransfer, $queryJoinCollectionTransfer);
+                $queryJoinCollectionTransfer = $this->addDateQueryJoin(
+                    $filterFieldTransfer,
+                    $queryJoinCollectionTransfer
+                );
+
+                continue;
+            }
+
+            if (
+                in_array($filterFieldType, $mappedSearchGroups, true)
+                || $filterFieldType === static::FILTER_FIELD_TYPE_ALL
+            ) {
+                $queryJoinCollectionTransfer = $this->addOrderSearchGroupQueryJoin(
+                    $filterFieldTransfer,
+                    $queryJoinCollectionTransfer
+                );
 
                 continue;
             }
@@ -95,7 +150,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
         $searchGroupType = $filterFieldTransfer->getType();
         $searchGroupValue = $filterFieldTransfer->getValue();
 
-        if ($searchGroupType === static::ORDER_SEARCH_GROUP_TYPE_ORDER_REFERENCE) {
+        if ($searchGroupType === static::FILTER_FIELD_TYPE_ORDER_REFERENCE) {
             $queryJoinTransfer->addWhereCondition(
                 $this->createWhereConditionTransfer($searchGroupType, $searchGroupValue)
             );
@@ -104,8 +159,8 @@ class OrderSearchReader implements OrderSearchReaderInterface
         }
 
         if (
-            $searchGroupType === static::ORDER_SEARCH_GROUP_TYPE_ITEM_NAME
-            || $searchGroupType === static::ORDER_SEARCH_GROUP_TYPE_ITEM_SKU
+            $searchGroupType === static::FILTER_FIELD_TYPE_ITEM_NAME
+            || $searchGroupType === static::FILTER_FIELD_TYPE_ITEM_SKU
         ) {
             $queryJoinTransfer
                 ->setRelation(static::RELATION_ITEM)
@@ -117,6 +172,30 @@ class OrderSearchReader implements OrderSearchReaderInterface
         }
 
         return $this->addOrderSearchGroupAllQueryJoin($filterFieldTransfer, $queryJoinCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer $filterFieldTransfer
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    protected function addDateQueryJoin(
+        FilterFieldTransfer $filterFieldTransfer,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer {
+        $comparison = $filterFieldTransfer->getType() === static::FILTER_FIELD_TYPE_DATE_FROM ?
+            static::COMPARISON_GREATER_EQUAL :
+            static::COMPARISON_LESS_EQUAL;
+
+        $whereConditionTransfer = (new WhereConditionTransfer())
+            ->setColumn(static::COLUMN_CREATED_AT)
+            ->setValue($filterFieldTransfer->getValue())
+            ->setComparison($comparison);
+
+        $queryJoinTransfer = (new QueryJoinTransfer())->addWhereCondition($whereConditionTransfer);
+
+        return $queryJoinCollectionTransfer->addQueryJoin($queryJoinTransfer);
     }
 
     /**
