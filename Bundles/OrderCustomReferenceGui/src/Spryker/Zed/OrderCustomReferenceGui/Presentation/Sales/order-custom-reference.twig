@@ -14,10 +14,10 @@
 
             <div class="js-toggle-target hide">
                 {{ form_start(orderCustomReferenceForm) }}
+                    {{ form_row(orderCustomReferenceForm.orderCustomReference) }}
+                    <button type="submit" class="btn btn-primary safe-submit">{{ 'Save' | trans }}</button>
+                    <button type="button" class="btn btn-default js-toggle-trigger">{{ 'Cancel' | trans }}</button>
                 {{ form_end(orderCustomReferenceForm) }}
-
-                <button type="submit" class="btn btn-primary safe-submit">{{ 'Save' | trans }}</button>
-                <button type="button" class="btn btn-default js-toggle-trigger">{{ 'Cancel' | trans }}</button>
             </div>
         </div>
 
