@@ -1,0 +1,13 @@
+{% extends '@ZedUi/Layout/layout.twig' %}
+
+{% block body %}
+    <zed-layout-main>
+        <zed-header></zed-header>
+        {% block content %}{% endblock %}
+    </zed-layout-main>
+{% endblock %}
+
+{% block footerJs %}
+    <script src="{{ assetsPath('js/zed-ui/polyfills-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/zed-ui/main-es5.js') }}"></script>
+{% endblock %}
