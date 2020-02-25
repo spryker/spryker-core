@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher;
 
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MerchantSwitcherInterface
 {
