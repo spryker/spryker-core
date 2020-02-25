@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -32,5 +34,26 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
         }
 
         return (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
+     */
+    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): array
+    {
+        $returnReasonQuery = $this->getFactory()->getSalesReturnReasonPropelQuery();
+
+        $returnReasonQuery = $this->buildQueryFromCriteria(
+            $returnReasonQuery,
+            $returnReasonFilterTransfer->getFilter()
+        );
+
+        $returnReasonQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
+
+        return $this->getFactory()
+            ->createReturnReasonMapper()
+            ->mapReturnReasonEntityCollectionToReturnReasonTransfers($returnReasonQuery->find());
     }
 }

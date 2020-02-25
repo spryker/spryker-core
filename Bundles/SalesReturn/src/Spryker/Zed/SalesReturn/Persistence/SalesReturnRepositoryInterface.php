@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 
 interface SalesReturnRepositoryInterface
 {
@@ -17,4 +18,11 @@ interface SalesReturnRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function findSalesOrderItemByIdSalesOrder(int $idSalesOrderItem): ?ItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
+     */
+    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): array;
 }

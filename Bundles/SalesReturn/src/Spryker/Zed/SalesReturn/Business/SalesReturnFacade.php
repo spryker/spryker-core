@@ -35,7 +35,9 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      */
     public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer
     {
-        // TODO: Implement getReturnReasons() method.
+        return $this->getFactory()
+            ->createReturnReasonReader()
+            ->getReturnReasons($returnReasonFilterTransfer);
     }
 
     /**
