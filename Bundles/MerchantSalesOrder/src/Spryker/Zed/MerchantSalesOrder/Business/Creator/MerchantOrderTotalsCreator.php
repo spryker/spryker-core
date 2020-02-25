@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\Creator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface;
 
 class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
@@ -20,31 +22,102 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
     protected $merchantSalesOrderEntityManager;
 
     /**
-     * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
+     * @var \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface
      */
-    public function __construct(MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager)
-    {
+    protected $calculationFacade;
+
+    /**
+     * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
+     * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface $calculationFacade
+     */
+    public function __construct(
+        MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager,
+        MerchantSalesOrderToCalculationFacadeInterface $calculationFacade
+    ) {
         $this->merchantSalesOrderEntityManager = $merchantSalesOrderEntityManager;
+        $this->calculationFacade = $calculationFacade;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
-    public function createMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): TotalsTransfer
-    {
-        $total = rand(1000, 9999);
-        $totalsTransfer = (new TotalsTransfer())
-            ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
-            ->setRefundTotal(0)
-            ->setGrandTotal($total)
-            ->setTaxTotal((new TaxTotalTransfer()))
-            ->setExpenseTotal(0)
-            ->setSubtotal($total)
-            ->setDiscountTotal(0)
-            ->setCanceledTotal(0);
+    public function createMerchantOrderTotals(
+        OrderTransfer $orderTransfer,
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): TotalsTransfer {
+        $totalsTransfer = $this->calculateTotals($orderTransfer, $merchantOrderTransfer);
+        $totalsTransfer->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder());
 
         return $this->merchantSalesOrderEntityManager->createMerchantOrderTotals($totalsTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    protected function calculateTotals(
+        OrderTransfer $orderTransfer,
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): TotalsTransfer {
+        $calculationOrderTransfer = (new OrderTransfer())
+            ->setPriceMode($orderTransfer->getPriceMode())
+            ->setTotals(new TotalsTransfer());
+        $calculationOrderTransfer = $this->addExpensesToCalculationOrder(
+            $calculationOrderTransfer,
+            $merchantOrderTransfer,
+            $orderTransfer->getExpenses()
+        );
+        $calculationOrderTransfer = $this->addItemsToCalculationOrder(
+            $calculationOrderTransfer,
+            $merchantOrderTransfer
+        );
+        $calculationOrderTransfer = $this->calculationFacade->recalculateOrder($calculationOrderTransfer);
+
+        return $calculationOrderTransfer->getTotals();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $calculationOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \ArrayObject $expenseTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function addExpensesToCalculationOrder(
+        OrderTransfer $calculationOrderTransfer,
+        MerchantOrderTransfer $merchantOrderTransfer,
+        ArrayObject $expenseTransfers
+    ): OrderTransfer {
+        foreach ($expenseTransfers as $expenseTransfer) {
+            if ($expenseTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
+                continue;
+            }
+
+            $calculationOrderTransfer->addExpense($expenseTransfer);
+        }
+
+        return $calculationOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $calculationOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function addItemsToCalculationOrder(
+        OrderTransfer $calculationOrderTransfer,
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): OrderTransfer {
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            $calculationOrderTransfer->addItem($merchantOrderItemTransfer->getOrderItem());
+        }
+
+        return $calculationOrderTransfer;
     }
 }

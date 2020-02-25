@@ -109,7 +109,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
         );
 
         return $merchantOrderTransfer->setTotals(
-            $this->merchantOrderTotalsCreator->createMerchantOrderTotals($merchantOrderTransfer)
+            $this->merchantOrderTotalsCreator->createMerchantOrderTotals($orderTransfer, $merchantOrderTransfer)
         );
     }
 

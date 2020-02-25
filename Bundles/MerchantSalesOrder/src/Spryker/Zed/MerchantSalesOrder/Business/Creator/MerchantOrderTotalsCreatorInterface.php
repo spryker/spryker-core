@@ -8,14 +8,19 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business\Creator;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
 interface MerchantOrderTotalsCreatorInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
-    public function createMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): TotalsTransfer;
+    public function createMerchantOrderTotals(
+        OrderTransfer $orderTransfer,
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): TotalsTransfer;
 }
