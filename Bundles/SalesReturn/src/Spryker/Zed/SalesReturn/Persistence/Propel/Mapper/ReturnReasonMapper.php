@@ -8,16 +8,16 @@
 namespace Spryker\Zed\SalesReturn\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ReturnReasonTransfer;
-use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ReturnReasonMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\Collection $salesReturnReasonEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesReturnReasonEntities
      *
      * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
      */
-    public function mapReturnReasonEntityCollectionToReturnReasonTransfers(Collection $salesReturnReasonEntities): array
+    public function mapReturnReasonEntityCollectionToReturnReasonTransfers(ObjectCollection $salesReturnReasonEntities): array
     {
         $returnReasonTransfers = [];
 
