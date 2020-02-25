@@ -105,6 +105,6 @@ class LabelDeleter implements LabelDeleterInterface
     {
         return (new MessageTransfer())
             ->setValue($message)
-            ->setParameters([$parameters]);
+            ->setParameters($parameters);
     }
 }
