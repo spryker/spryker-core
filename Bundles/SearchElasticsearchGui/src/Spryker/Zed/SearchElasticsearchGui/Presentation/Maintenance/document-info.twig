@@ -1,0 +1,17 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block body_class %}spy-page{% endblock %}
+
+{% block action %}
+    {% set allDocumentsUrl = '/search-elasticsearch-gui/maintenance/list-documents?index=' ~ indexName %}
+    {{ viewActionButton(allDocumentsUrl, 'All Documents' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Search Document' } %}
+        {% block widget_content %}
+            <h1>{{ documentId }}</h1>
+            <pre>{{ data }}</pre>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
