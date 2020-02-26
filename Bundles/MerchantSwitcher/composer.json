@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-switcher",
+  "type": "library",
   "description": "MerchantSwitcher module",
   "license": "proprietary",
   "require": {
@@ -12,9 +13,22 @@
     "spryker/quote": "^2.0.0",
     "spryker/zed-request": "^3.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
+    "spryker/merchant": "*",
+    "spryker/product-offer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
@@ -30,13 +44,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/customer": "*",
-    "spryker/merchant": "*",
-    "spryker/product-offer": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
   }
 }
