@@ -27,9 +27,9 @@ class MerchantUserConfig extends AbstractBundleConfig
      * @uses \Spryker\Shared\Acl\AclConstants::ALLOW
      */
     protected const RULE_TYPE_ALLOW = 'allow';
-    protected const MERCHANT_ADMIN_ROLE_NAME = 'Merchant Portal Admin';
-    protected const MERCHANT_ADMIN_GROUP_NAME = 'Merchant Portal Admin';
-    protected const MERCHANT_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
+    protected const MERCHANT_ADMIN_ROLE_NAME = 'Merchant Admin';
+    protected const MERCHANT_ADMIN_GROUP_NAME = 'Merchant Admin';
+    protected const MERCHANT_ADMIN_GROUP_REFERENCE = 'merchant_admin_group_reference';
 
     /**
      * @return string
