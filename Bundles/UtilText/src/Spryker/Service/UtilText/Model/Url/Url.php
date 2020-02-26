@@ -410,7 +410,8 @@ class Url
             $url .= $parts[self::HOST];
 
             // Only include the port if it is not the default port of the scheme
-            if (isset($parts[self::PORT])
+            if (
+                isset($parts[self::PORT])
                 && !(($scheme === 'http' && $parts[self::PORT] === 80) || ($scheme === 'https' && $parts[self::PORT] === 443))
             ) {
                 $url .= ':' . $parts[self::PORT];

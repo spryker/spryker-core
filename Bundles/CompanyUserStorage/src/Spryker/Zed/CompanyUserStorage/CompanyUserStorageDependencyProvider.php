@@ -31,6 +31,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addCompanyUserFacade($container);
 
         return $container;
     }
@@ -56,11 +57,11 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CompanyUserStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,11 +73,11 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUserStorageToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -88,9 +89,9 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyUserStorageExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_STORAGE_EXPANDER] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_STORAGE_EXPANDER, function () {
             return $this->getCompanyUserStorageExpanderPlugins();
-        };
+        });
 
         return $container;
     }

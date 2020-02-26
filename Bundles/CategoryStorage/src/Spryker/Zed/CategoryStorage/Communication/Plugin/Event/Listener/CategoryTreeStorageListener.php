@@ -35,7 +35,8 @@ class CategoryTreeStorageListener extends AbstractPlugin implements EventBulkHan
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        if ($eventName === CategoryEvents::CATEGORY_TREE_UNPUBLISH
+        if (
+            $eventName === CategoryEvents::CATEGORY_TREE_UNPUBLISH
         ) {
             $this->getFacade()->unpublishCategoryTree();
 
