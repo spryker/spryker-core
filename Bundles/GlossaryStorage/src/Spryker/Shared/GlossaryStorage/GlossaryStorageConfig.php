@@ -14,7 +14,7 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     /**
      * Defines queue name as used for processing translation messages.
      */
-    public const SYNC_QUEUE_NAME = 'sync.storage.translation';
+    public const SYNC_STORAGE_TRANSLATION = 'sync.storage.translation';
 
     /**
      * Defines resource name, that will be used for key generation.
@@ -24,12 +24,12 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     /**
      * This events that will be used for key writing.
      */
-    public const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
+    public const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish.write';
 
     /**
      * This events that will be used for key deleting.
      */
-    public const GLOSSARY_KEY_PUBLISH_DELETE = 'Glossary.key.unpublish';
+    public const GLOSSARY_KEY_PUBLISH_DELETE = 'Glossary.key.publish.delete';
 
     /**
      * This events will be used for spy_glossary_key entity creation.

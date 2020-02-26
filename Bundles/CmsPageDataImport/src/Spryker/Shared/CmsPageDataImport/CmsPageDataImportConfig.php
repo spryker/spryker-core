@@ -14,5 +14,5 @@ class CmsPageDataImportConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE
      */
-    public const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
+    public const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish.write';
 }

@@ -29,34 +29,34 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     /**
      * @var \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface
      */
-    protected $repository;
+    protected $glossaryStorageRepository;
 
     /**
      * @var \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface
      */
-    protected $entityManager;
+    protected $glossaryStorageEntityManager;
 
     /**
      * @var \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface
      */
-    protected $mapper;
+    protected $glossaryTranslationStorageMapper;
 
     /**
      * @param \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface $glossaryStorageRepository
      * @param \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface $glossaryStorageEntityManager
-     * @param \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface $mapper
+     * @param \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface $glossaryTranslationStorageMapper
      */
     public function __construct(
         GlossaryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         GlossaryStorageRepositoryInterface $glossaryStorageRepository,
         GlossaryStorageEntityManagerInterface $glossaryStorageEntityManager,
-        GlossaryTranslationStorageMapperInterface $mapper
+        GlossaryTranslationStorageMapperInterface $glossaryTranslationStorageMapper
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->repository = $glossaryStorageRepository;
-        $this->entityManager = $glossaryStorageEntityManager;
-        $this->mapper = $mapper;
+        $this->glossaryStorageRepository = $glossaryStorageRepository;
+        $this->glossaryStorageEntityManager = $glossaryStorageEntityManager;
+        $this->glossaryTranslationStorageMapper = $glossaryTranslationStorageMapper;
     }
 
     /**
@@ -102,9 +102,9 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      */
     protected function writerGlossaryStorageCollection(array $glossaryKeyIds): void
     {
-        $glossaryTranslationEntityTransfers = $this->repository->findGlossaryTranslationEntityTransfer($glossaryKeyIds);
-        $glossaryStorageEntityTransfers = $this->repository->findGlossaryStorageEntityTransfer($glossaryKeyIds);
-        $mappedGlossaryStorageEntityTransfers = $this->mapper->mapGlossaryStorageEntityTransferByGlossaryIdAndLocale($glossaryStorageEntityTransfers);
+        $glossaryTranslationEntityTransfers = $this->glossaryStorageRepository->findGlossaryTranslationEntityTransfer($glossaryKeyIds);
+        $glossaryStorageEntityTransfers = $this->glossaryStorageRepository->findGlossaryStorageEntityTransfer($glossaryKeyIds);
+        $mappedGlossaryStorageEntityTransfers = $this->glossaryTranslationStorageMapper->mapGlossaryStorageEntityTransferByGlossaryIdAndLocale($glossaryStorageEntityTransfers);
 
         [$glossaryStorageInactiveEntityTransfer, $glossaryTranslationEntityTransfers] = $this
             ->filterInactiveAndEmptyLocalizedStorageEntityTransfers(
@@ -114,7 +114,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
 
         /** @var \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer $glossaryStorageInactiveEntity */
         foreach ($glossaryStorageInactiveEntityTransfer as $glossaryStorageInactiveEntity) {
-            $this->entityManager->deleteGlossaryStorageEntity((int)$glossaryStorageInactiveEntity->getIdGlossaryStorage());
+            $this->glossaryStorageEntityManager->deleteGlossaryStorageEntity((int)$glossaryStorageInactiveEntity->getIdGlossaryStorage());
         }
 
         $this->storeData($glossaryTranslationEntityTransfers, $mappedGlossaryStorageEntityTransfers);
@@ -166,7 +166,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
             $glossaryStorageEntityTransfers[] = $this->storeDataSet($glossaryTranslationEntityTransfer);
         }
 
-        $this->entityManager->saveGlossaryStorageEntities($glossaryStorageEntityTransfers);
+        $this->glossaryStorageEntityManager->saveGlossaryStorageEntities($glossaryStorageEntityTransfers);
     }
 
     /**

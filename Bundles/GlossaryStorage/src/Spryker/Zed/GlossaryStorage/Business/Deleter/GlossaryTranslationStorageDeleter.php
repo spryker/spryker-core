@@ -22,34 +22,34 @@ class GlossaryTranslationStorageDeleter implements GlossaryTranslationStorageDel
     /**
      * @var \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface
      */
-    protected $repository;
+    protected $glossaryStorageRepository;
 
     /**
      * @var \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface
      */
-    protected $entityManager;
+    protected $glossaryStorageEntityManager;
 
     /**
      * @var \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface
      */
-    protected $mapper;
+    protected $glossaryTranslationStorageMapper;
 
     /**
      * @param \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface $glossaryStorageRepository
      * @param \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface $glossaryStorageEntityManager
-     * @param \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface $mapper
+     * @param \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface $glossaryTranslationStorageMapper
      */
     public function __construct(
         GlossaryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         GlossaryStorageRepositoryInterface $glossaryStorageRepository,
         GlossaryStorageEntityManagerInterface $glossaryStorageEntityManager,
-        GlossaryTranslationStorageMapperInterface $mapper
+        GlossaryTranslationStorageMapperInterface $glossaryTranslationStorageMapper
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->repository = $glossaryStorageRepository;
-        $this->entityManager = $glossaryStorageEntityManager;
-        $this->mapper = $mapper;
+        $this->glossaryStorageRepository = $glossaryStorageRepository;
+        $this->glossaryStorageEntityManager = $glossaryStorageEntityManager;
+        $this->glossaryTranslationStorageMapper = $glossaryTranslationStorageMapper;
     }
 
     /**
@@ -85,13 +85,13 @@ class GlossaryTranslationStorageDeleter implements GlossaryTranslationStorageDel
      */
     protected function deleteGlossaryStorageCollection(array $glossaryKeyIds): void
     {
-        $glossaryStorageTransfers = $this->repository->findGlossaryStorageEntityTransfer($glossaryKeyIds);
-        $mappedGlossaryStorageTransfers = $this->mapper->mapGlossaryStorageEntityTransferByGlossaryIdAndLocale($glossaryStorageTransfers);
+        $glossaryStorageTransfers = $this->glossaryStorageRepository->findGlossaryStorageEntityTransfer($glossaryKeyIds);
+        $mappedGlossaryStorageTransfers = $this->glossaryTranslationStorageMapper->mapGlossaryStorageEntityTransferByGlossaryIdAndLocale($glossaryStorageTransfers);
 
         foreach ($mappedGlossaryStorageTransfers as $glossaryStorageTransfers) {
             /** @var \Generated\Shared\Transfer\GlossaryStorageTransfer $glossaryStorageTransfer */
             foreach ($glossaryStorageTransfers as $glossaryStorageTransfer) {
-                $this->entityManager->deleteGlossaryStorageEntity((int)$glossaryStorageTransfer->getIdGlossaryStorage());
+                $this->glossaryStorageEntityManager->deleteGlossaryStorageEntity((int)$glossaryStorageTransfer->getIdGlossaryStorage());
             }
         }
     }
