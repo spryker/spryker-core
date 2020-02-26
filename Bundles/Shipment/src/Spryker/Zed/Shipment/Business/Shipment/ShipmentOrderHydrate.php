@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Shipment\Business\Shipment;
 
 use ArrayObject;
+use Closure;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConfig;
@@ -284,25 +286,27 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function sortOrderItemsByIdShipment(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $orderItemTransfers = $orderTransfer->getItems();
-        if ($orderItemTransfers->count() === 0) {
+        $orderItemTransfers = $orderTransfer->getItems()->getArrayCopy();
+        if ($orderItemTransfers === []) {
             return $orderTransfer;
         }
 
-        $salesShipmentIdsIndexed = [];
-        foreach ($orderItemTransfers as $orderItemIndex => $orderItemTransfer) {
-            if ($orderItemTransfer->getShipment() !== null) {
-                $salesShipmentIdsIndexed[$orderItemIndex] = $orderItemTransfer->getShipment()->getIdSalesShipment();
+        uasort($orderItemTransfers, $this->getOrderItemTransfersSortCallback());
+
+        return $orderTransfer->setItems(new ArrayObject($orderItemTransfers));
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getOrderItemTransfersSortCallback(): Closure
+    {
+        return function (ItemTransfer $itemTransferA, ItemTransfer $itemTransferB) {
+            if ($itemTransferA->getShipment() === null || $itemTransferB->getShipment() === null) {
+                return 0;
             }
-        }
 
-        asort($salesShipmentIdsIndexed);
-
-        $sortedOrderItemTransfers = new ArrayObject();
-        foreach (array_keys($salesShipmentIdsIndexed) as $orderItemIndex) {
-            $sortedOrderItemTransfers->append($orderItemTransfers->offsetGet($orderItemIndex));
-        }
-
-        return $orderTransfer->setItems($sortedOrderItemTransfers);
+            return $itemTransferA->getShipment()->getIdSalesShipment() <=> $itemTransferB->getShipment()->getIdSalesShipment();
+        };
     }
 }
