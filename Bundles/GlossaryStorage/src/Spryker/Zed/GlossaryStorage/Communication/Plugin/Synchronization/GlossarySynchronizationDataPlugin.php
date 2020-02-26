@@ -8,7 +8,7 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
 
@@ -31,7 +31,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      */
     public function getResourceName(): string
     {
-        return GlossaryStorageConstants::RESOURCE_NAME;
+        return GlossaryStorageConfig::TRANSLATION_RESOURCE_NAME;
     }
 
     /**
@@ -89,7 +89,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      */
     public function getQueueName(): string
     {
-        return GlossaryStorageConstants::SYNC_STORAGE_QUEUE;
+        return GlossaryStorageConfig::SYNC_STORAGE_TRANSLATION;
     }
 
     /**
