@@ -36,10 +36,9 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
         $merchantOmsProcessName = $dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_OMS_PROCESS_NAME];
 
         $stateMachineProcessEntity = $this->createStateMachineProcessPropelQuery()
+            ->filterByStateMachineName(static::MERCHANT_OMS_STATE_MACHINE_NAME)
             ->filterByName($merchantOmsProcessName)
             ->findOneOrCreate();
-
-        $stateMachineProcessEntity->setStateMachineName(static::MERCHANT_OMS_STATE_MACHINE_NAME);
 
         if ($stateMachineProcessEntity->isNew() || $stateMachineProcessEntity->isModified()) {
             $stateMachineProcessEntity->save();
