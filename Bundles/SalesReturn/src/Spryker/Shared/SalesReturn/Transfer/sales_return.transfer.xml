@@ -13,12 +13,14 @@
         <property name="idSalesReturn" type="int"/>
         <property name="returnReference" type="string"/>
         <property name="store" type="string"/>
+        <property name="customer" type="Customer"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="returnTotals" type="ReturnTotals"/>
     </transfer>
 
     <transfer name="ReturnItem">
         <property name="idSalesReturnItem" type="int"/>
+        <property name="idSalesReturn" type="int"/>
         <property name="uuid" type="string"/>
         <property name="reason" type="string"/>
         <property name="orderItem" type="Item"/>

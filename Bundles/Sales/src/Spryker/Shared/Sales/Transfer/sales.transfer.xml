@@ -328,4 +328,8 @@
     <transfer name="CalculatedDiscount">
     </transfer>
 
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]"/>
+    </transfer>
+
 </transfers>

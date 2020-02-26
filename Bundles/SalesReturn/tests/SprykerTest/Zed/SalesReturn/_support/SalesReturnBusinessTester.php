@@ -9,8 +9,12 @@ namespace SprykerTest\Zed\SalesReturn;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 
@@ -60,6 +64,30 @@ class SalesReturnBusinessTester extends Actor
     public function ensureReturnReasonTablesIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getSalesReturnReasonQuery());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem()
+            ->withItem()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer
+            ->setCustomer($customerTransfer)
+            ->setStore($storeTransfer);
+
+        return $quoteTransfer;
     }
 
     /**

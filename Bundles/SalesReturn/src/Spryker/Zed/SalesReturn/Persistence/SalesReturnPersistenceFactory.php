@@ -11,6 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\SalesReturn\Persistence\Propel\Mapper\ReturnMapper;
 use Spryker\Zed\SalesReturn\Persistence\Propel\Mapper\ReturnReasonMapper;
 use Spryker\Zed\SalesReturn\SalesReturnDependencyProvider;
 
@@ -43,6 +44,14 @@ class SalesReturnPersistenceFactory extends AbstractPersistenceFactory
     public function createReturnReasonMapper(): ReturnReasonMapper
     {
         return new ReturnReasonMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturn\Persistence\Propel\Mapper\ReturnMapper
+     */
+    public function createReturnMapper(): ReturnMapper
+    {
+        return new ReturnMapper();
     }
 
     /**

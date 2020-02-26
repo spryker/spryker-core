@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -78,5 +79,17 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     protected function createOrderAddressTransfer(): AddressTransfer
     {
         return new AddressTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
+    {
+        // TODO: Implement getOrderItems() method.
+
+        return [];
     }
 }

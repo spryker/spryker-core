@@ -45,6 +45,8 @@ use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShipping
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
+use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
+use Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
@@ -457,6 +459,16 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderReferenceExpander(): OrderReferenceExpanderInterface
     {
         return new OrderReferenceExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface
+     */
+    public function createOrderItemReader(): OrderItemReaderInterface
+    {
+        return new OrderItemReader(
+            $this->getRepository()
+        );
     }
 
     /**

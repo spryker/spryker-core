@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ReturnItemTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
 
 interface SalesReturnEntityManagerInterface
 {
@@ -17,4 +19,18 @@ interface SalesReturnEntityManagerInterface
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function updateOrderItem(ItemTransfer $itemTransfer): ItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function createReturn(ReturnTransfer $returnTransfer): ReturnTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnItemTransfer $returnItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnItemTransfer
+     */
+    public function createReturnItem(ReturnItemTransfer $returnItemTransfer): ReturnItemTransfer;
 }
