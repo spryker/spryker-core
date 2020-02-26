@@ -33,8 +33,10 @@ class ProductConcreteRelationCsvConfigurableBundleTemplateSlotEditFormFileUpload
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer
      */
-    public function handleFileUpload(UploadedFile $uploadedFile, ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer): ConfigurableBundleTemplateSlotEditFormTransfer
-    {
+    public function handleFileUpload(
+        UploadedFile $uploadedFile,
+        ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
+    ): ConfigurableBundleTemplateSlotEditFormTransfer {
         $productListAggregateFormTransfer = $configurableBundleTemplateSlotEditFormTransfer->getProductListAggregateForm();
 
         if (!$productListAggregateFormTransfer) {

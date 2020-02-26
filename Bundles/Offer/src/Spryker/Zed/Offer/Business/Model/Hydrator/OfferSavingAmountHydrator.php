@@ -21,9 +21,8 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     /**
      * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
      */
-    public function __construct(
-        OfferConfig $offerConfig
-    ) {
+    public function __construct(OfferConfig $offerConfig)
+    {
         $this->offerConfig = $offerConfig;
     }
 
