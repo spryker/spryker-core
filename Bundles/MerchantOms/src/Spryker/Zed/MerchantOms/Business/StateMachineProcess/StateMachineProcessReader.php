@@ -58,7 +58,7 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
 
         if (!$stateMachineProcessTransfer) {
             $stateMachineProcessTransfer = (new StateMachineProcessTransfer())
-                ->setStateMachineName($this->merchantOmsConfig->getMerchantOmsStateMachineName())
+                ->setStateMachineName(MerchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME)
                 ->setProcessName($this->merchantOmsConfig->getMerchantOmsDefaultProcessName());
         }
 
