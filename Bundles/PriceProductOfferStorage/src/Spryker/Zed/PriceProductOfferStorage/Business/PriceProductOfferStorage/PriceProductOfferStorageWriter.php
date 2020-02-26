@@ -174,6 +174,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                 SpyPriceTypeTableMap::COL_NAME,
                 SpyPriceProductStoreTableMap::COL_GROSS_PRICE,
                 SpyPriceProductStoreTableMap::COL_NET_PRICE,
+                SpyPriceProductStoreTableMap::COL_PRICE_DATA,
             ])
             ->find()
             ->toArray();
@@ -222,7 +223,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         $groupedByStoreAndProductSkuProductOffers = [];
         foreach ($priceProductOffers as $productOffer) {
             $priceProductOfferStorageTransfer = $this->createPriceProductOfferStorageTransfer($productOffer);
-            $groupedByStoreAndProductSkuProductOffers[$productOffer[SpyStoreTableMap::COL_NAME]][$productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU]][] = $priceProductOfferStorageTransfer->toArray();
+            $groupedByStoreAndProductSkuProductOffers[$productOffer[SpyStoreTableMap::COL_NAME]][$productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU]][] = array_filter($priceProductOfferStorageTransfer->toArray());
         }
 
         foreach ($groupedByStoreAndProductSkuProductOffers as $storeName => $groupedByProductSkuProductOffers) {
@@ -254,6 +255,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         $priceProductOfferStorageTransfer->setCurrency($productOffer[SpyCurrencyTableMap::COL_CODE]);
         $priceProductOfferStorageTransfer->setNetPrice($productOffer[SpyPriceProductStoreTableMap::COL_NET_PRICE]);
         $priceProductOfferStorageTransfer->setGrossPrice($productOffer[SpyPriceProductStoreTableMap::COL_GROSS_PRICE]);
+        $priceProductOfferStorageTransfer->setPriceData($productOffer[SpyPriceProductStoreTableMap::COL_PRICE_DATA]);
 
         return $priceProductOfferStorageTransfer;
     }

@@ -36,6 +36,7 @@ class PriceProductOfferStorageMapper implements PriceProductOfferStorageMapperIn
             ->setPriceTypeName($priceProductOfferStorageTransfer->getPriceType())
             ->setMoneyValue(
                 (new MoneyValueTransfer())
+                    ->setPriceData($priceProductOfferStorageTransfer->getPriceData())
                     ->setCurrency(
                         (new CurrencyTransfer())->setCode($priceProductOfferStorageTransfer->getCurrency())
                     )
