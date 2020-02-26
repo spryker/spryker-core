@@ -33,6 +33,10 @@ class SingleMerchantPreReloadItemsPlugin extends AbstractPlugin implements PreRe
      */
     public function preReloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        if (!$this->getConfig()->isMerchantSwitcherEnabled()) {
+            return $quoteTransfer;
+        }
+
         $quoteTransfer->requireMerchantReference();
 
         $merchantSwitcherRequestTransfer = (new MerchantSwitchRequestTransfer())
