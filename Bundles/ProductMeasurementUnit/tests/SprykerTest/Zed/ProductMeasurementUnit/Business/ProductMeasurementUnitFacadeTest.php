@@ -403,13 +403,13 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSalesUnitWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
+    public function testCheckSalesUnitsWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
     {
         // Arrange
         $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
 
         // Act
-        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkSalesUnit($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkSalesUnits($cartChangeTransfer);
 
         // Assert
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
@@ -419,7 +419,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSalesUnitWillReturnSuccessfulResponseWithNonEmptyQuantitySalesUnit(): void
+    public function testCheckSalesUnitsWillReturnSuccessfulResponseWithNonEmptyQuantitySalesUnit(): void
     {
         // Arrange
         $code = 'MYCODE' . random_int(1, 100);
@@ -446,7 +446,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         );
 
         // Act
-        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkSalesUnit($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkSalesUnits($cartChangeTransfer);
 
         // Assert
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
@@ -456,7 +456,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSalesUnitWillReturnResponseWithErrorWithWrongSalesUnitId(): void
+    public function testCheckSalesUnitsWillReturnResponseWithErrorWithWrongSalesUnitId(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -484,7 +484,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         );
 
         // Act
-        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkSalesUnit($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkSalesUnits($cartChangeTransfer);
 
         // Assert
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());

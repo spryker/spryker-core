@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
@@ -118,6 +119,27 @@ class ProductPackagingUnitBusinessTester extends Actor
             (new ItemTransfer())
                 ->setSku($sku)
                 ->setAmount($amount)
+        );
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param string $sku
+     * @param int $idProductPackagingUnit
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function addProductPackagingUnitToCartChangeTransfer(
+        CartChangeTransfer $cartChangeTransfer,
+        string $sku,
+        int $idProductPackagingUnit
+    ): CartChangeTransfer {
+        $cartChangeTransfer->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setProductPackagingUnit((new ProductPackagingUnitTransfer())->setIdProductPackagingUnit($idProductPackagingUnit))
         );
 
         return $cartChangeTransfer;

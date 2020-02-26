@@ -71,6 +71,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
     protected const STORE_NAME_DE = 'DE';
 
+    protected const NON_EXISTING_PRODUCT_PACKAGING_UNIT_ID = 9999;
+
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
      */
@@ -1177,6 +1179,82 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             $result->toString(),
             $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductPackagingUnitsWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
+    {
+        // Arrange
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->getFacade()->checkProductPackagingUnits($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductPackagingUnitsWillReturnSuccessfulResponseWithExistingPackagingUnitForCartItem(): void
+    {
+        // Arrange
+        $itemProductConcreteTransfer = $this->tester->haveProduct();
+        $boxProductConcreteTransfer = $this->tester->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE]);
+
+        $spyProductPackagingUnitEntityTransfer = $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
+            SpyProductPackagingUnitEntityTransfer::DEFAULT_AMOUNT => static::PACKAGE_AMOUNT,
+        ]);
+
+        $cartChangeTransfer = $this->tester->addProductPackagingUnitToCartChangeTransfer(
+            $this->tester->createEmptyCartChangeTransfer(),
+            $boxProductConcreteTransfer->getSku(),
+            $spyProductPackagingUnitEntityTransfer->getIdProductPackagingUnit()
+        );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->getFacade()->checkProductPackagingUnits($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductPackagingUnitsWillReturnResponseWithErrorWithNoPackagingUnit(): void
+    {
+        // Arrange
+        $itemProductConcreteTransfer = $this->tester->haveProduct();
+        $boxProductConcreteTransfer = $this->tester->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $boxProductConcreteTransfer->getSku(), 0);
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->getFacade()->checkProductPackagingUnits($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
     }
 
     /**
