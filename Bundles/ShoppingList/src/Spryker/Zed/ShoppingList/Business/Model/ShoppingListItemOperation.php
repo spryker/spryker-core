@@ -69,6 +69,18 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     }
 
     /**
+     * @deprecated Use ShoppingListItemOperationInterface::addShoppingListItem instead. Will be removed with next major release.
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->addShoppingListItem($shoppingListItemTransfer)->getShoppingListItem() ?? $shoppingListItemTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
@@ -99,47 +111,6 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function updateShoppingListItem(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer {
-        $shoppingListItemTransfer
-            ->requireIdShoppingListItem()
-            ->requireFkShoppingList()
-            ->requireQuantity()
-            ->requireIdCompanyUser();
-
-        $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
-
-        $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator->validateItemUpdateRequest(
-            $shoppingListItemTransfer,
-            $shoppingListItemResponseTransfer
-        );
-        if (!$validatedShoppingListItemResponseTransfer->getIsSuccess()) {
-            return $validatedShoppingListItemResponseTransfer;
-        }
-
-        $shoppingListItemResponseTransfer = $this->saveShoppingListItemTransaction($shoppingListItemTransfer);
-
-        return $shoppingListItemResponseTransfer;
-    }
-
-    /**
-     * @deprecated Use ShoppingListItemOperationInterface::addShoppingListItem instead. Will be removed with next major release.
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
-     */
-    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
-        return $this->addShoppingListItem($shoppingListItemTransfer)->getShoppingListItem() ?? $shoppingListItemTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return void
@@ -165,19 +136,6 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             ->requireIdCompanyUser()
             ->requireCustomerReference();
 
-        $shoppingListTransfer = $this->resolveShoppingList($shoppingListTransfer);
-        $this->sanitizeItems($shoppingListTransfer);
-
-        $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
-        $validatedShoppingListResponseTransfer = $this->shoppingListItemOperationValidator->validateItemAddBulkRequest(
-            $shoppingListTransfer,
-            $shoppingListResponseTransfer
-        );
-        if (!$validatedShoppingListResponseTransfer->getIsSuccess()) {
-            return $shoppingListResponseTransfer;
-        }
-        $shoppingListTransfer = $shoppingListResponseTransfer->getShoppingList() ?? $shoppingListTransfer;
-
         return $this->executeAddItemsTransaction($shoppingListTransfer);
     }
 
@@ -189,6 +147,17 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected function executeAddItemsTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
+            $shoppingListTransfer = $this->resolveShoppingList($shoppingListTransfer);
+            $shoppingListTransfer = $this->sanitizeItems($shoppingListTransfer);
+
+            $validatedShoppingListResponseTransfer = $this->shoppingListItemOperationValidator->validateItemAddBulkRequest(
+                $shoppingListTransfer,
+                new ShoppingListResponseTransfer()
+            );
+            if (!$validatedShoppingListResponseTransfer->getIsSuccess()) {
+                return $validatedShoppingListResponseTransfer;
+            }
+
             $shoppingListTransfer = $this->createItems($shoppingListTransfer);
 
             return (new ShoppingListResponseTransfer())
@@ -274,6 +243,35 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        $shoppingListItemTransfer
+            ->requireIdShoppingListItem()
+            ->requireFkShoppingList()
+            ->requireQuantity()
+            ->requireIdCompanyUser();
+
+        $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
+
+        $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator->validateItemUpdateRequest(
+            $shoppingListItemTransfer,
+            $shoppingListItemResponseTransfer
+        );
+        if (!$validatedShoppingListItemResponseTransfer->getIsSuccess()) {
+            return $validatedShoppingListItemResponseTransfer;
+        }
+
+        $shoppingListItemResponseTransfer = $this->saveShoppingListItemTransaction($shoppingListItemTransfer);
+
+        return $shoppingListItemResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
@@ -330,9 +328,8 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function createShoppingListTransfer(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListTransfer {
+    protected function createShoppingListTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListTransfer
+    {
         return (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
             ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser())
@@ -347,7 +344,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected function resolveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         if (!$shoppingListTransfer->getIdShoppingList()) {
-            $shoppingListTransfer = $this->shoppingListResolver
+            return $this->shoppingListResolver
                 ->createDefaultShoppingListIfNotExists($shoppingListTransfer->getCustomerReference())
                 ->setIdCompanyUser($shoppingListTransfer->getIdCompanyUser())
                 ->setItems($shoppingListTransfer->getItems());
