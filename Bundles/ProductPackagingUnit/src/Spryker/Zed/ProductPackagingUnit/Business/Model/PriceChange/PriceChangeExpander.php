@@ -28,7 +28,8 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
     public function setCustomAmountPrice(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmount()
+            if (
+                !$itemTransfer->getAmount()
                 || !$itemTransfer->getProductPackagingUnit()
                 || !$itemTransfer->getProductPackagingUnit()
                     ->getProductPackagingUnitAmount()

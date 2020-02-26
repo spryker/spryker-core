@@ -7,14 +7,14 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 
 interface ProductConcreteDefaultProductOfferInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return string|null
      */
-    public function findProductOfferReference(ProductViewTransfer $productViewTransfer): ?string;
+    public function findProductOfferReference(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string;
 }

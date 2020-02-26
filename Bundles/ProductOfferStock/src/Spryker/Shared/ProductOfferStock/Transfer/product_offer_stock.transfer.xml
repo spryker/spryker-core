@@ -13,11 +13,18 @@
         <property name="quantity" type="decimal"/>
         <property name="productOffer" type="ProductOffer"/>
         <property name="stock" type="Stock"/>
+        <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+    </transfer>
+
+    <transfer name="Stock">
     </transfer>
 
 </transfers>

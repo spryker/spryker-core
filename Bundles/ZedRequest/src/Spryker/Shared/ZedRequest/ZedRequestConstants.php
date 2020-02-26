@@ -79,4 +79,20 @@ interface ZedRequestConstants
      * @api
      */
     public const ENABLE_REPEAT = 'ZED_REQUEST:ENABLE_REPEAT';
+
+    /**
+     * Specification:
+     * - Enables forwarding of Xdebug profiling.
+     *
+     * @api
+     */
+    public const XDEBUG_PROFILER_FORWARD_ENABLED = 'ZED_REQUEST:XDEBUG_PROFILER_FORWARD_ENABLED';
+
+    /**
+     * Specification:
+     * - Xdebug profiler name.
+     *
+     * @api
+     */
+    public const XDEBUG_PROFILER_NAME = 'ZED_REQUEST:XDEBUG_PROFILER_NAME';
 }

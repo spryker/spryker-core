@@ -197,8 +197,13 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return void
      */
-    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, int $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
-    {
+    protected function setConcreteLocalizedProductData(
+        array $concreteProductLocalizedAttributes,
+        int $idLocale,
+        array &$concreteNames,
+        array &$concreteDescriptions,
+        array &$concreteLocalizedAttributes
+    ) {
         $concreteNames = [];
         foreach ($concreteProductLocalizedAttributes as $concreteProductLocalizedAttribute) {
             if ($concreteProductLocalizedAttribute['fk_locale'] === $idLocale) {

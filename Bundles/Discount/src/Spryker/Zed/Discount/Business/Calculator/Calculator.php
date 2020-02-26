@@ -343,8 +343,9 @@ class Calculator implements CalculatorInterface
             $this->getDiscountIds($oldVoucherDiscountTransferCollection)
         );
         foreach ($collectedDiscountTransferCollection as $collectedDiscountTransfer) {
-            if (!in_array($collectedDiscountTransfer->getDiscount()->getIdDiscount(), $discountIds)
-             || $this->isDiscountAmountBeenChanged($collectedDiscountTransfer->getDiscount(), $oldCartRuleDiscountTransferCollection, $oldVoucherDiscountTransferCollection)
+            if (
+                !in_array($collectedDiscountTransfer->getDiscount()->getIdDiscount(), $discountIds)
+                || $this->isDiscountAmountBeenChanged($collectedDiscountTransfer->getDiscount(), $oldCartRuleDiscountTransferCollection, $oldVoucherDiscountTransferCollection)
             ) {
                 $this->setSuccessfulDiscountAddMessage($collectedDiscountTransfer->getDiscount());
             }

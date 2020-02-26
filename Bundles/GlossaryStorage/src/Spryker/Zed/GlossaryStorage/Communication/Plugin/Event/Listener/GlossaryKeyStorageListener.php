@@ -37,7 +37,8 @@ class GlossaryKeyStorageListener extends AbstractPlugin implements EventBulkHand
         $this->preventTransaction();
         $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE ||
+        if (
+            $eventName === GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE ||
             $eventName === GlossaryEvents::GLOSSARY_KEY_UNPUBLISH
         ) {
             $this->getFacade()->unpublish($glossaryKeyIds);
