@@ -37,7 +37,9 @@ class SingleMerchantPreReloadItemsPlugin extends AbstractPlugin implements PreRe
             return $quoteTransfer;
         }
 
-        $quoteTransfer->requireMerchantReference();
+        if (!$quoteTransfer->getMerchantReference()) {
+            return $quoteTransfer;
+        }
 
         $merchantSwitcherRequestTransfer = (new MerchantSwitchRequestTransfer())
             ->setMerchantReference($quoteTransfer->getMerchantReference())
