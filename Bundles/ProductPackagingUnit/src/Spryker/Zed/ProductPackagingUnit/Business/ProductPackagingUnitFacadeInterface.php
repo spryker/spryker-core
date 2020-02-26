@@ -413,4 +413,15 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItemFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkProductPackagingUnits(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }
