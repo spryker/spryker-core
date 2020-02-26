@@ -122,7 +122,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     {
         $shipmentMethodTransfer = $shipmentTransfer->getMethod();
 
-        if (!$shipmentMethodTransfer) {
+        if (!$shipmentMethodTransfer || !$shipmentMethodTransfer->getIdShipmentMethod()) {
             return false;
         }
 
