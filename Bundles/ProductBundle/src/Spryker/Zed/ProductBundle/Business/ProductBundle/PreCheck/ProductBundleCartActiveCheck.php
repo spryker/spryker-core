@@ -39,9 +39,12 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
+        $productConcreteSkus = $this->getProductConcreteSkusFromCartChangeTransfer($cartChangeTransfer);
+        $productForBundleTransfers = $this->productBundleRepository->getBundleProductsByProductConcreteSkus($productConcreteSkus);
+        $groupedProductForBundleTransfers = $this->groupBundledProductsBySku($productForBundleTransfers);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->checkBundledProductsActive($itemTransfer->getSku())) {
+            if (!$this->checkBundledProductsActive($groupedProductForBundleTransfers[$itemTransfer->getSku()] ?? [])) {
                 $cartPreCheckResponseTransfer
                     ->addMessage(
                         $this->createItemIsNotActiveMessageTransfer($itemTransfer->getSku())
@@ -54,14 +57,12 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     }
 
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
      *
      * @return bool
      */
-    protected function checkBundledProductsActive(string $sku): bool
+    protected function checkBundledProductsActive(array $productForBundleTransfers): bool
     {
-        $productForBundleTransfers = $this->productBundleRepository->findBundledProductsBySku($sku);
-
         foreach ($productForBundleTransfers as $productForBundleTransfer) {
             if (!$productForBundleTransfer->getIsActive()) {
                 return false;
@@ -83,5 +84,37 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
             ->setParameters([
                 static::GLOSSARY_PARAMETER_SKU => $sku,
             ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[][]
+     */
+    protected function groupBundledProductsBySku(array $productForBundleTransfers): array
+    {
+        $groupedProductForBundleTransfers = [];
+
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            $groupedProductForBundleTransfers[$productForBundleTransfer->getSku()][] = $productForBundleTransfer;
+        }
+
+        return $groupedProductForBundleTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return string[]
+     */
+    protected function getProductConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $skus = [];
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $skus[] = $itemTransfer->getSku();
+        }
+
+        return $skus;
     }
 }

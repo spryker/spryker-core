@@ -87,4 +87,18 @@ interface GiftCardReaderInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer|null
      */
     public function findGiftCardByIdSalesOrderItem($idSalesOrderItem);
+
+    /**
+     * @param string[] $abstractSkus
+     *
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[]
+     */
+    //public function getGiftCartAbstractConfigurationsByAbstractSkus(array $abstractSkus): array;
+
+    /**
+     * @param string[] $concreteSkus
+     *
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer[]
+     */
+    //public function getGiftCardConcreteConfigurationsByConcreteSkus(array $concreteSkus): array;
 }

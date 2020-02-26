@@ -14,6 +14,9 @@ use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 
 class MetadataExpander implements MetadataExpanderInterface
 {
+    protected const SKU_ABSTRACT = 'SKU_ABSTRACT';
+    protected const SKU_CONCRETE = 'SKU_CONCRETE';
+
     /**
      * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
@@ -66,5 +69,35 @@ class MetadataExpander implements MetadataExpanderInterface
         $metadata->setConcreteConfiguration($concreteConfiguration);
 
         return $metadata;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return string[][]
+     */
+    protected function getAbstractAndConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $skus = [
+            static::SKU_ABSTRACT => [],
+            static::SKU_CONCRETE => [],
+        ];
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $skus[static::SKU_ABSTRACT][] = $itemTransfer->getAbstractSku();
+            $skus[static::SKU_CONCRETE][] = $itemTransfer->getSku();
+        }
+
+        return $skus;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[] $giftCardAbstractConfigurationTransfers
+     *
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[]
+     */
+    protected function indexGiftCardAbstractConfigurationTransfersByAbstractSku(array $giftCardAbstractConfigurationTransfers): array
+    {
+        $indexedGiftCardAbstractConfigurationTransfers = [];
     }
 }

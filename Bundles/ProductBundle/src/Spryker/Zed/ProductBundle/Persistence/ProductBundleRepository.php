@@ -57,4 +57,24 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->createProductBundleMapper()
             ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities->getArrayCopy(), new ProductBundleCollectionTransfer());
     }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     */
+    public function getBundleProductsByProductConcreteSkus(array $skus): array
+    {
+        $productBundleEntities = $this->getFactory()
+            ->createProductBundleQuery()
+            ->joinWithSpyProductRelatedByFkProduct()
+            ->useSpyProductRelatedByFkProductQuery()
+                ->filterBySku_In($skus)
+            ->endUse()
+            ->find();
+
+        return $this->getFactory()
+            ->createProductBundleMapper()
+            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
+    }
 }
