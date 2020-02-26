@@ -13,6 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
@@ -66,6 +67,14 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderCommentQuery()
     {
         return SpySalesOrderCommentQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery
+     */
+    public function getSalesOrderTotalsPropelQuery(): SpySalesOrderTotalsQuery
+    {
+        return SpySalesOrderTotalsQuery::create();
     }
 
     /**
