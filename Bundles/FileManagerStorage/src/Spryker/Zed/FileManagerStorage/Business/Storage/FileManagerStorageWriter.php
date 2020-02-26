@@ -132,11 +132,13 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 
             if (!$fileTransfer->getFileInfo()->count() && isset($fileStorageTransfers[$key])) {
                 $this->unpublish([$fileTransfer->getIdFile()]);
+
                 continue;
             }
 
             if (empty($fileStorageTransfers[$key])) {
                 $this->createDataSet($fileTransfer, $localeTransfer);
+
                 continue;
             }
 

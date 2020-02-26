@@ -286,21 +286,25 @@ class RestApiError implements RestApiErrorInterface
         foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
                 $restResponse = $this->addCustomerAlreadyExistsError($restResponse);
+
                 continue;
             }
 
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID) {
                 $restResponse = $this->addCustomerEmailInvalidError($restResponse);
+
                 continue;
             }
 
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED) {
                 $restResponse = $this->addCustomerEmailLengthExceededError($restResponse);
+
                 continue;
             }
 
             if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
                 $restResponse = $this->addPasswordNotValidError($restResponse);
+
                 continue;
             }
         }

@@ -27,7 +27,8 @@ class SharedQuoteSetDefaultBeforeQuoteSavePlugin extends AbstractPlugin implemen
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$quoteTransfer->getIsDefault() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()
+        if (
+            !$quoteTransfer->getIsDefault() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()
         ) {
             return $quoteTransfer;
         }

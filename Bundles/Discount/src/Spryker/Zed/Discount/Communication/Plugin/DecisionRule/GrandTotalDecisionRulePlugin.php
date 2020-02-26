@@ -36,7 +36,6 @@ class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRul
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isQuoteGrandTotalSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }

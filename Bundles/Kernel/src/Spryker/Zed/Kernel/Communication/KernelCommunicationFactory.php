@@ -7,6 +7,16 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
+use Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface;
+use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
+
 class KernelCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
+     */
+    public function createResolverCacheManager(): ResolverCacheFactoryInterface
+    {
+        return new ResolverCacheManager();
+    }
 }

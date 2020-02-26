@@ -21,6 +21,7 @@ class ProductOfferStockWriterStep extends PublishAwareStep implements DataImport
         ProductOfferStockDataSetInterface::FK_STOCK,
         ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER,
         ProductOfferStockDataSetInterface::QUANTITY,
+        ProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK,
     ];
 
     /**
@@ -39,6 +40,7 @@ class ProductOfferStockWriterStep extends PublishAwareStep implements DataImport
 
         $productOfferStockEntity
             ->setQuantity($dataSet[ProductOfferStockDataSetInterface::QUANTITY])
+            ->setIsNeverOutOfStock($dataSet[ProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK])
             ->save();
 
         $this->addPublishEvents(
