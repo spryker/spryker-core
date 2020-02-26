@@ -69,7 +69,6 @@
     </transfer>
 
     <transfer name="Totals">
-        <property name="idMerchantOrder" type="int"/>
         <property name="refundTotal" type="int"/>
         <property name="grandTotal" type="int"/>
         <property name="taxTotal" type="TaxTotal"/>

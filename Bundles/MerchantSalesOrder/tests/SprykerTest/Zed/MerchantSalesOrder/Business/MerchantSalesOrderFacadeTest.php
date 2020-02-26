@@ -159,9 +159,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
-        $this->tester->haveMerchantOrderTotals([
-            TotalsTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
-        ]);
+        $this->tester->haveMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder());
         $merchantCriteriaFilterTransfer = (new MerchantOrderCriteriaFilterTransfer())
             ->fromArray($merchantOrderCriteriaFilterData);
 
