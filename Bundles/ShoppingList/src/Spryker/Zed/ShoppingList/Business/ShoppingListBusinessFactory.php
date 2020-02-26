@@ -191,10 +191,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
      */
     public function createShoppingListItemUpdateOperationValidator(): ShoppingListItemUpdateOperationValidatorInterface
     {
-        return new ShoppingListItemUpdateOperationValidator(
-            $this->createShoppingListItemValidator(),
-            $this->createShoppingListItemPermissionValidator()
-        );
+        return new ShoppingListItemUpdateOperationValidator($this->createShoppingListItemValidator());
     }
 
     /**

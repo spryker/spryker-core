@@ -18,20 +18,11 @@ class ShoppingListItemUpdateOperationValidator implements ShoppingListItemUpdate
     protected $shoppingListItemValidator;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface
-     */
-    protected $permissionValidator;
-
-    /**
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface $shoppingListItemValidator
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface $permissionValidator
      */
-    public function __construct(
-        ShoppingListItemValidatorInterface $shoppingListItemValidator,
-        ShoppingListItemPermissionValidatorInterface $permissionValidator
-    ) {
+    public function __construct(ShoppingListItemValidatorInterface $shoppingListItemValidator)
+    {
         $this->shoppingListItemValidator = $shoppingListItemValidator;
-        $this->permissionValidator = $permissionValidator;
     }
 
     /**
