@@ -27,9 +27,9 @@ class MerchantUserConfig extends AbstractBundleConfig
      * @uses \Spryker\Shared\Acl\AclConstants::ALLOW
      */
     protected const RULE_TYPE_ALLOW = 'allow';
-    protected const MERCHANT_PORTAL_ADMIN_ROLE_NAME = 'Merchant Portal Admin';
-    protected const MERCHANT_PORTAL_ADMIN_GROUP_NAME = 'Merchant Portal Admin';
-    protected const MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
+    protected const MERCHANT_ADMIN_ROLE_NAME = 'Merchant Portal Admin';
+    protected const MERCHANT_ADMIN_GROUP_NAME = 'Merchant Portal Admin';
+    protected const MERCHANT_ADMIN_GROUP_REFERENCE = 'merchant_portal_admin_group_reference';
 
     /**
      * @return string
@@ -44,7 +44,7 @@ class MerchantUserConfig extends AbstractBundleConfig
      */
     public function getMerchantAdminGroupReference(): string
     {
-        return static::MERCHANT_PORTAL_ADMIN_GROUP_REFERENCE;
+        return static::MERCHANT_ADMIN_GROUP_REFERENCE;
     }
 
     /**
@@ -52,7 +52,7 @@ class MerchantUserConfig extends AbstractBundleConfig
      */
     public function getMerchantAdminRoleName(): string
     {
-        return static::MERCHANT_PORTAL_ADMIN_ROLE_NAME;
+        return static::MERCHANT_ADMIN_ROLE_NAME;
     }
 
     /**
@@ -60,7 +60,7 @@ class MerchantUserConfig extends AbstractBundleConfig
      */
     public function getMerchantAdminGroupName(): string
     {
-        return static::MERCHANT_PORTAL_ADMIN_GROUP_NAME;
+        return static::MERCHANT_ADMIN_GROUP_NAME;
     }
 
     /**
