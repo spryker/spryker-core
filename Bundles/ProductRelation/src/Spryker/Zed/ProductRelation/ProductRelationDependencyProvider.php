@@ -30,8 +30,8 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
 
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
-    public const PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY = 'PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY';
-    public const PROPEL_QUERY_SPY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_SPY_PRODUCT_ABSTRACT';
+    public const PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY = 'PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY';
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -72,7 +72,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SPY_PRODUCT_ABSTRACT, $container->factory(function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
         }));
 
@@ -86,7 +86,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductAttributeKeyPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY, $container->factory(function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY, $container->factory(function () {
             return SpyProductAttributeKeyQuery::create();
         }));
 

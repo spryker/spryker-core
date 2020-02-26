@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Persistence;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
-use Generated\Shared\Transfer\ProductSelectorTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -26,7 +25,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
-    public function findUniqueProductRelation(
+    public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer {
         $productRelationCriteriaTransfer->requireFkProductAbstract()
@@ -46,50 +45,5 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
         return $this->getFactory()
             ->createProductRelationMapper()
             ->mapProductRelationEntityToProductRelationTransfer($productRelationEntity, new ProductRelationTransfer());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer[]
-     */
-    public function findProductAttributes(): array
-    {
-        $productAttributeKeyEntities = $this->getFactory()
-            ->getProductAttributeQuery()
-            ->find();
-
-        if ($productAttributeKeyEntities->getData() === []) {
-            return [];
-        }
-
-        return $this->getFactory()
-            ->createProductAttributeMapper()
-            ->mapProductAttributeKeyEntitiesToProductAttributeKeyTransfers(
-                $productAttributeKeyEntities,
-                []
-            );
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\ProductSelectorTransfer
-     */
-    public function findProductWithCategoriesByFkLocale(int $idProductAbstract, int $idLocale): ProductSelectorTransfer
-    {
-        $productSelectorTransfer = new ProductSelectorTransfer();
-        $productAbstractEntity = $this->getFactory()
-            ->getQueryContainer()
-            ->queryProductsWithCategoriesByFkLocale($idLocale)
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->findOne();
-
-        if (!$productAbstractEntity) {
-            return $productSelectorTransfer;
-        }
-
-        return $this->getFactory()
-            ->createProductMapper()
-            ->mapProductArrayToProductSelectorTransfer($productAbstractEntity, $productSelectorTransfer);
     }
 }

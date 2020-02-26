@@ -8,6 +8,9 @@
 namespace Spryker\Zed\ProductRelationGui\Communication;
 
 use Generated\Shared\Transfer\ProductRelationTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProvider;
 use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProviderInterface;
@@ -111,7 +114,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createProductRelationTable(): ProductRelationTable
     {
         return new ProductRelationTable(
-            $this->getProductRelationQueryContainer(),
+            $this->getProductRelationPropelQuery(),
             $this->getProductFacade(),
             $this->getConfig(),
             $this->getLocaleFacade()
@@ -126,7 +129,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createProductTable(?int $idProductRelation = null): ProductTable
     {
         return new ProductTable(
-            $this->getProductRelationQueryContainer(),
+            $this->getProductAbstractPropelQuery(),
             $this->getLocaleFacade(),
             $this->getUtilEncodingService(),
             $this->getMoneyFacade(),
@@ -181,6 +184,30 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getProductRelationQueryContainer(): ProductRelationGuiToProductRelationQueryContainerInterface
     {
         return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_RELATION);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function getProductRelationPropelQuery(): SpyProductRelationQuery
+    {
+        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_RELATION);
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function getProductAbstractPropelQuery(): SpyProductAbstractQuery
+    {
+        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function getProductAAttributeKeyPropelQuery(): SpyProductAttributeKeyQuery
+    {
+        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY);
     }
 
     /**

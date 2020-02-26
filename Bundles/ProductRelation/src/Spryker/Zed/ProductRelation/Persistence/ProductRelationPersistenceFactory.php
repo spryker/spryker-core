@@ -14,7 +14,6 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductAttributeMapper;
-use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationTypeMapper;
 use Spryker\Zed\ProductRelation\Persistence\Rule\ProductRelationRuleQueryCreator;
@@ -92,7 +91,7 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
      */
     public function getProductAttributeQuery(): SpyProductAttributeKeyQuery
     {
-        return $this->getProvidedDependency(ProductRelationDependencyProvider::PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY);
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY);
     }
 
     /**
@@ -104,19 +103,11 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper
-     */
-    public function createProductMapper(): ProductMapper
-    {
-        return new ProductMapper();
-    }
-
-    /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function getProductAbstractQuery(): SpyProductAbstractQuery
     {
-        return $this->getProvidedDependency(ProductRelationDependencyProvider::PROPEL_QUERY_SPY_PRODUCT_ABSTRACT);
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }
 
     /**
