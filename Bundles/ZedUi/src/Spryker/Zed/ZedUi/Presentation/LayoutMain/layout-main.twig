@@ -11,6 +11,8 @@
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/zed-ui/polyfills-es5.js') }}"></script>
-    <script src="{{ assetsPath('js/zed-ui/main-es5.js') }}"></script>
+    <script src="{{ assetsPath('js/zed-ui/polyfills-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/zed-ui/main-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/zed-ui/polyfills-es5.js') }}" nomodule defer></script>
+    <script src="{{ assetsPath('js/zed-ui/main-es5.js') }}" nomodule defer></script>
 {% endblock %}

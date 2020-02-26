@@ -64,6 +64,45 @@ describe('ZedLayoutMainComponent', () => {
     });
   });
 
+  describe('isCollapsed property', () => {
+    let layoutComponent: ZedLayoutMainComponent;
+    let layoutFixture: ComponentFixture<ZedLayoutMainComponent>;
+
+    beforeEach(() => {
+      layoutFixture = TestBed.createComponent(ZedLayoutMainComponent);
+      layoutComponent = layoutFixture.componentInstance;
+    });
+
+    it('should bind to `collapsed` of <spy-navigation>', () => {
+      const navigationElem = layoutFixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
+
+      layoutComponent.isCollapsed = true;
+
+      layoutFixture.detectChanges();
+
+      expect(navigationElem.properties.collapsed).toBe(true);
+    });
+
+    it('should show collapsed logo class if value is true', () => {
+      const collapsedClass = 'zed-layout-main__logo--collapsed';
+      const logoContainerElem = layoutFixture.debugElement.query(By.css('spy-sidebar .zed-layout-main__logo'));
+
+      layoutComponent.isCollapsed = true;
+
+      layoutFixture.detectChanges();
+
+      expect(logoContainerElem.nativeElement.classList.contains(collapsedClass)).toBe(true);
+    });
+
+    it('should change if `updateCollapseHandler` method invokes', () => {
+      layoutComponent.updateCollapseHandler(true);
+
+      layoutFixture.detectChanges();
+
+      expect(layoutComponent.isCollapsed).toBe(true);
+    });
+  });
+
   describe('Slots', () => {
     it('should render correct info inside `header` slot', () => {
       const headerSlotContainerElem = fixture.debugElement.query(By.css('.zed-layout-main__header'));
@@ -105,37 +144,6 @@ describe('ZedLayoutMainComponent', () => {
       fixture.detectChanges();
 
       expect(navigationElem.properties.items).toBe('');
-    });
-  });
-
-  describe('isCollapsed property', () => {
-    let layoutComponent: ZedLayoutMainComponent;
-    let layoutFixture: ComponentFixture<ZedLayoutMainComponent>;
-
-    beforeEach(() => {
-      layoutFixture = TestBed.createComponent(ZedLayoutMainComponent);
-      layoutComponent = layoutFixture.componentInstance;
-    });
-
-    it('should bind to `collapsed` of <spy-navigation>', () => {
-      const navigationElem = layoutFixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
-
-      layoutComponent.isCollapsed = true;
-
-      layoutFixture.detectChanges();
-
-      expect(navigationElem.properties.collapsed).toBe(true);
-    });
-
-    it('should show collapsed logo class if value is true', () => {
-      const collapsedClass = 'zed-layout-main__logo--collapsed';
-      const logoContainerElem = layoutFixture.debugElement.query(By.css('spy-sidebar .zed-layout-main__logo'));
-
-      layoutComponent.isCollapsed = true;
-
-      layoutFixture.detectChanges();
-
-      expect(logoContainerElem.nativeElement.classList.contains(collapsedClass)).toBe(true);
     });
   });
 });

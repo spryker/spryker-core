@@ -7,55 +7,6 @@
 @sidebar-collapse-transition-time: 0.2s;
 @header-height: 56px;
 
-* {
-    box-sizing: border-box;
-}
-
-.cdk-overlay {
-    &-container {
-        pointer-events: none;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        position: fixed;
-        z-index: 1000;
-    }
-
-    &-connected-position-bounding-box {
-        position: absolute;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        min-width: 1px;
-        min-height: 1px;
-    }
-
-    &-pane {
-        position: absolute;
-        pointer-events: auto;
-        z-index: 1000;
-    }
-}
-
-.ant-layout {
-    height: 100%;
-}
-
-.ant-layout-sider {
-    display: block;
-    height: 100%;
-}
-
-.ant-layout-sider-trigger {
-    position: absolute !important;
-    bottom: 30px !important;
-}
-
-.ant-layout-sider-children {
-    overflow-y: auto;
-}
-
 .zed-layout-main {
     height: 100%;
     display: flex;
