@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Acl\Persistence;
 
-use Generated\Shared\Transfer\GroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 
 interface AclRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\GroupCriteriaTransfer $groupCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\GroupTransfer|null
      */
-    public function findGroup(GroupCriteriaFilterTransfer $groupCriteriaFilterTransfer): ?GroupTransfer;
+    public function findGroup(GroupCriteriaTransfer $groupCriteriaTransfer): ?GroupTransfer;
 }

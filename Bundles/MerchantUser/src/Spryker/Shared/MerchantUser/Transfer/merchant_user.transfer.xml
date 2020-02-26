@@ -78,7 +78,7 @@
         <property name="idAclGroup" type="int"/>
     </transfer>
 
-    <transfer name="GroupCriteriaFilter">
+    <transfer name="GroupCriteria">
         <property name="reference" type="string"/>
     </transfer>
 
