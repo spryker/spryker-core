@@ -423,18 +423,18 @@ class ProductMeasurementUnitFacadeTest extends Unit
     {
         // Arrange
         $code = 'MYCODE' . random_int(1, 100);
-        $productTransfer = $this->tester->haveProduct();
+        $productConcreteTransfer = $this->tester->haveProduct();
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
             SpyProductMeasurementUnitEntityTransfer::CODE => $code,
         ]);
 
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
-            $productTransfer->getFkProductAbstract(),
+            $productConcreteTransfer->getFkProductAbstract(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
         );
 
         $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
-            $productTransfer->getIdProductConcrete(),
+            $productConcreteTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
             $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
         );
@@ -442,7 +442,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer(
             $this->tester->createEmptyCartChangeTransfer(),
             $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit(),
-            $productTransfer->getSku()
+            $productConcreteTransfer->getSku()
         );
 
         // Act
@@ -456,7 +456,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSalesUnitWillReturnResponseWithErrorWithEmptyQuantitySalesUnit(): void
+    public function testCheckSalesUnitWillReturnResponseWithErrorWithWrongSalesUnitId(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
