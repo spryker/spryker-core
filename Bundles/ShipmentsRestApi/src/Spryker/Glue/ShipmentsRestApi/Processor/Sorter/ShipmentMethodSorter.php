@@ -31,18 +31,30 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
         if (!$sorts) {
             return $restShipmentMethodAttributeTransfers;
         }
-
+        $sortsCount = count($sorts) - 1;
+        $lastSort = $sorts[$sortsCount];
         uasort(
             $restShipmentMethodAttributeTransfers,
             function (
-                RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfers,
-                RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfers
-            ) use ($sorts) {
-                return $this->compare(
-                    $currentRestShipmentMethodAttributeTransfers,
-                    $nextRestShipmentMethodAttributeTransfers,
-                    $this->filterSorts($sorts)
-                );
+                RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
+                RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer
+            ) use (
+                $sorts,
+                $sortsCount,
+                $lastSort
+            ) {
+                for ($sortIndex = 0; $sortIndex < $sortsCount; $sortIndex++) {
+                    $currentSortedPropertyValue = $this->getPropertyValue($currentRestShipmentMethodAttributeTransfer, $sorts[$sortIndex]);
+                    $nextSortedPropertyValue = $this->getPropertyValue($nextRestShipmentMethodAttributeTransfer, $sorts[$sortIndex]);
+
+                    if ($currentSortedPropertyValue != $nextSortedPropertyValue) {
+                        return $this->compareValues($currentSortedPropertyValue, $nextSortedPropertyValue, $sorts[$sortIndex]);
+                    }
+                }
+                $currentSortedPropertyValue = $this->getPropertyValue($currentRestShipmentMethodAttributeTransfer, $lastSort);
+                $nextSortedPropertyValue = $this->getPropertyValue($nextRestShipmentMethodAttributeTransfer, $lastSort);
+
+                return $this->compareValues($currentSortedPropertyValue, $nextSortedPropertyValue, $lastSort);
             }
         );
 
@@ -50,44 +62,32 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
-     * @param int $index
+     * @param string|null $currentSortedPropertyValue
+     * @param string|null $nextSortedPropertyValue
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface $currentSort
      *
      * @return int
      */
-    protected function compare(
-        RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
-        RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer,
-        array $sorts,
-        int $index = 0
-    ) {
-        $currentSort = $sorts[$index];
+    protected function compareValues(?string $currentSortedPropertyValue, ?string $nextSortedPropertyValue, SortInterface $currentSort): int
+    {
+        $isDescending = $currentSort->getDirection() === SortInterface::SORT_DESC;
+        $isCurrentValueLessThanNextValue = $currentSortedPropertyValue < $nextSortedPropertyValue;
+
+        return $isCurrentValueLessThanNextValue === $isDescending ? 1 : -1;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface $currentSort
+     *
+     * @return string|null
+     */
+    protected function getPropertyValue(RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer, SortInterface $currentSort): ?string
+    {
         $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1];
-        $currentSortedPropertyValue = $currentRestShipmentMethodAttributeTransfer->offsetExists($field)
-            ? $currentRestShipmentMethodAttributeTransfer->offsetGet($field) : null;
-        $nextSortedPropertyValue = $nextRestShipmentMethodAttributeTransfer->offsetExists($field)
-            ? $nextRestShipmentMethodAttributeTransfer->offsetGet($field) : null;
 
-        if ($currentSortedPropertyValue === $nextSortedPropertyValue) {
-            if (!isset($sorts[$index + 1])) {
-                return 0;
-            }
-
-            return $this->compare(
-                $currentRestShipmentMethodAttributeTransfer,
-                $nextRestShipmentMethodAttributeTransfer,
-                $sorts,
-                $index + 1
-            );
-        }
-
-        if ($currentSort->getDirection() === SortInterface::SORT_DESC) {
-            return $currentSortedPropertyValue < $nextSortedPropertyValue ? 1 : -1;
-        }
-
-        return $currentSortedPropertyValue < $nextSortedPropertyValue ? -1 : 1;
+        return $restShipmentMethodAttributeTransfer->offsetExists($field)
+            ? (string)$restShipmentMethodAttributeTransfer->offsetGet($field) : null;
     }
 
     /**
