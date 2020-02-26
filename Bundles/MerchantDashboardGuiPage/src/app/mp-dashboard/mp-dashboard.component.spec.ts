@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZedHeaderComponent } from './zed-header.component';
+import { MpDashboardComponent } from './mp-dashboard.component';
 
-describe('ZedHeaderComponent', () => {
-  let component: ZedHeaderComponent;
-  let fixture: ComponentFixture<ZedHeaderComponent>;
+describe('MpDashboardComponent', () => {
+  let component: MpDashboardComponent;
+  let fixture: ComponentFixture<MpDashboardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ZedHeaderComponent ]
+      declarations: [ MpDashboardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ZedHeaderComponent);
+    fixture = TestBed.createComponent(MpDashboardComponent);
     component = fixture.componentInstance;
   });
 

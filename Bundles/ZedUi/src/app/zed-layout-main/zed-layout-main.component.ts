@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
-  selector: 'zed-zed-layout-main',
+  selector: 'zed-layout-main',
   templateUrl: './zed-layout-main.component.html',
-  styleUrls: ['./zed-layout-main.component.less']
+  styleUrls: ['./zed-layout-main.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
-export class ZedLayoutMainComponent implements OnInit {
+export class ZedLayoutMainComponent {
+  @Input() navigationConfig = '';
 
-  constructor() { }
+  isCollapsed = false;
 
-  ngOnInit() {
+  updateCollapseHandler(isCollapsed: boolean): void {
+    this.isCollapsed = isCollapsed;
   }
-
 }

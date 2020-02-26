@@ -3,7 +3,7 @@
     <merchant-dashboard-gui-page>
         <label>Merchant Dashboard</label>
         <title>Merchant Dashboard</title>
-        <icon>fa-area-chart</icon>
+        <icon>dashboard</icon>
         <bundle>merchant-dashboard-gui-page</bundle>
         <controller>dashboard</controller>
         <action>index</action>

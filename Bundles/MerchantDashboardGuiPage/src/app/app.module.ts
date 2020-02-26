@@ -1,16 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CustomElementModule } from '@spryker/web-components';
 
-import { AppComponent } from './app.component';
+import { MpDashboardModule } from './mp-dashboard/mp-dashboard.module';
+import { MpDashboardComponent } from './mp-dashboard/mp-dashboard.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        MpDashboardModule
+    ],
+    providers: [],
 })
-export class AppModule { }
+export class AppModule extends CustomElementModule {
+    protected components = [
+        {
+            selector: 'mp-dashboard',
+            component: MpDashboardComponent
+        },
+    ];
+}

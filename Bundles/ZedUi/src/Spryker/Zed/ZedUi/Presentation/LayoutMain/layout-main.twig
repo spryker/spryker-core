@@ -1,8 +1,11 @@
 {% extends '@ZedUi/Layout/layout.twig' %}
 
 {% block body %}
-    <zed-layout-main>
-        <zed-header></zed-header>
+    {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
+
+    <zed-layout-main navigation-config="{{ navigationConfig }}">
+        <zed-header name="header"></zed-header>
+
         {% block content %}{% endblock %}
     </zed-layout-main>
 {% endblock %}

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from "@angular/common/http";
 import { CustomElementModule } from '@spryker/web-components';
 
 import { ZedHeaderComponent } from './zed-header/zed-header.component';
@@ -10,10 +11,10 @@ import { ZedLayoutMainComponent } from './zed-layout-main/zed-layout-main.compon
 @NgModule({
     imports: [
         BrowserModule,
+        ZedHeaderModule,
+        HttpClientModule,
         ZedLayoutMainModule,
-        ZedHeaderModule
     ],
-    providers: [],
 })
 export class AppModule extends CustomElementModule {
     protected components = [
@@ -24,6 +25,6 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'zed-header',
             component: ZedHeaderComponent
-        }
+        },
     ];
 }
