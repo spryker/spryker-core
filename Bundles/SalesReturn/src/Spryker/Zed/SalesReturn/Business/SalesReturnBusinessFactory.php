@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesReturn\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpander;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpanderInterface;
+use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReader;
+use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetter;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetterInterface;
 
@@ -29,6 +31,14 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReaderInterface
+     */
+    public function createReturnReasonReader(): ReturnReasonReaderInterface
+    {
+        return new ReturnReasonReader($this->getRepository());
     }
 
     /**

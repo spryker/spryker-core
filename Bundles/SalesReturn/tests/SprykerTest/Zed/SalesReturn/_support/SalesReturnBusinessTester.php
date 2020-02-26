@@ -12,6 +12,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 
 /**
  * Inherited Methods
@@ -51,5 +52,21 @@ class SalesReturnBusinessTester extends Actor
         return (new OrderTransfer())
             ->setItems(new ArrayObject($itemTransfers))
             ->setTotals(new TotalsTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureReturnReasonTablesIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesReturnReasonQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery
+     */
+    protected function getSalesReturnReasonQuery(): SpySalesReturnReasonQuery
+    {
+        return SpySalesReturnReasonQuery::create();
     }
 }
