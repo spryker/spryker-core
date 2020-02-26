@@ -56,7 +56,8 @@ class UniqueUrlValidator extends ConstraintValidator
     protected function isUrlChanged(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
     {
         $existingUrlTransfer = $this->findUrl($urlTransfer->getUrl(), $constraint);
-        if ($existingUrlTransfer
+        if (
+            $existingUrlTransfer
             && $existingUrlTransfer->getFkResourceMerchantProfile()
             && (int)$existingUrlTransfer->getFkResourceMerchantProfile() === (int)$urlTransfer->getFkResourceMerchantProfile()
         ) {

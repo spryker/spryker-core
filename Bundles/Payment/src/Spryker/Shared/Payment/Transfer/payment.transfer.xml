@@ -108,4 +108,7 @@
         <property name="idSalesOrder" type="int"/>
     </transfer>
 
+    <transfer name="CheckoutError">
+    </transfer>
+
 </transfers>

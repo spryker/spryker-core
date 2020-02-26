@@ -89,7 +89,8 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
             ->joinPriceProductDefault()
             ->findOne();
 
-        if ($priceProductStoreEntity
+        if (
+            $priceProductStoreEntity
             && $priceProductStoreEntity->getGrossPrice() === (int)$dataSet[PriceProductDataSet::KEY_PRICE_GROSS]
             && $priceProductStoreEntity->getNetPrice() === (int)$dataSet[PriceProductDataSet::KEY_PRICE_NET]
             && $priceProductStoreEntity->getPriceDataChecksum() === $dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM]

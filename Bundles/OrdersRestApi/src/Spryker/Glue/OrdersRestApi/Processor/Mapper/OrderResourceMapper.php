@@ -131,7 +131,8 @@ class OrderResourceMapper implements OrderResourceMapperInterface
 
         /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
         $firstItemTransfer = $orderTransfer->getItems()->getIterator()->current();
-        if ($firstItemTransfer->getShipment() === null
+        if (
+            $firstItemTransfer->getShipment() === null
             || $firstItemTransfer->getShipment()->getShippingAddress() === null
         ) {
             return null;
