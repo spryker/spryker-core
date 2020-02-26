@@ -89,8 +89,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     {
         $shoppingListItemTransfer
             ->requireQuantity()
-            ->requireSku()
-            ->requireIdCompanyUser();
+            ->requireSku();
 
         $shoppingListTransfer = $this->createShoppingListTransfer($shoppingListItemTransfer);
         $shoppingListTransfer = $this->resolveShoppingList($shoppingListTransfer);
@@ -212,8 +211,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     {
         $shoppingListItemTransfer
             ->requireIdShoppingListItem()
-            ->requireFkShoppingList()
-            ->requireIdCompanyUser();
+            ->requireFkShoppingList();
 
         $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
 
@@ -251,8 +249,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $shoppingListItemTransfer
             ->requireIdShoppingListItem()
             ->requireFkShoppingList()
-            ->requireQuantity()
-            ->requireIdCompanyUser();
+            ->requireQuantity();
 
         $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
 

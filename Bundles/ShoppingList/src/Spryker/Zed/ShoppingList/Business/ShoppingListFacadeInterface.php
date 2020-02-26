@@ -82,9 +82,13 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      * - Adds item to shopping list.
+     * - Requires ShoppingListItemTransfer.sku, ShoppingListItemTransfer.quantity.
+     * - Creates shopping list for customer if ShoppingListItemTransfer.fkShoppingList is not provided.
+     * - Checks shopping list write permissions.
+     * - Executes ShoppingListItemPostSavePlugin plugins after save.
      * - Adds create shopping list success message if shopping list created.
-     * - Fails and adds error message when the product is not available or deactivated.
-     * - Fails and adds error message when quantity is lesser equal than zero or bigger than 2147483647.
+     * - Fails and adds error message when the product does not exist.
+     * - Fails and adds error message when quantity is less or equal to zero or greater than 2147483647.
      *
      * @api
      *
@@ -98,9 +102,11 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Updates shopping list item.saveShoppingListItem
-     *  - Adds update shopping list success message if shopping list successfully updated.
-     *  - Fails and adds error message when quantity is lesser equal than zero or bigger than 2147483647.
+     * - Updates shopping list item.
+     * - Requires ShoppingListItemTransfer.idShoppingListItem, ShoppingListItemTransfer.fkShoppingList, ShoppingListItemTransfer.quantity.
+     * - Checks shopping list write permissions.
+     * - Executes ShoppingListItemPostSavePlugin plugins after save.
+     * - Fails when quantity is less or equal to zero or greater than 2147483647.
      *
      * @api
      *
