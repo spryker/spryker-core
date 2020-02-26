@@ -29,7 +29,7 @@ class GlossarySynchronizationDataRepositoryPlugin extends AbstractPlugin impleme
      */
     public function getResourceName(): string
     {
-        return GlossaryStorageConfig::RESOURCE_NAME;
+        return GlossaryStorageConfig::TRANSLATION_RESOURCE_NAME;
     }
 
     /**
@@ -81,7 +81,7 @@ class GlossarySynchronizationDataRepositoryPlugin extends AbstractPlugin impleme
      */
     public function getQueueName(): string
     {
-        return GlossaryStorageConfig::SYNC_QUEUE_NAME;
+        return GlossaryStorageConfig::SYNC_STORAGE_TRANSLATION;
     }
 
     /**

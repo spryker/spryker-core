@@ -17,9 +17,14 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     public const SYNC_STORAGE_TRANSLATION = 'sync.storage.translation';
 
     /**
+     * Defines queue name as used for processing translation error messages.
+     */
+    public const SYNC_STORAGE_TRANSLATION_ERROR = 'sync.storage.translation.error';
+
+    /**
      * Defines resource name, that will be used for key generation.
      */
-    public const RESOURCE_NAME = 'translation';
+    public const TRANSLATION_RESOURCE_NAME = 'translation';
 
     /**
      * This events that will be used for key writing.

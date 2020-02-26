@@ -33,7 +33,7 @@ class GlossaryPublisherTriggerPlugin extends AbstractPlugin implements Publisher
      */
     public function getResourceName(): string
     {
-        return GlossaryStorageConfig::RESOURCE_NAME;
+        return GlossaryStorageConfig::TRANSLATION_RESOURCE_NAME;
     }
 
     /**

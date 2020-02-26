@@ -126,7 +126,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
             ->setLocale($localeName);
 
         return $this->synchronizationService
-            ->getStorageKeyBuilder(SharedGlossaryStorageConfig::RESOURCE_NAME)
+            ->getStorageKeyBuilder(SharedGlossaryStorageConfig::TRANSLATION_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
     }
 
