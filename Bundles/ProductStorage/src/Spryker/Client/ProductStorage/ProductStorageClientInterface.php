@@ -241,6 +241,8 @@ interface ProductStorageClientInterface
      *
      * @api
      *
+     * @deprecated Use getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore instead.
+     *
      * @param int[] $productAbstractIds
      * @param string $localeName
      *

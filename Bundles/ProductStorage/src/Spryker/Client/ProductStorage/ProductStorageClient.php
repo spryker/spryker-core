@@ -284,6 +284,8 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @deprecated Use getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore instead.
+     *
      * @param int[] $productAbstractIds
      * @param string $localeName
      *
@@ -291,6 +293,8 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      */
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
     {
+        trigger_error('Use getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore instead.', E_USER_DEPRECATED);
+
         return $this->getFactory()
             ->createProductAbstractStorageReader()
             ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);

@@ -53,10 +53,6 @@ class RelatedProductReader implements RelatedProductReaderInterface
      */
     public function findRelatedProducts($idProductAbstract, $localeName, ?string $storeName = null)
     {
-        if (!$storeName) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         $relatedProductAbstractIds = $this->findRelatedAbstractProductIds($idProductAbstract);
         $productStorageDataCollection = $this
             ->productStorageClient
@@ -89,10 +85,6 @@ class RelatedProductReader implements RelatedProductReaderInterface
      */
     public function findRelatedAbstractProductIds(int $idProductAbstract, ?string $storeName = null): array
     {
-        if (!$storeName) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         $relationIds = $this->getRelationIds($idProductAbstract, $storeName);
 
         return $this->getSortedProductAbstractIds($relationIds);
