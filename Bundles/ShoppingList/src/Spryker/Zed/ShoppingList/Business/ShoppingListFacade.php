@@ -441,7 +441,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListPreAddItemCheckResponseTransfer {
         return $this->getFactory()
-            ->createShoppingListItemOperation()
+            ->createProductConcreteIsActiveChecker()
             ->checkShoppingListItemProductIsActive($shoppingListItemTransfer);
     }
 }

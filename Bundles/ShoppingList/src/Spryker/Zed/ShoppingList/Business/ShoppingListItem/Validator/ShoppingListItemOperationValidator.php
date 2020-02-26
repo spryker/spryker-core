@@ -84,17 +84,6 @@ class ShoppingListItemOperationValidator implements ShoppingListItemOperationVal
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function invalidateItemDeleteResponse(
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): ShoppingListItemResponseTransfer {
-        return $this->shoppingListItemDeleteOperationValidator->invalidateResponse($shoppingListItemResponseTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
@@ -106,17 +95,6 @@ class ShoppingListItemOperationValidator implements ShoppingListItemOperationVal
     ): ShoppingListItemResponseTransfer {
         return $this->shoppingListItemDeleteOperationValidator
             ->validateRequest($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function invalidateItemUpdateResponse(
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): ShoppingListItemResponseTransfer {
-        return $this->shoppingListItemUpdateOperationValidator->invalidateResponse($shoppingListItemResponseTransfer);
     }
 
     /**

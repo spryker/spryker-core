@@ -11,22 +11,13 @@ use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Spryker\Zed\Kernel\PermissionAwareTrait;
-use Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 
 class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperationValidatorInterface
 {
-    use PermissionAwareTrait;
-
     protected const ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'customer.account.shopping_list.error.write_permission_required';
     protected const ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID = 'customer.account.shopping_list_item.error.quantity_not_valid';
-
-    /**
-     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface
-     */
-    protected $shoppingListResolver;
 
     /**
      * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
@@ -51,21 +42,18 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     /**
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface $shoppingListItemValidator
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface $messageAdder
-     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface $permissionValidator
      */
     public function __construct(
         ShoppingListItemValidatorInterface $shoppingListItemValidator,
         ShoppingListItemMessageAdderInterface $messageAdder,
-        ShoppingListResolverInterface $shoppingListResolver,
         ShoppingListItemPluginExecutorInterface $pluginExecutor,
         ShoppingListItemPermissionValidatorInterface $permissionValidator
     ) {
-        $this->shoppingListResolver = $shoppingListResolver;
-        $this->pluginExecutor = $pluginExecutor;
         $this->shoppingListItemValidator = $shoppingListItemValidator;
         $this->messageAdder = $messageAdder;
+        $this->pluginExecutor = $pluginExecutor;
         $this->permissionValidator = $permissionValidator;
     }
 
@@ -104,17 +92,17 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
             return $validatedShoppingListItemResponseTransfer;
         }
 
-        $shoppingListItemResponseTransferWithResolvedItemParent = $this->resolveShoppingListItemParent(
-            $shoppingListItemTransfer,
-            $shoppingListItemResponseTransfer
-        );
-        if (!$shoppingListItemResponseTransferWithResolvedItemParent->getIsSuccess()) {
+        $shoppingListTransfer = $this->createShoppingListTransfer($shoppingListItemTransfer);
+        $shoppingListItemResponseTransferWithValidatedPermission = $this->permissionValidator
+            ->validatePermissionForPerformingOperation($shoppingListTransfer, $shoppingListItemResponseTransfer);
+
+        if (!$shoppingListItemResponseTransferWithValidatedPermission->getIsSuccess()) {
             $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer->getSku());
 
-            return $shoppingListItemResponseTransferWithResolvedItemParent;
+            return $shoppingListItemResponseTransferWithValidatedPermission;
         }
 
-        return $shoppingListItemResponseTransfer;
+        return $shoppingListItemResponseTransfer->setIsSuccess(true);
     }
 
     /**
@@ -127,10 +115,6 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
         ShoppingListTransfer $shoppingListTransfer,
         ShoppingListResponseTransfer $shoppingListResponseTransfer
     ): ShoppingListResponseTransfer {
-        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
-        }
-
         if (!$this->permissionValidator->checkWritePermission($shoppingListTransfer)) {
             $shoppingListResponseTransfer
                 ->addError(static::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
@@ -150,9 +134,10 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
             }
         }
 
-        $shoppingListResponseTransfer->setShoppingList($shoppingListTransfer);
+        $shoppingListResponseTransfer->setShoppingList($shoppingListTransfer)
+            ->setIsSuccess(true);
 
-        return $shoppingListResponseTransfer->setIsSuccess(true);
+        return $shoppingListResponseTransfer;
     }
 
     /**
@@ -196,37 +181,6 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    protected function resolveShoppingListItemParent(
-        ShoppingListItemTransfer $shoppingListItemTransfer,
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): ShoppingListItemResponseTransfer {
-        $shoppingListTransfer = $this->createShoppingListTransfer($shoppingListItemTransfer);
-        if (!$shoppingListTransfer->getIdShoppingList()) {
-            $shoppingListTransfer = $this->shoppingListResolver
-                ->createDefaultShoppingListIfNotExists($shoppingListTransfer->getCustomerReference())
-                ->setIdCompanyUser($shoppingListTransfer->getIdCompanyUser())
-                ->setItems($shoppingListTransfer->getItems());
-        }
-
-        $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
-
-        $shoppingListItemResponseTransferWithValidatedPermission = $this->permissionValidator
-            ->validatePermissionForPerformingOperation($shoppingListTransfer, $shoppingListItemResponseTransfer);
-        if (!$shoppingListItemResponseTransferWithValidatedPermission->getIsSuccess()) {
-            $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer->getSku());
-
-            return $shoppingListItemResponseTransferWithValidatedPermission;
-        }
-
-        return $shoppingListItemResponseTransfer->setIsSuccess(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
     protected function performShoppingListItemAddPreCheckPlugins(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
@@ -256,7 +210,6 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     ): ShoppingListTransfer {
         return (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
-            ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser())
-            ->setCustomerReference($shoppingListItemTransfer->getCustomerReference());
+            ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser());
     }
 }

@@ -22,6 +22,8 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharer;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriterInterface;
+use Spryker\Zed\ShoppingList\Business\Product\ProductConcreteIsActiveChecker;
+use Spryker\Zed\ShoppingList\Business\Product\ProductConcreteIsActiveCheckerInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleter;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleterInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdder;
@@ -105,10 +107,18 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListItemOperation(
             $this->getEntityManager(),
             $this->getRepository(),
+            $this->createShoppingListResolver(),
             $this->createShoppingListItemOperationValidator(),
-            $this->createShoppingListItemPluginExecutor(),
-            $this->getProductFacade()
+            $this->createShoppingListItemPluginExecutor()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Product\ProductConcreteIsActiveCheckerInterface
+     */
+    public function createProductConcreteIsActiveChecker(): ProductConcreteIsActiveCheckerInterface
+    {
+        return new ProductConcreteIsActiveChecker($this->getProductFacade());
     }
 
     /**
@@ -171,7 +181,6 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListItemAddOperationValidator(
             $this->createShoppingListItemValidator(),
             $this->createShoppingListItemMessageAdder(),
-            $this->createShoppingListResolver(),
             $this->createShoppingListItemPluginExecutor(),
             $this->createShoppingListItemPermissionValidator()
         );
@@ -184,7 +193,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListItemUpdateOperationValidator(
             $this->createShoppingListItemValidator(),
-            $this->createShoppingListItemMessageAdder()
+            $this->createShoppingListItemPermissionValidator()
         );
     }
 
@@ -193,10 +202,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
      */
     public function createShoppingListItemDeleteOperationValidator(): ShoppingListItemDeleteOperationValidatorInterface
     {
-        return new ShoppingListItemDeleteOperationValidator(
-            $this->createShoppingListItemValidator(),
-            $this->createShoppingListItemMessageAdder()
-        );
+        return new ShoppingListItemDeleteOperationValidator($this->createShoppingListItemValidator());
     }
 
     /**

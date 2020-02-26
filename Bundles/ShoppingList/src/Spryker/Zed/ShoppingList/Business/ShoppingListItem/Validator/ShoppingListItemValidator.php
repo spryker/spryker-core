@@ -10,14 +10,11 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
 {
-    use PermissionAwareTrait;
-
     protected const MAX_QUANTITY = 2147483647; // 32 bit integer
 
     protected const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list.error.not_found';
@@ -65,8 +62,6 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
-        $shoppingListItemTransfer->requireFkShoppingList();
-
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById(
             (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
         );
@@ -105,8 +100,6 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
-        $shoppingListItemTransfer->requireQuantity();
-
         $quantity = $shoppingListItemTransfer->getQuantity();
         if ($quantity <= 0 || $quantity > static::MAX_QUANTITY) {
             $shoppingListItemResponseTransfer
@@ -129,8 +122,6 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
-        $shoppingListItemTransfer->requireSku();
-
         if (!$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
             $shoppingListItemResponseTransfer
                 ->addError(static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND)

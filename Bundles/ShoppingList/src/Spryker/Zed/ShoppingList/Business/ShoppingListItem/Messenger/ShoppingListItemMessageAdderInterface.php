@@ -10,23 +10,6 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger;
 interface ShoppingListItemMessageAdderInterface
 {
     /**
-     * @return void
-     */
-    public function addShoppingListItemUpdateFailedMessage(): void;
-
-    /**
-     * @return void
-     */
-    public function addShoppingListItemUpdateSuccessMessage(): void;
-
-    /**
-     * @param string $sku
-     *
-     * @return void
-     */
-    public function addShoppingListItemAddingFailedMessage(string $sku): void;
-
-    /**
      * @param string $sku
      *
      * @return void
@@ -34,12 +17,9 @@ interface ShoppingListItemMessageAdderInterface
     public function addShoppingListItemAddingSuccessMessage(string $sku): void;
 
     /**
+     * @param string $sku
+     *
      * @return void
      */
-    public function addShoppingListItemDeleteFailedMessage(): void;
-
-    /**
-     * @return void
-     */
-    public function addShoppingListItemDeleteSuccessMessage(): void;
+    public function addShoppingListItemAddingFailedMessage(string $sku): void;
 }

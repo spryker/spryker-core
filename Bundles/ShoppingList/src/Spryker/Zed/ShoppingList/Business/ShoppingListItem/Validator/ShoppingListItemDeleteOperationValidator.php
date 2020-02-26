@@ -9,15 +9,9 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator;
 
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface;
 
 class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDeleteOperationValidatorInterface
 {
-    /**
-     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface
-     */
-    protected $messageAdder;
-
     /**
      * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface
      */
@@ -25,29 +19,10 @@ class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDelete
 
     /**
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface $shoppingListItemValidator
-     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface $messageAdder
      */
-    public function __construct(
-        ShoppingListItemValidatorInterface $shoppingListItemValidator,
-        ShoppingListItemMessageAdderInterface $messageAdder
-    ) {
-        $this->messageAdder = $messageAdder;
+    public function __construct(ShoppingListItemValidatorInterface $shoppingListItemValidator)
+    {
         $this->shoppingListItemValidator = $shoppingListItemValidator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function invalidateResponse(
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): ShoppingListItemResponseTransfer {
-        if ($shoppingListItemResponseTransfer->getIsSuccess()) {
-            $this->messageAdder->addShoppingListItemDeleteSuccessMessage();
-        }
-
-        return $shoppingListItemResponseTransfer;
     }
 
     /**
@@ -60,16 +35,12 @@ class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDelete
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
-        $shoppingListItemTransfer->requireIdShoppingListItem();
-
         $shoppingListItemResponseTransferWithValidatedParent = $this->shoppingListItemValidator->checkShoppingListItemParent(
             $shoppingListItemTransfer,
             $shoppingListItemResponseTransfer
         );
 
         if (!$shoppingListItemResponseTransferWithValidatedParent->getIsSuccess()) {
-            $this->messageAdder->addShoppingListItemDeleteFailedMessage();
-
             return $shoppingListItemResponseTransferWithValidatedParent;
         }
 

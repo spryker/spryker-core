@@ -57,15 +57,6 @@ interface ShoppingListItemOperationValidatorInterface
     ): ShoppingListItemResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function invalidateItemDeleteResponse(
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): ShoppingListItemResponseTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
      *
@@ -73,15 +64,6 @@ interface ShoppingListItemOperationValidatorInterface
      */
     public function validateItemUpdateRequest(
         ShoppingListItemTransfer $shoppingListItemTransfer,
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): ShoppingListItemResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function invalidateItemUpdateResponse(
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer;
 }

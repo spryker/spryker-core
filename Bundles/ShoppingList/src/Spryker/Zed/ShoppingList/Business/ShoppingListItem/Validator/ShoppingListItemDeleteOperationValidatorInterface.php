@@ -22,13 +22,4 @@ interface ShoppingListItemDeleteOperationValidatorInterface
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function invalidateResponse(
-        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
-    ): ShoppingListItemResponseTransfer;
 }
