@@ -39,10 +39,6 @@ class AmountSalesUnitItemExpander implements AmountSalesUnitItemExpanderInterfac
                 continue;
             }
 
-            if (!$itemTransfer->getAmountLeadProduct()) {
-                continue;
-            }
-
             $itemTransfer->requireAmountLeadProduct();
 
             if ($itemTransfer->getAmountLeadProduct()->getSku() === $itemTransfer->getSku()) {

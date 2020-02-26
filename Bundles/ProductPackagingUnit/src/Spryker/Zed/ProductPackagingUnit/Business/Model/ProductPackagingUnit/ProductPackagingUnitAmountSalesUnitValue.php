@@ -23,10 +23,7 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
     public function calculateAmountSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productMeasurementSalesUnitTransfer = $itemTransfer->getAmountSalesUnit();
-            if (!$productMeasurementSalesUnitTransfer
-                || !$productMeasurementSalesUnitTransfer->getPrecision() || !$productMeasurementSalesUnitTransfer->getConversion()
-            ) {
+            if (!$itemTransfer->getAmountSalesUnit()) {
                 continue;
             }
 
