@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\AvailabilityGui\Dependency\QueryContainer;
 
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+
 class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityGuiToAvailabilityQueryContainerInterface
 {
     /**
@@ -35,6 +38,22 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
     }
 
     /**
+     * @param int $idLocale
+     * @param int $idStore
+     * @param int[] $stockIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(
+        int $idLocale,
+        int $idStore,
+        array $stockIds
+    ): SpyProductAbstractQuery {
+        return $this->availabilityQueryContainer
+            ->queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated($idLocale, $idStore, $stockIds);
+    }
+
+    /**
      * @param int $idProductAbstract
      * @param int $idLocale
      * @param int $idStore
@@ -58,5 +77,37 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
     public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = [])
     {
         return $this->availabilityQueryContainer->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, $stockNames);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     * @param int $idStore
+     * @param string[] $stockNames
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractWithStockByProductAbstractIdsAndIdLocale(
+        array $productAbstractIds,
+        int $idLocale,
+        int $idStore,
+        array $stockNames = []
+    ): SpyProductAbstractQuery {
+        return $this->availabilityQueryContainer->queryProductAbstractWithStockByProductAbstractIdsAndIdLocale(
+            $productAbstractIds,
+            $idLocale,
+            $idStore,
+            $stockNames
+        );
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityAbstractByFkStore(int $idStore): SpyAvailabilityAbstractQuery
+    {
+        return $this->availabilityQueryContainer->queryAvailabilityAbstractByFkStore($idStore);
     }
 }

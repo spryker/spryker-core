@@ -9,6 +9,8 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Helper;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\DecimalObject\Decimal;
 
 interface AvailabilityHelperInterface
@@ -107,6 +109,14 @@ interface AvailabilityHelperInterface
     public function queryAvailabilityAbstractWithStockByIdLocale(int $idLocale, int $idStore);
 
     /**
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(int $idLocale, int $idStore): SpyProductAbstractQuery;
+
+    /**
      * @param int|null $idProductAbstract
      * @param int $idLocale
      * @param int $idStore
@@ -114,4 +124,20 @@ interface AvailabilityHelperInterface
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale(?int $idProductAbstract, int $idLocale, int $idStore);
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     */
+    public function getProductAbstractEntitiesWithStockByProductAbstractIdsAndIdLocale(array $productAbstractIds, int $idLocale, int $idStore): array;
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityAbstractByFkStore(int $idStore): SpyAvailabilityAbstractQuery;
 }

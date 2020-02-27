@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\AvailabilityGui\Dependency\QueryContainer;
 
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+
 interface AvailabilityGuiToAvailabilityQueryContainerInterface
 {
     /**
@@ -17,6 +20,15 @@ interface AvailabilityGuiToAvailabilityQueryContainerInterface
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, array $stockNames);
+
+    /**
+     * @param int $idLocale
+     * @param int $idStore
+     * @param int[] $stockIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(int $idLocale, int $idStore, array $stockIds): SpyProductAbstractQuery;
 
     /**
      * @param int $idProductAbstract
@@ -37,4 +49,26 @@ interface AvailabilityGuiToAvailabilityQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = []);
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     * @param int $idStore
+     * @param string[] $stockNames
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractWithStockByProductAbstractIdsAndIdLocale(
+        array $productAbstractIds,
+        int $idLocale,
+        int $idStore,
+        array $stockNames = []
+    ): SpyProductAbstractQuery;
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityAbstractByFkStore(int $idStore): SpyAvailabilityAbstractQuery;
 }

@@ -10,6 +10,9 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Helper;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface;
@@ -177,6 +180,27 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(
+        int $idLocale,
+        int $idStore
+    ): SpyProductAbstractQuery {
+        $storeTransfer = $this->storeFacade->getStoreById($idStore);
+        $stockTransfers = $this->stockFacade->getAvailableWarehousesForStore($storeTransfer);
+        $stockIds = $this->getStockIdsByStockTransfers($stockTransfers);
+
+        return $this->availabilityQueryContainer->queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(
+            $idLocale,
+            $idStore,
+            $stockIds
+        );
+    }
+
+    /**
      * @param int|null $idProductAbstract
      * @param int $idLocale
      * @param int $idStore
@@ -191,6 +215,68 @@ class AvailabilityHelper implements AvailabilityHelperInterface
             $idStore,
             $this->getStockNamesForStoreByStoreId($idStore)
         );
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     */
+    public function getProductAbstractEntitiesWithStockByProductAbstractIdsAndIdLocale(
+        array $productAbstractIds,
+        int $idLocale,
+        int $idStore
+    ): array {
+        $availabilityAbstractEntities = $this->availabilityQueryContainer
+            ->queryProductAbstractWithStockByProductAbstractIdsAndIdLocale(
+                $productAbstractIds,
+                $idLocale,
+                $idStore,
+                $this->getStockNamesForStoreByStoreId($idStore)
+            )->find();
+
+        return $this->orderAvailabilityAbstractEntitiesByProductAbstractIdsSequence(
+            $availabilityAbstractEntities,
+            $productAbstractIds
+        );
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityAbstractByFkStore(int $idStore): SpyAvailabilityAbstractQuery
+    {
+        return $this->availabilityQueryContainer->queryAvailabilityAbstractByFkStore($idStore);
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $availabilityAbstractEntities
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     */
+    protected function orderAvailabilityAbstractEntitiesByProductAbstractIdsSequence(
+        ObjectCollection $availabilityAbstractEntities,
+        array $productAbstractIds
+    ): array {
+        $orderedAvailabilityAbstractEntities = [];
+        foreach ($availabilityAbstractEntities as $availabilityAbstractEntity) {
+            $productAbstractId = $availabilityAbstractEntity->getIdProductAbstract();
+            $indexProductAbstract = array_search($productAbstractId, $productAbstractIds, true);
+            if ($indexProductAbstract === false) {
+                continue;
+            }
+
+            $orderedAvailabilityAbstractEntities[$indexProductAbstract] = $availabilityAbstractEntity;
+        }
+
+        ksort($orderedAvailabilityAbstractEntities);
+
+        return $orderedAvailabilityAbstractEntities;
     }
 
     /**
@@ -217,5 +303,20 @@ class AvailabilityHelper implements AvailabilityHelperInterface
         return array_map(function (StockTransfer $stockTransfer): string {
             return $stockTransfer->getName();
         }, $stockTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer[] $stockTransfers
+     *
+     * @return int[]
+     */
+    protected function getStockIdsByStockTransfers(array $stockTransfers): array
+    {
+        $stockIds = [];
+        foreach ($stockTransfers as $stockTransfer) {
+            $stockIds[] = $stockTransfer->getIdStock();
+        }
+
+        return $stockIds;
     }
 }
