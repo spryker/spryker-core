@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\SchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshipInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface;
 
 class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
@@ -39,11 +39,6 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected $restErrorSchemaReference;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
-     */
-    protected $resourceRelationshipPluginAnalyzer;
-
-    /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface
      */
     protected $resourceTransferAnalyzer;
@@ -59,21 +54,26 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected $schemaRenderer;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshipInterface
+     */
+    protected $resourceRelationship;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface $schemaBuilder
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface $schemaRenderer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshipInterface $resourceRelationship
      */
     public function __construct(
-        ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer,
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
         SchemaBuilderInterface $schemaBuilder,
-        SchemaRendererInterface $schemaRenderer
+        SchemaRendererInterface $schemaRenderer,
+        ResourceRelationshipInterface $resourceRelationship
     ) {
-        $this->resourceRelationshipPluginAnalyzer = $resourceRelationshipPluginAnalyzer;
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
         $this->schemaBuilder = $schemaBuilder;
         $this->schemaRenderer = $schemaRenderer;
+        $this->resourceRelationship = $resourceRelationship;
 
         $this->addDefaultSchemas();
     }
@@ -128,7 +128,6 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
-        $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseResourceSchemaNameFromTransferClassName($transferClassName);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
@@ -138,8 +137,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData($this->schemaBuilder->createResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
-        if ($resourceRelationships && !$plugin instanceof ResourceWithParentPluginInterface) {
-            $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
+
+        if (!$plugin instanceof ResourceWithParentPluginInterface) {
+            $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
         }
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
@@ -154,7 +154,6 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
-        $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionSchemaNameFromTransferClassName($transferClassName);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
@@ -164,30 +163,10 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData($this->schemaBuilder->createCollectionResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
-        if ($resourceRelationships) {
-            $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
-        }
+
+        $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
-    }
-
-    /**
-     * @param string $responseDataSchemaName
-     * @param array $resourceRelationships
-     * @param string $transferClassName
-     *
-     * @return void
-     */
-    protected function addRelationshipSchemas(string $responseDataSchemaName, array $resourceRelationships, string $transferClassName): void
-    {
-        $resourceRelationshipsSchemaName = $this->resourceTransferAnalyzer->createResourceRelationshipSchemaNameFromTransferClassName($transferClassName);
-        $this->addSchemaData($this->schemaBuilder->createRelationshipBaseSchema($responseDataSchemaName, $resourceRelationshipsSchemaName));
-        $this->addSchemaData($this->schemaBuilder->createRelationshipDataSchema($resourceRelationshipsSchemaName, $resourceRelationships));
-        $this->addSchemaData($this->schemaBuilder->createRelationshipDataSchema($resourceRelationshipsSchemaName, $resourceRelationships));
-
-        $includedSchemaName = $this->resourceTransferAnalyzer->createIncludedSchemaNameFromTransferClassName($transferClassName);
-        $this->addSchemaData($this->schemaBuilder->createIncludedBaseSchema($responseDataSchemaName, $includedSchemaName));
-        $this->addSchemaData($this->schemaBuilder->createIncludedDataSchema($includedSchemaName, $resourceRelationships));
     }
 
     /**
@@ -331,6 +310,23 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     {
         if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
             throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $transferClassName
+     * @param string $responseDataSchemaName
+     *
+     * @return void
+     */
+    protected function addRelationshipSchemas(ResourceRoutePluginInterface $plugin, string $transferClassName, string $responseDataSchemaName): void
+    {
+        $relationshipSchemaDataTransfers = $this->resourceRelationship->getSchemaDataTransfersFromForPlugin($plugin, $transferClassName, $responseDataSchemaName);
+        if ($relationshipSchemaDataTransfers) {
+            foreach ($relationshipSchemaDataTransfers as $relationshipSchemaDataTransfer) {
+                $this->addSchemaData($relationshipSchemaDataTransfer);
+            }
         }
     }
 }

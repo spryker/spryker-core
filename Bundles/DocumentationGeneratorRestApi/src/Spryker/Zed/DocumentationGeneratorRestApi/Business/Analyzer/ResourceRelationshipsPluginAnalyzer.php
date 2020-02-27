@@ -17,11 +17,20 @@ class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPlugin
     protected $resourceRelationshipCollectionPlugins;
 
     /**
-     * @param \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface
      */
-    public function __construct(array $resourceRelationshipCollectionPlugins)
-    {
+    protected $resourceRelationshipsPluginAnnotationAnalyzer;
+
+    /**
+     * @param \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
+     */
+    public function __construct(
+        array $resourceRelationshipCollectionPlugins,
+        ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
+    ) {
         $this->resourceRelationshipCollectionPlugins = $resourceRelationshipCollectionPlugins;
+        $this->resourceRelationshipsPluginAnnotationAnalyzer = $resourceRelationshipsPluginAnnotationAnalyzer;
     }
 
     /**
@@ -39,6 +48,7 @@ class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPlugin
             }
             $relationshipPlugins = $resourceRouteCollection->getRelationships($plugin->getResourceType());
             foreach ($relationshipPlugins as $relationshipPlugin) {
+                $this->resourceRelationshipsPluginAnnotationAnalyzer->getResourceAttributesFromResourceRelationshipPlugin($relationshipPlugin);
                 $resourceRelationships[] = $relationshipPlugin->getRelationshipResourceType();
             }
         }

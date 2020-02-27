@@ -24,6 +24,9 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     protected const APPLICATION_PROJECT_ANNOTATION_SOURCE_DIRECTORY_PATTERN = '/Glue/%1$s/Controller/';
     protected const APPLICATION_CORE_ANNOTATION_SOURCE_DIRECTORY_PATTERN = '/*/*/src/*/Glue/%1$s/Controller/';
 
+    protected const APPLICATION_PROJECT_ANNOTATION_PLUGIN_SOURCE_DIRECTORY_PATTERN = '/Glue/%1$s/Plugin/';
+    protected const APPLICATION_CORE_ANNOTATION_PLUGIN_SOURCE_DIRECTORY_PATTERN = '/*/*/src/*/Glue/%1$s/Plugin/';
+
     /**
      * @return string
      */
@@ -84,6 +87,17 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array
+     */
+    public function getAnnotationPluginSourceDirectories(): array
+    {
+        return array_merge(
+            $this->getCoreAnnotationPluginSourceDirectoryPatterns(),
+            $this->getProjectAnnotationPluginSourceDirectoryPatterns()
+        );
+    }
+
+    /**
      * @return string[]
      */
     protected function getCoreAnnotationSourceDirectoryPatterns(): array
@@ -94,12 +108,32 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    protected function getCoreAnnotationPluginSourceDirectoryPatterns(): array
+    {
+        return [
+            APPLICATION_VENDOR_DIR . static::APPLICATION_CORE_ANNOTATION_PLUGIN_SOURCE_DIRECTORY_PATTERN,
+        ];
+    }
+
+    /**
      * @return array
      */
     protected function getProjectAnnotationSourceDirectoryPatterns(): array
     {
         return [
             APPLICATION_SOURCE_DIR . '/' . $this->get(KernelConstants::PROJECT_NAMESPACE) . static::APPLICATION_PROJECT_ANNOTATION_SOURCE_DIRECTORY_PATTERN,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getProjectAnnotationPluginSourceDirectoryPatterns(): array
+    {
+        return [
+            APPLICATION_SOURCE_DIR . '/' . $this->get(KernelConstants::PROJECT_NAMESPACE) . static::APPLICATION_PROJECT_ANNOTATION_PLUGIN_SOURCE_DIRECTORY_PATTERN,
         ];
     }
 

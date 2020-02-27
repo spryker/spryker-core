@@ -115,6 +115,10 @@
         <property name="delete" type="Annotation"/>
     </transfer>
 
+    <transfer name="PluginAnnotations">
+        <property name="resourceAttributesClassName" type="string"/>
+    </transfer>
+
     <transfer name="Annotation">
         <property name="path" type="string"/>
         <property name="summary" type="string[]" singular="summary"/>

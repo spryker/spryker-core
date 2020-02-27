@@ -99,9 +99,9 @@ interface SchemaComponentBuilderInterface
 
     /**
      * @param string $resourceRelationship
-     * @param string $SCHEMA_NAME_RELATIONSHIPS_DATA
+     * @param string $schemaNameRelationshipsData
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createOneOfArrayTransfer(string $resourceRelationship, string $SCHEMA_NAME_RELATIONSHIPS_DATA): SchemaPropertyTransfer;
+    public function createOneOfArrayTransfer(string $resourceRelationship, string $schemaNameRelationshipsData): SchemaPropertyTransfer;
 }
