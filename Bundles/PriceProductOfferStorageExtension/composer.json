@@ -6,6 +6,7 @@
     "php": ">=7.2"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -14,7 +15,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
