@@ -23,18 +23,10 @@ class ShoppingListsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a shopping list by id."
      *          ],
-     *          "parameters": [
-     *              {
-     *                  "name": "Accept-Language",
-     *                  "in": "header"
-     *              },
-     *              {
-     *                  "name": "X-Company-User-Id",
-     *                  "in": "header",
-     *                  "required": true,
-     *                  "description": "Company user uuid"
-     *              }
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list is not found."
