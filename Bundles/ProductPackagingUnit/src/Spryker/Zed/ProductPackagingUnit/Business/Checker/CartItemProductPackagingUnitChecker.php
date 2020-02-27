@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Checker;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUnitCheckerInterface
@@ -27,20 +26,11 @@ class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUni
     protected $productPackagingUnitRepository;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface $storeFacade
      */
-    public function __construct(
-        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
-        ProductPackagingUnitToStoreFacadeInterface $storeFacade
-    ) {
+    public function __construct(ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository)
+    {
         $this->productPackagingUnitRepository = $productPackagingUnitRepository;
-        $this->storeFacade = $storeFacade;
     }
 
     /**

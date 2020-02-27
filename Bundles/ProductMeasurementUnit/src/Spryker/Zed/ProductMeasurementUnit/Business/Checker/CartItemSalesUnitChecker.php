@@ -59,13 +59,13 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
         }
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
-        $indexedProductMeasurementSalesUnitIds = $this->productMeasurementUnitRepository
-            ->findIndexedStoreAwareDefaultProductMeasurementSalesUnitIds(
+        $indexedProductMeasurementSalesUnitIdsData = $this->productMeasurementUnitRepository
+            ->findIndexedStoreAwareProductMeasurementSalesUnitIds(
                 $productConcreteSkus,
                 $storeTransfer->getIdStore()
             );
 
-        if (!$indexedProductMeasurementSalesUnitIds) {
+        if (!$indexedProductMeasurementSalesUnitIdsData) {
             return $cartPreCheckResponseTransfer;
         }
 
@@ -73,7 +73,7 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
             $cartPreCheckResponseTransfer = $this->checkSalesUnit(
                 $itemTransfer,
                 $cartPreCheckResponseTransfer,
-                $indexedProductMeasurementSalesUnitIds[$itemTransfer->getSku()]
+                $indexedProductMeasurementSalesUnitIdsData[$itemTransfer->getSku()]
             );
         }
 
@@ -83,14 +83,14 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
-     * @param int $indexedIdProductMeasurementSalesUnit
+     * @param array $productMeasurementSalesUnitIds
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     protected function checkSalesUnit(
         ItemTransfer $itemTransfer,
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
-        int $indexedIdProductMeasurementSalesUnit
+        array $productMeasurementSalesUnitIds
     ): CartPreCheckResponseTransfer {
         $productMeasurementSalesUnitTransfer = $itemTransfer->getAmountSalesUnit();
         if (!$productMeasurementSalesUnitTransfer) {
@@ -98,7 +98,7 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
         }
 
         $idProductMeasurementSalesUnit = $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
-        if ($idProductMeasurementSalesUnit === $indexedIdProductMeasurementSalesUnit) {
+        if (in_array($idProductMeasurementSalesUnit, $productMeasurementSalesUnitIds)) {
             return $cartPreCheckResponseTransfer;
         }
 

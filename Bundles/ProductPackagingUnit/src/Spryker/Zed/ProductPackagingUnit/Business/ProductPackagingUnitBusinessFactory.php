@@ -188,10 +188,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartItemProductPackagingUnitChecker(): CartItemProductPackagingUnitCheckerInterface
     {
-        return new CartItemProductPackagingUnitChecker(
-            $this->getRepository(),
-            $this->getStoreFacade()
-        );
+        return new CartItemProductPackagingUnitChecker($this->getRepository());
     }
 
     /**
