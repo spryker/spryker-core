@@ -28,7 +28,7 @@
                         name="{{ formField.vars.full_name }}"
                         value="{{ formField.vars.value }}"
                         type="{{ formField.vars.block_prefixes[2] }}"
-                        placeholder="{{ formField.vars.attr.placeholder | default }}"
+                        placeholder="{{ formField.vars.attr.placeholder | trans }}"
                     ></spy-input>
                 </spy-form-item>
             {% endfor %}
