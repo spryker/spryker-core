@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
-class ProductPackagingUnitChecker implements ProductPackagingUnitCheckerInterface
+class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUnitCheckerInterface
 {
     protected const GLOSSARY_KEY_CART_ITEM_PRODUCT_PACKAGING_UNIT_IS_NOT_FOUND = 'cart.item.packaging_unit.not_found';
 
@@ -48,7 +48,7 @@ class ProductPackagingUnitChecker implements ProductPackagingUnitCheckerInterfac
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $productConcreteSkus = $this->getProductConcreteSkus($cartChangeTransfer);

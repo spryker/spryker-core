@@ -415,7 +415,9 @@ interface ProductPackagingUnitFacadeInterface
     public function removeItemFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Checks if packaging unit is found for item in CartChangeTransfer.
+     * - Returns `CartPreCheckResponseTransfer` with an error in case packaging unit not found for item.
      *
      * @api
      *
@@ -423,5 +425,5 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductPackagingUnits(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

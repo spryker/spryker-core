@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductPackagingUnit\Business\Checker\ProductPackagingUnitChecker;
-use Spryker\Zed\ProductPackagingUnit\Business\Checker\ProductPackagingUnitCheckerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitChecker;
+use Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitCheckerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheck;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheckInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheck;
@@ -184,11 +184,11 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Checker\ProductPackagingUnitCheckerInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitCheckerInterface
      */
-    public function createProductPackagingUnitChecker(): ProductPackagingUnitCheckerInterface
+    public function createCartItemProductPackagingUnitChecker(): CartItemProductPackagingUnitCheckerInterface
     {
-        return new ProductPackagingUnitChecker(
+        return new CartItemProductPackagingUnitChecker(
             $this->getRepository(),
             $this->getStoreFacade()
         );

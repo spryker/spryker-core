@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
-class CartSalesUnitChecker implements CartSalesUnitCheckerInterface
+class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
 {
     protected const GLOSSARY_KEY_CART_ITEM_SALES_UNIT_IS_NOT_FOUND = 'cart.item.sales_unit.not_found';
 
@@ -50,7 +50,7 @@ class CartSalesUnitChecker implements CartSalesUnitCheckerInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartSalesUnits(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkCartItemSalesUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $productConcreteSkus = $this->getProductConcreteSkus($cartChangeTransfer);
@@ -70,7 +70,7 @@ class CartSalesUnitChecker implements CartSalesUnitCheckerInterface
         }
 
         foreach ($cartChangeTransfer->getItems() as $index => $itemTransfer) {
-            $cartPreCheckResponseTransfer = $this->checkCartItemSalesUnit(
+            $cartPreCheckResponseTransfer = $this->checkSalesUnit(
                 $itemTransfer,
                 $cartPreCheckResponseTransfer,
                 $indexedProductMeasurementSalesUnitIds[$itemTransfer->getSku()]
@@ -87,7 +87,7 @@ class CartSalesUnitChecker implements CartSalesUnitCheckerInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    protected function checkCartItemSalesUnit(
+    protected function checkSalesUnit(
         ItemTransfer $itemTransfer,
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
         int $indexedIdProductMeasurementSalesUnit

@@ -514,10 +514,10 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductPackagingUnits(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
-            ->createProductPackagingUnitChecker()
-            ->checkProductPackagingUnit($cartChangeTransfer);
+            ->createCartItemProductPackagingUnitChecker()
+            ->checkCartItemProductPackagingUnit($cartChangeTransfer);
     }
 }

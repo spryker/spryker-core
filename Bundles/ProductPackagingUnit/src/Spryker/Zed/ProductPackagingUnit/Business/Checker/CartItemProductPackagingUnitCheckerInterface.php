@@ -10,12 +10,12 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Checker;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 
-interface ProductPackagingUnitCheckerInterface
+interface CartItemProductPackagingUnitCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

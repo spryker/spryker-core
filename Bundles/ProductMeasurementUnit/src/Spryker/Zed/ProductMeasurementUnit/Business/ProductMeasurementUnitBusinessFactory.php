@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpanderInterface;
-use Spryker\Zed\ProductMeasurementUnit\Business\Checker\CartSalesUnitChecker;
-use Spryker\Zed\ProductMeasurementUnit\Business\Checker\CartSalesUnitCheckerInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Checker\CartItemSalesUnitChecker;
+use Spryker\Zed\ProductMeasurementUnit\Business\Checker\CartItemSalesUnitCheckerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstaller;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpander;
@@ -103,11 +103,11 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Checker\CartSalesUnitCheckerInterface
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Checker\CartItemSalesUnitCheckerInterface
      */
-    public function createCartChangeSalesUnitChecker(): CartSalesUnitCheckerInterface
+    public function createCartItemSalesUnitChecker(): CartItemSalesUnitCheckerInterface
     {
-        return new CartSalesUnitChecker(
+        return new CartItemSalesUnitChecker(
             $this->getRepository(),
             $this->getStoreFacade()
         );

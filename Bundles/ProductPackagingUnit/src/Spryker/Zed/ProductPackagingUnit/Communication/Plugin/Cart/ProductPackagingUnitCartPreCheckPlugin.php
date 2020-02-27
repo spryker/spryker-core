@@ -21,7 +21,9 @@ class ProductPackagingUnitCartPreCheckPlugin extends AbstractPlugin implements C
 {
     /**
      * {@inheritDoc}
-     * -
+     * - Checks if packaging unit is found for item in CartChangeTransfer.
+     * - Returns `CartPreCheckResponseTransfer` with an error in case packaging unit not found for item.
+     * - Terminates on failure.
      *
      * @api
      *
@@ -31,7 +33,7 @@ class ProductPackagingUnitCartPreCheckPlugin extends AbstractPlugin implements C
      */
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->checkProductPackagingUnits($cartChangeTransfer);
+        return $this->getFacade()->checkCartItemProductPackagingUnit($cartChangeTransfer);
     }
 
     /**

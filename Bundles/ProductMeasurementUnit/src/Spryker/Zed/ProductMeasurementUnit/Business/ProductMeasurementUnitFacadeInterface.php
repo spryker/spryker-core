@@ -225,7 +225,8 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * -
+     * - Checks if sales unit is found for item in CartChangeTransfer.
+     * - Returns `CartPreCheckResponseTransfer` with an error in case sales unit not found for item.
      *
      * @api
      *
@@ -233,5 +234,5 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkSalesUnits(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkCartItemSalesUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

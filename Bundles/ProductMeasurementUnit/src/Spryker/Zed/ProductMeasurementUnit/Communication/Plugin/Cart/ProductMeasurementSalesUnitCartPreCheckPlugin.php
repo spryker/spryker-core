@@ -20,7 +20,8 @@ class ProductMeasurementSalesUnitCartPreCheckPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritDoc}
-     * -
+     * - Checks if sales unit is found for item in CartChangeTransfer.
+     * - Returns `CartPreCheckResponseTransfer` with an error in case sales unit not found for item.
      *
      * @api
      *
@@ -30,6 +31,6 @@ class ProductMeasurementSalesUnitCartPreCheckPlugin extends AbstractPlugin imple
      */
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->checkSalesUnits($cartChangeTransfer);
+        return $this->getFacade()->checkCartItemSalesUnit($cartChangeTransfer);
     }
 }

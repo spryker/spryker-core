@@ -297,10 +297,10 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkSalesUnits(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkCartItemSalesUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
-            ->createCartChangeSalesUnitChecker()
-            ->checkCartSalesUnits($cartChangeTransfer);
+            ->createCartItemSalesUnitChecker()
+            ->checkCartItemSalesUnit($cartChangeTransfer);
     }
 }

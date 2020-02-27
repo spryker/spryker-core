@@ -1184,13 +1184,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
-    public function testProductPackagingUnitsWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
+    public function testCheckCartItemProductPackagingUnitWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
     {
         // Arrange
         $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
 
         // Act
-        $cartPreCheckResponseTransfer = $this->getFacade()->checkProductPackagingUnits($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->getFacade()->checkCartItemProductPackagingUnit($cartChangeTransfer);
 
         // Assert
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
@@ -1200,7 +1200,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
-    public function testProductPackagingUnitsWillReturnSuccessfulResponseWithExistingPackagingUnitForCartItem(): void
+    public function testCheckCartItemProductPackagingUnitWillReturnSuccessfulResponseWithExistingPackagingUnitForCartItem(): void
     {
         // Arrange
         $itemProductConcreteTransfer = $this->tester->haveProduct();
@@ -1226,7 +1226,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         // Act
-        $cartPreCheckResponseTransfer = $this->getFacade()->checkProductPackagingUnits($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->getFacade()->checkCartItemProductPackagingUnit($cartChangeTransfer);
 
         // Assert
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
@@ -1236,7 +1236,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
-    public function testProductPackagingUnitsWillReturnResponseWithErrorWithNoPackagingUnit(): void
+    public function testCheckCartItemProductPackagingUnitWillReturnResponseWithErrorWithNoPackagingUnit(): void
     {
         // Arrange
         $itemProductConcreteTransfer = $this->tester->haveProduct();
@@ -1250,7 +1250,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $boxProductConcreteTransfer->getSku(), 0);
 
         // Act
-        $cartPreCheckResponseTransfer = $this->getFacade()->checkProductPackagingUnits($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->getFacade()->checkCartItemProductPackagingUnit($cartChangeTransfer);
 
         // Assert
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
