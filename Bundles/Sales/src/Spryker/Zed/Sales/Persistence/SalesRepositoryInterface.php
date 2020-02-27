@@ -33,4 +33,11 @@ interface SalesRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array;
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
+     */
+    public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array;
 }

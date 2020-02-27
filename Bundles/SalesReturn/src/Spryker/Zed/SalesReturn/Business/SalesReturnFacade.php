@@ -65,7 +65,9 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      */
     public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer
     {
-        // TODO: Implement createReturn() method.
+        return $this->getFactory()
+            ->createReturnWriter()
+            ->createReturn($createReturnRequestTransfer);
     }
 
     /**

@@ -89,4 +89,10 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
 </transfers>

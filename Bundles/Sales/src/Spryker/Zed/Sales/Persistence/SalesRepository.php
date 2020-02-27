@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Persistence;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -58,6 +59,45 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
+    {
+        $salesOrderItemQuery = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->leftJoinWithOrder()
+            ->leftJoinWithProcess()
+            ->leftJoinWithState();
+
+        $salesOrderItemQuery = $this->setOrderItemFilters($salesOrderItemQuery, $orderItemFilterTransfer);
+
+        return $this->getFactory()
+            ->createSalesOrderItemMapper()
+            ->mapSalesOrderItemEntityCollectionToOrderItemTransfers($salesOrderItemQuery->find());
+    }
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
+     */
+    public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array
+    {
+        $omsOrderItemStateHistoryQuery = $this->getFactory()
+            ->createOmsOrderItemStateHistoryQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->leftJoinWithState()
+            ->leftJoinOrderItem()
+            ->groupByFkSalesOrderItem();
+
+        return $this->getFactory()
+            ->createSalesOrderItemMapper()
+            ->mapStateHistoryEntityCollectionToItemStateHistoryTransfers($omsOrderItemStateHistoryQuery->find());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $addressEntity
      *
@@ -82,14 +122,26 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
-    {
-        // TODO: Implement getOrderItems() method.
+    protected function setOrderItemFilters(
+        SpySalesOrderItemQuery $salesOrderItemQuery,
+        OrderItemFilterTransfer $orderItemFilterTransfer
+    ): SpySalesOrderItemQuery {
+        if ($orderItemFilterTransfer->getSalesOrderItemIds()) {
+            $salesOrderItemQuery->filterByIdSalesOrderItem_In($orderItemFilterTransfer->getSalesOrderItemIds());
+        }
 
-        return [];
+        if ($orderItemFilterTransfer->getCustomerReference()) {
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByCustomerReference($orderItemFilterTransfer->getCustomerReference())
+                ->endUse();
+        }
+
+        return $salesOrderItemQuery;
     }
 }

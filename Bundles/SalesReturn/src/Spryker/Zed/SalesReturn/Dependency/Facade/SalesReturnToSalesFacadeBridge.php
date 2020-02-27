@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\SalesReturn\Dependency\Facade;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
+
 class SalesReturnToSalesFacadeBridge implements SalesReturnToSalesFacadeInterface
 {
     /**
@@ -20,5 +23,15 @@ class SalesReturnToSalesFacadeBridge implements SalesReturnToSalesFacadeInterfac
     public function __construct($salesFacade)
     {
         $this->salesFacade = $salesFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
+    {
+        return $this->salesFacade->getOrderItems($orderItemFilterTransfer);
     }
 }

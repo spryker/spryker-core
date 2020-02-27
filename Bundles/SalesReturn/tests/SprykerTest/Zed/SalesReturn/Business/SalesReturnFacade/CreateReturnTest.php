@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -57,7 +58,10 @@ class CreateReturnTest extends Unit
 
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setReason('Damaged')
-            ->setIdSalesReturnItem($orderTransfer->getOrderItems()->getIterator()->current());
+            ->setOrderItem(
+                (new ItemTransfer())
+                    ->setIdSalesOrderItem($orderTransfer->getOrderItems()->getIterator()->current()->getIdSalesOrderItem())
+            );
 
         $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
             ->setCustomer($quoteTransfer->getCustomer())

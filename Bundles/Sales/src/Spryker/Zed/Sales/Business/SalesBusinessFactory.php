@@ -467,7 +467,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemReader(): OrderItemReaderInterface
     {
         return new OrderItemReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getOrderItemExpanderPlugins()
         );
     }
 
@@ -493,5 +494,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getUniqueOrderItemsExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     */
+    public function getOrderItemExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER);
     }
 }

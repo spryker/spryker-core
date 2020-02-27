@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesReturn\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class SalesReturnToStoreFacadeBridge implements SalesReturnToStoreFacadeInterface
 {
     /**
@@ -20,5 +22,15 @@ class SalesReturnToStoreFacadeBridge implements SalesReturnToStoreFacadeInterfac
     public function __construct($storeFacade)
     {
         $this->storeFacade = $storeFacade;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreByName(string $storeName): ?StoreTransfer
+    {
+        return $this->storeFacade->findStoreByName($storeName);
     }
 }

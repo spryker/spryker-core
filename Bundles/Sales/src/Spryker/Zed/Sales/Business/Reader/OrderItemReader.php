@@ -20,11 +20,20 @@ class OrderItemReader implements OrderItemReaderInterface
     protected $salesRepository;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @var array|\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
      */
-    public function __construct(SalesRepositoryInterface $salesRepository)
-    {
+    protected $orderItemExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[] $orderItemExpanderPlugins
+     */
+    public function __construct(
+        SalesRepositoryInterface $salesRepository,
+        array $orderItemExpanderPlugins
+    ) {
         $this->salesRepository = $salesRepository;
+        $this->orderItemExpanderPlugins = $orderItemExpanderPlugins;
     }
 
     /**
@@ -35,10 +44,99 @@ class OrderItemReader implements OrderItemReaderInterface
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
     {
         $itemTransfers = $this->salesRepository->getOrderItems($orderItemFilterTransfer);
-
-        // TODO: plugin expander
+        $itemTransfers = $this->expandItemTransfers($itemTransfers);
 
         return (new ItemCollectionTransfer())
             ->setItems(new ArrayObject($itemTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function expandItemTransfers(array $itemTransfers): array
+    {
+        $itemTransfers = $this->expandItemsWithStateHistory($itemTransfers);
+        $itemTransfers = $this->deriveOrderItemsUnitPrices($itemTransfers);
+
+        $itemTransfers = $this->executeOrderItemExpanderPlugins($itemTransfers);
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function expandItemsWithStateHistory(array $itemTransfers): array
+    {
+        $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
+        $mappedItemStateTransfers = $this->salesRepository->getItemHistoryStatesByOrderItemIds($salesOrderItemIds);
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer->setStateHistory(
+                new ArrayObject($mappedItemStateTransfers[$itemTransfer->getIdSalesOrderItem()] ?? null)
+            );
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return int[]
+     */
+    protected function extractSalesOrderItemIds(array $itemTransfers): array
+    {
+        $salesOrderItemIds = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
+        }
+
+        return $salesOrderItemIds;
+    }
+
+    /**
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function deriveOrderItemsUnitPrices(array $itemTransfers): array
+    {
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer
+                ->setUnitGrossPrice((int)round($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity()))
+                ->setUnitNetPrice((int)round($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity()))
+                ->setUnitPrice((int)round($itemTransfer->getSumPrice() / $itemTransfer->getQuantity()))
+                ->setUnitSubtotalAggregation((int)round($itemTransfer->getSumSubtotalAggregation() / $itemTransfer->getQuantity()))
+                ->setUnitDiscountAmountAggregation((int)round($itemTransfer->getSumDiscountAmountAggregation() / $itemTransfer->getQuantity()))
+                ->setUnitDiscountAmountFullAggregation((int)round($itemTransfer->getSumDiscountAmountFullAggregation() / $itemTransfer->getQuantity()))
+                ->setUnitExpensePriceAggregation((int)round($itemTransfer->getSumExpensePriceAggregation() / $itemTransfer->getQuantity()))
+                ->setUnitTaxAmount((int)round($itemTransfer->getSumTaxAmount() / $itemTransfer->getQuantity()))
+                ->setUnitTaxAmountFullAggregation((int)round($itemTransfer->getSumTaxAmountFullAggregation() / $itemTransfer->getQuantity()))
+                ->setUnitPriceToPayAggregation((int)round($itemTransfer->getSumPriceToPayAggregation() / $itemTransfer->getQuantity()));
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeOrderItemExpanderPlugins(array $itemTransfers): array
+    {
+        foreach ($this->orderItemExpanderPlugins as $orderItemExpanderPlugin) {
+            $itemTransfers = $orderItemExpanderPlugin->expand($itemTransfers);
+        }
+
+        return $itemTransfers;
     }
 }

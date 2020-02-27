@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SalesReturn\Business\Expander\ReturnExpanderInterface;
+use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface;
 use Spryker\Zed\SalesReturn\Business\Validator\ReturnValidatorInterface;
 use Spryker\Zed\SalesReturn\Persistence\SalesReturnEntityManagerInterface;
 
@@ -35,18 +36,26 @@ class ReturnWriter implements ReturnWriterInterface
     protected $returnExpander;
 
     /**
+     * @var \Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface
+     */
+    protected $returnReferenceGenerator;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnEntityManagerInterface $salesReturnEntityManager
      * @param \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidatorInterface $returnValidator
      * @param \Spryker\Zed\SalesReturn\Business\Expander\ReturnExpanderInterface $returnExpander
+     * @param \Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface $returnReferenceGenerator
      */
     public function __construct(
         SalesReturnEntityManagerInterface $salesReturnEntityManager,
         ReturnValidatorInterface $returnValidator,
-        ReturnExpanderInterface $returnExpander
+        ReturnExpanderInterface $returnExpander,
+        ReturnReferenceGeneratorInterface $returnReferenceGenerator
     ) {
         $this->salesReturnEntityManager = $salesReturnEntityManager;
         $this->returnValidator = $returnValidator;
         $this->returnExpander = $returnExpander;
+        $this->returnReferenceGenerator = $returnReferenceGenerator;
     }
 
     /**
@@ -97,6 +106,10 @@ class ReturnWriter implements ReturnWriterInterface
             ->setStore($createReturnRequestTransfer->getStore())
             ->setCustomer($createReturnRequestTransfer->getCustomer())
             ->setReturnItems($createReturnRequestTransfer->getReturnItems());
+
+        $returnReference = $this->returnReferenceGenerator->generateReturnReference('test-reference');
+
+        $returnTransfer->setReturnReference($returnReference);
 
         return $this->salesReturnEntityManager->createReturn($returnTransfer);
     }
