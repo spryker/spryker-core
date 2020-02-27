@@ -28,6 +28,7 @@
   },
   "replace": {
     "spryker/acl": "*",
+    "spryker/acl-extension": "*",
     "spryker/agent": "*",
     "spryker/agent-gui": "*",
     "spryker/alternative-products-rest-api": "*",
@@ -337,6 +338,7 @@
     "spryker/merchant-sales-order": "*",
     "spryker/merchant-search": "*",
     "spryker/merchant-user": "*",
+    "spryker/merchant-user-auth-gui-page": "*",
     "spryker/messenger": "*",
     "spryker/messenger-extension": "*",
     "spryker/module-finder": "*",
@@ -558,6 +560,7 @@
     "spryker/scheduler-jenkins": "*",
     "spryker/search": "*",
     "spryker/search-elasticsearch": "*",
+    "spryker/search-elasticsearch-gui": "*",
     "spryker/search-extension": "*",
     "spryker/security": "*",
     "spryker/security-extension": "*",
@@ -654,6 +657,7 @@
     "spryker/wishlist-extension": "*",
     "spryker/wishlists-rest-api": "*",
     "spryker/zed-navigation": "*",
+    "spryker/zed-navigation-extension": "*",
     "spryker/zed-request": "*",
     "spryker/zend": "*"
   }
