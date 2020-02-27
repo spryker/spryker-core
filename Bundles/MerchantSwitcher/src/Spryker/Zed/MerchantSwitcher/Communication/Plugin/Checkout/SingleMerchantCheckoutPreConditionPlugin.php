@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantSwitcher\Communication\Plugin\Checkout;
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
@@ -49,7 +48,9 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
 
         $checkoutErrorTransfers = [];
         foreach ($singleMerchantQuoteValidationResponseTransfer->getErrors() as $messageTransfer) {
-            $checkoutErrorTransfers[] = $this->mapMessageTransferToCheckoutErrorTransfer($messageTransfer);
+            $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
+                ->setMessage($messageTransfer->getValue())
+                ->setParameters($messageTransfer->getParameters());
         }
 
         $checkoutResponseTransfer
@@ -57,17 +58,5 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
             ->setErrors(new ArrayObject($checkoutErrorTransfers));
 
         return !$checkoutErrorTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
-     */
-    protected function mapMessageTransferToCheckoutErrorTransfer(MessageTransfer $messageTransfer): CheckoutErrorTransfer
-    {
-        return (new CheckoutErrorTransfer())
-            ->setMessage($messageTransfer->getMessage())
-            ->setParameters($messageTransfer->getParameters());
     }
 }
