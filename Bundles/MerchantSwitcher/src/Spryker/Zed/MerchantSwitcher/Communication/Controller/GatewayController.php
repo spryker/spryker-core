@@ -21,7 +21,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switchMerchantAction(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
+    public function switchMerchantInQuoteAction(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
     {
         return $this->getFacade()->switchMerchantInQuote($merchantSwitchRequestTransfer);
     }

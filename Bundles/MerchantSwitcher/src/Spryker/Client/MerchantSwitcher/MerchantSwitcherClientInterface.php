@@ -25,5 +25,5 @@ interface MerchantSwitcherClientInterface
      *
      * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switchMerchant(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer;
+    public function switchMerchantInQuote(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer;
 }

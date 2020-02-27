@@ -27,16 +27,16 @@ class MerchantSwitcherStub implements MerchantSwitcherStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\MerchantSwitcher\Communication\Controller\GatewayController::switchMerchantAction()
+     * @uses \Spryker\Zed\MerchantSwitcher\Communication\Controller\GatewayController::switchMerchantInQuoteAction()
      *
      * @param \Generated\Shared\Transfer\MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switchMerchant(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
+    public function switchMerchantInQuote(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\MerchantSwitchResponseTransfer $merchantSwitchResponseTransfer */
-        $merchantSwitchResponseTransfer = $this->zedRequestClient->call('/merchant-switcher/gateway/switch-merchant', $merchantSwitchRequestTransfer);
+        $merchantSwitchResponseTransfer = $this->zedRequestClient->call('/merchant-switcher/gateway/switch-merchant-in-quote', $merchantSwitchRequestTransfer);
 
         return $merchantSwitchResponseTransfer;
     }

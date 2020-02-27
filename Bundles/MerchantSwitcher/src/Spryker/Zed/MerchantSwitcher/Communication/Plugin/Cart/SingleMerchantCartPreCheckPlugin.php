@@ -21,10 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
-    protected const GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE = 'merchant_switcher.message.product_is_not_available';
-    protected const GLOSSARY_PARAMETER_NAME = '%product_name%';
-    protected const GLOSSARY_PARAMETER_SKU = '%sku%';
-
     /**
      * {@inheritDoc}
      * - Goes through CartChangeTransfer.quoteTransfer.items and compares ItemTransfer.merchantReference with CartChangeTransfer.quoteTransfer.merchantReference.
@@ -55,10 +51,10 @@ class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPre
                 && $itemTransfer->getMerchantReference() !== $quoteMerchantReference
             ) {
                 $messageTransfers[] = (new MessageTransfer())
-                    ->setValue(static::GLOSSARY_KEY_PRODUCT_IS_NOT_AVAILABLE)
+                    ->setValue('merchant_switcher.message.product_is_not_available')
                     ->setParameters([
-                        static::GLOSSARY_PARAMETER_NAME => $itemTransfer->getName(),
-                        static::GLOSSARY_PARAMETER_SKU => $itemTransfer->getSku(),
+                        '%product_name%' => $itemTransfer->getName(),
+                        '%sku%' => $itemTransfer->getSku(),
                     ]);
             }
         }

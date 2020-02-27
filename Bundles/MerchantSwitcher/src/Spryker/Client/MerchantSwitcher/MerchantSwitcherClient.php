@@ -25,10 +25,10 @@ class MerchantSwitcherClient extends AbstractClient implements MerchantSwitcherC
      *
      * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switchMerchant(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
+    public function switchMerchantInQuote(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantSwitcherStub()
-            ->switchMerchant($merchantSwitchRequestTransfer);
+            ->switchMerchantInQuote($merchantSwitchRequestTransfer);
     }
 }
