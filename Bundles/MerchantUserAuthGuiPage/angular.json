@@ -20,7 +20,7 @@
             "outputPath": "../../../../../public/Zed/assets/js/mp-login",
             "index": "",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": "",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [],
