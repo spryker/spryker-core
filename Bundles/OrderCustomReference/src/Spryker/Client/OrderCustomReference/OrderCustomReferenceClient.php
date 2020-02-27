@@ -21,14 +21,17 @@ class OrderCustomReferenceClient extends AbstractClient implements OrderCustomRe
      *
      * @api
      *
+     * @param string $orderCustomReference
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
+    public function setOrderCustomReference(
+        string $orderCustomReference,
+        QuoteTransfer $quoteTransfer
+    ): QuoteResponseTransfer {
         return $this->getFactory()
             ->createOrderCustomReferenceSetter()
-            ->setOrderCustomReference($quoteTransfer);
+            ->setOrderCustomReference($orderCustomReference, $quoteTransfer);
     }
 }

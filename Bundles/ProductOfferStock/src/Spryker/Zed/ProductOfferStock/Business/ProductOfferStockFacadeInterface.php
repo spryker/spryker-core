@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOfferStock\Business;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
-use Spryker\DecimalObject\Decimal;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
 
 interface ProductOfferStockFacadeInterface
 {
@@ -22,7 +22,7 @@ interface ProductOfferStockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
-    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
+    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer;
 }

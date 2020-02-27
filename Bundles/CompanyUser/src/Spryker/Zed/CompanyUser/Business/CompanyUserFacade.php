@@ -338,4 +338,19 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
             ->createCompanyUser()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getRawCompanyUsersByCriteria(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->getRepository()
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+    }
 }

@@ -71,6 +71,7 @@ class ModuleFinderConfig extends AbstractBundleConfig
             $nonsplitDirectory = sprintf('%s/vendor/spryker/%s/Bundles/', APPLICATION_ROOT_DIR, $organizationPathFragment);
             if (is_dir($nonsplitDirectory)) {
                 $organizationPaths[] = $nonsplitDirectory;
+
                 continue;
             }
 

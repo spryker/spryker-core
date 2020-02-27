@@ -15,14 +15,21 @@ interface OrderCustomReferenceClientInterface
     /**
      * Specification:
      * - Sets Quote with QuoteTransfer::orderCustomReference.
+     * - Makes Zed request.
+     * - Saves order custom reference in persistence.
      * - Expects QuoteTransfer::idQuote to be provided.
      * - Expects QuoteTransfer::customer to be provided.
+     * - Expects $orderCustomReference length to be less than 255 symbols.
      *
      * @api
      *
+     * @param string $orderCustomReference
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function setOrderCustomReference(
+        string $orderCustomReference,
+        QuoteTransfer $quoteTransfer
+    ): QuoteResponseTransfer;
 }

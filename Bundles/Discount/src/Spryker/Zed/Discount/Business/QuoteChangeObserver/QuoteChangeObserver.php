@@ -99,7 +99,8 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     {
         $itemSkuCollection = [];
         foreach ($indexSourceDiscountTransferCollection as $discountTransfer) {
-            if (isset($indexResultDiscountTransferCollection[$discountTransfer->getIdDiscount()]) &&
+            if (
+                isset($indexResultDiscountTransferCollection[$discountTransfer->getIdDiscount()]) &&
                 $discountTransfer->getAmount() !== $indexResultDiscountTransferCollection[$discountTransfer->getIdDiscount()]->getAmount()
             ) {
                 $itemSkuCollection = array_merge(

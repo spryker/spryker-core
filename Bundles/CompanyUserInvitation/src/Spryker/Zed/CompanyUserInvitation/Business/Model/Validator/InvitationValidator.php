@@ -125,8 +125,10 @@ class InvitationValidator implements InvitationValidatorInterface
             $this->populateBusinessUnitCache($invitationTransfer);
         }
 
-        if (!trim($invitationTransfer->getCompanyBusinessUnitName())
-            || !in_array($invitationTransfer->getCompanyBusinessUnitName(), $this->businessUnitNameCache)) {
+        if (
+            !trim($invitationTransfer->getCompanyBusinessUnitName())
+            || !in_array($invitationTransfer->getCompanyBusinessUnitName(), $this->businessUnitNameCache)
+        ) {
             $this->errorMessage = sprintf('Business Unit "%s" is not valid', $invitationTransfer->getCompanyBusinessUnitName());
 
             return false;

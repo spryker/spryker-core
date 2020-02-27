@@ -13,9 +13,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface OrderCustomReferenceSetterInterface
 {
     /**
+     * @param string $orderCustomReference
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function setOrderCustomReference(
+        string $orderCustomReference,
+        QuoteTransfer $quoteTransfer
+    ): QuoteResponseTransfer;
 }

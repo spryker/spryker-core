@@ -19,7 +19,9 @@ class OrderCustomReferenceFactory extends AbstractFactory
      */
     public function createOrderCustomReferenceSetter(): OrderCustomReferenceSetterInterface
     {
-        return new OrderCustomReferenceSetter($this->getPersistentCartClient());
+        return new OrderCustomReferenceSetter(
+            $this->getPersistentCartClient()
+        );
     }
 
     /**

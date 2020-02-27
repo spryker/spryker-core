@@ -10,10 +10,8 @@ namespace Spryker\Zed\OrderCustomReference\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProvider;
 use Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProviderInterface;
-use Spryker\Zed\OrderCustomReference\Business\Saver\OrderCustomReferenceSaver;
-use Spryker\Zed\OrderCustomReference\Business\Saver\OrderCustomReferenceSaverInterface;
-use Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidator;
-use Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface;
+use Spryker\Zed\OrderCustomReference\Business\Writer\OrderCustomReferenceWriter;
+use Spryker\Zed\OrderCustomReference\Business\Writer\OrderCustomReferenceWriterInterface;
 
 /**
  * @method \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface getEntityManager()
@@ -22,22 +20,11 @@ use Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceVali
 class OrderCustomReferenceBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\OrderCustomReference\Business\Saver\OrderCustomReferenceSaverInterface
+     * @return \Spryker\Zed\OrderCustomReference\Business\Writer\OrderCustomReferenceWriterInterface
      */
-    public function createOrderCustomReferenceSaver(): OrderCustomReferenceSaverInterface
+    public function createOrderCustomReferenceWriter(): OrderCustomReferenceWriterInterface
     {
-        return new OrderCustomReferenceSaver(
-            $this->createOrderCustomReferenceValidator(),
-            $this->getEntityManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidatorInterface
-     */
-    public function createOrderCustomReferenceValidator(): OrderCustomReferenceValidatorInterface
-    {
-        return new OrderCustomReferenceValidator();
+        return new OrderCustomReferenceWriter($this->getEntityManager());
     }
 
     /**

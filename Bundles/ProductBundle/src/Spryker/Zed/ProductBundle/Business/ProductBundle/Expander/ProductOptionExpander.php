@@ -87,6 +87,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
         foreach ($bundleItem->getProductOptions() as $productOption) {
             if ($productOption->getSku() !== $productOptionTransfer->getSku()) {
                 $bundleItem->getProductOptions()->append($productOptionTransfer);
+
                 break;
             }
         }
