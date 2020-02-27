@@ -10,10 +10,10 @@
 
     <mp-login>
         {% for message in app.session.flashbag.get('flash.messages.error') %}
-            <spy-alert type="error">{{ message | trans }}</spy-alert>
+            <spy-alert class="login__message" type="error">{{ message | trans }}</spy-alert>
         {% endfor %}
         {% for error in form.vars.errors %}
-            <spy-alert type="error">{{ error.message | trans }}</spy-alert>
+            <spy-alert class="login_message" type="error">{{ error.message | trans }}</spy-alert>
         {% endfor %}
 
         <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
