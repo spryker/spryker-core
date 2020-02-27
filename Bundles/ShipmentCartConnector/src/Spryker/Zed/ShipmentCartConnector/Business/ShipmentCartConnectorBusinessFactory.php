@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ShipmentCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplier;
+use Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander as ShipmentCartExpanderWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator as ShipmentCartValidatorWithMultiShippingAddress;
@@ -33,7 +35,11 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentCartExpander()
     {
-        return new ShipmentCartExpander($this->getShipmentFacade(), $this->getPriceFacade());
+        return new ShipmentCartExpander(
+            $this->getShipmentFacade(),
+            $this->getPriceFacade(),
+            $this->createSourcePriceApplier()
+        );
     }
 
     /**
@@ -44,7 +50,8 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new ShipmentCartExpanderWithMultiShippingAddress(
             $this->getShipmentFacade(),
             $this->getPriceFacade(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->createSourcePriceApplier()
         );
     }
 
@@ -132,5 +139,13 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
         };
 
         return new CartValidatorStrategyResolver($strategyContainer);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface
+     */
+    public function createSourcePriceApplier(): ShipmentSourcePriceApplierInterface
+    {
+        return new ShipmentSourcePriceApplier();
     }
 }

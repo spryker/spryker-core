@@ -102,9 +102,55 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
      */
     protected function clearSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $quoteTransfer = $this->clearItemSourcePrices($quoteTransfer);
+        $quoteTransfer = $this->clearItemShipmentMethodSourcePrices($quoteTransfer);
+        $quoteTransfer = $this->clearSingleShipmentMethodSourcePrices($quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearItemSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setSourceUnitGrossPrice(null);
             $itemTransfer->setSourceUnitNetPrice(null);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearItemShipmentMethodSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() && $itemTransfer->getShipment()->getMethod()) {
+                $itemTransfer->getShipment()->getMethod()->setSourcePrice(null);
+            }
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearSingleShipmentMethodSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if ($quoteTransfer->getShipment() && $quoteTransfer->getShipment()->getMethod()) {
+            $quoteTransfer->getShipment()->getMethod()->setSourcePrice(null);
         }
 
         return $quoteTransfer;
