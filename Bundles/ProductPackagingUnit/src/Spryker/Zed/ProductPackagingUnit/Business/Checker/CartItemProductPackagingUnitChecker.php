@@ -57,6 +57,10 @@ class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUni
         }
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getAmountSalesUnit()) {
+                continue;
+            }
+
             $sku = $itemTransfer->getSku();
             $productPackagingUnitTransfer = $this->productPackagingUnitRepository->findProductPackagingUnitByProductSku($sku);
             if ($productPackagingUnitTransfer) {
