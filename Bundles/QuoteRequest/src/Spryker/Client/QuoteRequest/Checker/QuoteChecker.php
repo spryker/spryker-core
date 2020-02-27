@@ -35,7 +35,7 @@ class QuoteChecker implements QuoteCheckerInterface
      */
     public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getQuoteRequestVersionReference() && $this->isShipmentSourcePriceSet($quoteTransfer);
+        return !$quoteTransfer->getQuoteRequestReference() && $this->isShipmentSourcePriceSet($quoteTransfer);
     }
 
     /**
@@ -70,7 +70,7 @@ class QuoteChecker implements QuoteCheckerInterface
     protected function findQuoteLevelShipment(QuoteTransfer $quoteTransfer): ?ShipmentTransfer
     {
         $shipmentTransfer = $quoteTransfer->getShipment();
-        if (!$shipmentTransfer) {
+        if (!$shipmentTransfer || !$shipmentTransfer->getMethod()) {
             return null;
         }
 
