@@ -15,10 +15,12 @@ use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
 class MerchantUserReader implements MerchantUserReaderInterface
 {
+    protected const EXCEPTION_MESSAGE_MERCHANT_USER_NOT_FOUND_FOR_USER = 'Merchant user was not found by provided user id %s';
+
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
      */
-    protected $merchantUserToUserFacade;
+    protected $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface
@@ -26,14 +28,14 @@ class MerchantUserReader implements MerchantUserReaderInterface
     protected $merchantUserRepository;
 
     /**
-     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $merchantUserToUserFacade
+     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      */
     public function __construct(
-        MerchantUserToUserFacadeInterface $merchantUserToUserFacade,
+        MerchantUserToUserFacadeInterface $merchantUserFacade,
         MerchantUserRepositoryInterface $merchantUserRepository
     ) {
-        $this->merchantUserToUserFacade = $merchantUserToUserFacade;
+        $this->merchantUserFacade = $merchantUserFacade;
         $this->merchantUserRepository = $merchantUserRepository;
     }
 
@@ -44,7 +46,7 @@ class MerchantUserReader implements MerchantUserReaderInterface
      */
     public function getCurrentMerchantUser(): MerchantUserTransfer
     {
-        $userTransfer = $this->merchantUserToUserFacade->getCurrentUser();
+        $userTransfer = $this->merchantUserFacade->getCurrentUser();
         $merchantUserCriteriaFilterTransfer = (new MerchantUserCriteriaFilterTransfer())->setIdUser(
             $userTransfer->getIdUser()
         );
@@ -52,7 +54,10 @@ class MerchantUserReader implements MerchantUserReaderInterface
         $merchantUserTransfers = $this->merchantUserRepository->getMerchantUsers($merchantUserCriteriaFilterTransfer);
 
         if (count($merchantUserTransfers) === 0) {
-            throw new MerchantUserNotFoundException();
+            throw new MerchantUserNotFoundException(sprintf(
+                static::EXCEPTION_MESSAGE_MERCHANT_USER_NOT_FOUND_FOR_USER,
+                $userTransfer->getIdUser()
+            ));
         }
 
         return $merchantUserTransfers[0];

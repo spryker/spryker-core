@@ -60,7 +60,7 @@ interface MerchantUserFacadeInterface
     /**
      * Specification:
      * - Returns Merchant user for current logged in user.
-     * - Throws MerchantUserNotFoundException exception if no merchant users exist for current logged in user.
+     * - Throws MerchantUserNotFoundException exception if no Merchant users exist for current logged in user.
      *
      * @api
      *
