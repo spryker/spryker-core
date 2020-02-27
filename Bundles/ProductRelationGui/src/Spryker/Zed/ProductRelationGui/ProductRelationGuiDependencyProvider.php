@@ -18,6 +18,7 @@ use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToPricePr
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeBridge;
+use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceBridge;
 
 /**
@@ -38,6 +39,8 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
     public const PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY = 'PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY';
 
+    public const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -56,6 +59,23 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addProductRelationPropelQuery($container);
         $container = $this->addProductAbstractPropelQuery($container);
         $container = $this->addProductAttributeKeyPropelQuery($container);
+        $container = $this->addProductRelationQueryContainer($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductRelationQueryContainer(Container $container): Container
+    {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_RELATION, function (Container $container) {
+            return new ProductRelationGuiToProductRelationQueryContainerBridge(
+                $container->getLocator()->productRelation()->queryContainer()
+            );
+        });
 
         return $container;
     }
