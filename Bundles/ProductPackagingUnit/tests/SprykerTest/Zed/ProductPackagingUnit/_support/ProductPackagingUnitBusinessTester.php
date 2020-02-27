@@ -119,6 +119,7 @@ class ProductPackagingUnitBusinessTester extends Actor
             (new ItemTransfer())
                 ->setSku($sku)
                 ->setAmount($amount)
+                ->setAmountSalesUnit(new ProductMeasurementSalesUnitTransfer())
         );
 
         return $cartChangeTransfer;
