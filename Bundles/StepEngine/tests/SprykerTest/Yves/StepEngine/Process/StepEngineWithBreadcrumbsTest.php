@@ -78,8 +78,13 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface
      */
-    protected function getStepMockWithBreadcrumb(bool $preCondition = true, bool $postCondition = true, bool $requireInput = true, string $stepRoute = '', string $escapeRoute = ''): StepWithBreadcrumbInterface
-    {
+    protected function getStepMockWithBreadcrumb(
+        bool $preCondition = true,
+        bool $postCondition = true,
+        bool $requireInput = true,
+        string $stepRoute = '',
+        string $escapeRoute = ''
+    ): StepWithBreadcrumbInterface {
         return new StepMockWithBreadcrumbs($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }
 }

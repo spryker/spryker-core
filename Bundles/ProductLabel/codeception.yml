@@ -16,11 +16,6 @@ settings:
     memory_limit: 1024M
     log: true
 
-coverage:
-    enabled: true
-    remote: false
-    whitelist: { include: ['src/*'] }
-
 extensions:
     enabled:
         - Codeception\Extension\Phantoman

@@ -340,7 +340,8 @@ class Auth implements AuthInterface
     {
         $ignorable = $this->authConfig->getIgnorable();
         foreach ($ignorable as $ignore) {
-            if (($bundle === $ignore['bundle'] || $ignore['bundle'] === AuthConstants::AUTHORIZATION_WILDCARD) &&
+            if (
+                ($bundle === $ignore['bundle'] || $ignore['bundle'] === AuthConstants::AUTHORIZATION_WILDCARD) &&
                 ($controller === $ignore['controller'] || $ignore['controller'] === AuthConstants::AUTHORIZATION_WILDCARD) &&
                 ($action === $ignore['action'] || $ignore['action'] === AuthConstants::AUTHORIZATION_WILDCARD)
             ) {

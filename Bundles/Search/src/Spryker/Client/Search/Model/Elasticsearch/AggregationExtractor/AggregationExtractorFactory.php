@@ -36,13 +36,10 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
         switch ($facetConfigTransfer->getType()) {
             case SearchConfig::FACET_TYPE_RANGE:
                 return $this->createRangeExtractor($facetConfigTransfer);
-
             case SearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createPriceRangeExtractor($facetConfigTransfer);
-
             case SearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createCategoryExtractor($facetConfigTransfer);
-
             default:
                 return $this->createFacetExtractor($facetConfigTransfer);
         }
