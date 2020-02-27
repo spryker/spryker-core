@@ -43,7 +43,7 @@ class MerchantStockFacadeTest extends Unit
 
         // Assert
         $this->assertGreaterThan(0, $merchantTransfer->getStockCollection()->count());
-        $this->assertInstanceOf(StockTransfer::class, $merchantTransfer->getStockCollection()[0]);
+        $this->assertInstanceOf(StockTransfer::class, $merchantTransfer->getStockCollection()->getIterator()->current());
     }
 
     /**
@@ -61,6 +61,6 @@ class MerchantStockFacadeTest extends Unit
 
         // Assert
         $this->assertGreaterThan(0, $merchantTransfer->getStockCollection()->count());
-        $this->assertEquals($stockTransfer->getIdStock(), $merchantTransfer->getStockCollection()[0]->getIdStock());
+        $this->assertEquals($stockTransfer->getIdStock(), $merchantTransfer->getStockCollection()->getIterator()->current()->getIdStock());
     }
 }

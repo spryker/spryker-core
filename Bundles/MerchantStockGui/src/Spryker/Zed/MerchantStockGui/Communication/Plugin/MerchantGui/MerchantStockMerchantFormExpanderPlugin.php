@@ -21,6 +21,7 @@ class MerchantStockMerchantFormExpanderPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
+     * - Expands MerchantForm with form field for merchant warehouses.
      *
      * @api
      *

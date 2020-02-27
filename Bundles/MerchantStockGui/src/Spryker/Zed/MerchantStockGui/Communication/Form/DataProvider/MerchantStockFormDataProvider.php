@@ -20,7 +20,7 @@ class MerchantStockFormDataProvider
     public function getOptions(MerchantTransfer $merchantTransfer): array
     {
         return [
-            MerchantStockFormType::STOCKS => $this->getStocksByMerchant($merchantTransfer),
+            MerchantStockFormType::STOCKS => $this->getData($merchantTransfer),
         ];
     }
 
@@ -30,16 +30,6 @@ class MerchantStockFormDataProvider
      * @return array
      */
     public function getData(MerchantTransfer $merchantTransfer): array
-    {
-        return $this->getStocksByMerchant($merchantTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return array
-     */
-    protected function getStocksByMerchant(MerchantTransfer $merchantTransfer): array
     {
         if (!$merchantTransfer->getIdMerchant() || $merchantTransfer->getStockCollection()->count() < 1) {
             return [];

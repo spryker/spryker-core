@@ -11,7 +11,6 @@ use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantStock\Persistence\Mapper\MerchantStockMapper;
-use Spryker\Zed\MerchantStock\Persistence\Mapper\MerchantStockMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface getEntityManager()
@@ -37,9 +36,9 @@ class MerchantStockPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantStock\Persistence\Mapper\MerchantStockMapperInterface
+     * @return \Spryker\Zed\MerchantStock\Persistence\Mapper\MerchantStockMapper
      */
-    public function createMerchantStockMapper(): MerchantStockMapperInterface
+    public function createMerchantStockMapper(): MerchantStockMapper
     {
         return new MerchantStockMapper();
     }

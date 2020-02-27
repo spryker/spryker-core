@@ -10,12 +10,16 @@ namespace Spryker\Zed\MerchantStock\Persistence\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class MerchantStockMapper implements MerchantStockMapperInterface
+class MerchantStockMapper
 {
     /**
-     * @inheritDoc
+     * @param \Propel\Runtime\Collection\ObjectCollection $merchantStocksData
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function mapMerchantStocksDataToMerchantTransfer(
         ObjectCollection $merchantStocksData,
@@ -24,13 +28,21 @@ class MerchantStockMapper implements MerchantStockMapperInterface
         $stockCollection = new ArrayObject();
 
         foreach ($merchantStocksData as $merchantStockEntity) {
-            $stockCollection->append(
-                (new StockTransfer())
-                ->setIdStock($merchantStockEntity->getFkStock())
-                ->setName($merchantStockEntity->getStockName())
-            );
+            $stockCollection->append($this->createStockTransfer($merchantStockEntity));
         }
 
         return $merchantTransfer->setStockCollection($stockCollection);
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock $merchantStockEntity
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    protected function createStockTransfer(SpyMerchantStock $merchantStockEntity): StockTransfer
+    {
+        return (new StockTransfer())
+            ->setIdStock($merchantStockEntity->getFkStock())
+            ->setName($merchantStockEntity->getStockName());
     }
 }

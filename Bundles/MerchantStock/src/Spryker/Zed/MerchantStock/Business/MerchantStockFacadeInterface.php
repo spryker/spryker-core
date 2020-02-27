@@ -28,7 +28,7 @@ interface MerchantStockFacadeInterface
 
     /**
      * Specification:
-     * - Fills MerchantTransfer.stockCollection with related stocks.
+     * - Expands MerchantTransfer with related stocks.
      *
      * @api
      *
