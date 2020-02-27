@@ -12,7 +12,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "mp",
       "architect": {
         "build": {
           "builder": "ngx-build-plus:browser",
@@ -20,7 +20,7 @@
             "outputPath": "../../../../../public/Zed/assets/js/mp-dashboard",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": "",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
@@ -41,7 +41,7 @@
               "optimization": true,
               "outputHashing": "none",
               "sourceMap": false,
-              "extractCss": true,
+              "extractCss": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
