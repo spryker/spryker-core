@@ -29,6 +29,6 @@ class MerchantStockFacade extends AbstractFacade implements MerchantStockFacadeI
      */
     public function createMerchantStockByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        return $this->getFactory()->createMerchantStockWriter()->createMerchantStockByMerchant($merchantTransfer);
+        return $this->getFactory()->createMerchantStockWriter()->createByMerchant($merchantTransfer);
     }
 }

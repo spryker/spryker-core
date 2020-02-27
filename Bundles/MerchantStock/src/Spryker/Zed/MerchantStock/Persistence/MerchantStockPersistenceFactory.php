@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\MerchantStock\Persistence;
 
-use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\MerchantStock\Persistence\Mapper\MerchantStockMapper;
 
 /**
  * @method \Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface getEntityManager()
@@ -19,18 +19,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class MerchantStockPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock
+     * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery
      */
-    public function createMerchantStockEntity(): SpyMerchantStock
+    public function createMerchantStockPropelQuery(): SpyMerchantStockQuery
     {
-        return new SpyMerchantStock();
+        return SpyMerchantStockQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery
+     * @return \Spryker\Zed\MerchantStock\Persistence\Mapper\MerchantStockMapper
      */
-    public function createMerchantStockQuery(): SpyMerchantStockQuery
+    public function createMerchantStockMapper(): MerchantStockMapper
     {
-        return SpyMerchantStockQuery::create();
+        return new MerchantStockMapper();
     }
 }
