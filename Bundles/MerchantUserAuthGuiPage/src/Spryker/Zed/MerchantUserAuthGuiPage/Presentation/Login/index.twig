@@ -12,6 +12,9 @@
         {% for message in app.session.flashbag.get('flash.messages.error') %}
             <spy-alert type="error">{{ message | trans }}</spy-alert>
         {% endfor %}
+        {% for error in form.vars.errors %}
+            <spy-alert type="error">{{ error.message | trans }}</spy-alert>
+        {% endfor %}
 
         <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
             {% for formField in formData.children if formField.vars.block_prefixes[1] != 'hidden' %}
