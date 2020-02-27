@@ -31,7 +31,6 @@ interface ShoppingListsRestApiClientInterface
     /**
      * Specification:
      *  - Creates new shopping list if shopping list with given name does not already exist.
-     *  - Checks that company user belongs to current customer.
      *
      * @api
      *
