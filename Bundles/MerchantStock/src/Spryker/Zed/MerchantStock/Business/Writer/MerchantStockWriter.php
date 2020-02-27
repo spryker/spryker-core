@@ -43,10 +43,10 @@ class MerchantStockWriter implements MerchantStockWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchantStockByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    public function createByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         $stockTransfer = (new StockTransfer())
-            ->setName($this->getStockNameByMerchant($merchantTransfer))
+            ->setName($this->generateStockNameByMerchant($merchantTransfer))
             ->setIsActive(true);
 
         $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
@@ -61,7 +61,7 @@ class MerchantStockWriter implements MerchantStockWriterInterface
      *
      * @return string
      */
-    protected function getStockNameByMerchant(MerchantTransfer $merchantTransfer): string
+    protected function generateStockNameByMerchant(MerchantTransfer $merchantTransfer): string
     {
         return sprintf(
             '%s %s %d',
@@ -80,8 +80,8 @@ class MerchantStockWriter implements MerchantStockWriterInterface
     protected function createMerchantResponseTransfer(MerchantTransfer $merchantTransfer, string $message = ''): MerchantResponseTransfer
     {
         $merchantResponseTransfer = (new MerchantResponseTransfer())
-            ->setMerchant($merchantTransfer)
-            ->setIsSuccess(true);
+            ->setIsSuccess(true)
+            ->setMerchant($merchantTransfer);
 
         if (!$message) {
             return $merchantResponseTransfer;

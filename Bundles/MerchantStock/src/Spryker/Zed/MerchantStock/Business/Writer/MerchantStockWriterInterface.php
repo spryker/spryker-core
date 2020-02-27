@@ -17,5 +17,5 @@ interface MerchantStockWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchantStockByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function createByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }

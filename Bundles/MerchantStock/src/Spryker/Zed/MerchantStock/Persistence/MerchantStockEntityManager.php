@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantStock\Persistence;
 
+use Generated\Shared\Transfer\MerchantStockTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -20,15 +22,19 @@ class MerchantStockEntityManager extends AbstractEntityManager implements Mercha
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantStockTransfer
      */
-    public function createMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): void
+    public function createMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): MerchantStockTransfer
     {
-        $merchantStockEntity = $this->getFactory()->createMerchantStockEntity();
+        $merchantStockEntity = new SpyMerchantStock();
 
         $merchantStockEntity->setFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
             ->setFkStock($stockTransfer->requireIdStock()->getIdStock())
             ->setIsDefault(true);
         $merchantStockEntity->save();
+
+        return $this->getFactory()
+            ->createMerchantStockMapper()
+            ->mapMerchantStockEntityToMerchantStockTransfer($merchantStockEntity, new MerchantStockTransfer());
     }
 }

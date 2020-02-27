@@ -29,6 +29,8 @@ class MerchantStockWriterStep extends PublishAwareStep implements DataImportStep
             ->filterByFkMerchant($idMerchant)
             ->findOneOrCreate();
 
+        $merchantStockEntity->setIsDefault(true);
+
         $merchantStockEntity->save();
     }
 }

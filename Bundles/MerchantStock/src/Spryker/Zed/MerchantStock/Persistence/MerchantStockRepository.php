@@ -26,7 +26,7 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
     public function getMerchantStocksByMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantStocksData = $this->getFactory()
-            ->createMerchantStockQuery()
+            ->createMerchantStockPropelQuery()
                 ->useSpyStockQuery()
                     ->withColumn(SpyStockTableMap::COL_NAME, static::STOCK_NAME)
                 ->endUse()

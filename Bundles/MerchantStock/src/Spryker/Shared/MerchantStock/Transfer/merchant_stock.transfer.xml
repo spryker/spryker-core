@@ -12,4 +12,20 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="MerchantStock">
+        <property name="idMerchantStock" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="idStock" type="int"/>
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantError">
+    </transfer>
+
+    <transfer name="MerchantResponse">
+    </transfer>
+
+    <transfer name="StockResponse">
+    </transfer>
+
 </transfers>
