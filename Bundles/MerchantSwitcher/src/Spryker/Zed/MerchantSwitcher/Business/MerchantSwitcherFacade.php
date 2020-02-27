@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantSwitcher\Business;
 
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
+use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
+use Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -46,5 +48,22 @@ class MerchantSwitcherFacade extends AbstractFacade implements MerchantSwitcherF
         return $this->getFactory()
             ->createMerchantSwitcher()
             ->switchMerchantInQuoteItems($merchantSwitchRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer
+     */
+    public function validateMerchantInQuote(
+        SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer
+    ): SingleMerchantQuoteValidationResponseTransfer {
+        return $this->getFactory()
+            ->createMerchantInQuoteValidator()
+            ->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
     }
 }

@@ -41,6 +41,7 @@
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -69,4 +70,12 @@
         <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
+    <transfer name="SingleMerchantQuoteValidationRequest">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="SingleMerchantQuoteValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="Message[]" singular="error"/>
+    </transfer>
 </transfers>

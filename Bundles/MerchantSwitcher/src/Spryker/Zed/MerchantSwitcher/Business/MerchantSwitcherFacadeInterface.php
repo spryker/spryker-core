@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantSwitcher\Business;
 
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
+use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
+use Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer;
 
 interface MerchantSwitcherFacadeInterface
 {
@@ -42,4 +44,16 @@ interface MerchantSwitcherFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
     public function switchMerchantInQuoteItems(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates that all items in the quote have the same merchant.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer
+     */
+    public function validateMerchantInQuote(SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer): SingleMerchantQuoteValidationResponseTransfer;
 }

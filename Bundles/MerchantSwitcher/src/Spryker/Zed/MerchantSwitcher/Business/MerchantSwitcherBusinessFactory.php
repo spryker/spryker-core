@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantSwitcher\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantSwitcher\Business\MerchantInQuoteValidator\MerchantInQuoteValidator;
+use Spryker\Zed\MerchantSwitcher\Business\MerchantInQuoteValidator\MerchantInQuoteValidatorInterface;
 use Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\MerchantSwitcher;
 use Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\MerchantSwitcherInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToCartFacadeInterface;
@@ -54,5 +56,13 @@ class MerchantSwitcherBusinessFactory extends AbstractBusinessFactory
     public function getMerchantProductOfferFacade(): MerchantSwitcherToMerchantProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSwitcherDependencyProvider::FACADE_MERCHANT_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSwitcher\Business\MerchantInQuoteValidator\MerchantInQuoteValidatorInterface
+     */
+    public function createMerchantInQuoteValidator(): MerchantInQuoteValidatorInterface
+    {
+        return new MerchantInQuoteValidator();
     }
 }

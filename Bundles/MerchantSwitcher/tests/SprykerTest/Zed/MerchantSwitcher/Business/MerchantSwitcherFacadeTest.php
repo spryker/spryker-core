@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
 
 /**
  * Auto-generated group annotations
@@ -159,5 +160,78 @@ class MerchantSwitcherFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($quoteTransfer->getMerchantReference(), $merchantTransfer->getMerchantReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateMerchantInQuoteReturnsSuccessfulResponse(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $this->tester->haveCustomer(),
+            QuoteTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            QuoteTransfer::ITEMS => [
+                [
+                    ItemTransfer::SKU => $productOfferTransfer->getConcreteSku(),
+                    ItemTransfer::UNIT_PRICE => 1,
+                    ItemTransfer::QUANTITY => 1,
+                    ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+                    ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+                ],
+            ],
+        ]);
+
+        $singleMerchantQuoteValidationRequestTransfer = (new SingleMerchantQuoteValidationRequestTransfer())
+            ->setQuote($quoteTransfer);
+
+        // Act
+        $singleMerchantQuoteValidationResponseTransfer = $this->tester->getFacade()->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
+
+        // Assert
+        $this->assertTrue($singleMerchantQuoteValidationResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateMerchantInQuoteReturnsFailureResponse(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $this->tester->haveCustomer(),
+            QuoteTransfer::MERCHANT_REFERENCE => uniqid(),
+            QuoteTransfer::ITEMS => [
+                [
+                    ItemTransfer::SKU => $productOfferTransfer->getConcreteSku(),
+                    ItemTransfer::UNIT_PRICE => 1,
+                    ItemTransfer::QUANTITY => 1,
+                    ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+                    ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+                ],
+            ],
+        ]);
+
+        $singleMerchantQuoteValidationRequestTransfer = (new SingleMerchantQuoteValidationRequestTransfer())
+            ->setQuote($quoteTransfer);
+
+        // Act
+        $singleMerchantQuoteValidationResponseTransfer = $this->tester->getFacade()->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
+
+        // Assert
+        $this->assertFalse($singleMerchantQuoteValidationResponseTransfer->getIsSuccessful());
+        $this->assertNotEmpty($singleMerchantQuoteValidationResponseTransfer->getErrors()->count());
     }
 }

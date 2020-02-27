@@ -10,7 +10,9 @@ namespace Spryker\Zed\MerchantSwitcher\Communication\Plugin\Checkout;
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -39,28 +41,33 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
             return true;
         }
 
-        $quoteMerchantReference = $quoteTransfer->getMerchantReference();
+        $singleMerchantQuoteValidationRequestTransfer = (new SingleMerchantQuoteValidationRequestTransfer())
+            ->setQuote($quoteTransfer);
+
+        $singleMerchantQuoteValidationResponseTransfer = $this->getFacade()
+            ->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
 
         $checkoutErrorTransfers = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (
-                $quoteMerchantReference
-                && $itemTransfer->getMerchantReference()
-                && $itemTransfer->getMerchantReference() !== $quoteMerchantReference
-            ) {
-                $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
-                    ->setMessage('merchant_switcher.message.product_is_not_available')
-                    ->setParameters([
-                        '%product_name%' => $itemTransfer->getName(),
-                        '%sku%' => $itemTransfer->getSku(),
-                    ]);
-            }
+        foreach ($singleMerchantQuoteValidationResponseTransfer->getErrors() as $messageTransfer) {
+            $checkoutErrorTransfers[] = $this->mapMessageTransferToCheckoutErrorTransfer($messageTransfer);
         }
 
         $checkoutResponseTransfer
-            ->setIsSuccess(!$checkoutErrorTransfers)
+            ->setIsSuccess($singleMerchantQuoteValidationResponseTransfer->getIsSuccessful())
             ->setErrors(new ArrayObject($checkoutErrorTransfers));
 
         return !$checkoutErrorTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
+     */
+    protected function mapMessageTransferToCheckoutErrorTransfer(MessageTransfer $messageTransfer): CheckoutErrorTransfer
+    {
+        return (new CheckoutErrorTransfer())
+            ->setMessage($messageTransfer->getMessage())
+            ->setParameters($messageTransfer->getParameters());
     }
 }

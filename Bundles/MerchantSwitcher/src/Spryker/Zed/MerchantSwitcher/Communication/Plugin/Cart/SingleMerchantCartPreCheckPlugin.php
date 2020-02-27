@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\MerchantSwitcher\Communication\Plugin\Cart;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -41,26 +40,14 @@ class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPre
             return $cartPreCheckResponseTransfer;
         }
 
-        $quoteMerchantReference = $cartChangeTransfer->getQuote()->getMerchantReference();
+        $singleMerchantQuoteValidationRequestTransfer = (new SingleMerchantQuoteValidationRequestTransfer())
+            ->setQuote($cartChangeTransfer->getQuote());
 
-        $messageTransfers = [];
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (
-                $quoteMerchantReference
-                && $itemTransfer->getMerchantReference()
-                && $itemTransfer->getMerchantReference() !== $quoteMerchantReference
-            ) {
-                $messageTransfers[] = (new MessageTransfer())
-                    ->setValue('merchant_switcher.message.product_is_not_available')
-                    ->setParameters([
-                        '%product_name%' => $itemTransfer->getName(),
-                        '%sku%' => $itemTransfer->getSku(),
-                    ]);
-            }
-        }
+        $singleMerchantQuoteValidationResponseTransfer = $this->getFacade()
+            ->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
 
         return (new CartPreCheckResponseTransfer())
-            ->setMessages(new ArrayObject($messageTransfers))
-            ->setIsSuccess(!$messageTransfers);
+            ->setMessages($singleMerchantQuoteValidationResponseTransfer->getErrors())
+            ->setIsSuccess($singleMerchantQuoteValidationResponseTransfer->getIsSuccessful());
     }
 }
