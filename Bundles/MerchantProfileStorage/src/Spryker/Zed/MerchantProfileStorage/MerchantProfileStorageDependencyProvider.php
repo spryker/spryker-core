@@ -29,6 +29,7 @@ class MerchantProfileStorageDependencyProvider extends AbstractBundleDependencyP
     {
         parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addMerchantProfileFacade($container);
 
         return $container;
     }

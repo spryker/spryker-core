@@ -72,5 +72,11 @@
     <transfer name="Customer">
     </transfer>
 
+    <transfer name="Totals">
+    </transfer>
+
+    <transfer name="Expense">
+    </transfer>
+
 </transfers>
 

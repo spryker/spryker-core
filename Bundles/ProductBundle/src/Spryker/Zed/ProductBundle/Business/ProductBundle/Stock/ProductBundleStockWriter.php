@@ -95,6 +95,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $this->productBundleQueryContainer->getConnection()->commit();
         } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
+
             throw $exception;
         }
 
@@ -208,7 +209,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             }
 
             $bundleTotalStockPerWarehouse[$idStock] = [
-                static::QUANTITY => $bundleStock,
+                static::QUANTITY => $bundleStock->floor(),
                 static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }

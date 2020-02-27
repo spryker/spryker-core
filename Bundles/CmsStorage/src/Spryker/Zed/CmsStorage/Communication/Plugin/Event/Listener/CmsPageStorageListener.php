@@ -35,11 +35,13 @@ class CmsPageStorageListener extends AbstractPlugin implements EventBulkHandlerI
         $this->preventTransaction();
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE ||
+        if (
+            $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE ||
             $eventName === CmsEvents::CMS_VERSION_PUBLISH
         ) {
             $this->getFacade()->publish($cmsPageIds);
-        } elseif ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE ||
+        } elseif (
+            $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE ||
             $eventName === CmsEvents::CMS_VERSION_UNPUBLISH
         ) {
             $this->getFacade()->unpublish($cmsPageIds);

@@ -97,8 +97,10 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId())
         );
 
-        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()
-            || !$this->isCurrentCompanyUserInCompany($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())) {
+        if (
+            !$companyBusinessUnitResponseTransfer->getIsSuccessful()
+            || !$this->isCurrentCompanyUserInCompany($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())
+        ) {
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
         }
 

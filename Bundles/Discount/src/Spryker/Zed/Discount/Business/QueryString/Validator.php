@@ -51,12 +51,12 @@ class Validator implements ValidatorInterface
             switch (strtolower($type)) {
                 case MetaProviderFactory::TYPE_DECISION_RULE:
                     $this->decisionRuleQueryString($queryString);
-                    break;
 
+                    break;
                 case MetaProviderFactory::TYPE_COLLECTOR:
                     $this->collectorQueryString($queryString);
-                    break;
 
+                    break;
                 default:
                     throw new QueryBuilderException(
                         sprintf(

@@ -251,6 +251,7 @@ class CodeArchitectureSnifferConsole extends Console
                 }
                 if (!is_dir($path)) {
                     $output->writeln('Path not found, skipping: ' . $path, OutputInterface::VERBOSITY_VERY_VERBOSE);
+
                     continue;
                 }
                 $output->writeln('Checking path: ' . $path, OutputInterface::VERBOSITY_VERBOSE);

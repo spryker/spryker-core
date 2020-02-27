@@ -44,9 +44,11 @@ trait DatabaseTransactionHandlerTrait
             return $result;
         } catch (Exception $exception) {
             $connection->rollBack();
+
             throw $exception;
         } catch (Throwable $exception) {
             $connection->rollBack();
+
             throw $exception;
         }
     }

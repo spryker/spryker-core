@@ -347,8 +347,12 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    protected function findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(SpyPriceProductScheduleQuery $subQuery, StoreTransfer $storeTransfer, string $dbEngineName, int $idProductConcrete): array
-    {
+    protected function findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(
+        SpyPriceProductScheduleQuery $subQuery,
+        StoreTransfer $storeTransfer,
+        string $dbEngineName,
+        int $idProductConcrete
+    ): array {
         $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
             ->joinWithCurrency()

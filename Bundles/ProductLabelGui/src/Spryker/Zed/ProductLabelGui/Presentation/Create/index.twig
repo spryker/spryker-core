@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(aggregateForm) }}
+    {{ form_start(aggregateForm, {attr: {novalidate: 'novalidate'}}) }}
 
     {{ tabs(
         productLabelFormTabs,

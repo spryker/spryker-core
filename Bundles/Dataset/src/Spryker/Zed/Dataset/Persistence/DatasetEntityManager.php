@@ -281,6 +281,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
             $idLocale = $localizedAttribute->getLocale()->getIdLocale();
             if (!empty($existingDatasetLocalizedAttributes[$idLocale])) {
                 $this->updateLocalizedAttribute($existingDatasetLocalizedAttributes[$idLocale], $localizedAttribute);
+
                 continue;
             }
             $this->createLocalizedAttributes($datasetEntity, (new ArrayObject([$localizedAttribute])));

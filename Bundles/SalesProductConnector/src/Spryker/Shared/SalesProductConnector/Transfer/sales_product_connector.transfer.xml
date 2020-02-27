@@ -36,4 +36,10 @@
     <transfer name="SaveOrder">
     </transfer>
 
+    <transfer name="ProductImage">
+    </transfer>
+
+    <transfer name="CheckoutError">
+    </transfer>
+
 </transfers>

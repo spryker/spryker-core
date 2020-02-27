@@ -23,22 +23,6 @@ class ProductOfferAvailabilityFacade extends AbstractFacade implements ProductOf
      *
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
      *
-     * @return bool
-     */
-    public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
-    {
-        return $this->getFactory()
-            ->createProductOfferAvailabilityProvider()
-            ->isProductSellableForRequest($productOfferAvailabilityRequestTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     public function findProductConcreteAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ?ProductConcreteAvailabilityTransfer

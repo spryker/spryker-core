@@ -57,8 +57,10 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      */
     protected function assureDefaultSkusExists(DataSetInterface $dataSet): void
     {
-        if (!isset($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DEFAULT_SKUS])
-            || !$dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DEFAULT_SKUS]) {
+        if (
+            !isset($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DEFAULT_SKUS])
+            || !$dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DEFAULT_SKUS]
+        ) {
             $parameters = [
                 static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
             ];
