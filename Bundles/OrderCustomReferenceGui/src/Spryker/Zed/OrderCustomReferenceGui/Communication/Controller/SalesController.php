@@ -24,6 +24,9 @@ class SalesController extends AbstractController
     protected const MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED = 'Order Custom Reference was successfully changed.';
     protected const MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED = 'Order Custom Reference has not been changed.';
 
+    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
+    protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -47,10 +50,30 @@ class SalesController extends AbstractController
             ->setOrderCustomReference($formData[OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE] ?? '');
         $saveOrderTransfer = (new SaveOrderTransfer())->setIdSalesOrder($formDataIdSalesOrder);
 
+        if (!$this->isOrderCustomReferenceLengthValid($quoteTransfer->getOrderCustomReference())) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
+
+            return $this->redirectResponse($formDataBackUrl);
+        }
+
         $orderCustomReferenceFacade->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
 
         return $this->redirectResponse($formDataBackUrl);
+    }
+
+    /**
+     * @param string|null $orderCustomReference
+     *
+     * @return bool
+     */
+    protected function isOrderCustomReferenceLengthValid(?string $orderCustomReference): bool
+    {
+        if (!$orderCustomReference) {
+            return true;
+        }
+
+        return mb_strlen($orderCustomReference) <= static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH;
     }
 }
