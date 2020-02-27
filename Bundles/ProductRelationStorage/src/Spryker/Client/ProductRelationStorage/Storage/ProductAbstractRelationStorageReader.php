@@ -92,8 +92,9 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
             return $productAbstractRelationCollectorData;
         }
         $key = $this->generateKey($idProductAbstract);
+        $productAbstractRelationStorageData = $this->storageClient->get($key);
 
-        return $this->storageClient->get($key);
+        return $productAbstractRelationStorageData;
     }
 
     /**
