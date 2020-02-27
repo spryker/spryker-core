@@ -30,6 +30,8 @@
     "sort-packages": true
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   }
 }
