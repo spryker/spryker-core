@@ -30,8 +30,10 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
      */
     public function getRequiredRequestDataForPaymentMethod(string $paymentProviderName, string $paymentMethodName): array
     {
-        if (!isset(static::PAYMENT_METHOD_REQUIRED_FIELDS[$paymentProviderName])
-            || !isset(static::PAYMENT_METHOD_REQUIRED_FIELDS[$paymentProviderName][$paymentMethodName])) {
+        if (
+            !isset(static::PAYMENT_METHOD_REQUIRED_FIELDS[$paymentProviderName])
+            || !isset(static::PAYMENT_METHOD_REQUIRED_FIELDS[$paymentProviderName][$paymentMethodName])
+        ) {
             return static::PAYMENT_REQUIRED_FIELDS;
         }
 
