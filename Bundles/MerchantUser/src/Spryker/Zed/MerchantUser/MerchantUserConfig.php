@@ -29,7 +29,7 @@ class MerchantUserConfig extends AbstractBundleConfig
     protected const RULE_TYPE_ALLOW = 'allow';
     protected const MERCHANT_ADMIN_ROLE_NAME = 'Merchant Admin';
     protected const MERCHANT_ADMIN_GROUP_NAME = 'Merchant Admin';
-    protected const MERCHANT_ADMIN_GROUP_REFERENCE = 'merchant_admin_group_reference';
+    protected const MERCHANT_ADMIN_GROUP_REFERENCE = 'merchant_admin';
 
     /**
      * @return string
