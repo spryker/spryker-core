@@ -341,19 +341,19 @@
     </transfer>
 
     <transfer name="QueryJoin">
-        <property name="whereConditions" type="WhereCondition[]" singular="whereCondition"/>
         <property name="relation" type="string"/>
         <property name="left" type="array" singular="left"/>
         <property name="right" type="array" singular="right"/>
         <property name="joinType" type="string"/>
         <property name="condition" type="string"/>
+        <property name="queryWhereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
     </transfer>
 
     <transfer name="QueryJoinCollection">
         <property name="queryJoins" type="QueryJoin[]" singular="queryJoin"/>
     </transfer>
 
-    <transfer name="WhereCondition">
+    <transfer name="QueryWhereCondition">
         <property name="column" type="string"/>
         <property name="value" type="string"/>
         <property name="comparison" type="string"/>

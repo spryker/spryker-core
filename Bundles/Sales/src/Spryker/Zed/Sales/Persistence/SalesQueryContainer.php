@@ -365,10 +365,10 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         foreach ($queryJoinCollectionTransfer->getQueryJoins() as $queryJoinTransfer) {
             $salesOrderQuery = $this->addSalesOrderQueryJoin($salesOrderQuery, $queryJoinTransfer);
 
-            if ($queryJoinTransfer->getWhereConditions()->count()) {
+            if ($queryJoinTransfer->getQueryWhereConditions()->count()) {
                 $salesOrderQuery = $this->addSalesOrderQueryWhereConditionGroup(
                     $salesOrderQuery,
-                    $queryJoinTransfer->getWhereConditions(),
+                    $queryJoinTransfer->getQueryWhereConditions(),
                     $whereConditionGroups
                 );
             }
@@ -436,20 +436,20 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param \ArrayObject|\Generated\Shared\Transfer\WhereConditionTransfer[] $whereConditionTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\QueryWhereConditionTransfer[] $queryWhereConditionTransfers
      * @param array $conditionGroups
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function addSalesOrderQueryWhereConditionGroup(
         SpySalesOrderQuery $salesOrderQuery,
-        ArrayObject $whereConditionTransfers,
+        ArrayObject $queryWhereConditionTransfers,
         array &$conditionGroups
     ): SpySalesOrderQuery {
         $conditionGroupName = uniqid('', true);
         $conditionGroups[] = $conditionGroupName;
 
-        $conditions = $this->createSalesOrderQueryWhereConditions($salesOrderQuery, $whereConditionTransfers);
+        $conditions = $this->createSalesOrderQueryWhereConditions($salesOrderQuery, $queryWhereConditionTransfers);
 
         $salesOrderQuery->combine(
             $conditions,
@@ -462,22 +462,22 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param \ArrayObject|\Generated\Shared\Transfer\WhereConditionTransfer[] $whereConditionTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\QueryWhereConditionTransfer[] $queryWhereConditionTransfers
      *
      * @return string[]
      */
     protected function createSalesOrderQueryWhereConditions(
         SpySalesOrderQuery $salesOrderQuery,
-        ArrayObject $whereConditionTransfers
+        ArrayObject $queryWhereConditionTransfers
     ): array {
         $conditions = [];
 
-        foreach ($whereConditionTransfers as $whereConditionTransfer) {
-            $column = $whereConditionTransfer->getColumn();
-            $value = $whereConditionTransfer->getValue();
+        foreach ($queryWhereConditionTransfers as $queryWhereConditionTransfer) {
+            $column = $queryWhereConditionTransfer->getColumn();
+            $value = $queryWhereConditionTransfer->getValue();
 
             $conditionName = uniqid($column, true);
-            $comparison = $whereConditionTransfer->getComparison() ?? Criteria::ILIKE;
+            $comparison = $queryWhereConditionTransfer->getComparison() ?? Criteria::ILIKE;
 
             $salesOrderQuery->addCond(
                 $conditionName,

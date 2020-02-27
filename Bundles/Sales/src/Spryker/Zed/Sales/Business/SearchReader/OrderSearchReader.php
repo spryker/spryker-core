@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
-use Generated\Shared\Transfer\WhereConditionTransfer;
+use Generated\Shared\Transfer\QueryWhereConditionTransfer;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class OrderSearchReader implements OrderSearchReaderInterface
@@ -120,8 +120,8 @@ class OrderSearchReader implements OrderSearchReaderInterface
             }
 
             if (
-                in_array($filterFieldType, $mappedSearchGroups, true)
-                || $filterFieldType === static::FILTER_FIELD_TYPE_ALL
+                $filterFieldType === static::FILTER_FIELD_TYPE_ALL
+                || in_array($filterFieldType, $mappedSearchGroups, true)
             ) {
                 $queryJoinCollectionTransfer = $this->addOrderSearchGroupQueryJoin(
                     $filterFieldTransfer,
@@ -151,8 +151,8 @@ class OrderSearchReader implements OrderSearchReaderInterface
         $searchGroupValue = $filterFieldTransfer->getValue();
 
         if ($searchGroupType === static::FILTER_FIELD_TYPE_ORDER_REFERENCE) {
-            $queryJoinTransfer->addWhereCondition(
-                $this->createWhereConditionTransfer($searchGroupType, $searchGroupValue)
+            $queryJoinTransfer->addQueryWhereCondition(
+                $this->createQueryWhereConditionTransfer($searchGroupType, $searchGroupValue)
             );
 
             return $queryJoinCollectionTransfer->addQueryJoin($queryJoinTransfer);
@@ -164,8 +164,8 @@ class OrderSearchReader implements OrderSearchReaderInterface
         ) {
             $queryJoinTransfer
                 ->setRelation(static::RELATION_ITEM)
-                ->addWhereCondition(
-                    $this->createWhereConditionTransfer($searchGroupType, $searchGroupValue)
+                ->addQueryWhereCondition(
+                    $this->createQueryWhereConditionTransfer($searchGroupType, $searchGroupValue)
                 );
 
             return $queryJoinCollectionTransfer->addQueryJoin($queryJoinTransfer);
@@ -188,12 +188,12 @@ class OrderSearchReader implements OrderSearchReaderInterface
             static::COMPARISON_GREATER_EQUAL :
             static::COMPARISON_LESS_EQUAL;
 
-        $whereConditionTransfer = (new WhereConditionTransfer())
+        $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
             ->setColumn(static::COLUMN_CREATED_AT)
             ->setValue($filterFieldTransfer->getValue())
             ->setComparison($comparison);
 
-        $queryJoinTransfer = (new QueryJoinTransfer())->addWhereCondition($whereConditionTransfer);
+        $queryJoinTransfer = (new QueryJoinTransfer())->addQueryWhereCondition($queryWhereConditionTransfer);
 
         return $queryJoinCollectionTransfer->addQueryJoin($queryJoinTransfer);
     }
@@ -211,8 +211,8 @@ class OrderSearchReader implements OrderSearchReaderInterface
         $queryJoinTransfer = new QueryJoinTransfer();
 
         foreach ($this->getMappedSearchGroups() as $searchGroupType) {
-            $queryJoinTransfer->addWhereCondition(
-                $this->createWhereConditionTransfer($searchGroupType, $filterFieldTransfer->getValue())
+            $queryJoinTransfer->addQueryWhereCondition(
+                $this->createQueryWhereConditionTransfer($searchGroupType, $filterFieldTransfer->getValue())
             );
         }
 
@@ -225,11 +225,11 @@ class OrderSearchReader implements OrderSearchReaderInterface
      * @param string $type
      * @param string $value
      *
-     * @return \Generated\Shared\Transfer\WhereConditionTransfer
+     * @return \Generated\Shared\Transfer\QueryWhereConditionTransfer
      */
-    protected function createWhereConditionTransfer(string $type, string $value): WhereConditionTransfer
+    protected function createQueryWhereConditionTransfer(string $type, string $value): QueryWhereConditionTransfer
     {
-        return (new WhereConditionTransfer())
+        return (new QueryWhereConditionTransfer())
             ->setColumn(static::ORDER_SEARCH_GROUP_MAPPING[$type])
             ->setValue($value);
     }
