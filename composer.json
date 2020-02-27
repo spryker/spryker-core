@@ -28,6 +28,7 @@
   },
   "replace": {
     "spryker/acl": "*",
+    "spryker/acl-extension": "*",
     "spryker/agent": "*",
     "spryker/agent-gui": "*",
     "spryker/alternative-products-rest-api": "*",
@@ -658,6 +659,7 @@
     "spryker/wishlist-extension": "*",
     "spryker/wishlists-rest-api": "*",
     "spryker/zed-navigation": "*",
+    "spryker/zed-navigation-extension": "*",
     "spryker/zed-request": "*",
     "spryker/zend": "*"
   }
