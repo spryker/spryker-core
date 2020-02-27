@@ -86,4 +86,13 @@
     <transfer name="Money">
     </transfer>
 
+    <transfer name="PropelQueryBuilderCriteria">
+    </transfer>
+
+    <transfer name="PropelQueryBuilderCriteriaMapping">
+    </transfer>
+
+    <transfer name="ProductRelationRelatedProduct">
+    </transfer>
+
 </transfers>

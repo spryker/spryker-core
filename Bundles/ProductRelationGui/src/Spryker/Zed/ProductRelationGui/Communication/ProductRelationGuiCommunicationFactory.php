@@ -18,6 +18,10 @@ use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationT
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Transformer\RuleQuerySetTransformer;
+use Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReader;
+use Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReaderInterface;
+use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreator;
+use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductRelationTable;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductRuleTable;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductTable;
@@ -28,7 +32,7 @@ use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToPricePr
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeInterface;
-use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface;
+use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToPropelQueryBuilderQueryContainerInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductRelationGui\ProductRelationGuiDependencyProvider;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -100,7 +104,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     {
         return new ProductRuleTable(
             $this->getProductFacade(),
-            $this->getProductRelationQueryContainer(),
+            $this->createRuleQueryCreator(),
             $this->getUtilEncodingService(),
             $this->getLocaleFacade(),
             $this->getConfig(),
@@ -147,6 +151,27 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
+     * @return \Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReaderInterface
+     */
+    public function createMappingReader(): MappingReaderInterface
+    {
+        return new MappingReader($this->getProductAttributeKeyPropelQuery());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface
+     */
+    public function createRuleQueryCreator(): RuleQueryCreatorInterface
+    {
+        return new RuleQueryCreator(
+            $this->getLocaleFacade(),
+            $this->getProductAbstractPropelQuery(),
+            $this->createMappingReader(),
+            $this->getPropelQueryBuilderQueryContainer()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeInterface
      */
     public function getProductRelationFacade(): ProductRelationGuiToProductRelationFacadeInterface
@@ -179,11 +204,11 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface
+     * @return \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToPropelQueryBuilderQueryContainerInterface
      */
-    public function getProductRelationQueryContainer(): ProductRelationGuiToProductRelationQueryContainerInterface
+    public function getPropelQueryBuilderQueryContainer(): ProductRelationGuiToPropelQueryBuilderQueryContainerInterface
     {
-        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_RELATION);
+        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::QUERY_CONTAINER_PROPEL_QUERY_BUILDER);
     }
 
     /**
@@ -205,7 +230,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function getProductAAttributeKeyPropelQuery(): SpyProductAttributeKeyQuery
+    public function getProductAttributeKeyPropelQuery(): SpyProductAttributeKeyQuery
     {
         return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY);
     }

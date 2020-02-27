@@ -12,13 +12,14 @@ use Generated\Shared\Transfer\ProductRelationTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface;
-use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig;
 
@@ -36,11 +37,6 @@ class ProductRuleTable extends AbstractProductTable
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface
      */
     protected $productFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer
-     */
-    protected $productRelationQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface
@@ -78,8 +74,13 @@ class ProductRuleTable extends AbstractProductTable
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface
+     */
+    protected $ruleQueryCreator;
+
+    /**
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer
+     * @param \Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface $ruleQueryCreator
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig $productRelationGuiConfig
@@ -87,15 +88,14 @@ class ProductRuleTable extends AbstractProductTable
      */
     public function __construct(
         ProductRelationGuiToProductFacadeInterface $productFacade,
-        ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer,
+        RuleQueryCreatorInterface $ruleQueryCreator,
         ProductRelationGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductRelationGuiToLocaleFacadeInterface $localeFacade,
         ProductRelationGuiConfig $productRelationGuiConfig,
         ProductRelationTransfer $productRelationTransfer
     ) {
-
+        $this->ruleQueryCreator = $ruleQueryCreator;
         $this->productFacade = $productFacade;
-        $this->productRelationQueryContainer = $productRelationQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->productRelationGuiConfig = $productRelationGuiConfig;
         $this->utilEncodingService = $utilEncodingService;
@@ -149,9 +149,20 @@ class ProductRuleTable extends AbstractProductTable
      */
     protected function getQuery(): ModelCriteria
     {
-        return $this->productRelationQueryContainer
-            ->queryRulePropelQueryWithLocalizedProductData($this->productRelationTransfer)
-            ->setFormatter(new SimpleArrayFormatter());
+        return $this->ruleQueryCreator
+            ->createQuery($this->productRelationTransfer)
+            ->clearSelectColumns()
+            ->withColumn(
+                'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
+                static::COL_IS_ACTIVE_AGGREGATION
+            )
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
+            ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
+            ->withColumn(
+                'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
+                static::COL_CATEGORY_NAME
+            )->setFormatter(new SimpleArrayFormatter());
     }
 
     /**
