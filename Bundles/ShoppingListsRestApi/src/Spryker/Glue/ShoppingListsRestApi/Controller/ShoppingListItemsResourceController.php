@@ -58,18 +58,10 @@ class ShoppingListItemsResourceController extends AbstractController
      *          "summary": [
      *              "Updates the shopping list item."
      *          ],
-     *          "parameters": [
-     *              {
-     *                  "name": "Accept-Language",
-     *                  "in": "header"
-     *              },
-     *              {
-     *                  "name": "X-Company-User-Id",
-     *                  "in": "header",
-     *                  "required": true,
-     *                  "description": "Company user id"
-     *              }
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Shopping list id or shopping list item id not specified.",
      *              "403": "Unauthorized request.",
@@ -100,18 +92,10 @@ class ShoppingListItemsResourceController extends AbstractController
      *          "summary": [
      *              "Deletes the shopping list item."
      *          ],
-     *          "parameters": [
-     *              {
-     *                  "name": "Accept-Language",
-     *                  "in": "header"
-     *              },
-     *              {
-     *                  "name": "X-Company-User-Id",
-     *                  "in": "header",
-     *                  "required": true,
-     *                  "description": "Company user id"
-     *              }
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Shopping list id or shopping list item id not specified.",
      *              "403": "Unauthorized request.",

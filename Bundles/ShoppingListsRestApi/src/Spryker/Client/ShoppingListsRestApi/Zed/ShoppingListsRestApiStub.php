@@ -50,7 +50,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::createShoppingList()
+     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::createShoppingListAction()
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
@@ -69,7 +69,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::updateShoppingList()
+     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::updateShoppingListAction()
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
@@ -88,7 +88,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::deleteShoppingList()
+     * @uses \Spryker\Zed\ShoppingListsRestApi\Communication\Controller\GatewayController::deleteShoppingListAction()
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *

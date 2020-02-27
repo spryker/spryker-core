@@ -19,7 +19,6 @@ interface ShoppingListsRestApiClientInterface
     /**
      * Specification:
      *  - Gets shopping list collection by the customer reference.
-     *  - Checks that company user belongs to current customer.
      *
      * @api
      *
