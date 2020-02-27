@@ -19,20 +19,16 @@ class MerchantInQuoteValidator implements MerchantInQuoteValidatorInterface
      *
      * @return \Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer
      */
-    public function validateMerchantInQuote(SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer): SingleMerchantQuoteValidationResponseTransfer
+    public function validateMerchantInQuoteItems(SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer): SingleMerchantQuoteValidationResponseTransfer
     {
-        $singleMerchantQuoteValidationRequestTransfer->requireQuote();
-
-        $quoteTransfer = $singleMerchantQuoteValidationRequestTransfer->getQuote();
-
-        if (!$quoteTransfer->getMerchantReference()) {
+        if (!$singleMerchantQuoteValidationRequestTransfer->getMerchantReference()) {
             return (new SingleMerchantQuoteValidationResponseTransfer())
                 ->setIsSuccessful(true);
         }
 
         $messageTransfers = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getMerchantReference() && $itemTransfer->getMerchantReference() !== $quoteTransfer->getMerchantReference()) {
+        foreach ($singleMerchantQuoteValidationRequestTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getMerchantReference() && $itemTransfer->getMerchantReference() !== $singleMerchantQuoteValidationRequestTransfer->getMerchantReference()) {
                 $messageTransfers[] = (new MessageTransfer())
                     ->setValue('merchant_switcher.message.product_is_not_available')
                     ->setParameters([

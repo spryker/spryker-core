@@ -17,7 +17,7 @@ interface MerchantInQuoteValidatorInterface
      *
      * @return \Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer
      */
-    public function validateMerchantInQuote(
+    public function validateMerchantInQuoteItems(
         SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer
     ): SingleMerchantQuoteValidationResponseTransfer;
 }

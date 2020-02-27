@@ -70,7 +70,8 @@
     </transfer>
 
     <transfer name="SingleMerchantQuoteValidationRequest">
-        <property name="quote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="SingleMerchantQuoteValidationResponse">

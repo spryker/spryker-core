@@ -189,10 +189,11 @@ class MerchantSwitcherFacadeTest extends Unit
         ]);
 
         $singleMerchantQuoteValidationRequestTransfer = (new SingleMerchantQuoteValidationRequestTransfer())
-            ->setQuote($quoteTransfer);
+            ->setMerchantReference($quoteTransfer->getMerchantReference())
+            ->setItems($quoteTransfer->getItems());
 
         // Act
-        $singleMerchantQuoteValidationResponseTransfer = $this->tester->getFacade()->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
+        $singleMerchantQuoteValidationResponseTransfer = $this->tester->getFacade()->validateMerchantInQuoteItems($singleMerchantQuoteValidationRequestTransfer);
 
         // Assert
         $this->assertTrue($singleMerchantQuoteValidationResponseTransfer->getIsSuccessful());
@@ -225,10 +226,11 @@ class MerchantSwitcherFacadeTest extends Unit
         ]);
 
         $singleMerchantQuoteValidationRequestTransfer = (new SingleMerchantQuoteValidationRequestTransfer())
-            ->setQuote($quoteTransfer);
+            ->setMerchantReference($quoteTransfer->getMerchantReference())
+            ->setItems($quoteTransfer->getItems());
 
         // Act
-        $singleMerchantQuoteValidationResponseTransfer = $this->tester->getFacade()->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
+        $singleMerchantQuoteValidationResponseTransfer = $this->tester->getFacade()->validateMerchantInQuoteItems($singleMerchantQuoteValidationRequestTransfer);
 
         // Assert
         $this->assertFalse($singleMerchantQuoteValidationResponseTransfer->getIsSuccessful());

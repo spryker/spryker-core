@@ -59,11 +59,11 @@ class MerchantSwitcherFacade extends AbstractFacade implements MerchantSwitcherF
      *
      * @return \Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer
      */
-    public function validateMerchantInQuote(
+    public function validateMerchantInQuoteItems(
         SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer
     ): SingleMerchantQuoteValidationResponseTransfer {
         return $this->getFactory()
             ->createMerchantInQuoteValidator()
-            ->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
+            ->validateMerchantInQuoteItems($singleMerchantQuoteValidationRequestTransfer);
     }
 }

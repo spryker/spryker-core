@@ -41,10 +41,11 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
         }
 
         $singleMerchantQuoteValidationRequestTransfer = (new SingleMerchantQuoteValidationRequestTransfer())
-            ->setQuote($quoteTransfer);
+            ->setItems($quoteTransfer->getItems())
+            ->setMerchantReference($quoteTransfer->getMerchantReference());
 
         $singleMerchantQuoteValidationResponseTransfer = $this->getFacade()
-            ->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
+            ->validateMerchantInQuoteItems($singleMerchantQuoteValidationRequestTransfer);
 
         $checkoutErrorTransfers = [];
         foreach ($singleMerchantQuoteValidationResponseTransfer->getErrors() as $messageTransfer) {

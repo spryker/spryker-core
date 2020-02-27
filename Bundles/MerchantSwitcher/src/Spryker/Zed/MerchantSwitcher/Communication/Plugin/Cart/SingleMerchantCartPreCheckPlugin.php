@@ -41,10 +41,11 @@ class SingleMerchantCartPreCheckPlugin extends AbstractPlugin implements CartPre
         }
 
         $singleMerchantQuoteValidationRequestTransfer = (new SingleMerchantQuoteValidationRequestTransfer())
-            ->setQuote($cartChangeTransfer->getQuote());
+            ->setItems($cartChangeTransfer->getItems())
+            ->setMerchantReference($cartChangeTransfer->getQuote()->getMerchantReference());
 
         $singleMerchantQuoteValidationResponseTransfer = $this->getFacade()
-            ->validateMerchantInQuote($singleMerchantQuoteValidationRequestTransfer);
+            ->validateMerchantInQuoteItems($singleMerchantQuoteValidationRequestTransfer);
 
         return (new CartPreCheckResponseTransfer())
             ->setMessages($singleMerchantQuoteValidationResponseTransfer->getErrors())

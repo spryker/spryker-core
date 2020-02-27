@@ -47,7 +47,7 @@ interface MerchantSwitcherFacadeInterface
 
     /**
      * Specification:
-     * - Validates that all items in the quote have the same merchant.
+     * - Validates that all items in the quote have requested merchant reference.
      *
      * @api
      *
@@ -55,5 +55,5 @@ interface MerchantSwitcherFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer
      */
-    public function validateMerchantInQuote(SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer): SingleMerchantQuoteValidationResponseTransfer;
+    public function validateMerchantInQuoteItems(SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer): SingleMerchantQuoteValidationResponseTransfer;
 }
