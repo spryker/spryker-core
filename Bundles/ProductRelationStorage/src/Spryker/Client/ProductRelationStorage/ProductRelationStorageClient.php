@@ -76,7 +76,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
 
         return $this->getFactory()
             ->createRelatedProductReader()
-            ->findRelatedAbstractProductIds($idProductAbstract, $storeName);
+            ->findRelatedAbstractProductIds($idProductAbstract);
     }
 
     /**

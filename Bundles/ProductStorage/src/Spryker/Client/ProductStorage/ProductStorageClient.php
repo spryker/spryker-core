@@ -315,7 +315,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     {
         return $this->getFactory()
             ->createProductAbstractStorageReader()
-            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore($productAbstractIds, $localeName, $storeName);
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 
     /**
