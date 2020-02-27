@@ -1,1 +1,11 @@
-{% extends '@ZedUi/Layout/merchant.twig' %}
+{% extends '@ZedUi/LayoutMain/layout-main.twig' %}
+
+{% block content %}
+    <mp-dashboard></mp-dashboard>
+{% endblock %}
+
+{% block footerJs %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/mp-dashboard/main-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp-dashboard/main-es5.js') }}" nomodule defer></script>
+{% endblock %}
