@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturn\Business\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ReturnTransfer;
 
 interface ReturnExpanderInterface
@@ -17,4 +18,12 @@ interface ReturnExpanderInterface
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
     public function expandReturn(ReturnTransfer $returnTransfer): ReturnTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function expandReturnItemsBeforeCreate(ReturnTransfer $returnTransfer, ArrayObject $itemTransfers): ReturnTransfer;
 }

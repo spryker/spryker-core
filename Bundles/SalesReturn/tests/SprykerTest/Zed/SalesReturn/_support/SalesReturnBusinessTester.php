@@ -67,12 +67,35 @@ class SalesReturnBusinessTester extends Actor
     }
 
     /**
+     * @param string $stateMachineProcessName
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function createOrderByCustomer(string $stateMachineProcessName, ?CustomerTransfer $customerTransfer = null): OrderTransfer
+    {
+        $quoteTransfer = $this->createFakeQuote(
+            $customerTransfer ?? $this->haveCustomer(),
+            $this->haveStore([StoreTransfer::NAME => 'DE'])
+        );
+
+        $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
+
+        return (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setOrderReference($saveOrderTransfer->getOrderReference())
+            ->setStore($quoteTransfer->getStore()->getName())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setItems($saveOrderTransfer->getOrderItems());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
+    protected function createFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withItem()

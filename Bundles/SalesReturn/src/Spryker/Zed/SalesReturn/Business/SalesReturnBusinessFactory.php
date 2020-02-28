@@ -55,7 +55,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createReturnValidator(),
             $this->createReturnExpander(),
-            $this->createReturnReferenceGenerator()
+            $this->createReturnReferenceGenerator(),
+            $this->getSalesFacade()
         );
     }
 
@@ -64,10 +65,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
      */
     public function createReturnValidator(): ReturnValidatorInterface
     {
-        return new ReturnValidator(
-            $this->getSalesFacade(),
-            $this->getStoreFacade()
-        );
+        return new ReturnValidator($this->getStoreFacade());
     }
 
     /**
@@ -107,9 +105,12 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface
      */
-    protected function createReturnReferenceGenerator(): ReturnReferenceGeneratorInterface
+    public function createReturnReferenceGenerator(): ReturnReferenceGeneratorInterface
     {
-        return new ReturnReferenceGenerator();
+        return new ReturnReferenceGenerator(
+            $this->getRepository(),
+            $this->getConfig()
+        );
     }
 
     /**

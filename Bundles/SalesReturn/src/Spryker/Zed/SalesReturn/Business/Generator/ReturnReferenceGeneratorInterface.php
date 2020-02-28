@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\SalesReturn\Business\Generator;
 
+use Generated\Shared\Transfer\ReturnTransfer;
+
 interface ReturnReferenceGeneratorInterface
 {
     /**
-     * @param string $orderReference
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return string
      */
-    public function generateReturnReference(string $orderReference): string;
+    public function generateReturnReference(ReturnTransfer $returnTransfer): string;
 }

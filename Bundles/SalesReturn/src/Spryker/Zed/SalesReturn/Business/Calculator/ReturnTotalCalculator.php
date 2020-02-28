@@ -19,6 +19,40 @@ class ReturnTotalCalculator implements ReturnTotalCalculatorInterface
      */
     public function calculateReturnTotals(ReturnTransfer $returnTransfer): ReturnTotalsTransfer
     {
-        return (new ReturnTotalsTransfer());
+        return (new ReturnTotalsTransfer())
+            ->setRemunerationTotal($this->calculateItemRemunerationTotal($returnTransfer))
+            ->setRefundTotal($this->calculateItemCanceledTotal($returnTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return int
+     */
+    protected function calculateItemRemunerationTotal(ReturnTransfer $returnTransfer): int
+    {
+        $remunerationTotal = 0;
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $remunerationTotal += $returnItemTransfer->getOrderItem()->getRemunerationAmount();
+        }
+
+        return $remunerationTotal;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return int
+     */
+    protected function calculateItemCanceledTotal(ReturnTransfer $returnTransfer): int
+    {
+        $canceledTotal = 0;
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $canceledTotal += $returnItemTransfer->getOrderItem()->getCanceledAmount();
+        }
+
+        return $canceledTotal;
     }
 }

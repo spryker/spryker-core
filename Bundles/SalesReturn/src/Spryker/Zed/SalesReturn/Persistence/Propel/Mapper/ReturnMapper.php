@@ -38,7 +38,7 @@ class ReturnMapper
     {
         $salesReturnItemEntity->fromArray($returnItemTransfer->modifiedToArray());
         $salesReturnItemEntity
-            ->setFkSalesOrderItem($returnItemTransfer->getIdSalesReturn())
+            ->setFkSalesReturn($returnItemTransfer->getIdSalesReturn())
             ->setFkSalesOrderItem($returnItemTransfer->getOrderItem()->getIdSalesOrderItem());
 
         return $salesReturnItemEntity;

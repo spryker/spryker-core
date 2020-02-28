@@ -11,4 +11,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesReturnConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string
+     */
+    public function getReturnReferenceFormat(): string
+    {
+        return '%s-R%s';
+    }
 }

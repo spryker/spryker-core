@@ -56,4 +56,17 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
             ->createReturnReasonMapper()
             ->mapReturnReasonEntityCollectionToReturnReasonTransfers($returnReasonQuery->find());
     }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return int
+     */
+    public function countCustomerReturns(string $customerReference): int
+    {
+        return $this->getFactory()
+            ->getSalesReturnPropelQuery()
+            ->filterByCustomerReference($customerReference)
+            ->count();
+    }
 }

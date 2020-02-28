@@ -25,4 +25,11 @@ interface SalesReturnRepositoryInterface
      * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
      */
     public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): array;
+
+    /**
+     * @param string $customerReference
+     *
+     * @return int
+     */
+    public function countCustomerReturns(string $customerReference): int;
 }

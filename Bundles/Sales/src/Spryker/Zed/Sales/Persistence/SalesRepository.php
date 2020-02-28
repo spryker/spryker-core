@@ -132,7 +132,11 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         OrderItemFilterTransfer $orderItemFilterTransfer
     ): SpySalesOrderItemQuery {
         if ($orderItemFilterTransfer->getSalesOrderItemIds()) {
-            $salesOrderItemQuery->filterByIdSalesOrderItem_In($orderItemFilterTransfer->getSalesOrderItemIds());
+            $salesOrderItemQuery->filterByIdSalesOrderItem_In(array_unique($orderItemFilterTransfer->getSalesOrderItemIds()));
+        }
+
+        if ($orderItemFilterTransfer->getSalesOrderItemUuids()) {
+            $salesOrderItemQuery->filterByUuid_In(array_unique($orderItemFilterTransfer->getSalesOrderItemUuids()));
         }
 
         if ($orderItemFilterTransfer->getCustomerReference()) {

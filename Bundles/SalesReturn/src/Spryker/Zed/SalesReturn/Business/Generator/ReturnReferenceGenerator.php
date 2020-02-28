@@ -7,17 +7,63 @@
 
 namespace Spryker\Zed\SalesReturn\Business\Generator;
 
+use Generated\Shared\Transfer\ReturnTransfer;
+use Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface;
+use Spryker\Zed\SalesReturn\SalesReturnConfig;
+
 class ReturnReferenceGenerator implements ReturnReferenceGeneratorInterface
 {
     /**
-     * @param string $orderReference
+     * @var \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface
+     */
+    protected $salesReturnRepository;
+
+    /**
+     * @var \Spryker\Zed\SalesReturn\SalesReturnConfig
+     */
+    protected $salesReturnConfig;
+
+    /**
+     * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface $salesReturnRepository
+     * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
+     */
+    public function __construct(
+        SalesReturnRepositoryInterface $salesReturnRepository,
+        SalesReturnConfig $salesReturnConfig
+    ) {
+        $this->salesReturnRepository = $salesReturnRepository;
+        $this->salesReturnConfig = $salesReturnConfig;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return string
      */
-    public function generateReturnReference(string $orderReference): string
+    public function generateReturnReference(ReturnTransfer $returnTransfer): string
     {
-        // TODO: generate return reference
+        $this->assertRequirements($returnTransfer);
 
-        return $orderReference;
+        $customerReference = $returnTransfer->getCustomer()->getCustomerReference();
+        $customerReturnCounter = $this->salesReturnRepository->countCustomerReturns($customerReference);
+
+        return sprintf(
+            $this->salesReturnConfig->getReturnReferenceFormat(),
+            $customerReference,
+            $customerReturnCounter + 1
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return void
+     */
+    protected function assertRequirements(ReturnTransfer $returnTransfer): void
+    {
+        $returnTransfer
+            ->requireCustomer()
+            ->getCustomer()
+                ->requireCustomerReference();
     }
 }
