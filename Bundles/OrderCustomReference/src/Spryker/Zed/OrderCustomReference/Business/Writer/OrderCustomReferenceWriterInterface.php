@@ -19,4 +19,11 @@ interface OrderCustomReferenceWriterInterface
      * @return void
      */
     public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function updateOrderCustomReference(SaveOrderTransfer $saveOrderTransfer): void;
 }

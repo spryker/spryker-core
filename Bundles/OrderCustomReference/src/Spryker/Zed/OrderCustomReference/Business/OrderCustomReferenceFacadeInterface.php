@@ -28,6 +28,19 @@ interface OrderCustomReferenceFacadeInterface
 
     /**
      * Specification:
+     * - Persists `orderCustomReference` in `spy_sales_order` schema.
+     * - Expects SaveOrderTransfer::idSalesOrder to be provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function updateOrderCustomReference(SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * Specification:
      * - Returns order custom reference related Quote fields allowed for saving.
      *
      * @api

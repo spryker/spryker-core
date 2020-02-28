@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\OrderCustomReferenceGui\Communication\Controller;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\OrderCustomReferenceGui\Communication\Form\OrderCustomReferenceForm;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,7 +24,6 @@ class SalesController extends AbstractController
     protected const MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED = 'Order Custom Reference was successfully changed.';
     protected const MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED = 'Order Custom Reference has not been changed.';
 
-    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
     protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
 
     /**
@@ -35,45 +34,33 @@ class SalesController extends AbstractController
     public function saveAction(Request $request): RedirectResponse
     {
         $orderCustomReferenceFacade = $this->getFactory()->getOrderCustomReferenceFacade();
-        $formData = $request->get(static::FORM_NAME);
 
-        $formDataIdSalesOrder = $formData[OrderCustomReferenceForm::FIELD_ID_SALES_ORDER] ?? '';
-        $formDataBackUrl = $formData[OrderCustomReferenceForm::FIELD_BACK_URL] ?? '';
+        $orderCustomReferenceForm = $this->getFactory()->getOrderCustomReferenceForm()->handleRequest($request);
 
-        if (!$formDataIdSalesOrder) {
-            $this->addErrorMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED);
+        if ($orderCustomReferenceForm->isSubmitted() && $orderCustomReferenceForm->isValid()) {
+            $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
+            $orderCustomReferenceFormData = $orderCustomReferenceForm->getData();
+            $saveOrderTransfer = (new SaveOrderTransfer())
+                ->setIdSalesOrder($orderCustomReferenceFormData[OrderCustomReferenceForm::FIELD_ID_SALES_ORDER])
+                ->setOrderCustomReference($orderCustomReferenceFormData[OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE]);
 
-            return $this->redirectResponse($formDataBackUrl);
+            $orderCustomReferenceFacade->updateOrderCustomReference($saveOrderTransfer);
         }
 
-        $quoteTransfer = (new QuoteTransfer())
-            ->setOrderCustomReference($formData[OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE] ?? '');
-        $saveOrderTransfer = (new SaveOrderTransfer())->setIdSalesOrder($formDataIdSalesOrder);
+        $this->addErrors($orderCustomReferenceForm);
 
-        if (!$this->isOrderCustomReferenceLengthValid($quoteTransfer->getOrderCustomReference())) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
-
-            return $this->redirectResponse($formDataBackUrl);
-        }
-
-        $orderCustomReferenceFacade->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
-
-        $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
-
-        return $this->redirectResponse($formDataBackUrl);
+        return $this->redirectResponse($orderCustomReferenceForm->getData()[OrderCustomReferenceForm::FIELD_BACK_URL]);
     }
 
     /**
-     * @param string|null $orderCustomReference
+     * @param \Symfony\Component\Form\FormInterface $orderCustomReferenceForm
      *
-     * @return bool
+     * @return void
      */
-    protected function isOrderCustomReferenceLengthValid(?string $orderCustomReference): bool
+    protected function addErrors(FormInterface $orderCustomReferenceForm): void
     {
-        if (!$orderCustomReference) {
-            return true;
+        foreach ($orderCustomReferenceForm->getErrors(true) as $error) {
+            $this->addErrorMessage($error->getMessage());
         }
-
-        return mb_strlen($orderCustomReference) <= static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH;
     }
 }

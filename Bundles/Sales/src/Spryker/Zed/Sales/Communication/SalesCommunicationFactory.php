@@ -203,13 +203,12 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOrderCustomReferenceForm(array $data = [], array $options = []): FormInterface
+    public function getOrderCustomReferenceForm(array $data = []): FormInterface
     {
-        return $this->getFormFactory()->create(OrderCustomReferenceForm::class, $data, $options);
+        return $this->getFormFactory()->create(OrderCustomReferenceForm::class, $data);
     }
 
     /**

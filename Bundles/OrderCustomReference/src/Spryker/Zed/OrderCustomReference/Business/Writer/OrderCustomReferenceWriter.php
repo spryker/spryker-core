@@ -42,4 +42,20 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
                 );
         }
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function updateOrderCustomReference(SaveOrderTransfer $saveOrderTransfer): void
+    {
+        if ($saveOrderTransfer->getIdSalesOrder()) {
+            $this->orderCustomReferenceEntityManager
+                ->saveOrderCustomReference(
+                    $saveOrderTransfer->getIdSalesOrder(),
+                    $saveOrderTransfer->getOrderCustomReference()
+                );
+        }
+    }
 }

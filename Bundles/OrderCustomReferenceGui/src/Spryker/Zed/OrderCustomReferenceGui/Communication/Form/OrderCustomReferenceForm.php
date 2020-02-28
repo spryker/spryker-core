@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\OrderCustomReferenceGui\Communication\OrderCustomReferenceGuiCommunicationFactory getFactory()
@@ -22,7 +23,7 @@ class OrderCustomReferenceForm extends AbstractType
     public const FIELD_ID_SALES_ORDER = 'idSalesOrder';
     public const FIELD_BACK_URL = 'backUrl';
 
-    protected const ROUTE_ORDER_CUSTOM_REFERENCE_SAVE = '/order-custom-reference-gui/sales/save';
+    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
 
     protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
 
@@ -35,7 +36,6 @@ class OrderCustomReferenceForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addAction($builder)
             ->addOrderCustomReferenceField($builder)
             ->addBackUrlField($builder)
             ->addIdSalesOrderField($builder);
@@ -53,8 +53,12 @@ class OrderCustomReferenceForm extends AbstractType
             TextType::class,
             [
                 'label' => 'Custom Order Reference',
+                'required' => false,
                 'constraints' => [
-                    new Length(['max' => static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH]),
+                    new Length([
+                        'max' => static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH,
+                        'maxMessage' => static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH,
+                    ]),
                 ],
             ]
         );
@@ -69,7 +73,16 @@ class OrderCustomReferenceForm extends AbstractType
      */
     protected function addIdSalesOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ID_SALES_ORDER, HiddenType::class);
+        $builder->add(
+            static::FIELD_ID_SALES_ORDER,
+            HiddenType::class,
+            [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]
+        );
 
         return $this;
     }
@@ -82,18 +95,6 @@ class OrderCustomReferenceForm extends AbstractType
     protected function addBackUrlField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_BACK_URL, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addAction(FormBuilderInterface $builder)
-    {
-        $builder->setAction(static::ROUTE_ORDER_CUSTOM_REFERENCE_SAVE);
 
         return $this;
     }

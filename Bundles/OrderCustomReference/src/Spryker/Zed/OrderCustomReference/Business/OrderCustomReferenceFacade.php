@@ -39,6 +39,22 @@ class OrderCustomReferenceFacade extends AbstractFacade implements OrderCustomRe
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function updateOrderCustomReference(SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()
+            ->createOrderCustomReferenceWriter()
+            ->updateOrderCustomReference($saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string[]
