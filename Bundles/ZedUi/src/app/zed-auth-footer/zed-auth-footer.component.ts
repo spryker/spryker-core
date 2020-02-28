@@ -8,5 +8,5 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
     encapsulation: ViewEncapsulation.ShadowDom
 })
 export class ZedAuthFooterComponent {
-    todayDate: Date = new Date();
+    todayDate = new Date();
 }
