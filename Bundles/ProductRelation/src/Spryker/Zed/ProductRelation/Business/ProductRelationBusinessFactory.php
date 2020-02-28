@@ -17,9 +17,11 @@ use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReader;
 use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdater;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdaterInterface;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdater;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdater;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdaterInterface;
-use Spryker\Zed\ProductRelation\Business\Updater\ProductRelationUpdater;
+use Spryker\Zed\ProductRelation\Business\Updater\ProductRelationBuilder;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 
 /**
@@ -80,6 +82,19 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface
+     */
+    public function createProductRelationUpdater(): ProductRelationUpdaterInterface
+    {
+        return new ProductRelationUpdater(
+            $this->getEntityManager(),
+            $this->createRelatedProductUpdater(),
+            $this->getTouchFacade(),
+            $this->createProductRelationStoreRelationUpdater()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdaterInterface
      */
     public function createProductRelationStoreRelationUpdater(): ProductRelationStoreRelationUpdaterInterface
@@ -107,11 +122,11 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Business\Updater\ProductRelationUpdaterInterface
+     * @return \Spryker\Zed\ProductRelation\Business\Updater\ProductRelationBuilderInterface
      */
-    public function createProductRelationUpdater()
+    public function createProductRelationBuilder()
     {
-        return new ProductRelationUpdater(
+        return new ProductRelationBuilder(
             $this->getQueryContainer(),
             $this->getUtilEncodingService(),
             $this->createProductRelationWriter()

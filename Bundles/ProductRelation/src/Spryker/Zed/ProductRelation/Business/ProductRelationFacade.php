@@ -43,16 +43,12 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @throws \Exception
-     * @throws \Throwable
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer)
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
-        $this->getFactory()
-            ->createProductRelationWriter()
+        return $this->getFactory()
+            ->createProductRelationUpdater()
             ->updateRelation($productRelationTransfer);
     }
 
@@ -146,7 +142,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
     public function rebuildRelations()
     {
         $this->getFactory()
-            ->createProductRelationUpdater()
+            ->createProductRelationBuilder()
             ->rebuildRelations();
     }
 

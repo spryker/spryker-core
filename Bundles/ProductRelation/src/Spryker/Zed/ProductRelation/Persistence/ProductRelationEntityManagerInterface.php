@@ -58,4 +58,18 @@ interface ProductRelationEntityManagerInterface
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer
      */
     public function saveProductRelationType(ProductRelationTypeTransfer $productRelationTypeTransfer): ProductRelationTypeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ?ProductRelationTransfer;
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    public function removeRelatedProductsByIdProductRelation(int $idProductRelation): void;
 }

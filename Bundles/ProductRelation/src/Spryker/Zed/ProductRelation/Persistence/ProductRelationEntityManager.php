@@ -122,6 +122,49 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ?ProductRelationTransfer
+    {
+        $productRelationEntity = $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByIdProductRelation($productRelationTransfer->getIdProductRelation())
+            ->findOne();
+
+        if (!$productRelationEntity) {
+            return null;
+        }
+
+        $productRelationMapper = $this->getFactory()->createProductRelationMapper();
+
+        $productRelationEntity = $productRelationMapper->mapProductRelationTransferToProductRelationEntity(
+            $productRelationTransfer,
+            $productRelationEntity
+        );
+        $productRelationEntity->save();
+
+        return $productRelationMapper->mapProductRelationEntityToProductRelationTransfer(
+            $productRelationEntity,
+            $productRelationTransfer
+        );
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    public function removeRelatedProductsByIdProductRelation(int $idProductRelation): void
+    {
+        $this->getFactory()
+            ->createProductRelationProductAbstractQuery()
+            ->filterByFkProductRelation($idProductRelation)
+            ->delete();
+    }
+
+    /**
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract
      */
     protected function createProductRelationProductAbstractEntity(): SpyProductRelationProductAbstract

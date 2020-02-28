@@ -16,7 +16,7 @@ use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriterInterface
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 
-class ProductRelationUpdater implements ProductRelationUpdaterInterface
+class ProductRelationBuilder implements ProductRelationBuilderInterface
 {
     use LoggerTrait;
 

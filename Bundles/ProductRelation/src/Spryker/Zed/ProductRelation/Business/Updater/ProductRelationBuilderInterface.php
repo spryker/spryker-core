@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductRelation\Business\Updater;
 
-interface ProductRelationUpdaterInterface
+interface ProductRelationBuilderInterface
 {
     /**
      * @return void
