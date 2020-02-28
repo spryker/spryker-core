@@ -134,7 +134,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductRelationRelatedProductTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
     public function findRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array
     {
@@ -146,7 +146,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
 
         return $this->getFactory()
             ->createProductMapper()
-            ->mapProductRelationRelatedProductEntitiesToRelatedProductTransfers(
+            ->mapProductAbstractEntitiesToProductAbstractTransfers(
                 $relatedProducts,
                 []
             );

@@ -78,23 +78,23 @@ class ProductMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract[] $productRelationRelatedProductEntities
-     * @param \Generated\Shared\Transfer\ProductRelationRelatedProductTransfer[] $relatedProductTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductRelationRelatedProductTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function mapProductRelationRelatedProductEntitiesToRelatedProductTransfers(
-        ObjectCollection $productRelationRelatedProductEntities,
-        array $relatedProductTransfers
+    public function mapProductAbstractEntitiesToProductAbstractTransfers(
+        ObjectCollection $productAbstractEntities,
+        array $productAbstractTransfers
     ): array {
-        foreach ($productRelationRelatedProductEntities as $productRelationRelatedProductEntity) {
-            $productAbstractTransfers[] = $this->mapProductRelationProductAbstractEntityToProductRelationRelatedProductTransfer(
-                $productRelationRelatedProductEntity,
-                new ProductRelationRelatedProductTransfer()
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractTransfers[] = $this->mapProductAbstractEntityToProductAbstractTransfer(
+                $productAbstractEntity,
+                new ProductAbstractTransfer()
             );
         }
 
-        return $relatedProductTransfers;
+        return $productAbstractTransfers;
     }
 
     /**
