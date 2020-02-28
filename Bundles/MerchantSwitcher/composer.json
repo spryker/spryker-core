@@ -1,16 +1,23 @@
 {
-  "name": "spryker/merchant-product-offer",
+  "name": "spryker/merchant-switcher",
   "type": "library",
-  "description": "MerchantProductOffer module",
+  "description": "MerchantSwitcher module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.33.0",
-    "spryker/merchant": "^2.0.0",
-    "spryker/product-offer": "^0.3.1"
+    "spryker/cart": "^7.0.0",
+    "spryker/cart-extension": "^4.0.0",
+    "spryker/checkout-extension": "^1.2.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/merchant-product-offer": "^0.4.0",
+    "spryker/quote": "^2.0.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
+    "spryker/merchant": "*",
+    "spryker/product-offer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
