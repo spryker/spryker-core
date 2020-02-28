@@ -10,7 +10,7 @@
         children: form.children,
     } %}
 
-    <mp-login>
+    <mp-login cloack>
         {% for message in app.session.flashbag.get('flash.messages.error') %}
             <spy-alert class="login__message" type="error">{{ message | trans }}</spy-alert>
         {% endfor %}
@@ -31,13 +31,14 @@
                         value="{{ formField.vars.value }}"
                         type="{{ formField.vars.block_prefixes[2] }}"
                         placeholder="{{ formField.vars.attr.placeholder | default | trans }}"
+                        cloack
                     ></spy-input>
                 </spy-form-item>
             {% endfor %}
 
             <input type="hidden" name="{{ formData.children._token.vars.full_name }}" value="{{ formData.children._token.vars.value }}">
 
-            <spy-button type="submit">{{ 'Login' | trans }}</spy-button>
+            <spy-button type="submit" cloack>{{ 'Login' | trans }}</spy-button>
         </form>
     </mp-login>
 {% endblock %}
