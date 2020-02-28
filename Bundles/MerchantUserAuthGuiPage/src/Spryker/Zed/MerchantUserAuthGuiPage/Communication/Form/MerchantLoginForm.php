@@ -54,7 +54,7 @@ class MerchantLoginForm extends AbstractType
                     new NotBlank(),
                 ],
                 'attr' => [
-                'placeholder' => 'Email Address',
+                    'placeholder' => 'Email Address',
                 ],
             ]
         );
@@ -79,8 +79,8 @@ class MerchantLoginForm extends AbstractType
                     new NotBlank(),
                 ],
                 'attr' => [
-                'placeholder' => 'Password',
-                'autocomplete' => 'off',
+                    'placeholder' => 'Password',
+                    'autocomplete' => 'off',
                 ],
             ]
         );

@@ -20,7 +20,7 @@
 
         <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
             {% for formField in formData.children if formField.vars.block_prefixes[1] != 'hidden' %}
-                <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default }}">
+                <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default | trans }}">
                     {{ formField.vars.label | trans }}
                     <spy-input
                         control
