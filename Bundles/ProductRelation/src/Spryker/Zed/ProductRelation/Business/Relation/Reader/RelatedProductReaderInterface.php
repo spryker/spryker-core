@@ -15,7 +15,7 @@ interface RelatedProductReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return \Generator|\Generated\Shared\Transfer\ProductRelationRelatedProductTransfer[][]
+     * @return \Generator|\Generated\Shared\Transfer\ProductAbstractTransfer[][]
      */
     public function findMatchingProducts(ProductRelationTransfer $productRelationTransfer): Generator;
 }

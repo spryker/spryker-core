@@ -14,16 +14,6 @@ interface ProductRelationWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @throws \Throwable
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function saveRelation(ProductRelationTransfer $productRelationTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
-     *
      * @throws \Exception
      * @throws \Throwable
      * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException

@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductRelation\Business\Relation;
 
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
-use Generator;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract;
-use Orm\Zed\ProductRelation\Persistence\SpyProductRelationType;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException;
@@ -70,42 +68,6 @@ class ProductRelationWriter implements ProductRelationWriterInterface
         $this->utilEncodingService = $utilEncodingService;
         $this->productRelationConfig = $productRelationConfig;
         $this->relatedProductReader = $relatedProductReader;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
-     *
-     * @return int
-     */
-    public function saveRelation(ProductRelationTransfer $productRelationTransfer)
-    {
-        $productRelationTransfer->requireProductRelationType();
-
-        return $this->getTransactionHandler()->handleTransaction(function () use ($productRelationTransfer) {
-            return $this->executeSaveRelationTransaction($productRelationTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
-     *
-     * @return int
-     */
-    protected function executeSaveRelationTransaction(
-        ProductRelationTransfer $productRelationTransfer
-    ) {
-        $productRelationTypeTransfer = $productRelationTransfer->getProductRelationType();
-        $productRelationTypeEntity = $this->findOrCreateProductRelationTypeEntity($productRelationTypeTransfer);
-        $productRelationTypeEntity->save();
-
-        $productRelationEntity = $this->mapProductRelationEntity($productRelationTransfer, $productRelationTypeEntity);
-        $productRelationEntity->save();
-        $productRelationTransfer->setIdProductRelation($productRelationEntity->getIdProductRelation());
-
-        $this->saveAllRelatedProducts($productRelationTransfer);
-        $this->touchRelationActive($productRelationTransfer->getFkProductAbstract());
-
-        return $productRelationEntity->getIdProductRelation();
     }
 
     /**
@@ -180,28 +142,6 @@ class ProductRelationWriter implements ProductRelationWriterInterface
             }
 
             $this->saveRelatedProducts($productAbstractIds, $productRelationTransfer->getIdProductRelation());
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
-     *
-     * @return \Generator|\Orm\Zed\Product\Persistence\SpyProductAbstract[][]
-     */
-    protected function findMatchingProducts(ProductRelationTransfer $productRelationTransfer): Generator
-    {
-        $count = $this->productRelationQueryContainer
-            ->getRulePropelQuery($productRelationTransfer)
-            ->count();
-
-        $limit = $this->productRelationConfig->getProductRelationUpdateChunkSize();
-
-        for ($offset = 0; $offset <= $count; $offset += $limit) {
-            yield $this->productRelationQueryContainer
-                ->getRulePropelQuery($productRelationTransfer)
-                ->limit($limit)
-                ->offset($offset)
-                ->find();
         }
     }
 
@@ -296,24 +236,6 @@ class ProductRelationWriter implements ProductRelationWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelationType $productRelationTypeEntity
-     *
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation
-     */
-    protected function mapProductRelationEntity(
-        ProductRelationTransfer $productRelationTransfer,
-        SpyProductRelationType $productRelationTypeEntity
-    ) {
-        $productRelationEntity = $this->createProductRelationEntity();
-        $productRelationEntity->fromArray($productRelationTransfer->toArray());
-        $productRelationEntity->setQuerySetData($this->encodeQuerySet($productRelationTransfer));
-        $productRelationEntity->setFkProductRelationType($productRelationTypeEntity->getIdProductRelationType());
-
-        return $productRelationEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation $productRelationEntity
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation
@@ -377,27 +299,6 @@ class ProductRelationWriter implements ProductRelationWriterInterface
     protected function createProductRelationProductAbstractEntity()
     {
         return new SpyProductRelationProductAbstract();
-    }
-
-    /**
-     * @param int $idProductRelation
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract
-     */
-    protected function findOrCreateProductRelationProductByIdAndIdProduct($idProductRelation, $idProductAbstract)
-    {
-        return $this->productRelationQueryContainer
-            ->queryProductRelationProductAbstractByIdRelationAndIdProduct($idProductRelation, $idProductAbstract)
-            ->findOneOrCreate();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation
-     */
-    protected function createProductRelationEntity()
-    {
-        return new SpyProductRelation();
     }
 
     /**
