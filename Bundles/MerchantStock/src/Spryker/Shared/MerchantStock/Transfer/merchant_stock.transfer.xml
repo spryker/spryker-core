@@ -5,11 +5,14 @@
 
     <transfer name="Merchant">
         <property name="stockCollection" type="Stock[]" singular="stock"/>
+        <property name="name" type="string"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="Stock">
         <property name="idStock" type="int"/>
         <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="MerchantStock">
@@ -20,12 +23,17 @@
     </transfer>
 
     <transfer name="MerchantError">
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="MerchantResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="merchant" type="Merchant"/>
+        <property name="errors" type="MerchantError[]" singular="error"/>
     </transfer>
 
     <transfer name="StockResponse">
+        <property name="stock" type="Stock"/>
     </transfer>
 
 </transfers>
