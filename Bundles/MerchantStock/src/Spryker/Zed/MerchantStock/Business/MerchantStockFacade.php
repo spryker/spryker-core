@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantStock\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -39,10 +40,10 @@ class MerchantStockFacade extends AbstractFacade implements MerchantStockFacadeI
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\StockTransfer[]|\ArrayObject
      */
-    public function expandMerchantWithStocks(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function getStocksByMerchant(MerchantTransfer $merchantTransfer): ArrayObject
     {
-        return $this->getRepository()->getMerchantStocksByMerchant($merchantTransfer);
+        return $this->getRepository()->getStocksByMerchant($merchantTransfer);
     }
 }

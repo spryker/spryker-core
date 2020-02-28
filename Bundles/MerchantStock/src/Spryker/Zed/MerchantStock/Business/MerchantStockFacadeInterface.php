@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantStock\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
@@ -28,13 +29,13 @@ interface MerchantStockFacadeInterface
 
     /**
      * Specification:
-     * - Expands MerchantTransfer with related stocks.
+     * - Returns StockTransfers related to provider merchant.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\StockTransfer[]|\ArrayObject
      */
-    public function expandMerchantWithStocks(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function getStocksByMerchant(MerchantTransfer $merchantTransfer): ArrayObject;
 }

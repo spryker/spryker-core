@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantStock\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantStockRepositoryInterface
@@ -14,7 +15,7 @@ interface MerchantStockRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\StockTransfer[]|\ArrayObject
      */
-    public function getMerchantStocksByMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function getStocksByMerchant(MerchantTransfer $merchantTransfer): ArrayObject;
 }

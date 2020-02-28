@@ -7,44 +7,27 @@
 
 namespace Spryker\Zed\MerchantStock\Persistence\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MerchantStockTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Orm\Zed\MerchantStock\Persistence\Map\SpyMerchantStockTableMap;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
-use Propel\Runtime\Collection\ObjectCollection;
+use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 
 class MerchantStockMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $merchantStocksData
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function mapMerchantStocksDataToMerchantTransfer(
-        ObjectCollection $merchantStocksData,
-        MerchantTransfer $merchantTransfer
-    ): MerchantTransfer {
-        $stockCollection = new ArrayObject();
-
-        foreach ($merchantStocksData as $merchantStockEntity) {
-            $stockCollection->append($this->createStockTransfer($merchantStockEntity));
-        }
-
-        return $merchantTransfer->setStockCollection($stockCollection);
-    }
-
-    /**
-     * @param \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock $merchantStockEntity
+     * @param array $stock
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
      * @return \Generated\Shared\Transfer\StockTransfer
      */
-    protected function createStockTransfer(SpyMerchantStock $merchantStockEntity): StockTransfer
-    {
-        return (new StockTransfer())
-            ->setIdStock($merchantStockEntity->getFkStock())
-            ->setName($merchantStockEntity->getStockName());
+    public function mapStockDataToStockTransfer(
+        array $stock,
+        StockTransfer $stockTransfer
+    ): StockTransfer {
+        return $stockTransfer
+            ->setIdStock($stock[SpyMerchantStockTableMap::COL_FK_STOCK])
+            ->setName($stock[SpyStockTableMap::COL_NAME]);
     }
 
     /**

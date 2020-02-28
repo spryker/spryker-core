@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\MerchantStock\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -16,24 +18,30 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantStockRepository extends AbstractRepository implements MerchantStockRepositoryInterface
 {
-    protected const STOCK_NAME = 'stockName';
-
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\StockTransfer[]|\ArrayObject
      */
-    public function getMerchantStocksByMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function getStocksByMerchant(MerchantTransfer $merchantTransfer): ArrayObject
     {
-        $merchantStocksData = $this->getFactory()
+        $stocksData = $this->getFactory()
             ->createMerchantStockPropelQuery()
-                ->useSpyStockQuery()
-                    ->withColumn(SpyStockTableMap::COL_NAME, static::STOCK_NAME)
-                ->endUse()
-            ->findByFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant());
+            ->filterByFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
+            ->useSpyStockQuery()
+                ->withColumn(SpyStockTableMap::COL_NAME)
+            ->endUse()
+            ->find()
+            ->toArray();
 
-        return $this->getFactory()
-            ->createMerchantStockMapper()
-            ->mapMerchantStocksDataToMerchantTransfer($merchantStocksData, $merchantTransfer);
+        $stocks = new ArrayObject();
+
+        foreach ($stocksData as $stock) {
+            $stocks->append(
+                $this->getFactory()->createMerchantStockMapper()->mapStockDataToStockTransfer($stock, new StockTransfer())
+            );
+        }
+
+        return $stocks;
     }
 }

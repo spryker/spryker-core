@@ -29,6 +29,8 @@ class MerchantStockMerchantExpanderPlugin extends AbstractPlugin implements Merc
      */
     public function expand(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        return $this->getFacade()->expandMerchantWithStocks($merchantTransfer);
+        $stockTransfers = $this->getFacade()->getStocksByMerchant($merchantTransfer);
+
+        return $merchantTransfer->setStockCollection($stockTransfers);
     }
 }
