@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "postbuild": "run-s copy:*",
     "copy:images": "cp -a ./node_modules/@spryker/logo/src/lib/logo/images/ ../../../../../public/Zed/assets/images",
     "test": "ng test",
