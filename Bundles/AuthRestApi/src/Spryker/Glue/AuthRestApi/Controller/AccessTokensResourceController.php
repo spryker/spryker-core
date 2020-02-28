@@ -24,9 +24,7 @@ class AccessTokensResourceController extends AbstractController
      *              "Creates access token for user."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {

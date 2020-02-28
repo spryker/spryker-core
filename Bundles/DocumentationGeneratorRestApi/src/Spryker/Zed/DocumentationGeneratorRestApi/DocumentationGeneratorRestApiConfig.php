@@ -21,9 +21,9 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     public const REST_API_DOCUMENTATION_INFO_TITLE = 'Spryker API';
     public const REST_API_DOCUMENTATION_INFO_LICENSE_NAME = 'MIT';
 
-    public const REST_API_DOCUMENTATION_CONTACT_NAME = 'Spryker';
-    public const REST_API_DOCUMENTATION_CONTACT_URL = 'https://support.spryker.com/';
-    public const REST_API_DOCUMENTATION_CONTACT_EMAIL = 'support@spryker.com';
+    protected const REST_API_DOCUMENTATION_CONTACT_NAME = 'Spryker';
+    protected const REST_API_DOCUMENTATION_CONTACT_URL = 'https://support.spryker.com/';
+    protected const REST_API_DOCUMENTATION_CONTACT_EMAIL = 'support@spryker.com';
 
     protected const APPLICATION_PROJECT_ANNOTATION_SOURCE_DIRECTORY_PATTERN = '/Glue/%1$s/Controller/';
     protected const APPLICATION_CORE_ANNOTATION_SOURCE_DIRECTORY_PATTERN = '/*/*/src/*/Glue/%1$s/Controller/';

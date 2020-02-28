@@ -23,9 +23,7 @@ class CompaniesResourceController extends AbstractController
      *              "Retrieves a company by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Company id is missing.",

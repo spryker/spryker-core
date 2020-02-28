@@ -16,9 +16,7 @@ class TestResourceWithAllMethodsController
      *              "getResource summary"
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Item not found"

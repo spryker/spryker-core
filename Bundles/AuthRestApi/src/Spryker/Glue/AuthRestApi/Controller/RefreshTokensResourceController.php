@@ -24,9 +24,7 @@ class RefreshTokensResourceController extends AbstractController
      *              "Refreshes customer's auth token."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {

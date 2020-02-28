@@ -24,9 +24,7 @@ class WishlistsResourceController extends AbstractController
      *              "Retrieves wishlist data by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Wishlist not found.",
@@ -38,9 +36,7 @@ class WishlistsResourceController extends AbstractController
      *              "Retrieves all customer wishlists."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }]
      *     }
      * })
@@ -63,9 +59,7 @@ class WishlistsResourceController extends AbstractController
      *              "Creates wishlist."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Wishlist with the same name already exists, Wishlist name has wrong format.",
@@ -93,9 +87,7 @@ class WishlistsResourceController extends AbstractController
      *              "Deletes customer wishlist."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "A wishlist with the same name already exists.",
@@ -124,9 +116,7 @@ class WishlistsResourceController extends AbstractController
      *              "Removes customer wishlist."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Wishlist not found.",

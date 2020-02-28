@@ -23,9 +23,7 @@ class CompanyUsersResourceController extends AbstractController
      *              "Retrieves a company user by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Company user not found."

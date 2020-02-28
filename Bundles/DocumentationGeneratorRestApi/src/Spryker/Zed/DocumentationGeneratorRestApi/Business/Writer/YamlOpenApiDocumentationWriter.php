@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer;
 
-use Generated\Shared\Transfer\PathMethodComponentTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFilesystemInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToSymfonyYamlAdapter;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToYamlDumperInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
-use Symfony\Component\HttpFoundation\Request;
 
 class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
 {
@@ -81,7 +79,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     {
         $dataStructure = $this->getDefaultDataStructure();
         $dataStructure[static::KEY_PATHS] = $data[static::KEY_PATHS];
-        $dataStructure[static::KEY_TAGS] = $this->getTagsFromData($data[static::KEY_PATHS]);
+        $dataStructure[static::KEY_TAGS] = $data[static::KEY_TAGS];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $data[static::KEY_SCHEMAS];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SECURITY_SCHEMES] = $data[static::KEY_SECURITY_SCHEMES];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_PARAMETERS] = $data[static::KEY_PARAMETERS];
@@ -128,7 +126,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
             static::KEY_COMPONENTS => [
                 static::KEY_SECURITY_SCHEMES => [],
                 static::KEY_SCHEMAS => [],
-                static::KEY_PARAMETERS => (object)[],
+                static::KEY_PARAMETERS => [],
             ],
         ];
     }
@@ -142,70 +140,5 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
             . DIRECTORY_SEPARATOR
             . $this->documentationGeneratorRestApiConfig->getGeneratedFilePrefix()
             . static::GENERATED_FILE_POSTFIX;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return string[]
-     */
-    protected function getTagsFromData(array $data): array
-    {
-        $tags = [];
-
-        foreach ($data as $path) {
-            $tags = array_merge($tags, $this->getTagFromPath($path));
-        }
-
-        $tags = array_unique($tags);
-        asort($tags);
-
-        return $this->formatTags($tags);
-    }
-
-    /**
-     * @param array $path
-     *
-     * @return string[]
-     */
-    protected function getTagFromPath(array $path): array
-    {
-        $tags = [];
-
-        foreach ($this->getRequestMethods() as $requestMethod) {
-            if (!empty($path[$requestMethod][PathMethodComponentTransfer::TAGS])) {
-                $tags = array_merge($tags, $path[$requestMethod][PathMethodComponentTransfer::TAGS]);
-            }
-        }
-
-        return $tags;
-    }
-
-    /**
-     * @param string[] $tags
-     *
-     * @return array
-     */
-    protected function formatTags(array $tags): array
-    {
-        $formattedTags = [];
-        foreach ($tags as $tag) {
-            $formattedTags[] = ['name' => $tag];
-        }
-
-        return $formattedTags;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getRequestMethods(): array
-    {
-        return [
-            strtolower(Request::METHOD_POST),
-            strtolower(Request::METHOD_PATCH),
-            strtolower(Request::METHOD_GET),
-            strtolower(Request::METHOD_DELETE),
-        ];
     }
 }

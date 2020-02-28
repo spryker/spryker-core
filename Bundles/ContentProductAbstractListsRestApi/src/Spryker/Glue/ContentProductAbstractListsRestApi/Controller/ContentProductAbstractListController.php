@@ -23,9 +23,7 @@ class ContentProductAbstractListController extends AbstractController
      *              "Retrieves content item abstract products."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Content key is missing.",

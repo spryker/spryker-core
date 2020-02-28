@@ -24,9 +24,7 @@ class GuestCartVouchersResourceController extends AbstractController
      *              "Adds a code to guest cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found."
@@ -54,9 +52,7 @@ class GuestCartVouchersResourceController extends AbstractController
      *              "Deletes a code from guest cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found.",

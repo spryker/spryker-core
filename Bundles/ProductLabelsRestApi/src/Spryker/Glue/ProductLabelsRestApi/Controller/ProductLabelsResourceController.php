@@ -23,9 +23,7 @@ class ProductLabelsResourceController extends AbstractController
      *              "Retrieves abstract product labels by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Product label id is not specified.",

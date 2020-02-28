@@ -23,9 +23,7 @@ class CompanyRolesResourceController extends AbstractController
      *              "Retrieves a company role by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Company role id is missing.",

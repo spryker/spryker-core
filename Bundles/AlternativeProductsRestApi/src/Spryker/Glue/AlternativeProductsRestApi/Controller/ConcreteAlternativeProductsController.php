@@ -23,9 +23,7 @@ class ConcreteAlternativeProductsController extends AbstractController
      *              "Retrieves concrete alternative products of concrete product."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Concrete product id is not specified.",

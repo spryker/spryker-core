@@ -16,9 +16,7 @@ class TestResourceWithGetCollectionController
      *              "Summary example"
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Bad Request",

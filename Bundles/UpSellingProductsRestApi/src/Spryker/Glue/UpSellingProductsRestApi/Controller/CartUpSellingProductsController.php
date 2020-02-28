@@ -23,9 +23,7 @@ class CartUpSellingProductsController extends AbstractController
      *              "Retrieves list of all up-selling products for the cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",

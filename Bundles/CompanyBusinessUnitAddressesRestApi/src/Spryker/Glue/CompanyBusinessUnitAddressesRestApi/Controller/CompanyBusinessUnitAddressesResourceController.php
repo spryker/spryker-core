@@ -23,9 +23,7 @@ class CompanyBusinessUnitAddressesResourceController extends AbstractController
      *              "Retrieves a company business unit address by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Company business unit address id is missing.",

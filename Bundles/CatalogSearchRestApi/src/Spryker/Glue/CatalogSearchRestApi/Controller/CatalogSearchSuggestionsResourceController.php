@@ -24,9 +24,7 @@ class CatalogSearchSuggestionsResourceController extends AbstractController
      *          ],
      *          "parameters": [
      *              {
-     *                  "name": "Accept-Language",
-     *                  "in": "header",
-     *                  "description": "Locale value relevant for the store."
+     *                  "ref": "acceptLanguage"
      *              },
      *              {
      *                  "name": "q",

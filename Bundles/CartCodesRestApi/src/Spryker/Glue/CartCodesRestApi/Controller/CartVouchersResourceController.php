@@ -24,9 +24,7 @@ class CartVouchersResourceController extends AbstractController
      *              "Adds a code to cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "401": "Invalid access token.",
@@ -58,9 +56,7 @@ class CartVouchersResourceController extends AbstractController
      *              "Deletes a code from cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "401": "Invalid access token.",

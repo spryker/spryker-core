@@ -23,9 +23,7 @@ class RelatedProductsController extends AbstractController
      *              "Retrieves list of all related products of abstract product."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Abstract product sku is not specified.",

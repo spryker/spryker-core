@@ -71,6 +71,7 @@
         <property name="summary" type="string"/>
         <property name="tags" type="string[]" singular="tag"/>
         <property name="operationId" type="string"/>
+        <property name="ref" type="string"/>
         <property name="parameters" type="array" singular="parameter"/>
         <property name="request" type="array" singular="request"/>
         <property name="security" type="array" singular="security"/>
@@ -82,6 +83,7 @@
         <property name="in" type="string"/>
         <property name="description" type="string"/>
         <property name="required" type="bool"/>
+        <property name="ref" type="string"/>
         <property name="deprecated" type="bool"/>
         <property name="allowEmptyValue" type="bool"/>
         <property name="schemaType" type="string"/>

@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\PathMethodDataTransfer;
 use Generated\Shared\Transfer\PathSchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
@@ -31,7 +32,6 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     protected const PATTERN_OPERATION_ID_PATCH_RESOURCE = 'update-%s';
     protected const PATTERN_OPERATION_ID_DELETE_RESOURCE = 'delete-%s';
 
-    protected const SUFFIX_FOR_OPERATION_ID = '-for-guest';
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
      */
@@ -48,26 +48,34 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     protected $securitySchemeGenerator;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface
      */
     protected $parameterGenerator;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface
+     */
+    protected $tagGenerator;
 
     /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface $pathGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface $schemaGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface $securitySchemeGenerator
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface $parameterGenerator
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface $parameterGenerator
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface $tagGenerator
      */
     public function __construct(
         PathGeneratorInterface $pathGenerator,
         SchemaGeneratorInterface $schemaGenerator,
         SecuritySchemeGeneratorInterface $securitySchemeGenerator,
-        ParameterGeneratorInterface $parameterGenerator
+        OpenApiSpecificationParameterGeneratorInterface $parameterGenerator,
+        OpenApiTagGeneratorInterface $tagGenerator
     ) {
         $this->pathGenerator = $pathGenerator;
         $this->schemaGenerator = $schemaGenerator;
         $this->securitySchemeGenerator = $securitySchemeGenerator;
         $this->parameterGenerator = $parameterGenerator;
+        $this->tagGenerator = $tagGenerator;
     }
 
     /**
@@ -103,6 +111,14 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     }
 
     /**
+     * @return array
+     */
+    public function getGeneratedTags(): array
+    {
+        return $this->tagGenerator->getTags();
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
      * @param bool $isProtected
@@ -123,10 +139,12 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
-            static::PATTERN_OPERATION_ID_GET_RESOURCE,
-            $this->getParentResourceType($plugin),
             $errorSchema,
-            $annotationTransfer
+            $annotationTransfer,
+            $this->getOperationId(
+                static::PATTERN_OPERATION_ID_GET_RESOURCE,
+                $this->getFullResource($plugin)
+            )
         );
 
         $this->addGetResourceById($plugin, $pathDataTransfer, $idResource, $annotationTransfer);
@@ -153,12 +171,15 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
-            static::PATTERN_OPERATION_ID_GET_COLLECTION,
-            $this->getParentResourceType($plugin),
             $errorSchema,
-            $annotationTransfer
+            $annotationTransfer,
+            $this->getOperationId(
+                static::PATTERN_OPERATION_ID_GET_COLLECTION,
+                $this->getFullResource($plugin)
+            )
         );
 
+        $this->tagGenerator->addTag($pathDataTransfer);
         $this->addGetCollectionPath($plugin, $pathDataTransfer, $annotationTransfer);
     }
 
@@ -184,10 +205,12 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
-            static::PATTERN_OPERATION_ID_POST_RESOURCE,
-            $this->getParentResourceType($plugin),
             $errorSchema,
-            $annotationTransfer
+            $annotationTransfer,
+            $this->getOperationId(
+                static::PATTERN_OPERATION_ID_POST_RESOURCE,
+                $this->getFullResource($plugin)
+            )
         );
 
         if (!$pathDataTransfer->getSummary()) {
@@ -195,7 +218,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
                 $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType())
             );
         }
-
+        $this->tagGenerator->addTag($pathDataTransfer);
         $this->pathGenerator->addPostPath($pathDataTransfer, $requestSchema, $errorSchema, $responseSchema);
     }
 
@@ -221,10 +244,12 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
-            static::PATTERN_OPERATION_ID_PATCH_RESOURCE,
-            $this->getParentResourceType($plugin),
             $errorSchema,
-            $annotationTransfer
+            $annotationTransfer,
+            $this->getOperationId(
+                static::PATTERN_OPERATION_ID_PATCH_RESOURCE,
+                $this->getFullResource($plugin)
+            )
         );
 
         if (!$pathDataTransfer->getSummary()) {
@@ -233,6 +258,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             );
         }
 
+        $this->tagGenerator->addTag($pathDataTransfer);
         $this->pathGenerator->addPatchPath($pathDataTransfer, $requestSchema, $errorSchema, $responseSchema);
     }
 
@@ -256,10 +282,12 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $plugin->getResourceType(),
             $resourcePath,
             $isProtected,
-            static::PATTERN_OPERATION_ID_DELETE_RESOURCE,
-            $this->getParentResourceType($plugin),
             $errorSchema,
-            $annotationTransfer
+            $annotationTransfer,
+            $this->getOperationId(
+                static::PATTERN_OPERATION_ID_DELETE_RESOURCE,
+                $this->getFullResource($plugin)
+            )
         );
 
         if (!$pathDataTransfer->getSummary()) {
@@ -268,6 +296,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             );
         }
 
+        $this->tagGenerator->addTag($pathDataTransfer);
         $this->pathGenerator->addDeletePath($pathDataTransfer, $errorSchema);
     }
 
@@ -292,6 +321,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             );
         }
 
+        $this->tagGenerator->addTag($pathMethodDataTransfer);
         $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchema, $responseSchema);
     }
 
@@ -320,6 +350,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
 
         $pathMethodDataTransfer->setPath($pathMethodDataTransfer->getPath() . '/' . $idResource);
 
+        $this->tagGenerator->addTag($pathMethodDataTransfer);
         $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchema, $responseSchema);
     }
 
@@ -327,10 +358,9 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      * @param string $resource
      * @param string $path
      * @param bool $isProtected
-     * @param string $patternOperationId
-     * @param string $parentResourceType
      * @param \Generated\Shared\Transfer\PathSchemaDataTransfer $errorSchema
      * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     * @param string $operationId
      *
      * @return \Generated\Shared\Transfer\PathMethodDataTransfer
      */
@@ -338,16 +368,15 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         string $resource,
         string $path,
         bool $isProtected,
-        string $patternOperationId,
-        string $parentResourceType,
         PathSchemaDataTransfer $errorSchema,
-        ?AnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer,
+        string $operationId
     ): PathMethodDataTransfer {
         $pathDataTransfer = new PathMethodDataTransfer();
         $pathDataTransfer->setResource($resource);
         $pathDataTransfer->setPath($path);
         $pathDataTransfer->setIsProtected($isProtected);
-        $pathDataTransfer->setOperationId($this->getDefaultMethodOperationId($patternOperationId, $this->getFullResource($parentResourceType, $resource)) . $this->getSuffixForOperationId($isProtected));
+        $pathDataTransfer->setOperationId($operationId);
 
         if ($annotationTransfer) {
             $pathDataTransfer->fromArray($annotationTransfer->modifiedToArray(), true);
@@ -454,19 +483,9 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      *
      * @return string
      */
-    protected function getDefaultMethodOperationId(string $pattern, string $resourceType): string
+    protected function getOperationId(string $pattern, string $resourceType): string
     {
         return sprintf($pattern, $resourceType);
-    }
-
-    /**
-     * @param bool $isProtected
-     *
-     * @return string
-     */
-    protected function getSuffixForOperationId(bool $isProtected): string
-    {
-        return $isProtected ? '' : static::SUFFIX_FOR_OPERATION_ID;
     }
 
     /**
@@ -480,13 +499,14 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     }
 
     /**
-     * @param string $parentResourceType
-     * @param string $resource
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
      * @return string
      */
-    protected function getFullResource(string $parentResourceType, string $resource): string
+    protected function getFullResource(ResourceRoutePluginInterface $plugin): string
     {
-        return ($parentResourceType ? $parentResourceType . '-' : '') . $resource;
+        $parentResourceType = $this->getParentResourceType($plugin);
+
+        return ($parentResourceType ? $parentResourceType . '-' : '') . $plugin->getResourceType();
     }
 }

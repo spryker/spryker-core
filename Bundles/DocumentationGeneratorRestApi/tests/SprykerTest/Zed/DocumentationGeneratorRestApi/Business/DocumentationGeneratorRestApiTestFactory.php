@@ -29,10 +29,12 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBu
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinder;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGenerator;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
@@ -245,7 +247,8 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createOpenApiSpecificationPathGenerator(),
             $this->createOpenApiSpecificationSchemaGenerator(),
             $this->createOpenApiSpecificationSecuritySchemeGenerator(),
-            $this->createOpenApiSpecificationParameterGenerator()
+            $this->createOpenApiSpecificationParameterGenerator(),
+            $this->createOpenApiTagGeneratorInterface()
         );
     }
 
@@ -258,11 +261,19 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\ParameterGeneratorInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface
      */
-    public function createOpenApiSpecificationParameterGenerator(): ParameterGeneratorInterface
+    public function createOpenApiSpecificationParameterGenerator(): OpenApiSpecificationParameterGeneratorInterface
     {
         return new OpenApiSpecificationParameterGenerator($this->createParameterRenderer());
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface
+     */
+    public function createOpenApiTagGeneratorInterface(): OpenApiTagGeneratorInterface
+    {
+        return new OpenApiTagGenerator();
     }
 
     /**

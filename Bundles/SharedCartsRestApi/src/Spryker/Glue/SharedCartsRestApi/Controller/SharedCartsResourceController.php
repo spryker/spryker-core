@@ -24,9 +24,7 @@ class SharedCartsResourceController extends AbstractController
      *              "Shares a cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing",
@@ -56,9 +54,7 @@ class SharedCartsResourceController extends AbstractController
      *              "Updates permission group for shared cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Shared cart id is missing.",
@@ -87,9 +83,7 @@ class SharedCartsResourceController extends AbstractController
      *              "Deletes cart sharing."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Shared cart id is missing.",

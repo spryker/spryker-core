@@ -23,9 +23,7 @@ class StoresResourceController extends AbstractController
      *              "Retrieves current store data."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }]
      *     },
      *     "getCollection": {
@@ -33,9 +31,7 @@ class StoresResourceController extends AbstractController
      *              "Retrieves current store data."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }]
      *     }
      * })

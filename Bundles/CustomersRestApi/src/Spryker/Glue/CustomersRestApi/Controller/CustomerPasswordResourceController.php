@@ -24,9 +24,7 @@ class CustomerPasswordResourceController extends AbstractController
      *              "Updates customer password."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "isEmptyResponse": true,
      *          "responses": {

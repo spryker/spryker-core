@@ -11,10 +11,8 @@ use Generated\Shared\Transfer\ParameterSchemaTransfer;
 use Generated\Shared\Transfer\ParameterTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRendererInterface;
 
-class OpenApiSpecificationParameterGenerator implements ParameterGeneratorInterface
+class OpenApiSpecificationParameterGenerator implements OpenApiSpecificationParameterGeneratorInterface
 {
-    protected const PATTERN__REFERENCE = '#/components/parameters/%s';
-
     protected const DEFAULT_LANGUAGE_REF_NAME = 'acceptLanguage';
     protected const DEFAULT_LANGUAGE_NAME = 'Accept-Language';
     protected const DEFAULT_LANGUAGE_IN = 'header';
@@ -65,19 +63,21 @@ class OpenApiSpecificationParameterGenerator implements ParameterGeneratorInterf
      */
     protected function addDefaultParameters(): void
     {
-        $this->addDefaultLanguageParameter();
+        $this->addAcceptLanguageParameter();
     }
 
     /**
      * @return void
      */
-    protected function addDefaultLanguageParameter(): void
+    protected function addAcceptLanguageParameter(): void
     {
         $language = $this->createParameter(
             static::DEFAULT_LANGUAGE_REF_NAME,
             static::DEFAULT_LANGUAGE_IN,
             static::DEFAULT_LANGUAGE_DESCRIPTION,
-            static::DEFAULT_LANGUAGE_NAME
+            static::DEFAULT_LANGUAGE_NAME,
+            false,
+            $this->createParameterScheme('string')
         );
 
         $this->addParameter($language);
@@ -88,6 +88,8 @@ class OpenApiSpecificationParameterGenerator implements ParameterGeneratorInterf
      * @param string $in
      * @param string $description
      * @param string $name
+     * @param bool $required
+     * @param \Generated\Shared\Transfer\ParameterSchemaTransfer $parameterScheme
      *
      * @return \Generated\Shared\Transfer\ParameterTransfer
      */
@@ -95,15 +97,17 @@ class OpenApiSpecificationParameterGenerator implements ParameterGeneratorInterf
         string $refName,
         string $in,
         string $description,
-        string $name
+        string $name,
+        bool $required,
+        ParameterSchemaTransfer $parameterScheme
     ): ParameterTransfer {
         $parameter = new ParameterTransfer();
         $parameter->setRefName($refName);
         $parameter->setIn($in);
         $parameter->setDescription($description);
         $parameter->setName($name);
-        $parameter->setRequired(false);
-        $parameter->setSchema($this->createParameterScheme('string'));
+        $parameter->setRequired($required);
+        $parameter->setSchema($parameterScheme);
 
         return $parameter;
     }

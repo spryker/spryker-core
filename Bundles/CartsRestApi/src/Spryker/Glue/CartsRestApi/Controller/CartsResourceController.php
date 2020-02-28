@@ -24,9 +24,7 @@ class CartsResourceController extends AbstractController
      *              "Retrieves a cart by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Cart not found.",
@@ -38,9 +36,7 @@ class CartsResourceController extends AbstractController
      *              "Retrieves list of all customer's carts."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }]
      *     }
      * })
@@ -67,9 +63,7 @@ class CartsResourceController extends AbstractController
      *              "Creates a cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "403": "Unauthorized cart action.",
@@ -95,9 +89,7 @@ class CartsResourceController extends AbstractController
      *              "Deletes cart by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",
@@ -124,9 +116,7 @@ class CartsResourceController extends AbstractController
      *              "Updates a cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",

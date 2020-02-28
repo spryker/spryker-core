@@ -9,7 +9,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Generated\Shared\Transfer\ParameterTransfer;
 
-interface ParameterGeneratorInterface
+interface OpenApiSpecificationParameterGeneratorInterface
 {
     /**
      * @return array

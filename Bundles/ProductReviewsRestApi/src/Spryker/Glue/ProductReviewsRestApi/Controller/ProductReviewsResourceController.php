@@ -24,9 +24,7 @@ class ProductReviewsResourceController extends AbstractController
      *              "Retrieves abstract product review by sku."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "501": "Resource is not available."
@@ -37,9 +35,7 @@ class ProductReviewsResourceController extends AbstractController
      *              "Retrieves a collection of abstract product reviews by sku."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Abstract product id is not specified.",
@@ -64,9 +60,7 @@ class ProductReviewsResourceController extends AbstractController
      *              "Creates a product review."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "202": "Accepted.",

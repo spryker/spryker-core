@@ -24,9 +24,7 @@ class CustomerResourceController extends AbstractController
      *              "Retrieves customer data."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Customer id is not specified.",
@@ -54,9 +52,7 @@ class CustomerResourceController extends AbstractController
      *              "Creates customer."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Terms and Conditions was not accepted.",
@@ -84,9 +80,7 @@ class CustomerResourceController extends AbstractController
      *              "Updates customer data."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Failed to save customer.",
@@ -115,9 +109,7 @@ class CustomerResourceController extends AbstractController
      *              "Anonymizes customers."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Customer id is not specified.",
