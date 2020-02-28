@@ -39,6 +39,23 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
+     */
+    public function getMerchantUsers(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): array
+    {
+        $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
+        $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaFilterTransfer);
+
+        $merchantUserEntities = $merchantUserQuery->find();
+
+        return $this->getFactory()
+            ->createMerchantUserMapper()
+            ->mapMerchantUserEntitiesToMerchantUserTransfers($merchantUserEntities);
+    }
+
+    /**
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
      *

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 
 interface MerchantUserFacadeInterface
 {
@@ -60,12 +59,14 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Returns current logged in user.
-     * - Throws UserNotFoundException exception if user is not stored in the session.
+     * - Returns Merchant user for current logged in user.
+     * - Throws MerchantUserNotFoundException exception if no Merchant users exist for current logged in user.
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @throws \Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
-    public function getCurrentUser(): UserTransfer;
+    public function getCurrentMerchantUser(): MerchantUserTransfer;
 }
