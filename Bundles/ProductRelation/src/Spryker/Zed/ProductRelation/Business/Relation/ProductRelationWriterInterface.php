@@ -7,21 +7,8 @@
 
 namespace Spryker\Zed\ProductRelation\Business\Relation;
 
-use Generated\Shared\Transfer\ProductRelationTransfer;
-
 interface ProductRelationWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
-     *
-     * @throws \Exception
-     * @throws \Throwable
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function updateRelation(ProductRelationTransfer $productRelationTransfer);
-
     /**
      * @param int $idProductRelation
      *
