@@ -29,7 +29,8 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
             ->createMerchantStockPropelQuery()
             ->filterByFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
             ->useSpyStockQuery()
-                ->withColumn(SpyStockTableMap::COL_NAME)
+                ->withColumn(SpyStockTableMap::COL_ID_STOCK, StockTransfer::ID_STOCK)
+                ->withColumn(SpyStockTableMap::COL_NAME, StockTransfer::NAME)
             ->endUse()
             ->find()
             ->toArray();

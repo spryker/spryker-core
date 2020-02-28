@@ -9,9 +9,7 @@ namespace Spryker\Zed\MerchantStock\Persistence\Mapper;
 
 use Generated\Shared\Transfer\MerchantStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
-use Orm\Zed\MerchantStock\Persistence\Map\SpyMerchantStockTableMap;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
-use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 
 class MerchantStockMapper
 {
@@ -26,8 +24,8 @@ class MerchantStockMapper
         StockTransfer $stockTransfer
     ): StockTransfer {
         return $stockTransfer
-            ->setIdStock($stock[SpyMerchantStockTableMap::COL_FK_STOCK])
-            ->setName($stock[SpyStockTableMap::COL_NAME]);
+            ->setIdStock($stock[StockTransfer::ID_STOCK])
+            ->setName($stock[StockTransfer::NAME]);
     }
 
     /**
