@@ -142,6 +142,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -167,8 +169,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->addAnd(SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE, $idLocale)
             ->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->addGroupByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_ID_ABSTRACT_ATTRIBUTES)
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, self::PRODUCT_NAME)
-            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', self::STOCK_QUANTITY)
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::PRODUCT_NAME)
+            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::STOCK_QUANTITY)
             ->withColumn(
                 'SUM(' . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . ')',
                 static::RESERVATION_QUANTITY
@@ -313,6 +315,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -370,6 +374,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idStore

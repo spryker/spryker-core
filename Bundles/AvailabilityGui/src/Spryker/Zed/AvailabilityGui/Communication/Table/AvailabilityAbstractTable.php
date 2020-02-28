@@ -133,6 +133,7 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $result = [];
 
+        /** @var \Orm\Zed\Product\Persistence\Base\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntities */
         $productAbstractEntities = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
         $productAbstractIds = $this->getProductAbstractIds($productAbstractEntities);
         $productAbstractEntities = $this->availabilityHelper
@@ -149,7 +150,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
-                AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
+                AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::PRODUCT_NAME),
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
                 AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim(),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
