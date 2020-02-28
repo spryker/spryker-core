@@ -12,7 +12,6 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
-use Spryker\Shared\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -23,6 +22,11 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class MerchantProfileWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE
+     */
+    public const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -105,7 +109,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
                 $glossaryTranslationEntity->save();
             }
 
-            $this->addPublishEvents(MerchantProfileDataImportConfig::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryKeyEntity->getIdGlossaryKey());
+            $this->addPublishEvents(static::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryKeyEntity->getIdGlossaryKey());
         }
 
         return $merchantProfileEntity;
