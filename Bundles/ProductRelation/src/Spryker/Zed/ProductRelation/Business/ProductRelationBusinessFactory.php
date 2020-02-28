@@ -14,7 +14,6 @@ use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleter
 use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleterInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationActivator;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationReader;
-use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriter;
 use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReader;
 use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdater;
@@ -34,20 +33,6 @@ use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
  */
 class ProductRelationBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriterInterface
-     */
-    public function createProductRelationWriter()
-    {
-        return new ProductRelationWriter(
-            $this->getTouchFacade(),
-            $this->getQueryContainer(),
-            $this->getUtilEncodingService(),
-            $this->getConfig(),
-            $this->createRelatedProductReader()
-        );
-    }
-
     /**
      * @return \Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface
      */
@@ -143,7 +128,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
         return new ProductRelationBuilder(
             $this->getQueryContainer(),
             $this->getUtilEncodingService(),
-            $this->createProductRelationWriter()
+            $this->createProductRelationUpdater()
         );
     }
 

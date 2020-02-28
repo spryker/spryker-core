@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriterInterface;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 
@@ -31,23 +31,23 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriterInterface
+     * @var \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface
      */
-    protected $productRelationWriter;
+    protected $productRelationUpdater;
 
     /**
      * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface $productRelationQueryContainer
      * @param \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriterInterface $productRelationWriter
+     * @param \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface $productRelationUpdater
      */
     public function __construct(
         ProductRelationQueryContainerInterface $productRelationQueryContainer,
         ProductRelationToUtilEncodingInterface $utilEncodingService,
-        ProductRelationWriterInterface $productRelationWriter
+        ProductRelationUpdaterInterface $productRelationUpdater
     ) {
         $this->productRelationQueryContainer = $productRelationQueryContainer;
-        $this->productRelationWriter = $productRelationWriter;
         $this->utilEncodingService = $utilEncodingService;
+        $this->productRelationUpdater = $productRelationUpdater;
     }
 
     /**
@@ -62,7 +62,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
                 }
 
                 $productRelationTransfer = $this->mapProductRelationTransfer($productRelationEntity);
-                $this->productRelationWriter->updateRelation($productRelationTransfer);
+                $this->productRelationUpdater->updateRelation($productRelationTransfer);
             } catch (Exception $exception) {
                 $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);
 
