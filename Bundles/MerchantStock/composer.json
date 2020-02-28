@@ -1,6 +1,7 @@
 {
   "name": "spryker/merchant-stock",
   "description": "MerchantStock module",
+  "type": "library",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",

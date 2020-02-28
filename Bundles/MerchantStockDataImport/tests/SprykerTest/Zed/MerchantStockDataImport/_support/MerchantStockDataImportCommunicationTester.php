@@ -34,7 +34,7 @@ class MerchantStockDataImportCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function createRelatedData(): void
+    public function createMerchantStockRelatedData(): void
     {
         $this->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => 'merchant-test-reference-1']);
         $this->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => 'merchant-test-reference-2']);

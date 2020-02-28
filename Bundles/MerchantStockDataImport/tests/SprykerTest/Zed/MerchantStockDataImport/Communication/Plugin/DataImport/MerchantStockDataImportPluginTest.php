@@ -39,7 +39,7 @@ class MerchantStockDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-        $this->tester->createRelatedData();
+        $this->tester->createMerchantStockRelatedData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_stock.csv');
