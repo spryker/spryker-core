@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <config>
     <merchant-dashboard-gui-page>
-        <label>Merchant Dashboard</label>
-        <title>Merchant Dashboard</title>
+        <label>Dashboard</label>
+        <title>Dashboard</title>
         <icon>dashboard</icon>
         <bundle>merchant-dashboard-gui-page</bundle>
         <controller>dashboard</controller>
