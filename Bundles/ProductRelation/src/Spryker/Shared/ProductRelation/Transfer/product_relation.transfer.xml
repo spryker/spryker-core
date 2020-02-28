@@ -143,4 +143,16 @@
         <property name="externalUrlSmall" type="string"/>
     </transfer>
 
+    <transfer name="ProductRelationCriteriaFilter">
+        <property name="productRelation" type="ProductRelation"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="ProductRelationResponse">
+        <property name="productRelation" type="ProductRelation"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
 </transfers>

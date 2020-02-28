@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductRelation\Persistence;
 
+use Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductSelectorTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationPersistenceFactory getFactory()
@@ -44,4 +46,25 @@ interface ProductRelationRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
     public function findProductRelationById(int $idProductRelation): ?ProductRelationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return int
+     */
+    public function getRelatedProductsCount(ProductRelationTransfer $productRelationTransfer): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationRelatedProductTransfer[]
+     */
+    public function findRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array;
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdProductRelation(int $idProductRelation): StoreRelationTransfer;
 }

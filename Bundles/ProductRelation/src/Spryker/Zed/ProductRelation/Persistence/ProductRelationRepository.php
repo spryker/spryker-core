@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductRelation\Persistence;
 
+use Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductSelectorTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -115,5 +117,58 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
                 $productRelationEntity,
                 new ProductRelationTransfer()
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return int
+     */
+    public function getRelatedProductsCount(ProductRelationTransfer $productRelationTransfer): int
+    {
+        return $this->getFactory()->getProductRelationQueryContainer()
+            ->getRulePropelQuery($productRelationTransfer)
+            ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationRelatedProductTransfer[]
+     */
+    public function findRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array
+    {
+        $relatedProducts = $this->getFactory()->getProductRelationQueryContainer()
+            ->getRulePropelQuery($productRelationCriteriaFilterTransfer->getProductRelation())
+            ->limit($productRelationCriteriaFilterTransfer->getLimit())
+            ->offset($productRelationCriteriaFilterTransfer->getOffset())
+            ->find();
+
+        return $this->getFactory()
+            ->createProductMapper()
+            ->mapProductRelationRelatedProductEntitiesToRelatedProductTransfers(
+                $relatedProducts,
+                []
+            );
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdProductRelation(int $idProductRelation): StoreRelationTransfer
+    {
+        $productRelationStoreEntities = $this->getFactory()
+            ->createProductRelationStoreQuery()
+            ->filterByFkProductRelation($idProductRelation)
+            ->leftJoinWithStore()
+            ->find();
+
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idProductRelation);
+
+        return $this->getFactory()
+            ->createStoreRelationMapper()
+            ->mapProductRelationStoreEntitiesToStoreRelationTransfer($productRelationStoreEntities, $storeRelationTransfer);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelation\Business;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
+use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductSelectorTransfer;
 
@@ -27,9 +28,9 @@ interface ProductRelationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function createProductRelation(ProductRelationTransfer $productRelationTransfer);
+    public function createProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer;
 
     /**
      * Specification:

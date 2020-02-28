@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ProductRelation\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductRelationRelatedProductTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductSelectorTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -73,5 +75,38 @@ class ProductMapper
         ProductRelationRelatedProductTransfer $productRelationRelatedProductTransfer
     ): ProductRelationRelatedProductTransfer {
         return $productRelationRelatedProductTransfer->fromArray($productRelationProductAbstractEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract[] $productRelationRelatedProductEntities
+     * @param \Generated\Shared\Transfer\ProductRelationRelatedProductTransfer[] $relatedProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationRelatedProductTransfer[]
+     */
+    public function mapProductRelationRelatedProductEntitiesToRelatedProductTransfers(
+        ObjectCollection $productRelationRelatedProductEntities,
+        array $relatedProductTransfers
+    ): array {
+        foreach ($productRelationRelatedProductEntities as $productRelationRelatedProductEntity) {
+            $productAbstractTransfers[] = $this->mapProductRelationProductAbstractEntityToProductRelationRelatedProductTransfer(
+                $productRelationRelatedProductEntity,
+                new ProductRelationRelatedProductTransfer()
+            );
+        }
+
+        return $relatedProductTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function mapProductAbstractEntityToProductAbstractTransfer(
+        SpyProductAbstract $productAbstractEntity,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+        return $productAbstractTransfer->fromArray($productAbstractEntity->toArray(), true);
     }
 }

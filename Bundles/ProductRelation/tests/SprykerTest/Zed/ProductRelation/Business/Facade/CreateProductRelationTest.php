@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\ProductRelation\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductRelationBuilder;
 use Generated\Shared\DataBuilder\ProductRelationTypeBuilder;
-use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
@@ -62,14 +61,9 @@ class CreateProductRelationTest extends Unit
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
         ]);
-        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
-            StoreRelationTransfer::ID_STORES => [
-                $storeTransfer->getIdStore(),
-            ],
-            StoreRelationTransfer::STORES => [
-                $storeTransfer,
-            ],
-        ])->build();
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->addIdStores($storeTransfer->getIdStore())
+            ->addStores($storeTransfer);
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setCondition('AND');
 
@@ -77,7 +71,7 @@ class CreateProductRelationTest extends Unit
 
         $ruleQuerySetTransfer->addRules($this->createProductCategoryNameRuleTransfer('test'));
         $productRelationTypeTransfer = (new ProductRelationTypeBuilder())->seed([
-            ProductRelationTypeTransfer::KEY => 'upselling',
+            ProductRelationTypeTransfer::KEY => 'up-selling',
         ])->build();
 
         $productRelationTransfer = (new ProductRelationBuilder())->seed([
@@ -89,10 +83,10 @@ class CreateProductRelationTest extends Unit
         ])->build();
 
         // Act
-        $this->productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationResponseTransfer = $this->productRelationFacade->createProductRelation($productRelationTransfer);
 
         // Assert
-        $shipmentMethodExist = SpyProductRelationQuery::create()
+        $productRelationExist = SpyProductRelationQuery::create()
             ->filterByProductRelationKey('test1')
             ->exists();
         $storeRelationExist = SpyProductRelationStoreQuery::create()
@@ -101,7 +95,7 @@ class CreateProductRelationTest extends Unit
             ->endUse()
             ->exists();
 
-        $this->assertTrue($shipmentMethodExist, 'Product relation should exists');
+        $this->assertTrue($productRelationExist, 'Product relation should exists');
         $this->assertTrue($storeRelationExist, 'Product relation store relation should exists');
     }
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelation\Business;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
+use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductSelectorTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -15,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationEntityManagerInterface getEntityManager()
  */
 class ProductRelationFacade extends AbstractFacade implements ProductRelationFacadeInterface
 {
@@ -25,13 +27,13 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function createProductRelation(ProductRelationTransfer $productRelationTransfer)
+    public function createProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
         return $this->getFactory()
-            ->createProductRelationWriter()
-            ->saveRelation($productRelationTransfer);
+            ->createProductRelationCreator()
+            ->createRelation($productRelationTransfer);
     }
 
     /**

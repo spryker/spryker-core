@@ -14,16 +14,17 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationType;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException;
+use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 use Spryker\Zed\ProductRelation\ProductRelationConfig;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductRelationWriter implements ProductRelationWriterInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface
@@ -46,21 +47,29 @@ class ProductRelationWriter implements ProductRelationWriterInterface
     protected $productRelationConfig;
 
     /**
+     * @var \Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface
+     */
+    protected $relatedProductReader;
+
+    /**
      * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface $touchFacade
      * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface $productRelationQueryContainer
      * @param \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductRelation\ProductRelationConfig $productRelationConfig
+     * @param \Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface $relatedProductReader
      */
     public function __construct(
         ProductRelationToTouchInterface $touchFacade,
         ProductRelationQueryContainerInterface $productRelationQueryContainer,
         ProductRelationToUtilEncodingInterface $utilEncodingService,
-        ProductRelationConfig $productRelationConfig
+        ProductRelationConfig $productRelationConfig,
+        RelatedProductReaderInterface $relatedProductReader
     ) {
         $this->touchFacade = $touchFacade;
         $this->productRelationQueryContainer = $productRelationQueryContainer;
         $this->utilEncodingService = $utilEncodingService;
         $this->productRelationConfig = $productRelationConfig;
+        $this->relatedProductReader = $relatedProductReader;
     }
 
     /**
@@ -72,24 +81,20 @@ class ProductRelationWriter implements ProductRelationWriterInterface
     {
         $productRelationTransfer->requireProductRelationType();
 
-        $productRelationTypeTransfer = $productRelationTransfer->getProductRelationType();
-
-        return $this->handleDatabaseTransaction(function () use ($productRelationTransfer, $productRelationTypeTransfer) {
-            return $this->executeSaveRelationTransaction($productRelationTransfer, $productRelationTypeTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productRelationTransfer) {
+            return $this->executeSaveRelationTransaction($productRelationTransfer);
         });
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
-     * @param \Generated\Shared\Transfer\ProductRelationTypeTransfer $productRelationTypeTransfer
      *
      * @return int
      */
     protected function executeSaveRelationTransaction(
-        ProductRelationTransfer $productRelationTransfer,
-        ProductRelationTypeTransfer $productRelationTypeTransfer
+        ProductRelationTransfer $productRelationTransfer
     ) {
-
+        $productRelationTypeTransfer = $productRelationTransfer->getProductRelationType();
         $productRelationTypeEntity = $this->findOrCreateProductRelationTypeEntity($productRelationTypeTransfer);
         $productRelationTypeEntity->save();
 
@@ -125,7 +130,7 @@ class ProductRelationWriter implements ProductRelationWriterInterface
             );
         }
 
-        $this->handleDatabaseTransaction(function () use ($productRelationTransfer, $productRelationEntity) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($productRelationTransfer, $productRelationEntity) {
             $this->executeUpdateRelationTransaction($productRelationTransfer, $productRelationEntity);
         });
     }
@@ -167,11 +172,11 @@ class ProductRelationWriter implements ProductRelationWriterInterface
      */
     protected function saveAllRelatedProducts(ProductRelationTransfer $productRelationTransfer): void
     {
-        foreach ($this->findMatchingProducts($productRelationTransfer) as $productAbstractEntities) {
+        foreach ($this->relatedProductReader->findMatchingProducts($productRelationTransfer) as $relatedProductTransfers) {
             $productAbstractIds = [];
 
-            foreach ($productAbstractEntities as $productAbstractEntity) {
-                $productAbstractIds[] = $productAbstractEntity->getIdProductAbstract();
+            foreach ($relatedProductTransfers as $relatedProductTransfer) {
+                $productAbstractIds[] = $relatedProductTransfer->getFkProductAbstract();
             }
 
             $this->saveRelatedProducts($productAbstractIds, $productRelationTransfer->getIdProductRelation());
@@ -220,7 +225,7 @@ class ProductRelationWriter implements ProductRelationWriterInterface
             );
         }
 
-        $deleted = $this->handleDatabaseTransaction(function () use ($productRelationEntity) {
+        $deleted = $this->getTransactionHandler()->handleTransaction(function () use ($productRelationEntity) {
             return $this->executeDeleteProductRelationTransaction($productRelationEntity);
         });
 
