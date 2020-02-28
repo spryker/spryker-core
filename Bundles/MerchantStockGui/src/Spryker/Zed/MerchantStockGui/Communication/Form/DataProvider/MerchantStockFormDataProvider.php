@@ -31,10 +31,6 @@ class MerchantStockFormDataProvider
      */
     public function getData(MerchantTransfer $merchantTransfer): array
     {
-        if (!$merchantTransfer->getIdMerchant() || $merchantTransfer->getStockCollection()->count() < 1) {
-            return [];
-        }
-
         return $merchantTransfer->getStockCollection()->getArrayCopy();
     }
 }

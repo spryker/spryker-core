@@ -17,8 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantStockMerchantFormExpanderPlugin extends AbstractPlugin implements MerchantFormExpanderPluginInterface
 {
-    protected const FIELD_STOCK_COLLECTION = 'stockCollection';
-
     /**
      * {@inheritDoc}
      * - Expands MerchantForm with form field for merchant warehouses.
