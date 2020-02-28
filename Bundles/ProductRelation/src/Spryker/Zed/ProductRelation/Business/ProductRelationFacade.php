@@ -73,12 +73,12 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @param int $idProductRelation
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function deleteProductRelation($idProductRelation)
+    public function deleteProductRelation(int $idProductRelation): ProductRelationResponseTransfer
     {
         return $this->getFactory()
-            ->createProductRelationWriter()
+            ->createProductRelationDeleter()
             ->deleteProductRelation($idProductRelation);
     }
 

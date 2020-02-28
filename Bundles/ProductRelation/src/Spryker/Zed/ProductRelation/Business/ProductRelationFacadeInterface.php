@@ -116,9 +116,9 @@ interface ProductRelationFacadeInterface
      *
      * @param int $idProductRelation
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function deleteProductRelation($idProductRelation);
+    public function deleteProductRelation(int $idProductRelation): ProductRelationResponseTransfer;
 
     /**
      * Specification:

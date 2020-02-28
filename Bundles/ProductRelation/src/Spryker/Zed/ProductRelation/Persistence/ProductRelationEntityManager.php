@@ -165,6 +165,34 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
     }
 
     /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    public function deleteProductRelationById(int $idProductRelation): void
+    {
+        $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByIdProductRelation($idProductRelation)
+            ->findOne()
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    public function deleteProductRelationStoresByIdProductRelation(int $idProductRelation): void
+    {
+        $this->getFactory()
+            ->createProductRelationStoreQuery()
+            ->filterByFkProductRelation($idProductRelation)
+            ->find()
+            ->delete();
+    }
+
+    /**
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract
      */
     protected function createProductRelationProductAbstractEntity(): SpyProductRelationProductAbstract

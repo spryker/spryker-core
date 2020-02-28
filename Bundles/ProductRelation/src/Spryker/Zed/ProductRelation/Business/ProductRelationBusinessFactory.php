@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductRelation\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreator;
 use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreatorInterface;
+use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleter;
+use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleterInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationActivator;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationReader;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriter;
@@ -91,6 +93,18 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
             $this->createRelatedProductUpdater(),
             $this->getTouchFacade(),
             $this->createProductRelationStoreRelationUpdater()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleterInterface
+     */
+    public function createProductRelationDeleter(): ProductRelationDeleterInterface
+    {
+        return new ProductRelationDeleter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getTouchFacade()
         );
     }
 

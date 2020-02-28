@@ -72,4 +72,18 @@ interface ProductRelationEntityManagerInterface
      * @return void
      */
     public function removeRelatedProductsByIdProductRelation(int $idProductRelation): void;
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    public function deleteProductRelationById(int $idProductRelation): void;
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    public function deleteProductRelationStoresByIdProductRelation(int $idProductRelation): void;
 }
