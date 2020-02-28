@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business\Index;
 
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 
 interface IndexInterface
@@ -54,4 +55,23 @@ interface IndexInterface
      * @return bool
      */
     public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer
+     *
+     * @return int
+     */
+    public function getDocumentsTotalCount(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer
+     *
+     * @return array
+     */
+    public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): array;
+
+    /**
+     * @return string[]
+     */
+    public function getIndexNames(): array;
 }
