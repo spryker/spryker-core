@@ -113,6 +113,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer());
         }
 
+        if ($productOfferCriteriaFilter->getProductOfferIds()) {
+            $productOfferQuery->filterByIdProductOffer_In($productOfferCriteriaFilter->getProductOfferIds());
+        }
+
         if ($productOfferCriteriaFilter->getConcreteSkus()) {
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilter->getConcreteSkus());
         }
