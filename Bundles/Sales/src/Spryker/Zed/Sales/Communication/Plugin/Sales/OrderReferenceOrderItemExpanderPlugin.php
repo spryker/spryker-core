@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\Sales\Communication\Plugin\Sales;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
@@ -17,20 +16,20 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
-class OrderReferenceOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface
+class OrderReferenceOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands order item with order reference information.
+     * - Expands order items with order reference information.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
+    public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandOrderItemsWithOrderReference($orderTransfer);
+        return $this->getFacade()->expandOrderItemsWithOrderReference($itemTransfers);
     }
 }

@@ -40,4 +40,11 @@ interface SalesRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
      */
     public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return string[][]
+     */
+    public function getOrderReferencesByOrderItemIds(array $salesOrderItemIds): array;
 }

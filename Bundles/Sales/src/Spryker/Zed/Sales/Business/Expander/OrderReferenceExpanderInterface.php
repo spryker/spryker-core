@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Sales\Business\Expander;
 
-use Generated\Shared\Transfer\OrderTransfer;
-
 interface OrderReferenceExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderItemsWithOrderReference(array $itemTransfers): array;
 }

@@ -336,17 +336,17 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Requires OrderTransfer::orderReference to be set.
+     * - Requires ItemTransfer::idSalesOrderItem to be set.
      * - Expands item with order reference information.
-     * - Copies OrderTransfer::orderReference to ItemTransfer::orderReference for each order item.
+     * - Sets ItemTransfer::orderReference for each order item.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderItemsWithOrderReference(array $itemTransfers): array;
 
     /**
      * Specification:

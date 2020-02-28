@@ -458,7 +458,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderReferenceExpander(): OrderReferenceExpanderInterface
     {
-        return new OrderReferenceExpander();
+        return new OrderReferenceExpander($this->getRepository());
     }
 
     /**
