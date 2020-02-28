@@ -497,8 +497,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Calculates shipment total using expenses.
+     * {@inheritDoc}
      *
      * @api
      *
