@@ -5,7 +5,7 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
     templateUrl: './zed-layout-central.component.html',
     styleUrls: ['./zed-layout-central.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.ShadowDom
+    encapsulation: ViewEncapsulation.None
 })
 export class ZedLayoutCentralComponent {
 }
