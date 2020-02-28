@@ -46,7 +46,7 @@ class OrderSearchFiltersTransformer implements OrderSearchFiltersTransformerInte
     ];
 
     protected const ORDER_BY_FIELDS_MAPPING = [
-        'orderReference' => 'spy_sales_order.order_reference',
+        'orderReference' => 'spy_sales_order.id_sales_order',
         'date' => 'spy_sales_order.created_at',
     ];
 

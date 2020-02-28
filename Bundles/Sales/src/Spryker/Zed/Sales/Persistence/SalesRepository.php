@@ -10,10 +10,13 @@ namespace Spryker\Zed\Sales\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Formatter\ObjectFormatter;
+use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -69,17 +72,53 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         $orderListTransfer->requireFormat();
+        $orderListTransfer->requirePagination();
 
-        $salesOrderMapper = $this->getFactory()->createSalesOrderMapper();
+        $paginationTransfer = $orderListTransfer->getPagination();
+
+        $paginationTransfer
+            ->requirePage()
+            ->requireMaxPerPage();
 
         $salesOrderQuery = $this->getFactory()->createSalesOrderQuery();
         $salesOrderQuery = $this->getFactory()
             ->getSalesQueryContainer()
             ->setSalesOrderQuerySearchFilters($salesOrderQuery, $orderListTransfer);
 
-        $salesOrderEntityCollection = $this->buildQueryFromCriteria($salesOrderQuery, $orderListTransfer->getFilter())
-            ->setFormatter(ObjectFormatter::class)
-            ->find();
+        $salesOrderQuery = $this->buildQueryFromCriteria(
+            $salesOrderQuery,
+            $orderListTransfer->getFilter()
+        )->setFormatter(ObjectFormatter::class);
+
+        $propelModelPager = $salesOrderQuery->paginate(
+            $paginationTransfer->getPage(),
+            $paginationTransfer->getMaxPerPage()
+        );
+
+        $paginationTransfer = $this->mapPropelModelPagerToPaginationTransfer(
+            $propelModelPager,
+            $orderListTransfer->getPagination()
+        );
+
+        $orderListTransfer->setPagination($paginationTransfer);
+
+        return $this->mapSalesOrderEntityCollectionToOrderListTransfer(
+            $propelModelPager->getResults(),
+            $orderListTransfer
+        );
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $salesOrderEntityCollection
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function mapSalesOrderEntityCollectionToOrderListTransfer(
+        Collection $salesOrderEntityCollection,
+        OrderListTransfer $orderListTransfer
+    ): OrderListTransfer {
+        $salesOrderMapper = $this->getFactory()->createSalesOrderMapper();
 
         $orderTransfers = $salesOrderMapper->mapSalesOrderEntityCollectionToOrderTransfers(
             $salesOrderEntityCollection,
@@ -105,6 +144,26 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $orderListTransfer->setOrders($orderTransfers);
+    }
+
+    /**
+     * @param \Propel\Runtime\Util\PropelModelPager $propelModelPager
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function mapPropelModelPagerToPaginationTransfer(
+        PropelModelPager $propelModelPager,
+        PaginationTransfer $paginationTransfer
+    ): PaginationTransfer {
+        return $paginationTransfer
+            ->setNbResults($propelModelPager->getNbResults())
+            ->setFirstIndex($propelModelPager->getFirstIndex())
+            ->setLastIndex($propelModelPager->getLastIndex())
+            ->setFirstPage($propelModelPager->getFirstPage())
+            ->setLastPage($propelModelPager->getLastPage())
+            ->setNextPage($propelModelPager->getNextPage())
+            ->setPreviousPage($propelModelPager->getPreviousPage());
     }
 
     /**

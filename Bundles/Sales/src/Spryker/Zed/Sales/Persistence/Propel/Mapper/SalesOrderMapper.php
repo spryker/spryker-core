@@ -11,18 +11,19 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class SalesOrderMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $salesOrderEntityCollection
+     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $salesOrderEntityCollection
      * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
      */
     public function mapSalesOrderEntityCollectionToOrderTransfers(
-        ObjectCollection $salesOrderEntityCollection,
+        Collection $salesOrderEntityCollection,
         ArrayObject $orderTransfers
     ): ArrayObject {
         foreach ($salesOrderEntityCollection as $salesOrderEntity) {
