@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantSalesOrder\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
-use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
@@ -41,12 +41,12 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
     public function getMerchantOrderCollection(
-        MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+        MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
     ): MerchantOrderCollectionTransfer {
         return $this->getRepository()->getMerchantOrderCollection($merchantCriteriaFilterTransfer);
     }
@@ -56,12 +56,12 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
     public function findMerchantOrder(
-        MerchantOrderCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+        MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
     ): ?MerchantOrderTransfer {
         return $this->getRepository()->findMerchantOrder($merchantCriteriaFilterTransfer);
     }
