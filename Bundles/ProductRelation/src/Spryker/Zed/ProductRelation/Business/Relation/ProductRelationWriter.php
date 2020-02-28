@@ -176,7 +176,7 @@ class ProductRelationWriter implements ProductRelationWriterInterface
             $productAbstractIds = [];
 
             foreach ($relatedProductTransfers as $relatedProductTransfer) {
-                $productAbstractIds[] = $relatedProductTransfer->getFkProductAbstract();
+                $productAbstractIds[] = $relatedProductTransfer->getIdProductAbstract();
             }
 
             $this->saveRelatedProducts($productAbstractIds, $productRelationTransfer->getIdProductRelation());

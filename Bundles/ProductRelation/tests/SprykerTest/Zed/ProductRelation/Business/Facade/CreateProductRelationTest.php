@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductRelation\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductRelationBuilder;
 use Generated\Shared\DataBuilder\ProductRelationTypeBuilder;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
@@ -61,9 +62,15 @@ class CreateProductRelationTest extends Unit
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
         ]);
-        $storeRelationTransfer = (new StoreRelationTransfer())
-            ->addIdStores($storeTransfer->getIdStore())
-            ->addStores($storeTransfer);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransfer->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransfer,
+            ],
+        ])->build();
+
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setCondition('AND');
 

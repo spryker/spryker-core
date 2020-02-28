@@ -46,7 +46,7 @@ class RelatedProductUpdater implements RelatedProductUpdaterInterface
             $productAbstractIds = [];
 
             foreach ($relatedProductTransfers as $relatedProductTransfer) {
-                $productAbstractIds[] = $relatedProductTransfer->getFkProductAbstract();
+                $productAbstractIds[] = $relatedProductTransfer->getIdProductAbstract();
             }
 
             $this->productRelationEntityManager->saveRelatedProducts(
