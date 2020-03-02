@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param string $orderCustomReference
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function updateOrderCustomReference(SaveOrderTransfer $saveOrderTransfer): void;
+    public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): void;
 }

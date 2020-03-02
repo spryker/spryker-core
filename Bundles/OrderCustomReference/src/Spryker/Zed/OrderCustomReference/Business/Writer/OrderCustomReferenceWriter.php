@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business\Writer;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface;
@@ -44,17 +45,18 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param string $orderCustomReference
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function updateOrderCustomReference(SaveOrderTransfer $saveOrderTransfer): void
+    public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): void
     {
-        if ($saveOrderTransfer->getIdSalesOrder()) {
+        if ($orderTransfer->getIdSalesOrder()) {
             $this->orderCustomReferenceEntityManager
                 ->saveOrderCustomReference(
-                    $saveOrderTransfer->getIdSalesOrder(),
-                    $saveOrderTransfer->getOrderCustomReference()
+                    $orderTransfer->getIdSalesOrder(),
+                    $orderCustomReference
                 );
         }
     }

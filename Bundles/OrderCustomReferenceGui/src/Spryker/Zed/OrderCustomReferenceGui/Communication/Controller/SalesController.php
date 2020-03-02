@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\OrderCustomReferenceGui\Communication\Controller;
 
-use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,6 @@ class SalesController extends AbstractController
      */
     public function saveAction(Request $request): RedirectResponse
     {
-        $orderCustomReferenceFacade = $this->getFactory()->getOrderCustomReferenceFacade();
         $orderCustomReferenceValidator = $this->getFactory()->createOrderCustomReferenceValidator();
 
         $orderCustomReferenceParam = $request->request->get(static::PARAM_ORDER_CUSTOM_REFERENCE);
@@ -45,11 +44,11 @@ class SalesController extends AbstractController
         }
 
         $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
-        $saveOrderTransfer = (new SaveOrderTransfer())
-            ->setIdSalesOrder($request->request->getInt(static::PARAM_ID_SALES_ORDER))
-            ->setOrderCustomReference($orderCustomReferenceParam);
+        $orderTransfer = (new OrderTransfer())
+            ->setIdSalesOrder($request->request->getInt(static::PARAM_ID_SALES_ORDER));
 
-        $orderCustomReferenceFacade->updateOrderCustomReference($saveOrderTransfer);
+        $this->getFactory()->getOrderCustomReferenceFacade()
+            ->updateOrderCustomReference($orderCustomReferenceParam, $orderTransfer);
 
         return $this->redirectResponse($backUrlParam);
     }

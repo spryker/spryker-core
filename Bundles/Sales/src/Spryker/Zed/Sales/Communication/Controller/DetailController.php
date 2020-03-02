@@ -26,7 +26,6 @@ class DetailController extends AbstractController
     protected const PARAM_BACK_URL = 'backUrl';
 
     public const ROUTE_REDIRECT = '/sales/detail';
-    protected const PATTERN_BACK_URL = '%s/?%s=%d';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
