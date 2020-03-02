@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ProductLabelCollector
+namespace: SprykerTest\Zed\ProductLabelDataImport
 
 paths:
     tests: .
@@ -12,9 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: ProductLabelCollectorBusinessTester
+    Communication:
+        path: Communication
+        class_name: ProductLabelDataImportCommunicationTester
         modules:
             enabled:
                 - Asserts
@@ -22,8 +22,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Collector\Helper\CollectorDataHelper
-                - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
