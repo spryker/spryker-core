@@ -67,7 +67,7 @@ class MerchantStockWriter implements MerchantStockWriterInterface
             '%s %s %d',
             $merchantTransfer->getName(),
             'Warehouse',
-            $merchantTransfer->getStockCollection()->count() + 1
+            $merchantTransfer->getStocks()->count() + 1
         );
     }
 

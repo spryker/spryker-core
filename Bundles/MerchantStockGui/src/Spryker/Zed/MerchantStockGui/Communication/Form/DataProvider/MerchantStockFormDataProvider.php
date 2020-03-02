@@ -8,10 +8,14 @@
 namespace Spryker\Zed\MerchantStockGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\MerchantStockGui\Communication\Form\MerchantStockFormType;
 
 class MerchantStockFormDataProvider
 {
+    /**
+     * @uses \Spryker\Zed\MerchantStockGui\Communication\Form\MerchantStockFormType::FIELD_STOCKS
+     */
+    protected const STOCKS = 'stocks';
+
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
@@ -20,7 +24,7 @@ class MerchantStockFormDataProvider
     public function getOptions(MerchantTransfer $merchantTransfer): array
     {
         return [
-            MerchantStockFormType::STOCKS => $this->getData($merchantTransfer),
+            static::STOCKS => $this->getData($merchantTransfer),
         ];
     }
 
@@ -31,6 +35,6 @@ class MerchantStockFormDataProvider
      */
     public function getData(MerchantTransfer $merchantTransfer): array
     {
-        return $merchantTransfer->getStockCollection()->getArrayCopy();
+        return $merchantTransfer->getStocks()->getArrayCopy();
     }
 }

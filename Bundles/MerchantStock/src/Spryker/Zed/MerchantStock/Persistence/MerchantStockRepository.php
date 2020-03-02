@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantStock\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -21,9 +21,9 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
-    public function getStocksByMerchant(MerchantTransfer $merchantTransfer): ArrayObject
+    public function getStockCollectionByMerchant(MerchantTransfer $merchantTransfer): StockCollectionTransfer
     {
         $stocksData = $this->getFactory()
             ->createMerchantStockPropelQuery()
@@ -35,14 +35,14 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
             ->find()
             ->toArray();
 
-        $stocks = new ArrayObject();
+        $stockCollectionTransfer = new StockCollectionTransfer();
 
         foreach ($stocksData as $stock) {
-            $stocks->append(
+            $stockCollectionTransfer->addStock(
                 $this->getFactory()->createMerchantStockMapper()->mapStockDataToStockTransfer($stock, new StockTransfer())
             );
         }
 
-        return $stocks;
+        return $stockCollectionTransfer;
     }
 }

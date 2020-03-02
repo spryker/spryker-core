@@ -8,24 +8,47 @@
 namespace SprykerTest\Zed\MerchantStock\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
+use Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class MerchantStockHelper extends Module
 {
+    use DataCleanupHelperTrait;
+
     /**
-     * @param int $idMerchant
-     * @param int $idStock
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
      * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock
      */
-    public function haveMerchantStock(int $idMerchant, int $idStock): SpyMerchantStock
+    public function haveMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): SpyMerchantStock
     {
         $merchantStockEntity = (new SpyMerchantStock())
-            ->setFkMerchant($idMerchant)
-            ->setFkStock($idStock);
+            ->setFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
+            ->setFkStock($stockTransfer->requireIdStock()->getIdStock());
 
         $merchantStockEntity->save();
 
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantStockEntity): void {
+            $this->cleanupMerchantStock($merchantStockEntity);
+        });
+
         return $merchantStockEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock $merchantStockEntity
+     *
+     * @return void
+     */
+    protected function cleanupMerchantStock(SpyMerchantStock $merchantStockEntity): void
+    {
+        $this->debug(sprintf('Deleting Merchant Stock: %d', $merchantStockEntity->getIdMerchantStock()));
+        SpyMerchantStockQuery::create()
+            ->findByIdMerchantStock($merchantStockEntity->getIdMerchantStock())
+            ->delete();
     }
 }

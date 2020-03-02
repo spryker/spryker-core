@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\MerchantStock\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StockCollectionTransfer;
 
 interface MerchantStockFacadeInterface
 {
@@ -35,7 +35,7 @@ interface MerchantStockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
-    public function getStocksByMerchant(MerchantTransfer $merchantTransfer): ArrayObject;
+    public function getStockCollectionByMerchant(MerchantTransfer $merchantTransfer): StockCollectionTransfer;
 }

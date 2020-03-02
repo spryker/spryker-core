@@ -18,10 +18,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantStockFormType extends AbstractType
 {
-    public const STOCKS = 'stocks';
-
-    protected const FIELD_STOCK_COLLECTION = 'stockCollection';
-    protected const LABEL_STOCK_COLLECTION = 'Warehouses';
+    protected const FIELD_STOCKS = 'stocks';
+    protected const LABEL_STOCKS = 'Warehouses';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -31,7 +29,7 @@ class MerchantStockFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!$builder->getData()->getStockCollection()->count()) {
+        if (!$builder->getData()->getStocks()->count()) {
             return;
         }
 
@@ -46,8 +44,8 @@ class MerchantStockFormType extends AbstractType
      */
     protected function addIdMerchantStockField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_STOCK_COLLECTION, Select2ComboBoxType::class, [
-            'choices' => $options[static::STOCKS],
+        $builder->add(static::FIELD_STOCKS, Select2ComboBoxType::class, [
+            'choices' => $options[static::FIELD_STOCKS],
             'choice_value' => function (StockTransfer $stockTransfer) {
                 return $stockTransfer->getIdStock();
             },
@@ -57,7 +55,7 @@ class MerchantStockFormType extends AbstractType
                 ->getData($builder->getData()),
             'required' => false,
             'multiple' => true,
-            'label' => static::LABEL_STOCK_COLLECTION,
+            'label' => static::LABEL_STOCKS,
             'disabled' => true,
         ]);
 
