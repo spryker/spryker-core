@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Publisher\Business\Collator;
+namespace Spryker\Zed\Event\Business\Exception;
 
-interface PublisherEventCollatorInterface
+use Exception;
+
+class EventListenerInvalidException extends Exception
 {
-    /**
-     * @return array
-     */
-    public function getPublisherEventCollection(): array;
 }

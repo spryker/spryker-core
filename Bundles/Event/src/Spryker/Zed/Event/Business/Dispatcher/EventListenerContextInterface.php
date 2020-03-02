@@ -26,4 +26,9 @@ interface EventListenerContextInterface extends EventHandlerInterface, EventBulk
      * @return string|null
      */
     public function getQueuePoolName();
+
+    /**
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string;
 }
