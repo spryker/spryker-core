@@ -17,7 +17,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  */
-class MerchantProductAbstractMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
+class MerchantNamesProductAbstractMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
     protected const KEY_MERCHANT_NAME = 'merchant_name';
@@ -35,8 +35,12 @@ class MerchantProductAbstractMapExpanderPlugin implements ProductAbstractMapExpa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    public function expandProductMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
         if (!is_array($productData[static::KEY_MERCHANT_NAMES])) {
             return $pageMapTransfer;
         }
