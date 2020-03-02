@@ -116,7 +116,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer
     {
-        return $this->addShoppingListItem($shoppingListItemTransfer)->getShoppingListItem() ?? $shoppingListItemTransfer;
+        return $this->addShoppingListItem($shoppingListItemTransfer, $params)->getShoppingListItem() ?? $shoppingListItemTransfer;
     }
 
     /**
