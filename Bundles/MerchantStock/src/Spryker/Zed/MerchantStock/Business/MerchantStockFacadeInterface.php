@@ -29,7 +29,7 @@ interface MerchantStockFacadeInterface
 
     /**
      * Specification:
-     * - Returns StockTransfers related to provider merchant.
+     * - Returns StockCollectionTransfer with stocks related to provider merchant.
      *
      * @api
      *
