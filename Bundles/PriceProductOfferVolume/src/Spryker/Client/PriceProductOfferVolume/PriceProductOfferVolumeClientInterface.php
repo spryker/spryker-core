@@ -11,7 +11,7 @@ interface PriceProductOfferVolumeClientInterface
 {
     /**
      * Specification:
-     * - Extracts additional product offer volume prices from price product data
+     * - Extracts additional product offer volume prices from price product data.
      *
      * @api
      *

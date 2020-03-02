@@ -13,9 +13,9 @@ class PriceProductOfferVolumeConfig extends AbstractSharedConfig
 {
     /**
      * Specification:
-     *  - Default Price Dimension name.
+     *  - Dimension type as used for product offer volume price.
      */
-    public const PRICE_DIMENSION_DEFAULT = 'PRODUCT_OFFER_VOLUME';
+    public const DIMENSION_TYPE_PRICE_PRODUCT_OFFER_VOLUME = 'PRICE_PRODUCT_OFFER_VOLUME';
 
     public const VOLUME_PRICE_TYPE = 'volume_prices';
     public const VOLUME_PRICE_QUANTITY = 'quantity';

@@ -22,38 +22,35 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
         $extractedPrices = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $extractedPrices = array_merge(
-                $extractedPrices,
-                $this->extractPriceProductOfferVolumes($priceProductTransfer)
-            );
+            $extractedPrices = $this->extractPriceProductOfferVolumes($extractedPrices, $priceProductTransfer);
         }
 
         return $extractedPrices;
     }
 
     /**
+     * @param array $extractedPrices
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function extractPriceProductOfferVolumes(PriceProductTransfer $priceProductTransfer): array
+    protected function extractPriceProductOfferVolumes(array $extractedPrices, PriceProductTransfer $priceProductTransfer): array
     {
         if (!$priceProductTransfer->getMoneyValue()->getPriceData()) {
-            return [];
+            return $extractedPrices;
         }
 
-        $priceProductTransfers = [];
         $priceData = json_decode($priceProductTransfer->getMoneyValue()->getPriceData(), true);
 
         if (!is_array($priceData) || !isset($priceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE])) {
-            return [];
+            return $extractedPrices;
         }
 
         foreach ($priceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE] as $volumePrice) {
-            $priceProductTransfers[] = $this->mapVolumePriceToPriceProductTransfer($priceProductTransfer, $volumePrice);
+            $extractedPrices[] = $this->mapVolumePriceToPriceProductTransfer($priceProductTransfer, $volumePrice);
         }
 
-        return $priceProductTransfers;
+        return $extractedPrices;
     }
 
     /**

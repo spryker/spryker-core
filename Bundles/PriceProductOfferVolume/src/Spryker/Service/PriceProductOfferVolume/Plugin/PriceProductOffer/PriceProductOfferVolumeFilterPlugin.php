@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProductOfferVolume\Plugin\PriceProductExtension;
+namespace Spryker\Service\PriceProductOfferVolume\Plugin\PriceProductOffer;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -33,12 +33,12 @@ class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements Pric
             return $priceProductTransfers;
         }
 
-        $minPriceProductTransfer = $this->getMinPrice(
+        $minPriceProductTransfer = $this->findMinPrice(
             $priceProductTransfers,
             $priceProductFilterTransfer->getQuantity()
         );
 
-        if ($minPriceProductTransfer == null) {
+        if ($minPriceProductTransfer === null) {
             $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
 
             return $priceProductTransfers;
@@ -56,7 +56,7 @@ class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements Pric
      */
     public function getDimensionName(): string
     {
-        return PriceProductOfferVolumeConfig::PRICE_DIMENSION_DEFAULT;
+        return PriceProductOfferVolumeConfig::DIMENSION_TYPE_PRICE_PRODUCT_OFFER_VOLUME;
     }
 
     /**
@@ -65,7 +65,7 @@ class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements Pric
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    protected function getMinPrice(array $priceProductTransfers, int $filterQuantity): ?PriceProductTransfer
+    protected function findMinPrice(array $priceProductTransfers, int $filterQuantity): ?PriceProductTransfer
     {
         $minPriceProductTransfer = null;
 
@@ -75,7 +75,7 @@ class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements Pric
             }
 
             if ($priceProductTransfer->getVolumeQuantity() <= $filterQuantity) {
-                if ($minPriceProductTransfer == null) {
+                if ($minPriceProductTransfer === null) {
                     $minPriceProductTransfer = $priceProductTransfer;
 
                     continue;
@@ -110,6 +110,6 @@ class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements Pric
      */
     protected function filterVolumePrices(PriceProductTransfer $priceProductTransfer): bool
     {
-        return $priceProductTransfer->getVolumeQuantity() == null;
+        return $priceProductTransfer->getVolumeQuantity() === null;
     }
 }

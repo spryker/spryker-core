@@ -38,10 +38,13 @@ class PriceProductOfferVolumeClientTest extends Unit
      */
     public function testExtractProductPricesForProductOffer(): void
     {
+        // Arrange
         $priceProductTransfers = $this->preparePriceProductsWithVolumePrices();
 
+        // Act
         $offerVolumePrices = $this->tester->getClient()->extractProductPricesForProductOffer($priceProductTransfers);
 
+        // Assert
         $this->assertGreaterThan(1, count($offerVolumePrices));
     }
 
