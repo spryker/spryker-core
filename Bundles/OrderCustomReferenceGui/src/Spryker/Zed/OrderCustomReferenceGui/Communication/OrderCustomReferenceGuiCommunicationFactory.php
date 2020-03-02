@@ -8,8 +8,6 @@
 namespace Spryker\Zed\OrderCustomReferenceGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\OrderCustomReferenceGui\Business\Validator\OrderCustomReferenceValidator;
-use Spryker\Zed\OrderCustomReferenceGui\Business\Validator\OrderCustomReferenceValidatorInterface;
 use Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface;
 use Spryker\Zed\OrderCustomReferenceGui\OrderCustomReferenceGuiDependencyProvider;
 
@@ -21,13 +19,5 @@ class OrderCustomReferenceGuiCommunicationFactory extends AbstractCommunicationF
     public function getOrderCustomReferenceFacade(): OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface
     {
         return $this->getProvidedDependency(OrderCustomReferenceGuiDependencyProvider::FACADE_ORDER_CUSTOM_REFERENCE);
-    }
-
-    /**
-     * @return \Spryker\Zed\OrderCustomReferenceGui\Business\Validator\OrderCustomReferenceValidatorInterface
-     */
-    public function createOrderCustomReferenceValidator(): OrderCustomReferenceValidatorInterface
-    {
-        return new OrderCustomReferenceValidator();
     }
 }

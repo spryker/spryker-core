@@ -32,24 +32,23 @@ class SalesController extends AbstractController
      */
     public function saveAction(Request $request): RedirectResponse
     {
-        $orderCustomReferenceValidator = $this->getFactory()->createOrderCustomReferenceValidator();
+        $orderCustomReference = $request->request->get(static::PARAM_ORDER_CUSTOM_REFERENCE);
+        $backUrl = $request->request->get(static::PARAM_BACK_URL);
 
-        $orderCustomReferenceParam = $request->request->get(static::PARAM_ORDER_CUSTOM_REFERENCE);
-        $backUrlParam = $request->request->get(static::PARAM_BACK_URL);
-
-        if (!$orderCustomReferenceValidator->isOrderCustomReferenceLengthValid($orderCustomReferenceParam)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
-
-            return $this->redirectResponse($backUrlParam);
-        }
-
-        $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
         $orderTransfer = (new OrderTransfer())
             ->setIdSalesOrder($request->request->getInt(static::PARAM_ID_SALES_ORDER));
 
         $this->getFactory()->getOrderCustomReferenceFacade()
-            ->updateOrderCustomReference($orderCustomReferenceParam, $orderTransfer);
+            ->updateOrderCustomReference($orderCustomReference, $orderTransfer);
 
-        return $this->redirectResponse($backUrlParam);
+        if ($orderTransfer->getOrderCustomReference() === $orderCustomReference) {
+            $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
+        }
+
+        if ($orderTransfer->getOrderCustomReference() !== $orderCustomReference) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
+        }
+
+        return $this->redirectResponse($backUrl);
     }
 }

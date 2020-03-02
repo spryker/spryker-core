@@ -10,6 +10,7 @@ namespace Spryker\Zed\OrderCustomReference\Business\Writer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig;
 use Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface;
 
 class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
@@ -20,11 +21,20 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
     protected $orderCustomReferenceEntityManager;
 
     /**
-     * @param \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager
+     * @var \Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig
      */
-    public function __construct(OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager)
-    {
+    protected $orderCustomReferenceConfig;
+
+    /**
+     * @param \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager
+     * @param \Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig $orderCustomReferenceConfig
+     */
+    public function __construct(
+        OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager,
+        OrderCustomReferenceConfig $orderCustomReferenceConfig
+    ) {
         $this->orderCustomReferenceEntityManager = $orderCustomReferenceEntityManager;
+        $this->orderCustomReferenceConfig = $orderCustomReferenceConfig;
     }
 
     /**
@@ -52,11 +62,16 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
      */
     public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): void
     {
+        if (mb_strlen($orderCustomReference) > $this->orderCustomReferenceConfig->getOrderCustomReferenceMaxLength()) {
+            return;
+        }
+
+        $orderTransfer->setOrderCustomReference($orderCustomReference);
         if ($orderTransfer->getIdSalesOrder()) {
             $this->orderCustomReferenceEntityManager
                 ->saveOrderCustomReference(
                     $orderTransfer->getIdSalesOrder(),
-                    $orderCustomReference
+                    $orderTransfer->getOrderCustomReference()
                 );
         }
     }

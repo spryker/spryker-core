@@ -5,6 +5,7 @@
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
+        <property name="orderCustomReference" type="string"/>
     </transfer>
 
 </transfers>

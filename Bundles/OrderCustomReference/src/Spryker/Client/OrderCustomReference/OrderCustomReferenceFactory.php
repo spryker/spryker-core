@@ -12,6 +12,9 @@ use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceTo
 use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetter;
 use Spryker\Client\OrderCustomReference\Setter\OrderCustomReferenceSetterInterface;
 
+/**
+ * @method \Spryker\Client\OrderCustomReference\OrderCustomReferenceConfig getConfig()
+ */
 class OrderCustomReferenceFactory extends AbstractFactory
 {
     /**
@@ -20,7 +23,8 @@ class OrderCustomReferenceFactory extends AbstractFactory
     public function createOrderCustomReferenceSetter(): OrderCustomReferenceSetterInterface
     {
         return new OrderCustomReferenceSetter(
-            $this->getPersistentCartClient()
+            $this->getPersistentCartClient(),
+            $this->getConfig()
         );
     }
 
