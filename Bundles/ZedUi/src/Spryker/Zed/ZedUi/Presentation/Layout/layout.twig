@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ app.locale }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>
+            {% block headTitle %}
+                {% if title is defined %}
+                    {{ title | trans }}
+                {% endif %}
+            {% endblock %}
+        </title>
+
+        {% block headCss %}
+            <link rel="stylesheet" href="{{ assetsPath('css/reset.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block footerJs %}{% endblock %}
+    </body>
+</html>

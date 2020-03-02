@@ -1,0 +1,18 @@
+{% extends '@ZedUi/Layout/layout.twig' %}
+
+{% block body %}
+    {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
+
+    <zed-layout-main navigation-config="{{ navigationConfig }}">
+        <zed-header name="header"></zed-header>
+
+        {% block content %}{% endblock %}
+    </zed-layout-main>
+{% endblock %}
+
+{% block footerJs %}
+    <script src="{{ assetsPath('js/zed-ui/polyfills-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/zed-ui/main-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/zed-ui/polyfills-es5.js') }}" nomodule defer></script>
+    <script src="{{ assetsPath('js/zed-ui/main-es5.js') }}" nomodule defer></script>
+{% endblock %}
