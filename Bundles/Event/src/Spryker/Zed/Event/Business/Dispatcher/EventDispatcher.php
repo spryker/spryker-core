@@ -9,6 +9,7 @@ namespace Spryker\Zed\Event\Business\Dispatcher;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException;
+use Spryker\Zed\Event\Business\Exception\EventListenerInvalidException;
 use Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface;
@@ -73,9 +74,15 @@ class EventDispatcher implements EventDispatcherInterface
 
         foreach (clone $eventListeners as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
-                $this->eventQueueProducer->enqueueListener($eventName, $transfer, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
-            } elseif ($eventListener instanceof EventHandlerInterface) {
-                $eventListener->handle($transfer, $eventName);
+                $this->eventQueueProducer->enqueueListener(
+                    $eventName,
+                    $transfer,
+                    $eventListener->getListenerName(),
+                    $eventListener->getQueuePoolName(),
+                    $eventListener->getEventQueueName()
+                );
+            } else {
+                $this->eventProducer($eventName, $transfer, $eventListener);
             }
             $this->logEventHandle($eventName, $transfer, $eventListener);
         }
@@ -97,11 +104,59 @@ class EventDispatcher implements EventDispatcherInterface
 
         foreach (clone $eventListeners as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
-                $this->eventQueueProducer->enqueueListenerBulk($eventName, $transfers, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
-                $this->logEventHandleBulk($eventName, $transfers, $eventListener);
-            } elseif ($eventListener instanceof EventHandlerInterface) {
-                $this->handleEventListeners($eventName, $transfers, $eventListener);
+                $this->eventQueueProducer->enqueueListenerBulk(
+                    $eventName,
+                    $transfers,
+                    $eventListener->getListenerName(),
+                    $eventListener->getQueuePoolName(),
+                    $eventListener->getEventQueueName()
+                );
+            } else {
+                $this->eventBulkProducer($eventName, $transfers, $eventListener);
             }
+
+            $this->logEventHandleBulk($eventName, $transfers, $eventListener);
+        }
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
+     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
+     *
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerInvalidException
+     *
+     * @return void
+     */
+    protected function eventProducer(string $eventName, TransferInterface $transfer, EventListenerContextInterface $eventListener): void
+    {
+        if (is_subclass_of($eventListener->getListenerName(), EventHandlerInterface::class)) {
+            $eventListener->handle($transfer, $eventName);
+        } elseif (is_subclass_of($eventListener->getListenerName(), EventBulkHandlerInterface::class)) {
+            throw new EventListenerAmbiguousException(sprintf('`%s` is using `\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface` , you need to use `EventFacade::triggerBulk()` to trigger the events.', $eventListener->getListenerName()));
+        } else {
+            throw new EventListenerInvalidException(sprintf('`%s` is using invalid interface, use `\Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface` to fix this.', $eventListener->getListenerName()));
+        }
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
+     *
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerInvalidException
+     *
+     * @return void
+     */
+    protected function eventBulkProducer(string $eventName, array $transfers, EventListenerContextInterface $eventListener): void
+    {
+        if (is_subclass_of($eventListener->getListenerName(), EventBulkHandlerInterface::class)) {
+            $eventListener->handleBulk($transfers, $eventName);
+        } elseif (is_subclass_of($eventListener->getListenerName(), EventHandlerInterface::class)) {
+            $this->handleEventListeners($eventName, $transfers, $eventListener);
+        } else {
+            throw new EventListenerInvalidException(sprintf('`%s` is using invalid interface, use `\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface` to fix this.', $eventListener->getListenerName()));
         }
     }
 

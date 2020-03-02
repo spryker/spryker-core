@@ -10,8 +10,6 @@ namespace Spryker\Zed\Publisher\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Publisher\Business\Collator\PublisherEventCollator;
 use Spryker\Zed\Publisher\Business\Collator\PublisherEventCollatorInterface;
-use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
-use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistryInterface;
 use Spryker\Zed\Publisher\PublisherDependencyProvider;
 
 /**
@@ -25,17 +23,8 @@ class PublisherBusinessFactory extends AbstractBusinessFactory
     public function createPublisherEventCollator(): PublisherEventCollatorInterface
     {
         return new PublisherEventCollator(
-            $this->createPublisherEventRegistry(),
             $this->getPublisherPlugins()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistryInterface
-     */
-    public function createPublisherEventRegistry(): PublisherEventRegistryInterface
-    {
-        return new PublisherEventRegistry();
     }
 
     /**

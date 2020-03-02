@@ -47,4 +47,16 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
             GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_UPDATE,
         ];
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getPublishQueueName(): ?string
+    {
+         return $this->getConfig()->getGlossaryEventQueueName();
+    }
 }
