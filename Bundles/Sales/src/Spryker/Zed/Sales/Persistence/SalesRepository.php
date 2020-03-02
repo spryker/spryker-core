@@ -13,10 +13,9 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Formatter\ObjectFormatter;
-use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -74,12 +73,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         $orderListTransfer->requireFormat();
         $orderListTransfer->requirePagination();
 
-        $paginationTransfer = $orderListTransfer->getPagination();
-
-        $paginationTransfer
-            ->requirePage()
-            ->requireMaxPerPage();
-
         $salesOrderQuery = $this->getFactory()->createSalesOrderQuery();
         $salesOrderQuery = $this->getFactory()
             ->getSalesQueryContainer()
@@ -90,32 +83,25 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             $orderListTransfer->getFilter()
         )->setFormatter(ObjectFormatter::class);
 
-        $propelModelPager = $salesOrderQuery->paginate(
-            $paginationTransfer->getPage(),
-            $paginationTransfer->getMaxPerPage()
-        );
-
-        $paginationTransfer = $this->mapPropelModelPagerToPaginationTransfer(
-            $propelModelPager,
+        $salesOrderQuery = $this->preparePagination(
+            $salesOrderQuery,
             $orderListTransfer->getPagination()
         );
 
-        $orderListTransfer->setPagination($paginationTransfer);
-
         return $this->mapSalesOrderEntityCollectionToOrderListTransfer(
-            $propelModelPager->getResults(),
+            $salesOrderQuery->find(),
             $orderListTransfer
         );
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection $salesOrderEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderEntityCollection
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     protected function mapSalesOrderEntityCollectionToOrderListTransfer(
-        Collection $salesOrderEntityCollection,
+        ObjectCollection $salesOrderEntityCollection,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {
         $salesOrderMapper = $this->getFactory()->createSalesOrderMapper();
@@ -147,23 +133,34 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
-     * @param \Propel\Runtime\Util\PropelModelPager $propelModelPager
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mapPropelModelPagerToPaginationTransfer(
-        PropelModelPager $propelModelPager,
+    protected function preparePagination(
+        ModelCriteria $query,
         PaginationTransfer $paginationTransfer
-    ): PaginationTransfer {
-        return $paginationTransfer
-            ->setNbResults($propelModelPager->getNbResults())
+    ): ModelCriteria {
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        $propelModelPager = $query->paginate($page, $maxPerPage);
+
+        $paginationTransfer->setNbResults($propelModelPager->getNbResults())
             ->setFirstIndex($propelModelPager->getFirstIndex())
             ->setLastIndex($propelModelPager->getLastIndex())
             ->setFirstPage($propelModelPager->getFirstPage())
             ->setLastPage($propelModelPager->getLastPage())
             ->setNextPage($propelModelPager->getNextPage())
             ->setPreviousPage($propelModelPager->getPreviousPage());
+
+        return $propelModelPager->getQuery();
     }
 
     /**
