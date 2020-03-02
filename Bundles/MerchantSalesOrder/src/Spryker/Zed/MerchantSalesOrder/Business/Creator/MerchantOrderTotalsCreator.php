@@ -49,7 +49,6 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
         MerchantOrderTransfer $merchantOrderTransfer
     ): TotalsTransfer {
         $totalsTransfer = $this->calculateTotals($orderTransfer, $merchantOrderTransfer);
-        $totalsTransfer->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder());
 
         return $this->merchantSalesOrderEntityManager
             ->createMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder(), $totalsTransfer);
