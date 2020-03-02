@@ -32,6 +32,11 @@ class CreateReturnTest extends Unit
     protected const FAKE_RETURN_REASON = 'FAKE_RETURN_REASON';
     protected const FAKE_STORE_NAME = 'FAKE_STORE_NAME';
 
+    protected const SHIPPED_STATE_NAME = 'shipped';
+    protected const DELIVERED_STATE_NAME = 'delivered';
+
+    protected const FAKE_STATE_NAME = 'FAKE_STATE_NAME';
+
     /**
      * @uses \Spryker\Zed\SalesReturn\Business\Writer\ReturnWriter::GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR
      */
@@ -41,6 +46,11 @@ class CreateReturnTest extends Unit
      * @uses \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidator::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR = 'return.create_return.validation.items_error';
+
+    /**
+     * @uses \Spryker\Zed\SalesReturn\Business\Writer\ReturnWriter::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR
+     */
+    protected const GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR = 'return.create_return.validation.returnable_items_error';
 
     /**
      * @uses \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidator::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR
@@ -74,6 +84,8 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setReason(static::FAKE_RETURN_REASON)
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
+
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
         $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
@@ -117,6 +129,8 @@ class CreateReturnTest extends Unit
             ->setReason(null)
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
         $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
@@ -145,6 +159,9 @@ class CreateReturnTest extends Unit
 
         $firstItemTransfer = $firstOrderTransfer->getItems()->getIterator()->current();
         $secondItemTransfer = $secondOrderTransfer->getItems()->getIterator()->current();
+
+        $this->tester->setItemState($firstItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+        $this->tester->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
         $firstReturnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($firstItemTransfer->getIdSalesOrderItem()));
@@ -182,6 +199,9 @@ class CreateReturnTest extends Unit
         $firstItemTransfer = $firstOrderTransfer->getItems()->getIterator()->current();
         $secondItemTransfer = $secondOrderTransfer->getItems()->getIterator()->current();
 
+        $this->tester->setItemState($firstItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+        $this->tester->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
         $firstReturnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($firstItemTransfer->getIdSalesOrderItem()));
 
@@ -216,6 +236,8 @@ class CreateReturnTest extends Unit
         $orderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME);
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
 
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setUuid($itemTransfer->getUuid()));
 
@@ -241,6 +263,8 @@ class CreateReturnTest extends Unit
         // Arrange
         $orderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME);
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
@@ -302,6 +326,8 @@ class CreateReturnTest extends Unit
         $orderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME);
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
 
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
@@ -319,6 +345,76 @@ class CreateReturnTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR,
+            $returnResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateReturnCreatesReturnWithItemsInReturnableStates(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $firstOrderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $secondOrderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+
+        $firstItemTransfer = $firstOrderTransfer->getItems()->getIterator()->current();
+        $secondItemTransfer = $secondOrderTransfer->getItems()->getIterator()->current();
+
+        $this->tester->setItemState($firstItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+        $this->tester->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::DELIVERED_STATE_NAME);
+
+        $firstReturnItemTransfer = (new ReturnItemTransfer())
+            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($firstItemTransfer->getIdSalesOrderItem()));
+
+        $secondReturnItemTransfer = (new ReturnItemTransfer())
+            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($secondItemTransfer->getIdSalesOrderItem()));
+
+        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+            ->setCustomer($customerTransfer)
+            ->setStore($firstOrderTransfer->getStore())
+            ->addReturnItem($firstReturnItemTransfer)
+            ->addReturnItem($secondReturnItemTransfer);
+
+        // Act
+        $returnResponseTransfer = $this->tester
+            ->getFacade()
+            ->createReturn($createReturnRequestTransfer);
+
+        // Assert
+        $this->assertTrue($returnResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateReturnCreatesReturnWithItemInNotReturnableState(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME);
+        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::FAKE_STATE_NAME);
+
+        $returnItemTransfer = (new ReturnItemTransfer())
+            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
+
+        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+            ->setCustomer($orderTransfer->getCustomer())
+            ->setStore($orderTransfer->getStore())
+            ->addReturnItem($returnItemTransfer);
+
+        // Act
+        $returnResponseTransfer = $this->tester
+            ->getFacade()
+            ->createReturn($createReturnRequestTransfer);
+
+        // Assert
+        $this->assertFalse($returnResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR,
             $returnResponseTransfer->getMessages()[0]->getValue()
         );
     }
@@ -354,6 +450,8 @@ class CreateReturnTest extends Unit
         $orderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME);
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
 
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
@@ -380,6 +478,8 @@ class CreateReturnTest extends Unit
         $orderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME);
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
 
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
@@ -405,6 +505,8 @@ class CreateReturnTest extends Unit
         // Arrange
         $orderTransfer = $this->tester->createOrderByCustomer(static::DEFAULT_OMS_PROCESS_NAME);
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));

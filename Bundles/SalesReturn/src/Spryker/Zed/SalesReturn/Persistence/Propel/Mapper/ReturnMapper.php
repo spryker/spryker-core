@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\SalesReturn\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturn;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnItem;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ReturnMapper
 {
@@ -23,7 +25,6 @@ class ReturnMapper
     public function mapReturnTransferToSalesReturnEntity(ReturnTransfer $returnTransfer, SpySalesReturn $salesReturnEntity): SpySalesReturn
     {
         $salesReturnEntity->fromArray($returnTransfer->modifiedToArray());
-        $salesReturnEntity->setCustomerReference($returnTransfer->getCustomer()->getCustomerReference());
 
         return $salesReturnEntity;
     }
@@ -42,5 +43,23 @@ class ReturnMapper
             ->setFkSalesOrderItem($returnItemTransfer->getOrderItem()->getIdSalesOrderItem());
 
         return $salesReturnItemEntity;
+    }
+    
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesReturnEntities
+     *
+     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     */
+    public function mapReturnEntityCollectionToReturnCollection(ObjectCollection $salesReturnEntities): ReturnCollectionTransfer
+    {
+        $returnCollectionTransfer = new ReturnCollectionTransfer();
+
+        foreach ($salesReturnEntities as $salesReturnEntity) {
+            $returnCollectionTransfer->addReturn(
+                (new ReturnTransfer())->fromArray($salesReturnEntity->toArray(), true)
+            );
+        }
+
+        return $returnCollectionTransfer;
     }
 }

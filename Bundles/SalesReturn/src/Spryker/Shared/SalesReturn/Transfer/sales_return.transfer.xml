@@ -12,8 +12,8 @@
     <transfer name="Return">
         <property name="idSalesReturn" type="int"/>
         <property name="returnReference" type="string"/>
+        <property name="customerReference" type="string"/>
         <property name="store" type="string"/>
-        <property name="customer" type="Customer"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="returnTotals" type="ReturnTotals"/>
     </transfer>
@@ -36,8 +36,8 @@
     </transfer>
 
     <transfer name="ReturnFilter">
-        <property name="customerReference" type="string"/>
         <property name="returnReference" type="string"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ReturnReasonFilter">
@@ -72,6 +72,7 @@
 
     <transfer name="ReturnCollection">
         <property name="returns" type="Return[]" singular="return"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ReturnResponse">
@@ -93,6 +94,18 @@
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
         <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
         <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
     </transfer>
 
 </transfers>

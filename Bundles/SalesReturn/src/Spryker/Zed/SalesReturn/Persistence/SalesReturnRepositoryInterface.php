@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ReturnCollectionTransfer;
+use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 
 interface SalesReturnRepositoryInterface
@@ -32,4 +34,13 @@ interface SalesReturnRepositoryInterface
      * @return int
      */
     public function countCustomerReturns(string $customerReference): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     */
+    public function getReturnCollectionByFilter(
+        ReturnFilterTransfer $quoteRequestFilterTransfer
+    ): ReturnCollectionTransfer;
 }

@@ -10,8 +10,11 @@ namespace Spryker\Glue\SalesReturnsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
+use Spryker\Glue\SalesReturnsRestApi\Dependency\RestApiResource\SalesReturnsRestApiToOrdersRestApiResourceInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapper;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapper;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReasonReader;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReasonReaderInterface;
 
@@ -40,6 +43,16 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface
+     */
+    public function createReturnResourceMapper(): ReturnResourceMapperInterface
+    {
+        return new ReturnResourceMapper(
+            $this->getOrdersRestApiResource()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface
      */
     public function getSalesReturnClient(): SalesReturnsRestApiToSalesReturnClientInterface
@@ -53,5 +66,13 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function getGlossaryStorageClient(): SalesReturnsRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\SalesReturnsRestApi\Dependency\RestApiResource\SalesReturnsRestApiToOrdersRestApiResourceInterface
+     */
+    public function getOrdersRestApiResource(): SalesReturnsRestApiToOrdersRestApiResourceInterface
+    {
+        return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::RESOURCE_ORDERS_REST_API);
     }
 }

@@ -83,11 +83,12 @@ class OrderResourceMapper implements OrderResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
      */
-    protected function mapItemTransferToRestOrderItemsAttributesTransfer(
+    public function mapItemTransferToRestOrderItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
         RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
     ): RestOrderItemsAttributesTransfer {
         $restOrderItemsAttributesTransfer = $restOrderItemsAttributesTransfer->fromArray($itemTransfer->toArray(), true);
+
         foreach ($this->restOrderItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
             $restOrderItemsAttributesTransfer = $restOrderItemsAttributesMapperPlugin->mapItemTransferToRestOrderItemsAttributesTransfer(
                 $itemTransfer,

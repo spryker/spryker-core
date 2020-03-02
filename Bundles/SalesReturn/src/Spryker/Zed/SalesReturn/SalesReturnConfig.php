@@ -11,11 +11,24 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesReturnConfig extends AbstractBundleConfig
 {
+    protected const RETURNABLE_STATE_NAMES = [
+        'shipped',
+        'delivered',
+    ];
+
     /**
      * @return string
      */
     public function getReturnReferenceFormat(): string
     {
         return '%s-R%s';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getReturnableStateNames(): array
+    {
+        return static::RETURNABLE_STATE_NAMES;
     }
 }

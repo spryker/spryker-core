@@ -11,11 +11,12 @@ use ArrayObject;
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\SalesReturn\Business\Expander\ReturnExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface;
+use Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Validator\ReturnValidatorInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface;
 use Spryker\Zed\SalesReturn\Persistence\SalesReturnEntityManagerInterface;
@@ -37,9 +38,9 @@ class ReturnWriter implements ReturnWriterInterface
     protected $returnValidator;
 
     /**
-     * @var \Spryker\Zed\SalesReturn\Business\Expander\ReturnExpanderInterface
+     * @var \Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface
      */
-    protected $returnExpander;
+    protected $returnReader;
 
     /**
      * @var \Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface
@@ -54,20 +55,20 @@ class ReturnWriter implements ReturnWriterInterface
     /**
      * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnEntityManagerInterface $salesReturnEntityManager
      * @param \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidatorInterface $returnValidator
-     * @param \Spryker\Zed\SalesReturn\Business\Expander\ReturnExpanderInterface $returnExpander
+     * @param \Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface $returnReader
      * @param \Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface $returnReferenceGenerator
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
      */
     public function __construct(
         SalesReturnEntityManagerInterface $salesReturnEntityManager,
         ReturnValidatorInterface $returnValidator,
-        ReturnExpanderInterface $returnExpander,
+        ReturnReaderInterface $returnReader,
         ReturnReferenceGeneratorInterface $returnReferenceGenerator,
         SalesReturnToSalesFacadeInterface $salesFacade
     ) {
         $this->salesReturnEntityManager = $salesReturnEntityManager;
         $this->returnValidator = $returnValidator;
-        $this->returnExpander = $returnExpander;
+        $this->returnReader = $returnReader;
         $this->returnReferenceGenerator = $returnReferenceGenerator;
         $this->salesFacade = $salesFacade;
     }
@@ -107,11 +108,11 @@ class ReturnWriter implements ReturnWriterInterface
         $returnTransfer = $this->createReturnTransfer($createReturnRequestTransfer);
         $returnTransfer = $this->createReturnItemTransfers($returnTransfer, $orderItems);
 
-        $returnTransfer = $this->returnExpander->expandReturn($returnTransfer);
+        // TODO: trigger event for return items, recalculate???
 
-        return (new ReturnResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setReturn($returnTransfer);
+        return $this->returnReader->getReturn(
+            (new ReturnFilterTransfer())->setReturnReference($returnTransfer->getReturnReference())
+        );
     }
 
     /**
@@ -169,7 +170,7 @@ class ReturnWriter implements ReturnWriterInterface
     {
         $returnTransfer = (new ReturnTransfer())
             ->setStore($createReturnRequestTransfer->getStore())
-            ->setCustomer($createReturnRequestTransfer->getCustomer())
+            ->setCustomerReference($createReturnRequestTransfer->getCustomer()->getCustomerReference())
             ->setReturnItems($createReturnRequestTransfer->getReturnItems());
 
         $returnReference = $this->returnReferenceGenerator->generateReturnReference($returnTransfer);
@@ -187,7 +188,7 @@ class ReturnWriter implements ReturnWriterInterface
      */
     protected function createReturnItemTransfers(ReturnTransfer $returnTransfer, ArrayObject $itemTransfers): ReturnTransfer
     {
-        $returnTransfer = $this->returnExpander->expandReturnItemsBeforeCreate($returnTransfer, $itemTransfers);
+        $returnTransfer = $this->expandReturnItemsBeforeCreate($returnTransfer, $itemTransfers);
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
             $this->salesReturnEntityManager->createReturnItem($returnItemTransfer);
@@ -243,5 +244,62 @@ class ReturnWriter implements ReturnWriterInterface
         return (new ReturnResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function expandReturnItemsBeforeCreate(ReturnTransfer $returnTransfer, ArrayObject $itemTransfers): ReturnTransfer
+    {
+        $returnTransfer->requireIdSalesReturn();
+
+        $indexedItemsById = $this->indexOrderItemsById($itemTransfers);
+        $indexedItemsByUuid = $this->indexOrderItemsByUuid($itemTransfers);
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $itemTransfer = $returnItemTransfer->getOrderItem();
+
+            $returnItemTransfer->setIdSalesReturn($returnTransfer->getIdSalesReturn());
+            $returnItemTransfer->setOrderItem(
+                $indexedItemsById[$itemTransfer->getIdSalesOrderItem()] ?? $indexedItemsByUuid[$itemTransfer->getUuid()]
+            );
+        }
+
+        return $returnTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function indexOrderItemsByUuid(ArrayObject $itemTransfers): array
+    {
+        $indexedOrderItems = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $indexedOrderItems[$itemTransfer->getUuid()] = $itemTransfer;
+        }
+
+        return $indexedOrderItems;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function indexOrderItemsById(ArrayObject $itemTransfers): array
+    {
+        $indexedOrderItems = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $indexedOrderItems[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
+        }
+
+        return $indexedOrderItems;
     }
 }

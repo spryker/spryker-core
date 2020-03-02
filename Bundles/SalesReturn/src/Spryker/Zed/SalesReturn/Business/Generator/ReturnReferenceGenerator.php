@@ -42,9 +42,9 @@ class ReturnReferenceGenerator implements ReturnReferenceGeneratorInterface
      */
     public function generateReturnReference(ReturnTransfer $returnTransfer): string
     {
-        $this->assertRequirements($returnTransfer);
+        $returnTransfer->requireCustomerReference();
 
-        $customerReference = $returnTransfer->getCustomer()->getCustomerReference();
+        $customerReference = $returnTransfer->getCustomerReference();
         $customerReturnCounter = $this->salesReturnRepository->countCustomerReturns($customerReference);
 
         return sprintf(
@@ -52,18 +52,5 @@ class ReturnReferenceGenerator implements ReturnReferenceGeneratorInterface
             $customerReference,
             $customerReturnCounter + 1
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
-     *
-     * @return void
-     */
-    protected function assertRequirements(ReturnTransfer $returnTransfer): void
-    {
-        $returnTransfer
-            ->requireCustomer()
-            ->getCustomer()
-                ->requireCustomerReference();
     }
 }

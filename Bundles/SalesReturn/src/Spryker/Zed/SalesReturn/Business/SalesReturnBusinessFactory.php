@@ -12,10 +12,10 @@ use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculator;
 use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpander;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpanderInterface;
-use Spryker\Zed\SalesReturn\Business\Expander\ReturnExpander;
-use Spryker\Zed\SalesReturn\Business\Expander\ReturnExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGenerator;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface;
+use Spryker\Zed\SalesReturn\Business\Reader\ReturnReader;
+use Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetter;
@@ -54,7 +54,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
         return new ReturnWriter(
             $this->getEntityManager(),
             $this->createReturnValidator(),
-            $this->createReturnExpander(),
+            $this->createReturnReader(),
             $this->createReturnReferenceGenerator(),
             $this->getSalesFacade()
         );
@@ -65,16 +65,19 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
      */
     public function createReturnValidator(): ReturnValidatorInterface
     {
-        return new ReturnValidator($this->getStoreFacade());
+        return new ReturnValidator(
+            $this->getStoreFacade(),
+            $this->getConfig()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturn\Business\Expander\ReturnExpanderInterface
+     * @return \Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface
      */
-    public function createReturnExpander(): ReturnExpanderInterface
+    public function createReturnReader(): ReturnReaderInterface
     {
-        return new ReturnExpander(
-            $this->createReturnTotalCalculator()
+        return new ReturnReader(
+            $this->getRepository()
         );
     }
 

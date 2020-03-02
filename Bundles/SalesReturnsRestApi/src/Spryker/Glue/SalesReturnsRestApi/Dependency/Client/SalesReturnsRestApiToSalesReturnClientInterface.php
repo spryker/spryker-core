@@ -7,8 +7,10 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 interface SalesReturnsRestApiToSalesReturnClientInterface
 {
@@ -18,4 +20,11 @@ interface SalesReturnsRestApiToSalesReturnClientInterface
      * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
      */
     public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer;
 }

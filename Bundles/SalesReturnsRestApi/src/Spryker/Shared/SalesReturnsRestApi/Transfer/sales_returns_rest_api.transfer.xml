@@ -19,6 +19,45 @@
         <property name="filter" type="Filter"/>
     </transfer>
 
+    <transfer name="RestReturnRequestAttributes">
+        <property name="store" type="string" restRequestParameter="yes"/>
+        <property name="returnItems" type="RestReturnItemRequestAttributes[]" singular="returnItem" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestReturnItemRequestAttributes">
+        <property name="salesOrderItemUuid" type="string" restRequestParameter="yes"/>
+        <property name="reason" type="string" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestReturnsAttributes">
+        <property name="returnReference" type="string"/>
+        <property name="store" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="returnTotals" type="RestReturnTotalsAttributes"/>
+    </transfer>
+
+    <transfer name="RestReturnDetailsAttributes">
+        <property name="returnReference" type="string"/>
+        <property name="store" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="returnTotals" type="RestReturnTotalsAttributes"/>
+        <property name="returnItems" type="RestReturnItemsAttributes[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="RestReturnTotalsAttributes">
+        <property name="refundTotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
+    </transfer>
+
+    <transfer name="RestReturnItemsAttributes">
+        <property name="uuid" type="string"/>
+        <property name="reason" type="string"/>
+        <property name="orderItem" type="RestOrderItemsAttributes"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+    </transfer>
+
     <transfer name="Filter">
         <property name="offset" type="int"/>
         <property name="limit" type="int"/>

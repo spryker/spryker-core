@@ -8,7 +8,11 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ReturnCollectionTransfer;
+use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -68,5 +72,72 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
             ->getSalesReturnPropelQuery()
             ->filterByCustomerReference($customerReference)
             ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     */
+    public function getReturnCollectionByFilter(ReturnFilterTransfer $returnFilterTransfer): ReturnCollectionTransfer
+    {
+        $salesReturnQuery = $this->getFactory()->getSalesReturnPropelQuery();
+
+        $salesReturnQuery = $this->setSalesReturnFilters($salesReturnQuery, $returnFilterTransfer);
+
+        return $this->getFactory()
+            ->createReturnMapper()
+            ->mapReturnEntityCollectionToReturnCollection($salesReturnQuery->find())
+            ->setPagination($returnFilterTransfer->getPagination());
+    }
+
+    /**
+     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery
+     * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
+     *
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
+     */
+    protected function setSalesReturnFilters(
+        SpySalesReturnQuery $salesReturnQuery,
+        ReturnFilterTransfer $returnFilterTransfer
+    ): SpySalesReturnQuery {
+        if ($returnFilterTransfer->getReturnReference()) {
+            $salesReturnQuery->filterByReturnReference($returnFilterTransfer->getReturnReference());
+        }
+
+        if ($returnFilterTransfer->getPagination()) {
+            $salesReturnQuery = $this->preparePagination($salesReturnQuery, $returnFilterTransfer->getPagination());
+        }
+
+        return $salesReturnQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
+     */
+    protected function preparePagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): SpySalesReturnQuery
+    {
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        $paginationModel = $query->paginate($page, $maxPerPage);
+
+        $paginationTransfer->setNbResults($paginationModel->getNbResults())
+            ->setFirstIndex($paginationModel->getFirstIndex())
+            ->setLastIndex($paginationModel->getLastIndex())
+            ->setFirstPage($paginationModel->getFirstPage())
+            ->setLastPage($paginationModel->getLastPage())
+            ->setNextPage($paginationModel->getNextPage())
+            ->setPreviousPage($paginationModel->getPreviousPage());
+
+        return $paginationModel->getQuery();
     }
 }
