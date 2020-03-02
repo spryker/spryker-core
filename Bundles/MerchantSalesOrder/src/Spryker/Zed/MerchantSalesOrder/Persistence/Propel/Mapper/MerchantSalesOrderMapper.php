@@ -139,23 +139,24 @@ class MerchantSalesOrderMapper
 
         return $totalsTransfer
             ->fromArray($merchantSalesOrderTotalsEntity->toArray(), true)
-            ->setTaxTotal($taxTotalTransfer)
-            ->setIdMerchantOrder($merchantSalesOrderTotalsEntity->getFkMerchantSalesOrder());
+            ->setTaxTotal($taxTotalTransfer);
     }
 
     /**
+     * @param int $idMerchantOrder
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals $merchantSalesOrderTotalsEntity
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals
      */
     public function mapTotalsTransferToMerchantSalesOrderTotalsEntity(
+        int $idMerchantOrder,
         TotalsTransfer $totalsTransfer,
         SpyMerchantSalesOrderTotals $merchantSalesOrderTotalsEntity
     ): SpyMerchantSalesOrderTotals {
         $merchantSalesOrderTotalsEntity->fromArray($totalsTransfer->modifiedToArray());
         $merchantSalesOrderTotalsEntity->setTaxTotal($totalsTransfer->getTaxTotal()->getAmount());
-        $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($totalsTransfer->getIdMerchantOrder());
+        $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($idMerchantOrder);
 
         return $merchantSalesOrderTotalsEntity;
     }
