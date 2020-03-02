@@ -22,14 +22,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
-    protected const PARAM_ID_SALES_ORDER = 'idSalesOrder';
-    protected const PARAM_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
+    protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
     protected const PARAM_BACK_URL = 'backUrl';
 
     public const ROUTE_REDIRECT = '/sales/detail';
-
     protected const PATTERN_BACK_URL = '%s/?%s=%d';
-    protected const GET_PARAM_BACK_URL = 'id-sales-order';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
@@ -58,19 +55,6 @@ class DetailController extends AbstractController
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
         $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
-        $orderCustomReferenceForm = $this->getFactory()
-            ->getOrderCustomReferenceForm(
-                [
-                    static::PARAM_ID_SALES_ORDER => $idSalesOrder,
-                    static::PARAM_ORDER_CUSTOM_REFERENCE => $orderTransfer->getOrderCustomReference(),
-                    static::PARAM_BACK_URL => sprintf(
-                        static::PATTERN_BACK_URL,
-                        static::ROUTE_REDIRECT,
-                        static::GET_PARAM_BACK_URL,
-                        $idSalesOrder
-                    ),
-                ]
-            );
 
         $blockResponseData = $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
@@ -89,8 +73,6 @@ class DetailController extends AbstractController
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
             'changeStatusRedirectUrl' => $this->createRedirectLink($idSalesOrder),
-            'orderCustomReferenceForm' => $orderCustomReferenceForm->createView(),
-            'orderCustomReference' => $orderTransfer->getOrderCustomReference(),
         ], $blockResponseData);
     }
 

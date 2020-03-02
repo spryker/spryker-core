@@ -8,10 +8,10 @@
 namespace Spryker\Zed\OrderCustomReferenceGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\OrderCustomReferenceGui\Communication\Form\OrderCustomReferenceForm;
+use Spryker\Zed\OrderCustomReferenceGui\Business\Validator\OrderCustomReferenceValidator;
+use Spryker\Zed\OrderCustomReferenceGui\Business\Validator\OrderCustomReferenceValidatorInterface;
 use Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface;
 use Spryker\Zed\OrderCustomReferenceGui\OrderCustomReferenceGuiDependencyProvider;
-use Symfony\Component\Form\FormInterface;
 
 class OrderCustomReferenceGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -24,12 +24,10 @@ class OrderCustomReferenceGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @param array $data
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\OrderCustomReferenceGui\Business\Validator\OrderCustomReferenceValidatorInterface
      */
-    public function getOrderCustomReferenceForm(array $data = []): FormInterface
+    public function createOrderCustomReferenceValidator(): OrderCustomReferenceValidatorInterface
     {
-        return $this->getFormFactory()->create(OrderCustomReferenceForm::class, $data);
+        return new OrderCustomReferenceValidator();
     }
 }
