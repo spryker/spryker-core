@@ -101,15 +101,17 @@ class PublisherFacadeTest extends Unit
     protected function getMergedPublisherEvents(): array
     {
         return [
-            'TestEvent-1' => [
-                'TestPluginClassFooPlugin',
-            ],
-            'TestEvent-2' => [
-                'TestPluginClassFooPlugin',
-                'TestPluginClassBarPlugin',
-            ],
-            'TestEvent-3' => [
-                'TestPluginClassBazPlugin',
+            'event' => [
+                'TestEvent-1' => [
+                    'TestPluginClassFooPlugin',
+                ],
+                'TestEvent-2' => [
+                    'TestPluginClassFooPlugin',
+                    'TestPluginClassBarPlugin',
+                ],
+                'TestEvent-3' => [
+                    'TestPluginClassBazPlugin',
+                ],
             ],
         ];
     }
