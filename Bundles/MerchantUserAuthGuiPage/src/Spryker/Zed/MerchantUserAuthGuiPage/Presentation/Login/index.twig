@@ -1,24 +1,49 @@
-{% extends '@MerchantUserAuthGuiPage/Layout/layout.twig' %}
+{% extends '@ZedUi/LayoutCentral/layout-central.twig' %}
 
-{% form_theme form '@MerchantUserAuthGuiPage/Layout/form.twig' %}
+{% set title = 'Merchant Portal' | trans %}
 
 {% block content %}
+    {% set formData = {
+        actionUrl: form.vars.action,
+        name: form.vars.name,
+        method: form.vars.method,
+        children: form.children,
+    } %}
 
-    <div>
-        {{ form_start(form) }}
+    <mp-login cloack>
+        {% for message in app.session.flashbag.get('flash.messages.error') %}
+            <spy-alert class="login__message" type="error">{{ message | trans }}</spy-alert>
+        {% endfor %}
+        {% for error in form.vars.errors %}
+            <spy-alert class="login_message" type="error">{{ error.message | trans }}</spy-alert>
+        {% endfor %}
 
-            {% include '@MerchantUserAuthGuiPage/Partial/form-message.twig' %}
+        <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
+            {% for formField in formData.children if formField.vars.block_prefixes[1] != 'hidden' %}
+                <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default | trans }}">
+                    {{ formField.vars.label | trans }}
+                    <spy-input
+                        control
+                        spy-id="{{ formField.vars.id }}"
+                        attrs=""
+                        required="{{ formField.vars.required }}"
+                        name="{{ formField.vars.full_name }}"
+                        value="{{ formField.vars.value }}"
+                        type="{{ formField.vars.block_prefixes[2] }}"
+                        placeholder="{{ formField.vars.attr.placeholder | default | trans }}"
+                        cloack
+                    ></spy-input>
+                </spy-form-item>
+            {% endfor %}
 
-            {{ form_errors(form) }}
+            <input type="hidden" name="{{ formData.children._token.vars.full_name }}" value="{{ formData.children._token.vars.value }}">
 
-            {{ form_row(form.username) }}
-            {{ form_row(form.password) }}
+            <spy-button type="submit" cloack>{{ 'Login' | trans }}</spy-button>
+        </form>
+    </mp-login>
+{% endblock %}
 
-            <div class="form-group"><button class="btn btn-success btn-block btn-outline btn" type="submit">{{ 'Login' | trans }}</button></div>
-
-            {{ form_rest(form) }}
-
-        {{ form_end(form) }}
-    </div>
-
+{% block footerJs %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/mp-login/main-es5.js') }}"></script>
 {% endblock %}
