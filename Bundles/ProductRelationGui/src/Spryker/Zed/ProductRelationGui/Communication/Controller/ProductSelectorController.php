@@ -33,7 +33,7 @@ class ProductSelectorController extends AbstractController
 
         $productWithCategories = $this->getFactory()
             ->getProductRelationFacade()
-            ->getProductWithCategories($idProductAbstract, $localeTransfer->getIdLocale());
+            ->getProductAbstractDataById($idProductAbstract, $localeTransfer->getIdLocale());
 
         return $this->jsonResponse($productWithCategories);
     }

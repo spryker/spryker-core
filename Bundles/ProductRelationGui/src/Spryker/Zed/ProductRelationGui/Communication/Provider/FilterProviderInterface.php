@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelationGui\Communication\FilterProvider;
+namespace Spryker\Zed\ProductRelationGui\Communication\Provider;
 
 interface FilterProviderInterface
 {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelationGui\Communication\MappingReader;
+namespace Spryker\Zed\ProductRelationGui\Communication\Provider;
 
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
@@ -14,7 +14,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 
-class MappingReader implements MappingReaderInterface
+class MappingProvider implements MappingProviderInterface
 {
     protected const PATTERN_PRODUCT_ATTRIBUTE_KEY = 'product.json.%s';
 
@@ -32,9 +32,9 @@ class MappingReader implements MappingReaderInterface
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
      */
-    public function getMappings()
+    public function getMappings(): array
     {
         $mapping = $this->buildProductMapping();
         $mapping = array_merge($mapping, $this->buildProductAttributeMap());

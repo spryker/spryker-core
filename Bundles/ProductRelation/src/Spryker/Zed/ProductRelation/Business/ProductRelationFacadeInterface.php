@@ -138,7 +138,7 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
-     * - Finds product with categories py provider product abstract id and locale id.
+     * - Finds product abstract with categories and image by provided product abstract id and locale id.
      *
      * @api
      *
@@ -147,5 +147,5 @@ interface ProductRelationFacadeInterface
      *
      * @return array
      */
-    public function getProductWithCategories(int $idProductAbstract, int $idLocale): array;
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
 }

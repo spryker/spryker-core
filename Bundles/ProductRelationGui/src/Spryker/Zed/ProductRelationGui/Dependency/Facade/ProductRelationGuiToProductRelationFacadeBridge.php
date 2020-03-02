@@ -101,8 +101,8 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
      *
      * @return array
      */
-    public function getProductWithCategories(int $idProductAbstract, int $idLocale): array
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array
     {
-        return $this->productRelationFacade->getProductWithCategories($idProductAbstract, $idLocale);
+        return $this->productRelationFacade->getProductAbstractDataById($idProductAbstract, $idLocale);
     }
 }

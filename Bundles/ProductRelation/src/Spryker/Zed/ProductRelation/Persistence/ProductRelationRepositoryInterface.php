@@ -23,4 +23,12 @@ interface ProductRelationRepositoryInterface
     public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
 }

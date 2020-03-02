@@ -12,14 +12,14 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProvider;
-use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Transformer\RuleQuerySetTransformer;
-use Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReader;
-use Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReaderInterface;
+use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProvider;
+use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProviderInterface;
+use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProvider;
+use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreator;
 use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductRelationTable;
@@ -143,7 +143,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProviderInterface
+     * @return \Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProviderInterface
      */
     public function createFilterProvider(): FilterProviderInterface
     {
@@ -151,11 +151,11 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReaderInterface
+     * @return \Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface
      */
-    public function createMappingReader(): MappingReaderInterface
+    public function createMappingProvider(): MappingProviderInterface
     {
-        return new MappingReader($this->getProductAttributeKeyPropelQuery());
+        return new MappingProvider($this->getProductAttributeKeyPropelQuery());
     }
 
     /**
@@ -166,7 +166,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
         return new RuleQueryCreator(
             $this->getLocaleFacade(),
             $this->getProductAbstractPropelQuery(),
-            $this->createMappingReader(),
+            $this->createMappingProvider(),
             $this->getPropelQueryBuilderQueryContainer()
         );
     }

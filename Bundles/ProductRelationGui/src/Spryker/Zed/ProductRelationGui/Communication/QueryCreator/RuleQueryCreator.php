@@ -20,7 +20,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReaderInterface;
+use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToPropelQueryBuilderQueryContainerInterface;
 
@@ -40,9 +40,9 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
     protected $productAbstractQuery;
 
     /**
-     * @var \Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReaderInterface
+     * @var \Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface
      */
-    protected $mappingReader;
+    protected $mappingProvider;
 
     /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToPropelQueryBuilderQueryContainerInterface
@@ -52,18 +52,18 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
     /**
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface $localeFacade
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
-     * @param \Spryker\Zed\ProductRelationGui\Communication\MappingReader\MappingReaderInterface $mappingReader
+     * @param \Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface $mappingProvider
      * @param \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToPropelQueryBuilderQueryContainerInterface $propelQueryBuilderQueryContainer
      */
     public function __construct(
         ProductRelationGuiToLocaleFacadeInterface $localeFacade,
         SpyProductAbstractQuery $productAbstractQuery,
-        MappingReaderInterface $mappingReader,
+        MappingProviderInterface $mappingProvider,
         ProductRelationGuiToPropelQueryBuilderQueryContainerInterface $propelQueryBuilderQueryContainer
     ) {
         $this->localeFacade = $localeFacade;
         $this->productAbstractQuery = $productAbstractQuery;
-        $this->mappingReader = $mappingReader;
+        $this->mappingProvider = $mappingProvider;
         $this->propelQueryBuilderQueryContainer = $propelQueryBuilderQueryContainer;
     }
 
@@ -159,7 +159,7 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
     {
         $propelQueryBuilderCriteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
         $propelQueryBuilderCriteriaTransfer->setRuleSet($productRelationTransfer->getQuerySet());
-        $propelQueryBuilderCriteriaTransfer->setMappings(new ArrayObject($this->mappingReader->getMappings()));
+        $propelQueryBuilderCriteriaTransfer->setMappings(new ArrayObject($this->mappingProvider->getMappings()));
 
         return $propelQueryBuilderCriteriaTransfer;
     }

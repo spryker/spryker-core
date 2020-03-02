@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelationGui\Communication\MappingReader;
+namespace Spryker\Zed\ProductRelationGui\Communication\Provider;
 
-interface MappingReaderInterface
+interface MappingProviderInterface
 {
     /**
      * @return array|\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer

@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductRelation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductRelation\Business\Product\ProductReader;
-use Spryker\Zed\ProductRelation\Business\Product\ProductReaderInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationActivator;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationReader;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriter;
@@ -41,14 +39,6 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     public function createProductRelationReader()
     {
         return new ProductRelationReader($this->getQueryContainer(), $this->getUtilEncodingService());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductRelation\Business\Product\ProductReaderInterface
-     */
-    public function createProductReader(): ProductReaderInterface
-    {
-        return new ProductReader($this->getQueryContainer());
     }
 
     /**

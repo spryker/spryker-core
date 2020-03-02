@@ -77,5 +77,5 @@ interface ProductRelationGuiToProductRelationFacadeInterface
      *
      * @return array
      */
-    public function getProductWithCategories(int $idProductAbstract, int $idLocale): array;
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
 }

@@ -174,10 +174,8 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @return array
      */
-    public function getProductWithCategories(int $idProductAbstract, int $idLocale): array
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array
     {
-        return $this->getFactory()
-            ->createProductReader()
-            ->getProductWithCategories($idProductAbstract, $idLocale);
+        return $this->getRepository()->getProductAbstractDataById($idProductAbstract, $idLocale);
     }
 }
