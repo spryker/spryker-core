@@ -13,10 +13,10 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRendere
 
 class OpenApiSpecificationParameterGenerator implements OpenApiSpecificationParameterGeneratorInterface
 {
-    protected const DEFAULT_LANGUAGE_REF_NAME = 'acceptLanguage';
-    protected const DEFAULT_LANGUAGE_NAME = 'Accept-Language';
-    protected const DEFAULT_LANGUAGE_IN = 'header';
-    protected const DEFAULT_LANGUAGE_DESCRIPTION = 'Locale value relevant for the store.';
+    protected const DEFAULT_ACCEPT_LANGUAGE_REF_NAME = 'acceptLanguage';
+    protected const DEFAULT_ACCEPT_LANGUAGE_NAME = 'Accept-Language';
+    protected const DEFAULT_ACCEPT_LANGUAGE_IN = 'header';
+    protected const DEFAULT_ACCEPT_LANGUAGE_DESCRIPTION = 'Locale value relevant for the store.';
 
     /**
      * @var array
@@ -72,10 +72,10 @@ class OpenApiSpecificationParameterGenerator implements OpenApiSpecificationPara
     protected function addAcceptLanguageParameter(): void
     {
         $language = $this->createParameter(
-            static::DEFAULT_LANGUAGE_REF_NAME,
-            static::DEFAULT_LANGUAGE_IN,
-            static::DEFAULT_LANGUAGE_DESCRIPTION,
-            static::DEFAULT_LANGUAGE_NAME,
+            static::DEFAULT_ACCEPT_LANGUAGE_REF_NAME,
+            static::DEFAULT_ACCEPT_LANGUAGE_IN,
+            static::DEFAULT_ACCEPT_LANGUAGE_DESCRIPTION,
+            static::DEFAULT_ACCEPT_LANGUAGE_NAME,
             false,
             $this->createParameterScheme('string')
         );

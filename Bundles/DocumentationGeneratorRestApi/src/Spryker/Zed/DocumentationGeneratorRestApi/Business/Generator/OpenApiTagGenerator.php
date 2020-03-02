@@ -35,7 +35,7 @@ class OpenApiTagGenerator implements OpenApiTagGeneratorInterface
     public function addTag(PathMethodDataTransfer $pathMethodDataTransfer): void
     {
         if ($pathMethodDataTransfer->getResource()) {
-            array_push($this->tags, $pathMethodDataTransfer->getResource());
+            $this->tags[] = $pathMethodDataTransfer->getResource();
         }
     }
 
