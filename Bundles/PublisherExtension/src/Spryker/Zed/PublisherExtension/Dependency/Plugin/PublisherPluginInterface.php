@@ -20,14 +20,4 @@ interface PublisherPluginInterface extends EventBulkHandlerInterface
      * @return string[]
      */
     public function getSubscribedEvents(): array;
-
-    /**
-     * Specification:
-     * - Registers publisher event queue name.
-     *
-     * @api
-     *
-     * @return string|null
-     */
-    public function getPublishQueueName(): ?string;
 }

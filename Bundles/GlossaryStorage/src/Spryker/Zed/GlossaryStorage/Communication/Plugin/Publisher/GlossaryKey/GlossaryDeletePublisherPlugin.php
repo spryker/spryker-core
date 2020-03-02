@@ -48,16 +48,4 @@ class GlossaryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
             GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE,
         ];
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return string|null
-     */
-    public function getPublishQueueName(): ?string
-    {
-        return $this->getConfig()->getGlossaryEventQueueName();
-    }
 }

@@ -134,9 +134,9 @@ class EventDispatcher implements EventDispatcherInterface
         if (is_subclass_of($eventListener->getListenerName(), EventHandlerInterface::class)) {
             $eventListener->handle($transfer, $eventName);
         } elseif (is_subclass_of($eventListener->getListenerName(), EventBulkHandlerInterface::class)) {
-            throw new EventListenerAmbiguousException(sprintf('`%s` is using `\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface` , you need to use `EventFacade::triggerBulk()` to trigger the events.', $eventListener->getListenerName()));
+            throw new EventListenerAmbiguousException(sprintf('`%s` is using `%s` , you need to use `EventFacade::triggerBulk()` to trigger the events.', $eventListener->getListenerName(), EventBulkHandlerInterface::class));
         } else {
-            throw new EventListenerInvalidException(sprintf('`%s` is using invalid interface, use `\Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface` to fix this.', $eventListener->getListenerName()));
+            throw new EventListenerInvalidException(sprintf('`%s` is using invalid interface, use `%s` to fix this.', $eventListener->getListenerName(), EventHandlerInterface::class));
         }
     }
 
@@ -156,7 +156,7 @@ class EventDispatcher implements EventDispatcherInterface
         } elseif (is_subclass_of($eventListener->getListenerName(), EventHandlerInterface::class)) {
             $this->handleEventListeners($eventName, $transfers, $eventListener);
         } else {
-            throw new EventListenerInvalidException(sprintf('`%s` is using invalid interface, use `\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface` to fix this.', $eventListener->getListenerName()));
+            throw new EventListenerInvalidException(sprintf('`%s` is using invalid interface, use `%s` to fix this.', $eventListener->getListenerName(), EventBulkHandlerInterface::class));
         }
     }
 

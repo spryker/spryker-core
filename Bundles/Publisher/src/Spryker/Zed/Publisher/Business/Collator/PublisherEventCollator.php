@@ -49,18 +49,36 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
         $eventCollection = [];
 
         foreach ($this->publisherPlugins as $publisherPlugin) {
-            $publishQueueName = $publisherPlugin->getPublishQueueName() ?? EventConstants::EVENT_QUEUE;
+            $eventCollection = $this->registerSubscribedEventsByPublisher(
+                $eventCollection,
+                $publisherPlugin->getSubscribedEvents(),
+                get_class($publisherPlugin)
+            );
+        }
 
-            if (!isset($eventCollection[$publishQueueName])) {
-                $eventCollection[$publishQueueName] = [];
-            }
+        return $eventCollection;
+    }
 
-            foreach ($publisherPlugin->getSubscribedEvents() as $subscribedEvent) {
-                if (!isset($eventCollection[$publishQueueName][$subscribedEvent])) {
-                    $eventCollection[$publishQueueName][$subscribedEvent] = [];
-                }
-                $eventCollection[$publishQueueName][$subscribedEvent][] = get_class($publisherPlugin);
+    /**
+     * @param array $eventCollection
+     * @param string[] $subscribedEvents
+     * @param string $publisherClassName
+     *
+     * @return array
+     */
+    protected function registerSubscribedEventsByPublisher(array $eventCollection, array $subscribedEvents, string $publisherClassName): array
+    {
+        $publishQueueName = EventConstants::EVENT_QUEUE;
+
+        if (!isset($eventCollection[$publishQueueName])) {
+            $eventCollection[$publishQueueName] = [];
+        }
+
+        foreach ($subscribedEvents as $subscribedEvent) {
+            if (!isset($eventCollection[$publishQueueName][$subscribedEvent])) {
+                $eventCollection[$publishQueueName][$subscribedEvent] = [];
             }
+            $eventCollection[$publishQueueName][$subscribedEvent][] = $publisherClassName;
         }
 
         return $eventCollection;

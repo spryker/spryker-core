@@ -65,14 +65,4 @@ class GlossaryStorageConfig extends AbstractBundleConfig
      * This events will be used for spy_glossary_translation entity deletion.
      */
     public const ENTITY_SPY_GLOSSARY_TRANSLATION_DELETE = 'Entity.spy_glossary_translation.delete';
-
-    /**
-     * Defines queue name as used for publishing translation messages.
-     */
-    public const TRANSLATION_PUBLISH_QUEUE_NAME = 'publish.translation';
-
-    /**
-     * Defines queue name as used for collecting error translation messages.
-     */
-    public const TRANSLATION_PUBLISH_QUEUE_NAME_ERROR = 'publish.translation.error';
 }

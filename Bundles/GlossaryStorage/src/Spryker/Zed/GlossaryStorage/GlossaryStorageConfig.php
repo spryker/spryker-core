@@ -28,20 +28,4 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     {
         return null;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getGlossaryEventQueueName(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getGlossaryEventQueueMessageChunkSize(): ?int
-    {
-        return null;
-    }
 }
