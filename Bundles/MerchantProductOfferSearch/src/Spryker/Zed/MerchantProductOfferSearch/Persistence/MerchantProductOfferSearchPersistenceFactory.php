@@ -11,6 +11,8 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchDependencyProvider;
+use Spryker\Zed\MerchantProductOfferSearch\Persistence\Mapper\ProductAbstractMerchantMapper;
+use Spryker\Zed\MerchantProductOfferSearch\Persistence\Mapper\ProductAbstractMerchantMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
@@ -18,6 +20,14 @@ use Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchDependencyP
  */
 class MerchantProductOfferSearchPersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferSearch\Persistence\Mapper\ProductAbstractMerchantMapperInterface
+     */
+    public function createProductAbstractMerchantMapper(): ProductAbstractMerchantMapperInterface
+    {
+        return new ProductAbstractMerchantMapper();
+    }
+
     /**
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
