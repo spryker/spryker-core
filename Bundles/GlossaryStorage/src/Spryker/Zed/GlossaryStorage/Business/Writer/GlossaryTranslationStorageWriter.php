@@ -188,8 +188,6 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         /**
          * This line added to keep the glossary data structure in backward compatible and
          * will be removed in the next major version.
-         *
-         * @var string $data https://spryker.atlassian.net/browse/TE-3518
          */
         $data = $this->makeGlossaryDataBackwardCompatible($glossaryTranslationEntityTransfer->modifiedToArray());
         $glossaryStorageEntityTransfer->setData($data);

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Event\Business\Dispatcher;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Zed\Event\Business\EventFacadeInterface;
 use Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException;
 use Spryker\Zed\Event\Business\Exception\EventListenerInvalidException;
 use Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException;
@@ -134,7 +135,7 @@ class EventDispatcher implements EventDispatcherInterface
         if (is_subclass_of($eventListener->getListenerName(), EventHandlerInterface::class)) {
             $eventListener->handle($transfer, $eventName);
         } elseif (is_subclass_of($eventListener->getListenerName(), EventBulkHandlerInterface::class)) {
-            throw new EventListenerAmbiguousException(sprintf('`%s` is using `%s` , you need to use `EventFacade::triggerBulk()` to trigger the events.', $eventListener->getListenerName(), EventBulkHandlerInterface::class));
+            throw new EventListenerAmbiguousException(sprintf('`%s` is using `%s` , you need to use `%s` to trigger the events.', $eventListener->getListenerName(), EventBulkHandlerInterface::class, EventFacadeInterface::class));
         } else {
             throw new EventListenerInvalidException(sprintf('`%s` is using invalid interface, use `%s` to fix this.', $eventListener->getListenerName(), EventHandlerInterface::class));
         }
@@ -187,7 +188,7 @@ class EventDispatcher implements EventDispatcherInterface
             return;
         }
 
-        throw new EventListenerNotFoundException(sprintf('%s is not a listener or class doesn\'t exists', $listenerName));
+        throw new EventListenerNotFoundException(sprintf('%s is not a listener or class doesn\'t exist', $listenerName));
     }
 
     /**
