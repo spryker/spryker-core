@@ -26,14 +26,14 @@
                         value="{{ formField.vars.value }}"
                         type="{{ formField.vars.block_prefixes[2] }}"
                         placeholder="{{ formField.vars.attr.placeholder | default | trans }}"
-                        cloack
+                        cloak
                     ></spy-input>
                 </spy-form-item>
             {% endfor %}
 
             <input type="hidden" name="{{ formData.children._token.vars.full_name }}" value="{{ formData.children._token.vars.value }}">
 
-            <spy-button class="login__submit" type="submit" cloack>{{ 'Login' | trans }}</spy-button>
+            <spy-button class="login__submit" type="submit" cloak>{{ 'Login' | trans }}</spy-button>
         </form>
     </mp-login>
 {% endblock %}
