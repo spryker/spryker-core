@@ -11,6 +11,7 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\DataSet\ProductLabelDataSetInterface;
 
@@ -37,9 +38,7 @@ class ProductLabelProductAbstractWriterStep extends PublishAwareStep implements 
                 $productLabelAbstractProductEntity->save();
 
                 $this->addPublishEvents(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, $idProductAbstract);
-
-                // TODO check this
-//                $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $idProductAbstract);
+                $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $idProductAbstract);
             }
         }
     }
