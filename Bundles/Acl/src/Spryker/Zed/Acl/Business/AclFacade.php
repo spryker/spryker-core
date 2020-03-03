@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Acl\Business;
 
+use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
@@ -16,6 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Acl\Business\AclBusinessFactory getFactory()
+ * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
  */
 class AclFacade extends AbstractFacade implements AclFacadeInterface
 {
@@ -99,6 +101,20 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
         return $this->getFactory()
             ->createGroupModel()
             ->getByName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GroupCriteriaTransfer $groupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\GroupTransfer|null
+     */
+    public function findGroup(GroupCriteriaTransfer $groupCriteriaTransfer): ?GroupTransfer
+    {
+        return $this->getRepository()->findGroup($groupCriteriaTransfer);
     }
 
     /**
@@ -363,7 +379,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int $type
+     * @param string $type
      *
      * @return bool
      */
