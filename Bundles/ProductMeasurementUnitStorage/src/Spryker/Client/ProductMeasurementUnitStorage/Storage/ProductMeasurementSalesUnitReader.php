@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer;
-use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
@@ -51,7 +50,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
             return null;
         }
 
-        return $this->getProductMeasurementSalesUnits($productConcreteMeasurementUnitStorageTransfer);
+        return $this->getProductMeasurementSalesUnits([$productConcreteMeasurementUnitStorageTransfer]);
     }
 
     /**
@@ -72,54 +71,69 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
             return [];
         }
 
+        $productMeasurementSalesUnitTransfers = $this->getProductMeasurementSalesUnits($productConcreteMeasurementUnitStorageTransfers);
         $productConcreteProductMeasurementSalesUnitTransfers = [];
-        foreach ($productConcreteMeasurementUnitStorageTransfers as $idProductConcrete => $productConcreteMeasurementUnitStorageTransfer) {
+        foreach ($productMeasurementSalesUnitTransfers as $idProductConcrete => $productMeasurementSalesUnitTransfer) {
             $productConcreteProductMeasurementSalesUnitTransfers[] = (new ProductConcreteProductMeasurementSalesUnitTransfer())
                 ->setIdProductConcrete($idProductConcrete)
-                ->setProductMeasurementSalesUnits(
-                    new ArrayObject($this->getProductMeasurementSalesUnits($productConcreteMeasurementUnitStorageTransfer))
-                );
+                ->setProductMeasurementSalesUnits(new ArrayObject($productMeasurementSalesUnitTransfer));
         }
 
         return $productConcreteProductMeasurementSalesUnitTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[] $productConcreteMeasurementUnitStorageTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    protected function getProductMeasurementSalesUnits(ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer): array
+    protected function getProductMeasurementSalesUnits(array $productConcreteMeasurementUnitStorageTransfers): array
     {
-        $productMeasurementSalesUnits = [];
-        $defaultFound = false;
-        foreach ($productConcreteMeasurementUnitStorageTransfer->getSalesUnits() as $productConcreteMeasurementSalesUnitTransfer) {
+        $productMeasurementSalesUnitTransfers = [];
+        $productConcreteMeasurementSalesUnitTransfers = [];
+        foreach ($productConcreteMeasurementUnitStorageTransfers as $productConcreteMeasurementUnitStorageTransfer) {
+            foreach ($productConcreteMeasurementUnitStorageTransfer->getSalesUnits() as $productConcreteMeasurementSalesUnitTransfer) {
+                $productConcreteMeasurementSalesUnitTransfers[] = $productConcreteMeasurementSalesUnitTransfer;
+            }
+        }
+
+        $indexedProductMeasurementUnitTransfers = $this->getIndexedProductMeasurementUnitTransfers($productConcreteMeasurementSalesUnitTransfers);
+        foreach ($productConcreteMeasurementSalesUnitTransfers as $productConcreteMeasurementSalesUnitTransfer) {
+            $productMeasurementUnitTransfer = $indexedProductMeasurementUnitTransfers[$productConcreteMeasurementSalesUnitTransfer->getIdProductMeasurementUnit()];
+            $productMeasurementSalesUnitTransfer = $this->mapProductMeasurementSalesUnitTransfer(
+                $productConcreteMeasurementSalesUnitTransfer,
+                new ProductMeasurementSalesUnitTransfer()
+            );
+            $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+            $productMeasurementSalesUnitTransfers[$productMeasurementSalesUnitTransfer->getFkProduct()][] = $productMeasurementSalesUnitTransfer;
+        }
+
+        return $productMeasurementSalesUnitTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer[] $productConcreteMeasurementSalesUnitTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    protected function getIndexedProductMeasurementUnitTransfers(array $productConcreteMeasurementSalesUnitTransfers): array
+    {
+        $productMeasurementUnitIds = [];
+        foreach ($productConcreteMeasurementSalesUnitTransfers as $productConcreteMeasurementSalesUnitTransfer) {
             if ($productConcreteMeasurementSalesUnitTransfer->getIsDisplayed() !== true) {
                 continue;
             }
 
-            if ($productConcreteMeasurementSalesUnitTransfer->getIsDefault()) {
-                $defaultFound = true;
-            }
-
-            $productMeasurementUnitTransfer = $this->productMeasurementUnitReader->findProductMeasurementUnit(
-                $productConcreteMeasurementSalesUnitTransfer->getIdProductMeasurementUnit()
-            );
-
-            $productMeasurementSalesUnit = $this->mapProductMeasurementSalesUnitTransfer(
-                $productConcreteMeasurementSalesUnitTransfer,
-                new ProductMeasurementSalesUnitTransfer()
-            );
-
-            $productMeasurementSalesUnit->setProductMeasurementUnit($productMeasurementUnitTransfer);
-            $productMeasurementSalesUnits[] = $productMeasurementSalesUnit;
+            $productMeasurementUnitIds[] = $productConcreteMeasurementSalesUnitTransfer->getIdProductMeasurementUnit();
         }
 
-        if ($defaultFound !== true && count($productMeasurementSalesUnits)) {
-            $productMeasurementSalesUnits[0]->setIsDefault(true);
+        $productMeasurementUnitTransfers = $this->productMeasurementUnitReader->getProductMeasurementUnits($productMeasurementUnitIds);
+        $indexedProductMeasurementUnitTransfers = [];
+        foreach ($productMeasurementUnitTransfers as $productMeasurementUnitTransfer) {
+            $indexedProductMeasurementUnitTransfers[$productMeasurementUnitTransfer->getIdProductMeasurementUnit()] = $productMeasurementUnitTransfer;
         }
 
-        return $productMeasurementSalesUnits;
+        return $indexedProductMeasurementUnitTransfers;
     }
 
     /**

@@ -159,10 +159,26 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     {
         $mappingKeys = [];
         foreach ($identifiers as $identifier) {
-            $mappingKeys[] = $this->generateKey(sprintf('%s:%s', $mappingType, $identifier));
+            $mappingKeys[] = $this->getStorageKey(sprintf('%s:%s', $mappingType, $identifier));
         }
 
         return $mappingKeys;
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return string
+     */
+    protected function getStorageKey(string $reference): string
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer
+            ->setReference($reference);
+
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
     }
 
     /**
