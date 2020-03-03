@@ -17,7 +17,7 @@ interface ProductLabelRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findProductLabelByIdProductLabel(int $idProductLabel): ?ProductLabelTransfer;
+    public function findProductLabelById(int $idProductLabel): ?ProductLabelTransfer;
 
     /**
      * @param string $labelName

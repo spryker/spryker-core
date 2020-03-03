@@ -328,7 +328,7 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int $type
+     * @param string $type
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
