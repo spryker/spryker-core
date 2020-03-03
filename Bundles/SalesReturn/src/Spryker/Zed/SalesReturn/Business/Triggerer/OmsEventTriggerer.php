@@ -13,7 +13,8 @@ use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface;
 
 class OmsEventTriggerer implements OmsEventTriggererInterface
 {
-    protected const EVENT_EXECUTE_RETURN = 'execute-return';
+    // TODO: get from shared config?
+    protected const EVENT_RETURN = 'return';
 
     /**
      * @var \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface
@@ -37,7 +38,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($returnTransfer);
 
-        $this->omsFacade->triggerEventForOrderItems(static::EVENT_EXECUTE_RETURN, $salesOrderItemIds);
+        $this->omsFacade->triggerEventForOrderItems(static::EVENT_RETURN, $salesOrderItemIds);
     }
 
     /**

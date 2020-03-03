@@ -42,6 +42,8 @@ class ReturnsResourceController extends AbstractController
         RestRequestInterface $restRequest,
         RestReturnRequestAttributesTransfer $restReturnRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createReturnWriter()->createReturn($restRequest);
+        return $this->getFactory()
+            ->createReturnWriter()
+            ->createReturn($restRequest, $restReturnRequestAttributesTransfer);
     }
 }

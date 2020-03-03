@@ -51,7 +51,9 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      */
     public function getReturns(ReturnFilterTransfer $returnFilterTransfer): ReturnCollectionTransfer
     {
-        // TODO: Implement getReturns() method.
+        return $this->getFactory()
+            ->createReturnReader()
+            ->getReturnCollection($returnFilterTransfer);
     }
 
     /**

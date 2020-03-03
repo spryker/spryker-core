@@ -17,5 +17,5 @@ interface ReturnReasonReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getReturnReasonAttributes(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getReturnReasons(RestRequestInterface $restRequest): RestResponseInterface;
 }

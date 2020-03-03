@@ -98,7 +98,7 @@ class ReturnWriter implements ReturnWriterInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR);
         }
 
-        $orderItems = $this->getOrderItemsFromReturnRequest($createReturnRequestTransfer);
+        $orderItems = $this->getOrderItems($createReturnRequestTransfer);
         $returnResponseTransfer = $this->returnValidator->validateReturnRequest($createReturnRequestTransfer, $orderItems);
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
@@ -262,16 +262,14 @@ class ReturnWriter implements ReturnWriterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getOrderItemsFromReturnRequest(CreateReturnRequestTransfer $createReturnRequestTransfer): ArrayObject
+    protected function getOrderItems(CreateReturnRequestTransfer $createReturnRequestTransfer): ArrayObject
     {
         $orderItemFilterTransfer = $this->mapCreateReturnRequestTransferToOrderItemFilterTransfer(
             $createReturnRequestTransfer,
             new OrderItemFilterTransfer()
         );
 
-        return $this->returnReader
-            ->getOrderItemCollection($orderItemFilterTransfer)
-            ->getItems();
+        return $this->returnReader->getOrderItems($orderItemFilterTransfer);
     }
 
     /**

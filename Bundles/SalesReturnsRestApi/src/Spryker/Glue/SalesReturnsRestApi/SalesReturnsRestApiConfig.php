@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\SalesReturnsRestApi\SalesReturnsRestApiConfig as SalesReturnsRestApiSharedConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,11 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_RETURNS = 'returns';
     public const RESOURCE_RETURN_REASONS = 'return-reasons';
 
+    // TODO: clarify it.
+    public const RESPONSE_RETURN_CANT_BE_CREATED = '3302';
+
+    public const EXCEPTION_MESSAGE_RETURN_CANT_BE_CREATED = 'Return can\'t be created.';
+
     /**
      * @return array
      */
@@ -23,19 +29,9 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     {
         return [
             SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATE_RETURN => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_NOT_FOUND,
+                RestErrorMessageTransfer::CODE => static::RESPONSE_RETURN_CANT_BE_CREATED,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
-            ],
-            SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_CODE_CANT_BE_ADDED,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_CODE_CANT_BE_ADDED,
-            ],
-            SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_CODE_NOT_FOUND,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_CODE_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_RETURN_CANT_BE_CREATED,
             ],
         ];
     }

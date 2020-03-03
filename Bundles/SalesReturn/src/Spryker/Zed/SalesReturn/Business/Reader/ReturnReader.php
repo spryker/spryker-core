@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesReturn\Business\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
@@ -96,11 +95,13 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getOrderItemCollection(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ArrayObject
     {
-        return $this->salesFacade->getOrderItems($orderItemFilterTransfer);
+        return $this->salesFacade
+            ->getOrderItems($orderItemFilterTransfer)
+            ->getItems();
     }
 
     /**
@@ -153,7 +154,7 @@ class ReturnReader implements ReturnReaderInterface
         $salesOrderItemIds = $this->extractSalesOrderItemIds($returnTransfer);
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds);
 
-        $itemTransfers = $this->getOrderItemCollection($orderItemFilterTransfer)->getItems();
+        $itemTransfers = $this->getOrderItems($orderItemFilterTransfer);
         $mappedItemTransfers = $this->mapOrderItemsByIdSalesOrderItem($itemTransfers);
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {

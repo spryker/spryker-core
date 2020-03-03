@@ -73,7 +73,6 @@ class ReturnResourceMapper implements ReturnResourceMapperInterface
         RestReturnDetailsAttributesTransfer $restReturnDetailsAttributesTransfer
     ): RestReturnDetailsAttributesTransfer {
         $returnTransfer
-            ->requireCustomer()
             ->requireReturnTotals()
             ->requireReturnItems();
 
@@ -81,7 +80,6 @@ class ReturnResourceMapper implements ReturnResourceMapperInterface
 
         $restReturnDetailsAttributesTransfer = $restReturnDetailsAttributesTransfer
             ->fromArray($returnTransfer->toArray(), true)
-            ->setCustomerReference($returnTransfer->getCustomer()->getCustomerReference())
             ->setReturnItems(new ArrayObject($restReturnItemsAttributesTransfers))
             ->setReturnTotals(
                 (new RestReturnTotalsAttributesTransfer())

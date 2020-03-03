@@ -9,7 +9,9 @@
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/sales-return": "^1.0.0"
+    "spryker/orders-rest-api": "*",
+    "spryker/sales-return": "^1.0.0",
+    "spryker/symfony": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
