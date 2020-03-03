@@ -1,4 +1,4 @@
-{% extends '@ZedUi/LayoutCentral/layout-central.twig' %}
+{% extends '@ZedUi/Layout/layout-centered.twig' %}
 
 {% set title = 'Merchant Portal' | trans %}
 
@@ -10,13 +10,8 @@
         children: form.children,
     } %}
 
-    <mp-login cloack>
-        {% for message in app.session.flashbag.get('flash.messages.error') %}
-            <spy-alert class="login__message" type="error">{{ message | trans }}</spy-alert>
-        {% endfor %}
-        {% for error in form.vars.errors %}
-            <spy-alert class="login_message" type="error">{{ error.message | trans }}</spy-alert>
-        {% endfor %}
+    <mp-login cloak>
+        {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
 
         <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
             {% for formField in formData.children if formField.vars.block_prefixes[1] != 'hidden' %}
@@ -38,7 +33,7 @@
 
             <input type="hidden" name="{{ formData.children._token.vars.full_name }}" value="{{ formData.children._token.vars.value }}">
 
-            <spy-button type="submit" cloack>{{ 'Login' | trans }}</spy-button>
+            <spy-button class="login__submit" type="submit" cloack>{{ 'Login' | trans }}</spy-button>
         </form>
     </mp-login>
 {% endblock %}

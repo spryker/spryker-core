@@ -4,16 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            [cloack] {
+            [cloak] {
                 display: none;
             }
         </style>
         <title>
-            {% block headTitle %}
-                {% if title is defined %}
-                    {{ title | trans }}
-                {% endif %}
-            {% endblock %}
+            {% block headTitle %}{% endblock %}
         </title>
 
         {% block headCss %}

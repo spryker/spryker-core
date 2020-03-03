@@ -5,10 +5,10 @@
     "types": []
   },
   "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
+    "src/Spryker/Zed/ZedUi/Presentation/Components/main.ts",
+    "src/Spryker/Zed/ZedUi/Presentation/Components/polyfills.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "src/Spryker/Zed/ZedUi/Presentation/Components/**/*.d.ts"
   ]
 }

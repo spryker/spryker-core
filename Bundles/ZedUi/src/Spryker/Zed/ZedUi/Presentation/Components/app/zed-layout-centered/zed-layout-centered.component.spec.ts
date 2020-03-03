@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { ZedLayoutCentralComponent } from './zed-layout-central.component';
+import { ZedLayoutCenteredComponent } from './zed-layout-centered.component';
 import { ZedAuthFooterModule } from '../zed-auth-footer/zed-auth-footer.module';
 
 describe('ZedLayoutCentralComponent', () => {
@@ -12,7 +12,7 @@ describe('ZedLayoutCentralComponent', () => {
     @Component({
         selector: 'test',
         template: `
-            <zed-layout-central>Content</zed-layout-central>
+            <zed-layout-centered>Content</zed-layout-centered>
         `
     })
     class TestComponent {}
@@ -20,7 +20,7 @@ describe('ZedLayoutCentralComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [ZedAuthFooterModule],
-            declarations: [ZedLayoutCentralComponent, TestComponent]
+            declarations: [ZedLayoutCenteredComponent, TestComponent]
         }).compileComponents();
     }));
 
@@ -38,8 +38,8 @@ describe('ZedLayoutCentralComponent', () => {
         expect(footerElem).toBeTruthy();
     });
 
-    it('is ng-content renderer inside `zed-layout-central` component', () => {
-        const footerContentElem = fixture.debugElement.query(By.css('.zed-layout-central__content'));
+    it('is ng-content renderer inside `zed-layout-centered` component', () => {
+        const footerContentElem = fixture.debugElement.query(By.css('.zed-layout-centered__content'));
         expect(footerContentElem.nativeElement.textContent).toMatch('Content');
     });
 });

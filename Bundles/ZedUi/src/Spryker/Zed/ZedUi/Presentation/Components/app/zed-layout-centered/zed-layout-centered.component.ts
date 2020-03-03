@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'zed-layout-central',
-    templateUrl: './zed-layout-central.component.html',
-    styleUrls: ['./zed-layout-central.component.less'],
+    selector: 'zed-layout-centered',
+    templateUrl: './zed-layout-centered.component.html',
+    styleUrls: ['./zed-layout-centered.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class ZedLayoutCentralComponent {
+export class ZedLayoutCenteredComponent {
 }

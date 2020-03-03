@@ -45,6 +45,7 @@ describe('LoginComponent', () => {
     });
 
     it('is ng-content renderer inside `spy-card` component', () => {
+        fixture.detectChanges();
         const cardElem = fixture.debugElement.query(By.css('spy-card'));
         expect(cardElem.nativeElement.textContent).toMatch('Card Content');
     });

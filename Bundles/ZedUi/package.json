@@ -6,10 +6,9 @@
     "start": "ng serve",
     "build": "ng build --prod",
     "postbuild": "run-s copy:*",
-    "copy:reset": "cp ./src/assets/reset.css ../../../../../public/Zed/assets/css",
+    "copy:reset": "cp ./src/Spryker/Zed/ZedUi/Presentation/Components/assets/reset.css ../../../../../public/Zed/assets/css",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {

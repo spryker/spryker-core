@@ -8,8 +8,7 @@
     "postbuild": "run-s copy:*",
     "copy:images": "cp -a ./node_modules/@spryker/logo/src/lib/logo/images/ ../../../../../public/Zed/assets/images",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {

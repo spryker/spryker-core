@@ -5,9 +5,9 @@
     "types": []
   },
   "files": [
-    "src/main.ts"
+    "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/main.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/**/*.d.ts"
   ]
 }

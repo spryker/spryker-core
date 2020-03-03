@@ -11,7 +11,7 @@
         }
       },
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components",
       "prefix": "mp",
       "architect": {
         "build": {
@@ -19,12 +19,12 @@
           "options": {
             "outputPath": "../../../../../public/Zed/assets/js/mp-login",
             "index": "",
-            "main": "src/main.ts",
+            "main": "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/main.ts",
             "polyfills": "",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [],
-            "styles": ["src/styles.less"],
+            "styles": ["src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/styles.less"],
             "singleBundle": true,
             "scripts": []
           },
@@ -32,8 +32,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/environments/environment.ts",
+                  "with": "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -79,8 +79,8 @@
         "test": {
           "builder": "ngx-build-plus:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "main": "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/test.ts",
+            "polyfills": "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [],
@@ -93,24 +93,11 @@
           "options": {
             "tsConfig": [
               "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mp-login:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "mp-login:serve:production"
-            }
           }
         }
       }
