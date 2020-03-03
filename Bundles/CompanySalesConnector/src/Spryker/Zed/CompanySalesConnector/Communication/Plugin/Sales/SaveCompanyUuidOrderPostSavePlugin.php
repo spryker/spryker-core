@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Sales;
+namespace Spryker\Zed\CompanySalesConnector\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -13,13 +13,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface;
 
 /**
- * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanySalesConnector\Business\CompanySalesConnectorFacadeInterface getFacade()
  */
-class SaveBusinessUnitUuidOrderPostSavePlugin extends AbstractPlugin implements OrderPostSavePluginInterface
+class SaveCompanyUuidOrderPostSavePlugin extends AbstractPlugin implements OrderPostSavePluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands sales order with company business unit uuid and persists updated entity.
+     * - Expands sales order with company uuid and persists updated entity.
      * - Requires SaveOrderTransfer::idSalesOrder to be set.
      *
      * @api
@@ -31,7 +31,7 @@ class SaveBusinessUnitUuidOrderPostSavePlugin extends AbstractPlugin implements 
      */
     public function execute(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer
     {
-        $this->getFacade()->updateOrderCompanyBusinessUnitUuid($saveOrderTransfer, $quoteTransfer);
+        $this->getFacade()->updateOrderCompanyUuid($saveOrderTransfer, $quoteTransfer);
 
         return $saveOrderTransfer;
     }
