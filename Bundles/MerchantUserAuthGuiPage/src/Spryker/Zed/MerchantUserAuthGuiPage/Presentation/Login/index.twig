@@ -1,6 +1,8 @@
 {% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
 
-{% set title = 'Merchant Portal' | trans %}
+{% block headTitle %}
+    {{ 'Merchant Portal' | trans }}
+{% endblock %}
 
 {% block content %}
     {% set formData = {
