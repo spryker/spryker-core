@@ -2,21 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CustomElementModule } from '@spryker/web-components';
 
-import { ZedLayoutCenteredComponent } from './zed-layout-centered/zed-layout-centered.component';
-import { ZedLayoutCenteredModule } from './zed-layout-centered/zed-layout-centered.module';
+import { MpLayoutCenteredComponent } from './mp-layout-centered/mp-layout-centered.component';
+import { MpLayoutCenteredModule } from './mp-layout-centered/mp-layout-centered.module';
 
 @NgModule({
     imports: [
         BrowserModule,
-        ZedLayoutCenteredModule
+        MpLayoutCenteredModule
     ],
     providers: [],
 })
 export class AppModule extends CustomElementModule {
     protected components = [
         {
-            selector: 'zed-layout-centered',
-            component: ZedLayoutCenteredComponent
+            selector: 'mp-layout-centered',
+            component: MpLayoutCenteredComponent
         }
     ];
 }

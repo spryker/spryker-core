@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZedAuthFooterComponent } from './zed-auth-footer.component';
+import { ZedAuthFooterComponent } from './mp-auth-footer.component';
 
 describe('ZedAuthFooterComponent', () => {
     let component: ZedAuthFooterComponent;
