@@ -7,10 +7,17 @@
 
 namespace Spryker\Zed\SalesReturn\Business\Reader;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Generated\Shared\Transfer\ReturnItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
+use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface;
+use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface;
 use Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface;
 
 class ReturnReader implements ReturnReaderInterface
@@ -23,11 +30,28 @@ class ReturnReader implements ReturnReaderInterface
     protected $salesReturnRepository;
 
     /**
-     * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface $salesReturnRepository
+     * @var \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface
      */
-    public function __construct(SalesReturnRepositoryInterface $salesReturnRepository)
-    {
+    protected $salesFacade;
+
+    /**
+     * @var \Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface
+     */
+    protected $returnTotalCalculator;
+
+    /**
+     * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface $salesReturnRepository
+     * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface $returnTotalCalculator
+     */
+    public function __construct(
+        SalesReturnRepositoryInterface $salesReturnRepository,
+        SalesReturnToSalesFacadeInterface $salesFacade,
+        ReturnTotalCalculatorInterface $returnTotalCalculator
+    ) {
         $this->salesReturnRepository = $salesReturnRepository;
+        $this->salesFacade = $salesFacade;
+        $this->returnTotalCalculator = $returnTotalCalculator;
     }
 
     /**
@@ -70,15 +94,123 @@ class ReturnReader implements ReturnReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItemCollection(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
+    {
+        return $this->salesFacade->getOrderItems($orderItemFilterTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
      */
     protected function expandReturnCollectionWithReturnItems(ReturnCollectionTransfer $returnCollectionTransfer): ReturnCollectionTransfer
     {
-        // TODO: in next story.
+        $returnIds = $this->extractReturnIds($returnCollectionTransfer);
+        $returnItemFilterTransfer = (new ReturnItemFilterTransfer())->setReturnIds($returnIds);
+
+        $returnItemTransfers = $this->salesReturnRepository->getReturnItemsByFilter($returnItemFilterTransfer);
+        $mappedReturnItemTransfers = $this->mapReturnItemsByIdReturn($returnItemTransfers);
+
+        foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
+            $returnTransfer->setReturnItems(
+                new ArrayObject($mappedReturnItemTransfers[$returnTransfer->getIdSalesReturn()] ?? [])
+            );
+
+            $this->expandReturnWithOrderItems($returnTransfer);
+        }
 
         return $returnCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function extractReturnIds(ReturnCollectionTransfer $returnCollectionTransfer): array
+    {
+        $returnIds = [];
+
+        foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
+            $returnIds[] = $returnTransfer->getIdSalesReturn();
+        }
+
+        return $returnIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    protected function expandReturnWithOrderItems(ReturnTransfer $returnTransfer): ReturnTransfer
+    {
+        $salesOrderItemIds = $this->extractSalesOrderItemIds($returnTransfer);
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds);
+
+        $itemTransfers = $this->getOrderItemCollection($orderItemFilterTransfer)->getItems();
+        $mappedItemTransfers = $this->mapOrderItemsByIdSalesOrderItem($itemTransfers);
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $returnItemTransfer->setOrderItem(
+                $mappedItemTransfers[$returnItemTransfer->getOrderItem()->getIdSalesOrderItem()] ?? null
+            );
+        }
+
+        return $returnTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return int[]
+     */
+    protected function extractSalesOrderItemIds(ReturnTransfer $returnTransfer): array
+    {
+        $salesOrderItemIds = [];
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
+        }
+
+        return $salesOrderItemIds;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function mapOrderItemsByIdSalesOrderItem(ArrayObject $itemTransfers): array
+    {
+        $mappedItemTransfers = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $mappedItemTransfers[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
+        }
+
+        return $mappedItemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnItemTransfer[] $returnItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ReturnItemTransfer[][]
+     */
+    protected function mapReturnItemsByIdReturn(array $returnItemTransfers): array
+    {
+        $mappedReturnItemTransfers = [];
+
+        foreach ($returnItemTransfers as $returnItemTransfer) {
+            $mappedReturnItemTransfers[$returnItemTransfer->getIdSalesReturn()][] = $returnItemTransfer;
+        }
+
+        return $mappedReturnItemTransfers;
     }
 
     /**
@@ -88,7 +220,11 @@ class ReturnReader implements ReturnReaderInterface
      */
     protected function expandReturnCollectionWithReturnTotals(ReturnCollectionTransfer $returnCollectionTransfer): ReturnCollectionTransfer
     {
-        // TODO: in next story.
+        foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
+            $returnTransfer->setReturnTotals(
+                $this->returnTotalCalculator->calculateReturnTotals($returnTransfer)
+            );
+        }
 
         return $returnCollectionTransfer;
     }

@@ -17,8 +17,8 @@ use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface;
+use Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggererInterface;
 use Spryker\Zed\SalesReturn\Business\Validator\ReturnValidatorInterface;
-use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface;
 use Spryker\Zed\SalesReturn\Persistence\SalesReturnEntityManagerInterface;
 
 class ReturnWriter implements ReturnWriterInterface
@@ -48,29 +48,29 @@ class ReturnWriter implements ReturnWriterInterface
     protected $returnReferenceGenerator;
 
     /**
-     * @var \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface
+     * @var \Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggererInterface
      */
-    protected $salesFacade;
+    protected $omsEventTriggerer;
 
     /**
      * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnEntityManagerInterface $salesReturnEntityManager
      * @param \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidatorInterface $returnValidator
      * @param \Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface $returnReader
      * @param \Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface $returnReferenceGenerator
-     * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggererInterface $omsEventTriggerer
      */
     public function __construct(
         SalesReturnEntityManagerInterface $salesReturnEntityManager,
         ReturnValidatorInterface $returnValidator,
         ReturnReaderInterface $returnReader,
         ReturnReferenceGeneratorInterface $returnReferenceGenerator,
-        SalesReturnToSalesFacadeInterface $salesFacade
+        OmsEventTriggererInterface $omsEventTriggerer
     ) {
         $this->salesReturnEntityManager = $salesReturnEntityManager;
         $this->returnValidator = $returnValidator;
         $this->returnReader = $returnReader;
         $this->returnReferenceGenerator = $returnReferenceGenerator;
-        $this->salesFacade = $salesFacade;
+        $this->omsEventTriggerer = $omsEventTriggerer;
     }
 
     /**
@@ -108,57 +108,11 @@ class ReturnWriter implements ReturnWriterInterface
         $returnTransfer = $this->createReturnTransfer($createReturnRequestTransfer);
         $returnTransfer = $this->createReturnItemTransfers($returnTransfer, $orderItems);
 
-        // TODO: trigger event for return items, recalculate???
+        $this->omsEventTriggerer->triggerExecuteReturnEvent($returnTransfer);
 
         return $this->returnReader->getReturn(
             (new ReturnFilterTransfer())->setReturnReference($returnTransfer->getReturnReference())
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getOrderItemsFromReturnRequest(CreateReturnRequestTransfer $createReturnRequestTransfer): ArrayObject
-    {
-        $orderItemFilterTransfer = $this->mapCreateReturnRequestTransferToOrderItemFilterTransfer(
-            $createReturnRequestTransfer,
-            new OrderItemFilterTransfer()
-        );
-
-        return $this->salesFacade
-            ->getOrderItems($orderItemFilterTransfer)
-            ->getItems();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
-     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderItemFilterTransfer
-     */
-    protected function mapCreateReturnRequestTransferToOrderItemFilterTransfer(
-        CreateReturnRequestTransfer $createReturnRequestTransfer,
-        OrderItemFilterTransfer $orderItemFilterTransfer
-    ): OrderItemFilterTransfer {
-        $orderItemFilterTransfer->setCustomerReference(
-            $createReturnRequestTransfer->getCustomer()->getCustomerReference()
-        );
-
-        foreach ($createReturnRequestTransfer->getReturnItems() as $returnItemTransfer) {
-            $itemTransfer = $returnItemTransfer->getOrderItem();
-
-            if ($itemTransfer->getUuid()) {
-                $orderItemFilterTransfer->addSalesOrderItemUuid($itemTransfer->getUuid());
-
-                continue;
-            }
-
-            $orderItemFilterTransfer->addSalesOrderItemId($itemTransfer->getIdSalesOrderItem());
-        }
-
-        return $orderItemFilterTransfer;
     }
 
     /**
@@ -301,5 +255,51 @@ class ReturnWriter implements ReturnWriterInterface
         }
 
         return $indexedOrderItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getOrderItemsFromReturnRequest(CreateReturnRequestTransfer $createReturnRequestTransfer): ArrayObject
+    {
+        $orderItemFilterTransfer = $this->mapCreateReturnRequestTransferToOrderItemFilterTransfer(
+            $createReturnRequestTransfer,
+            new OrderItemFilterTransfer()
+        );
+
+        return $this->returnReader
+            ->getOrderItemCollection($orderItemFilterTransfer)
+            ->getItems();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderItemFilterTransfer
+     */
+    protected function mapCreateReturnRequestTransferToOrderItemFilterTransfer(
+        CreateReturnRequestTransfer $createReturnRequestTransfer,
+        OrderItemFilterTransfer $orderItemFilterTransfer
+    ): OrderItemFilterTransfer {
+        $orderItemFilterTransfer->setCustomerReference(
+            $createReturnRequestTransfer->getCustomer()->getCustomerReference()
+        );
+
+        foreach ($createReturnRequestTransfer->getReturnItems() as $returnItemTransfer) {
+            $itemTransfer = $returnItemTransfer->getOrderItem();
+
+            if ($itemTransfer->getUuid()) {
+                $orderItemFilterTransfer->addSalesOrderItemUuid($itemTransfer->getUuid());
+
+                continue;
+            }
+
+            $orderItemFilterTransfer->addSalesOrderItemId($itemTransfer->getIdSalesOrderItem());
+        }
+
+        return $orderItemFilterTransfer;
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\SalesReturn\Persistence\SpySalesReturnItemQuery;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -28,6 +29,14 @@ class SalesReturnPersistenceFactory extends AbstractPersistenceFactory
     public function getSalesReturnPropelQuery(): SpySalesReturnQuery
     {
         return SpySalesReturnQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnItemQuery
+     */
+    public function getSalesReturnItemPropelQuery(): SpySalesReturnItemQuery
+    {
+        return SpySalesReturnItemQuery::create();
     }
 
     /**

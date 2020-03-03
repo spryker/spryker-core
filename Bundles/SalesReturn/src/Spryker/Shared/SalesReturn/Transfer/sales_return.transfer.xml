@@ -40,6 +40,10 @@
         <property name="pagination" type="Pagination"/>
     </transfer>
 
+    <transfer name="ReturnItemFilter">
+        <property name="returnIds" type="array" singular="idReturn"/>
+    </transfer>
+
     <transfer name="ReturnReasonFilter">
         <property name="filter" type="Filter"/>
     </transfer>

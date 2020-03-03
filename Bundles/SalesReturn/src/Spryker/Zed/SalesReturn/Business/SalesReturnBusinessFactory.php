@@ -20,10 +20,13 @@ use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetter;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetterInterface;
+use Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggerer;
+use Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggererInterface;
 use Spryker\Zed\SalesReturn\Business\Validator\ReturnValidator;
 use Spryker\Zed\SalesReturn\Business\Validator\ReturnValidatorInterface;
 use Spryker\Zed\SalesReturn\Business\Writer\ReturnWriter;
 use Spryker\Zed\SalesReturn\Business\Writer\ReturnWriterInterface;
+use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface;
 use Spryker\Zed\SalesReturn\SalesReturnDependencyProvider;
@@ -56,7 +59,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->createReturnValidator(),
             $this->createReturnReader(),
             $this->createReturnReferenceGenerator(),
-            $this->getSalesFacade()
+            $this->createOmsEventTriggerer()
         );
     }
 
@@ -77,8 +80,15 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     public function createReturnReader(): ReturnReaderInterface
     {
         return new ReturnReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getSalesFacade(),
+            $this->createReturnTotalCalculator()
         );
+    }
+
+    public function createOmsEventTriggerer(): OmsEventTriggererInterface
+    {
+        return new OmsEventTriggerer($this->getOmsFacade());
     }
 
     /**
@@ -130,5 +140,13 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): SalesReturnToStoreFacadeInterface
     {
         return $this->getProvidedDependency(SalesReturnDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface
+     */
+    public function getOmsFacade(): SalesReturnToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::FACADE_OMS);
     }
 }

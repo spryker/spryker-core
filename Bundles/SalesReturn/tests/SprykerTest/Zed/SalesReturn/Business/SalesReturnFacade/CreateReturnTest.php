@@ -105,7 +105,7 @@ class CreateReturnTest extends Unit
         $this->assertSame($orderTransfer->getStore(), $returnTransfer->getStore());
         $this->assertSame(
             $orderTransfer->getCustomer()->getCustomerReference(),
-            $returnTransfer->getCustomer()->getCustomerReference()
+            $returnTransfer->getCustomerReference()
         );
 
         $this->assertSame(static::FAKE_RETURN_REASON, $returnItemTransfer->getReason());

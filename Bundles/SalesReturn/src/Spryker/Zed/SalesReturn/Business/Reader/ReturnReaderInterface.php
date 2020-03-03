@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesReturn\Business\Reader;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
@@ -26,4 +28,11 @@ interface ReturnReaderInterface
      * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
      */
     public function getReturnCollection(ReturnFilterTransfer $returnFilterTransfer): ReturnCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItemCollection(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer;
 }

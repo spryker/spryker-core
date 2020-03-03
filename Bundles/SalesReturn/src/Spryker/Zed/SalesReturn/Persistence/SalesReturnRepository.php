@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Generated\Shared\Transfer\ReturnItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -89,6 +90,24 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
             ->createReturnMapper()
             ->mapReturnEntityCollectionToReturnCollection($salesReturnQuery->find())
             ->setPagination($returnFilterTransfer->getPagination());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnItemFilterTransfer $returnItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnItemTransfer[]
+     */
+    public function getReturnItemsByFilter(ReturnItemFilterTransfer $returnItemFilterTransfer): array
+    {
+        $salesReturnItemQuery = $this->getFactory()->getSalesReturnItemPropelQuery();
+
+        if ($returnItemFilterTransfer->getReturnIds()) {
+            $salesReturnItemQuery->filterByFkSalesReturn_In($returnItemFilterTransfer->getReturnIds());
+        }
+
+        return $this->getFactory()
+            ->createReturnMapper()
+            ->mapReturnItemEntityCollectionToReturnTransfers($salesReturnItemQuery->find());
     }
 
     /**

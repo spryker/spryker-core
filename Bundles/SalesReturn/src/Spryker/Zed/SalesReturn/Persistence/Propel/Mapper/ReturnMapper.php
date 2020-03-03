@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturn\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
@@ -61,5 +62,24 @@ class ReturnMapper
         }
 
         return $returnCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesReturnItemEntities
+     *
+     * @return \Generated\Shared\Transfer\ReturnItemTransfer[]
+     */
+    public function mapReturnItemEntityCollectionToReturnTransfers(ObjectCollection $salesReturnItemEntities): array
+    {
+        $returnItemTransfers = [];
+
+        foreach ($salesReturnItemEntities as $salesReturnItemEntity) {
+            $returnItemTransfers[] = (new ReturnItemTransfer())
+                ->fromArray($salesReturnItemEntity->toArray(), true)
+                ->setIdSalesReturn($salesReturnItemEntity->getFkSalesReturn())
+                ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($salesReturnItemEntity->getFkSalesOrderItem()));
+        }
+
+        return $returnItemTransfers;
     }
 }
