@@ -19,7 +19,7 @@ use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataExpander\MerchantProductPageDataExpanderPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader\MerchantProductPageDataLoaderPlugin;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\MerchantProductAbstractMapExpanderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageMapExpander\MerchantNamesProductAbstractMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
@@ -130,7 +130,7 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER,
             [
-                new MerchantProductAbstractMapExpanderPlugin(),
+                new MerchantNamesProductAbstractMapExpanderPlugin(),
             ]
         );
 
