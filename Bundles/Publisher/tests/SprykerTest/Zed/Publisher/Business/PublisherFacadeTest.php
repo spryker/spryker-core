@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Publisher\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 use SprykerTest\Zed\Publisher\Business\Collator\MockPublishEventCollator;
 
@@ -49,7 +48,6 @@ class PublisherFacadeTest extends Unit
     protected function setPublisherRegistryPlugins(): void
     {
         $this->tester->mockFactoryMethod('createPublisherEventCollator', new MockPublishEventCollator(
-            $this->createPublisherEventRegistry(),
             $this->getPublisherRegistryPlugins()
         ));
     }
@@ -98,28 +96,22 @@ class PublisherFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry
-     */
-    protected function createPublisherEventRegistry(): PublisherEventRegistry
-    {
-        return new PublisherEventRegistry();
-    }
-
-    /**
      * @return array
      */
     protected function getMergedPublisherEvents(): array
     {
         return [
-            'TestEvent-1' => [
-                'TestPluginClassFooPlugin',
-            ],
-            'TestEvent-2' => [
-                'TestPluginClassFooPlugin',
-                'TestPluginClassBarPlugin',
-            ],
-            'TestEvent-3' => [
-                'TestPluginClassBazPlugin',
+            'event' => [
+                'TestEvent-1' => [
+                    'TestPluginClassFooPlugin',
+                ],
+                'TestEvent-2' => [
+                    'TestPluginClassFooPlugin',
+                    'TestPluginClassBarPlugin',
+                ],
+                'TestEvent-3' => [
+                    'TestPluginClassBazPlugin',
+                ],
             ],
         ];
     }

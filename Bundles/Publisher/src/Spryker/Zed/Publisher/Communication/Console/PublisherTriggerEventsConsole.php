@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Publisher\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Spryker\Zed\Publisher\Business\PublisherBusinessFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -65,8 +64,6 @@ class PublisherTriggerEventsConsole extends Console
     {
         $resources = [];
         $resourcesIds = [];
-
-        (new PublisherBusinessFactory())->createPublisherEventCollator()->getPublisherEventCollection();
 
         if ($input->getOption(static::RESOURCE_OPTION)) {
             $resourceString = $input->getOption(static::RESOURCE_OPTION);

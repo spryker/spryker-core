@@ -38,8 +38,10 @@ class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInter
      */
     protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, array $publisherEventCollection): EventCollectionInterface
     {
-        foreach ($publisherEventCollection as $eventName => $listeners) {
-            $this->addListenerToEventCollection($eventCollection, $listeners, $eventName);
+        foreach ($publisherEventCollection as $queueName => $eventsCollection) {
+            foreach ($eventsCollection as $eventName => $listeners) {
+                $this->addListenerToEventCollection($eventCollection, $listeners, $eventName, $queueName);
+            }
         }
 
         return $eventCollection;
@@ -49,13 +51,14 @@ class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInter
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      * @param string[] $listeners
      * @param string $eventName
+     * @param string $queueName
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function addListenerToEventCollection(EventCollectionInterface $eventCollection, array $listeners, string $eventName): EventCollectionInterface
+    protected function addListenerToEventCollection(EventCollectionInterface $eventCollection, array $listeners, string $eventName, string $queueName): EventCollectionInterface
     {
         foreach ($listeners as $listener) {
-            $eventCollection->addListenerQueued($eventName, new $listener());
+            $eventCollection->addListenerQueued($eventName, new $listener(), 0, null, $queueName);
         }
 
         return $eventCollection;
