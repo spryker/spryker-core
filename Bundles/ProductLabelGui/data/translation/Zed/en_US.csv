@@ -25,6 +25,8 @@ Stores,Stores
 Yes,Yes
 No,No
 N/A,N/A
+Active,Active
+Deactivated,Deactivated
 "List of Product Labels","List of Product Labels"
 "Missing or wrong request data","Missing or wrong request data"
 "Overview of Product Labels","Overview of Product Labels"

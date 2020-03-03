@@ -19,9 +19,9 @@
             <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
             <div class="col-xs-10">
                 {% if productLabelTransfer.getIsActive() %}
-                    <span class="label label-info">Active</span>
+                    <span class="label label-info">{{ 'Active' | trans }}</span>
                 {% else %}
-                    <span class="label label-danger">Deactivated</span>
+                    <span class="label label-danger">{{ 'Deactivated' | trans }}</span>
                 {% endif %}
             </div>
         </div>
