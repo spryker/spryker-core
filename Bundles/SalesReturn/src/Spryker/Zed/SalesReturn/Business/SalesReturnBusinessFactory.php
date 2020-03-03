@@ -86,6 +86,9 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return \Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggererInterface
+     */
     public function createOmsEventTriggerer(): OmsEventTriggererInterface
     {
         return new OmsEventTriggerer($this->getOmsFacade());
