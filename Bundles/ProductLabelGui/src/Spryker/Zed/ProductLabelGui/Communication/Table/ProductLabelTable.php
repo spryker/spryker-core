@@ -95,7 +95,7 @@ class ProductLabelTable extends AbstractTable
         $config->setRawColumns([
             static::COL_STATUS,
             static::COL_STORES,
-            static::COL_ACTIONS
+            static::COL_ACTIONS,
         ]);
     }
 
