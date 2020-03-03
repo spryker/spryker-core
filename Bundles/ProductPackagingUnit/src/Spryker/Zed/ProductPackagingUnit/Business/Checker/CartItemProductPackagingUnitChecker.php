@@ -42,10 +42,6 @@ class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUni
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getProductPackagingUnit()) {
-                continue;
-            }
-
             if (!$itemTransfer->getAmount()) {
                 continue;
             }

@@ -104,7 +104,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
         }
 
         return $this->mapProductMeasurementUnitStorageDataToProductMeasurementUnitStorageTransfers(
-            $this->storageClient->getMulti($this->generateKeys($productMeasurementUnitIds))
+            $this->storageClient->getMulti(
+                $this->generateKeys($productMeasurementUnitIds)
+            )
         );
     }
 
@@ -137,9 +139,11 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
                 continue;
             }
 
-            $productConcreteMeasurementUnitStorageTransfers[] = $this->mapToProductMeasurementUnitStorage(
-                $this->utilEncodingService->decodeJson($dataItem, true)
-            );
+            $productMeasurementUnitStorageData = $this->utilEncodingService->decodeJson($dataItem, true);
+            if (!$productMeasurementUnitStorageData) {
+                continue;
+            }
+            $productConcreteMeasurementUnitStorageTransfers[] = $this->mapToProductMeasurementUnitStorage($productMeasurementUnitStorageData);
         }
 
         return $productConcreteMeasurementUnitStorageTransfers;
@@ -155,26 +159,10 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     {
         $mappingKeys = [];
         foreach ($identifiers as $identifier) {
-            $mappingKeys[] = $this->getStorageKey($mappingType . ':' . $identifier);
+            $mappingKeys[] = $this->generateKey(sprintf('%s:%s', $mappingType, $identifier));
         }
 
         return $mappingKeys;
-    }
-
-    /**
-     * @param string $reference
-     *
-     * @return string
-     */
-    protected function getStorageKey(string $reference): string
-    {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer
-            ->setReference($reference);
-
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
     }
 
     /**

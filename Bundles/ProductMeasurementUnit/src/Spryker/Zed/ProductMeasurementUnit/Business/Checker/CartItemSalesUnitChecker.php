@@ -20,7 +20,6 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
 
     protected const MESSAGE_TYPE_ERROR = 'error';
 
-    protected const ID_TRANSLATION_PARAMETER = '%id%';
     protected const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
@@ -75,6 +74,10 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
                 $cartPreCheckResponseTransfer,
                 $indexedProductMeasurementSalesUnitIdsData[$itemTransfer->getSku()]
             );
+
+            if (!$cartPreCheckResponseTransfer->getIsSuccess()) {
+                return $cartPreCheckResponseTransfer;
+            }
         }
 
         return $cartPreCheckResponseTransfer;
@@ -98,14 +101,11 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
         }
 
         $idProductMeasurementSalesUnit = $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
-        if (in_array($idProductMeasurementSalesUnit, $productMeasurementSalesUnitIds)) {
+        if (in_array($idProductMeasurementSalesUnit, $productMeasurementSalesUnitIds, true)) {
             return $cartPreCheckResponseTransfer;
         }
 
-        $messageParameters = [
-            static::ID_TRANSLATION_PARAMETER => $idProductMeasurementSalesUnit,
-            static::SKU_TRANSLATION_PARAMETER => $itemTransfer->getSku(),
-        ];
+        $messageParameters = [static::SKU_TRANSLATION_PARAMETER => $itemTransfer->getSku()];
 
         return $cartPreCheckResponseTransfer
             ->addMessage($this->createMessageTransfer($messageParameters))

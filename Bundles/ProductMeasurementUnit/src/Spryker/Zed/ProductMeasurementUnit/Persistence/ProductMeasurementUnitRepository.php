@@ -353,7 +353,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      * @param string[] $productConcreteSkus
      * @param int $idStore
      *
-     * @return array
+     * @return int[][]
      */
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
     {

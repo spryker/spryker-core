@@ -85,8 +85,8 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
                 $restCartItemsSalesUnitAttributesTransfer = $restCartItemsAttributesTransfer->getSalesUnit();
                 $this->addResourceRelationship(
                     $resource,
-                    $restCartItemsSalesUnitAttributesTransfer,
-                    $productConcreteProductMeasurementSalesUnitTransfer->getProductMeasurementSalesUnits()
+                    $productConcreteProductMeasurementSalesUnitTransfer->getProductMeasurementSalesUnits(),
+                    $restCartItemsSalesUnitAttributesTransfer
                 );
             }
         }
@@ -94,15 +94,15 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Generated\Shared\Transfer\RestCartItemsSalesUnitAttributesTransfer $restCartItemsSalesUnitAttributesTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     * @param \Generated\Shared\Transfer\RestCartItemsSalesUnitAttributesTransfer|null $restCartItemsSalesUnitAttributesTransfer
      *
      * @return void
      */
     protected function addResourceRelationship(
         RestResourceInterface $resource,
-        RestCartItemsSalesUnitAttributesTransfer $restCartItemsSalesUnitAttributesTransfer,
-        ArrayObject $productMeasurementSalesUnitTransfers
+        ArrayObject $productMeasurementSalesUnitTransfers,
+        ?RestCartItemsSalesUnitAttributesTransfer $restCartItemsSalesUnitAttributesTransfer
     ): void {
         if (!$restCartItemsSalesUnitAttributesTransfer) {
             return;

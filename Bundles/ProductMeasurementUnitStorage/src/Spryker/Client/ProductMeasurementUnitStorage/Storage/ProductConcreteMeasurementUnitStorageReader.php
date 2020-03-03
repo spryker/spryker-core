@@ -83,17 +83,27 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
             return [];
         }
 
-        $productConcreteMeasurementUnitStorageKeys = [];
-        foreach ($productConcreteIds as $idProductConcrete) {
-            $productConcreteMeasurementUnitStorageKeys[] = $this->generateKey($idProductConcrete);
-        }
-        $productConcreteMeasurementUnitsStorageData = $this->storageClient
-            ->getMulti($productConcreteMeasurementUnitStorageKeys);
+        $productConcreteMeasurementUnitsStorageData = $this->storageClient->getMulti($this->generateKeys($productConcreteIds));
 
         return $this
             ->mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
                 $productConcreteMeasurementUnitsStorageData
             );
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return string[]
+     */
+    protected function generateKeys(array $productConcreteIds): array
+    {
+        $productConcreteMeasurementUnitStorageKeys = [];
+        foreach ($productConcreteIds as $idProductConcrete) {
+            $productConcreteMeasurementUnitStorageKeys[] = $this->generateKey($idProductConcrete);
+        }
+
+        return $productConcreteMeasurementUnitStorageKeys;
     }
 
     /**
@@ -111,8 +121,12 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
             }
 
             $idProductConcrete = $this->getIdProductConcrete($storageKey);
+            $productConcreteMeasurementUnitStorageData = $this->utilEncodingService->decodeJson($dataItem, true);
+            if (!$productConcreteMeasurementUnitStorageData) {
+                continue;
+            }
             $productConcreteMeasurementUnitStorageTransfers[$idProductConcrete] =
-                $this->mapToProductConcreteMeasurementUnitStorage($this->utilEncodingService->decodeJson($dataItem, true));
+                $this->mapToProductConcreteMeasurementUnitStorage($productConcreteMeasurementUnitStorageData);
         }
 
         return $productConcreteMeasurementUnitStorageTransfers;

@@ -79,7 +79,7 @@ interface ProductMeasurementUnitRepositoryInterface
      * @param string[] $productConcreteSkus
      * @param int $idStore
      *
-     * @return int[]
+     * @return int[][]
      */
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array;
 
