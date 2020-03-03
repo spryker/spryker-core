@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelation\Business;
 
+use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 
 /**
@@ -120,4 +121,31 @@ interface ProductRelationFacadeInterface
      * @return bool
      */
     public function deleteProductRelation($idProductRelation);
+
+    /**
+     * Specification:
+     * - Finds product relation by given criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationByCriteria(
+        ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+    ): ?ProductRelationTransfer;
+
+    /**
+     * Specification:
+     * - Finds product abstract with categories and image by provided product abstract id and locale id.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
 }

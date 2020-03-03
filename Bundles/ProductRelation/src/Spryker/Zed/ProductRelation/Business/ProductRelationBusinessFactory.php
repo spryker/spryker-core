@@ -17,6 +17,7 @@ use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
  */
 class ProductRelationBusinessFactory extends AbstractBusinessFactory
 {

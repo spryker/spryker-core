@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ProductRelation\Business;
 
+use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
  */
 class ProductRelationFacade extends AbstractFacade implements ProductRelationFacadeInterface
 {
@@ -145,5 +147,35 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
         $this->getFactory()
             ->createProductRelationUpdater()
             ->rebuildRelations();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationByCriteria(
+        ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+    ): ?ProductRelationTransfer {
+        return $this->getRepository()->findProductRelationByCriteria($productRelationCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array
+    {
+        return $this->getRepository()->getProductAbstractDataById($idProductAbstract, $idLocale);
     }
 }

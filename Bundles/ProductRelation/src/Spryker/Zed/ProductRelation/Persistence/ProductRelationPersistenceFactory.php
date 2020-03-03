@@ -11,6 +11,9 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductAttributeMapper;
+use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationMapper;
+use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationTypeMapper;
 use Spryker\Zed\ProductRelation\Persistence\Rule\ProductRelationRuleQueryCreator;
 use Spryker\Zed\ProductRelation\Persistence\Rule\Query\ProductQuery;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
@@ -18,6 +21,7 @@ use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
  */
 class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -57,11 +61,43 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationTypeMapper
+     */
+    public function createProductRelationTypeMapper(): ProductRelationTypeMapper
+    {
+        return new ProductRelationTypeMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationMapper
+     */
+    public function createProductRelationMapper(): ProductRelationMapper
+    {
+        return new ProductRelationMapper($this->createProductRelationTypeMapper());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductRelation\Persistence\Rule\Query\QueryInterface
      */
     protected function createProductQuery()
     {
         return new ProductQuery($this->getProductQueryContainer(), $this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductAttributeMapper
+     */
+    public function createProductAttributeMapper(): ProductAttributeMapper
+    {
+        return new ProductAttributeMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
+     */
+    public function getProductRelationQueryContainer(): ProductRelationQueryContainerInterface
+    {
+        return $this->getQueryContainer();
     }
 
     /**
