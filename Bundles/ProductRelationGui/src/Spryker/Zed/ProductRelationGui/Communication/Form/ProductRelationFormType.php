@@ -67,10 +67,11 @@ class ProductRelationFormType extends AbstractType
 
         $resolver->setDefaults([
             'validation_groups' => new GroupSequence([
-                static::GROUP_DEFAULT,
+               static::GROUP_DEFAULT,
                 static::GROUP_AFTER,
             ]),
             'constraints' => [
+                $this->getFactory()->createProductAbstractNotBlankConstraint(),
                 $this->getFactory()->createUniqueRelationTypeForProductAbstractConstraint(),
             ],
         ]);
@@ -147,14 +148,7 @@ class ProductRelationFormType extends AbstractType
     protected function addFkProductAbstractField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_PRODUCT_ABSTRACT, TextType::class, [
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Abstract product is not selected.',
-                    'groups' => [
-                        static::GROUP_DEFAULT,
-                    ],
-                ]),
-            ],
+            'required' => true,
         ]);
 
         return $this;

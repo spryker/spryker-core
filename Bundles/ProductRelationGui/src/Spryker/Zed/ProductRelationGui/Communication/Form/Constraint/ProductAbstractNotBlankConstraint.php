@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelationGui\Communication\Exception;
+namespace Spryker\Zed\ProductRelationGui\Communication\Form\Constraint;
 
-use Exception;
+use Symfony\Component\Validator\Constraint;
 
-class MissingStoreRelationFormTypePluginException extends Exception
+class ProductAbstractNotBlankConstraint extends Constraint
 {
 }

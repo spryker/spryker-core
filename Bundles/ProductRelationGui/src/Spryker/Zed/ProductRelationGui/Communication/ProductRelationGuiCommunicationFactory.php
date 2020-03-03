@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProvider;
 use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProviderInterface;
+use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductAbstractNotBlankConstraint;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
@@ -66,6 +67,14 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
                 ProductRelationFormType::GROUP_AFTER,
             ],
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createProductAbstractNotBlankConstraint(): Constraint
+    {
+        return new ProductAbstractNotBlankConstraint();
     }
 
     /**
