@@ -62,17 +62,29 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
      */
     public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): void
     {
-        if (mb_strlen($orderCustomReference) > $this->orderCustomReferenceConfig->getOrderCustomReferenceMaxLength()) {
+        if (!$orderTransfer->getIdSalesOrder() || !$this->isOrderCustomReferenceLengthValid($orderCustomReference)) {
             return;
         }
 
         $orderTransfer->setOrderCustomReference($orderCustomReference);
-        if ($orderTransfer->getIdSalesOrder()) {
-            $this->orderCustomReferenceEntityManager
-                ->saveOrderCustomReference(
-                    $orderTransfer->getIdSalesOrder(),
-                    $orderTransfer->getOrderCustomReference()
-                );
+        $this->orderCustomReferenceEntityManager
+            ->saveOrderCustomReference(
+                $orderTransfer->getIdSalesOrder(),
+                $orderTransfer->getOrderCustomReference()
+            );
+    }
+
+    /**
+     * @param string $orderCustomReference
+     *
+     * @return bool
+     */
+    protected function isOrderCustomReferenceLengthValid(string $orderCustomReference): bool
+    {
+        if (mb_strlen($orderCustomReference) > $this->orderCustomReferenceConfig->getOrderCustomReferenceMaxLength()) {
+            return false;
         }
+
+        return true;
     }
 }

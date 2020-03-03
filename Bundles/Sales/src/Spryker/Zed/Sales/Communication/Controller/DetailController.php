@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
-    protected const PARAM_BACK_URL = 'backUrl';
 
     public const ROUTE_REDIRECT = '/sales/detail';
 
