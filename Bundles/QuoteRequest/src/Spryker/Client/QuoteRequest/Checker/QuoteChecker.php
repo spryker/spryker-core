@@ -70,8 +70,8 @@ class QuoteChecker implements QuoteCheckerInterface
     protected function findQuoteLevelShipment(QuoteTransfer $quoteTransfer): ?ShipmentTransfer
     {
         $shipmentTransfer = $quoteTransfer->getShipment();
-        if ($shipmentTransfer) {
-            return $shipmentTransfer;
+        if (!$shipmentTransfer) {
+            return null;
         }
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {

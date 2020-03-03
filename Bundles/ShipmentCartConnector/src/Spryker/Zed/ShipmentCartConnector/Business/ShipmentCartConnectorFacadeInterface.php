@@ -18,6 +18,7 @@ interface ShipmentCartConnectorFacadeInterface
      * Specification:
      *  - Changes shipment method and shipment expenses based on current currency for quote level (BC)
      * or item level shipments.
+     * - Applies shipment source prices if they are set.
      *
      * @api
      *
