@@ -4,6 +4,8 @@
 
 <h4>{{ 'Selected product' | trans }}</h4>
 
+{{ form_row(productRelationForm.productRelationKey) }}
+
 {% if productRelationForm.vars.data.fkProductAbstract is empty %}
     <div id="select-product-notice" class="form-group">
         {{ "Please select product from the list below" | trans  }}
@@ -33,6 +35,8 @@
     <h4>{{ 'Select product' | trans }}</h4>
     {{ productTable | raw }}
 {% endif %}
+
+{{ form_row(productRelationForm.storeRelation.id_stores, { 'label': 'Select Stores' | trans }) }}
 
 {{ form_row(productRelationForm.idProductRelation) }}
 

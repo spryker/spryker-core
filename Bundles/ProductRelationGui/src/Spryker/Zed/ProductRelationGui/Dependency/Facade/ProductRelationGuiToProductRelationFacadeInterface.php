@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelationGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
+use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductSelectorTransfer;
 
@@ -16,9 +17,9 @@ interface ProductRelationGuiToProductRelationFacadeInterface
     /**
      * @param int $idProductRelation
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function findProductRelationById($idProductRelation);
+    public function findProductRelationById($idProductRelation): ProductRelationResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
@@ -32,27 +33,23 @@ interface ProductRelationGuiToProductRelationFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function createProductRelation(ProductRelationTransfer $productRelationTransfer);
+    public function createProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer;
 
     /**
      * @param int $idProductRelation
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function deleteProductRelation($idProductRelation);
+    public function deleteProductRelation($idProductRelation): ProductRelationResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @throws \Exception
-     * @throws \Throwable
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer);
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer;
 
     /**
      * @param int $idProductRelation

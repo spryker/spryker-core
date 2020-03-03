@@ -71,7 +71,9 @@ class ProductRelationTypeDataProvider
             return $this->createProductRelationTransfer();
         }
 
-        $productRelationTransfer = $this->productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationResponseTransfer = $this->productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
+
         if (!$productRelationTransfer) {
             $productRelationTransfer = $this->createProductRelationTransfer();
         }

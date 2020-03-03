@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 
 class ProductRelationMapper
@@ -60,6 +61,27 @@ class ProductRelationMapper
         $this->ruleSetMapper = $ruleSetMapper;
         $this->productMapper = $productMapper;
         $this->utilEncodingService = $utilEncodingService;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelation[] $productRelationEntities
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer[] $productRelationTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function mapProductRelationEntitiesToProductRelationTransfers(
+        ObjectCollection $productRelationEntities,
+        array $productRelationTransfers
+    ): array
+    {
+        foreach ($productRelationEntities as $productRelationEntity) {
+            $productRelationTransfers[] = $this->mapProductRelationEntityToProductRelationTransfer(
+                $productRelationEntity,
+                new ProductRelationTransfer()
+            );
+        }
+
+        return $productRelationTransfers;
     }
 
     /**

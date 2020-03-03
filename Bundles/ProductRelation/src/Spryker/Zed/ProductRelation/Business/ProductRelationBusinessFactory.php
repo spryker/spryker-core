@@ -109,7 +109,10 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductRelationReader()
     {
-        return new ProductRelationReader($this->getQueryContainer());
+        return new ProductRelationReader(
+            $this->getQueryContainer(),
+            $this->getRepository()
+        );
     }
 
     /**
@@ -126,9 +129,9 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     public function createProductRelationBuilder()
     {
         return new ProductRelationBuilder(
-            $this->getQueryContainer(),
             $this->getUtilEncodingService(),
-            $this->createProductRelationUpdater()
+            $this->createProductRelationUpdater(),
+            $this->getRepository()
         );
     }
 

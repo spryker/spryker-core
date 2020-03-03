@@ -67,4 +67,9 @@ interface ProductRelationRepositoryInterface
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
     public function getStoreRelationByIdProductRelation(int $idProductRelation): StoreRelationTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function findActiveProductRelations(): array;
 }

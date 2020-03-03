@@ -7,25 +7,38 @@
 
 namespace Spryker\Zed\ProductRelation\Business\Relation;
 
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationType;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
+use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
 
 class ProductRelationReader implements ProductRelationReaderInterface
 {
+    protected const ERROR_MESSAGE_NOT_FOUND = 'Product relation not found';
+
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
     protected $productRelationQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface
+     */
+    protected $productRelationRepository;
+
+    /**
      * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface $productRelationQueryContainer
+     * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface $productRelationRepository
      */
     public function __construct(
-        ProductRelationQueryContainerInterface $productRelationQueryContainer
+        ProductRelationQueryContainerInterface $productRelationQueryContainer,
+        ProductRelationRepositoryInterface $productRelationRepository
     ) {
 
         $this->productRelationQueryContainer = $productRelationQueryContainer;
+        $this->productRelationRepository = $productRelationRepository;
     }
 
     /**
@@ -41,6 +54,48 @@ class ProductRelationReader implements ProductRelationReaderInterface
         }
 
         return $productRelationTypes;
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
+     */
+    public function findProductRelationById(int $idProductRelation): ProductRelationResponseTransfer
+    {
+        $productRelationResponseTransfer = $this->createProductRelationResponseTransfer();
+        $productRelationTransfer = $this->productRelationRepository
+            ->findProductRelationById($idProductRelation);
+
+        if (!$productRelationTransfer) {
+            $messageTransfer = $this->getErrorMessageTransfer(static::ERROR_MESSAGE_NOT_FOUND);
+
+            return $productRelationResponseTransfer->addMessage($messageTransfer);
+        }
+
+        return $productRelationResponseTransfer
+            ->setIsSuccess(true)
+            ->setProductRelation($productRelationTransfer);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function getErrorMessageTransfer(string $message): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue($message);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
+     */
+    protected function createProductRelationResponseTransfer(): ProductRelationResponseTransfer
+    {
+        return (new ProductRelationResponseTransfer())
+            ->setIsSuccess(false);
     }
 
     /**

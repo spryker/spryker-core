@@ -55,9 +55,9 @@ interface ProductRelationFacadeInterface
      *
      * @param int $idProductRelation
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function findProductRelationById($idProductRelation);
+    public function findProductRelationById($idProductRelation): ProductRelationResponseTransfer;
 
     /**
      * Specification:

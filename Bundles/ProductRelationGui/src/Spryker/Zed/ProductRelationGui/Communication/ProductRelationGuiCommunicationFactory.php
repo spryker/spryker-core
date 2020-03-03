@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductRelationGui\Communication;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProvider;
 use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
@@ -61,6 +62,9 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     {
         return new UniqueRelationTypeForProductAbstract([
             UniqueRelationTypeForProductAbstract::OPTION_PRODUCT_RELATION_FACADE => $this->getProductRelationFacade(),
+            'groups' => [
+                ProductRelationFormType::GROUP_AFTER,
+            ],
         ]);
     }
 
@@ -214,5 +218,13 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getProductRelationPropelQuery(): SpyProductRelationQuery
     {
         return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_RELATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 }

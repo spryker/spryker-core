@@ -60,7 +60,8 @@ class ProductRelationDataHelper extends Module
         $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
         $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
 
-        $productRelationTransfer = $productRelationFacade->findProductRelationById($productRelationTransfer->getIdProductRelation());
+        $productRelationResponseTransfer = $productRelationFacade->findProductRelationById($productRelationTransfer->getIdProductRelation());
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
 
         $this->debug(sprintf(
             'Inserted Product Relation: %d',

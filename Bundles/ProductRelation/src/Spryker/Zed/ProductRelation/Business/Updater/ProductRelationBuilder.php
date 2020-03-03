@@ -15,15 +15,11 @@ use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
+use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
 
 class ProductRelationBuilder implements ProductRelationBuilderInterface
 {
     use LoggerTrait;
-
-    /**
-     * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
-     */
-    protected $productRelationQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface
@@ -36,18 +32,23 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     protected $productRelationUpdater;
 
     /**
-     * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface $productRelationQueryContainer
+     * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface
+     */
+    protected $productRelationRepository;
+
+    /**
      * @param \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface $productRelationUpdater
+     * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface $productRelationRepository
      */
     public function __construct(
-        ProductRelationQueryContainerInterface $productRelationQueryContainer,
         ProductRelationToUtilEncodingInterface $utilEncodingService,
-        ProductRelationUpdaterInterface $productRelationUpdater
+        ProductRelationUpdaterInterface $productRelationUpdater,
+        ProductRelationRepositoryInterface $productRelationRepository
     ) {
-        $this->productRelationQueryContainer = $productRelationQueryContainer;
         $this->utilEncodingService = $utilEncodingService;
         $this->productRelationUpdater = $productRelationUpdater;
+        $this->productRelationRepository = $productRelationRepository;
     }
 
     /**
@@ -55,13 +56,12 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
      */
     public function rebuildRelations()
     {
-        foreach ($this->findActiveProductRelations() as $productRelationEntity) {
+        foreach ($this->findActiveProductRelations() as $productRelationTransfer) {
             try {
-                if (!$productRelationEntity->getQuerySetData()) {
+                if (!$productRelationTransfer->getQuerySet()->getRules()) {
                     continue;
                 }
 
-                $productRelationTransfer = $this->mapProductRelationTransfer($productRelationEntity);
                 $this->productRelationUpdater->updateRelation($productRelationTransfer);
             } catch (Exception $exception) {
                 $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);
@@ -72,46 +72,10 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     }
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
     protected function findActiveProductRelations()
     {
-        return $this->productRelationQueryContainer
-            ->queryActiveAndScheduledRelations()
-            ->find();
-    }
-
-    /**
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation $productRelationEntity
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer
-     */
-    protected function mapProductRelationTransfer(SpyProductRelation $productRelationEntity)
-    {
-        $productRelationTransfer = new ProductRelationTransfer();
-        $productRelationTransfer->fromArray($productRelationEntity->toArray(), true);
-
-        $queryRuleBuilderSetTransfer = $this->mapPropelQueryBuilderRuleSetTransfer($productRelationEntity);
-
-        $productRelationTransfer->setQuerySet($queryRuleBuilderSetTransfer);
-
-        return $productRelationTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation $productRelationEntity
-     *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
-     */
-    protected function mapPropelQueryBuilderRuleSetTransfer(SpyProductRelation $productRelationEntity)
-    {
-        $queryRuleBuilderSetTransfer = new PropelQueryBuilderRuleSetTransfer();
-
-        $queryRuleBuilderSetTransfer->fromArray(
-            $this->utilEncodingService->decodeJson($productRelationEntity->getQuerySetData(), true),
-            true
-        );
-
-        return $queryRuleBuilderSetTransfer;
+        return $this->productRelationRepository->findActiveProductRelations();
     }
 }
