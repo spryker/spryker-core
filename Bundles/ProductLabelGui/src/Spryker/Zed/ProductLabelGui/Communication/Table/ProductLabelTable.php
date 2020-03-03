@@ -216,10 +216,10 @@ class ProductLabelTable extends AbstractTable
      *
      * @return string
      */
-    protected function getStoreNames(SpyProductLabel $spyProductLabel): string
+    protected function getStoreNames(SpyProductLabel $productLabelEntity): string
     {
         $storeNames = [];
-        foreach ($spyProductLabel->getProductLabelStores() as $productLabelStore) {
+        foreach ($productLabelEntity->getProductLabelStores() as $productLabelStore) {
             $storeNames[] = $this->generateLabel($productLabelStore->getStore()->getName(), 'label-info');
         }
 
