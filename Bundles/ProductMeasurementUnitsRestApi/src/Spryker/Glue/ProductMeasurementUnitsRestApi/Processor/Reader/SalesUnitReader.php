@@ -70,16 +70,14 @@ class SalesUnitReader implements SalesUnitReaderInterface
             return $this->salesUnitRestResponseBuilder->createProductConcreteNotFoundErrorResponse();
         }
 
-        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
-            ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds)[0]
-            ->getProductMeasurementSalesUnits()
-            ->getArrayCopy();
-        if (!$productMeasurementSalesUnitTransfers) {
+        $productConcreteProductMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
+            ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
+        if (!$productConcreteProductMeasurementSalesUnitTransfers) {
             return $this->salesUnitRestResponseBuilder->createRestResponse();
         }
 
         return $this->salesUnitRestResponseBuilder->createSalesUnitResourceCollectionResponse(
-            $productMeasurementSalesUnitTransfers,
+            $productConcreteProductMeasurementSalesUnitTransfers[0]->getProductMeasurementSalesUnits()->getArrayCopy(),
             $concreteProductResourceId
         );
     }
