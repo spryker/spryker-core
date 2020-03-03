@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Provider;
 interface MappingProviderInterface
 {
     /**
-     * @return array|\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
      */
-    public function getMappings();
+    public function getMappings(): array;
 }
