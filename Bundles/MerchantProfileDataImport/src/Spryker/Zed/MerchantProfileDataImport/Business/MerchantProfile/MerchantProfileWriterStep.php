@@ -25,7 +25,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
     /**
      * @uses \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE
      */
-    public const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
+    protected const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet

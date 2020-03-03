@@ -135,7 +135,7 @@ class EventDispatcher implements EventDispatcherInterface
         if (is_subclass_of($eventListener->getListenerName(), EventHandlerInterface::class)) {
             $eventListener->handle($transfer, $eventName);
         } elseif (is_subclass_of($eventListener->getListenerName(), EventBulkHandlerInterface::class)) {
-            throw new EventListenerAmbiguousException(sprintf('`%s` is using `%s` , you need to use `%s` to trigger the events.', $eventListener->getListenerName(), EventBulkHandlerInterface::class, EventFacadeInterface::class));
+            throw new EventListenerAmbiguousException(sprintf('`%s` is using `%s` , you need to use `%s::triggerBulk()` to trigger the events.', $eventListener->getListenerName(), EventBulkHandlerInterface::class, EventFacadeInterface::class));
         } else {
             throw new EventListenerInvalidException(sprintf('`%s` is using invalid interface, use `%s` to fix this.', $eventListener->getListenerName(), EventHandlerInterface::class));
         }
