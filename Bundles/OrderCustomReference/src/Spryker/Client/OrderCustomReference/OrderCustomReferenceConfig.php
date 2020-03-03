@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\OrderCustomReference;
 
+use Spryker\Client\Kernel\AbstractBundleConfig;
+
 /**
  * @method \Spryker\Shared\OrderCustomReference\OrderCustomReferenceConfig getSharedConfig()
  */
-class OrderCustomReferenceConfig
+class OrderCustomReferenceConfig extends AbstractBundleConfig
 {
     /**
      * @return int
