@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator;
 
-use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
-
 interface ProductMeasurementUnitNameTranslatorInterface
 {
     /**
@@ -21,15 +19,4 @@ interface ProductMeasurementUnitNameTranslatorInterface
         array $productMeasurementUnitTransfers,
         string $localeName
     ): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
-     */
-    public function getProductMeasurementUnitTransferWithTranslatedName(
-        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
-        string $localeName
-    ): ProductMeasurementUnitTransfer;
 }

@@ -74,4 +74,9 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcreteProductMeasurementSalesUnit">
+        <property name="idProductConcrete" type="int"/>
+        <property name="productMeasurementSalesUnits" type="ProductMeasurementSalesUnit[]" singular="productMeasurementSalesUnit"/>
+    </transfer>
+
 </transfers>

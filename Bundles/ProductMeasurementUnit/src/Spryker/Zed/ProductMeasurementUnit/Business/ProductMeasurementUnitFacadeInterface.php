@@ -234,5 +234,5 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartItemSalesUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkItemProductMeasurementUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

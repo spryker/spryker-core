@@ -23,7 +23,6 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
         RestProductMeasurementUnitsAttributesTransfer $restProductMeasurementUnitsAttributesTransfer
     ): RestProductMeasurementUnitsAttributesTransfer {
         return $restProductMeasurementUnitsAttributesTransfer
-            ->fromArray($productMeasurementUniTransfer->toArray(), true)
-            ->setProductMeasurementUnitCode($productMeasurementUniTransfer->getCode());
+            ->fromArray($productMeasurementUniTransfer->toArray(), true);
     }
 }

@@ -69,7 +69,7 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
             return $cartPreCheckResponseTransfer;
         }
 
-        foreach ($cartChangeTransfer->getItems() as $index => $itemTransfer) {
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $cartPreCheckResponseTransfer = $this->checkSalesUnit(
                 $itemTransfer,
                 $cartPreCheckResponseTransfer,
@@ -83,7 +83,7 @@ class CartItemSalesUnitChecker implements CartItemSalesUnitCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
-     * @param array $productMeasurementSalesUnitIds
+     * @param int[] $productMeasurementSalesUnitIds
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */

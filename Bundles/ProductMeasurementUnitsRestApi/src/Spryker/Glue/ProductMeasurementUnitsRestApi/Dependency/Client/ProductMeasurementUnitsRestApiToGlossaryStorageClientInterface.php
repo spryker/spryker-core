@@ -10,15 +10,6 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client;
 interface ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface
 {
     /**
-     * @param string $id
-     * @param string $localeName
-     * @param array $parameters
-     *
-     * @return string
-     */
-    public function translate($id, $localeName, array $parameters = []);
-
-    /**
      * @param string[] $keyNames
      * @param string $localeName
      * @param string[][] $parameters

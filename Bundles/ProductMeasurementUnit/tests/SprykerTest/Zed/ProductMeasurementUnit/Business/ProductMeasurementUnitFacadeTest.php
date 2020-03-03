@@ -403,13 +403,13 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCartItemSalesUnitWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
+    public function testCheckItemProductMeasurementUnitWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
     {
         // Arrange
         $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
 
         // Act
-        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkCartItemSalesUnit($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementUnit($cartChangeTransfer);
 
         // Assert
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
@@ -419,7 +419,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCartItemSalesUnitWillReturnSuccessfulResponseWithNonEmptyQuantitySalesUnit(): void
+    public function testCheckItemProductMeasurementUnitWillReturnSuccessfulResponseWithNonEmptyQuantitySalesUnit(): void
     {
         // Arrange
         $code = 'MYCODE' . random_int(1, 100);
@@ -446,7 +446,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         );
 
         // Act
-        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkCartItemSalesUnit($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementUnit($cartChangeTransfer);
 
         // Assert
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
@@ -456,7 +456,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCartItemSalesUnitWillReturnResponseWithErrorWithWrongSalesUnitId(): void
+    public function testCheckItemProductMeasurementUnitWillReturnResponseWithErrorWithWrongSalesUnitId(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -477,14 +477,13 @@ class ProductMeasurementUnitFacadeTest extends Unit
             ]
         );
 
-        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransferWithoutQuantitySalesUnit(
-            $this->tester->createEmptyCartChangeTransfer(),
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem(
             static::NON_EXISTING_PRODUCT_MEASUREMENT_SALES_UNIT_ID,
             $sku
         );
 
         // Act
-        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkCartItemSalesUnit($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementUnit($cartChangeTransfer);
 
         // Assert
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());

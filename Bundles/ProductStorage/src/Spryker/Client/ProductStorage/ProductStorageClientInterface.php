@@ -317,6 +317,7 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves a current Store specific product abstract ids from Storage using specified mapping.
+     * - Returned data is indexed by the identifier.
      *
      * @api
      *

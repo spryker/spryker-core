@@ -41,13 +41,12 @@ class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUni
     public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
-        $productConcreteSkus = $this->getProductConcreteSkus($cartChangeTransfer);
-        if (!$productConcreteSkus) {
-            return $cartPreCheckResponseTransfer;
-        }
-
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmountSalesUnit()) {
+            if (!$itemTransfer->getProductPackagingUnit()) {
+                continue;
+            }
+
+            if (!$itemTransfer->getAmount()) {
                 continue;
             }
 
@@ -63,23 +62,6 @@ class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUni
         }
 
         return $cartPreCheckResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return string[]
-     */
-    protected function getProductConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
-    {
-        $productConcreteSkus = [];
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getProductPackagingUnit()) {
-                $productConcreteSkus[] = $itemTransfer->getSku();
-            }
-        }
-
-        return $productConcreteSkus;
     }
 
     /**

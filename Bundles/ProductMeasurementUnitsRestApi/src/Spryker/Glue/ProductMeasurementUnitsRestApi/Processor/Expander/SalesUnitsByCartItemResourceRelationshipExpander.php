@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
+use ArrayObject;
+use Generated\Shared\Transfer\RestCartItemsSalesUnitAttributesTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -65,78 +67,58 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
             $restRequest->getMetadata()->getLocale()
         );
 
-        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
+        $productConcreteProductMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
-
-        $restSalesUnitsResources = [];
         $productConcreteSkus = array_flip($productConcreteIds);
-        foreach ($productMeasurementSalesUnitTransfers as $idProductConcrete => $productConcreteProductMeasurementSalesUnitTransfers) {
-            $productConcreteSku = $productConcreteSkus[$idProductConcrete];
-            foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
-                $restSalesUnitsResources[$productConcreteSku][] =
-                    $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
-                        $productConcreteProductMeasurementSalesUnitTransfer,
-                        $productConcreteSku
-                    );
-            }
-        }
-
         foreach ($resources as $resource) {
-            $this->addSalesUnitResourceRelationships($resource, $restSalesUnitsResources);
+            foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
+                $productConcreteSku = $productConcreteSkus[$productConcreteProductMeasurementSalesUnitTransfer->getIdProductConcrete()];
+                $restCartItemsAttributesTransfer = $resource->getAttributes();
+                if (!$restCartItemsAttributesTransfer instanceof RestItemsAttributesTransfer) {
+                    continue;
+                }
+
+                if ($productConcreteSku !== $restCartItemsAttributesTransfer->getSku()) {
+                    continue;
+                }
+
+                $restCartItemsSalesUnitAttributesTransfer = $restCartItemsAttributesTransfer->getSalesUnit();
+                $this->addResourceRelationship(
+                    $resource,
+                    $restCartItemsSalesUnitAttributesTransfer,
+                    $productConcreteProductMeasurementSalesUnitTransfer->getProductMeasurementSalesUnits()
+                );
+            }
         }
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $restSalesUnitsResources
-     *
-     * @return void
-     */
-    protected function addSalesUnitResourceRelationships(
-        RestResourceInterface $resource,
-        array $restSalesUnitsResources
-    ): void {
-        foreach ($restSalesUnitsResources as $productConcreteSku => $productConcreteRestSalesUnitsResources) {
-            $restCartItemsAttributesTransfer = $resource->getAttributes();
-            if (!$restCartItemsAttributesTransfer instanceof RestItemsAttributesTransfer) {
-                continue;
-            }
-
-            if ($productConcreteSku !== $restCartItemsAttributesTransfer->getSku()) {
-                continue;
-            }
-
-            $restCartItemsSalesUnitAttributesTransfer = $restCartItemsAttributesTransfer->getSalesUnit();
-            if (!$restCartItemsSalesUnitAttributesTransfer) {
-                continue;
-            }
-
-            $this->addResourceRelationship(
-                $resource,
-                $productConcreteRestSalesUnitsResources,
-                $restCartItemsSalesUnitAttributesTransfer->getId()
-            );
-        }
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param array $productConcreteRestSalesUnitsResources
-     * @param int $salesUnitId
+     * @param \Generated\Shared\Transfer\RestCartItemsSalesUnitAttributesTransfer $restCartItemsSalesUnitAttributesTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
      *
      * @return void
      */
     protected function addResourceRelationship(
         RestResourceInterface $resource,
-        array $productConcreteRestSalesUnitsResources,
-        int $salesUnitId
+        RestCartItemsSalesUnitAttributesTransfer $restCartItemsSalesUnitAttributesTransfer,
+        ArrayObject $productMeasurementSalesUnitTransfers
     ): void {
-        foreach ($productConcreteRestSalesUnitsResources as $productConcreteRestSalesUnitsResource) {
-            if ($salesUnitId !== (int)$productConcreteRestSalesUnitsResource->getId()) {
+        if (!$restCartItemsSalesUnitAttributesTransfer) {
+            return;
+        }
+
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            if ($restCartItemsSalesUnitAttributesTransfer->getId() !== $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
                 continue;
             }
 
-            $resource->addRelationship($productConcreteRestSalesUnitsResource);
+            $resource->addRelationship(
+                $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
+                    $productMeasurementSalesUnitTransfer,
+                    $resource->getId()
+                )
+            );
         }
     }
 

@@ -36,7 +36,7 @@ class ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientBridge 
     /**
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[][]
+     * @return \Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer[]
      */
     public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array
     {

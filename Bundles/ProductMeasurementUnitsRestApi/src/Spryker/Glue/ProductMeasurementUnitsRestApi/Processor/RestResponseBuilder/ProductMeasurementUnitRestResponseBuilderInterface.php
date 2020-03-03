@@ -15,14 +15,10 @@ interface ProductMeasurementUnitRestResponseBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
-     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductMeasurementUnitRestResponse(
-        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
-        string $localeName
-    ): RestResponseInterface;
+    public function createProductMeasurementUnitRestResponse(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer

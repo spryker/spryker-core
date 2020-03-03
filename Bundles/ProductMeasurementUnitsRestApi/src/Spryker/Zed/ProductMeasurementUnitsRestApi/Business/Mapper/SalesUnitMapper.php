@@ -33,8 +33,8 @@ class SalesUnitMapper implements SalesUnitMapperInterface
                 continue;
             }
 
-            $itemTransfer->setAmount($cartItemRequestTransfer->getAmount());
             $amount = $cartItemRequestTransfer->getAmount();
+            $itemTransfer->setAmount($amount);
             $itemTransfer->setAmountSalesUnit(
                 (new ProductMeasurementSalesUnitTransfer())
                     ->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit)

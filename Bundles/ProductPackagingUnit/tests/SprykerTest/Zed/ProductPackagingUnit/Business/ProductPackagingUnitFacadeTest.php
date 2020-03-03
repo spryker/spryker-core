@@ -1246,8 +1246,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
         ]);
 
-        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
-        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $boxProductConcreteTransfer->getSku(), 0);
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem($boxProductConcreteTransfer->getSku(), 0);
 
         // Act
         $cartPreCheckResponseTransfer = $this->getFacade()->checkCartItemProductPackagingUnit($cartChangeTransfer);

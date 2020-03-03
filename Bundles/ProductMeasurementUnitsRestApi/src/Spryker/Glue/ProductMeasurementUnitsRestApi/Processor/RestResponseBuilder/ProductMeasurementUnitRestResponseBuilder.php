@@ -43,17 +43,12 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
-     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductMeasurementUnitRestResponse(
-        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
-        string $localeName
-    ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        return $restResponse->addResource(
+    public function createProductMeasurementUnitRestResponse(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse()->addResource(
             $this->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer)
         );
     }

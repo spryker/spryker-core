@@ -63,30 +63,31 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
                 $productMeasurementUnitCodes
             );
 
+        $productMeasurementUnitTransfersWithTranslatedNames = $this->productMeasurementUnitNameTranslator
+            ->getProductMeasurementUnitTransfersWithTranslatedNames(
+                $productMeasurementUnitTransfers,
+                $restRequest->getMetadata()->getLocale()
+            );
+
         foreach ($resources as $resource) {
             $this->addProductMeasurementUnitResourceRelationships(
-                $productMeasurementUnitTransfers,
                 $resource,
-                $restRequest->getMetadata()->getLocale()
+                $productMeasurementUnitTransfersWithTranslatedNames
             );
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $productMeasurementUnitTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $productMeasurementUnitTransfers
      *
      * @return void
      */
     protected function addProductMeasurementUnitResourceRelationships(
-        array $productMeasurementUnitTransfers,
         RestResourceInterface $resource,
-        string $localeName
+        array $productMeasurementUnitTransfers
     ): void {
-        $productMeasurementUnitTransfersWithTranslatedNames = $this->productMeasurementUnitNameTranslator
-            ->getProductMeasurementUnitTransfersWithTranslatedNames($productMeasurementUnitTransfers, $localeName);
-        foreach ($productMeasurementUnitTransfersWithTranslatedNames as $productMeasurementUnitTransfer) {
+        foreach ($productMeasurementUnitTransfers as $productMeasurementUnitTransfer) {
             $productMeasurementUnitCode = $this->findProductMeasurementUnitCode($resource);
             if ($productMeasurementUnitCode !== $productMeasurementUnitTransfer->getCode()) {
                 continue;
@@ -113,7 +114,7 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
                 continue;
             }
 
-            $productMeasurementUnitCodes[$resource->getId()] = $productMeasurementUnitCode;
+            $productMeasurementUnitCodes[] = $productMeasurementUnitCode;
         }
 
         return $productMeasurementUnitCodes;

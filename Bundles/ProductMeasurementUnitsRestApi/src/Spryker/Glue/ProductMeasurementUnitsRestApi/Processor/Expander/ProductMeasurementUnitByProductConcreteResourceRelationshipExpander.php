@@ -75,19 +75,17 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
             ->getProductMeasurementBaseUnitsByProductConcreteIds($productConcreteIds);
         $productMeasurementUnitTransfersWithTranslatedNames = $this->productMeasurementUnitNameTranslator
             ->getProductMeasurementUnitTransfersWithTranslatedNames($productMeasurementUnitTransfers, $localeName);
-        $productConcreteSkus = array_flip($productConcreteIds);
-        $restProductMeasurementUnitsResources = [];
-        foreach ($productMeasurementUnitTransfersWithTranslatedNames as $idProductConcrete => $productMeasurementUnitTransfer) {
-            $restProductMeasurementUnitsResources[$productConcreteSkus[$idProductConcrete]] =
-                $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer);
-        }
-
         foreach ($resources as $resource) {
-            if (!isset($restProductMeasurementUnitsResources[$resource->getId()])) {
+            $idProductConcrete = $productConcreteIds[$resource->getId()] ?? null;
+            if (!$idProductConcrete || !isset($productMeasurementUnitTransfersWithTranslatedNames[$idProductConcrete])) {
                 continue;
             }
 
-            $resource->addRelationship($restProductMeasurementUnitsResources[$resource->getId()]);
+            $restProductMeasurementUnitsResource = $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResource(
+                $productMeasurementUnitTransfersWithTranslatedNames[$idProductConcrete]
+            );
+
+            $resource->addRelationship($restProductMeasurementUnitsResource);
         }
     }
 

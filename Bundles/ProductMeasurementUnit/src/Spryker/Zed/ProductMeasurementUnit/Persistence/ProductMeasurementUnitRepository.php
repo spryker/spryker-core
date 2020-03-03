@@ -357,8 +357,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      */
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
     {
-        $indexedIds = [];
-        $salesUnitIdsData = $this->getFactory()
+        $indexedProductMeasurementSalesUnitIds = [];
+        $productMeasurementSalesUnitIdCollection = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->useProductQuery()
                 ->filterBySku_In($productConcreteSkus)
@@ -367,15 +367,14 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
                 ->filterByFkStore($idStore)
             ->endUse()
             ->select([SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT, SpyProductTableMap::COL_SKU])
-            ->find()
-            ->getData();
+            ->find();
 
-        foreach ($salesUnitIdsData as $salesUnitIdData) {
-            $indexedIds[$salesUnitIdData[SpyProductTableMap::COL_SKU]][]
+        foreach ($productMeasurementSalesUnitIdCollection as $salesUnitIdData) {
+            $indexedProductMeasurementSalesUnitIds[$salesUnitIdData[SpyProductTableMap::COL_SKU]][]
                 = $salesUnitIdData[SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT];
         }
 
-        return $indexedIds;
+        return $indexedProductMeasurementSalesUnitIds;
     }
 
     /**

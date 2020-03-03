@@ -126,6 +126,23 @@ class ProductPackagingUnitBusinessTester extends Actor
     }
 
     /**
+     * @param string $sku
+     * @param int $amount
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferWithItem(string $sku, int $amount): CartChangeTransfer
+    {
+        return (new CartChangeTransfer())->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setAmount($amount)
+                ->setProductPackagingUnit(new ProductPackagingUnitTransfer())
+                ->setAmountSalesUnit(new ProductMeasurementSalesUnitTransfer())
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param string $sku
      * @param int $idProductPackagingUnit
