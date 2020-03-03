@@ -111,11 +111,6 @@ class ZedNavigationBuilder
      */
     protected function isNavigationItemVisible(array $navigationItem): bool
     {
-        if (!isset($navigationItem[RuleTransfer::BUNDLE])) {
-            $navigationItem[RuleTransfer::BUNDLE] = '';
-            $navigationItem[RuleTransfer::CONTROLLER] = '';
-            $navigationItem[RuleTransfer::ACTION] = '';
-        }
         $navigationItemTransfer = (new NavigationItemTransfer())
             ->setModule($navigationItem[RuleTransfer::BUNDLE])
             ->setController($navigationItem[RuleTransfer::CONTROLLER])
