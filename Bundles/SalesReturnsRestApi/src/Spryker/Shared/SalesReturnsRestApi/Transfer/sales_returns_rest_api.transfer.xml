@@ -63,4 +63,49 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="Return">
+        <property name="returnTotals" type="ReturnTotals"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="ReturnResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="return" type="Return"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="CreateReturnRequest">
+        <property name="store" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnTotals">
+    </transfer>
+
 </transfers>

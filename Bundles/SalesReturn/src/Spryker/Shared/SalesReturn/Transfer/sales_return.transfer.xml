@@ -68,6 +68,8 @@
         <property name="uuid" type="string"/>
         <property name="remunerationAmount" type="int"/>
         <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="state" type="ItemState"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">
@@ -110,6 +112,22 @@
         <property name="lastIndex" type="int"/>
         <property name="firstPage" type="int"/>
         <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="totals" type="Totals"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
+    <transfer name="ItemState">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>
