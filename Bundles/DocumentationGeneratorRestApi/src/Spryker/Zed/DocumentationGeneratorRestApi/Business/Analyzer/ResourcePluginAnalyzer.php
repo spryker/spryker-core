@@ -23,8 +23,10 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected const KEY_ID = 'id';
     protected const KEY_PARENT = 'parent';
     protected const KEY_PATHS = 'paths';
+    protected const KEY_TAGS = 'tags';
     protected const KEY_SCHEMAS = 'schemas';
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
+    protected const KEY_PARAMETERS = 'parameters';
 
     protected const PATTERN_PATH_WITH_PARENT = '/%s/%s%s';
     protected const PATTERN_PATH_ID = '{%sId}';
@@ -95,6 +97,8 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             static::KEY_PATHS => $this->httpMethodProcessor->getGeneratedPaths(),
             static::KEY_SCHEMAS => $this->httpMethodProcessor->getGeneratedSchemas(),
             static::KEY_SECURITY_SCHEMES => $this->httpMethodProcessor->getGeneratedSecuritySchemes(),
+            static::KEY_PARAMETERS => $this->httpMethodProcessor->getGeneratedParameters(),
+            static::KEY_TAGS => $this->httpMethodProcessor->getGeneratedTags(),
         ];
     }
 

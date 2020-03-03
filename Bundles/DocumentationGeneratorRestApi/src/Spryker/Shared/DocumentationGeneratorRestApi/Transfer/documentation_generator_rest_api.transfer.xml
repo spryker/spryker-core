@@ -13,6 +13,7 @@
         <property name="requestSchema" type="PathSchemaData"/>
         <property name="isEmptyResponse" type="bool"/>
         <property name="responseSchemas" singular="responseSchema" type="PathSchemaData[]"/>
+        <property name="operationId" type="string"/>
     </transfer>
 
     <transfer name="PathParameter">
@@ -37,6 +38,19 @@
         <property name="required" type="string[]" singular="required"/>
     </transfer>
 
+    <transfer name="Parameter">
+        <property name="refName" type="string"/>
+        <property name="name" type="string"/>
+        <property name="in" type="string"/>
+        <property name="description" type="string"/>
+        <property name="required" type="bool"/>
+        <property name="schema" type="ParameterSchema"/>
+    </transfer>
+
+    <transfer name="ParameterSchema">
+        <property name="type" type="string"/>
+    </transfer>
+
     <transfer name="SchemaProperty">
         <property name="name" type="string"/>
         <property name="type" type="string"/>
@@ -56,6 +70,8 @@
         <property name="method" type="string"/>
         <property name="summary" type="string"/>
         <property name="tags" type="string[]" singular="tag"/>
+        <property name="operationId" type="string"/>
+        <property name="ref" type="string"/>
         <property name="parameters" type="array" singular="parameter"/>
         <property name="request" type="array" singular="request"/>
         <property name="security" type="array" singular="security"/>
@@ -67,6 +83,7 @@
         <property name="in" type="string"/>
         <property name="description" type="string"/>
         <property name="required" type="bool"/>
+        <property name="ref" type="string"/>
         <property name="deprecated" type="bool"/>
         <property name="allowEmptyValue" type="bool"/>
         <property name="schemaType" type="string"/>
@@ -88,6 +105,15 @@
         <property name="name" type="string"/>
         <property name="properties" type="array" singular="property"/>
         <property name="required" type="string[]" singular="required"/>
+    </transfer>
+
+    <transfer name="ParameterComponent">
+        <property name="refName" type="string"/>
+        <property name="name" type="string"/>
+        <property name="in" type="string"/>
+        <property name="description" type="string"/>
+        <property name="required" type="bool"/>
+        <property name="schema" type="ParameterSchema"/>
     </transfer>
 
     <transfer name="SchemaPropertyComponent">
