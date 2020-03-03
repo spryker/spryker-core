@@ -92,9 +92,11 @@ class ProductLabelTable extends AbstractTable
      */
     protected function configureRawColumns(TableConfiguration $config)
     {
-        $config->addRawColumn(static::COL_STATUS);
-        $config->addRawColumn(static::COL_STORES);
-        $config->addRawColumn(static::COL_ACTIONS);
+        $config->setRawColumns([
+            static::COL_STATUS,
+            static::COL_STORES,
+            static::COL_ACTIONS
+        ]);
     }
 
     /**
