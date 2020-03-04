@@ -239,14 +239,14 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new OauthRefreshTokenCleaner(
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->createDateTime()
+            $this->createPresentDateTime()
         );
     }
 
     /**
      * @return \DateTime
      */
-    protected function createDateTime(): DateTime
+    protected function createPresentDateTime(): DateTime
     {
         return new DateTime();
     }

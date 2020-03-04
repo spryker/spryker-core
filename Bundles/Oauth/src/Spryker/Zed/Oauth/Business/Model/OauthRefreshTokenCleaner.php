@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Business\Model;
 
+use DateInterval;
 use DateTime;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
@@ -53,10 +54,18 @@ class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
             return null;
         }
 
-        $expiredAt = $this->dateTime
+        return $this->oauthEntityManager->deleteExpiredRefreshTokens($this->getExpiresAt($refreshTokenRetentionInterval));
+    }
+
+    /**
+     * @param \DateInterval|null $refreshTokenRetentionInterval
+     *
+     * @return string
+     */
+    protected function getExpiresAt(?DateInterval $refreshTokenRetentionInterval)
+    {
+        return $this->dateTime
             ->add($refreshTokenRetentionInterval)
             ->format('Y-m-d H:i:s');
-
-        return $this->oauthEntityManager->deleteExpiredRefreshTokens($expiredAt);
     }
 }

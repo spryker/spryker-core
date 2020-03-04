@@ -18,8 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class OauthTokenConsole extends Console
 {
-    public const COMMAND_NAME = 'oauth:refresh-token:clean';
-    public const DESCRIPTION = 'Clean up expired refresh tokens in the database.';
+    public const COMMAND_NAME = 'oauth:refresh-token:remove-expired';
+    public const DESCRIPTION = 'Remove expired refresh tokens from the database.';
 
     /**
      * @return void
@@ -42,7 +42,7 @@ class OauthTokenConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
-        $output->writeln('<fg=yellow>Cleaning up expired refresh tokens in the database</fg=yellow>');
+        $output->writeln('<fg=yellow>Remove expired refresh tokens from the database</fg=yellow>');
         $output->writeln('');
 
         try {

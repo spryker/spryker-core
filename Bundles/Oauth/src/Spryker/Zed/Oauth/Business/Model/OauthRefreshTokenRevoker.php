@@ -74,7 +74,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
         $revokeRefreshTokenResponseTransfer = new RevokeRefreshTokenResponseTransfer();
 
-        $decryptedRefreshToken = $this->decryptRefreshToken($revokeRefreshTokenRequestTransfer->getRefreshToken());
+        $decryptedRefreshToken = $this->extractRefreshTokenId($revokeRefreshTokenRequestTransfer->getRefreshToken());
         if (!$decryptedRefreshToken) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
@@ -139,7 +139,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      *
      * @return string|null
      */
-    protected function decryptRefreshToken(string $refreshToken): ?string
+    protected function extractRefreshTokenId(string $refreshToken): ?string
     {
         try {
             $refreshToken = $this->decrypt($refreshToken);
