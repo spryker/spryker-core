@@ -51,6 +51,19 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
+     * - Saves current state of shopping list item note, if the note is empty, it gets deleted.
+     * - Executes in bulk
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    public function saveShoppingListItemNoteForShoppingListItemBulk(array $shoppingListItems): array;
+
+    /**
+     * Specification:
      *  - Expands shopping list item with additional parameters.
      *
      * @api

@@ -56,6 +56,21 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    public function saveShoppingListItemNoteForShoppingListItemBulk(array $shoppingListItems): array
+    {
+        $result = [];
+        foreach ($shoppingListItems as $shoppinglitsItem) {
+            $result[] = $this->saveShoppingListItemNoteForShoppingListItem($shoppinglitsItem);
+        }
+
+        return $result;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null

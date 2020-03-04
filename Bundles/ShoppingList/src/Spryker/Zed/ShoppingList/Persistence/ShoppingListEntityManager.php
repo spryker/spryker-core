@@ -19,6 +19,7 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnitBlacklist
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -438,5 +439,38 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         foreach ($shoppingListCompanyBusinessUnitBlacklistEntities as $shoppingListCompanyBusinessUnitBlacklistEntity) {
             $shoppingListCompanyBusinessUnitBlacklistEntity->delete();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    public function saveShoppingListItems(array $shoppingListItems, ShoppingListTransfer $shoppingListTransfer): array
+    {
+        if (empty($shoppingListItems)) {
+            return $shoppingListItems;
+        }
+
+        $shoppingListItemMapper = $this->getFactory()->createShoppingListItemMapper();
+
+        /**
+         * @var \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListItemsCollection
+         */
+        $shoppingListItemsCollection = new ObjectCollection();
+        $shoppingListItemsCollection->setModel(SpyShoppingListItem::class);
+        foreach ($shoppingListItems as $shoppingListItemTransfer) {
+            $shoppingListItemEntity = $shoppingListItemMapper->mapTransferToEntity($shoppingListItemTransfer, new SpyShoppingListItem());
+
+            $shoppingListItemsCollection->append($shoppingListItemEntity);
+        }
+        $shoppingListItemsCollection->save();
+
+        foreach ($shoppingListItemsCollection as $idx => $spyShoppingListItem) {
+            $shoppingListItems[$idx]->setIdShoppingListItem($spyShoppingListItem->getIdShoppingListItem());
+        }
+
+        return $shoppingListItems;
     }
 }

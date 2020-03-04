@@ -453,4 +453,29 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
                 ->setParameters([static::GLOSSARY_PARAM_SKU => $sku])
         );
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function saveShoppingListItemBulk(array $shoppingListItems, ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItems, $shoppingListTransfer) {
+            $this->saveShoppingListItemBulkTransaction($shoppingListItems, $shoppingListTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function saveShoppingListItemBulkTransaction(array $shoppingListItems, ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $shoppingListItems = $this->shoppingListEntityManager->saveShoppingListItems($shoppingListItems, $shoppingListTransfer);
+        $this->pluginExecutor->executeBulkPostSavePlugins($shoppingListItems);
+    }
 }

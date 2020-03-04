@@ -39,24 +39,32 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     protected $itemExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[] $bulkPostSavePlugins
+     */
+    protected $bulkPostSavePlugins;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[] $beforeDeletePlugins
      * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
      * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[] $bulkPostSavePlugins
      */
     public function __construct(
         ShoppingListToMessengerFacadeInterface $messengerFacade,
         array $beforeDeletePlugins,
         array $postSavePlugins,
         array $addItemPreCheckPlugins,
-        array $itemExpanderPlugins
+        array $itemExpanderPlugins,
+        array $bulkPostSavePlugins
     ) {
         $this->messengerFacade = $messengerFacade;
         $this->beforeDeletePlugins = $beforeDeletePlugins;
         $this->postSavePlugins = $postSavePlugins;
         $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
+        $this->bulkPostSavePlugins = $bulkPostSavePlugins;
     }
 
     /**
@@ -74,6 +82,8 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     }
 
     /**
+     * @deprecated Use `ShoppingListItemPluginExecutor::executeBulkPostSavePlugins()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -85,6 +95,20 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
         }
 
         return $shoppingListItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    public function executeBulkPostSavePlugins(array $shoppingListItems): array
+    {
+        foreach ($this->bulkPostSavePlugins as $bulkPostSavePlugin) {
+            $shoppingListItems = $bulkPostSavePlugin->execute($shoppingListItems);
+        }
+
+        return $shoppingListItems;
     }
 
     /**

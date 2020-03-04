@@ -54,6 +54,22 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    public function saveShoppingListItemNoteForShoppingListItemBulk(array $shoppingListItems): array
+    {
+        return $this->getFactory()
+            ->createShoppingListNoteWriter()
+            ->saveShoppingListItemNoteForShoppingListItemBulk($shoppingListItems);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
      * @return void

@@ -40,6 +40,22 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    public function saveShoppingListItemProductOptionsBulk(array $shoppingListItemTransfers): array
+    {
+        return $this->getFactory()
+            ->createShoppingListProductOptionWriter()
+            ->saveShoppingListItemProductOptionsBulk($shoppingListItemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param int $idShoppingListItem
      *
      * @return void

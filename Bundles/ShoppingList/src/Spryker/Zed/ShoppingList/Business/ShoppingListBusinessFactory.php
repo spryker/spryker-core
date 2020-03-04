@@ -108,7 +108,8 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getShoppingListItemBeforeDeletePlugins(),
             $this->getShoppingListItemPostSavePlugins(),
             $this->getAddItemPreCheckPlugins(),
-            $this->getItemExpanderPlugins()
+            $this->getItemExpanderPlugins(),
+            $this->getShoppingListItemBulkPostSavePlugins()
         );
     }
 
@@ -237,6 +238,14 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getShoppingListItemPostSavePlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[]
+     */
+    public function getShoppingListItemBulkPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE);
     }
 
     /**

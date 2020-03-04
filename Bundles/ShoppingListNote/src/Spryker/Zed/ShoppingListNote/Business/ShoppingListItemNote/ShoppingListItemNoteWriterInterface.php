@@ -25,4 +25,11 @@ interface ShoppingListItemNoteWriterInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function saveShoppingListItemNoteForShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    public function saveShoppingListItemNoteForShoppingListItemBulk(array $shoppingListItems): array;
 }

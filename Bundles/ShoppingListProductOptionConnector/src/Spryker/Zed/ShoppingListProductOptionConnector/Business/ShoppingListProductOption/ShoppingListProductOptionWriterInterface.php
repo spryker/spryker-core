@@ -19,6 +19,13 @@ interface ShoppingListProductOptionWriterInterface
     public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    public function saveShoppingListItemProductOptionsBulk(array $shoppingListItemTransfers): array;
+
+    /**
      * @param int $idShoppingListItem
      *
      * @return void

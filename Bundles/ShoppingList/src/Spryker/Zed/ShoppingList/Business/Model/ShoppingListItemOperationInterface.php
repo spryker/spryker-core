@@ -62,4 +62,12 @@ interface ShoppingListItemOperationInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function saveShoppingListItemBulk(array $shoppingListItems, ShoppingListTransfer $shoppingListTransfer): void;
 }
