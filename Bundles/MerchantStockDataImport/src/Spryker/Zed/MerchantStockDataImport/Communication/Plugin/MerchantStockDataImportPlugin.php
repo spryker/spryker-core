@@ -21,7 +21,7 @@ class MerchantStockDataImportPlugin extends AbstractPlugin implements DataImport
 {
     /**
      * {@inheritDoc}
-     * - Imports data about merchant stock relations.
+     * - Imports merchant stock relation data.
      *
      * @api
      *

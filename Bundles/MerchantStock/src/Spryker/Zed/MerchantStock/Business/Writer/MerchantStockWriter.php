@@ -16,6 +16,8 @@ use Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface;
 
 class MerchantStockWriter implements MerchantStockWriterInterface
 {
+    protected const ERROR_MERCHANT_STOCK_CREATE = 'Merchant stock can not be created.';
+
     /**
      * @var \Spryker\Zed\MerchantStock\Dependency\Facade\MerchantStockToStockFacadeInterface
      */
@@ -43,14 +45,19 @@ class MerchantStockWriter implements MerchantStockWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    public function createDefaultMerchantStock(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         $stockTransfer = (new StockTransfer())
             ->setName($this->generateStockNameByMerchant($merchantTransfer))
             ->setIsActive(true);
 
         $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
-        $this->merchantStockEntityManager->createMerchantStock($merchantTransfer, $stockTransfer);
+        $merchantStockTransfer = $this->merchantStockEntityManager->createMerchantStock($merchantTransfer, $stockTransfer);
+
+        if (!$merchantStockTransfer->getIdMerchantStock()) {
+            return $this->createMerchantResponseTransfer($merchantTransfer, static::ERROR_MERCHANT_STOCK_CREATE);
+        }
+
         $merchantTransfer->addStock($stockTransfer);
 
         return $this->createMerchantResponseTransfer($merchantTransfer);
@@ -64,8 +71,9 @@ class MerchantStockWriter implements MerchantStockWriterInterface
     protected function generateStockNameByMerchant(MerchantTransfer $merchantTransfer): string
     {
         return sprintf(
-            '%s %s %d',
-            $merchantTransfer->getName(),
+            '%s %s %s %d',
+            $merchantTransfer->requireName()->getName(),
+            $merchantTransfer->requireMerchantReference()->getMerchantReference(),
             'Warehouse',
             $merchantTransfer->getStocks()->count() + 1
         );
@@ -73,21 +81,23 @@ class MerchantStockWriter implements MerchantStockWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param string $message
+     * @param string $errorMessage
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    protected function createMerchantResponseTransfer(MerchantTransfer $merchantTransfer, string $message = ''): MerchantResponseTransfer
-    {
+    protected function createMerchantResponseTransfer(
+        MerchantTransfer $merchantTransfer,
+        string $errorMessage = ''
+    ): MerchantResponseTransfer {
         $merchantResponseTransfer = (new MerchantResponseTransfer())
             ->setIsSuccess(true)
             ->setMerchant($merchantTransfer);
 
-        if (!$message) {
+        if (!$errorMessage) {
             return $merchantResponseTransfer;
         }
 
-        $merchantErrorTransfer = (new MerchantErrorTransfer())->setMessage($message);
+        $merchantErrorTransfer = (new MerchantErrorTransfer())->setMessage($errorMessage);
 
         return $merchantResponseTransfer->setIsSuccess(false)->addError($merchantErrorTransfer);
     }

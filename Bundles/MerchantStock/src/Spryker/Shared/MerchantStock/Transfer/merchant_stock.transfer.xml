@@ -6,6 +6,7 @@
     <transfer name="Merchant">
         <property name="stocks" type="Stock[]" singular="stock"/>
         <property name="name" type="string"/>
+        <property name="merchantReference" type="string"/>
         <property name="idMerchant" type="int"/>
     </transfer>
 

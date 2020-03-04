@@ -126,7 +126,7 @@ interface CurrencyFacadeInterface
 
     /**
      * Specification:
-     * - Gets currency transfers by array of iso codes.
+     * - Gets Currency transfers by array of ISO codes.
      *
      * @api
      *

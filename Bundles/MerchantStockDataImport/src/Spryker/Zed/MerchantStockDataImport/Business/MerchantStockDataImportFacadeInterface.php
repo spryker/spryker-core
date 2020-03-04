@@ -14,7 +14,7 @@ interface MerchantStockDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports data about relations between merchants and stocks.
+     * - Imports merchant stock relation data.
      *
      * @api
      *

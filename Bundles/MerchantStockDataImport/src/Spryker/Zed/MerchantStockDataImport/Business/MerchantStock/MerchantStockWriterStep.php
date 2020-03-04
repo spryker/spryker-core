@@ -9,11 +9,10 @@ namespace Spryker\Zed\MerchantStockDataImport\Business\MerchantStock;
 
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\DataSet\MerchantStockDataSetInterface;
 
-class MerchantStockWriterStep extends PublishAwareStep implements DataImportStepInterface
+class MerchantStockWriterStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -24,7 +23,7 @@ class MerchantStockWriterStep extends PublishAwareStep implements DataImportStep
     {
         $idMerchant = $dataSet[MerchantStockDataSetInterface::MERCHANT_ID];
         $idStock = $dataSet[MerchantStockDataSetInterface::STOCK_ID];
-        $merchantStockEntity = SpyMerchantStockQuery::create()
+        $merchantStockEntity = $this->createMerchantStockQuery()
             ->filterByFkStock($idStock)
             ->filterByFkMerchant($idMerchant)
             ->findOneOrCreate();
@@ -32,5 +31,13 @@ class MerchantStockWriterStep extends PublishAwareStep implements DataImportStep
         $merchantStockEntity->setIsDefault(true);
 
         $merchantStockEntity->save();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery
+     */
+    protected function createMerchantStockQuery(): SpyMerchantStockQuery
+    {
+        return SpyMerchantStockQuery::create();
     }
 }
