@@ -51,5 +51,5 @@ interface ProductLabelEntityManagerInterface
      *
      * @return void
      */
-    public function addProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void;
+    public function createProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void;
 }

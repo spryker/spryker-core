@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -101,8 +102,8 @@ class ProductLabelDataHelper extends Module
      */
     protected function cleanupProductLabelStoreRelations(int $idProductLabel): void
     {
-        $this->getProductLabelQuery()
-            ->queryProductLabelStoreRelationsByIdProductLabel($idProductLabel)
+        SpyProductLabelStoreQuery::create()
+            ->filterByFkProductLabel($idProductLabel)
             ->find()
             ->delete();
     }

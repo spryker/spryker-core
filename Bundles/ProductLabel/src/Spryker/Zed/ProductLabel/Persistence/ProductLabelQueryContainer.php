@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductLabel\Persistence;
 
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -250,19 +249,5 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->filterByValidTo(null, Criteria::ISNULL)
             ->orderByIsExclusive(Criteria::DESC)
             ->orderByPosition(Criteria::ASC);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductLabel
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery
-     */
-    public function queryProductLabelStoreRelationsByIdProductLabel(int $idProductLabel): SpyProductLabelStoreQuery
-    {
-        return $this->getFactory()
-            ->createProductLabelStoreQuery()
-            ->filterByFkProductLabel($idProductLabel);
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabelGui\Communication;
 
 use Generated\Shared\Transfer\ProductLabelAggregateFormTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint;
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelAggregateFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider;
@@ -173,7 +174,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
-    public function getStoreRelationFormTypePlugin()
+    public function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }

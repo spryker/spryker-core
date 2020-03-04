@@ -85,7 +85,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function getAllProductLabelsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductLabelsByIdProductAbstract(int $idProductAbstract): array
     {
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()
@@ -105,7 +105,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      *
      * @return int[]
      */
-    public function getAllLabelIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductLabelIdsByIdProductAbstract(int $idProductAbstract): array
     {
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()
@@ -123,7 +123,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      *
      * @return int[]
      */
-    public function getAllActiveProductLabelIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getActiveProductLabelIdsByIdProductAbstract(int $idProductAbstract): array
     {
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()

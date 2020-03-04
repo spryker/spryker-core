@@ -93,7 +93,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      *
      * @return void
      */
-    public function addProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void
+    public function createProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void
     {
         foreach ($idStores as $idStore) {
             $productLabelStoreEntity = new SpyProductLabelStore();

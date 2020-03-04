@@ -90,7 +90,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findAllByIdProductAbstract($idProductAbstract)
     {
-        $productLabelTransferCollection = $this->productLabelRepository->getAllProductLabelsByIdProductAbstract($idProductAbstract);
+        $productLabelTransferCollection = $this->productLabelRepository->getProductLabelsByIdProductAbstract($idProductAbstract);
 
         $this->addLocalizedAttributesToProductLabels($productLabelTransferCollection);
 
@@ -104,7 +104,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findAllLabelIdsByIdProductAbstract($idProductAbstract)
     {
-        return $this->productLabelRepository->getAllLabelIdsByIdProductAbstract($idProductAbstract);
+        return $this->productLabelRepository->getProductLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -114,7 +114,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract)
     {
-        return $this->productLabelRepository->getAllActiveProductLabelIdsByIdProductAbstract($idProductAbstract);
+        return $this->productLabelRepository->getActiveProductLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
