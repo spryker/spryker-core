@@ -13,6 +13,8 @@ use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeChecker;
+use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
@@ -338,6 +340,18 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         return new SearchHealthCheck(
             $this->getSearchClient()
+        );
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterface
+     */
+    public function createSearchLegacyModeChecker(): SearchLegacyModeCheckerInterface
+    {
+        return new SearchLegacyModeChecker(
+            $this->getSourceInstallerPlugins()
         );
     }
 }

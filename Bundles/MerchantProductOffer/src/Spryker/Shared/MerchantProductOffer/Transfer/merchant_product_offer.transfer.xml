@@ -7,4 +7,17 @@
         <property name="fkMerchant" type="int"/>
         <property name="merchantSku" type="string"/>
     </transfer>
+
+    <transfer name="MerchantProductOfferCriteriaFilter">
+        <property name="merchantReference" type="string"/>
+        <property name="skus" type="array" singular="sku"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+    </transfer>
 </transfers>

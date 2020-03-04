@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\ProductRelation\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductAttributeMapper;
-use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationTypeMapper;
 use Spryker\Zed\ProductRelation\Persistence\Rule\ProductRelationRuleQueryCreator;
@@ -88,14 +85,6 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
-     */
-    public function getProductAttributeQuery(): SpyProductAttributeKeyQuery
-    {
-        return $this->getProvidedDependency(ProductRelationDependencyProvider::PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductAttributeMapper
      */
     public function createProductAttributeMapper(): ProductAttributeMapper
@@ -104,19 +93,11 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper
+     * @return \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
-    public function createProductMapper(): ProductMapper
+    public function getProductRelationQueryContainer(): ProductRelationQueryContainerInterface
     {
-        return new ProductMapper();
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function getProductAbstractQuery(): SpyProductAbstractQuery
-    {
-        return $this->getProvidedDependency(ProductRelationDependencyProvider::PROPEL_QUERY_SPY_PRODUCT_ABSTRACT);
+        return $this->getQueryContainer();
     }
 
     /**

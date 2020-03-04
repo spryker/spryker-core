@@ -19,4 +19,7 @@
         <property name="merchantSalesOrderReference" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
