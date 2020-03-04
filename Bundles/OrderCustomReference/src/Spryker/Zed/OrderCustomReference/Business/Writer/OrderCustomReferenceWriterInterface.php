@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business\Writer;
 
+use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -25,7 +26,10 @@ interface OrderCustomReferenceWriterInterface
      * @param string $orderCustomReference
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): void;
+    public function updateOrderCustomReference(
+        string $orderCustomReference,
+        OrderTransfer $orderTransfer
+    ): OrderCustomReferenceResponseTransfer;
 }

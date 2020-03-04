@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class OrderCustomReferenceGuiToOrderCustomReferenceFacadeBridge implements OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface
@@ -28,10 +29,12 @@ class OrderCustomReferenceGuiToOrderCustomReferenceFacadeBridge implements Order
      * @param string $orderCustomReference
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): void
-    {
-        $this->orderCustomReferenceFacade->updateOrderCustomReference($orderCustomReference, $orderTransfer);
+    public function updateOrderCustomReference(
+        string $orderCustomReference,
+        OrderTransfer $orderTransfer
+    ): OrderCustomReferenceResponseTransfer {
+        return $this->orderCustomReferenceFacade->updateOrderCustomReference($orderCustomReference, $orderTransfer);
     }
 }

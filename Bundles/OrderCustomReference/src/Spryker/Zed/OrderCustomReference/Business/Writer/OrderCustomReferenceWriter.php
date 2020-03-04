@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business\Writer;
 
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -15,6 +17,9 @@ use Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManag
 
 class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
 {
+    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
+    protected const MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED = 'Order Custom Reference has not been changed.';
+
     /**
      * @var \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface
      */
@@ -58,20 +63,37 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
      * @param string $orderCustomReference
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): void
-    {
-        if (!$orderTransfer->getIdSalesOrder() || !$this->isOrderCustomReferenceLengthValid($orderCustomReference)) {
-            return;
+    public function updateOrderCustomReference(
+        string $orderCustomReference,
+        OrderTransfer $orderTransfer
+    ): OrderCustomReferenceResponseTransfer {
+        $orderCustomReferenceResponseTransfer = (new OrderCustomReferenceResponseTransfer())
+            ->setIsSuccessful(true);
+
+        if (!$orderTransfer->getIdSalesOrder()) {
+            return $orderCustomReferenceResponseTransfer
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED)
+                );
         }
 
-        $orderTransfer->setOrderCustomReference($orderCustomReference);
+        if (!$this->isOrderCustomReferenceLengthValid($orderCustomReference)) {
+            return $orderCustomReferenceResponseTransfer
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH)
+                );
+        }
+
         $this->orderCustomReferenceEntityManager
-            ->saveOrderCustomReference(
-                $orderTransfer->getIdSalesOrder(),
-                $orderTransfer->getOrderCustomReference()
-            );
+            ->saveOrderCustomReference($orderTransfer->getIdSalesOrder(), $orderCustomReference);
+
+        return $orderCustomReferenceResponseTransfer;
     }
 
     /**

@@ -8,4 +8,13 @@
         <property name="orderCustomReference" type="string"/>
     </transfer>
 
+    <transfer name="OrderCustomReferenceResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>
