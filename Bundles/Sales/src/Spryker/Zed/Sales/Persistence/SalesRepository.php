@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Formatter\ObjectFormatter;
@@ -74,7 +73,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         $salesOrderMapper = $this->getFactory()->createSalesOrderMapper();
 
         $salesOrderQuery = $this->getFactory()->createSalesOrderQuery();
-        $salesOrderQuery = $this->setSalesOrderSearchFilters($salesOrderQuery, $orderListTransfer);
+        $salesOrderQuery = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->setSalesOrderQuerySearchFilters($salesOrderQuery, $orderListTransfer);
 
         $salesOrderEntityCollection = $this->buildQueryFromCriteria($salesOrderQuery, $orderListTransfer->getFilter())
             ->setFormatter(ObjectFormatter::class)
@@ -85,9 +86,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             new ArrayObject()
         );
 
-        $orderIds = $this->getOrderIdsFromOrderTransfers($orderTransfers);
+        $salesOrderIds = $this->getSalesOrderIdsFromOrderTransfers($orderTransfers);
 
-        $salesOrderTotalsEntityCollection = $this->getOrderTotalsByOrderIds($orderIds);
+        $salesOrderTotalsEntityCollection = $this->getSalesOrderTotalsBySalesOrderIds($salesOrderIds);
 
         $orderTransfers = $salesOrderMapper->mapSalesOrderTotalsEntityCollectionToOrderTransfers(
             $salesOrderTotalsEntityCollection,
@@ -95,7 +96,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         );
 
         if ($orderListTransfer->getFormat()->getExpandWithItems()) {
-            $salesOrderItemEntityCollection = $this->getOrderItemsByOrderIds($orderIds);
+            $salesOrderItemEntityCollection = $this->getSalesOrderItemsByOrderIds($salesOrderIds);
 
             $orderTransfers = $salesOrderMapper->mapSalesOrderItemEntityCollectionToOrderTransfers(
                 $salesOrderItemEntityCollection,
@@ -107,54 +108,32 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
-     * @param int[] $orderIds
+     * @param int[] $salesOrderIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
-    protected function getOrderItemsByOrderIds(array $orderIds): ObjectCollection
+    protected function getSalesOrderItemsByOrderIds(array $salesOrderIds): ObjectCollection
     {
         $salesOrderItemQuery = $this->getFactory()
             ->createSalesOrderItemQuery()
-            ->filterByFkSalesOrder_In($orderIds);
+            ->filterByFkSalesOrder_In($salesOrderIds);
 
         return $salesOrderItemQuery->find();
     }
 
     /**
-     * @param int[] $orderIds
+     * @param int[] $salesOrderIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderTotals[]
      */
-    protected function getOrderTotalsByOrderIds(array $orderIds): ObjectCollection
+    protected function getSalesOrderTotalsBySalesOrderIds(array $salesOrderIds): ObjectCollection
     {
         $salesOrderTotalsQuery = $this->getFactory()
             ->getSalesOrderTotalsPropelQuery()
-            ->filterByFkSalesOrder_In($orderIds)
+            ->filterByFkSalesOrder_In($salesOrderIds)
             ->orderByCreatedAt(Criteria::DESC);
 
         return $salesOrderTotalsQuery->find();
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    protected function setSalesOrderSearchFilters(
-        SpySalesOrderQuery $salesOrderQuery,
-        OrderListTransfer $orderListTransfer
-    ): SpySalesOrderQuery {
-        $orderListTransfer->requireFormat();
-        $orderListTransfer->requireCustomer();
-
-        $customerReference = $orderListTransfer->getCustomer()->getCustomerReference();
-
-        if ($customerReference) {
-            $salesOrderQuery->filterByCustomerReference($customerReference);
-        }
-
-        return $salesOrderQuery;
     }
 
     /**
@@ -186,14 +165,14 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      *
      * @return int[]
      */
-    protected function getOrderIdsFromOrderTransfers(ArrayObject $orderTransfers): array
+    protected function getSalesOrderIdsFromOrderTransfers(ArrayObject $orderTransfers): array
     {
-        $orderIds = [];
+        $salesOrderIds = [];
 
         foreach ($orderTransfers as $orderTransfer) {
-            $orderIds[] = $orderTransfer->getIdSalesOrder();
+            $salesOrderIds[] = $orderTransfer->getIdSalesOrder();
         }
 
-        return $orderIds;
+        return $salesOrderIds;
     }
 }

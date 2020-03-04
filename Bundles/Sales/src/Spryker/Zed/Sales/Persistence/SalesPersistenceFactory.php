@@ -110,4 +110,12 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     {
         return new SalesOrderMapper();
     }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     */
+    public function getSalesQueryContainer(): SalesQueryContainerInterface
+    {
+        return $this->getQueryContainer();
+    }
 }

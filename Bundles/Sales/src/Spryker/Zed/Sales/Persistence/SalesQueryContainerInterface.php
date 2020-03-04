@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -170,4 +171,21 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryCountUniqueProductsForOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     * - Adds filtering by customer reference using OrderListTransfer::customer.
+     * - Sets additional search filters using criteria from OrderListTransfer::queryJoins.
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function setSalesOrderQuerySearchFilters(
+        SpySalesOrderQuery $salesOrderQuery,
+        OrderListTransfer $orderListTransfer
+    ): SpySalesOrderQuery;
 }
