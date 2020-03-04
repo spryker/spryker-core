@@ -416,7 +416,8 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Checks if packaging unit is found for item in CartChangeTransfer.
+     * - Checks if packaging unit is found for item in `CartChangeTransfer`.
+     * - Checks items with amount set.
      * - Returns `CartPreCheckResponseTransfer` with an error in case packaging unit not found for item.
      *
      * @api

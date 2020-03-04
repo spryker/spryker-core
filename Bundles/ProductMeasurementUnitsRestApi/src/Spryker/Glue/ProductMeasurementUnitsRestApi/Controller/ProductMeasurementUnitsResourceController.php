@@ -23,8 +23,7 @@ class ProductMeasurementUnitsResourceController extends AbstractController
      *              "Retrieves product measurement unit by code."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Resource id has not been specified.",
