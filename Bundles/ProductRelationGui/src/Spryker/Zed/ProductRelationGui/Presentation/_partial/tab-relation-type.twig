@@ -34,9 +34,9 @@
             <div class="product-desc">
                 <img height="100" id="product-img" src="#"/> <br />
                 <small class="text-muted" id="product-category"></small>
-                <span class="product-name"></span>
+                <span class="product-name">{{ localizedATtributes.name ?? '' }}</span>
 
-                <div class="small m-t-xs" id="product-description"></div>
+                <div class="small m-t-xs" id="product-description">{{ localizedAttributes.description ?? '' }}</div>
             </div>
         </div>
 

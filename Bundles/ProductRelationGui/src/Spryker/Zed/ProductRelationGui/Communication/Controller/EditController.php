@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductRelationGui\Communication\Controller;
 
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\FormInterface;
@@ -63,6 +65,12 @@ class EditController extends BaseProductRelationController
 
         $productRelationResponseTransfer->requireProductRelation();
         $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
+        $productAbstractTransfer = $this->getFactory()
+            ->getProductFacade()
+            ->findProductAbstractById($productRelationTransfer->getFkProductAbstract());
+
+        $localizedAttributesTransfer = $this->getProductLocalizedAttributesForCurrentLocale($productAbstractTransfer);
+
         $productRuleTable = $this->getFactory()
             ->createProductRuleTable($productRelationTransfer);
         $productTable = $this->getFactory()->createProductTable();
@@ -73,6 +81,7 @@ class EditController extends BaseProductRelationController
             'productRelation' => $productRelationTransfer,
             'productRuleTable' => $productRuleTable->render(),
             'productTable' => $productTable->render(),
+            'localizedAttributes' => $localizedAttributesTransfer,
         ];
     }
 
@@ -86,6 +95,26 @@ class EditController extends BaseProductRelationController
         return $this->jsonResponse(
             $productTable->fetchData()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer|null
+     */
+    protected function getProductLocalizedAttributesForCurrentLocale(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ?LocalizedAttributesTransfer {
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+            if ($localizedAttributesTransfer->getLocale() === $localeTransfer) {
+                return $localizedAttributesTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
