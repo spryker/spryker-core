@@ -1,24 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZedAuthFooterComponent } from './mp-auth-footer.component';
+import { MpAuthFooterComponent } from './mp-auth-footer.component';
+import { By } from '@angular/platform-browser';
 
 describe('ZedAuthFooterComponent', () => {
-    let component: ZedAuthFooterComponent;
-    let fixture: ComponentFixture<ZedAuthFooterComponent>;
+    let component: MpAuthFooterComponent;
+    let fixture: ComponentFixture<MpAuthFooterComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ZedAuthFooterComponent]
+            declarations: [MpAuthFooterComponent]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ZedAuthFooterComponent);
+        fixture = TestBed.createComponent(MpAuthFooterComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create component', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('is the date current', () => {
+        fixture.detectChanges();
+        const footerElem = fixture.debugElement.query(By.css('.footer span'));
+        const currentYear = new Date().getFullYear();
+
+        expect(footerElem.nativeElement.textContent).toMatch(currentYear.toString());
     });
 });
