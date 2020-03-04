@@ -28,9 +28,9 @@ class ProductRelationTable extends AbstractTable
     public const COL_ACTIONS = 'Actions';
     public const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
 
-    public const URL_RELATION_DEACTIVATE = '/product-relation-gui/edit/deactivate';
+    public const URL_RELATION_DEACTIVATE = '/product-relation-gui/toggle-active/deactivate';
     public const URL_RELATION_DELETE = '/product-relation-gui/delete/index';
-    public const URL_RELATION_ACTIVATE = '/product-relation-gui/edit/activate';
+    public const URL_RELATION_ACTIVATE = '/product-relation-gui/toggle-active/activate';
     public const URL_PRODUCT_RELATION_LIST = '/product-relation-gui/list/index';
     public const URL_PRODUCT_RELATION_EDIT = '/product-relation-gui/edit/index';
     public const URL_PRODUCT_RELATION_VIEW = '/product-relation-gui/view/index';
