@@ -50,7 +50,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
             return null;
         }
 
-        return $this->getProductMeasurementSalesUnits([$productConcreteMeasurementUnitStorageTransfer]);
+        return array_values($this->getProductMeasurementSalesUnits([$productConcreteMeasurementUnitStorageTransfer]));
     }
 
     /**
