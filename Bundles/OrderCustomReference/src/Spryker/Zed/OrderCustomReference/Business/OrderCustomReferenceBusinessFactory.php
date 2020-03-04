@@ -24,7 +24,7 @@ class OrderCustomReferenceBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderCustomReferenceWriter(): OrderCustomReferenceWriterInterface
     {
-        return new OrderCustomReferenceWriter($this->getEntityManager());
+        return new OrderCustomReferenceWriter($this->getEntityManager(), $this->getConfig());
     }
 
     /**

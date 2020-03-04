@@ -7,23 +7,39 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business\Writer;
 
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig;
 use Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface;
 
 class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
 {
+    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
+    protected const MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED = 'Order Custom Reference has not been changed.';
+
     /**
      * @var \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface
      */
     protected $orderCustomReferenceEntityManager;
 
     /**
-     * @param \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager
+     * @var \Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig
      */
-    public function __construct(OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager)
-    {
+    protected $orderCustomReferenceConfig;
+
+    /**
+     * @param \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager
+     * @param \Spryker\Zed\OrderCustomReference\OrderCustomReferenceConfig $orderCustomReferenceConfig
+     */
+    public function __construct(
+        OrderCustomReferenceEntityManagerInterface $orderCustomReferenceEntityManager,
+        OrderCustomReferenceConfig $orderCustomReferenceConfig
+    ) {
         $this->orderCustomReferenceEntityManager = $orderCustomReferenceEntityManager;
+        $this->orderCustomReferenceConfig = $orderCustomReferenceConfig;
     }
 
     /**
@@ -41,5 +57,56 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
                     $quoteTransfer->getOrderCustomReference()
                 );
         }
+    }
+
+    /**
+     * @param string $orderCustomReference
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
+     */
+    public function updateOrderCustomReference(
+        string $orderCustomReference,
+        OrderTransfer $orderTransfer
+    ): OrderCustomReferenceResponseTransfer {
+        $orderCustomReferenceResponseTransfer = (new OrderCustomReferenceResponseTransfer())
+            ->setIsSuccessful(true);
+
+        if (!$orderTransfer->getIdSalesOrder()) {
+            return $orderCustomReferenceResponseTransfer
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED)
+                );
+        }
+
+        if (!$this->isOrderCustomReferenceLengthValid($orderCustomReference)) {
+            return $orderCustomReferenceResponseTransfer
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH)
+                );
+        }
+
+        $this->orderCustomReferenceEntityManager
+            ->saveOrderCustomReference($orderTransfer->getIdSalesOrder(), $orderCustomReference);
+
+        return $orderCustomReferenceResponseTransfer;
+    }
+
+    /**
+     * @param string $orderCustomReference
+     *
+     * @return bool
+     */
+    protected function isOrderCustomReferenceLengthValid(string $orderCustomReference): bool
+    {
+        if (mb_strlen($orderCustomReference) > $this->orderCustomReferenceConfig->getOrderCustomReferenceMaxLength()) {
+            return false;
+        }
+
+        return true;
     }
 }

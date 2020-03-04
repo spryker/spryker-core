@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface;
+use Spryker\Client\OrderCustomReference\OrderCustomReferenceConfig;
 
 class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
 {
     protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
-    protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
 
     /**
      * @var \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface
@@ -25,11 +25,20 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
     protected $persistentCartClient;
 
     /**
-     * @param \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient
+     * @var \Spryker\Client\OrderCustomReference\OrderCustomReferenceConfig
      */
-    public function __construct(OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient)
-    {
+    protected $orderCustomReferenceConfig;
+
+    /**
+     * @param \Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Client\OrderCustomReference\OrderCustomReferenceConfig $orderCustomReferenceConfig
+     */
+    public function __construct(
+        OrderCustomReferenceToPersistentCartClientInterface $persistentCartClient,
+        OrderCustomReferenceConfig $orderCustomReferenceConfig
+    ) {
         $this->persistentCartClient = $persistentCartClient;
+        $this->orderCustomReferenceConfig = $orderCustomReferenceConfig;
     }
 
     /**
@@ -97,6 +106,6 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
             return true;
         }
 
-        return mb_strlen($orderCustomReference) <= static::ORDER_CUSTOM_REFERENCE_MAX_LENGTH;
+        return mb_strlen($orderCustomReference) <= $this->orderCustomReferenceConfig->getOrderCustomReferenceMaxLength();
     }
 }

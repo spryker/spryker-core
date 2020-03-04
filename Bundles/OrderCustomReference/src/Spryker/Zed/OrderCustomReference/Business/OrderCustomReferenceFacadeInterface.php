@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business;
 
+use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
@@ -25,6 +27,23 @@ interface OrderCustomReferenceFacadeInterface
      * @return void
      */
     public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * Specification:
+     * - Persists `orderCustomReference` in `spy_sales_order` schema.
+     * - Expects OrderTransfer::idSalesOrder to be provided.
+     *
+     * @api
+     *
+     * @param string $orderCustomReference
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
+     */
+    public function updateOrderCustomReference(
+        string $orderCustomReference,
+        OrderTransfer $orderTransfer
+    ): OrderCustomReferenceResponseTransfer;
 
     /**
      * Specification:

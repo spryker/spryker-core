@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceToPersistentCartClientBridge;
 
+/**
+ * @method \Spryker\Client\OrderCustomReference\OrderCustomReferenceConfig getConfig()
+ */
 class OrderCustomReferenceDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';

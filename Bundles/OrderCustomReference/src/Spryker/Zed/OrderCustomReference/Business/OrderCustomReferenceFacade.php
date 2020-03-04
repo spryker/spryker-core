@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business;
 
+use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -32,6 +34,25 @@ class OrderCustomReferenceFacade extends AbstractFacade implements OrderCustomRe
         $this->getFactory()
             ->createOrderCustomReferenceWriter()
             ->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $orderCustomReference
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
+     */
+    public function updateOrderCustomReference(
+        string $orderCustomReference,
+        OrderTransfer $orderTransfer
+    ): OrderCustomReferenceResponseTransfer {
+        return $this->getFactory()
+            ->createOrderCustomReferenceWriter()
+            ->updateOrderCustomReference($orderCustomReference, $orderTransfer);
     }
 
     /**
