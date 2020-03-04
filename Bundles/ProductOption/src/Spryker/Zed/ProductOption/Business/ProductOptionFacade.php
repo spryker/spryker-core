@@ -337,4 +337,20 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
         return $this->getRepository()
             ->getProductAbstractOptionGroupStatusesByProductAbstractIds($productAbstractIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductOptions(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductOptionExpander()
+            ->expandOrderItemsWithProductOptions($itemTransfers);
+    }
 }

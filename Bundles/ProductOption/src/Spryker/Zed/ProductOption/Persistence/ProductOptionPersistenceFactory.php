@@ -12,6 +12,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOption\Persistence\Propel\Mapper\ProductOptionMapper;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
@@ -61,6 +62,14 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractProductOptionGroupQuery()
     {
         return SpyProductAbstractProductOptionGroupQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery
+     */
+    public function createSalesOrderItemOptionQuery()
+    {
+        return SpySalesOrderItemOptionQuery::create();
     }
 
     /**
