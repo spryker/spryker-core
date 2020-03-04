@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface MerchantSalesOrderFacadeInterface
@@ -81,4 +83,23 @@ interface MerchantSalesOrderFacadeInterface
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * Specification
+     * - Expands expense transfer with merchant reference from items.
+     * - Don't expand if items have different merchant references.
+     * - Requires ShipmentGroup.items property to be set.
+     * - Returns expanded expense transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function expandShipmentExpenseWithMerchantReference(
+        ExpenseTransfer $expenseTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer
+    ): ExpenseTransfer;
 }
