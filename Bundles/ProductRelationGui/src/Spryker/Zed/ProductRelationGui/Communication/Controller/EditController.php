@@ -65,11 +65,15 @@ class EditController extends BaseProductRelationController
 
         $productRelationResponseTransfer->requireProductRelation();
         $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
-        $productAbstractTransfer = $this->getFactory()
-            ->getProductFacade()
-            ->findProductAbstractById($productRelationTransfer->getFkProductAbstract());
-
-        $localizedAttributesTransfer = $this->getProductLocalizedAttributesForCurrentLocale($productAbstractTransfer);
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
+        $productAbstractData = $this->getFactory()
+            ->getProductRelationFacade()
+            ->getProductAbstractDataById(
+                $productRelationTransfer->getFkProductAbstract(),
+                $localeTransfer->getIdLocale()
+            );
 
         $productRuleTable = $this->getFactory()
             ->createProductRuleTable($productRelationTransfer);
@@ -81,7 +85,7 @@ class EditController extends BaseProductRelationController
             'productRelation' => $productRelationTransfer,
             'productRuleTable' => $productRuleTable->render(),
             'productTable' => $productTable->render(),
-            'localizedAttributes' => $localizedAttributesTransfer,
+            'productAbstractData' => $productAbstractData,
         ];
     }
 

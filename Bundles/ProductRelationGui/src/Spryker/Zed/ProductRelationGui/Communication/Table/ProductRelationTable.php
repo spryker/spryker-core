@@ -214,16 +214,6 @@ class ProductRelationTable extends AbstractTable
             ->leftJoinWithSpyProductAbstract()
             ->joinSpyProductRelationProductAbstract('num_alias')
             ->leftJoinWithSpyProductRelationType()
-            ->select([
-                SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION,
-                SpyProductAbstractTableMap::COL_SKU,
-                SpyProductRelationTypeTableMap::COL_KEY,
-                SpyProductRelationTableMap::COL_IS_ACTIVE,
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-            ])
-            ->joinSpyProductAbstract()
-            ->joinSpyProductRelationProductAbstract('num_alias')
             ->useSpyProductAbstractQuery()
                 ->useSpyProductAbstractLocalizedAttributesQuery()
                     ->filterByFkLocale($idLocale)
@@ -231,8 +221,6 @@ class ProductRelationTable extends AbstractTable
             ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_LOCALIZED_NAME)
             ->withColumn("COUNT('num_alias')", static::COL_NUMBER_OF_RELATED_PRODUCTS)
-            ->withColumn("COUNT('num_alias')", static::COL_NUMBER_OF_RELATED_PRODUCTS)
-            ->joinSpyProductRelationType()
             ->groupByIdProductRelation();
     }
 

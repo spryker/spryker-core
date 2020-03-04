@@ -20,6 +20,8 @@ use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelati
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeleteForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Transformer\RuleQuerySetTransformer;
+use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProvider;
+use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreator;
@@ -179,6 +181,14 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createMappingProvider(): MappingProviderInterface
     {
         return new MappingProvider($this->getProductAttributeKeyPropelQuery());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProviderInterface
+     */
+    public function createFilterProvider(): FilterProviderInterface
+    {
+        return new FilterProvider($this->getProductAttributeFacade());
     }
 
     /**
