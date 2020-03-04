@@ -22,7 +22,7 @@ describe('ZedAuthFooterComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('is the date current', () => {
+    it('is the current date', () => {
         fixture.detectChanges();
         const footerElem = fixture.debugElement.query(By.css('.footer span'));
         const currentYear = new Date().getFullYear();
