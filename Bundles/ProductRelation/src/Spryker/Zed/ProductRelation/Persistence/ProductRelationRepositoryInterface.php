@@ -72,4 +72,11 @@ interface ProductRelationRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
     public function findActiveProductRelations(): array;
+
+    /**
+     * @param string $productRelationKey
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer;
 }

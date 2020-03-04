@@ -61,6 +61,18 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
+     * - Finds product relation by provided product relation key.
+     *
+     * @api
+     *
+     * @param string $productRelationKey
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer;
+
+    /**
+     * Specification:
      *  - Returns product relation type list as stored in persistence
      *
      * @api

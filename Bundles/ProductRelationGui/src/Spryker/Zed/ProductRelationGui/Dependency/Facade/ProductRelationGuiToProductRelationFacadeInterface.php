@@ -42,7 +42,7 @@ interface ProductRelationGuiToProductRelationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function deleteProductRelation($idProductRelation): ProductRelationResponseTransfer;
+    public function deleteProductRelation(int $idProductRelation): ProductRelationResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
@@ -76,4 +76,11 @@ interface ProductRelationGuiToProductRelationFacadeInterface
      * @return \Generated\Shared\Transfer\ProductSelectorTransfer
      */
     public function findProductForProductSelector(int $idProductAbstract, int $idLocale): ProductSelectorTransfer;
+
+    /**
+     * @param string $productRelationKey
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer;
 }

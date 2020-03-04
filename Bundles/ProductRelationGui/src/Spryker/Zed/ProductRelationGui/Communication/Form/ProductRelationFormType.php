@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Form;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -31,6 +32,7 @@ class ProductRelationFormType extends AbstractType
     public const FIELD_ID_PRODUCT_RELATION = 'idProductRelation';
     public const FIELD_QUERY_SET = 'querySet';
     public const FIELD_IS_REBUILD_SCHEDULED = 'isRebuildScheduled';
+    public const FIELD_IS_ACTIVE = 'isActive';
     public const FIELD_STORE_RELATION = 'storeRelation';
     public const FIELD_PRODUCT_RELATION_KEY = 'productRelationKey';
 
@@ -52,6 +54,7 @@ class ProductRelationFormType extends AbstractType
             ->addIdProductRelationField($builder)
             ->addQuerySetField($builder)
             ->addUpdateWithSchedulerField($builder)
+            ->addIsActiveField($builder)
             ->addFkProductAbstractField($builder)
             ->addStoreRelationForm($builder);
     }
@@ -64,6 +67,10 @@ class ProductRelationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_RELATION_CHOICES);
+
+        $resolver->setRequired([
+            ProductRelationTypeDataProvider::OPTION_PRODUCT_RELATION_KEY_DISABLED,
+        ]);
 
         $resolver->setDefaults([
             'validation_groups' => new GroupSequence([
@@ -104,8 +111,22 @@ class ProductRelationFormType extends AbstractType
     protected function addUpdateWithSchedulerField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_REBUILD_SCHEDULED, CheckboxType::class, [
-            'label' => 'Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation\'s conditions.',
+            'label' => 'Update regularly',
 
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
+            'label' => 'Is active',
         ]);
 
         return $this;
@@ -182,12 +203,12 @@ class ProductRelationFormType extends AbstractType
     protected function addProductRelationKeyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PRODUCT_RELATION_KEY, TextType::class, [
-            'label' => 'Delivery Method Key',
-//            'disabled' => $options[ShipmentMethodFormDataProvider::OPTION_DELIVERY_KEY_DISABLED],
+            'label' => 'Product Relation Key',
+            'disabled' => $options[ProductRelationTypeDataProvider::OPTION_PRODUCT_RELATION_KEY_DISABLED],
             'constraints' => [
                 new NotBlank(),
                 new Required(),
-//                $this->getFactory()->createShipmentMethodKeyUniqueConstraint(),
+                $this->getFactory()->createProductRelationKeyUniqueConstraint(),
             ],
         ]);
 

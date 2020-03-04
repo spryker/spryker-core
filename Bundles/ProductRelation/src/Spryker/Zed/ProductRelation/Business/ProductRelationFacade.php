@@ -73,6 +73,20 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @api
      *
+     * @param string $productRelationKey
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer
+    {
+        return $this->getRepository()->findProductRelationByKey($productRelationKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param int $idProductRelation
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer

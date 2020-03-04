@@ -14,8 +14,10 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProvider;
 use Spryker\Zed\ProductRelationGui\Communication\FilterProvider\FilterProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductAbstractNotBlankConstraint;
+use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductRelationKeyUniqueConstraint;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeleteForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Transformer\RuleQuerySetTransformer;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductRelationTable;
@@ -72,26 +74,44 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
+    public function createProductRelationKeyUniqueConstraint(): Constraint
+    {
+        return new ProductRelationKeyUniqueConstraint([
+            ProductRelationKeyUniqueConstraint::OPTION_PRODUCT_RELATION_FACADE => $this->getProductRelationFacade(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
     public function createProductAbstractNotBlankConstraint(): Constraint
     {
         return new ProductAbstractNotBlankConstraint();
     }
 
     /**
-     * @param \Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider $productRelationFormTypeDataProvider
-     * @param int|null $idProductRelation
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $data
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createRelationForm(
-        ProductRelationTypeDataProvider $productRelationFormTypeDataProvider,
-        ?int $idProductRelation = null
+        ProductRelationTransfer $data,
+        array $options
     ): FormInterface {
         return $this->getFormFactory()->create(
             ProductRelationFormType::class,
-            $productRelationFormTypeDataProvider->getData($idProductRelation),
-            $productRelationFormTypeDataProvider->getOptions()
+            $data,
+            $options
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductRelationDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ProductRelationDeleteForm::class);
     }
 
     /**

@@ -31,7 +31,10 @@ class CreateController extends BaseProductRelationController
             ->createProductRelationFormTypeDataProvider();
 
         $productRelationForm = $this->getFactory()
-            ->createRelationForm($productRelationFormTypeDataProvider);
+            ->createRelationForm(
+                $productRelationFormTypeDataProvider->getData(),
+                $productRelationFormTypeDataProvider->getOptions()
+            );
 
         $productRelationTabs = $this->getFactory()
             ->createProductRelationTabs();

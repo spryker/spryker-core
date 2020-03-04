@@ -62,7 +62,7 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function deleteProductRelation($idProductRelation): ProductRelationResponseTransfer
+    public function deleteProductRelation(int $idProductRelation): ProductRelationResponseTransfer
     {
         return $this->productRelationFacade->deleteProductRelation($idProductRelation);
     }
@@ -106,5 +106,15 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     public function findProductForProductSelector(int $idProductAbstract, int $idLocale): ProductSelectorTransfer
     {
         return $this->productRelationFacade->findProductForProductSelector($idProductAbstract, $idLocale);
+    }
+
+    /**
+     * @param string $productRelationKey
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer
+    {
+        return $this->productRelationFacade->findProductRelationByKey($productRelationKey);
     }
 }

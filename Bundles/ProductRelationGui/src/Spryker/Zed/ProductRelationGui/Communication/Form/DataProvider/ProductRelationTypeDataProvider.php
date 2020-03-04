@@ -18,6 +18,8 @@ class ProductRelationTypeDataProvider
     public const TYPE_RELATED_PRODUCTS = 'related-products';
     public const TYPE_UP_SELLING = 'up-selling';
 
+    public const OPTION_PRODUCT_RELATION_KEY_DISABLED = 'option_product_relation_key_disabled';
+
     /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeInterface
      */
@@ -32,13 +34,16 @@ class ProductRelationTypeDataProvider
     }
 
     /**
+     * @param bool $isProductRelationKeyDisabled
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(bool $isProductRelationKeyDisabled = false): array
     {
         return [
             'data_class' => ProductRelationTransfer::class,
             ProductRelationFormType::OPTION_RELATION_CHOICES => $this->buildProductRelationTypeChoiceList(),
+            static::OPTION_PRODUCT_RELATION_KEY_DISABLED => $isProductRelationKeyDisabled,
         ];
     }
 
