@@ -41,7 +41,7 @@ class MethodPriceReader implements MethodPriceReaderInterface
     protected $currencyFacade;
 
     /**
-     * @var int[] Keys are currency iso codes, values are currency ids.
+     * @var int[] Keys are currency ISO codes, values are currency ids.
      */
     protected static $idCurrencyCache = [];
 

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductRelation\Persistence;
 use Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
-use Generated\Shared\Transfer\ProductSelectorTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
@@ -23,22 +22,9 @@ interface ProductRelationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
-    public function findUniqueProductRelation(
+    public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer[]
-     */
-    public function findProductAttributes(): array;
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\ProductSelectorTransfer
-     */
-    public function findProductWithCategoriesByFkLocale(int $idProductAbstract, int $idLocale): ProductSelectorTransfer;
 
     /**
      * @param int $idProductRelation
@@ -79,4 +65,12 @@ interface ProductRelationRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
     public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
 }

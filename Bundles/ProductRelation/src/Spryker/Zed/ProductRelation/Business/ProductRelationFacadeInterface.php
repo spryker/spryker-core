@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductRelation\Business;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
-use Generated\Shared\Transfer\ProductSelectorTransfer;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationBusinessFactory getFactory()
@@ -134,7 +133,7 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
-     * - Finds unique product relation by given criteria.
+     * - Finds product relation by given criteria.
      *
      * @api
      *
@@ -148,14 +147,14 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
-     * - Finds product with information needed by product selector.
+     * - Finds product abstract with categories and image by provided product abstract id and locale id.
      *
      * @api
      *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductSelectorTransfer
+     * @return array
      */
-    public function findProductForProductSelector(int $idProductAbstract, int $idLocale): ProductSelectorTransfer;
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
 }
