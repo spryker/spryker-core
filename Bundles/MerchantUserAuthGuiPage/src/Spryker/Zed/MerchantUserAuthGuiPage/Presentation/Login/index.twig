@@ -5,18 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    {% set formData = {
-        actionUrl: form.vars.action,
-        name: form.vars.name,
-        method: form.vars.method,
-        children: form.children,
-    } %}
-
     <mp-login cloak>
         {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
 
-        <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
-            {% for formField in formData.children if formField.vars.block_prefixes[1] != 'hidden' %}
+        <form action="{{ form.vars.action }}" name="{{ form.vars.name }}" method="{{ form.vars.method }}">
+            {% for formField in form.children if formField.vars.block_prefixes[1] != 'hidden' %}
                 <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default | trans }}">
                     {{ formField.vars.label | trans }}
                     <spy-input
@@ -33,7 +26,7 @@
                 </spy-form-item>
             {% endfor %}
 
-            <input type="hidden" name="{{ formData.children._token.vars.full_name }}" value="{{ formData.children._token.vars.value }}">
+            <input type="hidden" name="{{ form.children._token.vars.full_name }}" value="{{ form.children._token.vars.value }}">
 
             <spy-button class="login__submit" type="submit" cloak>{{ 'Login' | trans }}</spy-button>
         </form>
