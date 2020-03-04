@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantStock\Persistence;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockTransfer;
-use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -25,21 +24,19 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
      */
     public function getStockCollectionByMerchant(MerchantTransfer $merchantTransfer): StockCollectionTransfer
     {
-        $stocksData = $this->getFactory()
+        $merchantStocksData = $this->getFactory()
             ->createMerchantStockPropelQuery()
+            ->leftJoinWithSpyStock()
             ->filterByFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
-            ->useSpyStockQuery()
-                ->withColumn(SpyStockTableMap::COL_ID_STOCK, StockTransfer::ID_STOCK)
-                ->withColumn(SpyStockTableMap::COL_NAME, StockTransfer::NAME)
-            ->endUse()
-            ->find()
-            ->toArray();
+            ->find();
 
         $stockCollectionTransfer = new StockCollectionTransfer();
 
-        foreach ($stocksData as $stock) {
+        foreach ($merchantStocksData as $merchantStockEntity) {
             $stockCollectionTransfer->addStock(
-                $this->getFactory()->createMerchantStockMapper()->mapStockDataToStockTransfer($stock, new StockTransfer())
+                $this->getFactory()
+                    ->createMerchantStockMapper()
+                    ->mapStockDataToStockTransfer($merchantStockEntity->getSpyStock(), new StockTransfer())
             );
         }
 

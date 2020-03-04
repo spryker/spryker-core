@@ -49,7 +49,7 @@ class MerchantStockFormType extends AbstractType
             'choice_value' => function (StockTransfer $stockTransfer) {
                 return $stockTransfer->getIdStock();
             },
-            'choice_label' => 'name',
+            'choice_label' => StockTransfer::NAME,
             'data' => $this->getFactory()
                 ->createMerchantStockFormDataProvider()
                 ->getData($builder->getData()),

@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\MerchantStock\Helper;
 
 use Codeception\Module;
-use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\DataBuilder\MerchantStockBuilder;
+use Generated\Shared\Transfer\MerchantStockTransfer;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -19,24 +19,25 @@ class MerchantStockHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     * @param array $seedData
      *
-     * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock
+     * @return \Generated\Shared\Transfer\MerchantStockTransfer
      */
-    public function haveMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): SpyMerchantStock
+    public function haveMerchantStock(array $seedData): MerchantStockTransfer
     {
-        $merchantStockEntity = (new SpyMerchantStock())
-            ->setFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
-            ->setFkStock($stockTransfer->requireIdStock()->getIdStock());
+        $merchantStockTransfer = (new MerchantStockBuilder($seedData))->build();
 
+        $merchantStockEntity = new SpyMerchantStock();
+        $merchantStockEntity->fromArray($merchantStockTransfer->toArray());
         $merchantStockEntity->save();
+
+        $merchantStockTransfer->fromArray($merchantStockEntity->toArray());
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantStockEntity): void {
             $this->cleanupMerchantStock($merchantStockEntity);
         });
 
-        return $merchantStockEntity;
+        return $merchantStockTransfer;
     }
 
     /**

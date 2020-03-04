@@ -31,7 +31,7 @@ class MerchantStockFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StockTransfer[]
      */
     public function getData(MerchantTransfer $merchantTransfer): array
     {

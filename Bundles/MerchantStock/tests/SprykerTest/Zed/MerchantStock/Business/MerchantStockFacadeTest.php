@@ -42,7 +42,7 @@ class MerchantStockFacadeTest extends Unit
             ->getMerchant();
 
         // Assert
-        $this->assertGreaterThan(0, $merchantTransfer->getStocks()->count());
+        $this->assertNotEmpty($merchantTransfer->getStocks());
         $this->assertInstanceOf(StockTransfer::class, $merchantTransfer->getStocks()->getIterator()->current());
     }
 
@@ -60,14 +60,14 @@ class MerchantStockFacadeTest extends Unit
         $stockCollectionTransfer = $this->tester->getFacade()->getStockCollectionByMerchant($merchantTransfer);
 
         // Assert
-        $this->assertEquals(1, $stockCollectionTransfer->getStocks()->count());
-        $this->assertEquals($stockTransfer->getIdStock(), $stockCollectionTransfer->getStocks()->getIterator()->current()->getIdStock());
+        $this->assertNotEmpty($stockCollectionTransfer->getStocks());
+        $this->assertSame($stockTransfer->getIdStock(), $stockCollectionTransfer->getStocks()->getIterator()->current()->getIdStock());
     }
 
     /**
      * @return void
      */
-    public function testGetStockCollectionByMerchantEmptyReturnsEmptyStocks(): void
+    public function testGetStockCollectionByMerchantReturnsEmptyStocks(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
