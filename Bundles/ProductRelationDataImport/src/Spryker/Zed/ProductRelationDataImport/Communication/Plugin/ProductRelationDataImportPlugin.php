@@ -16,6 +16,7 @@ use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig;
 /**
  * @method \Spryker\Zed\ProductRelationDataImport\Business\ProductRelationDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig getConfig()
+ * @method \Spryker\Zed\ProductRelationDataImport\Communication\ProductRelationDataImportCommunicationFactory getFactory()
  */
 class ProductRelationDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
@@ -31,7 +32,12 @@ class ProductRelationDataImportPlugin extends AbstractPlugin implements DataImpo
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFacade()->importProductRelations($dataImporterConfigurationTransfer);
+        $dataImporterReportTransfer = $this->getFacade()->importProductRelations($dataImporterConfigurationTransfer);
+        $this->getFactory()
+            ->getProductRelationFacade()
+            ->rebuildRelations();
+
+        return $dataImporterReportTransfer;
     }
 
     /**
