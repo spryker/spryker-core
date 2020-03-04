@@ -20,7 +20,7 @@ class StockNameToIdStockStep implements DataImportStepInterface
     /**
      * @var array
      */
-    protected $idStock = [];
+    protected $idStockCache = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -37,11 +37,11 @@ class StockNameToIdStockStep implements DataImportStepInterface
             throw new InvalidDataException(sprintf('"%s" is required.', MerchantStockDataSetInterface::STOCK_NAME));
         }
 
-        if (!isset($this->idStock[$stockName])) {
-            $this->idStock[$stockName] = $this->getIdStock($stockName);
+        if (!isset($this->idStockCache[$stockName])) {
+            $this->idStockCache[$stockName] = $this->getIdStock($stockName);
         }
 
-        $dataSet[MerchantStockDataSetInterface::STOCK_ID] = $this->idStock[$stockName];
+        $dataSet[MerchantStockDataSetInterface::STOCK_ID] = $this->idStockCache[$stockName];
     }
 
     /**
@@ -54,8 +54,8 @@ class StockNameToIdStockStep implements DataImportStepInterface
     protected function getIdStock(string $stockName): int
     {
         /** @var \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery */
-        $stockQuery = SpyStockQuery::create()
-            ->select(SpyStockTableMap::COL_ID_STOCK);
+        $stockQuery = SpyStockQuery::create()->select(SpyStockTableMap::COL_ID_STOCK);
+
         /** @var int $idStock */
         $idStock = $stockQuery->findOneByName($stockName);
 

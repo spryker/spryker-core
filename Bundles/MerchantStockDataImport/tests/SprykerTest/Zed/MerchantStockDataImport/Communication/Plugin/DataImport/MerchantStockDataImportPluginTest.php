@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\MerchantStockDataImport\Communication\Plugin\MerchantStockDataImportPlugin;
 use Spryker\Zed\MerchantStockDataImport\MerchantStockDataImportConfig;
 
@@ -38,8 +40,9 @@ class MerchantStockDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
+        // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
-        $this->tester->createMerchantStockRelatedData();
+        $this->createMerchantStockRelatedData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_stock.csv');
@@ -48,10 +51,12 @@ class MerchantStockDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         $merchantStockDataImportPlugin = new MerchantStockDataImportPlugin();
+
+        // Act
         $dataImporterReportTransfer = $merchantStockDataImportPlugin->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-
         $this->tester->assertDatabaseTableContainsData();
     }
 
@@ -62,5 +67,16 @@ class MerchantStockDataImportPluginTest extends Unit
     {
         $merchantStockDataImportPlugin = new MerchantStockDataImportPlugin();
         $this->assertSame(MerchantStockDataImportConfig::IMPORT_TYPE_MERCHANT_STOCK, $merchantStockDataImportPlugin->getImportType());
+    }
+
+    /**
+     * @return void
+     */
+    protected function createMerchantStockRelatedData(): void
+    {
+        $this->tester->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => 'merchant-test-reference-1']);
+        $this->tester->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => 'merchant-test-reference-2']);
+        $this->tester->haveStock([StockTransfer::NAME => 'Warehouse 1']);
+        $this->tester->haveStock([StockTransfer::NAME => 'Warehouse 2']);
     }
 }

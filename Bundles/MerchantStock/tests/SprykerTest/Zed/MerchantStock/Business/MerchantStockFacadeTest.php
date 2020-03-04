@@ -39,11 +39,11 @@ class MerchantStockFacadeTest extends Unit
 
         // Act
         $merchantTransfer = $this->tester->getFacade()
-            ->createMerchantStockByMerchant($merchantTransfer)
+            ->createDefaultStockForMerchant($merchantTransfer)
             ->getMerchant();
 
         // Assert
-        $this->assertGreaterThan(0, $merchantTransfer->getStockCollection()->count());
-        $this->assertInstanceOf(StockTransfer::class, $merchantTransfer->getStockCollection()->getIterator()->current());
+        $this->assertGreaterThan(0, $merchantTransfer->getStocks()->count());
+        $this->assertInstanceOf(StockTransfer::class, $merchantTransfer->getStocks()->getIterator()->current());
     }
 }

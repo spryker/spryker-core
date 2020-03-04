@@ -20,7 +20,8 @@ class MerchantStockMerchantPostCreatePlugin extends AbstractPlugin implements Me
 {
     /**
      * {@inheritDoc}
-     * - Creates stock for provided merchant.
+     * - Creates default stock for the provided merchant.
+     * - Returns Merchant.stocks with related stocks.
      *
      * @api
      *
@@ -30,6 +31,6 @@ class MerchantStockMerchantPostCreatePlugin extends AbstractPlugin implements Me
      */
     public function postCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        return $this->getFacade()->createMerchantStockByMerchant($merchantTransfer);
+        return $this->getFacade()->createDefaultStockForMerchant($merchantTransfer);
     }
 }

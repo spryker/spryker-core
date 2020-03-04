@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\MerchantStockDataImport;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\StockTransfer;
 
 /**
  * Inherited Methods
@@ -30,15 +28,4 @@ use Generated\Shared\Transfer\StockTransfer;
 class MerchantStockDataImportCommunicationTester extends Actor
 {
     use _generated\MerchantStockDataImportCommunicationTesterActions;
-
-    /**
-     * @return void
-     */
-    public function createMerchantStockRelatedData(): void
-    {
-        $this->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => 'merchant-test-reference-1']);
-        $this->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => 'merchant-test-reference-2']);
-        $this->haveStock([StockTransfer::NAME => 'Warehouse 1']);
-        $this->haveStock([StockTransfer::NAME => 'Warehouse 2']);
-    }
 }

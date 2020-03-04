@@ -23,7 +23,7 @@ class MerchantStockWriterStep implements DataImportStepInterface
     {
         $idMerchant = $dataSet[MerchantStockDataSetInterface::MERCHANT_ID];
         $idStock = $dataSet[MerchantStockDataSetInterface::STOCK_ID];
-        $merchantStockEntity = SpyMerchantStockQuery::create()
+        $merchantStockEntity = $this->createMerchantStockQuery()
             ->filterByFkStock($idStock)
             ->filterByFkMerchant($idMerchant)
             ->findOneOrCreate();
@@ -31,5 +31,13 @@ class MerchantStockWriterStep implements DataImportStepInterface
         $merchantStockEntity->setIsDefault(true);
 
         $merchantStockEntity->save();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery
+     */
+    protected function createMerchantStockQuery(): SpyMerchantStockQuery
+    {
+        return SpyMerchantStockQuery::create();
     }
 }

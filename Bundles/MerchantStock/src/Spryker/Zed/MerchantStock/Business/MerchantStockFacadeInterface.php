@@ -15,8 +15,8 @@ interface MerchantStockFacadeInterface
     /**
      * Specification:
      * - Creates new stock for the provided merchant.
-     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant stock creating is not valid.
-     * - Returns MerchantResponseTransfer.isSuccessful=true and MerchantResponseTransfer.merchant.stocks is add from newly created entity.
+     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant stock can not be created.
+     * - Returns MerchantResponseTransfer.isSuccessful=true and MerchantResponseTransfer.merchant.stocks with related stocks.
      *
      * @api
      *
@@ -24,5 +24,5 @@ interface MerchantStockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchantStockByMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function createDefaultStockForMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }
