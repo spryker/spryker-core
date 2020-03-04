@@ -43,11 +43,11 @@ class SalesController extends AbstractController
 
         if (!$orderCustomReferenceResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessages($orderCustomReferenceResponseTransfer);
+
+            return $this->redirectResponse($backUrl);
         }
 
-        if ($orderCustomReferenceResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
-        }
+        $this->addSuccessMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED);
 
         return $this->redirectResponse($backUrl);
     }
