@@ -11,6 +11,8 @@ use Codeception\Module;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
 use Spryker\Shared\ProductRelation\ProductRelationTypes;
 use Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -20,6 +22,23 @@ class ProductRelationDataHelper extends Module
 {
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
+
+    /**
+     * @return void
+     */
+    public function ensureProductRelationTableIsEmpty(): void
+    {
+        SpyProductRelationStoreQuery::create()->deleteAll();
+        SpyProductRelationQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductRelationStoreTableIsEmpty(): void
+    {
+        SpyProductRelationStoreQuery::create()->deleteAll();
+    }
 
     /**
      * @param string $productAbstractSku

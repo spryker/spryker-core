@@ -29,7 +29,8 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
         return new ProductRelationWriter(
             $this->getTouchFacade(),
             $this->getQueryContainer(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getConfig()
         );
     }
 
