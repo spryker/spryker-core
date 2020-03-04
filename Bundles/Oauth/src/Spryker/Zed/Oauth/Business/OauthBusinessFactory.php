@@ -36,8 +36,8 @@ use Spryker\Zed\Oauth\Business\Model\OauthClientReader;
 use Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriterInterface;
-use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleaner;
-use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleanerInterface;
+use Spryker\Zed\Oauth\Business\Model\OauthExpiredRefreshTokenRemover;
+use Spryker\Zed\Oauth\Business\Model\OauthExpiredRefreshTokenRemoverInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenRevoker;
 use Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenRevokerInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReader;
@@ -232,11 +232,11 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\Model\OauthRefreshTokenCleanerInterface
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthExpiredRefreshTokenRemoverInterface
      */
-    public function createOauthRefreshTokenCleaner(): OauthRefreshTokenCleanerInterface
+    public function createOauthExpiredRefreshTokenRemover(): OauthExpiredRefreshTokenRemoverInterface
     {
-        return new OauthRefreshTokenCleaner(
+        return new OauthExpiredRefreshTokenRemover(
             $this->getEntityManager(),
             $this->getConfig(),
             $this->createPresentDateTime()

@@ -72,16 +72,16 @@ class OauthStub implements OauthStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\Oauth\Communication\Controller\GatewayController::revokeRefreshTokensAction()
+     * @uses \Spryker\Zed\Oauth\Communication\Controller\GatewayController::revokeAllRefreshTokens()
      *
      * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeAllRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer $revokeRefreshTokenRequestTransfer */
-        $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-refresh-tokens', $revokeRefreshTokenRequestTransfer);
+        $revokeRefreshTokenRequestTransfer = $this->zedRequestClient->call('/oauth/gateway/revoke-all-refresh-tokens', $revokeRefreshTokenRequestTransfer);
 
         return $revokeRefreshTokenRequestTransfer;
     }

@@ -77,6 +77,6 @@ class OauthConfig extends AbstractSharedConfig
      */
     public function getRefreshTokenRetentionInterval(): ?DateInterval
     {
-        return null;
+        return new DateInterval('PT0M');
     }
 }

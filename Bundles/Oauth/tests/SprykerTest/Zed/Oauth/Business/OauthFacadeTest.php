@@ -276,7 +276,7 @@ class OauthFacadeTest extends Unit
         );
 
         // Act
-        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
+        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeAllRefreshTokens($revokeRefreshTokenRequestTransfer);
 
         // Assert
         $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());

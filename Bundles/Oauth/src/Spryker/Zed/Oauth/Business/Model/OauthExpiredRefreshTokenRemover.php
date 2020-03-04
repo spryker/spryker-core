@@ -12,7 +12,7 @@ use DateTime;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 
-class OauthRefreshTokenCleaner implements OauthRefreshTokenCleanerInterface
+class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemoverInterface
 {
     /**
      * @var \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface

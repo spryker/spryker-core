@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Business\Model;
 
-interface OauthRefreshTokenCleanerInterface
+interface OauthExpiredRefreshTokenRemoverInterface
 {
     /**
      * @return int|null

@@ -55,8 +55,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
      */
-    public function revokeRefreshTokensAction(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    public function revokeAllRefreshTokensAction(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
     {
-        return $this->getFacade()->revokeRefreshTokens($revokeRefreshTokenRequestTransfer);
+        return $this->getFacade()->revokeAllRefreshTokens($revokeRefreshTokenRequestTransfer);
     }
 }
