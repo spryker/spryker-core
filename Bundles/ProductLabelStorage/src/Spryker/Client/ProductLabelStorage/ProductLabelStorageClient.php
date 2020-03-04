@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductLabelStorage;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -118,5 +119,22 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
             ->getFactory()
             ->createLabelDictionaryReader()
             ->findLabelByName($labelName, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductView(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer
+    {
+        return $this->getFactory()
+            ->createProductViewExpander()
+            ->expand($productViewTransfer, $locale);
     }
 }
