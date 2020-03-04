@@ -66,15 +66,17 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
     }
 
     /**
+     * @param int $idMerchantOrder
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
-    public function createMerchantOrderTotals(TotalsTransfer $totalsTransfer): TotalsTransfer
+    public function createMerchantOrderTotals(int $idMerchantOrder, TotalsTransfer $totalsTransfer): TotalsTransfer
     {
         $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 
         $merchantSalesOrderTotalsEntity = $merchantSalesOrderMapper->mapTotalsTransferToMerchantSalesOrderTotalsEntity(
+            $idMerchantOrder,
             $totalsTransfer,
             new SpyMerchantSalesOrderTotals()
         );

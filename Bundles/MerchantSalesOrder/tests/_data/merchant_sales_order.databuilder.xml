@@ -6,13 +6,13 @@
 >
 
     <transfer name="Merchant">
-        <property name="merchantReference" dataBuilderRule="unique()->word"/>
+        <property name="merchantReference" dataBuilderRule="unique()->sentence"/>
     </transfer>
 
     <transfer name="MerchantOrder">
         <property name="merchantOrderReference" dataBuilderRule="unique()->word"/>
         <property name="idOrder" dataBuilderRule="randomNumber(3)"/>
-        <property name="merchantReference" dataBuilderRule="unique()->word"/>
+        <property name="merchantReference" dataBuilderRule="unique()->sentence"/>
         <property name="totals" dataBuilderRule="Totals"/>
     </transfer>
 

@@ -34,17 +34,16 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
      */
     public function createMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): TotalsTransfer
     {
-        $total = rand(1000, 9999);
         $totalsTransfer = (new TotalsTransfer())
-            ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
             ->setRefundTotal(0)
-            ->setGrandTotal($total)
+            ->setGrandTotal(0)
             ->setTaxTotal((new TaxTotalTransfer()))
             ->setExpenseTotal(0)
-            ->setSubtotal($total)
+            ->setSubtotal(0)
             ->setDiscountTotal(0)
             ->setCanceledTotal(0);
 
-        return $this->merchantSalesOrderEntityManager->createMerchantOrderTotals($totalsTransfer);
+        return $this->merchantSalesOrderEntityManager
+            ->createMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder(), $totalsTransfer);
     }
 }

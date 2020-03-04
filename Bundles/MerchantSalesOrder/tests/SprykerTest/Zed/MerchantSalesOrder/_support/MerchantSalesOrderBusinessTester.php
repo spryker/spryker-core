@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 
 /**
  * Inherited Methods
@@ -105,9 +104,7 @@ class MerchantSalesOrderBusinessTester extends Actor
         ]);
         $merchantOrderTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
 
-        $merchantOrderTotalsTransfer = $this->haveMerchantOrderTotals([
-            TotalsTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
-        ]);
+        $merchantOrderTotalsTransfer = $this->haveMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder());
         $merchantOrderTransfer->setTotals($merchantOrderTotalsTransfer);
 
         return $merchantOrderTransfer;

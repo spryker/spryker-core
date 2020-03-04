@@ -9,6 +9,7 @@ namespace Spryker\Client\SearchElasticsearch\Reader;
 
 use Elastica\Client;
 use Elastica\Document;
+use Elastica\Index;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
@@ -41,39 +42,17 @@ class DocumentReader implements DocumentReaderInterface
      */
     public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
-        $indexName = $this->extractIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
-        $typeName = $this->extractTypeNameFromSearchDocumentTransfer($searchDocumentTransfer);
-        $index = $this->elasticaClient->getIndex($indexName);
-
-        $document = $index->getType($typeName)->getDocument($searchDocumentTransfer->getId());
-
-        return $this->mapDocumentToSearchDocumentTransfer($document, $searchDocumentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return string
-     */
-    protected function extractIndexNameFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): string
-    {
-        $this->validateSearchDocumentTransferHasIndexName($searchDocumentTransfer);
-
-        return $searchDocumentTransfer->getSearchContext()->getElasticsearchContext()->getIndexName();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return void
-     */
-    protected function validateSearchDocumentTransferHasIndexName(SearchDocumentTransfer $searchDocumentTransfer): void
-    {
-        $searchDocumentTransfer->requireSearchContext()
+        $elasticsearchContextTransfer = $searchDocumentTransfer->requireSearchContext()
             ->getSearchContext()
             ->requireElasticsearchContext()
-            ->getElasticsearchContext()
-            ->requireIndexName();
+            ->getElasticsearchContext();
+        $indexName = $elasticsearchContextTransfer->requireIndexName()->getIndexName();
+        $elasticaIndex = $this->elasticaClient->getIndex($indexName);
+        $typeName = $elasticsearchContextTransfer->getTypeName() ?? $this->readMappingTypeNameFromElasticsearch($elasticaIndex);
+
+        $elasticaDocument = $elasticaIndex->getType($typeName)->getDocument($searchDocumentTransfer->getId());
+
+        return $this->mapElasticaDocumentToSearchDocumentTransfer($elasticaDocument, $searchDocumentTransfer);
     }
 
     /**
@@ -82,7 +61,7 @@ class DocumentReader implements DocumentReaderInterface
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    protected function mapDocumentToSearchDocumentTransfer(Document $document, SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
+    protected function mapElasticaDocumentToSearchDocumentTransfer(Document $document, SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
         return $searchDocumentTransfer
             ->setId($document->getId())
@@ -90,28 +69,14 @@ class DocumentReader implements DocumentReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     * @deprecated Will be removed after the migration to Elasticsearch 7.
+     *
+     * @param \Elastica\Index $elasticaIndex
      *
      * @return string
      */
-    protected function extractTypeNameFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): string
+    protected function readMappingTypeNameFromElasticsearch(Index $elasticaIndex): string
     {
-        $this->validateSearchDocumentTransferHasSourceIdentifier($searchDocumentTransfer);
-
-        return $searchDocumentTransfer->getSearchContext()->getElasticsearchContext()->getTypeName();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return void
-     */
-    protected function validateSearchDocumentTransferHasSourceIdentifier(SearchDocumentTransfer $searchDocumentTransfer): void
-    {
-        $searchDocumentTransfer->requireSearchContext()
-            ->getSearchContext()
-            ->requireElasticsearchContext()
-            ->getElasticsearchContext()
-            ->requireTypeName();
+        return key($elasticaIndex->getMapping());
     }
 }

@@ -8,27 +8,27 @@
 namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
-use Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 interface MerchantSalesOrderRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer $merchantOrderCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
     public function getMerchantOrderCollection(
-        MerchantOrderCriteriaFilterTransfer $merchantOrderCriteriaFilterTransfer
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
     ): MerchantOrderCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaFilterTransfer $merchantOrderCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
     public function findMerchantOrder(
-        MerchantOrderCriteriaFilterTransfer $merchantOrderCriteriaFilterTransfer
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
     ): ?MerchantOrderTransfer;
 
     /**

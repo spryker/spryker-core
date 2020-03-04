@@ -69,21 +69,21 @@ class MerchantSalesHelper extends Module
     }
 
     /**
+     * @param int $idMerchantOrder
      * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
-    public function haveMerchantOrderTotals(array $seedData = []): TotalsTransfer
+    public function haveMerchantOrderTotals(int $idMerchantOrder, array $seedData = []): TotalsTransfer
     {
         $totalsTransfer = (new TotalsBuilder($seedData))->build();
 
         $merchantSalesOrderTotalsEntity = new SpyMerchantSalesOrderTotals();
         $merchantSalesOrderTotalsEntity->fromArray($totalsTransfer->modifiedToArray());
-        $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($totalsTransfer->getIdMerchantOrder());
+        $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($idMerchantOrder);
         $merchantSalesOrderTotalsEntity->save();
 
         $totalsTransfer->fromArray($merchantSalesOrderTotalsEntity->toArray(), true);
-        $totalsTransfer->setIdMerchantOrder($merchantSalesOrderTotalsEntity->getFkMerchantSalesOrder());
 
         return $totalsTransfer;
     }
