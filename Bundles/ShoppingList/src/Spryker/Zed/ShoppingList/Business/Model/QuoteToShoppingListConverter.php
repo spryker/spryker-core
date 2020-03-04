@@ -169,19 +169,6 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         ItemCollectionTransfer $itemCollectionTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): void {
-//        foreach ($itemCollectionTransfer->getItems() as $item) {
-//            $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-//                ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
-//                ->setQuantity($item->getQuantity())
-//                ->setSku($item->getSku());
-//
-//            foreach ($this->itemToShoppingListItemMapperPlugins as $itemToShoppingListItemMapperPlugin) {
-//                $shoppingListItemTransfer = $itemToShoppingListItemMapperPlugin->map($item, $shoppingListItemTransfer);
-//            }
-//
-//            $this->shoppingListItemOperation->saveShoppingListItemWithoutPermissionsCheck($shoppingListItemTransfer);
-//        }
-
         $shoppingListItems = [];
         foreach ($itemCollectionTransfer->getItems() as $item) {
             $shoppingListItemTransfer = (new ShoppingListItemTransfer())
