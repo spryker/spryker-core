@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser\Business;
 
-use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -25,15 +24,15 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function createMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantUserCreator()
-            ->createMerchantAdmin($merchantTransfer);
+            ->create($merchantUserTransfer);
     }
 
     /**
@@ -41,15 +40,15 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function updateMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
+    public function update(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantUserUpdater()
-            ->updateMerchantAdmin($merchantTransfer);
+            ->update($merchantUserTransfer);
     }
 
     /**
@@ -57,12 +56,26 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
+     * @return void
      */
-    public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
+    public function disableMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): void
     {
-        return $this->getRepository()->findOne($merchantUserCriteriaFilterTransfer);
+        $this->getFactory()
+            ->createMerchantUsersUpdater()
+            ->disable($merchantUserCriteriaTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @inheritDoc
+     */
+    public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantUserReader()
+            ->find($merchantUserCriteriaTransfer);
     }
 }

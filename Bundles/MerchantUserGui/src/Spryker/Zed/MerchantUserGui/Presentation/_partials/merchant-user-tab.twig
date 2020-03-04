@@ -1,0 +1,9 @@
+{{
+    createActionButton(
+        url('/merchant-user-gui/create-merchant-user', {'merchant-id': merchantForm.vars.value.idMerchant}),
+        'Add Merchant User' | trans
+    )
+}}
+
+{{ merchantForm.vars.tables.merchantUsersTable | raw }}
+

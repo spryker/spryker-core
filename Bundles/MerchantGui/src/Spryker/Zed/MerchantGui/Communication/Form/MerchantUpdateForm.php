@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 
 class MerchantUpdateForm extends MerchantCreateForm
 {
@@ -28,6 +30,22 @@ class MerchantUpdateForm extends MerchantCreateForm
                 ],
                 'disabled' => true,
             ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
+     * @return $this|void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        foreach ($this->getFactory()->getMerchantUpdateFormViewExpanderPlugins() as $formViewExpanderPlugin) {
+            $formViewExpanderPlugin->expand($view, $form, $options);
+        }
 
         return $this;
     }

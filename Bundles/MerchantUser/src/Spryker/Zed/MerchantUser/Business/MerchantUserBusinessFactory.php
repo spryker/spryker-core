@@ -10,10 +10,12 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUsersUpdater;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUsersUpdaterInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
-use Spryker\Zed\MerchantUser\Business\User\UserMapper;
-use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
@@ -34,19 +36,10 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
         return new MerchantUserCreator(
             $this->getUtilTextService(),
             $this->getUserFacade(),
-            $this->createUserMapper(),
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface
-     */
-    public function createUserMapper(): UserMapperInterface
-    {
-        return new UserMapper();
     }
 
     /**
@@ -55,10 +48,30 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function createMerchantUserUpdater(): MerchantUserUpdaterInterface
     {
         return new MerchantUserUpdater(
-            $this->getRepository(),
             $this->getUserFacade(),
-            $this->createUserMapper(),
             $this->getAuthFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUsersUpdaterInterface
+     */
+    public function createMerchantUsersUpdater(): MerchantUsersUpdaterInterface
+    {
+        return new MerchantUsersUpdater(
+            $this->getRepository(),
+            $this->getUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface
+     */
+    public function createMerchantUserReader(): MerchantUserReaderInterface
+    {
+        return new MerchantUserReader(
+            $this->getRepository(),
+            $this->getUserFacade()
         );
     }
 

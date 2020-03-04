@@ -5,7 +5,6 @@
 
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
-        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="MerchantUser">
@@ -13,7 +12,6 @@
         <property name="idMerchant" type="int"/>
         <property name="idUser" type="int"/>
         <property name="user" type="User"/>
-        <property name="merchant" type="Merchant"/>
     </transfer>
 
     <transfer name="MerchantUserCriteria">
@@ -40,16 +38,6 @@
         <property name="username" type="string"/>
         <property name="status" type="string"/>
         <property name="lastName" type="string"/>
-    </transfer>
-
-    <transfer name="MerchantResponse">
-        <property name="isSuccess" type="bool"/>
-        <property name="errors" type="MerchantError[]" singular="error"/>
-        <property name="merchant" type="Merchant"/>
-    </transfer>
-
-    <transfer name="MerchantError">
-        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

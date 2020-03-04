@@ -1,0 +1,30 @@
+{
+  "name": "spryker/merchant-user-gui",
+  "description": "MerchantUserGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/gui": "*",
+    "spryker/kernel": "^3.30.0",
+    "spryker/merchant-gui-extension": "*",
+    "spryker/merchant-user": "^1.0.0",
+    "spryker/symfony": "*",
+    "spryker/user": "^3.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {},
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

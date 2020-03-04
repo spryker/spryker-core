@@ -5,24 +5,17 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantUser\Persistence;
+namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
-interface MerchantUserRepositoryInterface
+interface MerchantUserReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function findOne(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
-     */
-    public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array;
+    public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer;
 }

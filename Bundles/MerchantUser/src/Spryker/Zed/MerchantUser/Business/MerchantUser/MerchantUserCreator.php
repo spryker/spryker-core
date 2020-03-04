@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
-use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserConfig;
@@ -23,6 +21,7 @@ use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 class MerchantUserCreator implements MerchantUserCreatorInterface
 {
     protected const USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE = 'A user with the same email is already connected to another merchant.';
+
     protected const USER_CREATION_DEFAULT_PASSWORD_LENGTH = 64;
 
     /**
@@ -51,14 +50,8 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected $userFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface
-     */
-    protected $userMapper;
-
-    /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
-     * @param \Spryker\Zed\MerchantUser\Business\User\UserMapperInterface $userMapper
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
@@ -66,7 +59,6 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     public function __construct(
         MerchantUserToUtilTextServiceInterface $utilTextService,
         MerchantUserToUserFacadeInterface $userFacade,
-        UserMapperInterface $userMapper,
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
         MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserConfig $merchantUserConfig
@@ -76,21 +68,6 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $this->merchantUserRepository = $merchantUserRepository;
         $this->merchantUserConfig = $merchantUserConfig;
         $this->userFacade = $userFacade;
-        $this->userMapper = $userMapper;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
-     */
-    public function createMerchantAdmin(MerchantTransfer $merchantTransfer): MerchantUserResponseTransfer
-    {
-        $merchantUserTransfer = (new MerchantUserTransfer())
-            ->setMerchant($merchantTransfer)
-            ->setUser($this->resolveUserTransferByMerchant($merchantTransfer));
-
-        return $this->create($merchantUserTransfer);
     }
 
     /**
@@ -98,95 +75,87 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    protected function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
-        $merchantUserTransfer->requireMerchant()->getMerchant()->requireEmail();
-        $merchantUserTransfer->requireUser()->getUser()->requireIdUser();
+        $merchantUserResponseTransfer = new MerchantUserResponseTransfer();
+        $merchantUserTransfer->requireIdMerchant();
+        $merchantUserTransfer->requireUser();
+
+        $userTransfer = $this->resolveUserTransferByMerchantUser($merchantUserTransfer->getUser());
+        $merchantUserTransfer->setIdUser($userTransfer->getIdUser())->setUser($userTransfer);
+        $multipleMerchantCheckResponse = $this->checkForMultipleMerchant($merchantUserTransfer);
+
+        if (!$multipleMerchantCheckResponse->getIsSuccessful()) {
+            return $multipleMerchantCheckResponse;
+        }
+
+        $merchantUserTransfer = $this->merchantUserEntityManager->create($merchantUserTransfer);
+
+        return $merchantUserResponseTransfer->setIsSuccessful(true)->setMerchantUser($merchantUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    protected function checkForMultipleMerchant(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    {
+        $merchantUserResponseTransfer = new MerchantUserResponseTransfer();
 
         if (
             !$this->merchantUserConfig->canUserHaveManyMerchants()
-            && $this->hasUserAnotherMerchant($merchantUserTransfer->getUser(), $merchantUserTransfer->getMerchant())
+            && $this->hasUserAnotherMerchant($merchantUserTransfer)
         ) {
-            $merchantUserResponseTransfer = $this->createMerchantUserResponseTransfer($merchantUserTransfer);
+            $merchantUserResponseTransfer->setIsSuccessful(false)->setMerchantUser($merchantUserTransfer);
 
-            return $this->addMessageToMerchantUserResponseTransfer(
-                $merchantUserResponseTransfer,
-                sprintf(static::USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE, $merchantUserTransfer->getMerchant()->getEmail())
+            $message = sprintf(
+                static::USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE,
+                $merchantUserTransfer->getMerchant()->getEmail()
             );
+
+            return $merchantUserResponseTransfer->addError((new MessageTransfer())->setMessage($message));
         }
 
-        $merchantUserTransfer = $this->merchantUserEntityManager->create(
-            (new MerchantUserTransfer())
-                ->setIdMerchant($merchantUserTransfer->getMerchant()->getIdMerchant())
-                ->setIdUser($merchantUserTransfer->getUser()->getIdUser())
-        );
-
-        return $this->createMerchantUserResponseTransfer($merchantUserTransfer)
-            ->setIsSuccessful(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserResponseTransfer
-     * @param string $message
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
-     */
-    protected function addMessageToMerchantUserResponseTransfer(
-        MerchantUserResponseTransfer $merchantUserResponseTransfer,
-        string $message
-    ): MerchantUserResponseTransfer {
-        $merchantUserResponseTransfer->addError((new MessageTransfer())->setMessage($message));
-
-        return $merchantUserResponseTransfer;
+        return $merchantUserResponseTransfer->setIsSuccessful(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     * @return bool
      */
-    protected function createMerchantUserResponseTransfer(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    protected function hasUserAnotherMerchant(MerchantUserTransfer $merchantUserTransfer): bool
     {
-        return (new MerchantUserResponseTransfer())
-            ->setIsSuccessful(false)
-            ->setMerchantUser($merchantUserTransfer);
+        $existingMerchantUserTransfer = $this->merchantUserRepository->findOne(
+            (new MerchantUserCriteriaTransfer())->setIdUser($merchantUserTransfer->getIdUser())
+        );
+
+        if (!$existingMerchantUserTransfer) {
+            return false;
+        }
+
+        return $merchantUserTransfer->getIdMerchant() !== $existingMerchantUserTransfer->getIdMerchant();
     }
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return bool
-     */
-    protected function hasUserAnotherMerchant(UserTransfer $userTransfer, MerchantTransfer $merchantTransfer): bool
-    {
-        $merchantUserTransfer = $this->merchantUserRepository->findOne(
-            (new MerchantUserCriteriaFilterTransfer())->setIdUser($userTransfer->getIdUser())
-        );
-
-        if (!$merchantUserTransfer) {
-            return false;
-        }
-
-        return $merchantUserTransfer->getIdMerchant() !== $merchantTransfer->getIdMerchant();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function resolveUserTransferByMerchant(MerchantTransfer $merchantTransfer): UserTransfer
+    protected function resolveUserTransferByMerchantUser(UserTransfer $userTransfer): UserTransfer
     {
-        if (!$this->userFacade->hasUserByUsername($merchantTransfer->getEmail())) {
-            $userTransfer = $this->userMapper->mapMerchantTransferToUserTransfer($merchantTransfer, new UserTransfer())
-                ->setPassword($this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH))
-                ->setStatus($this->merchantUserConfig->getUserCreationStatus());
+        if (!$this->userFacade->hasUserByUsername($userTransfer->getUsername())) {
+            $userTransfer->setPassword(
+                $this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH)
+            )->setStatus($this->merchantUserConfig->getUserCreationStatus());
 
             return $this->userFacade->createUser($userTransfer);
         }
-        $userTransfer = $this->userFacade->getUserByUsername($merchantTransfer->getEmail());
 
-        return $this->userFacade->updateUser($this->userMapper->mapMerchantTransferToUserTransfer($merchantTransfer, $userTransfer));
+        $existingUserTransfer = $this->userFacade->getUserByUsername($userTransfer->getUsername());
+        $existingUserTransfer->fromArray($userTransfer->toArray(), true);
+
+        return $this->userFacade->updateUser($existingUserTransfer);
     }
 }
