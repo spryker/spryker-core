@@ -132,12 +132,12 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
      */
-    protected function preparePagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): SpySalesReturnQuery
+    protected function preparePagination(SpySalesReturnQuery $salesReturnQuery, PaginationTransfer $paginationTransfer): SpySalesReturnQuery
     {
         $page = $paginationTransfer
             ->requirePage()
@@ -147,16 +147,16 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
             ->requireMaxPerPage()
             ->getMaxPerPage();
 
-        $paginationModel = $query->paginate($page, $maxPerPage);
+        $propelModelPager = $salesReturnQuery->paginate($page, $maxPerPage);
 
-        $paginationTransfer->setNbResults($paginationModel->getNbResults())
-            ->setFirstIndex($paginationModel->getFirstIndex())
-            ->setLastIndex($paginationModel->getLastIndex())
-            ->setFirstPage($paginationModel->getFirstPage())
-            ->setLastPage($paginationModel->getLastPage())
-            ->setNextPage($paginationModel->getNextPage())
-            ->setPreviousPage($paginationModel->getPreviousPage());
+        $paginationTransfer->setNbResults($propelModelPager->getNbResults())
+            ->setFirstIndex($propelModelPager->getFirstIndex())
+            ->setLastIndex($propelModelPager->getLastIndex())
+            ->setFirstPage($propelModelPager->getFirstPage())
+            ->setLastPage($propelModelPager->getLastPage())
+            ->setNextPage($propelModelPager->getNextPage())
+            ->setPreviousPage($propelModelPager->getPreviousPage());
 
-        return $paginationModel->getQuery();
+        return $propelModelPager->getQuery();
     }
 }

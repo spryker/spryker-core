@@ -36,7 +36,7 @@ interface SalesOrderItemMapperInterface
     ): SpySalesOrderItem;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
@@ -45,11 +45,11 @@ interface SalesOrderItemMapperInterface
     ): array;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $omsOrderItemStateHistoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory[] $omsOrderItemStateHistoryEntities
      *
      * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
      */
-    public function mapStateHistoryEntityCollectionToItemStateHistoryTransfers(
+    public function mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers(
         ObjectCollection $omsOrderItemStateHistoryEntities
     ): array;
 }

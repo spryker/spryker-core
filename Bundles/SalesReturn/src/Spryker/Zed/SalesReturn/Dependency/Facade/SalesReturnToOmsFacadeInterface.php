@@ -16,5 +16,5 @@ interface SalesReturnToOmsFacadeInterface
      *
      * @return array|null
      */
-    public function triggerEventForOrderItems(string $eventId, array $orderItemIds, array $data = []);
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []);
 }

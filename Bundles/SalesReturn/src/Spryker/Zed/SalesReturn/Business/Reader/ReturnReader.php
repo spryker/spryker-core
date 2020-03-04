@@ -69,7 +69,7 @@ class ReturnReader implements ReturnReaderInterface
             ->current();
 
         if (!$returnTransfer) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_RETURN_NOT_EXISTS);
+            return $this->createErrorResponse(static::GLOSSARY_KEY_RETURN_NOT_EXISTS);
         }
 
         return (new ReturnResponseTransfer())
@@ -235,7 +235,7 @@ class ReturnReader implements ReturnReaderInterface
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    protected function getErrorResponse(string $message): ReturnResponseTransfer
+    protected function createErrorResponse(string $message): ReturnResponseTransfer
     {
         $messageTransfer = (new MessageTransfer())
             ->setValue($message);

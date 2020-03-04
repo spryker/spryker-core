@@ -57,7 +57,7 @@ class OrderItemReader implements OrderItemReaderInterface
      */
     protected function expandItemTransfers(array $itemTransfers): array
     {
-        $itemTransfers = $this->expandItemsWithStateHistory($itemTransfers);
+        $itemTransfers = $this->expandOrderItemsWithStateHistory($itemTransfers);
         $itemTransfers = $this->deriveOrderItemsUnitPrices($itemTransfers);
 
         $itemTransfers = $this->executeOrderItemExpanderPlugins($itemTransfers);
@@ -70,7 +70,7 @@ class OrderItemReader implements OrderItemReaderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function expandItemsWithStateHistory(array $itemTransfers): array
+    protected function expandOrderItemsWithStateHistory(array $itemTransfers): array
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
         $mappedItemStateTransfers = $this->salesRepository->getItemHistoryStatesByOrderItemIds($salesOrderItemIds);

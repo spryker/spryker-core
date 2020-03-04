@@ -16,5 +16,5 @@ interface OmsEventTriggererInterface
      *
      * @return void
      */
-    public function triggerExecuteReturnEvent(ReturnTransfer $returnTransfer): void;
+    public function triggerOrderItemsReturnEvent(ReturnTransfer $returnTransfer): void;
 }

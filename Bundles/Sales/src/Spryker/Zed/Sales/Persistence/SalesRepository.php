@@ -72,7 +72,8 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderItemQuery()
             ->leftJoinWithOrder()
             ->leftJoinWithProcess()
-            ->leftJoinWithState();
+            ->leftJoinWithState()
+            ->leftJoinWithStateHistory();
 
         $salesOrderItemQuery = $this->setOrderItemFilters($salesOrderItemQuery, $orderItemFilterTransfer);
 
@@ -97,7 +98,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
 
         return $this->getFactory()
             ->createSalesOrderItemMapper()
-            ->mapStateHistoryEntityCollectionToItemStateHistoryTransfers($omsOrderItemStateHistoryQuery->find());
+            ->mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers($omsOrderItemStateHistoryQuery->find());
     }
 
     /**
@@ -107,6 +108,10 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function getOrderReferencesByOrderItemIds(array $salesOrderItemIds): array
     {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
         return $this->getFactory()
             ->createSalesOrderItemQuery()
             ->filterByIdSalesOrderItem_In($salesOrderItemIds)

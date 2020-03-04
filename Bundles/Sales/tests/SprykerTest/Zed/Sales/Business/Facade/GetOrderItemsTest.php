@@ -65,10 +65,10 @@ class GetOrderItemsTest extends Test
             ->getOrderItems($orderItemFilterTransfer)
             ->getItems();
 
-        // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $itemTransfers->getIterator()->current();
 
+        // Assert
         $this->assertCount(1, $itemTransfers);
         $this->assertSame($idSalesOrderItem, $itemTransfer->getIdSalesOrderItem());
         $this->assertNotNull($itemTransfer->getState());
@@ -154,10 +154,10 @@ class GetOrderItemsTest extends Test
             ->getOrderItems($orderItemFilterTransfer)
             ->getItems();
 
-        // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $itemTransfers->getIterator()->current();
 
+        // Assert
         $this->assertCount(2, $itemTransfer->getStateHistory());
         $this->assertSame(static::FAKE_OMS_STATE, $itemTransfer->getStateHistory()->offsetGet(1)->getName());
     }

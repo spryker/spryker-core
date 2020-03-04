@@ -352,6 +352,7 @@ interface SalesFacadeInterface
      * Specification:
      * - Retrieves order items from persistence.
      * - Finds item records by criteria from OrderItemFilterTransfer.
+     * - Executes OrderItemExpanderPluginInterface stack.
      *
      * @api
      *

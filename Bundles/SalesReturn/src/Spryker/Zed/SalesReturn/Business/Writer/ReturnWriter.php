@@ -98,17 +98,17 @@ class ReturnWriter implements ReturnWriterInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR);
         }
 
-        $orderItems = $this->getOrderItems($createReturnRequestTransfer);
-        $returnResponseTransfer = $this->returnValidator->validateReturnRequest($createReturnRequestTransfer, $orderItems);
+        $itemTransfers = $this->getOrderItems($createReturnRequestTransfer);
+        $returnResponseTransfer = $this->returnValidator->validateReturnRequest($createReturnRequestTransfer, $itemTransfers);
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
             return $returnResponseTransfer;
         }
 
         $returnTransfer = $this->createReturnTransfer($createReturnRequestTransfer);
-        $returnTransfer = $this->createReturnItemTransfers($returnTransfer, $orderItems);
+        $returnTransfer = $this->createReturnItemTransfers($returnTransfer, $itemTransfers);
 
-        $this->omsEventTriggerer->triggerExecuteReturnEvent($returnTransfer);
+        $this->omsEventTriggerer->triggerOrderItemsReturnEvent($returnTransfer);
 
         return $this->returnReader->getReturn(
             (new ReturnFilterTransfer())->setReturnReference($returnTransfer->getReturnReference())

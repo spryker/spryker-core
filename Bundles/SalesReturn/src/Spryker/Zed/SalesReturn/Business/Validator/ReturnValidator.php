@@ -74,8 +74,10 @@ class ReturnValidator implements ReturnValidatorInterface
      *
      * @return bool
      */
-    protected function isOrderItemsRelatedToCustomer(CreateReturnRequestTransfer $createReturnRequestTransfer, ArrayObject $itemTransfers): bool
-    {
+    protected function isOrderItemsRelatedToCustomer(
+        CreateReturnRequestTransfer $createReturnRequestTransfer,
+        ArrayObject $itemTransfers
+    ): bool {
         return $itemTransfers->count() === $createReturnRequestTransfer->getReturnItems()->count();
     }
 
@@ -86,13 +88,15 @@ class ReturnValidator implements ReturnValidatorInterface
      */
     protected function isOrderItemsInReturnableStates(ArrayObject $itemTransfers): bool
     {
+        $returnableStateNames = $this->salesReturnConfig->getReturnableStateNames();
+
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer
                 ->requireState()
                 ->getState()
                     ->requireName();
 
-            if (!in_array($itemTransfer->getState()->getName(), $this->salesReturnConfig->getReturnableStateNames(), true)) {
+            if (!in_array($itemTransfer->getState()->getName(), $returnableStateNames, true)) {
                 return false;
             }
         }
