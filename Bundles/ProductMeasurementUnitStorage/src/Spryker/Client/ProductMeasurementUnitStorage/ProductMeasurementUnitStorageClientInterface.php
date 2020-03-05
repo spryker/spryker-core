@@ -79,6 +79,7 @@ interface ProductMeasurementUnitStorageClientInterface
      * Specification:
      * - Searches for product base units within Storage with given product IDs.
      * - Returns found product base units.
+     * - Returned data is indexed by product concrete IDs.
      *
      * @api
      *
@@ -92,7 +93,6 @@ interface ProductMeasurementUnitStorageClientInterface
      * Specification:
      * - Searches for product sales units within Storage with given product IDs.
      * - Returns found product sales units.
-     * - Returned data is indexed by product concrete IDs.
      *
      * @api
      *
