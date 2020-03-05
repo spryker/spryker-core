@@ -157,7 +157,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         array $idSalesOrderItemList
     ): OrderTransfer {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if (!in_array($itemTransfer->getIdSalesOrderItem(), $idSalesOrderItemList, true)) {
+            if (!in_array($itemTransfer->getIdSalesOrderItem(), $idSalesOrderItemList)) {
                 continue;
             }
 
