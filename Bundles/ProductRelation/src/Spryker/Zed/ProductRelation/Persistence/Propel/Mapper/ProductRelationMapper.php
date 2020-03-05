@@ -77,7 +77,7 @@ class ProductRelationMapper
             );
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
         $productRelationTransfer->setStoreRelation(
-            $this->storeRelationMapper->mapPaymentMethodStoreEntitiesToStoreRelationTransfer(
+            $this->storeRelationMapper->mapProductRelationStoreEntitiesToStoreRelationTransfer(
                 $productRelationEntity->getProductRelationStores(),
                 new StoreRelationTransfer()
             )

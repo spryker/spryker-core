@@ -20,7 +20,7 @@ class StoreRelationMapper
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapPaymentMethodStoreEntitiesToStoreRelationTransfer(
+    public function mapProductRelationStoreEntitiesToStoreRelationTransfer(
         ObjectCollection $productRelationStoreEntities,
         StoreRelationTransfer $storeRelationTransfer
     ): StoreRelationTransfer {
