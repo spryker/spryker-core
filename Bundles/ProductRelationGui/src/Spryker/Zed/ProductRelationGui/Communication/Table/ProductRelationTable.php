@@ -43,8 +43,6 @@ class ProductRelationTable extends AbstractTable
 
     protected const LABEL_PRIMARY = 'label-primary';
 
-    public const URL_RELATION_DEACTIVATE = '/product-relation-gui/toggle-active/deactivate';
-    public const URL_RELATION_ACTIVATE = '/product-relation-gui/toggle-active/activate';
     public const URL_PRODUCT_RELATION_EDIT = '/product-relation-gui/edit/index';
 
     /**
@@ -256,7 +254,7 @@ class ProductRelationTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->createViewButton($idProductRelation);
         $buttons[] = $this->createEditButton($idProductRelation);
-        $buttons[] = $this->createDeleteRelationButton($idProductRelation);
+        $buttons[] = $this->createDeleteButton($idProductRelation);
 
         return $buttons;
     }
@@ -316,7 +314,7 @@ class ProductRelationTable extends AbstractTable
      *
      * @return string
      */
-    protected function createDeleteRelationButton(int $idProductRelation): string
+    protected function createDeleteButton(int $idProductRelation): string
     {
         return $this->generateRemoveButton(
             Url::generate(static::URL_RELATION_DELETE, [

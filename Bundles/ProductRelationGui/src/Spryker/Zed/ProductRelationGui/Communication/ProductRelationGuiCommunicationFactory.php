@@ -258,12 +258,4 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     {
         return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
     }
-
-    /**
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
-     */
-    public function getProductRelationPropelQuery(): SpyProductRelationQuery
-    {
-        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_RELATION);
-    }
 }
