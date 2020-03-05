@@ -53,4 +53,14 @@
         <property name="valueTransformer" type="string"/>
     </transfer>
 
+    <transfer name="ProductLabelResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
 </transfers>
