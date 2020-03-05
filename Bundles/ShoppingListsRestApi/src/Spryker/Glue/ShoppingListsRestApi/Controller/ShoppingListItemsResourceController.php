@@ -55,6 +55,7 @@ class ShoppingListItemsResourceController extends AbstractController
     /**
      * @Glue({
      *     "patch": {
+     *          "path": "/shopping-lists/{shoppingListId}/shopping-list-items/{shoppingListItemId}",
      *          "summary": [
      *              "Updates the shopping list item."
      *          ],
@@ -89,6 +90,7 @@ class ShoppingListItemsResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
+     *          "path": "/shopping-lists/{shoppingListId}/shopping-list-items/{shoppingListItemId}",
      *          "summary": [
      *              "Deletes the shopping list item."
      *          ],
