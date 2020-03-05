@@ -30,6 +30,8 @@ class PropelConfig extends AbstractBundleConfig
     public const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGeneratedDirectory()
@@ -38,6 +40,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getPropelConfig()
@@ -46,6 +50,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getUsername(): string
@@ -54,6 +60,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPassword(): string
@@ -62,6 +70,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSchemaDirectory()
@@ -73,6 +83,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMigrationDirectory()
@@ -86,6 +98,8 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * First load the core file if present and then override it with the one from project
      *
+     * @api
+     *
      * @return array
      */
     public function getPropelSchemaPathPatterns()
@@ -97,6 +111,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getCorePropelSchemaPathPatterns()
@@ -105,6 +121,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getProjectPropelSchemaPathPatterns()
@@ -113,6 +131,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getLogPath()
@@ -123,6 +143,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentDatabaseEngine()
@@ -131,6 +153,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @throws \Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException
      *
      * @return string
@@ -148,6 +172,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getWhitelistForAllowedAttributeValueChanges()
@@ -156,6 +182,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getTableElementHierarchy(): array
@@ -171,6 +199,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isDebugEnabled(): bool
@@ -183,6 +213,8 @@ class PropelConfig extends AbstractBundleConfig
      * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
      * - Can return int, float or null to disable timeout.
      *
+     * @api
+     *
      * @return int|float|null
      */
     public function getProcessTimeout()
@@ -191,6 +223,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function allowIndexOverriding(): bool

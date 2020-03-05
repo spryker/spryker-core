@@ -18,6 +18,8 @@ class SessionFileConfig extends AbstractBundleConfig
     public const SESSION_HANDLER_FILE = 'file';
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSessionLifeTime(): int
@@ -26,6 +28,8 @@ class SessionFileConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSessionHandlerFileSavePath(): string
@@ -34,6 +38,8 @@ class SessionFileConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSessionHandlerFileName(): string

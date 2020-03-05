@@ -18,6 +18,8 @@ class QueueConfig extends AbstractBundleConfig
     public const DEFAULT_THRESHOLD = 59;
 
     /**
+     * @api
+     *
      * @return array|null
      */
     public function getWorkerMessageCheckOption()
@@ -32,6 +34,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $queueName
      *
      * @return array|null
@@ -75,6 +79,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueServerId()
@@ -85,6 +91,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getQueueWorkerInterval()
@@ -93,6 +101,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getQueueProcessTriggerInterval()
@@ -101,6 +111,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueWorkerOutputFileName()
@@ -109,6 +121,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueWorkerLogStatus()
@@ -117,6 +131,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getQueueWorkerMaxThreshold()
@@ -125,6 +141,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getQueueAdapterConfiguration()
@@ -133,6 +151,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getDefaultQueueAdapterConfiguration(): array
@@ -141,6 +161,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `vendor/bin/console queue:worker:start --stop-only-when-empty` instead.
      *
      * @return bool

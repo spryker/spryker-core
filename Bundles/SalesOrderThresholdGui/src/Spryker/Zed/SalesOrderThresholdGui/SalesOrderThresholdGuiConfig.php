@@ -73,6 +73,8 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return array
@@ -83,6 +85,8 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface[]
      */
     public function getStrategyGroupToFormTypeMap(): array
@@ -91,6 +95,8 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return array
@@ -101,6 +107,8 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface[]
      */
     public function getStrategyGroupToDataProviderMap(): array
