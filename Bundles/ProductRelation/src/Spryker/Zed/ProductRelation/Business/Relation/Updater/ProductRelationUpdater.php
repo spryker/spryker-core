@@ -19,7 +19,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
 {
     use TransactionTrait;
 
-    protected const MESSAGE_UPDATE_ERROR = 'It is impossible to update this product relation';
+    protected const MESSAGE_UPDATE_ERROR = 'It is impossible to update product relation #%d';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationEntityManagerInterface
@@ -78,7 +78,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
      */
     protected function executeUpdateRelationTransaction(
         ProductRelationTransfer $productRelationTransfer
-    ) {
+    ): ProductRelationResponseTransfer {
         $this->assertUpdateRelation($productRelationTransfer);
         $storeRelationTransfer = $productRelationTransfer->getStoreRelation()
             ->setIdEntity($productRelationTransfer->getIdProductRelation());
@@ -93,7 +93,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
 
         if (!$productRelationTransfer) {
             return $productRelationResponseTransfer
-                ->addMessage($this->getErrorMessageTransfer(static::MESSAGE_UPDATE_ERROR));
+                ->addMessage($this->getErrorMessageTransfer(sprintf(static::MESSAGE_UPDATE_ERROR, $productRelationTransfer->getIdProductRelation())));
         }
 
         $this->productRelationEntityManager->removeRelatedProductsByIdProductRelation(
