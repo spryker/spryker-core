@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
 
@@ -118,6 +119,23 @@ interface ProductLabelFacadeInterface
      * @return void
      */
     public function updateLabel(ProductLabelTransfer $productLabelTransfer);
+
+    /**
+     * Specification:
+     * - Expects product label id to be provided.
+     * - Removes provided product label from Persistence.
+     * - Removes assigned localized attributes in Persistence.
+     * - Removes relations between product label and abstract products.
+     * - Returns 'isSuccessful=true' if the product label was removed.
+     * - Returns 'isSuccessful=false' with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelResponseTransfer
+     */
+    public function removeLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer;
 
     /**
      * Specification:

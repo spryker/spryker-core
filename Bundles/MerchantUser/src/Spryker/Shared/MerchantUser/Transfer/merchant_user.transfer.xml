@@ -59,4 +59,27 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="Role">
+        <property name="name" type="string"/>
+        <property name="aclGroup" type="Group"/>
+        <property name="aclRules" type="Rule[]" singular="aclRule"/>
+    </transfer>
+
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Group">
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="idAclGroup" type="int"/>
+    </transfer>
+
+    <transfer name="GroupCriteria">
+        <property name="reference" type="string"/>
+    </transfer>
+
 </transfers>
