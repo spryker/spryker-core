@@ -64,9 +64,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      */
     public function findProductRelationById($idProductRelation)
     {
-        return $this->getFactory()
-            ->createProductRelationReader()
-            ->findProductRelationById($idProductRelation);
+        return $this->getRepository()->findProductRelationById($idProductRelation);
     }
 
     /**

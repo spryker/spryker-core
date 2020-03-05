@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductRelation\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
 
 class ProductRelationMapper
@@ -19,11 +21,36 @@ class ProductRelationMapper
     protected $productRelationTypeMapper;
 
     /**
-     * @param \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationTypeMapper $productRelationTypeMapper
+     * @var \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\StoreRelationMapper
      */
-    public function __construct(ProductRelationTypeMapper $productRelationTypeMapper)
-    {
+    protected $storeRelationMapper;
+
+    /**
+     * @var \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\RuleSetMapper
+     */
+    protected $ruleSetMapper;
+
+    /**
+     * @var \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper
+     */
+    protected $productMapper;
+
+    /**
+     * @param \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationTypeMapper $productRelationTypeMapper
+     * @param \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\StoreRelationMapper $storeRelationMapper
+     * @param \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\RuleSetMapper $ruleSetMapper
+     * @param \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper $productMapper
+     */
+    public function __construct(
+        ProductRelationTypeMapper $productRelationTypeMapper,
+        StoreRelationMapper $storeRelationMapper,
+        RuleSetMapper $ruleSetMapper,
+        ProductMapper $productMapper
+    ) {
         $this->productRelationTypeMapper = $productRelationTypeMapper;
+        $this->storeRelationMapper = $storeRelationMapper;
+        $this->ruleSetMapper = $ruleSetMapper;
+        $this->productMapper = $productMapper;
     }
 
     /**
@@ -37,13 +64,28 @@ class ProductRelationMapper
         ProductRelationTransfer $productRelationTransfer
     ): ProductRelationTransfer {
         $productRelationTransfer->fromArray($productRelationEntity->toArray(), true);
-        $productRelationTypeEntity = $productRelationEntity->getSpyProductRelationType();
+        $productRelationTransfer->setQuerySet(
+            $this->ruleSetMapper->mapQuerySetDataToPropelQueryBuilderRuleSetTransfer(
+                $productRelationEntity->getQuerySetData(),
+                new PropelQueryBuilderRuleSetTransfer()
+            )
+        );
         $productRelationTypeTransfer = $this->productRelationTypeMapper
             ->mapProductRelationTypeEntityToProductRelationTypeTransfer(
-                $productRelationTypeEntity,
+                $productRelationEntity->getSpyProductRelationType(),
                 new ProductRelationTypeTransfer()
             );
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
+        $productRelationTransfer->setStoreRelation(
+            $this->storeRelationMapper->mapProductRelationStoreEntitiesToStoreRelationTransfer(
+                $productRelationEntity->getProductRelationStores(),
+                new StoreRelationTransfer()
+            )
+        );
+        $productRelationTransfer = $this->productMapper->mapProductRelationRelatedProductEntitiesToProductRelationTransfer(
+            $productRelationEntity->getSpyProductRelationProductAbstracts(),
+            $productRelationTransfer
+        );
 
         return $productRelationTransfer;
     }

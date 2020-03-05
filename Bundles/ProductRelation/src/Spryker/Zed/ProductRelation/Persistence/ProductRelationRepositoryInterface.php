@@ -31,4 +31,11 @@ interface ProductRelationRepositoryInterface
      * @return array
      */
     public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    public function findProductRelationById(int $idProductRelation): ?ProductRelationTransfer;
 }

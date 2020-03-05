@@ -31,4 +31,13 @@ Sku:,Sku:
 up-selling,Upselling
 "Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation's conditions.","Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation's conditions."
 "View in Shop","View in Shop"
-"View relations","View relations"
+"View Product Relation: %s","View Product Relation: %s"
+"Product relation key","Product relation key"
+"Update regularly","Update regularly"
+Status,Status
+Active,Active
+Inactive,Inactive
+"Product owning the relation","Product owning the relation"
+"General information","General information"
+"Store relation","Store relation"
+Stores,Stores

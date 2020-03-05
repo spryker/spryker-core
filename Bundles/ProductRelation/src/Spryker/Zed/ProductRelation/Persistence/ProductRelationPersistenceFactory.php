@@ -11,9 +11,12 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductAttributeMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationTypeMapper;
+use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\RuleSetMapper;
+use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\StoreRelationMapper;
 use Spryker\Zed\ProductRelation\Persistence\Rule\ProductRelationRuleQueryCreator;
 use Spryker\Zed\ProductRelation\Persistence\Rule\Query\ProductQuery;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
@@ -73,7 +76,30 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createProductRelationMapper(): ProductRelationMapper
     {
-        return new ProductRelationMapper($this->createProductRelationTypeMapper());
+        return new ProductRelationMapper(
+            $this->createProductRelationTypeMapper(),
+            $this->createStoreRelationMapper(),
+            $this->createRuleSetMapper(),
+            $this->createProductMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\StoreRelationMapper
+     */
+    public function createStoreRelationMapper(): StoreRelationMapper
+    {
+        return new StoreRelationMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\RuleSetMapper
+     */
+    public function createRuleSetMapper(): RuleSetMapper
+    {
+        return new RuleSetMapper(
+            $this->getUtilEncodingService()
+        );
     }
 
     /**
@@ -122,5 +148,13 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     public function getProductQueryContainer()
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::QUERY_CONTAINER_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface
+     */
+    public function getUtilEncodingService(): ProductRelationToUtilEncodingInterface
+    {
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
