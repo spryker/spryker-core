@@ -14,8 +14,10 @@
 
             <div class="js-toggle-target hide">
                 <form action="{{ url('/order-custom-reference-gui/sales/save') }}" method="POST">
-                    <label for="orderCustomReference">{{ 'Custom Order Reference' | trans }}</label>
-                    <input type="text" id="orderCustomReference" name="orderCustomReference" value="{{ order.orderCustomReference }}">
+                    <div class="form-group">
+                        <label for="orderCustomReference" class="control-label">{{ 'Custom Order Reference' | trans }}</label>
+                        <input class="form-control" id="orderCustomReference" name="orderCustomReference" value="{{ order.orderCustomReference }}">
+                    </div>
                     <input type="hidden" required="required" name="idSalesOrder" id="idSalesOrder" value="{{ order.idSalesOrder }}">
                     <input type="hidden" required="required" name="backUrl" id="backUrl" value="{{ changeStatusRedirectUrl }}">
                     <button type="submit" class="btn btn-primary safe-submit">{{ 'Save' | trans }}</button>
