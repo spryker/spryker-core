@@ -94,4 +94,14 @@ interface SalesClientInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
+     * - Provides available order entity search types.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getOrderSearchTypes(): array;
 }

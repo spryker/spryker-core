@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Spryker\Client\Sales\SalesFactory getFactory()
+ * @method \Spryker\Client\Sales\SalesConfig getConfig()
  */
 class SalesClient extends AbstractClient implements SalesClientInterface
 {
@@ -110,5 +111,19 @@ class SalesClient extends AbstractClient implements SalesClientInterface
         return $this->getFactory()
             ->createZedSalesStub()
             ->searchOrders($orderListTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getOrderSearchTypes(): array
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getOrderSearchTypes();
     }
 }

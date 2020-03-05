@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Business\SearchReader;
 
 use Generated\Shared\Transfer\OrderListTransfer;
-use Spryker\Zed\Sales\Business\SearchTransformer\OrderSearchFiltersTransformerInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class OrderSearchReader implements OrderSearchReaderInterface
@@ -19,20 +18,11 @@ class OrderSearchReader implements OrderSearchReaderInterface
     protected $salesRepository;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\SearchTransformer\OrderSearchFiltersTransformerInterface
-     */
-    protected $orderSearchFiltersTransformer;
-
-    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
-     * @param \Spryker\Zed\Sales\Business\SearchTransformer\OrderSearchFiltersTransformerInterface $orderSearchFiltersTransformer
      */
-    public function __construct(
-        SalesRepositoryInterface $salesRepository,
-        OrderSearchFiltersTransformerInterface $orderSearchFiltersTransformer
-    ) {
+    public function __construct(SalesRepositoryInterface $salesRepository)
+    {
         $this->salesRepository = $salesRepository;
-        $this->orderSearchFiltersTransformer = $orderSearchFiltersTransformer;
     }
 
     /**
@@ -42,8 +32,6 @@ class OrderSearchReader implements OrderSearchReaderInterface
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer = $this->orderSearchFiltersTransformer->transformOrderSearchFilters($orderListTransfer);
-
         return $this->salesRepository->searchOrders($orderListTransfer);
     }
 }

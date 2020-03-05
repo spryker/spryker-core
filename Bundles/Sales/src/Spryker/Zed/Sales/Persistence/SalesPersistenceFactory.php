@@ -20,6 +20,10 @@ use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderAddressMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderAddressMapperInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderMapper;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilderInterface;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchQueryJoinQueryBuilder;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchQueryJoinQueryBuilderInterface;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
@@ -109,6 +113,22 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderMapper(): SalesOrderMapper
     {
         return new SalesOrderMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilderInterface
+     */
+    public function createOrderSearchFilterFieldQueryBuilder(): OrderSearchFilterFieldQueryBuilderInterface
+    {
+        return new OrderSearchFilterFieldQueryBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchQueryJoinQueryBuilderInterface
+     */
+    public function createOrderSearchQueryJoinQueryBuilder(): OrderSearchQueryJoinQueryBuilderInterface
+    {
+        return new OrderSearchQueryJoinQueryBuilder();
     }
 
     /**
