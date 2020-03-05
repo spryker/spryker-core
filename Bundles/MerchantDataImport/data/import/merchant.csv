@@ -1,6 +1,6 @@
 merchant_key,merchant_reference,merchant_name,registration_number,status,email
-kudu-merchant-1,MER000006,Kudu Merchant,1,waiting-for-approval,kudu.merchant@merchant.kudu
-oryx-merchant-1,MER000005,Oryx Merchant,2,waiting-for-approval,oryx.merchant@merchant.kudu
+kudu-merchant-1,MER000006,Kudu Merchant,1,approved,kudu.merchant@merchant.kudu
+oryx-merchant-1,MER000005,Oryx Merchant,2,approved,oryx.merchant@merchant.kudu
 impala-merchant-1,MER000004,Impala Merchant,3,waiting-for-approval,impala.merchant@merchant.kudu
 sugar-monster,MER000003,Sugar Monster,4,waiting-for-approval,sugar.monster@merchant.kudu
 restrictions-merchant,MER000007,Restrictions Merchant,5,waiting-for-approval,restrictions.merchant@merchant.kudu

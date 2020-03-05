@@ -112,4 +112,16 @@ interface DiscountPromotionFacadeInterface
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByIdDiscount($idDiscount);
+
+    /**
+     * Specification:
+     *  - Retrieves discount promotion from persistence by given UUID.
+     *
+     * @api
+     *
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     */
+    public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -148,14 +149,15 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [], ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null)
     {
         return $this->getFactory()
             ->createProductStorageDataMapper()
-            ->mapProductStorageData($localeName, $data, $selectedAttributes);
+            ->mapProductStorageData($localeName, $data, $selectedAttributes, $productStorageCriteriaTransfer);
     }
 
     /**

@@ -8,27 +8,67 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\MerchantSalesOrderTransfer;
+use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface MerchantSalesOrderFacadeInterface
 {
     /**
      * Specification:
-     * - Looks up a relation between an order and a merchant.
-     * - If the relation doesn't exist, the method creates it and saves the data to `spy_merchant_sales_order`.
+     * - Requires OrderTransfer.idSalesOrder.
+     * - Requires OrderTransfer.orderReference.
+     * - Requires OrderTransfer.items.
+     * - Iterates through the order items of given order looking for merchant reference presence.
+     * - Skips all the order items without merchant reference.
+     * - Creates a new merchant order for each unique merchant reference found.
+     * - Creates a new merchant order item for each order item with merchant reference and assign it to a merchant order accordingly.
+     * - Creates a new merchant order totals and assign it to a merchant order accordingly.
+     * - Returns a collection of merchant orders filled with merchant order items and merchant order totals.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantSalesOrderTransfer $merchantSalesOrderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantSalesOrderTransfer
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
-    public function createMerchantSalesOrder(MerchantSalesOrderTransfer $merchantSalesOrderTransfer): MerchantSalesOrderTransfer;
+    public function createMerchantOrderCollection(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer;
 
     /**
      * Specification:
-     * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer::getMerchantReference() if exists.
+     * - Finds all the merchant orders using MerchantOrderCriteriaTransfer.
+     * - Returns a collection of found merchant orders.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
+     */
+    public function getMerchantOrderCollection(
+        MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+    ): MerchantOrderCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns a merchant order found using MerchantOrderCriteriaTransfer.
+     * - Returns NULL if merchant order is not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    public function findMerchantOrder(
+        MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+    ): ?MerchantOrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer.merchantReference if exists.
      *
      * @api
      *

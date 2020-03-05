@@ -28,6 +28,7 @@
   },
   "replace": {
     "spryker/acl": "*",
+    "spryker/acl-extension": "*",
     "spryker/agent": "*",
     "spryker/agent-gui": "*",
     "spryker/alternative-products-rest-api": "*",
@@ -336,7 +337,9 @@
     "spryker/merchant-relationship-sales-order-threshold-gui-extension": "*",
     "spryker/merchant-sales-order": "*",
     "spryker/merchant-search": "*",
+    "spryker/merchant-switcher": "*",
     "spryker/merchant-user": "*",
+    "spryker/merchant-user-auth-gui-page": "*",
     "spryker/messenger": "*",
     "spryker/messenger-extension": "*",
     "spryker/module-finder": "*",
@@ -558,6 +561,7 @@
     "spryker/scheduler-jenkins": "*",
     "spryker/search": "*",
     "spryker/search-elasticsearch": "*",
+    "spryker/search-elasticsearch-gui": "*",
     "spryker/search-extension": "*",
     "spryker/security": "*",
     "spryker/security-extension": "*",
@@ -580,6 +584,8 @@
     "spryker/shipment-extension": "*",
     "spryker/shipment-gui": "*",
     "spryker/shipments-rest-api": "*",
+    "spryker/shop-context": "*",
+    "spryker/shop-context-extension": "*",
     "spryker/shopping-list": "*",
     "spryker/shopping-list-data-import": "*",
     "spryker/shopping-list-extension": "*",
@@ -652,6 +658,7 @@
     "spryker/wishlist-extension": "*",
     "spryker/wishlists-rest-api": "*",
     "spryker/zed-navigation": "*",
+    "spryker/zed-navigation-extension": "*",
     "spryker/zed-request": "*",
     "spryker/zend": "*"
   }
