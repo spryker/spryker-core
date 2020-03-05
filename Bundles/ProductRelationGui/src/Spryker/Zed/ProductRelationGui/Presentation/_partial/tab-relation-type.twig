@@ -32,11 +32,11 @@
 
         <div class="ibox-content product-box" id="selected-product" style="display:none;">
             <div class="product-desc">
-                <img height="100" id="product-img" src="#"/> <br />
-                <small class="text-muted" id="product-category"></small>
-                <span class="product-name">{{ localizedATtributes.name ?? '' }}</span>
+                <img height="100" id="product-img" src="{{ productAbstractData['spy_product_image.external_url_small'] ?? '' }}"/> <br />
+                <small class="text-muted" id="product-category">{{ productAbstractData['assignedCategories'] ?? '' }}</small>
+                <span class="product-name">{{ productAbstractData['spy_product_abstract_localized_attributes.name'] ?? '' }}</span>
 
-                <div class="small m-t-xs" id="product-description">{{ localizedAttributes.description ?? '' }}</div>
+                <div class="small m-t-xs" id="product-description">{{ productAbstractData['spy_product_abstract_localized_attributes.description'] ?? '' }}</div>
             </div>
         </div>
 

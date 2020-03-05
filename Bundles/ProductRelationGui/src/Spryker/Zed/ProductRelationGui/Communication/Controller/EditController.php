@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductRelationGui\Communication\Controller;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\FormInterface;
@@ -65,15 +63,6 @@ class EditController extends BaseProductRelationController
 
         $productRelationResponseTransfer->requireProductRelation();
         $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
-        $localeTransfer = $this->getFactory()
-            ->getLocaleFacade()
-            ->getCurrentLocale();
-        $productAbstractData = $this->getFactory()
-            ->getProductRelationFacade()
-            ->getProductAbstractDataById(
-                $productRelationTransfer->getFkProductAbstract(),
-                $localeTransfer->getIdLocale()
-            );
 
         $productRuleTable = $this->getFactory()
             ->createProductRuleTable($productRelationTransfer);
@@ -85,7 +74,7 @@ class EditController extends BaseProductRelationController
             'productRelation' => $productRelationTransfer,
             'productRuleTable' => $productRuleTable->render(),
             'productTable' => $productTable->render(),
-            'productAbstractData' => $productAbstractData,
+            'productAbstractData' => $this->getProductAbstractData($productRelationTransfer->getFkProductAbstract()),
         ];
     }
 
@@ -102,23 +91,22 @@ class EditController extends BaseProductRelationController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer|null
+     * @return array
      */
-    protected function getProductLocalizedAttributesForCurrentLocale(
-        ProductAbstractTransfer $productAbstractTransfer
-    ): ?LocalizedAttributesTransfer {
+    protected function getProductAbstractData(int $idProductAbstract): array
+    {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
             ->getCurrentLocale();
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
-            if ($localizedAttributesTransfer->getLocale() === $localeTransfer) {
-                return $localizedAttributesTransfer;
-            }
-        }
 
-        return null;
+        return $this->getFactory()
+            ->getProductRelationFacade()
+            ->getProductAbstractDataById(
+                $idProductAbstract,
+                $localeTransfer->getIdLocale()
+            );
     }
 
     /**
