@@ -35,4 +35,3 @@ yarn.lock
 /vendor/*
 composer.phar
 composer.lock
-dist/
