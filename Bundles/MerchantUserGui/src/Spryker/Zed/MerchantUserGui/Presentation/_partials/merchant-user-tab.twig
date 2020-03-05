@@ -1,9 +1,12 @@
-{{
-    createActionButton(
-        url('/merchant-user-gui/create-merchant-user', {'merchant-id': merchantForm.vars.value.idMerchant}),
-        'Add Merchant User' | trans
-    )
-}}
+{% if merchantForm.vars.tables.merchantUsersTable is defined %}
+    {{
+        createActionButton(
+            url('/merchant-user-gui/create-merchant-user', {'merchant-id': merchantForm.vars.value.idMerchant}),
+            'Add Merchant User' | trans
+        )
+    }}
 
-{{ merchantForm.vars.tables.merchantUsersTable | raw }}
-
+    {{ merchantForm.vars.tables.merchantUsersTable | raw }}
+{% else %}
+    Save merchant, before you can create merchant users for him
+{% endif %}

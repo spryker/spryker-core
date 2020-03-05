@@ -109,12 +109,8 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         ) {
             $merchantUserResponseTransfer->setIsSuccessful(false)->setMerchantUser($merchantUserTransfer);
 
-            $message = sprintf(
-                static::USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE,
-                $merchantUserTransfer->getMerchant()->getEmail()
-            );
-
-            return $merchantUserResponseTransfer->addError((new MessageTransfer())->setMessage($message));
+            return $merchantUserResponseTransfer->addError((new MessageTransfer())
+                ->setMessage(static::USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE));
         }
 
         return $merchantUserResponseTransfer->setIsSuccessful(true);
@@ -154,7 +150,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         }
 
         $existingUserTransfer = $this->userFacade->getUserByUsername($userTransfer->getUsername());
-        $existingUserTransfer->fromArray($userTransfer->toArray(), true);
+        $existingUserTransfer->fromArray($userTransfer->modifiedToArray(), true);
 
         return $this->userFacade->updateUser($existingUserTransfer);
     }
