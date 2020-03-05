@@ -88,4 +88,7 @@
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
     </transfer>
 
+    <transfer name="ProductStorageCriteria">
+    </transfer>
+
 </transfers>
