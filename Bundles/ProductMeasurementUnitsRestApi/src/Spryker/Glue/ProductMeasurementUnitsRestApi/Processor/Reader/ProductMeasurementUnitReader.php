@@ -69,13 +69,10 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
 
         $productMeasurementUnitTransfer = $this->productMeasurementUnitNameTranslator
             ->getProductMeasurementUnitTransfersWithTranslatedNames(
-                [$productMeasurementUnitTransfers[0]],
+                $productMeasurementUnitTransfers,
                 $restRequest->getMetadata()->getLocale()
-            );
+            )[0];
 
-        return $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResponse(
-            $productMeasurementUnitTransfer[0],
-            $restRequest->getMetadata()->getLocale()
-        );
+        return $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResponse($productMeasurementUnitTransfer);
     }
 }

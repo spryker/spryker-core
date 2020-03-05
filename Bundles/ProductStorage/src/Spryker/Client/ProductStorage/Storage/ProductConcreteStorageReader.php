@@ -156,7 +156,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $productConcreteIds = [];
         foreach ($mappingData as $storageKey => $mappingDataItem) {
             $decodedMappingDataItem = $this->utilEncodingService->decodeJson($mappingDataItem, true);
-            if (!$decodedMappingDataItem || !($decodedMappingDataItem[static::KEY_ID] ?? null)) {
+            if (!$decodedMappingDataItem || !$decodedMappingDataItem[static::KEY_ID]) {
                 continue;
             }
 
