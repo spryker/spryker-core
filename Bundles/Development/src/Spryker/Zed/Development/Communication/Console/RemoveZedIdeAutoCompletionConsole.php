@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveZedIdeAutoCompletionConsole extends Console
 {
-    public const COMMAND_NAME = 'dev:ide:remove-zed-auto-completion';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:zed:remove';
 
     /**
      * @return void

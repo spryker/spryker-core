@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveServiceIdeAutoCompletionConsole extends Console
 {
-    public const COMMAND_NAME = 'dev:ide:remove-service-auto-completion';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:service:remove';
 
     /**
      * @return void

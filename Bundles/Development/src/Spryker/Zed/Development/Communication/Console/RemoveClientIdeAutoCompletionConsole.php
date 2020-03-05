@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveClientIdeAutoCompletionConsole extends Console
 {
-    public const COMMAND_NAME = 'dev:ide:remove-client-auto-completion';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:client:remove';
 
     /**
      * @return void
