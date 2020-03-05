@@ -9,7 +9,7 @@
         {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
 
         {% for error in form.vars.errors %}
-            <spy-alert class="login_message" type="error">{{ error.message | trans }}</spy-alert>
+            <spy-alert type="error">{{ error.message | trans }}</spy-alert>
         {% endfor %}
 
         <form action="{{ form.vars.action }}" name="{{ form.vars.name }}" method="{{ form.vars.method }}">
