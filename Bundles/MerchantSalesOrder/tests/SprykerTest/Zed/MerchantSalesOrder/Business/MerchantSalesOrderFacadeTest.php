@@ -8,9 +8,11 @@
 namespace SprykerTest\Zed\MerchantSalesOrder\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
@@ -27,8 +29,14 @@ use Generated\Shared\Transfer\TotalsTransfer;
  */
 class MerchantSalesOrderFacadeTest extends Unit
 {
+    /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
+     */
+    protected const VALID_SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+    protected const INVALID_SHIPMENT_EXPENSE_TYPE = 'ANOTHER_EXPENSE_TYPE';
     protected const TEST_STATE_MACHINE = 'Test01';
     protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
+    protected const TEST_SECOND_MERCHANT_REFERENCE = 'test-second-merchant-reference';
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesOrder\MerchantSalesOrderBusinessTester
@@ -305,6 +313,81 @@ class MerchantSalesOrderFacadeTest extends Unit
 
         // Assert
         $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandShipmentExpenseWithMerchantReferenceReturnsUpdatedTransfer(): void
+    {
+        // Arrange
+        $expenseTransfer = (new ExpenseTransfer())->setType(static::VALID_SHIPMENT_EXPENSE_TYPE);
+        $itemTransfer = (new ItemTransfer())->setMerchantReference(static::TEST_MERCHANT_REFERENCE);
+        $shipmentGroupTransfer = (new ShipmentGroupTransfer())->addItem($itemTransfer);
+
+        // Act
+        $expenseTransfer = $this->tester
+            ->getFacade()
+            ->expandShipmentExpenseWithMerchantReference($expenseTransfer, $shipmentGroupTransfer);
+
+        // Assert
+        $this->assertEquals($expenseTransfer->getMerchantReference(), $itemTransfer->getMerchantReference());
+    }
+
+    /**
+     * @dataProvider getExpandShipmentExpenseWithMerchantReferenceNegativeScenarioDataProvider
+     *
+     * @param array $itemTransfersData
+     * @param string $expenseType
+     *
+     * @return void
+     */
+    public function testExpandShipmentExpenseWithMerchantReferenceDoesNothingWithIncorrectData(
+        array $itemTransfersData,
+        string $expenseType
+    ): void {
+        // Arrange
+        $expenseTransfer = (new ExpenseTransfer())->setType($expenseType);
+        $shipmentGroupTransfer = new ShipmentGroupTransfer();
+        foreach ($itemTransfersData as $itemTransferData) {
+            $shipmentGroupTransfer->addItem((new ItemTransfer())->fromArray($itemTransferData));
+        }
+
+        // Act
+        $expenseTransfer = $this->tester
+            ->getFacade()
+            ->expandShipmentExpenseWithMerchantReference($expenseTransfer, $shipmentGroupTransfer);
+
+        // Assert
+        $this->assertNull($expenseTransfer->getMerchantReference());
+    }
+
+    /**
+     * @return array
+     */
+    public function getExpandShipmentExpenseWithMerchantReferenceNegativeScenarioDataProvider(): array
+    {
+        return [
+            'with incorrect expense type' => [
+                [
+                    [
+                        ExpenseTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE,
+                    ],
+                ],
+                static::INVALID_SHIPMENT_EXPENSE_TYPE,
+            ],
+            'with different merchant references' => [
+                [
+                    [
+                        ExpenseTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE,
+                    ],
+                    [
+                        ExpenseTransfer::MERCHANT_REFERENCE => static::TEST_SECOND_MERCHANT_REFERENCE,
+                    ],
+                ],
+                static::VALID_SHIPMENT_EXPENSE_TYPE,
+            ],
+        ];
     }
 
     /**
