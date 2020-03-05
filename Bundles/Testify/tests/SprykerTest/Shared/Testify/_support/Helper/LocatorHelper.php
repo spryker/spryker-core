@@ -165,6 +165,8 @@ class LocatorHelper extends Module
      */
     public function _afterSuite(): void
     {
+        $this->clearLocators();
+        $this->clearCaches();
         $this->resetConfig();
     }
 

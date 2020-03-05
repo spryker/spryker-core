@@ -127,7 +127,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelDictionaryStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelDictionaryStoragePublishListener());
     }
 
     /**
@@ -177,6 +177,6 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryLocalizedDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE, new ProductLabelDictionaryStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE, new ProductLabelDictionaryStoragePublishListener());
     }
 }
