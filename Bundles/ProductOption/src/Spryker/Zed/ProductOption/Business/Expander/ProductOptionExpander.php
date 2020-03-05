@@ -130,7 +130,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
             $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
         }
 
-        return array_filter($salesOrderItemIds);
+        return array_unique($salesOrderItemIds);
     }
 
     /**
@@ -148,7 +148,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
             }
         }
 
-        return array_filter($productOptionSkus);
+        return array_unique($productOptionSkus);
     }
 
     /**
