@@ -55,7 +55,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      */
     public function findProductMeasurementUnitStorage(int $idProductMeasurementUnit): ?ProductMeasurementUnitStorageTransfer
     {
-        $key = $this->generateKey($idProductMeasurementUnit);
+        $key = $this->getGeneratedStorageKey((string)$idProductMeasurementUnit);
         $productMeasurementUnitStorageData = $this->storageClient->get($key);
 
         if (!$productMeasurementUnitStorageData) {
@@ -119,7 +119,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     {
         $productMeasurementUnitStorageKeys = [];
         foreach ($productMeasurementUnitIds as $idProductMeasurementUnit) {
-            $productMeasurementUnitStorageKeys[] = $this->generateKey($idProductMeasurementUnit);
+            $productMeasurementUnitStorageKeys[] = $this->getGeneratedStorageKey((string)$idProductMeasurementUnit);
         }
 
         return $productMeasurementUnitStorageKeys;
@@ -159,7 +159,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     {
         $mappingKeys = [];
         foreach ($identifiers as $identifier) {
-            $mappingKeys[] = $this->getStorageKey(sprintf('%s:%s', $mappingType, $identifier));
+            $mappingKeys[] = $this->getGeneratedStorageKey(sprintf('%s:%s', $mappingType, $identifier));
         }
 
         return $mappingKeys;
@@ -170,7 +170,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      *
      * @return string
      */
-    protected function getStorageKey(string $reference): string
+    protected function getGeneratedStorageKey(string $reference): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
@@ -190,20 +190,5 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     {
         return (new ProductMeasurementUnitStorageTransfer())
             ->fromArray($productMeasurementUnitStorageData, true);
-    }
-
-    /**
-     * @param int $idProductMeasurementUnit
-     *
-     * @return string
-     */
-    protected function generateKey(int $idProductMeasurementUnit): string
-    {
-        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($idProductMeasurementUnit);
-
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
     }
 }
