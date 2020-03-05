@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductRelation\Business\Relation\Updater;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface;
@@ -80,33 +81,76 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
         ProductRelationTransfer $productRelationTransfer
     ): ProductRelationResponseTransfer {
         $this->assertUpdateRelation($productRelationTransfer);
+        $idProductRelation = $productRelationTransfer->getIdProductRelation();
         $storeRelationTransfer = $productRelationTransfer->getStoreRelation()
             ->setIdEntity($productRelationTransfer->getIdProductRelation());
         $productRelationResponseTransfer = $this->createProductRelationResponseTransfer();
 
-        $productRelationTypeTransfer = $this->productRelationEntityManager->saveProductRelationType(
-            $productRelationTransfer->getProductRelationType()
-        );
-        $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
-        $productRelationTransfer = $this->productRelationEntityManager
-            ->updateProductRelation($productRelationTransfer);
+        $productRelationTransfer = $this->updateProductRelationWithRelationType($productRelationTransfer);
 
         if (!$productRelationTransfer) {
             return $productRelationResponseTransfer
-                ->addMessage($this->getErrorMessageTransfer(sprintf(static::MESSAGE_UPDATE_ERROR, $productRelationTransfer->getIdProductRelation())));
+                ->addMessage($this->createErrorMessageTransfer(sprintf(static::MESSAGE_UPDATE_ERROR, $idProductRelation)));
         }
 
-        $this->productRelationEntityManager->removeRelatedProductsByIdProductRelation(
-            $productRelationTransfer->getIdProductRelation()
-        );
-        $this->relatedProductsUpdater->updateAllRelatedProducts($productRelationTransfer);
-        $this->productRelationStoreRelationUpdater->update($storeRelationTransfer);
+        $this->removeRelatedProducts($productRelationTransfer->getIdProductRelation());
+        $this->updateRelatedProducts($productRelationTransfer);
+        $this->updateStoreRelation($storeRelationTransfer);
 
         $this->touchRelationActive($productRelationTransfer->getFkProductAbstract());
 
         return $productRelationResponseTransfer
             ->setIsSuccess(true)
             ->setProductRelation($productRelationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return void
+     */
+    protected function updateStoreRelation(StoreRelationTransfer $storeRelationTransfer): void
+    {
+        $this->productRelationStoreRelationUpdater->update($storeRelationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return void
+     */
+    protected function updateRelatedProducts(ProductRelationTransfer $productRelationTransfer): void
+    {
+        $this->relatedProductsUpdater->updateAllRelatedProducts($productRelationTransfer);
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    protected function removeRelatedProducts(int $idProductRelation): void
+    {
+        $this->productRelationEntityManager->removeRelatedProductsByIdProductRelation(
+            $idProductRelation
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     */
+    protected function updateProductRelationWithRelationType(
+        ProductRelationTransfer $productRelationTransfer
+    ): ?ProductRelationTransfer {
+        $productRelationTypeTransfer = $this->productRelationEntityManager->saveProductRelationType(
+            $productRelationTransfer->getProductRelationType()
+        );
+        $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
+
+        return $this->productRelationEntityManager
+            ->updateProductRelation($productRelationTransfer);
     }
 
     /**
@@ -134,7 +178,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function getErrorMessageTransfer(string $message): MessageTransfer
+    protected function createErrorMessageTransfer(string $message): MessageTransfer
     {
         return (new MessageTransfer())->setValue($message);
     }
