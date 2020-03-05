@@ -10,12 +10,7 @@ namespace Spryker\Zed\ProductRelation\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductRelationRelatedProductTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
-use Generated\Shared\Transfer\ProductSelectorTransfer;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
 

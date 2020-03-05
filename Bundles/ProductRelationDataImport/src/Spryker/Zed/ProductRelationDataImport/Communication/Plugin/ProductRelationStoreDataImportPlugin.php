@@ -16,6 +16,7 @@ use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig;
 /**
  * @method \Spryker\Zed\ProductRelationDataImport\Business\ProductRelationDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig getConfig()
+ * @method \Spryker\Zed\ProductRelationDataImport\Communication\ProductRelationDataImportCommunicationFactory getFactory()
  */
 class ProductRelationStoreDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

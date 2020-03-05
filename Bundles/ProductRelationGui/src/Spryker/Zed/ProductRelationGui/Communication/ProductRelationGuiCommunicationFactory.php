@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ProductRelationGui\Communication;
 
 use Generated\Shared\Transfer\ProductRelationTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductAbstractNotBlankConstraint;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductRelationKeyUniqueConstraint;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeleteForm;

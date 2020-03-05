@@ -62,6 +62,9 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addProductAttributeFacade($container);
         $container = $this->addProductRelationPropelQuery($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addProductAbstractPropelQuery($container);
+        $container = $this->addProductAttributeKeyPropelQuery($container);
+        $container = $this->addPropelQueryBuilderQueryContainer($container);
 
         return $container;
     }
@@ -76,9 +79,6 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container->set(static::PROPEL_QUERY_PRODUCT_RELATION, $container->factory(function () {
             return SpyProductRelationQuery::create();
         }));
-        $container = $this->addProductAbstractPropelQuery($container);
-        $container = $this->addProductAttributeKeyPropelQuery($container);
-        $container = $this->addPropelQueryBuilderQueryContainer($container);
 
         return $container;
     }

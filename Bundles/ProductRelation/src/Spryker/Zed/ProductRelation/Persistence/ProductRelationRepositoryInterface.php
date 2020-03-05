@@ -48,6 +48,14 @@ interface ProductRelationRepositoryInterface
     public function findRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array;
 
     /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
+
+    /**
      * @param int $idProductRelation
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
@@ -65,14 +73,6 @@ interface ProductRelationRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
     public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer;
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return array
-     */
-    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
 
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]

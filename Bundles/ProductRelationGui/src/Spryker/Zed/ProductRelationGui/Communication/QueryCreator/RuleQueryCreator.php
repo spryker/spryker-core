@@ -86,19 +86,17 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
      * @module Category
      * @module ProductCategory
      *
-     * @param \Generated\Shared\Transfer\RuleQueryDataProviderTransfer $dataProviderTransfer
+     * @param \Generated\Shared\Transfer\RuleQueryDataProviderTransfer|null $dataProviderTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function prepareQuery(RuleQueryDataProviderTransfer $dataProviderTransfer): ModelCriteria
+    protected function prepareQuery(?RuleQueryDataProviderTransfer $dataProviderTransfer): ModelCriteria
     {
         $idLocale = $this->localeFacade
             ->getCurrentLocale()
             ->getIdLocale();
 
-        $dataProviderTransfer->requireIdProductAbstract();
-
-        return $this->productAbstractQuery
+        $query = $this->productAbstractQuery
             ->setModelAlias(static::ALIAS_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES)
             ->addJoin(
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
@@ -147,7 +145,26 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
             ->withColumn(
                 'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
                 static::COL_CATEGORY_NAME
-            )->filterByIdProductAbstract($dataProviderTransfer->getIdProductAbstract());
+            );
+
+        return $this->filterByProductAbstract($query, $dataProviderTransfer);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
+     * @param \Generated\Shared\Transfer\RuleQueryDataProviderTransfer|null $dataProviderTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function filterByProductAbstract(
+        ModelCriteria $query,
+        ?RuleQueryDataProviderTransfer $dataProviderTransfer
+    ): ModelCriteria {
+        if (!$dataProviderTransfer || !$dataProviderTransfer->getIdProductAbstract()) {
+            return $query;
+        }
+
+        return $query->filterByIdProductAbstract($dataProviderTransfer->getIdProductAbstract());
     }
 
     /**
