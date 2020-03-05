@@ -69,6 +69,20 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addProductRelationPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_RELATION, $container->factory(function () {
+            return SpyProductRelationQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addPropelQueryBuilderQueryContainer(Container $container): Container
     {
         $container->set(static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER, function (Container $container) {
@@ -103,20 +117,6 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        }));
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductRelationPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_PRODUCT_RELATION, $container->factory(function () {
-            return SpyProductRelationQuery::create();
         }));
 
         return $container;
