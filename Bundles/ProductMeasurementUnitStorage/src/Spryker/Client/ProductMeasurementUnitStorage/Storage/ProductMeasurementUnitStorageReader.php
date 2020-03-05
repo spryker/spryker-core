@@ -143,7 +143,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
             if (!$productMeasurementUnitStorageData) {
                 continue;
             }
-            $productConcreteMeasurementUnitStorageTransfers[] = $this->mapToProductMeasurementUnitStorage($productMeasurementUnitStorageData);
+            $productConcreteMeasurementUnitStorageTransfers[] = $this->mapToProductMeasurementUnitStorage(
+                $productMeasurementUnitStorageData
+            );
         }
 
         return $productConcreteMeasurementUnitStorageTransfers;
@@ -188,7 +190,6 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      */
     protected function mapToProductMeasurementUnitStorage(array $productMeasurementUnitStorageData): ProductMeasurementUnitStorageTransfer
     {
-        return (new ProductMeasurementUnitStorageTransfer())
-            ->fromArray($productMeasurementUnitStorageData, true);
+        return (new ProductMeasurementUnitStorageTransfer())->fromArray($productMeasurementUnitStorageData, true);
     }
 }
