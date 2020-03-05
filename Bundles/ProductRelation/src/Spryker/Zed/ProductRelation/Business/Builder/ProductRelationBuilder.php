@@ -5,16 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelation\Business\Updater;
+namespace Spryker\Zed\ProductRelation\Business\Builder;
 
 use Exception;
-use Generated\Shared\Transfer\ProductRelationTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
-use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
-use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
 
 class ProductRelationBuilder implements ProductRelationBuilderInterface
@@ -58,7 +54,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     {
         foreach ($this->findActiveProductRelations() as $productRelationTransfer) {
             try {
-                if (!$productRelationTransfer->getQuerySet()->getRules()) {
+                if (!$productRelationTransfer->getQuerySet()->getRules()->count()) {
                     continue;
                 }
 

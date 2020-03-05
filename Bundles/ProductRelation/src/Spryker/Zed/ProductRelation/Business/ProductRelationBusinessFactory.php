@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductRelation\Business\Builder\ProductRelationBuilder;
 use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreator;
 use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreatorInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleter;
@@ -22,7 +23,6 @@ use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdater
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdater;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdaterInterface;
-use Spryker\Zed\ProductRelation\Business\Updater\ProductRelationBuilder;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 
 /**
@@ -124,7 +124,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Business\Updater\ProductRelationBuilderInterface
+     * @return \Spryker\Zed\ProductRelation\Business\Builder\ProductRelationBuilderInterface
      */
     public function createProductRelationBuilder()
     {

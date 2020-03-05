@@ -72,8 +72,7 @@ class ProductRelationMapper
     public function mapProductRelationEntitiesToProductRelationTransfers(
         ObjectCollection $productRelationEntities,
         array $productRelationTransfers
-    ): array
-    {
+    ): array {
         foreach ($productRelationEntities as $productRelationEntity) {
             $productRelationTransfers[] = $this->mapProductRelationEntityToProductRelationTransfer(
                 $productRelationEntity,
