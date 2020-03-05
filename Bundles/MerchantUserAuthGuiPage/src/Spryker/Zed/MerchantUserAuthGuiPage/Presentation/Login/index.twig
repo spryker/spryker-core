@@ -15,6 +15,10 @@
     <mp-login cloak>
         {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
 
+        {% for error in form.vars.errors %}
+            <spy-alert class="login_message" type="error">{{ error.message | trans }}</spy-alert>
+        {% endfor %}
+
         <form action="{{ formData.actionUrl }}" name="{{ formData.name }}" method="{{ formData.method }}">
             {% for formField in formData.children if formField.vars.block_prefixes[1] != 'hidden' %}
                 <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default | trans }}">
