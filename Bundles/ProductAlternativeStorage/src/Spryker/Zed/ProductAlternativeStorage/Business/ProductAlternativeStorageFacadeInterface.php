@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductAlternativeStorageFacadeInterface
 {
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Publishs alternatives for given products.
      *
      * @api
      *
