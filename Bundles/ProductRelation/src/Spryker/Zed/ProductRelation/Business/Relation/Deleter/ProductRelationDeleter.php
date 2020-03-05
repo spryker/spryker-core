@@ -19,7 +19,7 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
 {
     use TransactionTrait;
 
-    protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation not found';
+    protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation #%d not found';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface
@@ -75,7 +75,7 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
 
         if (!$productRelationTransfer) {
             return $productRelationResponseTransfer->addMessage(
-                $this->getErrorMessageTransfer(static::ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND)
+                $this->getErrorMessageTransfer(sprintf(static::ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND, $idProductRelation))
             );
         }
 
