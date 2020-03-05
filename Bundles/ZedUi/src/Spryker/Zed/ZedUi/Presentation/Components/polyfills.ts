@@ -61,3 +61,12 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+import 'core-js/features/array/flat';
+import cssVars from 'css-vars-ponyfill';
+
+cssVars({
+    preserveStatic: false,
+    watch: true,
+});
+
+import '@webcomponents/webcomponentsjs/bundles/webcomponents-ce';
