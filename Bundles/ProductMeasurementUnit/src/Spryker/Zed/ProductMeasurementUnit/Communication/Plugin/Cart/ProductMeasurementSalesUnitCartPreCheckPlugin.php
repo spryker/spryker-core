@@ -31,6 +31,6 @@ class ProductMeasurementSalesUnitCartPreCheckPlugin extends AbstractPlugin imple
      */
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->checkItemProductMeasurementUnit($cartChangeTransfer);
+        return $this->getFacade()->checkItemProductMeasurementSalesUnit($cartChangeTransfer);
     }
 }
