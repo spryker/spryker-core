@@ -7,8 +7,7 @@
 
 namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander;
 
-use ArrayObject;
-use Generated\Shared\Transfer\RestCartItemsSalesUnitAttributesTransfer;
+use Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -19,8 +18,6 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\Sa
 class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCartItemResourceRelationshipExpanderInterface
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
-    protected const ATTRIBUTE_SKU = 'sku';
-    protected const ATTRIBUTE_SALES_UNIT = 'salesUnit';
 
     /**
      * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\SalesUnitRestResponseBuilderInterface
@@ -71,22 +68,17 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
             ->getProductMeasurementSalesUnitsByProductConcreteIds($productConcreteIds);
         $productConcreteSkus = array_flip($productConcreteIds);
         foreach ($resources as $resource) {
+            $restItemsAttributesTransfer = $resource->getAttributes();
+            if (!$restItemsAttributesTransfer instanceof RestItemsAttributesTransfer) {
+                continue;
+            }
+
             foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {
-                $productConcreteSku = $productConcreteSkus[$productConcreteProductMeasurementSalesUnitTransfer->getIdProductConcrete()];
-                $restCartItemsAttributesTransfer = $resource->getAttributes();
-                if (!$restCartItemsAttributesTransfer instanceof RestItemsAttributesTransfer) {
-                    continue;
-                }
-
-                if ($productConcreteSku !== $restCartItemsAttributesTransfer->getSku()) {
-                    continue;
-                }
-
-                $restCartItemsSalesUnitAttributesTransfer = $restCartItemsAttributesTransfer->getSalesUnit();
                 $this->addResourceRelationship(
                     $resource,
-                    $productConcreteProductMeasurementSalesUnitTransfer->getProductMeasurementSalesUnits(),
-                    $restCartItemsSalesUnitAttributesTransfer
+                    $productConcreteProductMeasurementSalesUnitTransfer,
+                    $restItemsAttributesTransfer,
+                    $productConcreteSkus
                 );
             }
         }
@@ -94,21 +86,29 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
-     * @param \Generated\Shared\Transfer\RestCartItemsSalesUnitAttributesTransfer|null $restCartItemsSalesUnitAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer $productConcreteProductMeasurementSalesUnitTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     * @param array $productConcreteSkus
      *
      * @return void
      */
     protected function addResourceRelationship(
         RestResourceInterface $resource,
-        ArrayObject $productMeasurementSalesUnitTransfers,
-        ?RestCartItemsSalesUnitAttributesTransfer $restCartItemsSalesUnitAttributesTransfer
+        ProductConcreteProductMeasurementSalesUnitTransfer $productConcreteProductMeasurementSalesUnitTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer,
+        array $productConcreteSkus
     ): void {
+        $productConcreteSku = $productConcreteSkus[$productConcreteProductMeasurementSalesUnitTransfer->getIdProductConcrete()];
+        if ($productConcreteSku !== $restItemsAttributesTransfer->getSku()) {
+            return;
+        }
+
+        $restCartItemsSalesUnitAttributesTransfer = $restItemsAttributesTransfer->getSalesUnit();
         if (!$restCartItemsSalesUnitAttributesTransfer) {
             return;
         }
 
-        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+        foreach ($productConcreteProductMeasurementSalesUnitTransfer->getProductMeasurementSalesUnits() as $productMeasurementSalesUnitTransfer) {
             if ($restCartItemsSalesUnitAttributesTransfer->getId() !== $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
                 continue;
             }
@@ -131,11 +131,7 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
     {
         $skus = [];
         foreach ($resources as $resource) {
-            if (!$resource->getAttributes()->offsetExists(static::ATTRIBUTE_SKU)) {
-                continue;
-            }
-
-            $skus[] = $resource->getAttributes()->offsetGet(static::ATTRIBUTE_SKU);
+            $skus[] = $resource->getId();
         }
 
         return $skus;

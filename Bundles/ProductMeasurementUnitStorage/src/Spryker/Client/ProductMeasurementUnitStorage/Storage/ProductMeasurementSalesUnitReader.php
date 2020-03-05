@@ -99,7 +99,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         $productConcreteMeasurementSalesUnitTransfers = [];
         $productMeasurementUnitIds = [];
         foreach ($productConcreteMeasurementUnitStorageTransfers as $productConcreteMeasurementUnitStorageTransfer) {
-            [$productConcreteMeasurementSalesUnitTransfers, $productMeasurementUnitIds] = $this->collectData(
+            [$productConcreteMeasurementSalesUnitTransfers, $productMeasurementUnitIds] = $this->collectProductMeasurementUnitData(
                 $productConcreteMeasurementUnitStorageTransfer
             );
         }
@@ -126,7 +126,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      *
      * @return array
      */
-    protected function collectData(ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer): array
+    protected function collectProductMeasurementUnitData(ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer): array
     {
         $productConcreteMeasurementSalesUnitTransfers = [];
         $productMeasurementUnitIds = [];
