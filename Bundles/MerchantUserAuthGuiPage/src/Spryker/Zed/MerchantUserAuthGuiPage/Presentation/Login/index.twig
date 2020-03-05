@@ -1,0 +1,24 @@
+{% extends '@MerchantUserAuthGuiPage/Layout/layout.twig' %}
+
+{% form_theme form '@MerchantUserAuthGuiPage/Layout/form.twig' %}
+
+{% block content %}
+
+    <div>
+        {{ form_start(form) }}
+
+            {% include '@MerchantUserAuthGuiPage/Partial/form-message.twig' %}
+
+            {{ form_errors(form) }}
+
+            {{ form_row(form.username) }}
+            {{ form_row(form.password) }}
+
+            <div class="form-group"><button class="btn btn-success btn-block btn-outline btn" type="submit">{{ 'Login' | trans }}</button></div>
+
+            {{ form_rest(form) }}
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

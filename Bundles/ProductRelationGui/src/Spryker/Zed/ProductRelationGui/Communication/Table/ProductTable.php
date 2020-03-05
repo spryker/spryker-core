@@ -7,8 +7,13 @@
 
 namespace Spryker\Zed\ProductRelationGui\Communication\Table;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -16,7 +21,6 @@ use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToPriceProductFacadeInterface;
-use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface;
 
 class ProductTable extends AbstractProductTable
@@ -25,11 +29,6 @@ class ProductTable extends AbstractProductTable
     protected const COL_STATUS = 'Status';
     protected const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
     protected const COL_PRICE_PRODUCT = 'spy_price_product.price';
-
-    /**
-     * @var \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer
-     */
-    protected $productRelationQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface
@@ -57,7 +56,12 @@ class ProductTable extends AbstractProductTable
     protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected $productAbstractQuery;
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToMoneyFacadeInterface $moneyFacade
@@ -65,14 +69,14 @@ class ProductTable extends AbstractProductTable
      * @param int|null $idProductRelation
      */
     public function __construct(
-        ProductRelationGuiToProductRelationQueryContainerInterface $productRelationQueryContainer,
+        SpyProductAbstractQuery $productAbstractQuery,
         ProductRelationGuiToLocaleFacadeInterface $localeFacade,
         ProductRelationGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductRelationGuiToMoneyFacadeInterface $moneyFacade,
         ProductRelationGuiToPriceProductFacadeInterface $priceProductFacade,
         ?int $idProductRelation = null
     ) {
-        $this->productRelationQueryContainer = $productRelationQueryContainer;
+        $this->productAbstractQuery = $productAbstractQuery;
         $this->localeFacade = $localeFacade;
         $this->utilEncodingService = $utilEncodingService;
 
@@ -221,14 +225,87 @@ class ProductTable extends AbstractProductTable
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
         if ($this->idProductRelation !== null) {
-            return $this->productRelationQueryContainer->queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation(
+            return $this->queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation(
                 $localeTransfer->getIdLocale(),
                 $this->idProductRelation
             );
         }
 
-        return $this->productRelationQueryContainer
-                ->queryProductsWithCategoriesByFkLocale($localeTransfer->getIdLocale());
+        return $this->queryProductsWithCategoriesByFkLocale($localeTransfer->getIdLocale());
+    }
+
+    /**
+     * @module ProductImage
+     * @module Category
+     * @module ProductCategory
+     *
+     * @param int $idLocale
+     * @param int $idProductRelation
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation(int $idLocale, int $idProductRelation): SpyProductAbstractQuery
+    {
+        return $this->queryProductsWithCategoriesByFkLocale($idLocale)
+            ->useSpyProductRelationProductAbstractQuery()
+                ->filterByFkProductRelation($idProductRelation)
+            ->endUse();
+    }
+
+    /**
+     * @module ProductImage
+     * @module Category
+     * @module ProductCategory
+     *
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function queryProductsWithCategoriesByFkLocale(int $idLocale): SpyProductAbstractQuery
+    {
+        return $this->productAbstractQuery
+            ->leftJoinSpyProduct()
+            ->select([
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyProductAbstractTableMap::COL_SKU,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION,
+                static::COL_PRICE_PRODUCT,
+                SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL,
+            ])
+            ->withColumn(
+                sprintf(
+                    'GROUP_CONCAT(%s)',
+                    SpyCategoryAttributeTableMap::COL_NAME
+                ),
+                static::COL_ASSIGNED_CATEGORIES
+            )
+            ->leftJoinPriceProduct()
+            ->useSpyProductAbstractLocalizedAttributesQuery()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->leftJoinSpyProductCategory()
+            ->useSpyProductImageSetQuery()
+                ->filterByFkLocale($idLocale)
+                ->_or()
+                ->filterByFkLocale(null)
+                ->useSpyProductImageSetToProductImageQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithSpyProductImage()
+                ->endUse()
+            ->endUse()
+            ->addJoin(
+                [SpyProductCategoryTableMap::COL_FK_CATEGORY, $idLocale],
+                [SpyCategoryAttributeTableMap::COL_FK_CATEGORY, SpyCategoryAttributeTableMap::COL_FK_LOCALE],
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(
+                'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
+                static::COL_IS_ACTIVE_AGGREGATION
+            )
+            ->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
+            ->addGroupByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
+            ->addGroupByColumn(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->addGroupByColumn(static::COL_PRICE_PRODUCT);
     }
 
     /**

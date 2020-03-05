@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Business;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
-use Generated\Shared\Transfer\ProductSelectorTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -162,7 +161,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
     public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer {
-        return $this->getRepository()->findUniqueProductRelation($productRelationCriteriaTransfer);
+        return $this->getRepository()->findProductRelationByCriteria($productRelationCriteriaTransfer);
     }
 
     /**
@@ -173,10 +172,10 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductSelectorTransfer
+     * @return array
      */
-    public function findProductForProductSelector(int $idProductAbstract, int $idLocale): ProductSelectorTransfer
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array
     {
-        return $this->getRepository()->findProductWithCategoriesByFkLocale($idProductAbstract, $idLocale);
+        return $this->getRepository()->getProductAbstractDataById($idProductAbstract, $idLocale);
     }
 }
