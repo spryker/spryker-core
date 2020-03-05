@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductRelation;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleBridge;
@@ -29,9 +27,6 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'query propel rule container';
 
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
-
-    public const PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY = 'PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY';
-    public const PROPEL_QUERY_SPY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_SPY_PRODUCT_ABSTRACT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -59,37 +54,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerPropelQueryBuilder($container);
 
         $container = $this->addFacadeLocale($container);
-        $container = $this->addProductAttributeKeyPropelQuery($container);
-        $container = $this->addProductAbstractPropelQuery($container);
         $container = $this->addServiceUtilEncoding($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductAbstractPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_SPY_PRODUCT_ABSTRACT, $container->factory(function () {
-            return SpyProductAbstractQuery::create();
-        }));
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductAttributeKeyPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_SPY_PRODUCT_ATTRIBUTE_KEY, $container->factory(function () {
-            return SpyProductAttributeKeyQuery::create();
-        }));
 
         return $container;
     }

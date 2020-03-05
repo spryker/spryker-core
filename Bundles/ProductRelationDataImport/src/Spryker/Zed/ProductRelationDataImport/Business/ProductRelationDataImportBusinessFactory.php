@@ -8,13 +8,17 @@
 namespace Spryker\Zed\ProductRelationDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\ProductRelationDataImport\Business\Hook\ProductRelationAfterImportHook;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\ProductRelationTypeWriterStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\ProductRelationWriterStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\SkuToIdProductAbstractStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\ProductRelationKeyToIdProductRelationStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\ProductRelationStoreWriterStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\StoreNameToIdStoreStep;
+use Spryker\Zed\ProductRelationDataImport\Dependency\Facade\ProductRelationDataImportToProductRelationFacadeInterface;
+use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig getConfig()
@@ -35,6 +39,7 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
             ->addStep($this->createProductRelationWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+        $dataImporter->addAfterImportHook($this->createProductRelationAfterImportHook());
 
         return $dataImporter;
     }
@@ -55,6 +60,14 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface
+     */
+    public function createProductRelationAfterImportHook(): DataImporterAfterImportInterface
+    {
+        return new ProductRelationAfterImportHook($this->getProductRelationFacade());
     }
 
     /**
@@ -103,5 +116,13 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
     public function createProductRelationStoreWriterStep(): DataImportStepInterface
     {
         return new ProductRelationStoreWriterStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelationDataImport\Dependency\Facade\ProductRelationDataImportToProductRelationFacadeInterface
+     */
+    public function getProductRelationFacade(): ProductRelationDataImportToProductRelationFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductRelationDataImportDependencyProvider::FACADE_PRODUCT_RELATION);
     }
 }

@@ -186,9 +186,8 @@ class PermissionFinder implements PermissionFinderInterface
      *
      * @return \Generated\Shared\Transfer\PermissionTransfer[] Keys are permission keys
      */
-    protected function indexPermissionTransfers(
-        array $permissions
-    ): array {
+    protected function indexPermissionTransfers(array $permissions): array
+    {
         $indexedPermissions = [];
         foreach ($permissions as $permission) {
             $indexedPermissions[$permission->getKey()] = $permission;

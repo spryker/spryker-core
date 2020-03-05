@@ -1,6 +1,4 @@
 parameters:
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Call to an undefined method .+ModelCriteria::.+\(\).#'
-    - '#Parameter \#1 \$query of method .+AbstractTable::runQuery\(\) expects .+ModelCriteria, .+Criteria given#'
     - '#Parameter .+ of function strnatcmp expects string, int|null given#'

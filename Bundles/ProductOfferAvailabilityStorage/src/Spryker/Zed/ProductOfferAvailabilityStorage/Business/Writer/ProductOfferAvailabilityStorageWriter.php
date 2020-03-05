@@ -160,7 +160,10 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
         ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer,
         ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
     ): ProductOfferAvailabilityStorageTransfer {
-         return $productOfferAvailabilityStorageTransfer->setAvailability($productConcreteAvailabilityTransfer->getAvailability());
+         $productOfferAvailabilityStorageTransfer->setAvailability($productConcreteAvailabilityTransfer->getAvailability())
+             ->setIsNeverOutOfStock($productConcreteAvailabilityTransfer->getIsNeverOutOfStock());
+
+         return $productOfferAvailabilityStorageTransfer;
     }
 
     /**

@@ -15,6 +15,8 @@ class ProductRelationDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_RELATION = 'product-relation';
     public const IMPORT_TYPE_PRODUCT_RELATION_STORE = 'product-relation-store';
 
+    protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
+
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
@@ -49,7 +51,7 @@ class ProductRelationDataImportConfig extends DataImportConfig
     protected function getModuleRoot(): string
     {
         $moduleRoot = realpath(
-            dirname(__DIR__, 4)
+            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

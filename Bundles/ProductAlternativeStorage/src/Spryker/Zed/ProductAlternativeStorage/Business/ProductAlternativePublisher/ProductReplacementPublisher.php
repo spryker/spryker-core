@@ -111,9 +111,8 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
      *
      * @return void
      */
-    protected function storeConcreteProductData(
-        array $indexedSkus
-    ): void {
+    protected function storeConcreteProductData(array $indexedSkus): void
+    {
         foreach ($indexedSkus as $idProduct => $productConcreteData) {
             $replacementIds = array_merge(
                 $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct),

@@ -19,6 +19,14 @@ interface ProductRelationEvents
 
     /**
      * Specification
+     * - This events will be used for product_relation_store publishing
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_RELATION_STORE_PUBLISH = 'ProductRelation.product_relation_store.publish';
+
+    /**
+     * Specification
      * - This events will be used for product_abstract_relation un-publishing
      *
      * @api

@@ -31,10 +31,10 @@ class ProductSelectorController extends AbstractController
 
         $idProductAbstract = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_ABSTRACT));
 
-        $productSelectorTransfer = $this->getFactory()
+        $productWithCategories = $this->getFactory()
             ->getProductRelationFacade()
-            ->findProductForProductSelector($idProductAbstract, $localeTransfer->getIdLocale());
+            ->getProductAbstractDataById($idProductAbstract, $localeTransfer->getIdLocale());
 
-        return $this->jsonResponse($productSelectorTransfer->toArray());
+        return $this->jsonResponse($productWithCategories);
     }
 }

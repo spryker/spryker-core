@@ -140,8 +140,11 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $categories, ?SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity = null)
-    {
+    protected function storeDataSet(
+        SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity,
+        array $categories,
+        ?SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity = null
+    ) {
         if ($spyProductAbstractCategoryStorageEntity === null) {
             $spyProductAbstractCategoryStorageEntity = new SpyProductAbstractCategoryStorage();
         }

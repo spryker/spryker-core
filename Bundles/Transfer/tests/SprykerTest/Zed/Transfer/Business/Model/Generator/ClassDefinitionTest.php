@@ -362,8 +362,17 @@ class ClassDefinitionTest extends Unit
      *
      * @return array
      */
-    private function getMethod(string $method, string $property, ?string $var = null, ?string $return = null, ?string $typeHint = null, ?string $constant = null, array $bundles = [], ?bool $hasDefaultNull = null, ?bool $valueObject = null): array
-    {
+    private function getMethod(
+        string $method,
+        string $property,
+        ?string $var = null,
+        ?string $return = null,
+        ?string $typeHint = null,
+        ?string $constant = null,
+        array $bundles = [],
+        ?bool $hasDefaultNull = null,
+        ?bool $valueObject = null
+    ): array {
         $method = [
             'name' => $method,
             'property' => $property,
@@ -408,8 +417,16 @@ class ClassDefinitionTest extends Unit
      *
      * @return array
      */
-    private function getGetMethod(string $method, string $property, ?string $var = null, ?string $return = null, ?string $typeHint = null, ?string $constant = null, array $bundles = [], ?bool $hasDefaultNull = null): array
-    {
+    private function getGetMethod(
+        string $method,
+        string $property,
+        ?string $var = null,
+        ?string $return = null,
+        ?string $typeHint = null,
+        ?string $constant = null,
+        array $bundles = [],
+        ?bool $hasDefaultNull = null
+    ): array {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles, $hasDefaultNull);
         unset($method['typeHint']);
 
@@ -428,8 +445,16 @@ class ClassDefinitionTest extends Unit
      *
      * @return array
      */
-    private function getCollectionMethod(string $method, string $property, string $parent, ?string $var = null, ?string $return = null, ?string $typeHint = null, ?string $constant = null, array $bundles = []): array
-    {
+    private function getCollectionMethod(
+        string $method,
+        string $property,
+        string $parent,
+        ?string $var = null,
+        ?string $return = null,
+        ?string $typeHint = null,
+        ?string $constant = null,
+        array $bundles = []
+    ): array {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles);
         $method['parent'] = $parent;
         $method['is_associative'] = false;

@@ -29,8 +29,7 @@
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
-    "spryker/twig": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/event": "Required to listen for changes affecting product relations.",

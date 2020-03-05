@@ -39,10 +39,11 @@ class ProductRelationTable extends AbstractTable
 
     protected const URL_RELATION_DELETE = '/product-relation-gui/delete/index';
     protected const URL_PRODUCT_RELATION_LIST = '/product-relation-gui/list/index';
-    protected const URL_PRODUCT_RELATION_EDIT = '/product-relation-gui/edit/index';
     protected const URL_PRODUCT_RELATION_VIEW = '/product-relation-gui/view/index';
 
     protected const LABEL_PRIMARY = 'label-primary';
+
+    public const URL_PRODUCT_RELATION_EDIT = '/product-relation-gui/edit/index';
 
     /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface
@@ -65,21 +66,21 @@ class ProductRelationTable extends AbstractTable
     protected $productRelationQuery;
 
     /**
+     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery $productRelationQuery
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig $productRelationGuiConfig
      * @param \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface $localeFacade
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery $productRelationQuery
      */
     public function __construct(
+        SpyProductRelationQuery $productRelationQuery,
         ProductRelationGuiToProductFacadeInterface $productFacade,
         ProductRelationGuiConfig $productRelationGuiConfig,
-        ProductRelationGuiToLocaleFacadeInterface $localeFacade,
-        SpyProductRelationQuery $productRelationQuery
+        ProductRelationGuiToLocaleFacadeInterface $localeFacade
     ) {
+        $this->productRelationQuery = $productRelationQuery;
         $this->productFacade = $productFacade;
         $this->productRelationGuiConfig = $productRelationGuiConfig;
         $this->localeFacade = $localeFacade;
-        $this->productRelationQuery = $productRelationQuery;
 
         $this->setTableIdentifier('product-relation-table');
     }
@@ -201,6 +202,8 @@ class ProductRelationTable extends AbstractTable
     }
 
     /**
+     * @module Product
+     *
      * @param int $idLocale
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -251,7 +254,7 @@ class ProductRelationTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->createViewButton($idProductRelation);
         $buttons[] = $this->createEditButton($idProductRelation);
-        $buttons[] = $this->createDeleteRelationButton($idProductRelation);
+        $buttons[] = $this->createDeleteButton($idProductRelation);
 
         return $buttons;
     }
@@ -311,7 +314,7 @@ class ProductRelationTable extends AbstractTable
      *
      * @return string
      */
-    protected function createDeleteRelationButton(int $idProductRelation): string
+    protected function createDeleteButton(int $idProductRelation): string
     {
         return $this->generateRemoveButton(
             Url::generate(static::URL_RELATION_DELETE, [

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Persistence;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
-use Generated\Shared\Transfer\ProductSelectorTransfer;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationPersistenceFactory getFactory()
@@ -21,22 +20,17 @@ interface ProductRelationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
-    public function findUniqueProductRelation(
+    public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer[]
-     */
-    public function findProductAttributes(): array;
 
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductSelectorTransfer
+     * @return array
      */
-    public function findProductWithCategoriesByFkLocale(int $idProductAbstract, int $idLocale): ProductSelectorTransfer;
+    public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
 
     /**
      * @param int $idProductRelation
