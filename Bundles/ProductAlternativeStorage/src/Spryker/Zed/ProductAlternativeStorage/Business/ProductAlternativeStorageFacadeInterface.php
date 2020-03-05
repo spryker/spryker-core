@@ -13,7 +13,7 @@ interface ProductAlternativeStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Publishs alternatives for given products.
+     * - Publishes alternatives for given products.
      *
      * @api
      *
@@ -25,7 +25,7 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Publish replacements for abstract product
+     *  - Publishes replacements for abstract product
      *
      * @api
      *
@@ -37,7 +37,7 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Publish replacements for concrete product
+     *  - Publishes replacements for concrete product
      *
      * @api
      *
