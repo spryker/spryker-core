@@ -100,6 +100,12 @@
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
         <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
         <property name="customerReference" type="string"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+    </transfer>
+
+    <transfer name="ReturnableItemFilter">
+        <property name="customerReference" type="string"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
     </transfer>
 
     <transfer name="Pagination">

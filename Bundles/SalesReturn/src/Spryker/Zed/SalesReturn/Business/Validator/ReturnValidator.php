@@ -11,8 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
+use Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface;
-use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class ReturnValidator implements ReturnValidatorInterface
 {
@@ -26,20 +26,20 @@ class ReturnValidator implements ReturnValidatorInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\SalesReturn\SalesReturnConfig
+     * @var \Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface
      */
-    protected $salesReturnConfig;
+    protected $orderItemChecker;
 
     /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
+     * @param \Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface $orderItemChecker
      */
     public function __construct(
         SalesReturnToStoreFacadeInterface $storeFacade,
-        SalesReturnConfig $salesReturnConfig
+        OrderItemCheckerInterface $orderItemChecker
     ) {
         $this->storeFacade = $storeFacade;
-        $this->salesReturnConfig = $salesReturnConfig;
+        $this->orderItemChecker = $orderItemChecker;
     }
 
     /**
@@ -56,7 +56,7 @@ class ReturnValidator implements ReturnValidatorInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR);
         }
 
-        if (!$this->isOrderItemsInReturnableStates($itemTransfers)) {
+        if (!$this->orderItemChecker->isOrderItemsInReturnableStates($itemTransfers)) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR);
         }
 
@@ -79,29 +79,6 @@ class ReturnValidator implements ReturnValidatorInterface
         ArrayObject $itemTransfers
     ): bool {
         return $itemTransfers->count() === $createReturnRequestTransfer->getReturnItems()->count();
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return bool
-     */
-    protected function isOrderItemsInReturnableStates(ArrayObject $itemTransfers): bool
-    {
-        $returnableStateNames = $this->salesReturnConfig->getReturnableStateNames();
-
-        foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer
-                ->requireState()
-                ->getState()
-                    ->requireName();
-
-            if (!in_array($itemTransfer->getState()->getName(), $returnableStateNames, true)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**

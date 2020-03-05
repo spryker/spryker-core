@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SalesReturn\Business;
 
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
@@ -63,6 +65,22 @@ interface SalesReturnFacadeInterface
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
     public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves order items from persistence.
+     * - Requires ReturnableItemFilterTransfer::customerReference to be set.
+     * - Removes items in nonreturnable state.
+     * - Finds Item records by criteria from ReturnableItemFilterTransfer.
+     * - Executes ReturnPolicyPluginInterface stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReturnableItemFilterTransfer $returnableItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getReturnableItems(ReturnableItemFilterTransfer $returnableItemFilterTransfer): ItemCollectionTransfer;
 
     /**
      * Specification:

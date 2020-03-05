@@ -8,6 +8,8 @@
 namespace Spryker\Client\SalesReturn;
 
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
@@ -61,6 +63,21 @@ class SalesReturnClient extends AbstractClient implements SalesReturnClientInter
     public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer
     {
         return $this->getZedStub()->createReturn($createReturnRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     * - ...
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReturnableItemFilterTransfer $returnableItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getReturnableItems(ReturnableItemFilterTransfer $returnableItemFilterTransfer): ItemCollectionTransfer
+    {
+        return $this->getZedStub()->getReturnableItems($returnableItemFilterTransfer);
     }
 
     /**

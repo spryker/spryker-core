@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SalesReturnsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_RETURNS = 'returns';
+    public const RESOURCE_RETURNABLE_ITEMS = 'returnable-items';
     public const RESOURCE_RETURN_REASONS = 'return-reasons';
 
     // TODO: clarify it.
