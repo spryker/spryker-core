@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductImageMapper
 {
@@ -41,5 +42,34 @@ class ProductImageMapper
         $productImageTransfer = $productImageTransfer->fromArray($productImageEntity->toArray(), true);
 
         return $productImageTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function mapProductImageSetEntitiesToProductImageSetTransfers(ObjectCollection $productImageSetEntities): array
+    {
+        $productImageSetTransfers = [];
+
+        foreach ($productImageSetEntities as $productImageSetEntity) {
+            $productImageSetTransfer = $this->mapProductImageSetEntityToProductImageSetTransfer(
+                $productImageSetEntity,
+                new ProductImageSetTransfer()
+            );
+
+            foreach ($productImageSetEntity->getSpyProductImageSetToProductImages() as $productImageSetToProductImageEntity) {
+                $productImageTransfer = $this->mapProductImageEntityToProductImageTransfer(
+                    $productImageSetToProductImageEntity->getSpyProductImage(),
+                    new ProductImageTransfer()
+                );
+                $productImageSetTransfer->addProductImage($productImageTransfer);
+            }
+
+            $productImageSetTransfers[] = $productImageSetTransfer;
+        }
+
+        return $productImageSetTransfers;
     }
 }

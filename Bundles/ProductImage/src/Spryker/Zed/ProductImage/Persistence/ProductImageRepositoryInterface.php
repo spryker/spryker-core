@@ -32,4 +32,12 @@ interface ProductImageRepositoryInterface
      * @return int[]
      */
     public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array;
+
+    /**
+     * @param array $productConcreteIds
+     * @param int $localeId
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImageSetsByProductConcreteIdsAndLocaleId(array $productConcreteIds, int $localeId): array;
 }

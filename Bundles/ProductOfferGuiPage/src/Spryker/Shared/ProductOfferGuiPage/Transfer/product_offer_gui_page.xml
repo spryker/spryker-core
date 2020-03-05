@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="TableData">
+        <property name="rows" type="array" singular="row"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="TableConfiguration">
+        <property name="columns" type="TableColumn[]" singular="column"/>
+        <property name="availablePageSizes" type="int[]" singular="availablePageSize"/>
+        <property name="filters" type="TableFilter[]" singular="filter"/>
+        <property name="defaultSortColumn" type="string"/>
+    </transfer>
+
+    <transfer name="TableColumn">
+        <property name="columnKey" type="string"/>
+        <property name="columnTitle" type="string"/>
+        <property name="isSearchable" type="bool"/>
+        <property name="isSortable" type="bool"/>
+        <property name="options" type="bool"/>
+    </transfer>
+
+    <transfer name="TableFilter">
+        <property name="key" type="string"/>
+        <property name="title" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isMultiselect" type="bool"/>
+        <property name="options" type="array" singular="options"/>
+    </transfer>
+
+    <transfer name="ProductListTableCriteria">
+        <property name="inCategories" type="string[]" singular="inCategory"/>
+        <property name="inStores" type="string[]" singular="inStore"/>
+        <property name="isActive" type="bool"/>
+        <property name="hasOffers" type="bool"/>
+        <property name="searchTerm" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="merchantUser" type="MerchantUser"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="orderBy" type="string[]" associative="true" singular="orderBy"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCollection">
+        <property name="concreteProducts" type="ProductConcrete[]" singular="productConcrete"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProduct" type="int"/>
+        <property name="name" type="string"/>
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
+        <property name="sku" type="string"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="hasOffers" type="bool"/>
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="storeNames" type="string"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+        <property name="idProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantUserCriteriaFilter">
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="concreteSkus" type="string[]" singular="concreteSku"/>
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="fkMerchant" type="int"/>
+        <property name="concreteSku" type="string"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="idCategory" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+</transfers>

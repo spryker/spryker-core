@@ -39,4 +39,10 @@
         <property name="productImageIds" type="array" singular="productImageId"/>
     </transfer>
 
+    <transfer name="ProductImageSetCollection">
+    </transfer>
+
+    <transfer name="ProductImageSetCriteria">
+    </transfer>
+
 </transfers>

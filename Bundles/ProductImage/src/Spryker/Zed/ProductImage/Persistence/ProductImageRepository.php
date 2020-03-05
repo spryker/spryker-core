@@ -130,4 +130,30 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
             ->find()
             ->getData();
     }
+
+    /**
+     * @param array $productConcreteIds
+     * @param int $localeId
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImageSetsByProductConcreteIdsAndLocaleId(array $productConcreteIds, int $localeId): array
+    {
+        $productImageSetQuery = $this->getFactory()
+            ->createProductImageSetQuery()
+            ->joinWithSpyProductImageSetToProductImage()
+                ->useSpyProductImageSetToProductImageQuery()
+                    ->joinWithSpyProductImage()
+                ->endUse()
+            ->filterByFkLocale(
+                $localeId
+            )
+            ->filterByFkProduct_In($productConcreteIds);
+
+        $results = $productImageSetQuery->find();
+
+        return $this->getFactory()
+            ->createProductImageMapper()
+            ->mapProductImageSetEntitiesToProductImageSetTransfers($results);
+    }
 }

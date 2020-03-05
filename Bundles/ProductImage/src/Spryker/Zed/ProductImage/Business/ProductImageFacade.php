@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageFilterTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -327,5 +329,20 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageSetResolver()
             ->resolveProductImageSetsForLocale($productImageSetTransfers, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     * @param int $localeId
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImageSetsByProductConcreteIdsAndLocaleId(array $productIds, int $localeId): array
+    {
+        return $this->getRepository()->getProductImageSetsByProductConcreteIdsAndLocaleId($productIds, $localeId);
     }
 }
