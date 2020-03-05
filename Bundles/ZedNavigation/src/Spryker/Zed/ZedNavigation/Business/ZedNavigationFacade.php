@@ -15,9 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ZedNavigationFacade extends AbstractFacade implements ZedNavigationFacadeInterface
 {
     /**
-     * Specification:
-     * - Returns an array with all navigation entries.
-     * - When navigation cache is enabled it returns cached navigation.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,9 +29,7 @@ class ZedNavigationFacade extends AbstractFacade implements ZedNavigationFacadeI
     }
 
     /**
-     * Specification:
-     * - Writes generated navigation to a cache file.
-     * - This file is used to return navigation in `buildNavigation` when cache is enabled.
+     * {@inheritDoc}
      *
      * @api
      *

@@ -40,6 +40,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
+     *
      * @return int
      */
     public function getTotalCount()
@@ -54,6 +56,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
      *
      * @return array
      */
@@ -402,6 +406,20 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer
     {
         return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be remove without replacement.
+     *
+     * @return bool
+     */
+    public function isInLegacyMode(): bool
+    {
+        return $this->getFactory()->createSearchLegacyModeChecker()->isInLegacyMode();
     }
 
     /**

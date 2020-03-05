@@ -39,6 +39,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
+     *
      * @return int
      */
     public function getTotalCount();
@@ -50,14 +52,15 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
+     *
      * @return array
      */
     public function getMetaData();
 
     /**
      * Specification:
-     * - Removes the current index if no indexName is passed.
-     * - Removes the passed indexName.
+     * - Removes the current index.
      *
      * @api
      *
@@ -347,6 +350,19 @@ interface SearchFacadeInterface
      */
     public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer;
 
+    /**
+     * Specification:
+     * - Checks whether the search operates in legacy mode.
+     * - In legacy mode all search activities are done by this module, rather than being delegated to the search vendor specific modules.
+     *
+     * @api
+     *
+     * @deprecated Will be remove without replacement.
+     *
+     * @return bool
+     */
+    public function isInLegacyMode(): bool;
+    
     /**
      * Specification:
      * - Removes previously generated map class.
