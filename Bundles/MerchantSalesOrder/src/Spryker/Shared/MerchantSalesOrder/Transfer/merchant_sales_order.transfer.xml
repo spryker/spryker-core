@@ -5,6 +5,7 @@
 
     <transfer name="Expense">
         <property name="merchantReference" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="Filter">
@@ -86,6 +87,10 @@
     </transfer>
 
     <transfer name="Quote">
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

@@ -83,6 +83,7 @@ class MerchantExpander implements MerchantExpanderInterface
             if (!$item->getMerchantReference()) {
                 continue;
             }
+
             $merchantReferences[] = $item->getMerchantReference();
         }
 
