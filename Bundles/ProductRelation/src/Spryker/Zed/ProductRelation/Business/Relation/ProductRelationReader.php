@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductRelation\Business\Relation;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
-use Generated\Shared\Transfer\ProductRelationTypeTransfer;
-use Orm\Zed\ProductRelation\Persistence\SpyProductRelationType;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
 
@@ -39,21 +37,6 @@ class ProductRelationReader implements ProductRelationReaderInterface
 
         $this->productRelationQueryContainer = $productRelationQueryContainer;
         $this->productRelationRepository = $productRelationRepository;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
-     */
-    public function getProductRelationTypeList()
-    {
-        $productRelationTypeCollection = $this->findProductRelationTemplates();
-
-        $productRelationTypes = [];
-        foreach ($productRelationTypeCollection as $productRelationTypeEntity) {
-            $productRelationTypes[] = $this->mapProductRelationTypeTransfer($productRelationTypeEntity);
-        }
-
-        return $productRelationTypes;
     }
 
     /**
@@ -96,28 +79,5 @@ class ProductRelationReader implements ProductRelationReaderInterface
     {
         return (new ProductRelationResponseTransfer())
             ->setIsSuccess(false);
-    }
-
-    /**
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationType[]
-     */
-    protected function findProductRelationTemplates()
-    {
-        return $this->productRelationQueryContainer
-            ->queryProductRelationType()
-            ->find();
-    }
-
-    /**
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelationType $productRelationTypeEntity
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer
-     */
-    protected function mapProductRelationTypeTransfer(SpyProductRelationType $productRelationTypeEntity)
-    {
-        $productRelationTypeTransfer = new ProductRelationTypeTransfer();
-        $productRelationTypeTransfer->fromArray($productRelationTypeEntity->toArray(), true);
-
-        return $productRelationTypeTransfer;
     }
 }

@@ -73,4 +73,9 @@ interface ProductRelationRepositoryInterface
      * @return array
      */
     public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
+     */
+    public function findProductRelationTypes(): array;
 }

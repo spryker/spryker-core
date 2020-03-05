@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 interface ProductRelationReaderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
-     */
-    public function getProductRelationTypeList();
-
-    /**
      * @param int $idProductRelation
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer

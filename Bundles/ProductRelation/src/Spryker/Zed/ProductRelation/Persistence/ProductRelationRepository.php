@@ -187,4 +187,25 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
                 new ProductRelationTransfer()
             );
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
+     */
+    public function findProductRelationTypes(): array
+    {
+        $productRelationTypeEntities = $this->getFactory()
+            ->createProductRelationTypeQuery()
+            ->find();
+
+        if ($productRelationTypeEntities->getData() === []) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createProductRelationTypeMapper()
+            ->mapProductRelationTypeEntitiesToProductRelationTypeTransfer(
+                $productRelationTypeEntities,
+                []
+            );
+    }
 }
