@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\ProductRelationStorage\Communication\Plugin\Event\List
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
@@ -49,6 +52,11 @@ class ProductRelationStorageListenerTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\ProductAbstractTransfer
      */
+    protected $productAbstractTransferAnotherStore;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
     protected $productAbstractTransferRelated;
 
     /**
@@ -58,7 +66,24 @@ class ProductRelationStorageListenerTest extends Unit
     {
         parent::setUp();
 
-        $this->productAbstractTransfer = $this->tester->haveProductAbstract();
+        $storeDe = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $storeAt = $this->tester->haveStore([
+            StoreTransfer::NAME => 'AT',
+        ]);
+        $storeRelationDeTransfer = (new StoreRelationTransfer())
+            ->addStores($storeDe)
+            ->addIdStores($storeDe->getIdStore());
+        $storeRelationAtTransfer = (new StoreRelationTransfer())
+            ->addIdStores($storeAt->getIdStore())
+            ->addStores($storeAt);
+        $this->productAbstractTransfer = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::STORE_RELATION => $storeRelationDeTransfer,
+        ]);
+        $this->productAbstractTransferAnotherStore = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::STORE_RELATION => $storeRelationAtTransfer,
+        ]);
         $this->productAbstractTransferRelated = $this->tester->haveProductAbstract();
 
         $localizedAttributes = $this->tester->generateLocalizedAttributes();
@@ -84,8 +109,13 @@ class ProductRelationStorageListenerTest extends Unit
      */
     public function testProductRelationPublishStorageListenerStoreData(): void
     {
-        SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract())->delete();
-        $beforeCount = SpyProductAbstractRelationStorageQuery::create()->count();
+        SpyProductAbstractRelationStorageQuery::create()
+            ->filterByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract())
+            ->filterByStore('DE')
+            ->delete();
+        $beforeCount = SpyProductAbstractRelationStorageQuery::create()
+            ->filterByStore('DE')
+            ->count();
 
         $productRelationPublishStorageListener = new ProductRelationPublishStorageListener();
         $productRelationPublishStorageListener->setFacade($this->getProductRelationStorageFacade());
@@ -164,7 +194,9 @@ class ProductRelationStorageListenerTest extends Unit
      */
     protected function assertProductAbstractRelationStorage(int $beforeCount): void
     {
-        $productRelationStorageCount = SpyProductAbstractRelationStorageQuery::create()->count();
+        $productRelationStorageCount = SpyProductAbstractRelationStorageQuery::create()
+            ->filterByStore('DE')
+            ->count();
         $this->assertGreaterThan($beforeCount, $productRelationStorageCount);
         $productAbstractRelationStorage = SpyProductAbstractRelationStorageQuery::create()->orderByIdProductAbstractRelationStorage()->findOneByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract());
         $this->assertNotNull($productAbstractRelationStorage);
