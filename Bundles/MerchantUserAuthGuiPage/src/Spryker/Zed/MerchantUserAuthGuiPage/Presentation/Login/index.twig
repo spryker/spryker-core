@@ -1,24 +1,44 @@
-{% extends '@MerchantUserAuthGuiPage/Layout/layout.twig' %}
+{% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
 
-{% form_theme form '@MerchantUserAuthGuiPage/Layout/form.twig' %}
+{% block headTitle %}
+    {{ 'Merchant Portal' | trans }}
+{% endblock %}
 
 {% block content %}
+    <mp-login cloak>
+        {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
 
-    <div>
-        {{ form_start(form) }}
+        {% for error in form.vars.errors %}
+            <spy-alert type="error">{{ error.message | trans }}</spy-alert>
+        {% endfor %}
 
-            {% include '@MerchantUserAuthGuiPage/Partial/form-message.twig' %}
+        <form action="{{ form.vars.action }}" name="{{ form.vars.name }}" method="{{ form.vars.method }}">
+            {% for formField in form.children if formField.vars.block_prefixes[1] != 'hidden' %}
+                <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default | trans }}">
+                    {{ formField.vars.label | trans }}
+                    <spy-input
+                        control
+                        spy-id="{{ formField.vars.id }}"
+                        attrs=""
+                        required="{{ formField.vars.required }}"
+                        name="{{ formField.vars.full_name }}"
+                        value="{{ formField.vars.value }}"
+                        type="{{ formField.vars.block_prefixes[2] }}"
+                        placeholder="{{ formField.vars.attr.placeholder | default | trans }}"
+                        cloak
+                    ></spy-input>
+                </spy-form-item>
+            {% endfor %}
 
-            {{ form_errors(form) }}
+            <input type="hidden" name="{{ form.children._token.vars.full_name }}" value="{{ form.children._token.vars.value }}">
 
-            {{ form_row(form.username) }}
-            {{ form_row(form.password) }}
+            <spy-button class="login__submit" type="submit" cloak>{{ 'Login' | trans }}</spy-button>
+        </form>
+    </mp-login>
+{% endblock %}
 
-            <div class="form-group"><button class="btn btn-success btn-block btn-outline btn" type="submit">{{ 'Login' | trans }}</button></div>
-
-            {{ form_rest(form) }}
-
-        {{ form_end(form) }}
-    </div>
-
+{% block footerJs %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/mp-login/main-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp-login/main-es5.js') }}" nomodule defer></script>
 {% endblock %}

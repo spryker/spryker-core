@@ -23,6 +23,9 @@ class MerchantLoginForm extends AbstractType
     public const FIELD_USERNAME = 'username';
     public const FIELD_PASSWORD = 'password';
 
+    protected const LABEL_USERNAME = 'Email';
+    protected const LABEL_PASSWORD = 'Password';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -45,13 +48,14 @@ class MerchantLoginForm extends AbstractType
             static::FIELD_USERNAME,
             EmailType::class,
             [
-                    'constraints' => [
-                        new Required(),
-                        new NotBlank(),
-                    ],
-                    'attr' => [
+                'label' => static::LABEL_USERNAME,
+                'constraints' => [
+                    new Required(),
+                    new NotBlank(),
+                ],
+                'attr' => [
                     'placeholder' => 'Email Address',
-                    ],
+                ],
             ]
         );
 
@@ -69,14 +73,15 @@ class MerchantLoginForm extends AbstractType
             static::FIELD_PASSWORD,
             PasswordType::class,
             [
-                    'constraints' => [
-                        new Required(),
-                        new NotBlank(),
-                    ],
-                    'attr' => [
+                'label' => static::LABEL_PASSWORD,
+                'constraints' => [
+                    new Required(),
+                    new NotBlank(),
+                ],
+                'attr' => [
                     'placeholder' => 'Password',
                     'autocomplete' => 'off',
-                    ],
+                ],
             ]
         );
 
