@@ -65,7 +65,7 @@ class EmptyGeneratedDirectoryConsole extends Console
                         'dev:ide-auto-completion:yves:remove',
                         'dev:ide-auto-completion:zed:remove',
                         'glue:rest-request-validation-cache:remove',
-                        'navigation:remove-cache',
+                        'navigation:cache:remove',
                         'search:source-map:remove',
                         'transfer:databuilder:remove',
                         'transfer:entity:remove',
