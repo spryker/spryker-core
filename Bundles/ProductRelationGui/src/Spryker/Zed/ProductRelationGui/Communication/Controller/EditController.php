@@ -21,7 +21,14 @@ class EditController extends BaseProductRelationController
 
     protected const MESSAGE_SUCCESS = 'Product relation successfully modified';
 
+    /**
+     * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
+     */
     protected const REDIRECT_URL_EDIT = '/product-relation-gui/edit/index';
+
+    /**
+     * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\ListController::indexAction()
+     */
     protected const REDIRECT_URL_LIST = '/product-relation-gui/list/index';
 
     /**

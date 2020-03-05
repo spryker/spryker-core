@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeInterface;
 
@@ -95,6 +96,7 @@ class ProductRelationTypeDataProvider
         $productRelationTransfer->setIsActive(false);
         $productRelationTransfer->setQuerySet(new PropelQueryBuilderRuleSetTransfer());
         $productRelationTransfer->setProductRelationType(new ProductRelationTypeTransfer());
+        $productRelationTransfer->setStoreRelation(new StoreRelationTransfer());
 
         return $productRelationTransfer;
     }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductRelation\Business\Relation\Deleter;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
+use Generated\Shared\Transfer\ProductRelationTransfer;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface;
@@ -79,18 +80,47 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
             );
         }
 
-        $this->productRelationEntityManager
-            ->removeRelatedProductsByIdProductRelation($idProductRelation);
-        $this->productRelationEntityManager
-            ->deleteProductRelationStoresByIdProductRelation($idProductRelation);
+        $this->productRelationEntityManager->deleteProductRelationById($idProductRelation);
+        $this->removeRelatedProducts($idProductRelation);
+        $this->removeStoreRelations($idProductRelation);
+        $this->touchRelationDeleted($productRelationTransfer);
 
+        return $productRelationResponseTransfer->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return void
+     */
+    protected function touchRelationDeleted(ProductRelationTransfer $productRelationTransfer): void
+    {
         $this->touchFacade->touchDeleted(
             ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION,
             $productRelationTransfer->getFkProductAbstract()
         );
-        $this->productRelationEntityManager->deleteProductRelationById($idProductRelation);
+    }
 
-        return $productRelationResponseTransfer->setIsSuccess(true);
+    /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    protected function removeRelatedProducts(int $idProductRelation): void
+    {
+        $this->productRelationEntityManager
+            ->removeRelatedProductsByIdProductRelation($idProductRelation);
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return void
+     */
+    protected function removeStoreRelations(int $idProductRelation): void
+    {
+        $this->productRelationEntityManager
+            ->deleteProductRelationStoresByIdProductRelation($idProductRelation);
     }
 
     /**

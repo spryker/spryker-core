@@ -56,7 +56,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
             );
 
             yield $this->productRelationRepository
-                ->findRelatedProductsByCriteriaFilter($productRelationCriteriaFilterTransfer);
+                ->getRelatedProductsByCriteriaFilter($productRelationCriteriaFilterTransfer);
         }
     }
 

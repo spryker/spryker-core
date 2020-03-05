@@ -32,6 +32,9 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
  */
 class CreateProductRelationTest extends Unit
 {
+    protected const FIRST_FIXTURE_VALUE = 'test';
+    protected const SECOND_FIXTURE_VALUE = 'test1';
+
     /**
      * @var \SprykerTest\Zed\ProductRelation\ProductRelationBusinessTester
      */
@@ -74,9 +77,9 @@ class CreateProductRelationTest extends Unit
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setCondition('AND');
 
-        $ruleQuerySetTransfer->addRules($this->createProductAbstractSkuRuleTransfer('test'));
+        $ruleQuerySetTransfer->addRules($this->createProductAbstractSkuRuleTransfer(static::FIRST_FIXTURE_VALUE));
 
-        $ruleQuerySetTransfer->addRules($this->createProductCategoryNameRuleTransfer('test'));
+        $ruleQuerySetTransfer->addRules($this->createProductCategoryNameRuleTransfer(static::FIRST_FIXTURE_VALUE));
         $productRelationTypeTransfer = (new ProductRelationTypeBuilder())->seed([
             ProductRelationTypeTransfer::KEY => 'up-selling',
         ])->build();
@@ -84,21 +87,21 @@ class CreateProductRelationTest extends Unit
         $productRelationTransfer = (new ProductRelationBuilder())->seed([
             ProductRelationTransfer::PRODUCT_RELATION_TYPE => $productRelationTypeTransfer,
             ProductRelationTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
-            ProductRelationTransfer::PRODUCT_RELATION_KEY => 'test1',
+            ProductRelationTransfer::PRODUCT_RELATION_KEY => static::SECOND_FIXTURE_VALUE,
             ProductRelationTransfer::STORE_RELATION => $storeRelationTransfer,
             ProductRelationTransfer::QUERY_SET => $ruleQuerySetTransfer,
         ])->build();
 
         // Act
-        $productRelationResponseTransfer = $this->productRelationFacade->createProductRelation($productRelationTransfer);
+        $this->productRelationFacade->createProductRelation($productRelationTransfer);
 
         // Assert
         $productRelationExist = SpyProductRelationQuery::create()
-            ->filterByProductRelationKey('test1')
+            ->filterByProductRelationKey(static::SECOND_FIXTURE_VALUE)
             ->exists();
         $storeRelationExist = SpyProductRelationStoreQuery::create()
             ->useProductRelationQuery()
-                ->filterByProductRelationKey('test1')
+                ->filterByProductRelationKey(static::SECOND_FIXTURE_VALUE)
             ->endUse()
             ->exists();
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductRelation\Business\Relation\Creator;
 
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdaterInterface;
@@ -81,23 +82,55 @@ class ProductRelationCreator implements ProductRelationCreatorInterface
         ProductRelationTransfer $productRelationTransfer
     ): ProductRelationResponseTransfer {
         $productRelationResponseTransfer = $this->createProductRelationResponseTransfer();
-        $productRelationTypeTransfer = $this->productRelationEntityManager
-            ->saveProductRelationType($productRelationTransfer->getProductRelationType());
-        $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
         $storeRelationTransfer = $productRelationTransfer->getStoreRelation();
+        $productRelationTransfer = $this->createProductRelationWithType($productRelationTransfer);
 
-        $productRelationTransfer = $this->productRelationEntityManager
-            ->createProductRelation($productRelationTransfer);
-        $productRelationResponseTransfer->setProductRelation($productRelationTransfer);
-
-        $this->relatedProductUpdater->updateAllRelatedProducts($productRelationTransfer);
         $storeRelationTransfer->setIdEntity($productRelationTransfer->getIdProductRelation());
-        $this->productRelationStoreRelationUpdater->update($storeRelationTransfer);
+
+        $this->updateAllRelatedProducts($productRelationTransfer);
+        $this->updateStoreRelations($storeRelationTransfer);
 
         $this->touchRelationActive($productRelationTransfer->getFkProductAbstract());
 
         return $productRelationResponseTransfer->setIsSuccess(true)
             ->setProductRelation($productRelationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return void
+     */
+    protected function updateAllRelatedProducts(
+        ProductRelationTransfer $productRelationTransfer
+    ): void {
+        $this->relatedProductUpdater->updateAllRelatedProducts($productRelationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return void
+     */
+    protected function updateStoreRelations(StoreRelationTransfer $storeRelationTransfer): void
+    {
+        $this->productRelationStoreRelationUpdater->update($storeRelationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer
+     */
+    protected function createProductRelationWithType(
+        ProductRelationTransfer $productRelationTransfer
+    ): ProductRelationTransfer {
+        $productRelationTypeTransfer = $this->productRelationEntityManager
+            ->saveProductRelationType($productRelationTransfer->getProductRelationType());
+        $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
+
+        return $this->productRelationEntityManager
+            ->createProductRelation($productRelationTransfer);
     }
 
     /**

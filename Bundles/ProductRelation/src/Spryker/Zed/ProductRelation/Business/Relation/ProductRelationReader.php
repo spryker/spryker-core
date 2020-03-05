@@ -9,17 +9,11 @@ namespace Spryker\Zed\ProductRelation\Business\Relation;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
-use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
 
 class ProductRelationReader implements ProductRelationReaderInterface
 {
-    protected const ERROR_MESSAGE_NOT_FOUND = 'Product relation not found';
-
-    /**
-     * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
-     */
-    protected $productRelationQueryContainer;
+    protected const ERROR_MESSAGE_NOT_FOUND = 'Product relation #%d not found';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface
@@ -27,15 +21,11 @@ class ProductRelationReader implements ProductRelationReaderInterface
     protected $productRelationRepository;
 
     /**
-     * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface $productRelationQueryContainer
      * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface $productRelationRepository
      */
     public function __construct(
-        ProductRelationQueryContainerInterface $productRelationQueryContainer,
         ProductRelationRepositoryInterface $productRelationRepository
     ) {
-
-        $this->productRelationQueryContainer = $productRelationQueryContainer;
         $this->productRelationRepository = $productRelationRepository;
     }
 
@@ -51,7 +41,7 @@ class ProductRelationReader implements ProductRelationReaderInterface
             ->findProductRelationById($idProductRelation);
 
         if (!$productRelationTransfer) {
-            $messageTransfer = $this->getErrorMessageTransfer(static::ERROR_MESSAGE_NOT_FOUND);
+            $messageTransfer = $this->createErrorMessageTransfer(sprintf(static::ERROR_MESSAGE_NOT_FOUND, $idProductRelation));
 
             return $productRelationResponseTransfer->addMessage($messageTransfer);
         }
@@ -66,7 +56,7 @@ class ProductRelationReader implements ProductRelationReaderInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function getErrorMessageTransfer(string $message): MessageTransfer
+    protected function createErrorMessageTransfer(string $message): MessageTransfer
     {
         return (new MessageTransfer())
             ->setValue($message);

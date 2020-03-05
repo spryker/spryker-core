@@ -109,7 +109,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function findRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array
+    public function getRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array
     {
         $relatedProducts = $this->getFactory()->getProductRelationQueryContainer()
             ->getRulePropelQuery($productRelationCriteriaFilterTransfer->getProductRelation())
@@ -148,7 +148,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function findActiveProductRelations(): array
+    public function getActiveProductRelations(): array
     {
         $productRelationEntities = $this->getFactory()
             ->getProductRelationQueryContainer()
@@ -191,7 +191,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
      */
-    public function findProductRelationTypes(): array
+    public function getProductRelationTypes(): array
     {
         $productRelationTypeEntities = $this->getFactory()
             ->createProductRelationTypeQuery()

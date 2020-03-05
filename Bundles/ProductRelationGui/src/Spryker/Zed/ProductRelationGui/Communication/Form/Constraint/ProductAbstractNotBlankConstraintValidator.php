@@ -46,7 +46,7 @@ class ProductAbstractNotBlankConstraintValidator extends ConstraintValidator
      */
     protected function isIdProductAbstractExists(?int $idProductAbstract): bool
     {
-        return isset($idProductAbstract);
+        return $idProductAbstract !== null;
     }
 
     /**

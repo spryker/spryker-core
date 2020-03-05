@@ -20,8 +20,7 @@ class DeleteController extends AbstractController
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_SUCCESS = 'Relation successfully deleted.';
-    protected const MESSAGE_FAILURE = 'Failed to delete relation.';
+    protected const MESSAGE_SUCCESS = 'Relation #%d successfully deleted.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -64,7 +63,7 @@ class DeleteController extends AbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS);
+        $this->addSuccessMessage(sprintf(static::MESSAGE_SUCCESS, $idProductRelation));
 
         return $this->redirectResponse($redirectUrl);
     }

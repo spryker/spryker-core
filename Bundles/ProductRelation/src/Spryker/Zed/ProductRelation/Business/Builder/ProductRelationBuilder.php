@@ -8,19 +8,14 @@
 namespace Spryker\Zed\ProductRelation\Business\Builder;
 
 use Exception;
+use Generated\Shared\Transfer\ProductRelationTransfer;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
-use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
 
 class ProductRelationBuilder implements ProductRelationBuilderInterface
 {
     use LoggerTrait;
-
-    /**
-     * @var \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface
-     */
-    protected $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface
@@ -33,16 +28,13 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     protected $productRelationRepository;
 
     /**
-     * @param \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface $productRelationUpdater
      * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface $productRelationRepository
      */
     public function __construct(
-        ProductRelationToUtilEncodingInterface $utilEncodingService,
         ProductRelationUpdaterInterface $productRelationUpdater,
         ProductRelationRepositoryInterface $productRelationRepository
     ) {
-        $this->utilEncodingService = $utilEncodingService;
         $this->productRelationUpdater = $productRelationUpdater;
         $this->productRelationRepository = $productRelationRepository;
     }
@@ -50,28 +42,29 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     /**
      * @return void
      */
-    public function rebuildRelations()
+    public function rebuildRelations(): void
     {
-        foreach ($this->findActiveProductRelations() as $productRelationTransfer) {
-            try {
-                if (!$productRelationTransfer->getQuerySet()->getRules()->count()) {
-                    continue;
-                }
-
-                $this->productRelationUpdater->updateRelation($productRelationTransfer);
-            } catch (Exception $exception) {
-                $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);
-
-                continue;
-            }
+        $activeProductRelations = $this->productRelationRepository->getActiveProductRelations();
+        foreach ($activeProductRelations as $productRelationTransfer) {
+            $this->processRebuildRelations($productRelationTransfer);
         }
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return void
      */
-    protected function findActiveProductRelations()
+    protected function processRebuildRelations(ProductRelationTransfer $productRelationTransfer): void
     {
-        return $this->productRelationRepository->findActiveProductRelations();
+        try {
+            if (!$productRelationTransfer->getQuerySet()->getRules()->count()) {
+                return;
+            }
+
+            $this->productRelationUpdater->updateRelation($productRelationTransfer);
+        } catch (Exception $exception) {
+            $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);
+        }
     }
 }

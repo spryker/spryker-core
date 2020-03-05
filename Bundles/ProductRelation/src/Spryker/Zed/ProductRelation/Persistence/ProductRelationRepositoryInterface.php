@@ -45,7 +45,7 @@ interface ProductRelationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function findRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array;
+    public function getRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array;
 
     /**
      * @param int $idProductAbstract
@@ -65,7 +65,7 @@ interface ProductRelationRepositoryInterface
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function findActiveProductRelations(): array;
+    public function getActiveProductRelations(): array;
 
     /**
      * @param string $productRelationKey
@@ -77,5 +77,5 @@ interface ProductRelationRepositoryInterface
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
      */
-    public function findProductRelationTypes(): array;
+    public function getProductRelationTypes(): array;
 }

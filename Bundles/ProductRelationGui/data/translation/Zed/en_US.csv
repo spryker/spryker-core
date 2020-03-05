@@ -19,7 +19,7 @@ Edit,Edit
 related-products,"Related products"
 "Relation successfully activated.","Relation successfully activated."
 "Relation successfully deactivated.","Relation successfully deactivated."
-"Relation successfully deleted.","Relation successfully deleted."
+"Relation #%d successfully deleted.","Relation #%d successfully deleted."
 "Relation type","Relation type"
 "Relation type:","Relation type:"
 Save,Save
@@ -41,3 +41,7 @@ Inactive,Inactive
 "General information","General information"
 "Store relation","Store relation"
 Stores,Stores
+"Product relation #%d not found","Product relation #%d not found"
+"It is impossible to update product relation #%d","It is impossible to update product relation #%d"
+General,General
+"Select Stores","Select Stores"

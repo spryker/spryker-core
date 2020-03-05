@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductRelation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductRelation\Business\Builder\ProductRelationBuilder;
+use Spryker\Zed\ProductRelation\Business\Builder\ProductRelationBuilderInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreator;
 use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreatorInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleter;
@@ -23,6 +24,8 @@ use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdater
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdater;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdaterInterface;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface;
+use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 
 /**
@@ -110,7 +113,6 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     public function createProductRelationReader()
     {
         return new ProductRelationReader(
-            $this->getQueryContainer(),
             $this->getRepository()
         );
     }
@@ -126,10 +128,9 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductRelation\Business\Builder\ProductRelationBuilderInterface
      */
-    public function createProductRelationBuilder()
+    public function createProductRelationBuilder(): ProductRelationBuilderInterface
     {
         return new ProductRelationBuilder(
-            $this->getUtilEncodingService(),
             $this->createProductRelationUpdater(),
             $this->getRepository()
         );
@@ -138,7 +139,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface
      */
-    protected function getTouchFacade()
+    protected function getTouchFacade(): ProductRelationToTouchInterface
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_TOUCH);
     }
@@ -146,7 +147,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface
      */
-    protected function getUtilEncodingService()
+    protected function getUtilEncodingService(): ProductRelationToUtilEncodingInterface
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::SERVICE_UTIL_ENCODING);
     }
