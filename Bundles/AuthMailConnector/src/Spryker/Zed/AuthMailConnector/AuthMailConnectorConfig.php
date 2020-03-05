@@ -15,6 +15,8 @@ class AuthMailConnectorConfig extends AbstractBundleConfig
     protected const AUTH_PASSWORD_RESET_PATH = '/auth/password/reset';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getBaseUrlZed(): string
@@ -23,6 +25,8 @@ class AuthMailConnectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAuthPasswordResetPath(): string
