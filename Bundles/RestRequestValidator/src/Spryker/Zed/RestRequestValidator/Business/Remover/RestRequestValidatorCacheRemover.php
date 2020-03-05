@@ -63,6 +63,6 @@ class RestRequestValidatorCacheRemover implements RestRequestValidatorCacheRemov
      */
     protected function getOutdatedConfig(string $storeName): array
     {
-        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeName));
+        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeName), GLOB_NOSORT);
     }
 }

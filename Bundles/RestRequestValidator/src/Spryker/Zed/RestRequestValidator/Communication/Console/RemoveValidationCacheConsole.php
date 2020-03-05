@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveValidationCacheConsole extends Console
 {
-    protected const COMMAND_NAME = 'glue:rest:remove-request-validation-cache';
+    protected const COMMAND_NAME = 'glue:rest-request-validation-cache:remove';
     protected const DESCRIPTION = 'Removes the cache for rest request validation rules.';
 
     /**

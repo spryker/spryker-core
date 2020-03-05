@@ -16,8 +16,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `DeployPreparePropelConsole` from Propel module instead.
- * @see \Spryker\Zed\Propel\Communication\Console\DeployPreparePropelConsole
+ * @deprecated Use {@link \Spryker\Zed\Propel\Communication\Console\DeployPreparePropelConsole} instead.
+ *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
