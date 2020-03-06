@@ -45,17 +45,22 @@ class ProductRelationDataHelper extends Module
      * @param string $productAbstractSku
      * @param int $idProductAbstract
      * @param string $productRelationType
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
     public function haveProductRelation(
         string $productAbstractSku,
         int $idProductAbstract,
-        string $productRelationType = ProductRelationTypes::TYPE_UP_SELLING
+        string $productRelationType = ProductRelationTypes::TYPE_UP_SELLING,
+        ?StoreRelationTransfer $storeRelationTransfer = null
     ): ProductRelationTransfer {
         $productRelationFacade = $this->getProductRelationFacade();
+        if (!$storeRelationTransfer) {
+            $storeRelationTransfer = new StoreRelationTransfer();
+        }
 
-        $productRelationTransfer = $this->createProductRelationTransfer($productAbstractSku, $idProductAbstract, $productRelationType);
+        $productRelationTransfer = $this->createProductRelationTransfer($productAbstractSku, $idProductAbstract, $productRelationType, $storeRelationTransfer);
 
         $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
         $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
@@ -93,13 +98,15 @@ class ProductRelationDataHelper extends Module
      * @param string $productAbstractSku
      * @param int $idProductAbstractRelated
      * @param string $productRelationType
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
     protected function createProductRelationTransfer(
         string $productAbstractSku,
         int $idProductAbstractRelated,
-        string $productRelationType
+        string $productRelationType,
+        StoreRelationTransfer $storeRelationTransfer
     ): ProductRelationTransfer {
         $productRelationTransfer = new ProductRelationTransfer();
         $productRelationTransfer->setFkProductAbstract($idProductAbstractRelated);
@@ -114,7 +121,7 @@ class ProductRelationDataHelper extends Module
         $productRelationTypeTransfer = new ProductRelationTypeTransfer();
         $productRelationTypeTransfer->setKey($productRelationType);
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
-        $productRelationTransfer->setStoreRelation(new StoreRelationTransfer());
+        $productRelationTransfer->setStoreRelation($storeRelationTransfer);
 
         return $productRelationTransfer;
     }

@@ -208,4 +208,28 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
                 []
             );
     }
+
+    /**
+     * @param int[] $idProductAbstracts
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function getProductRelationsByIdProductAbstracts(array $idProductAbstracts): array
+    {
+        $productRelationEntities = $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByFkProductAbstract_In($idProductAbstracts)
+            ->find();
+
+        if ($productRelationEntities->getData() === []) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createProductRelationMapper()
+            ->mapProductRelationEntitiesToProductRelationTransfers(
+                $productRelationEntities,
+                []
+            );
+    }
 }
