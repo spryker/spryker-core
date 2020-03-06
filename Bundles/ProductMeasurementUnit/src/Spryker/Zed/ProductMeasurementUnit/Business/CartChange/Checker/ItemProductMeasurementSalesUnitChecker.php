@@ -96,6 +96,10 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
         array $productMeasurementSalesUnitIds
     ): CartPreCheckResponseTransfer {
+        if (!$productMeasurementSalesUnitIds) {
+            return $cartPreCheckResponseTransfer;
+        }
+
         $productMeasurementSalesUnitTransfer = $itemTransfer->getAmountSalesUnit();
         if (!$productMeasurementSalesUnitTransfer) {
             return $cartPreCheckResponseTransfer;
