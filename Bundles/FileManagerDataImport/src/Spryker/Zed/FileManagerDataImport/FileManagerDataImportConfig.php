@@ -15,6 +15,8 @@ class FileManagerDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MIME_TYPE = 'mime-type';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getFileManagerDataImporterConfiguration(): DataImporterConfigurationTransfer

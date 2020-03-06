@@ -23,6 +23,8 @@ class ModuleFinderConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getInternalOrganizations(): array
@@ -35,6 +37,8 @@ class ModuleFinderConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getApplications()
@@ -50,6 +54,8 @@ class ModuleFinderConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getInternalPackagePathFragments(): array
@@ -62,6 +68,8 @@ class ModuleFinderConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getPathsToInternalOrganizations(): array
@@ -71,6 +79,7 @@ class ModuleFinderConfig extends AbstractBundleConfig
             $nonsplitDirectory = sprintf('%s/vendor/spryker/%s/Bundles/', APPLICATION_ROOT_DIR, $organizationPathFragment);
             if (is_dir($nonsplitDirectory)) {
                 $organizationPaths[] = $nonsplitDirectory;
+
                 continue;
             }
 

@@ -124,5 +124,8 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="ShipmentCarrier">
+    </transfer>
+
 </transfers>
 

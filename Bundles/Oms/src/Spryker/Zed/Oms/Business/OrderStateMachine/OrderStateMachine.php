@@ -373,6 +373,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     $log->setIsError(true);
                     $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                     $log->saveAll();
+
                     throw $e;
                 }
 
@@ -486,6 +487,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         if ($command instanceof CommandByItemInterface) {
             return self::BY_ITEM;
         }
+
         throw new LogicException('Unknown type of command: ' . get_class($command));
     }
 
@@ -521,6 +523,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
             if (!$event->hasCommand()) {
                 $processedOrderItems[] = $orderItemEntity;
+
                 continue;
             }
 
@@ -693,7 +696,8 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $this->reservation->updateReservationQuantity($orderItem->getSku());
             }
 
-            if ($sourceState !== $targetState->getName()
+            if (
+                $sourceState !== $targetState->getName()
                 && $targetState->hasOnEnterEvent()
             ) {
                 $event = $targetState->getOnEnterEvent();

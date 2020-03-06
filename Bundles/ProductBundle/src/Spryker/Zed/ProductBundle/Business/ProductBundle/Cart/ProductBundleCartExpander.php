@@ -105,6 +105,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getRelatedBundleItemIdentifier()) {
                 $cartChangeItems->append($itemTransfer);
+
                 continue;
             }
 
@@ -115,6 +116,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
             if ($bundledProducts->count() == 0) {
                 $cartChangeItems->append($itemTransfer);
+
                 continue;
             }
 

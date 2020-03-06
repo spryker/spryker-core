@@ -33,6 +33,8 @@ class CatalogConfig extends AbstractBundleConfig
     protected const ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
+     * @api
+     *
      * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::getElasticsearchFullTextBoostedBoostingValue()` instead.
      *
      * @return int
@@ -43,6 +45,8 @@ class CatalogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getItemsPerPageParameterName(): string
@@ -51,6 +55,8 @@ class CatalogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     public function getPaginationConfig(): PaginationConfigTransfer
@@ -66,6 +72,8 @@ class CatalogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     public function getCatalogSearchPaginationConfigTransfer(): PaginationConfigTransfer
@@ -80,6 +88,8 @@ class CatalogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getElasticsearchFullTextBoostedBoostingValue(): int

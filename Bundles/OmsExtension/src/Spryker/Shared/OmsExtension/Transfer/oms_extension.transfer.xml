@@ -16,4 +16,7 @@
     <transfer name="Store">
     </transfer>
 
+    <transfer name="OmsState">
+    </transfer>
+
 </transfers>
