@@ -429,7 +429,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\PropelExtension\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
+     * @return \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
      */
     public function getPropelSchemaElementFilterPlugins(): array
     {

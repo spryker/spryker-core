@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\PropelExtension\Dependency\Plugin;
+namespace Spryker\Zed\Propel\Dependency\Plugin;
 
 use SimpleXMLElement;
 
@@ -13,7 +13,7 @@ interface PropelSchemaElementFilterPluginInterface
 {
     /**
      * Specification:
-     * - Filters propel schema elements.
+     * - Filters Propel's schema elements.
      *
      * @api
      *

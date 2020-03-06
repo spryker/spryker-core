@@ -106,7 +106,7 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\PropelExtension\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
+     * @return \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
      */
     protected function getPropelSchemaElementFilterPlugins(): array
     {

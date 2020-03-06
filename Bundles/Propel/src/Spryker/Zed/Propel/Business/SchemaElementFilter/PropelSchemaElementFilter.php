@@ -12,12 +12,12 @@ use SimpleXMLElement;
 class PropelSchemaElementFilter implements SchemaElementFilterInterface
 {
     /**
-     * @var \Spryker\Shared\PropelExtension\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
+     * @var \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
      */
     protected $schemaElementFilterPlugins;
 
     /**
-     * @param \Spryker\Shared\PropelExtension\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[] $schemaElementFilterPlugins
+     * @param \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[] $schemaElementFilterPlugins
      */
     public function __construct(array $schemaElementFilterPlugins)
     {

@@ -518,7 +518,6 @@
     "spryker/products-rest-api": "*",
     "spryker/products-rest-api-extension": "*",
     "spryker/propel": "*",
-    "spryker/propel-extension": "*",
     "spryker/propel-orm": "*",
     "spryker/propel-query-builder": "*",
     "spryker/queue": "*",

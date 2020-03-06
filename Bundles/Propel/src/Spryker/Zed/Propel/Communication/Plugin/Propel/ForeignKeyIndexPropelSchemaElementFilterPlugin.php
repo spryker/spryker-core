@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Propel\Communication\Plugin\Propel;
 
 use SimpleXMLElement;
-use Spryker\Shared\PropelExtension\Dependency\Plugin\PropelSchemaElementFilterPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface;
 
 /**
  * @method \Spryker\Zed\Propel\PropelConfig getConfig()
