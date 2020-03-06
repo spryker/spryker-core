@@ -42,7 +42,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findByIdProductLabel($idProductLabel)
     {
-        $productLabelTransfer = $this->productLabelRepository->findProductLabelByIdProductLabel($idProductLabel);
+        $productLabelTransfer = $this->productLabelRepository->findProductLabelById($idProductLabel);
 
         if (!$productLabelTransfer) {
             return null;
