@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer;
-use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
