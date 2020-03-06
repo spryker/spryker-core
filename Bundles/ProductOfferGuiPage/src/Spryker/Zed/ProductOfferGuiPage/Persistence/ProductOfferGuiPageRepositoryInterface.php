@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTableCriteriaTransfer;
 
@@ -16,14 +14,8 @@ interface ProductOfferGuiPageRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductListTableCriteriaTransfer $productListTableCriteriaTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer|null $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
-    public function getConcreteProductsForProductListTable(
-        ProductListTableCriteriaTransfer $productListTableCriteriaTransfer,
-        LocaleTransfer $localeTransfer,
-        ?MerchantUserTransfer $merchantUserTransfer
-    ): ProductConcreteCollectionTransfer;
+    public function getConcreteProductsForProductListTable(ProductListTableCriteriaTransfer $productListTableCriteriaTransfer): ProductConcreteCollectionTransfer;
 }

@@ -42,7 +42,7 @@ abstract class AbstractTable
     protected const DEFAULT_ORDER_DIRECTION = 'ASC';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $searchTerm;
 
@@ -64,7 +64,7 @@ abstract class AbstractTable
     /**
      * @var array
      */
-    protected $filters;
+    protected $filters = [];
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

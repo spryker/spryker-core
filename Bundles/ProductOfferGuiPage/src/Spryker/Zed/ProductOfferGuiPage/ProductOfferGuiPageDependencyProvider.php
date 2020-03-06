@@ -43,9 +43,6 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addProductImageFacade($container);
-        $container = $this->addLocaleFacade($container);
-        $container = $this->addUserFacade($container);
-        $container = $this->addMerchantUserFacade($container);
 
         return $container;
     }

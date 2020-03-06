@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -31,19 +29,14 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
 {
     /**
      * @param \Generated\Shared\Transfer\ProductListTableCriteriaTransfer $productListTableCriteriaTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer|null $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
-    public function getConcreteProductsForProductListTable(
-        ProductListTableCriteriaTransfer $productListTableCriteriaTransfer,
-        LocaleTransfer $localeTransfer,
-        ?MerchantUserTransfer $merchantUserTransfer
-    ): ProductConcreteCollectionTransfer {
+    public function getConcreteProductsForProductListTable(ProductListTableCriteriaTransfer $productListTableCriteriaTransfer): ProductConcreteCollectionTransfer
+    {
         $productConcreteMapper = $this->getFactory()->createProductConcreteMapper();
 
-        $productConcreteQuery = $this->buildBaseQuery($localeTransfer, $merchantUserTransfer);
+        $productConcreteQuery = $this->buildBaseQuery($productListTableCriteriaTransfer);
         $productConcreteQuery = $this->applySearch($productConcreteQuery, $productListTableCriteriaTransfer);
         $productConcreteQuery = $this->addFilters($productConcreteQuery, $productListTableCriteriaTransfer);
         $productConcreteQuery = $this->addSorting($productConcreteQuery, $productListTableCriteriaTransfer);
@@ -62,34 +55,37 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         return $productConcreteMapper->mapProductConcreteEntitiesToProductConcreteCollectionTransfer(
             $pager->getResults(),
             new ProductConcreteCollectionTransfer()
-        )
-            ->setPagination($paginationTransfer);
+        )->setPagination($paginationTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer|null $merchantUserTransfer
+     * @module ProductOffer
+     *
+     * @param \Generated\Shared\Transfer\ProductListTableCriteriaTransfer $productListTableCriteriaTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function buildBaseQuery(
-        LocaleTransfer $localeTransfer,
-        ?MerchantUserTransfer $merchantUserTransfer
-    ): SpyProductQuery {
+    protected function buildBaseQuery(ProductListTableCriteriaTransfer $productListTableCriteriaTransfer): SpyProductQuery
+    {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
+        $merchantUserTransfer = $productListTableCriteriaTransfer->getMerchantUser();
+        $localeId = $productListTableCriteriaTransfer->requireLocale()
+            ->getLocale()
+            ->requireIdLocale()
+            ->getIdLocale();
 
         $productConcreteQuery->joinSpyProductLocalizedAttributes()
             ->addJoinCondition(
                 'SpyProductLocalizedAttributes',
                 sprintf('%s = ?', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE),
-                $localeTransfer->getIdLocale()
+                $localeId
             )
             ->joinSpyProductAbstract()
             ->useSpyProductAbstractQuery()
-            ->joinSpyProductAbstractStore()
-            ->useSpyProductAbstractStoreQuery()
-            ->joinSpyStore()
-            ->endUse()
+                ->joinSpyProductAbstractStore()
+                ->useSpyProductAbstractStoreQuery()
+                    ->joinSpyStore()
+                ->endUse()
             ->endUse();
 
         if ($merchantUserTransfer) {
@@ -104,14 +100,17 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
                 ],
                 Criteria::LEFT_JOIN
             )
-                ->withColumn('COUNT(' . SpyProductOfferTableMap::COL_CONCRETE_SKU . ') > 0', ProductConcreteTransfer::HAS_OFFERS);
+                ->withColumn(
+                    sprintf('COUNT(%s) > 0', SpyProductOfferTableMap::COL_CONCRETE_SKU),
+                    ProductConcreteTransfer::HAS_OFFERS
+                );
         }
 
         $productConcreteQuery->leftJoinSpyProductValidity()
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConcreteTransfer::NAME)
             ->withColumn(SpyProductValidityTableMap::COL_VALID_FROM, ProductConcreteTransfer::VALID_FROM)
             ->withColumn(SpyProductValidityTableMap::COL_VALID_TO, ProductConcreteTransfer::VALID_TO)
-            ->withColumn('GROUP_CONCAT(' . SpyStoreTableMap::COL_NAME . ')', ProductConcreteTransfer::STORE_NAMES)
+            ->withColumn(sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME), ProductConcreteTransfer::STORE_NAMES)
             ->groupByIdProduct();
 
         return $productConcreteQuery;
@@ -184,6 +183,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $productConcreteQuery = $this->addIsActiveFilter($productConcreteQuery, $productListTableCriteriaTransfer);
         $productConcreteQuery = $this->addInStoresFilter($productConcreteQuery, $productListTableCriteriaTransfer);
         $productConcreteQuery = $this->addInCategoriesFilter($productConcreteQuery, $productListTableCriteriaTransfer);
+        $productConcreteQuery = $this->addHasOffersFilter($productConcreteQuery, $productListTableCriteriaTransfer);
 
         return $productConcreteQuery;
     }
@@ -230,9 +230,11 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
             return $productConcreteQuery;
         }
 
-        return $productConcreteQuery->filterByIsActive(
+        $productConcreteQuery->filterByIsActive(
             $productListTableCriteriaTransfer->getIsActive()
         );
+
+        return $productConcreteQuery;
     }
 
     /**
@@ -263,6 +265,8 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * @module ProductCategory
+     *
      * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
      * @param \Generated\Shared\Transfer\ProductListTableCriteriaTransfer $productListTableCriteriaTransfer
      *
@@ -287,6 +291,34 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
                     ->endUse()
                 ->endUse()
             ->endUse();
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @module ProductOffer
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductListTableCriteriaTransfer $productListTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function addHasOffersFilter(SpyProductQuery $productConcreteQuery, ProductListTableCriteriaTransfer $productListTableCriteriaTransfer): SpyProductQuery
+    {
+        $productConcreteHasOffers = $productListTableCriteriaTransfer->getHasOffers() ?? null;
+        $merchantUserTransfer = $productListTableCriteriaTransfer->getMerchantUser();
+
+        if ($productConcreteHasOffers === null || !$merchantUserTransfer) {
+            return $productConcreteQuery;
+        }
+
+        $productConcreteQuery->having(
+            sprintf(
+                '(COUNT(%s) %s 0) = FALSE',
+                SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                $productConcreteHasOffers ? '>' : '='
+            )
+        );
 
         return $productConcreteQuery;
     }

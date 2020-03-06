@@ -9,13 +9,18 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\CategoryProductListTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\HasOffersProductListTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\IsActiveProductListTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\ProductListTableFilterDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\StoresProductListTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductListTable;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductTableListCriteriaBuilder\ProductListTableCriteriaBuilder;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductTableListCriteriaBuilder\ProductListTableCriteriaBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToCategoryFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageDependencyProvider;
 
@@ -33,7 +38,20 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ProductListTable(
             $this->getFacade(),
-            $this->createProductListTableFilterDataProviders()
+            $this->createProductListTableFilterDataProviders(),
+            $this->createProductListTableCriteriaBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductTableListCriteriaBuilder\ProductListTableCriteriaBuilderInterface
+     */
+    public function createProductListTableCriteriaBuilder(): ProductListTableCriteriaBuilderInterface
+    {
+        return new ProductListTableCriteriaBuilder(
+            $this->getUserFacade(),
+            $this->getMerchantUserFacade(),
+            $this->getLocaleFacade()
         );
     }
 
@@ -65,6 +83,14 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\ProductListTableFilterDataProviderInterface
+     */
+    public function createHasOffersProductListTableFilterDataProvider(): ProductListTableFilterDataProviderInterface
+    {
+        return new HasOffersProductListTableFilterDataProvider();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\ProductListTableFilterDataProviderInterface[]
      */
     public function createProductListTableFilterDataProviders(): array
@@ -73,6 +99,7 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
             $this->createCategoryProductListTableFilterDataProvider(),
             $this->createIsActiveProductListTableFilterDataProvider(),
             $this->createStoresProductListTableFilterDataProvider(),
+            $this->createHasOffersProductListTableFilterDataProvider(),
         ];
     }
 
@@ -106,5 +133,21 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function getStoreFacade(): ProductOfferGuiPageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface
+     */
+    public function getUserFacade(): ProductOfferGuiPageToUserFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface
+     */
+    public function getMerchantUserFacade(): ProductOfferGuiPageToMerchantUserFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::FACADE_MERCHANT_USER);
     }
 }

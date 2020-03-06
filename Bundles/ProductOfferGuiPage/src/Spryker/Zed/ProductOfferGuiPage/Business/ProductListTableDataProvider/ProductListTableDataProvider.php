@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductListTableDataProvider;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductListTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Business\MerchantUserResolver\MerchantUserResolverInterface;
-use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToProductImageFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface;
 
@@ -25,37 +24,21 @@ class ProductListTableDataProvider implements ProductListTableDataProviderInterf
     protected $productImageFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface
      */
-    protected $ProductOfferGuiPageRepository;
-
-    /**
-     * @var \Spryker\Zed\ProductOfferGuiPage\Business\MerchantUserResolver\MerchantUserResolverInterface
-     */
-    protected $merchantUserResolver;
+    protected $productOfferGuiPageRepository;
 
     /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToProductImageFacadeInterface $productImageFacade
-     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\ProductOfferGuiPage\Business\MerchantUserResolver\MerchantUserResolverInterface $merchantUserResolver
      * @param \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface $ProductOfferGuiPageRepository
      */
     public function __construct(
         ProductOfferGuiPageToProductImageFacadeInterface $productImageFacade,
-        ProductOfferGuiPageToLocaleFacadeInterface $localeFacade,
-        MerchantUserResolverInterface $merchantUserResolver,
         ProductOfferGuiPageRepositoryInterface $ProductOfferGuiPageRepository
     ) {
 
         $this->productImageFacade = $productImageFacade;
-        $this->localeFacade = $localeFacade;
-        $this->merchantUserResolver = $merchantUserResolver;
-        $this->ProductOfferGuiPageRepository = $ProductOfferGuiPageRepository;
+        $this->productOfferGuiPageRepository = $ProductOfferGuiPageRepository;
     }
 
     /**
@@ -65,13 +48,12 @@ class ProductListTableDataProvider implements ProductListTableDataProviderInterf
      */
     public function getProductListTableData(ProductListTableCriteriaTransfer $productListTableCriteriaTransfer): ProductConcreteCollectionTransfer
     {
-        $productConcreteCollectionTransfer = $this->ProductOfferGuiPageRepository
-            ->getConcreteProductsForProductListTable(
-                $productListTableCriteriaTransfer,
-                $this->localeFacade->getCurrentLocale(),
-                $this->merchantUserResolver->findCurrentMerchantUser()
-            );
-        $productConcreteCollectionTransfer = $this->addProductImagesToConcreteProducts($productConcreteCollectionTransfer);
+        $productConcreteCollectionTransfer = $this->productOfferGuiPageRepository
+            ->getConcreteProductsForProductListTable($productListTableCriteriaTransfer);
+        $productConcreteCollectionTransfer = $this->addProductImagesToConcreteProducts(
+            $productConcreteCollectionTransfer,
+            $productListTableCriteriaTransfer->requireLocale()->getLocale()
+        );
         $productConcreteCollectionTransfer = $this->transformProductConcreteNames($productConcreteCollectionTransfer);
 
         return $productConcreteCollectionTransfer;
@@ -79,12 +61,15 @@ class ProductListTableDataProvider implements ProductListTableDataProviderInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
-    protected function addProductImagesToConcreteProducts(ProductConcreteCollectionTransfer $productConcreteCollectionTransfer): ProductConcreteCollectionTransfer
-    {
-        $productImageSetCollectionTransfer = $this->findProductConcreteProductImageSetsForCurrentLocale($productConcreteCollectionTransfer);
+    protected function addProductImagesToConcreteProducts(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductConcreteCollectionTransfer {
+        $productImageSetCollectionTransfer = $this->findProductConcreteProductImageSetsForLocale($productConcreteCollectionTransfer, $localeTransfer);
         $productConcreteCollectionTransfer = $this->mergeConcreteProductsWithProductImageSets(
             $productConcreteCollectionTransfer,
             $productImageSetCollectionTransfer
@@ -95,15 +80,17 @@ class ProductListTableDataProvider implements ProductListTableDataProviderInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    protected function findProductConcreteProductImageSetsForCurrentLocale(ProductConcreteCollectionTransfer $productConcreteCollectionTransfer): array
-    {
+    protected function findProductConcreteProductImageSetsForLocale(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer,
+        LocaleTransfer $localeTransfer
+    ): array {
         $productConcreteIds = $this->extractProductConcreteIds($productConcreteCollectionTransfer);
-        $localeId = $this->localeFacade->getCurrentLocale()->requireIdLocale()->getIdLocale();
 
-        return $this->productImageFacade->getProductImageSetsByProductConcreteIdsAndLocaleId($productConcreteIds, $localeId);
+        return $this->productImageFacade->getProductImageSetsByProductConcreteIdsAndLocaleId($productConcreteIds, $localeTransfer->requireIdLocale()->getIdLocale());
     }
 
     /**

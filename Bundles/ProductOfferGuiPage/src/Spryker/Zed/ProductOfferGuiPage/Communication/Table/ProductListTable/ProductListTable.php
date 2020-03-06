@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable;
 
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductListTableCriteriaTransfer;
@@ -18,6 +17,7 @@ use Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\CategoryProductListTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\IsActiveProductListTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\StoresProductListTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductTableListCriteriaBuilder\ProductListTableCriteriaBuilderInterface;
 
 class ProductListTable extends AbstractTable
 {
@@ -41,13 +41,23 @@ class ProductListTable extends AbstractTable
     protected $productListTableFilterDataProviders;
 
     /**
+     * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductTableListCriteriaBuilder\ProductListTableCriteriaBuilderInterface
+     */
+    protected $productListTableCriteriaBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface $ProductOfferGuiPageFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\ProductListTableFilterDataProviderInterface[] $productListTableFilterDataProviders
+     * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductTableListCriteriaBuilder\ProductListTableCriteriaBuilderInterface $productListTableCriteriaBuilder
      */
-    public function __construct(ProductOfferGuiPageFacadeInterface $ProductOfferGuiPageFacade, array $productListTableFilterDataProviders)
-    {
+    public function __construct(
+        ProductOfferGuiPageFacadeInterface $ProductOfferGuiPageFacade,
+        array $productListTableFilterDataProviders,
+        ProductListTableCriteriaBuilderInterface $productListTableCriteriaBuilder
+    ) {
         $this->ProductOfferGuiPageFacade = $ProductOfferGuiPageFacade;
         $this->productListTableFilterDataProviders = $productListTableFilterDataProviders;
+        $this->productListTableCriteriaBuilder = $productListTableCriteriaBuilder;
     }
 
     /**
@@ -168,16 +178,13 @@ class ProductListTable extends AbstractTable
      */
     protected function buildProductLIstTableCriteriaTransfer(): ProductListTableCriteriaTransfer
     {
-        $productListTableCriteriaTransfer = new ProductListTableCriteriaTransfer();
-        $paginationTransfer = (new PaginationTransfer())
+        return $this->productListTableCriteriaBuilder
+            ->setSearchTerm($this->searchTerm)
             ->setPage($this->page)
-            ->setMaxPerPage($this->pageSize);
-        $productListTableCriteriaTransfer->setSearchTerm($this->searchTerm);
-        $productListTableCriteriaTransfer->setOrderBy($this->sorting);
-        $productListTableCriteriaTransfer->setPagination($paginationTransfer);
-        $this->addFilterDataToProductListTableCriteriaTransfer($productListTableCriteriaTransfer);
-
-        return $productListTableCriteriaTransfer;
+            ->setPageSize($this->pageSize)
+            ->setSorting($this->sorting)
+            ->setFilters($this->filters)
+            ->build();
     }
 
     /**
