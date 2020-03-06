@@ -44,13 +44,18 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      */
     public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array
     {
-        $productConcreteProductMeasurementSalesUnitTransfers =
-            $this->getProductMeasurementSalesUnitsByProductConcreteIds([$idProduct]);
-        if (!$productConcreteProductMeasurementSalesUnitTransfers) {
+        $productConcreteMeasurementUnitStorageTransfer = $this->productConcreteMeasurementUnitStorageReader
+            ->findProductConcreteMeasurementUnitStorage($idProduct);
+
+        if ($productConcreteMeasurementUnitStorageTransfer === null) {
             return null;
         }
 
-        return current($productConcreteProductMeasurementSalesUnitTransfers) ?? null;
+        $productMeasurementSalesUnitTransfers = $this->getProductMeasurementSalesUnits(
+            [$productConcreteMeasurementUnitStorageTransfer]
+        );
+
+        return $this->updateIsDefault(array_values(current($productMeasurementSalesUnitTransfers)));
     }
 
     /**
