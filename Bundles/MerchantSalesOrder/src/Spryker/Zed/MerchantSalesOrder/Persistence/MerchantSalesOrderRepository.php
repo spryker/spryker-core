@@ -248,4 +248,17 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
 
         return $paginationModel->getQuery();
     }
+
+    /**
+     * @param int $idMerchantOrderItem
+     *
+     * @return bool
+     */
+    public function existsMerchantOrderItem(int $idMerchantOrderItem): bool
+    {
+        return $this->getFactory()
+            ->createMerchantSalesOrderItemQuery()
+            ->filterByIdMerchantSalesOrderItem($idMerchantOrderItem)
+            ->exists();
+    }
 }

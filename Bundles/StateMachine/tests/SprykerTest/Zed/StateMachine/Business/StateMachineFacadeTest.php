@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\StateMachine\Business;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
@@ -45,6 +46,12 @@ class StateMachineFacadeTest extends Unit
     public const TESTING_SM = 'TestingSm';
     public const TEST_PROCESS_NAME = 'TestProcess';
     public const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
+    public const TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID = 0;
+
+    /**
+     * @var \SprykerTest\Zed\StateMachine\StateMachineBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -682,6 +689,45 @@ class StateMachineFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStateMachineProcessReturnsCorrectData(): void
+    {
+        // Arrange
+        $stateMachineProcessEntity = $this->tester->haveStateMachineProcess();
+        $stateMachineProcessCriteriaFilterTransfer = (new StateMachineProcessCriteriaFilterTransfer())
+            ->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        // Act
+        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNotNull($stateMachineProcessTransfer);
+        $this->assertSame($stateMachineProcessTransfer->getProcessName(), $stateMachineProcessEntity->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStateMachineProcessReturnsNullWithIncorrectFilter(): void
+    {
+        // Arrange
+        $stateMachineProcessCriteriaFilterTransfer = (new StateMachineProcessCriteriaFilterTransfer())
+            ->setIdStateMachineProcess(static::TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID);
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        // Act
+        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNull($stateMachineProcessTransfer);
     }
 
     /**

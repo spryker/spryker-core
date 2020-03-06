@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantSalesOrder\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -35,6 +37,21 @@ interface MerchantSalesOrderFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
     public function createMerchantOrderCollection(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer;
+
+    /**
+     * Specification
+     * - Requires MerchantOrderItem.idMerchantOrderItem transfer field to be set.
+     * - Updates existing merchant order item based on MerchantOrderItem.idMerchantOrderItem in database.
+     * - Returns MerchantOrderItemResponse transfer with isSuccessful = false when merchant order item not found.
+     * - Returns MerchantOrderItemResponse transfer with isSuccessful = true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
+     */
+    public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemResponseTransfer;
 
     /**
      * Specification:
