@@ -21,6 +21,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_USER = 'user query container';
     public const QUERY_CONTAINER_ACL = 'acl query container';
     public const SERVICE_DATE_FORMATTER = 'date formatter service';
+    public const ACL_INSTALLER_PLUGINS = 'ACL_INSTALLER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +48,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addFacadeUser($container);
+        $container = $this->addAclInstallerPlugins($container);
 
         return $container;
     }
@@ -92,5 +94,27 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAclInstallerPlugins(Container $container): Container
+    {
+        $container->set(static::ACL_INSTALLER_PLUGINS, function () {
+            return $this->getAclInstallerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
+     */
+    protected function getAclInstallerPlugins(): array
+    {
+        return [];
     }
 }

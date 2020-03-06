@@ -21,6 +21,8 @@ class DiscountConfig extends AbstractBundleConfig
     protected const REDIRECT_URL_DEFAULT = '/discount/index/list';
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getVoucherCodeLength()
@@ -29,6 +31,8 @@ class DiscountConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getVoucherCodeCharacters()
@@ -47,6 +51,8 @@ class DiscountConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getAllowedCodeCharactersLength()
@@ -61,6 +67,8 @@ class DiscountConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getVoucherPoolTemplateReplacementString()
@@ -69,6 +77,8 @@ class DiscountConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultRedirectUrl(): string
