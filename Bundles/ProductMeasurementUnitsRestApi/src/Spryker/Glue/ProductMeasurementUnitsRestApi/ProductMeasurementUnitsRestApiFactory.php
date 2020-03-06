@@ -157,7 +157,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
      */
     public function createProductMeasurementUnitMapper(): ProductMeasurementUnitMapperInterface
     {
-        return new ProductMeasurementUnitMapper($this->getGlossaryStorageClient());
+        return new ProductMeasurementUnitMapper();
     }
 
     /**
