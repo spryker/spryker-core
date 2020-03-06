@@ -139,7 +139,7 @@ class OrderItemReader implements OrderItemReaderInterface
         $itemStateTransfers = $itemTransfer->getStateHistory();
         $latestOrderItemState = end($itemStateTransfers);
 
-        if ($latestOrderItemState) {
+        if ($latestOrderItemState && $itemTransfer->getState()) {
             $itemTransfer->getState()->setCreatedAt($latestOrderItemState->getCreatedAt());
         }
 
