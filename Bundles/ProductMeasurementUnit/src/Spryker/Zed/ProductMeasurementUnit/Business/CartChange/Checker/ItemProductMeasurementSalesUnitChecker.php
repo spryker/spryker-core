@@ -69,10 +69,11 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
         }
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $productMeasurementSalesUnitIds = $indexedProductMeasurementSalesUnitIdsData[$itemTransfer->getSku()] ?? [];
             $cartPreCheckResponseTransfer = $this->checkSalesUnit(
                 $itemTransfer,
                 $cartPreCheckResponseTransfer,
-                $indexedProductMeasurementSalesUnitIdsData[$itemTransfer->getSku()]
+                $productMeasurementSalesUnitIds
             );
 
             if (!$cartPreCheckResponseTransfer->getIsSuccess()) {
