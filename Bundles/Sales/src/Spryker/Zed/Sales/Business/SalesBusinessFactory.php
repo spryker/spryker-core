@@ -45,8 +45,6 @@ use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReader;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReaderInterface;
-use Spryker\Zed\Sales\Business\SearchTransformer\OrderSearchFiltersTransformer;
-use Spryker\Zed\Sales\Business\SearchTransformer\OrderSearchFiltersTransformerInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
@@ -350,18 +348,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderSearchReader(): OrderSearchReaderInterface
     {
-        return new OrderSearchReader(
-            $this->getRepository(),
-            $this->createOrderSearchFiltersTransformer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\SearchTransformer\OrderSearchFiltersTransformerInterface
-     */
-    public function createOrderSearchFiltersTransformer(): OrderSearchFiltersTransformerInterface
-    {
-        return new OrderSearchFiltersTransformer();
+        return new OrderSearchReader($this->getRepository());
     }
 
     /**

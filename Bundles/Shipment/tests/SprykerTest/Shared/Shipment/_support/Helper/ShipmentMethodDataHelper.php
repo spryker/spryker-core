@@ -29,7 +29,7 @@ class ShipmentMethodDataHelper extends Module
 
     /**
      * First level key represents store name.
-     * Second level key represents currency iso code.
+     * Second level key represents currency ISO code.
      * Second level value represents the optional corresponding MoneyValue transfer object override values.
      */
     public const DEFAULT_PRICE_LIST = [
@@ -44,7 +44,7 @@ class ShipmentMethodDataHelper extends Module
     protected static $idStoreCache = null;
 
     /**
-     * @var int[] Keys are currency iso codes, values are currency ids.
+     * @var int[] Keys are currency ISO codes, values are currency ids.
      */
     protected static $idCurrencyCache = [];
 
