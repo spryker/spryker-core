@@ -11,13 +11,12 @@ use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-class MerchantExpander implements MerchantExpanderInterface
+class ExpenseExpander implements ExpenseExpanderInterface
 {
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
      */
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
-    protected const VALID_MERCHANT_REFERENCE_COUNT = 1;
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
@@ -29,7 +28,7 @@ class MerchantExpander implements MerchantExpanderInterface
         ExpenseTransfer $expenseTransfer,
         ShipmentGroupTransfer $shipmentGroupTransfer
     ): ExpenseTransfer {
-        if (!$this->isExpenseValid($expenseTransfer) || !$this->isShipmentGroupValid($shipmentGroupTransfer)) {
+        if ($expenseTransfer->getType() !== static::SHIPMENT_EXPENSE_TYPE || !$this->isShipmentGroupValid($shipmentGroupTransfer)) {
             return $expenseTransfer;
         }
 
@@ -38,16 +37,6 @@ class MerchantExpander implements MerchantExpanderInterface
         $expenseTransfer->setMerchantReference($itemTransfer->getMerchantReference());
 
         return $expenseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     *
-     * @return bool
-     */
-    protected function isExpenseValid(ExpenseTransfer $expenseTransfer): bool
-    {
-        return $expenseTransfer->getType() === static::SHIPMENT_EXPENSE_TYPE;
     }
 
     /**
@@ -63,7 +52,7 @@ class MerchantExpander implements MerchantExpanderInterface
 
         $uniqueMerchantReferences = $this->getUniqueMerchantReferences($shipmentGroupTransfer->getItems());
 
-        if (count($uniqueMerchantReferences) !== static::VALID_MERCHANT_REFERENCE_COUNT) {
+        if (count($uniqueMerchantReferences) !== 1) {
             return false;
         }
 
@@ -73,7 +62,7 @@ class MerchantExpander implements MerchantExpanderInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
-     * @return array
+     * @return string[]
      */
     protected function getUniqueMerchantReferences(ArrayObject $items): array
     {

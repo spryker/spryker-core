@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrder\Business\Expander;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-interface MerchantExpanderInterface
+interface ExpenseExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer

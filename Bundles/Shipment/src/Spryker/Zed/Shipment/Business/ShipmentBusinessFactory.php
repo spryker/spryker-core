@@ -249,9 +249,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[]
      */
-    protected function getShipmentExpenseExpanderPlugins(): array
+    public function getShipmentExpenseExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::SHIPMENT_EXPENSE_EXPANDER_PLUGINS);
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS_SHIPMENT_EXPENSE_EXPANDER);
     }
 
     /**

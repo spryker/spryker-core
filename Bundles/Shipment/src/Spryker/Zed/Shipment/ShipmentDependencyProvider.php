@@ -34,7 +34,8 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
     public const SHIPMENT_GROUPS_SANITIZER_PLUGINS = 'SHIPMENT_GROUPS_SANITIZER_PLUGINS';
-    public const SHIPMENT_EXPENSE_EXPANDER_PLUGINS = 'SHIPMENT_EXPENSE_EXPANDER_PLUGINS';
+
+    public const PLUGINS_SHIPMENT_EXPENSE_EXPANDER = 'PLUGINS_SHIPMENT_EXPENSE_EXPANDER';
 
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
@@ -238,7 +239,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentExpenseExpanderPlugins(Container $container): Container
     {
-        $container->set(static::SHIPMENT_EXPENSE_EXPANDER_PLUGINS, function () {
+        $container->set(static::PLUGINS_SHIPMENT_EXPENSE_EXPANDER, function () {
             return $this->getShipmentExpenseExpanderPlugins();
         });
 

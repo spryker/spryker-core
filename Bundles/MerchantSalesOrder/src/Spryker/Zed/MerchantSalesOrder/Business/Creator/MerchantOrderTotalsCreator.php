@@ -64,32 +64,33 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
         OrderTransfer $orderTransfer,
         MerchantOrderTransfer $merchantOrderTransfer
     ): TotalsTransfer {
-        $calculationOrderTransfer = (new OrderTransfer())
+        $merchantAggregatedOrderTransfer = (new OrderTransfer())
             ->setPriceMode($orderTransfer->getPriceMode())
             ->setTotals(new TotalsTransfer());
-        $calculationOrderTransfer = $this->addExpensesToCalculationOrder(
-            $calculationOrderTransfer,
+        $merchantAggregatedOrderTransfer = $this->expandOrderWithMerchantExpenses(
+            $merchantAggregatedOrderTransfer,
             $merchantOrderTransfer,
             $orderTransfer->getExpenses()
         );
-        $calculationOrderTransfer = $this->addItemsToCalculationOrder(
-            $calculationOrderTransfer,
+        $merchantAggregatedOrderTransfer = $this->expandOrderWithMerchantOrderItems(
+            $merchantAggregatedOrderTransfer,
             $merchantOrderTransfer
         );
-        $calculationOrderTransfer = $this->calculationFacade->recalculateOrder($calculationOrderTransfer);
 
-        return $calculationOrderTransfer->getTotals();
+        $merchantAggregatedOrderTransfer = $this->calculationFacade->recalculateOrder($merchantAggregatedOrderTransfer);
+
+        return $merchantAggregatedOrderTransfer->getTotals();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $calculationOrderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $merchantAggregatedOrderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \ArrayObject $expenseTransfers
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function addExpensesToCalculationOrder(
-        OrderTransfer $calculationOrderTransfer,
+    protected function expandOrderWithMerchantExpenses(
+        OrderTransfer $merchantAggregatedOrderTransfer,
         MerchantOrderTransfer $merchantOrderTransfer,
         ArrayObject $expenseTransfers
     ): OrderTransfer {
@@ -98,26 +99,26 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
                 continue;
             }
 
-            $calculationOrderTransfer->addExpense($expenseTransfer);
+            $merchantAggregatedOrderTransfer->addExpense($expenseTransfer);
         }
 
-        return $calculationOrderTransfer;
+        return $merchantAggregatedOrderTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $calculationOrderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $merchantAggregatedOrderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function addItemsToCalculationOrder(
-        OrderTransfer $calculationOrderTransfer,
+    protected function expandOrderWithMerchantOrderItems(
+        OrderTransfer $merchantAggregatedOrderTransfer,
         MerchantOrderTransfer $merchantOrderTransfer
     ): OrderTransfer {
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $calculationOrderTransfer->addItem($merchantOrderItemTransfer->getOrderItem());
+            $merchantAggregatedOrderTransfer->addItem($merchantOrderItemTransfer->getOrderItem());
         }
 
-        return $calculationOrderTransfer;
+        return $merchantAggregatedOrderTransfer;
     }
 }

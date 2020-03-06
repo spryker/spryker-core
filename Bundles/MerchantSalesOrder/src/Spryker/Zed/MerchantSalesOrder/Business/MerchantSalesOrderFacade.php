@@ -97,10 +97,12 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    public function expandShipmentExpenseWithMerchantReference(ExpenseTransfer $expenseTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): ExpenseTransfer
-    {
+    public function expandShipmentExpenseWithMerchantReference(
+        ExpenseTransfer $expenseTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer
+    ): ExpenseTransfer {
         return $this->getFactory()
-            ->createMerchantExpander()
+            ->createExpenseExpander()
             ->expandShipmentExpenseWithMerchantReference($expenseTransfer, $shipmentGroupTransfer);
     }
 }

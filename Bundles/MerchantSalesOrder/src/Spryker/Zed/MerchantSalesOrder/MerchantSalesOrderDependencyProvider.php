@@ -25,6 +25,8 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addCalculationFacade($container);
 
         return $container;

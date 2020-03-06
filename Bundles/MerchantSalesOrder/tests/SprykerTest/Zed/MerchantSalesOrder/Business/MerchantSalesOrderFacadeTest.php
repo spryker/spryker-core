@@ -331,7 +331,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             ->expandShipmentExpenseWithMerchantReference($expenseTransfer, $shipmentGroupTransfer);
 
         // Assert
-        $this->assertEquals($expenseTransfer->getMerchantReference(), $itemTransfer->getMerchantReference());
+        $this->assertSame($expenseTransfer->getMerchantReference(), $itemTransfer->getMerchantReference());
     }
 
     /**
