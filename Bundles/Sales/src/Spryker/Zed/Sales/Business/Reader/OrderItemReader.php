@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\Reader;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
@@ -79,6 +80,8 @@ class OrderItemReader implements OrderItemReaderInterface
             $itemTransfer->setStateHistory(
                 new ArrayObject($mappedItemStateTransfers[$itemTransfer->getIdSalesOrderItem()] ?? null)
             );
+
+            $this->updateLatestOrderItemState($itemTransfer);
         }
 
         return $itemTransfers;
@@ -124,6 +127,23 @@ class OrderItemReader implements OrderItemReaderInterface
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function updateLatestOrderItemState(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $itemStateTransfers = $itemTransfer->getStateHistory();
+        $latestOrderItemState = end($itemStateTransfers);
+
+        if ($latestOrderItemState) {
+            $itemTransfer->getState()->setCreatedAt($latestOrderItemState->getCreatedAt());
+        }
+
+        return $itemTransfer;
     }
 
     /**

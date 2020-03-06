@@ -62,6 +62,12 @@
         <property name="orderReferences" type="array" singular="orderReference"/>
     </transfer>
 
+    <transfer name="ReturnableItemFilter">
+        <property name="customerReference" type="string"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
     <transfer name="RestReturnableItemsAttributes">
     </transfer>
 
@@ -113,6 +119,10 @@
     </transfer>
 
     <transfer name="ReturnTotals">
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

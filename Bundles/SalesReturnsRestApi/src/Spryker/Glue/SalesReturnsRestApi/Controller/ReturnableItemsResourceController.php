@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Controller;
 
-use Generated\Shared\Transfer\RestReturnableItemRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -31,16 +30,11 @@ class ReturnableItemsResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestReturnableItemRequestAttributesTransfer $restReturnableItemRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAction(
-        RestRequestInterface $restRequest,
-        RestReturnableItemRequestAttributesTransfer $restReturnableItemRequestAttributesTransfer
-    ): RestResponseInterface {
-        return $this->getFactory()
-            ->createReturnableItemReader()
-            ->getReturnableItems($restRequest, $restReturnableItemRequestAttributesTransfer);
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()->createReturnableItemReader()->getReturnableItems($restRequest);
     }
 }

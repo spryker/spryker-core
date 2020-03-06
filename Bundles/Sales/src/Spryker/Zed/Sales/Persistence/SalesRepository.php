@@ -14,6 +14,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -72,10 +73,16 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderItemQuery()
             ->leftJoinWithOrder()
             ->leftJoinWithProcess()
-            ->leftJoinWithState()
-            ->leftJoinWithStateHistory();
+            ->leftJoinWithState();
 
         $salesOrderItemQuery = $this->setOrderItemFilters($salesOrderItemQuery, $orderItemFilterTransfer);
+
+        $salesOrderItemQuery = $this->buildQueryFromCriteria(
+            $salesOrderItemQuery,
+            $orderItemFilterTransfer->getFilter()
+        );
+
+        $salesOrderItemQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
         return $this->getFactory()
             ->createSalesOrderItemMapper()

@@ -332,6 +332,8 @@
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
         <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
         <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
     </transfer>
 
 </transfers>

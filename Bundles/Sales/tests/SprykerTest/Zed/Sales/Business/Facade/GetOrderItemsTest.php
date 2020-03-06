@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface;
@@ -73,6 +74,55 @@ class GetOrderItemsTest extends Test
         $this->assertSame($idSalesOrderItem, $itemTransfer->getIdSalesOrderItem());
         $this->assertNotNull($itemTransfer->getState());
         $this->assertNotNull($itemTransfer->getProcess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOrderItemsRetrieveOrderItemsByCustomerReference(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference());
+
+        // Act
+        $itemTransfers = $this->tester
+            ->getFacade()
+            ->getOrderItems($orderItemFilterTransfer)
+            ->getItems();
+
+        // Assert
+        $this->assertCount(4, $itemTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOrderItemsRetrieveOrderItemsByFilter(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setFilter((new FilterTransfer())->setLimit(1));
+
+        // Act
+        $itemTransfers = $this->tester
+            ->getFacade()
+            ->getOrderItems($orderItemFilterTransfer)
+            ->getItems();
+
+        // Assert
+        $this->assertCount(1, $itemTransfers);
     }
 
     /**

@@ -70,7 +70,11 @@ interface SalesReturnClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - ...
+     * - Retrieves order items from persistence.
+     * - Requires ReturnableItemFilterTransfer::customerReference to be set.
+     * - Removes items in nonreturnable state.
+     * - Finds Item records by criteria from ReturnableItemFilterTransfer.
+     * - Executes ReturnPolicyPluginInterface stack.
      *
      * @api
      *

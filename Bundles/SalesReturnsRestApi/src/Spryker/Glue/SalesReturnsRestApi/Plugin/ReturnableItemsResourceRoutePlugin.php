@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestReturnableItemRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -63,6 +63,6 @@ class ReturnableItemsResourceRoutePlugin extends AbstractPlugin implements Resou
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestReturnableItemRequestAttributesTransfer::class;
+        return RestOrderItemsAttributesTransfer::class;
     }
 }
