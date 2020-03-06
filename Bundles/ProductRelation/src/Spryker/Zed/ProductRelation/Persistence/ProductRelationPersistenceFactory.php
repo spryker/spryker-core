@@ -13,6 +13,7 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductAttributeMapper;
+use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationTypeMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\RuleSetMapper;
@@ -82,6 +83,14 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
             $this->createRuleSetMapper(),
             $this->createProductMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper
+     */
+    public function createProductMapper(): ProductMapper
+    {
+        return new ProductMapper();
     }
 
     /**
