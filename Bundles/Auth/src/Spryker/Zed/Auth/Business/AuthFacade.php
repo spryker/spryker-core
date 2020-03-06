@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AuthFacade extends AbstractFacade implements AuthFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $username
@@ -30,6 +32,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -42,6 +46,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $token
@@ -56,6 +62,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return bool
@@ -68,6 +76,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -82,6 +92,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $bundle
@@ -98,6 +110,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $hash
@@ -112,6 +126,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -124,6 +140,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $email
@@ -136,6 +154,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $token
@@ -148,6 +168,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $token

@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class RemoveCanceledAmountCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @see \Spryker\Zed\Calculation\Business\CalculationFacadeInterface::removeCanceledAmount()

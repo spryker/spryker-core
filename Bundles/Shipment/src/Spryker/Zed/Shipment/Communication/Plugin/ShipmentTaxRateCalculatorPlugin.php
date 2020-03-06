@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ShipmentTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
     /**
+     * {@inheritDoc}
      * This plugin makes calculations based on the given quote. The result is added to the quote.
      *
      * @api

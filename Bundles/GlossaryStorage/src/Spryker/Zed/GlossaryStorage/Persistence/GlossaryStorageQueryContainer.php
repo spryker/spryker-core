@@ -18,6 +18,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class GlossaryStorageQueryContainer extends AbstractQueryContainer implements GlossaryStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $glossaryKeyIds
@@ -32,6 +34,8 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $glossaryKeyIds
@@ -50,6 +54,8 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $glossaryKeysIds

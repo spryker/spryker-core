@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductManagementQueryContainer extends AbstractQueryContainer implements ProductManagementQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
@@ -30,6 +32,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
@@ -40,6 +44,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -71,6 +77,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -101,6 +109,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -111,6 +121,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
@@ -122,6 +134,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
@@ -133,6 +147,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -150,6 +166,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
