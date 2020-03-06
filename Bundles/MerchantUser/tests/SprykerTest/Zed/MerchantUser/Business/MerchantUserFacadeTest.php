@@ -16,7 +16,6 @@ use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
-use Spryker\Zed\User\Business\Model\User;
 
 /**
  * Auto-generated group annotations
@@ -190,13 +189,16 @@ class MerchantUserFacadeTest extends Unit
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccessful());
     }
 
-    public function testUpdateWithNewActiveStatus()
+    /**
+     * @return void
+     */
+    public function testUpdateWithNewActiveStatus(): void
     {
         // Arrange
         $this->initializeFacadeMocks();
 
         $userTransfer = $this->tester->haveUser([
-            UserTransfer::USERNAME => 'test_merchant_user@spryker.com'
+            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
         ])->setStatus('blocked');
 
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
@@ -220,13 +222,16 @@ class MerchantUserFacadeTest extends Unit
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccessful());
     }
 
-    public function testUpdateWithNewBlockedStatus()
+    /**
+     * @return void
+     */
+    public function testUpdateWithNewBlockedStatus(): void
     {
         // Arrange
         $this->initializeFacadeMocks();
 
         $userTransfer = $this->tester->haveUser([
-            UserTransfer::USERNAME => 'test_merchant_user@spryker.com'
+            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
         ])->setStatus('blocked');
 
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
@@ -250,11 +255,14 @@ class MerchantUserFacadeTest extends Unit
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccessful());
     }
 
-    public function testFind()
+    /**
+     * @return void
+     */
+    public function testFind(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([
-            UserTransfer::USERNAME => 'test_merchant_user@spryker.com'
+            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
         ]);
 
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
@@ -272,17 +280,20 @@ class MerchantUserFacadeTest extends Unit
         );
     }
 
-    public function testDisableMerchantUsersByMerchantId()
+    /**
+     * @return void
+     */
+    public function testDisableMerchantUsersByMerchantId(): void
     {
         // Arrange
         $this->initializeFacadeMocks();
 
         $userOneTransfer = $this->tester->haveUser([
-            UserTransfer::USERNAME => 'test_merchant_user@spryker_one.com'
+            UserTransfer::USERNAME => 'test_merchant_user@spryker_one.com',
         ]);
 
         $userTwoTransfer = $this->tester->haveUser([
-            UserTransfer::USERNAME => 'test_merchant_user@spryker_two.com'
+            UserTransfer::USERNAME => 'test_merchant_user@spryker_two.com',
         ]);
 
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
