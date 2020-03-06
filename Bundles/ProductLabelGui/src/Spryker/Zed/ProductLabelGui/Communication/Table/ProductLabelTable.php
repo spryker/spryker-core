@@ -116,6 +116,7 @@ class ProductLabelTable extends AbstractTable
             static::COL_PRIORITY,
             static::COL_NAME,
             static::COL_IS_EXCLUSIVE,
+            static::COL_IS_DYNAMIC,
             static::COL_STATUS,
         ]);
     }
