@@ -37,8 +37,25 @@ class MetadataExpander implements MetadataExpanderInterface
      */
     public function expandGiftCardMetadata(CartChangeTransfer $cartChangeTransfer)
     {
+        $skus = $this->getAbstractAndConcreteSkusFromCartChangeTransfer($cartChangeTransfer);
+        $abstractConfiguration = $this
+            ->giftCardReader
+            ->getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus($skus[static::SKU_ABSTRACT]);
+        $indexedGiftCardAbstractConfigurationForAbstractProductTransfers = $this
+            ->indexGiftCardAbstractConfigurationForProductAbstractTransfersByAbstractSku($abstractConfiguration);
+
+        $concreteConfiguration = $this
+            ->giftCardReader
+            ->getGiftCardConcreteConfigurationsForProductConcreteByConcreteSkus($skus[static::SKU_CONCRETE]);
+        $indexedGiftCartConfigurationForProductTransfers = $this->indexGiftCardConfigurationForProductTransfersBySku($concreteConfiguration);
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setGiftCardMetadata($this->getGiftCardMetadata($itemTransfer));
+            $giftCardMetadata = $this->getGiftCardMetadata(
+                $itemTransfer,
+                $indexedGiftCardAbstractConfigurationForAbstractProductTransfers,
+                $indexedGiftCartConfigurationForProductTransfers
+            );
+            $itemTransfer->setGiftCardMetadata($giftCardMetadata);
         }
 
         return $cartChangeTransfer;
@@ -47,14 +64,20 @@ class MetadataExpander implements MetadataExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
+     * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[] $indexedGiftCardAbstractConfigurationForAbstractProductTransfers
+     * @param \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[] $indexedGiftCartConfigurationForProductTransfers
+     *
      * @return \Generated\Shared\Transfer\GiftCardMetadataTransfer
      */
-    protected function getGiftCardMetadata(ItemTransfer $itemTransfer)
-    {
+    protected function getGiftCardMetadata(
+        ItemTransfer $itemTransfer,
+        array $indexedGiftCardAbstractConfigurationForAbstractProductTransfers,
+        array $indexedGiftCartConfigurationForProductTransfers
+    ) {
         $itemTransfer->requireAbstractSku();
         $metadata = new GiftCardMetadataTransfer();
 
-        $abstractGiftCardConfiguration = $this->giftCardReader->findGiftCardAbstractConfiguration($itemTransfer->getAbstractSku());
+        $abstractGiftCardConfiguration = $indexedGiftCardAbstractConfigurationForAbstractProductTransfers[$itemTransfer->getAbstractSku()] ?? null;
 
         if (!$abstractGiftCardConfiguration) {
             $metadata->setIsGiftCard(false);
@@ -63,10 +86,10 @@ class MetadataExpander implements MetadataExpanderInterface
         }
 
         $metadata->setIsGiftCard(true);
-        $metadata->setAbstractConfiguration($abstractGiftCardConfiguration);
+        $metadata->setAbstractConfiguration($abstractGiftCardConfiguration->getGiftCardAbstractProductConfiguration());
 
-        $concreteConfiguration = $this->giftCardReader->findGiftCardConcreteConfiguration($itemTransfer->getSku());
-        $metadata->setConcreteConfiguration($concreteConfiguration);
+        $concreteConfiguration = $indexedGiftCartConfigurationForProductTransfers[$itemTransfer->getSku()];
+        $metadata->setConcreteConfiguration($concreteConfiguration->getGiftCardProductConfiguration());
 
         return $metadata;
     }
@@ -92,12 +115,36 @@ class MetadataExpander implements MetadataExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[] $giftCardAbstractConfigurationTransfers
+     * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[] $giftCardAbstractConfigurationForProductAbstractTransfers
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    protected function indexGiftCardAbstractConfigurationTransfersByAbstractSku(array $giftCardAbstractConfigurationTransfers): array
+    protected function indexGiftCardAbstractConfigurationForProductAbstractTransfersByAbstractSku(array $giftCardAbstractConfigurationForProductAbstractTransfers): array
     {
-        $indexedGiftCardAbstractConfigurationTransfers = [];
+        $indexedGiftCardAbstractConfigurationForProductAbstractTransfers = [];
+
+        foreach ($giftCardAbstractConfigurationForProductAbstractTransfers as $giftCardAbstractProductConfigurationForProductAbstractTransfer) {
+            $indexedGiftCardAbstractConfigurationForProductAbstractTransfers[$giftCardAbstractProductConfigurationForProductAbstractTransfer->getAbstractSku()]
+                = $giftCardAbstractProductConfigurationForProductAbstractTransfer;
+        }
+
+        return $indexedGiftCardAbstractConfigurationForProductAbstractTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[] $giftCartConfigurationForProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
+     */
+    protected function indexGiftCardConfigurationForProductTransfersBySku(array $giftCartConfigurationForProductTransfers): array
+    {
+        $indexedGiftCartConfigurationForProductTransfers = [];
+
+        foreach ($giftCartConfigurationForProductTransfers as $giftCardProductConfigurationForProductTransfer) {
+            $indexedGiftCartConfigurationForProductTransfers[$giftCardProductConfigurationForProductTransfer->getSku()]
+                = $giftCardProductConfigurationForProductTransfer;
+        }
+
+        return $indexedGiftCartConfigurationForProductTransfers;
     }
 }

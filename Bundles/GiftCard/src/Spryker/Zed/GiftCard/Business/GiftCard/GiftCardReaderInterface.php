@@ -91,14 +91,14 @@ interface GiftCardReaderInterface
     /**
      * @param string[] $abstractSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    //public function getGiftCartAbstractConfigurationsByAbstractSkus(array $abstractSkus): array;
+    public function getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array;
 
     /**
      * @param string[] $concreteSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
      */
-    //public function getGiftCardConcreteConfigurationsByConcreteSkus(array $concreteSkus): array;
+    public function getGiftCardConcreteConfigurationsForProductConcreteByConcreteSkus(array $concreteSkus): array;
 }

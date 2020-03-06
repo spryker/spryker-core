@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\GiftCard\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer;
 use Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer;
+use Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer;
 use Generated\Shared\Transfer\GiftCardProductConfigurationTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration;
@@ -17,67 +19,88 @@ class GiftCardMapper
 {
     /**
      * @param \Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration $giftCardProductAbstractConfigurationEntity
-     * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer $giftCardAbstractProductConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer $giftCardAbstractProductConfigurationForProductAbstractTransfer
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer
      */
-    public function mapGiftCardProductAbstractConfigurationEntityToGiftCardAbstractProductConfigurationTransfer(
+    public function mapGiftCardProductAbstractConfigurationEntityToGiftCardAbstractProductConfigurationForProductAbstractTransfer(
         SpyGiftCardProductAbstractConfiguration $giftCardProductAbstractConfigurationEntity,
-        GiftCardAbstractProductConfigurationTransfer $giftCardAbstractProductConfigurationTransfer
-    ): GiftCardAbstractProductConfigurationTransfer {
-        return $giftCardAbstractProductConfigurationTransfer->fromArray($giftCardProductAbstractConfigurationEntity->toArray(), true);
+        GiftCardAbstractProductConfigurationForProductAbstractTransfer $giftCardAbstractProductConfigurationForProductAbstractTransfer
+    ): GiftCardAbstractProductConfigurationForProductAbstractTransfer {
+        $giftCardAbstractProductConfigurationTransfer = new GiftCardAbstractProductConfigurationTransfer();
+        $giftCardAbstractProductConfigurationTransfer->fromArray($giftCardProductAbstractConfigurationEntity->toArray(), true);
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $firstProductAbstractEntity */
+        $firstProductAbstractEntity = $giftCardProductAbstractConfigurationEntity
+            ->getSpyGiftCardProductAbstractConfigurationLinks()
+            ->getIterator()
+            ->current();
+
+        return $giftCardAbstractProductConfigurationForProductAbstractTransfer
+            ->setGiftCardAbstractProductConfiguration($giftCardAbstractProductConfigurationTransfer)
+            ->setAbstractSku($firstProductAbstractEntity->getSku());
     }
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration[] $giftCardProductAbstractConfigurationEntities
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    public function mapGiftCardProductAbstractConfigurationEntitiesToGiftCardAbstractProductConfigurationTransfers(ObjectCollection $giftCardProductAbstractConfigurationEntities): array
+    public function mapGiftCardProductAbstractConfigurationEntitiesToGiftCardAbstractProductConfigurationForProductAbstractTransfers(ObjectCollection $giftCardProductAbstractConfigurationEntities): array
     {
-        $giftCardAbstractProductConfigurationTransfers = [];
+        $giftCardAbstractProductConfigurationForProductAbstractTransfers = [];
 
         foreach ($giftCardProductAbstractConfigurationEntities as $giftCardProductAbstractConfigurationEntity) {
-            $giftCardAbstractProductConfigurationTransfers[] = $this
-                ->mapGiftCardProductAbstractConfigurationEntityToGiftCardAbstractProductConfigurationTransfer(
+            $giftCardAbstractProductConfigurationForProductAbstractTransfers[] = $this
+                ->mapGiftCardProductAbstractConfigurationEntityToGiftCardAbstractProductConfigurationForProductAbstractTransfer(
                     $giftCardProductAbstractConfigurationEntity,
-                    new GiftCardAbstractProductConfigurationTransfer()
+                    new GiftCardAbstractProductConfigurationForProductAbstractTransfer()
                 );
         }
 
-        return $giftCardAbstractProductConfigurationTransfers;
+        return $giftCardAbstractProductConfigurationForProductAbstractTransfers;
     }
 
     /**
      * @param \Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration $giftCardProductConfigurationEntity
-     * @param \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer $giftCardProductConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer $giftCardProductConfigurationForProductTransfer
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer
      */
-    public function mapGiftCardProductConfigurationEntityToGiftCardProductConfigurationTransfer(
+    public function mapGiftCardProductConfigurationEntityToGiftCardProductConfigurationForProductTransfer(
         SpyGiftCardProductConfiguration $giftCardProductConfigurationEntity,
-        GiftCardProductConfigurationTransfer $giftCardProductConfigurationTransfer
-    ): GiftCardProductConfigurationTransfer {
-        return $giftCardProductConfigurationTransfer
-            ->fromArray($giftCardProductConfigurationEntity->toArray(), true);
+        GiftCardProductConfigurationForProductTransfer $giftCardProductConfigurationForProductTransfer
+    ): GiftCardProductConfigurationForProductTransfer {
+        $giftCardProductConfigurationTransfer = new GiftCardProductConfigurationTransfer();
+        $giftCardProductConfigurationTransfer->fromArray($giftCardProductConfigurationEntity->toArray(), true);
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $firstProductEntity */
+        $firstProductEntity = $giftCardProductConfigurationEntity
+            ->getSpyGiftCardProductConfigurationLinks()
+            ->getIterator()
+            ->current();
+
+        return $giftCardProductConfigurationForProductTransfer
+            ->setSku($firstProductEntity->getSku())
+            ->setGiftCardProductConfiguration($giftCardProductConfigurationTransfer);
     }
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration[] $giftCardProductConfigurationEntities
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
      */
-    public function mapGiftCardProductConfigurationEntitiesToGiftCardProductConfigurationTransfers(ObjectCollection $giftCardProductConfigurationEntities): array
+    public function mapGiftCardProductConfigurationEntitiesToGiftCardProductConfigurationForProductTransfers(ObjectCollection $giftCardProductConfigurationEntities): array
     {
-        $giftCardProductConfigurationTransfers = [];
+        $giftCardProductConfigurationForProductTransfers = [];
 
         foreach ($giftCardProductConfigurationEntities as $giftCardProductConfigurationEntity) {
-            $giftCardProductConfigurationTransfers[] = $this->mapGiftCardProductConfigurationEntityToGiftCardProductConfigurationTransfer(
+            $giftCardProductConfigurationForProductTransfers[] = $this->mapGiftCardProductConfigurationEntityToGiftCardProductConfigurationForProductTransfer(
                 $giftCardProductConfigurationEntity,
-                new GiftCardProductConfigurationTransfer()
+                new GiftCardProductConfigurationForProductTransfer()
             );
         }
 
-        return $giftCardProductConfigurationTransfers;
+        return $giftCardProductConfigurationForProductTransfers;
     }
 }

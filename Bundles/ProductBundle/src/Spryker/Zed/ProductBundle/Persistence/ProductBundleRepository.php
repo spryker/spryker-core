@@ -63,7 +63,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function getBundleProductsByProductConcreteSkus(array $skus): array
+    public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array
     {
         $productBundleEntities = $this->getFactory()
             ->createProductBundleQuery()

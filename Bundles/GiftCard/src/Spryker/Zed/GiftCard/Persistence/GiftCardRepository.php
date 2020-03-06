@@ -20,9 +20,9 @@ class GiftCardRepository extends AbstractRepository implements GiftCardRepositor
      *
      * @param string[] $abstractSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    public function getGiftCartAbstractConfigurationsByAbstractSkus(array $abstractSkus): array
+    public function getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array
     {
         $giftCardProductAbstractConfigurationEntities = $this->getFactory()
             ->createSpyGiftCardProductAbstractConfigurationQuery()
@@ -37,7 +37,7 @@ class GiftCardRepository extends AbstractRepository implements GiftCardRepositor
 
         return $this->getFactory()
             ->createGiftCardMapper()
-            ->mapGiftCardProductAbstractConfigurationEntitiesToGiftCardAbstractProductConfigurationTransfers($giftCardProductAbstractConfigurationEntities);
+            ->mapGiftCardProductAbstractConfigurationEntitiesToGiftCardAbstractProductConfigurationForProductAbstractTransfers($giftCardProductAbstractConfigurationEntities);
     }
 
     /**
@@ -45,9 +45,9 @@ class GiftCardRepository extends AbstractRepository implements GiftCardRepositor
      *
      * @param string[] $concreteSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
      */
-    public function getGiftCardConcreteConfigurationsByConcreteSkus(array $concreteSkus): array
+    public function getGiftCardConcreteConfigurationsForProductByConcreteSkus(array $concreteSkus): array
     {
         $giftCardProductConfigurationEntities = $this->getFactory()
             ->createSpyGiftCardProductConfigurationQuery()
@@ -62,6 +62,6 @@ class GiftCardRepository extends AbstractRepository implements GiftCardRepositor
 
         return $this->getFactory()
             ->createGiftCardMapper()
-            ->mapGiftCardProductConfigurationEntitiesToGiftCardProductConfigurationTransfers($giftCardProductConfigurationEntities);
+            ->mapGiftCardProductConfigurationEntitiesToGiftCardProductConfigurationForProductTransfers($giftCardProductConfigurationEntities);
     }
 }

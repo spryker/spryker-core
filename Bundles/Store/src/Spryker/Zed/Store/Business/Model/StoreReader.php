@@ -9,6 +9,7 @@ namespace Spryker\Zed\Store\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
+use Spryker\Zed\Store\Business\Cache\StoreCacheInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 use Spryker\Zed\Store\Persistence\StoreRepositoryInterface;
@@ -43,27 +44,30 @@ class StoreReader implements StoreReaderInterface
     protected $storeMapper;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var \Spryker\Zed\Store\Business\Cache\StoreCacheInterface
      */
-    protected static $storeCache = [];
+    protected $storeCache;
 
     /**
      * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
      * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
      * @param \Spryker\Zed\Store\Persistence\StoreRepositoryInterface $storeRepository
      * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
+     * @param \Spryker\Zed\Store\Business\Cache\StoreCacheInterface $storeCache
      */
     public function __construct(
         StoreToStoreInterface $store,
         StoreQueryContainerInterface $storeQueryContainer,
         StoreRepositoryInterface $storeRepository,
-        StoreMapperInterface $storeMapper
+        StoreMapperInterface $storeMapper,
+        StoreCacheInterface $storeCache
     ) {
         $this->store = $store;
         $this->storeConfigurationProvider = $store;
         $this->storeQueryContainer = $storeQueryContainer;
         $this->storeRepository = $storeRepository;
         $this->storeMapper = $storeMapper;
+        $this->storeCache = $storeCache;
     }
 
     /**
@@ -72,16 +76,8 @@ class StoreReader implements StoreReaderInterface
     public function getAllStores()
     {
         $stores = $this->store->getAllStoreNames();
-        $storeCollection = $this->storeQueryContainer
-            ->queryStoresByNames($stores)
-            ->find();
 
-        $allStores = [];
-        foreach ($storeCollection as $storeEntity) {
-            $allStores[] = $this->storeMapper->mapEntityToTransfer($storeEntity);
-        }
-
-        return $allStores;
+        return $this->getStoreTransfersByStoreNames($stores);
     }
 
     /**
@@ -90,19 +86,8 @@ class StoreReader implements StoreReaderInterface
     public function getCurrentStore()
     {
         $currentStore = $this->store->getCurrentStoreName();
-        if (isset(static::$storeCache[$currentStore])) {
-            return static::$storeCache[$currentStore];
-        }
 
-        $storeEntity = $this->storeQueryContainer
-            ->queryStoreByName($currentStore)
-            ->findOne();
-
-        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
-
-        static::$storeCache[$currentStore] = $storeTransfer;
-
-        return $storeTransfer;
+        return $this->getStoreByName($currentStore);
     }
 
     /**
@@ -114,8 +99,8 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreById($idStore)
     {
-        if (isset(static::$storeCache[$idStore])) {
-            return static::$storeCache[$idStore];
+        if ($this->storeCache->hasStoreTransferByStoreId($idStore)) {
+            return $this->storeCache->getStoreTransferByStoreId($idStore);
         }
 
          $storeEntity = $this->storeQueryContainer
@@ -130,7 +115,7 @@ class StoreReader implements StoreReaderInterface
 
         $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
 
-        static::$storeCache[$idStore] = $storeTransfer;
+        $this->storeCache->cacheStoreTransfer($storeTransfer);
 
         return $storeTransfer;
     }
@@ -144,8 +129,8 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreByName($storeName)
     {
-        if (isset(static::$storeCache[$storeName])) {
-            return static::$storeCache[$storeName];
+        if ($this->storeCache->hasStoreTransferByStoreName($storeName)) {
+            return $this->storeCache->getStoreTransferByStoreName($storeName);
         }
 
         $storeEntity = $this->storeQueryContainer
@@ -160,7 +145,7 @@ class StoreReader implements StoreReaderInterface
 
         $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
 
-        static::$storeCache[$storeName] = $storeTransfer;
+        $this->storeCache->cacheStoreTransfer($storeTransfer);
 
         return $storeTransfer;
     }
@@ -172,6 +157,10 @@ class StoreReader implements StoreReaderInterface
      */
     public function findStoreByName(string $storeName): ?StoreTransfer
     {
+        if ($this->storeCache->hasStoreTransferByStoreName($storeName)) {
+            return $this->storeCache->getStoreTransferByStoreName($storeName);
+        }
+
         if (!$this->storeRepository->storeExists($storeName)) {
             return null;
         }
@@ -209,6 +198,29 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array
     {
-        return $this->storeRepository->getStoreTransfersByStoreNames($storeNames);
+        $storeNames = array_unique($storeNames);
+        $unresolvedStoreNames = [];
+        $storeTransfersFromCache = [];
+
+        foreach ($storeNames as $storeName) {
+            if (!$this->storeCache->hasStoreTransferByStoreName($storeName)) {
+                $unresolvedStoreNames[] = $storeName;
+
+                continue;
+            }
+
+            $storeTransfersFromCache[] = $this->storeCache->getStoreTransferByStoreName($storeName);
+        }
+
+        if ($unresolvedStoreNames) {
+            $storeTransfers = $this->storeRepository->getStoreTransfersByStoreNames($storeNames);
+
+            foreach ($storeTransfers as $storeTransfer) {
+                $this->storeCache->cacheStoreTransfer($storeTransfer);
+                $storeTransfersFromCache[] = $storeTransfer;
+            }
+        }
+
+        return $storeTransfersFromCache;
     }
 }

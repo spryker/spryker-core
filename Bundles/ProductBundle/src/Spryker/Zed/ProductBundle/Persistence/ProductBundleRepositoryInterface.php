@@ -31,5 +31,5 @@ interface ProductBundleRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function getBundleProductsByProductConcreteSkus(array $skus): array;
+    public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array;
 }

@@ -10,6 +10,8 @@ namespace Spryker\Zed\Store\Business;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Store\Reader\StoreReader as SharedStoreReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Store\Business\Cache\StoreCache;
+use Spryker\Zed\Store\Business\Cache\StoreCacheInterface;
 use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProvider;
 use Spryker\Zed\Store\Business\Model\StoreMapper;
 use Spryker\Zed\Store\Business\Model\StoreReader;
@@ -33,7 +35,8 @@ class StoreBusinessFactory extends AbstractBusinessFactory
             $this->getSharedStore(),
             $this->getQueryContainer(),
             $this->getRepository(),
-            $this->createStoreMapper()
+            $this->createStoreMapper(),
+            $this->createStoreCache()
         );
     }
 
@@ -43,6 +46,11 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     public function createStoreValidator(): StoreValidatorInterface
     {
         return new StoreValidator($this->createStoreReader());
+    }
+
+    public function createStoreCache(): StoreCacheInterface
+    {
+        return new StoreCache();
     }
 
     /**

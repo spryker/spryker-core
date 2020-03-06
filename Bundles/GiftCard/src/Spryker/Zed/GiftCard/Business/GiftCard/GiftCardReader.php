@@ -40,7 +40,7 @@ class GiftCardReader implements GiftCardReaderInterface
     /**
      * @var \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface
      */
-    //protected $giftCardRepository;
+    protected $giftCardRepository;
 
     /**
      * @param \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface $queryContainer
@@ -51,13 +51,13 @@ class GiftCardReader implements GiftCardReaderInterface
     public function __construct(
         GiftCardQueryContainerInterface $queryContainer,
         GiftCardActualValueHydratorInterface $giftCardActualValueHydrator,
-        UtilEncodingServiceInterface $encodingService//,
-        //GiftCardRepositoryInterface $giftCardRepository
+        UtilEncodingServiceInterface $encodingService,
+        GiftCardRepositoryInterface $giftCardRepository
     ) {
         $this->queryContainer = $queryContainer;
         $this->giftCardActualValueHydrator = $giftCardActualValueHydrator;
         $this->encodingService = $encodingService;
-        //$this->giftCardRepository = $giftCardRepository;
+        $this->giftCardRepository = $giftCardRepository;
     }
 
     /**
@@ -342,20 +342,20 @@ class GiftCardReader implements GiftCardReaderInterface
     /**
      * @param string[] $abstractSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-//    public function getGiftCartAbstractConfigurationsByAbstractSkus(array $abstractSkus): array
-//    {
-//        return $this->giftCardRepository->getGiftCartAbstractConfigurationsByAbstractSkus($abstractSkus);
-//    }
+    public function getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array
+    {
+        return $this->giftCardRepository->getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus($abstractSkus);
+    }
 
     /**
      * @param string[] $concreteSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
      */
-//    public function getGiftCardConcreteConfigurationsByConcreteSkus(array $concreteSkus): array
-//    {
-//        return $this->giftCardRepository->getGiftCardConcreteConfigurationsByConcreteSkus($concreteSkus);
-//    }
+    public function getGiftCardConcreteConfigurationsForProductConcreteByConcreteSkus(array $concreteSkus): array
+    {
+        return $this->giftCardRepository->getGiftCardConcreteConfigurationsForProductByConcreteSkus($concreteSkus);
+    }
 }
