@@ -58,7 +58,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_CREATE,
-            new ShoppingListStorageListener()
+            new ShoppingListStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -71,7 +71,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_UPDATE,
-            new ShoppingListStorageListener()
+            new ShoppingListStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -84,7 +84,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::SHOPPING_LIST_UNPUBLISH,
-            new ShoppingListStoragePublishListener()
+            new ShoppingListStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -97,7 +97,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_ITEM_CREATE,
-            new ShoppingListItemStorageListener()
+            new ShoppingListItemStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -110,7 +110,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_ITEM_DELETE,
-            new ShoppingListItemStorageListener()
+            new ShoppingListItemStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -123,7 +123,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_USER_UPDATE,
-            new ShoppingListCompanyUserStorageListener()
+            new ShoppingListCompanyUserStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -136,7 +136,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_USER_CREATE,
-            new ShoppingListCompanyUserStorageListener()
+            new ShoppingListCompanyUserStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -149,7 +149,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_USER_DELETE,
-            new ShoppingListCompanyUserStorageListener()
+            new ShoppingListCompanyUserStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -162,7 +162,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_CREATE,
-            new ShoppingListCompanyBusinessUnitStorageListener()
+            new ShoppingListCompanyBusinessUnitStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -175,7 +175,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_UPDATE,
-            new ShoppingListCompanyBusinessUnitStorageListener()
+            new ShoppingListCompanyBusinessUnitStorageListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 }

@@ -58,7 +58,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH, new ProductOptionPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH, new ProductOptionPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -68,7 +68,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH, new ProductOptionPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH, new ProductOptionPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -78,7 +78,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE, new ProductOptionStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE, new ProductOptionStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -88,7 +88,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -98,7 +98,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -108,7 +108,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionGroupUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionGroupStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionGroupStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -118,7 +118,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionGroupDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionGroupStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionGroupStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -128,7 +128,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionValueCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE, new ProductOptionValueStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE, new ProductOptionValueStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -138,7 +138,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionValueUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_UPDATE, new ProductOptionValueStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_UPDATE, new ProductOptionValueStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -148,7 +148,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionValueDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE, new ProductOptionValueStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE, new ProductOptionValueStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -158,7 +158,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionValuePriceCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE, new ProductOptionValuePriceStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE, new ProductOptionValuePriceStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -168,7 +168,7 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionValuePriceUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE, new ProductOptionValuePriceStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE, new ProductOptionValuePriceStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -178,6 +178,6 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductOptionValuePriceDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE, new ProductOptionValuePriceStorageListener());
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE, new ProductOptionValuePriceStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

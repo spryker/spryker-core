@@ -26,4 +26,12 @@ class MerchantProfileStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
+    {
+        return null;
+    }
 }

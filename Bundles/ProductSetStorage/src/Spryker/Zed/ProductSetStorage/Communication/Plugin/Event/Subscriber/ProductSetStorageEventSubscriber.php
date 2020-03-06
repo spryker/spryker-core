@@ -71,7 +71,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_PUBLISH, new ProductSetStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_PUBLISH, new ProductSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -81,7 +81,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_UNPUBLISH, new ProductSetStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_UNPUBLISH, new ProductSetStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -91,7 +91,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_CREATE, new ProductSetStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_CREATE, new ProductSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -101,7 +101,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_UPDATE, new ProductSetStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_UPDATE, new ProductSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -111,7 +111,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE, new ProductSetStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE, new ProductSetStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -121,7 +121,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetDataCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_CREATE, new ProductSetDataStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_CREATE, new ProductSetDataStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -131,7 +131,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetDataUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_UPDATE, new ProductSetDataStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_UPDATE, new ProductSetDataStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -141,7 +141,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetDataDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetDataStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetDataStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -151,7 +151,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductAbstractProductSetCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE, new ProductAbstractProductSetStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE, new ProductAbstractProductSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -161,7 +161,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductAbstractProductSetUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_UPDATE, new ProductAbstractProductSetStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_UPDATE, new ProductAbstractProductSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -171,7 +171,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductAbstractProductSetDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE, new ProductAbstractProductSetStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE, new ProductAbstractProductSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -181,7 +181,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetUrlUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductSetUrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductSetUrlStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -191,7 +191,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetUrlDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductSetUrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductSetUrlStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -201,7 +201,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetProductImageUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE, new ProductSetProductImageStorageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE, new ProductSetProductImageStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -211,7 +211,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetProductImageDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE, new ProductSetProductImageStorageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE, new ProductSetProductImageStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -221,7 +221,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetProductImageSetCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE, new ProductSetProductImageSetStorageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE, new ProductSetProductImageSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -231,7 +231,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetProductImageSetUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE, new ProductSetProductImageSetStorageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE, new ProductSetProductImageSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -241,7 +241,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetProductImageSetDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ProductSetProductImageSetStorageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ProductSetProductImageSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -251,7 +251,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetProductImageSetImageUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE, new ProductSetProductImageSetImageStorageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE, new ProductSetProductImageSetImageStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -261,6 +261,6 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetProductImageSetImageDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE, new ProductSetProductImageSetImageStorageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE, new ProductSetProductImageSetImageStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

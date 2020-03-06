@@ -49,7 +49,7 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addCmsBlockProductConnectorPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH, new CmsBlockProductConnectorStoragePublishListener());
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH, new CmsBlockProductConnectorStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -59,7 +59,7 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addCmsBlockProductConnectorUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH, new CmsBlockProductConnectorStorageUnpublishListener());
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH, new CmsBlockProductConnectorStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -69,7 +69,7 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addCmsBlockProductConnectorCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE, new CmsBlockProductConnectorEntityStoragePublishListener());
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE, new CmsBlockProductConnectorEntityStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -79,7 +79,7 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addCmsBlockProductConnectorUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE, new CmsBlockProductConnectorEntityStoragePublishListener());
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE, new CmsBlockProductConnectorEntityStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -89,6 +89,6 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addCmsBlockProductConnectorDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE, new CmsBlockProductConnectorEntityStorageUnpublishListener());
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE, new CmsBlockProductConnectorEntityStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

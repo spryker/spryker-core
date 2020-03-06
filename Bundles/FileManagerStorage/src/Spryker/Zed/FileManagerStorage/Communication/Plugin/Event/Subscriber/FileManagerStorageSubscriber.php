@@ -47,9 +47,9 @@ class FileManagerStorageSubscriber extends AbstractPlugin implements EventSubscr
     protected function addFileListeners(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_CREATE, new FilePublishListener())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_UPDATE, new FilePublishListener())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_DELETE, new FileUnpublishListener());
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_CREATE, new FilePublishListener(), 0, null, $this->getConfig()->getEventQueueName())
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_UPDATE, new FilePublishListener(), 0, null, $this->getConfig()->getEventQueueName())
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_DELETE, new FileUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -60,9 +60,9 @@ class FileManagerStorageSubscriber extends AbstractPlugin implements EventSubscr
     protected function addFileInfoListeners(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_INFO_CREATE, new FileInfoListener())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_INFO_UPDATE, new FileInfoListener())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_INFO_DELETE, new FileInfoListener());
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_INFO_CREATE, new FileInfoListener(), 0, null, $this->getConfig()->getEventQueueName())
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_INFO_UPDATE, new FileInfoListener(), 0, null, $this->getConfig()->getEventQueueName())
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_INFO_DELETE, new FileInfoListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -73,8 +73,8 @@ class FileManagerStorageSubscriber extends AbstractPlugin implements EventSubscr
     protected function addFileLocalizedAttributesListeners(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_CREATE, new FileLocalizedAttributesListener())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_UPDATE, new FileLocalizedAttributesListener())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_DELETE, new FileLocalizedAttributesListener());
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_CREATE, new FileLocalizedAttributesListener(), 0, null, $this->getConfig()->getEventQueueName())
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_UPDATE, new FileLocalizedAttributesListener(), 0, null, $this->getConfig()->getEventQueueName())
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_DELETE, new FileLocalizedAttributesListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

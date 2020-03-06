@@ -30,7 +30,7 @@ class MerchantProfileSearchEventSubscriber extends AbstractPlugin implements Eve
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileSearchEventListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileSearchEventListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $eventCollection;
     }

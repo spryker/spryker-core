@@ -43,7 +43,7 @@ class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements Eve
      */
     protected function addUnauthenticatedCustomerAccessUpdateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_UPDATE, new CustomerAccessStorageBulkListener());
+        $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_UPDATE, new CustomerAccessStorageBulkListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -53,7 +53,7 @@ class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements Eve
      */
     protected function addUnauthenticatedCustomerAccessCreateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_CREATE, new CustomerAccessStorageBulkListener());
+        $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_CREATE, new CustomerAccessStorageBulkListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -63,6 +63,6 @@ class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements Eve
      */
     protected function addUnauthenticatedCustomerAccessDeleteListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_DELETE, new CustomerAccessStorageBulkListener());
+        $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_DELETE, new CustomerAccessStorageBulkListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

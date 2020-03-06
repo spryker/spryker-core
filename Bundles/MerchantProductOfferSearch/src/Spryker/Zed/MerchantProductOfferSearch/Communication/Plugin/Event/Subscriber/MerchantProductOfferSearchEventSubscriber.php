@@ -30,9 +30,9 @@ class MerchantProductOfferSearchEventSubscriber extends AbstractPlugin implement
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, new MerchantProductOfferSearchEventListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new MerchantProductOfferSearchEventListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new MerchantProductOfferSearchEventListener());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, new MerchantProductOfferSearchEventListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new MerchantProductOfferSearchEventListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new MerchantProductOfferSearchEventListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $eventCollection;
     }

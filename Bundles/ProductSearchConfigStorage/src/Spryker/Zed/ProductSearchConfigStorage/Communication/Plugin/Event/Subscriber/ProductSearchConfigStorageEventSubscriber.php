@@ -51,7 +51,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH, new ProductSearchConfigStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH, new ProductSearchConfigStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -61,7 +61,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH, new ProductSearchConfigStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH, new ProductSearchConfigStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -71,7 +71,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE, new ProductSearchConfigStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE, new ProductSearchConfigStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -81,7 +81,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE, new ProductSearchConfigStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE, new ProductSearchConfigStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -91,7 +91,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE, new ProductSearchConfigStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE, new ProductSearchConfigStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -101,7 +101,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigKeyCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE, new ProductSearchConfigStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE, new ProductSearchConfigStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -111,7 +111,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigKeyUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE, new ProductSearchConfigStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE, new ProductSearchConfigStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -121,6 +121,6 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigKeyDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE, new ProductSearchConfigStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE, new ProductSearchConfigStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

@@ -46,7 +46,7 @@ class ProductReviewSearchEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductReviewPublishSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_PUBLISH, new ProductReviewSearchListener());
+        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_PUBLISH, new ProductReviewSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductReviewSearchEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductReviewUnpublishSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_UNPUBLISH, new ProductReviewSearchListener());
+        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_UNPUBLISH, new ProductReviewSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -66,7 +66,7 @@ class ProductReviewSearchEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductReviewCreateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE, new ProductReviewSearchListener());
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE, new ProductReviewSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -76,7 +76,7 @@ class ProductReviewSearchEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductReviewUpdateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_UPDATE, new ProductReviewSearchListener());
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_UPDATE, new ProductReviewSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -86,6 +86,6 @@ class ProductReviewSearchEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductReviewDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_DELETE, new ProductReviewSearchListener());
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_DELETE, new ProductReviewSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

@@ -49,7 +49,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
     {
         $eventCollection->addListenerQueued(
             MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH,
-            new MerchantOpeningHoursScheduleStoragePublishListener()
+            new MerchantOpeningHoursScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
 
         return $this;
@@ -64,7 +64,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
     {
         $eventCollection->addListenerQueued(
             MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE,
-            new MerchantOpeningHoursWeekdayScheduleStoragePublishListener()
+            new MerchantOpeningHoursWeekdayScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
 
         return $this;
@@ -79,7 +79,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
     {
         $eventCollection->addListenerQueued(
             MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE,
-            new MerchantOpeningHoursDateScheduleStoragePublishListener()
+            new MerchantOpeningHoursDateScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
 
         return $this;

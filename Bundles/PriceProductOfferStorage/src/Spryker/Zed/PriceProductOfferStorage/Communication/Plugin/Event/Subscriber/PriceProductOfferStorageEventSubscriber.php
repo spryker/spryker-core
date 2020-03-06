@@ -31,15 +31,15 @@ class PriceProductOfferStorageEventSubscriber extends AbstractPlugin implements 
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH, new PriceProductOfferStoragePublishListener());
-        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_CREATE, new PriceProductOfferStoragePublishListener());
-        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_UPDATE, new PriceProductOfferStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH, new PriceProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_CREATE, new PriceProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_UPDATE, new PriceProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
-        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_UNPUBLISH, new PriceProductOfferStorageUnpublishListener());
-        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_DELETE, new PriceProductOfferStorageUnpublishListener());
+        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_UNPUBLISH, new PriceProductOfferStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_DELETE, new PriceProductOfferStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductPublishListener());
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_UNPUBLISH, new ProductUnpublishListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductPublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_UNPUBLISH, new ProductUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $eventCollection;
     }

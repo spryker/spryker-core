@@ -49,7 +49,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
     {
         $eventCollection->addListenerQueued(
             CompanyUserEvents::COMPANY_USER_PUBLISH,
-            new CompanyUserStoragePublishListener()
+            new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -62,7 +62,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
     {
         $eventCollection->addListenerQueued(
             CompanyUserEvents::COMPANY_USER_UNPUBLISH,
-            new CompanyUserStorageUnpublishListener()
+            new CompanyUserStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -75,7 +75,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
     {
         $eventCollection->addListenerQueued(
             CompanyUserEvents::ENTITY_SPY_COMPANY_USER_CREATE,
-            new CompanyUserStoragePublishListener()
+            new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -88,7 +88,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
     {
         $eventCollection->addListenerQueued(
             CompanyUserEvents::ENTITY_SPY_COMPANY_USER_UPDATE,
-            new CompanyUserStoragePublishListener()
+            new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -101,7 +101,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
     {
         $eventCollection->addListenerQueued(
             CompanyUserEvents::ENTITY_SPY_COMPANY_USER_DELETE,
-            new CompanyUserStorageUnpublishListener()
+            new CompanyUserStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -114,7 +114,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
     {
         $eventCollection->addListenerQueued(
             CompanyEvents::ENTITY_SPY_COMPANY_UPDATE,
-            new CompanyUserCompanyStoragePublishListener()
+            new CompanyUserCompanyStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 }

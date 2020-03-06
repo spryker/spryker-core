@@ -43,7 +43,7 @@ class ConfigurableBundleTemplatePageSearchEventSubscriber extends AbstractPlugin
      */
     protected function addConfigurableBundleTemplatePublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener());
+        $eventCollection->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -55,7 +55,7 @@ class ConfigurableBundleTemplatePageSearchEventSubscriber extends AbstractPlugin
      */
     protected function addConfigurableBundleTemplateDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener());
+        $eventCollection->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }

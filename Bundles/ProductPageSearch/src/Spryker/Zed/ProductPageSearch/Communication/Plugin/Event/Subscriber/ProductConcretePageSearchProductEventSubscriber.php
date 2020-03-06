@@ -53,7 +53,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      */
     protected function addProductConcretePageProductConcreteCreateSearchListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcretePageSearchProductListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcretePageSearchProductListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -63,7 +63,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      */
     protected function addProductConcretePageProductConcreteUpdateSearchListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcretePageSearchProductListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcretePageSearchProductListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -73,7 +73,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      */
     protected function addProductConcretePageProductConcreteDeleteSearchListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcretePageSearchProductListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcretePageSearchProductListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      */
     protected function addProductConcretePageProductConcretePublishSearchListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductConcretePageSearchProductListener());
+        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductConcretePageSearchProductListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -93,7 +93,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      */
     protected function addProductConcretePageProductConcreteUnpublishSearchListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_UNPUBLISH, new ProductConcretePageSearchProductListener());
+        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_UNPUBLISH, new ProductConcretePageSearchProductListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -105,7 +105,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
     {
         $eventCollection->addListenerQueued(
             ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE,
-            new ProductAbstractStoreProductConcretePageSearchPublishListener()
+            new ProductAbstractStoreProductConcretePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -118,7 +118,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
     {
         $eventCollection->addListenerQueued(
             ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE,
-            new ProductAbstractStoreProductConcretePageSearchPublishListener()
+            new ProductAbstractStoreProductConcretePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 
@@ -131,7 +131,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
     {
         $eventCollection->addListenerQueued(
             ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE,
-            new ProductAbstractStoreProductConcretePageSearchUnpublishListener()
+            new ProductAbstractStoreProductConcretePageSearchUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
     }
 }

@@ -45,10 +45,10 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addProductConcretePublishStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, new ProductPackagingUnitPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, new ProductPackagingUnitPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
 
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE, new ProductPackagingUnitTypePublishStorageListener());
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE, new ProductPackagingUnitTypePublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE, new ProductPackagingUnitTypePublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE, new ProductPackagingUnitTypePublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -58,8 +58,8 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addProductConcreteUnpublishStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH, new ProductPackagingUnitUnpublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH, new ProductPackagingUnitUnpublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
 
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE, new ProductPackagingUnitTypeUnpublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE, new ProductPackagingUnitTypeUnpublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

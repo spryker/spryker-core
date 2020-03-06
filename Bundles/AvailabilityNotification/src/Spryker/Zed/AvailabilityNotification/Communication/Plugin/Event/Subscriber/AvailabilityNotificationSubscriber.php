@@ -41,6 +41,6 @@ class AvailabilityNotificationSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityNotificationListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_NOTIFICATION, new AvailabilityNotificationListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_NOTIFICATION, new AvailabilityNotificationListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

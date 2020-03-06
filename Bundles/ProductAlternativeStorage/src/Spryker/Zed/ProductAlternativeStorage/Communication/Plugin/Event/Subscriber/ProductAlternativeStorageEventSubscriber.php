@@ -61,7 +61,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addProductAlternativePublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativePublishStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativePublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -72,7 +72,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addProductAlternativeUnpublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH, new ProductAlternativeStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH, new ProductAlternativeStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addProductAlternativeCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_CREATE, new ProductAlternativeStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_CREATE, new ProductAlternativeStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -94,7 +94,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addProductAlternativeUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_UPDATE, new ProductAlternativeStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_UPDATE, new ProductAlternativeStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -105,7 +105,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addProductAlternativeDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_DELETE, new ProductAlternativeStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_DELETE, new ProductAlternativeStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -132,7 +132,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addReplacementsProductAlternativePublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativeReplacementStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativeReplacementStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -143,7 +143,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addReplacementsProductAlternativeCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_CREATE, new ProductAlternativeReplacementStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_CREATE, new ProductAlternativeReplacementStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -154,7 +154,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addReplacementsProductAlternativeUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_UPDATE, new ProductAlternativeReplacementStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_UPDATE, new ProductAlternativeReplacementStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -165,7 +165,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addReplacementsProductAlternativeDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_DELETE, new ProductAlternativeReplacementStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_DELETE, new ProductAlternativeReplacementStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -176,7 +176,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addReplacementsAbstractPublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_REPLACEMENT_ABSTRACT_PUBLISH, new ProductAbstractReplacementStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_REPLACEMENT_ABSTRACT_PUBLISH, new ProductAbstractReplacementStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -187,6 +187,6 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addReplacementsConcretePublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_REPLACEMENT_CONCRETE_PUBLISH, new ProductConcreteReplacementStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_REPLACEMENT_CONCRETE_PUBLISH, new ProductConcreteReplacementStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

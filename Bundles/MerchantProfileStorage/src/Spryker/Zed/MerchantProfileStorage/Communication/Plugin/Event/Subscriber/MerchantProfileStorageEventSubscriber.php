@@ -47,7 +47,7 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addMerchantProfileCreateListeners(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_CREATE, new MerchantProfileStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_CREATE, new MerchantProfileStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $eventCollection;
     }
@@ -59,7 +59,7 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addMerchantProfileUpdateListeners(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $eventCollection;
     }
@@ -71,7 +71,7 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addMerchantProfilePublishListeners(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, new MerchantProfileStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, new MerchantProfileStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $eventCollection;
     }
@@ -83,7 +83,7 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addMerchantProfileDeleteListeners(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_DELETE, new MerchantProfileStorageUnpublishListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_DELETE, new MerchantProfileStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $eventCollection;
     }

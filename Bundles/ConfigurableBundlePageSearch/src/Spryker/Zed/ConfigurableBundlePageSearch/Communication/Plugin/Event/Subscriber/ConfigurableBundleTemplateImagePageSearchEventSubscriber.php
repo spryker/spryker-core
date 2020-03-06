@@ -49,7 +49,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH,
-            new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener()
+            new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
 
         return $this;
@@ -64,7 +64,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_UNPUBLISH,
-            new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener()
+            new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
 
         return $this;
@@ -79,7 +79,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE,
-            new ProductImageSetConfigurableBundlePageSearchPublishListener()
+            new ProductImageSetConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
 
         return $this;
@@ -94,7 +94,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE,
-            new ProductImageSetConfigurableBundlePageSearchPublishListener()
+            new ProductImageSetConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
 
         return $this;
@@ -109,7 +109,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE,
-            new ProductImageSetConfigurableBundlePageSearchPublishListener()
+            new ProductImageSetConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
         );
 
         return $this;
