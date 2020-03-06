@@ -55,7 +55,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
             [$productConcreteMeasurementUnitStorageTransfer]
         );
 
-        return $this->updateIsDefault(array_values(current($productMeasurementSalesUnitTransfers)));
+        return $this->updateIsDefault(current($productMeasurementSalesUnitTransfers));
     }
 
     /**
@@ -99,9 +99,14 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         $productConcreteMeasurementSalesUnitTransfers = [];
         $productMeasurementUnitIds = [];
         foreach ($productConcreteMeasurementUnitStorageTransfers as $productConcreteMeasurementUnitStorageTransfer) {
-            [$productConcreteMeasurementSalesUnitTransfers, $productMeasurementUnitIds] = $this->collectProductMeasurementUnitData(
-                $productConcreteMeasurementUnitStorageTransfer
-            );
+            foreach ($productConcreteMeasurementUnitStorageTransfer->getSalesUnits() as $productConcreteMeasurementSalesUnitTransfer) {
+                if ($productConcreteMeasurementSalesUnitTransfer->getIsDisplayed() !== true) {
+                    continue;
+                }
+
+                $productConcreteMeasurementSalesUnitTransfers[] = $productConcreteMeasurementSalesUnitTransfer;
+                $productMeasurementUnitIds[] = $productConcreteMeasurementSalesUnitTransfer->getIdProductMeasurementUnit();
+            }
         }
 
         $productMeasurementSalesUnitTransfers = [];
@@ -119,27 +124,6 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         }
 
         return $productMeasurementSalesUnitTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer
-     *
-     * @return array
-     */
-    protected function collectProductMeasurementUnitData(ProductConcreteMeasurementUnitStorageTransfer $productConcreteMeasurementUnitStorageTransfer): array
-    {
-        $productConcreteMeasurementSalesUnitTransfers = [];
-        $productMeasurementUnitIds = [];
-        foreach ($productConcreteMeasurementUnitStorageTransfer->getSalesUnits() as $productConcreteMeasurementSalesUnitTransfer) {
-            if ($productConcreteMeasurementSalesUnitTransfer->getIsDisplayed() !== true) {
-                continue;
-            }
-
-            $productConcreteMeasurementSalesUnitTransfers[] = $productConcreteMeasurementSalesUnitTransfer;
-            $productMeasurementUnitIds[] = $productConcreteMeasurementSalesUnitTransfer->getIdProductMeasurementUnit();
-        }
-
-        return [$productConcreteMeasurementSalesUnitTransfers, $productMeasurementUnitIds];
     }
 
     /**
