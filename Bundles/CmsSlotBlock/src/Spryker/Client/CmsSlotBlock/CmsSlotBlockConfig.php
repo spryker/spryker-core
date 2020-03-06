@@ -14,6 +14,8 @@ class CmsSlotBlockConfig extends AbstractBundleConfig
     protected const IS_CMS_BLOCK_VISIBLE_IN_SLOT_BY_DEFAULT = true;
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getIsCmsBlockVisibleInSlotByDefault(): bool

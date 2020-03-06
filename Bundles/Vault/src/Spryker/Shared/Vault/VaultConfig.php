@@ -13,6 +13,8 @@ use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured;
 class VaultConfig extends AbstractSharedConfig
 {
     /**
+     * @api
+     *
      * @throws \Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured
      *
      * @return string

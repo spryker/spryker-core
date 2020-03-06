@@ -12,6 +12,8 @@ class KernelConfig extends AbstractSharedConfig
     /**
      * Set this to true if you want to return already located instances instead of creating new ones for each call.
      *
+     * @api
+     *
      * @return bool
      */
     public function isLocatorInstanceCacheEnabled(): bool

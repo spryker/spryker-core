@@ -18,6 +18,8 @@ class CmsSlotDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_CMS_SLOT_TEMPLATE = 'cms-slot-template';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCmsSlotDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -28,6 +30,8 @@ class CmsSlotDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCmsSlotTemplateDataImporterConfiguration(): DataImporterConfigurationTransfer
