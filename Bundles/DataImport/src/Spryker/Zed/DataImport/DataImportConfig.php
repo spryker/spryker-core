@@ -24,6 +24,8 @@ class DataImportConfig extends AbstractBundleConfig
     protected const DEFAULT_QUEUE_WRITER_CHUNK_SIZE = 100;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDataImportRootPath()
@@ -35,6 +37,8 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getQueueReaderChunkSize(): int
@@ -43,6 +47,8 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getQueueWriterChunkSize(): int
@@ -51,6 +57,8 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getFullImportTypes(): array
