@@ -77,8 +77,6 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
      */
     protected function mapQuerySortingColumn(OrderListTransfer $orderListTransfer): void
     {
-        $orderListTransfer->requireFilter();
-
         $filterTransfer = $orderListTransfer->getFilter();
         $mappedColumn = static::ORDER_BY_COLUMN_MAPPING[$filterTransfer->getOrderBy()] ?? null;
 

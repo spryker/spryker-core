@@ -97,7 +97,7 @@ interface SalesClientInterface
 
     /**
      * Specification:
-     * - Provides available order entity search types.
+     * - Provides available order search types.
      *
      * @api
      *
