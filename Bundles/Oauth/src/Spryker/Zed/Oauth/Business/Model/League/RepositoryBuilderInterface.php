@@ -36,7 +36,7 @@ interface RepositoryBuilderInterface
     public function createUserRepository(): UserRepositoryInterface;
 
     /**
-     * @return \League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface
+     * @return \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface
      */
     public function createRefreshTokenRepository(): RefreshTokenRepositoryInterface;
 }
