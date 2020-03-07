@@ -52,9 +52,9 @@
 
         <column name="identifier" type="VARCHAR" size="128" required="true"/>
         <column name="scopes" type="VARCHAR" size="1024" required="false"/>
+        <column name="customer_reference" type="VARCHAR" size="255" />
         <column name="user_identifier" type="VARCHAR" size="1024" required="true"/>
         <column name="fk_oauth_client" type="VARCHAR" size="1024" required="true"/>
-        <column name="payload" type="JSON" required="false" />
 
         <column name="expires_at" type="TIMESTAMP" required="true"/>
         <column name="revoked_at" type="TIMESTAMP" required="false"/>
@@ -66,6 +66,9 @@
 
         <index name="index-spy_oauth_refresh_token-identifier">
             <index-column name="identifier"/>
+        </index>
+        <index name="index-spy_oauth_refresh_token-customer_reference">
+            <index-column name="customer_reference"/>
         </index>
         <index name="index-spy_oauth_refresh_token-user_identifier">
             <index-column name="user_identifier"/>

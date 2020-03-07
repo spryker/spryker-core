@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
-use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
@@ -67,10 +67,12 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
     {
         $userIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
+        $customerReference = $this->getCustomerReference($userIdentifier);
 
         $oauthRefreshTokenTransfer = new OauthRefreshTokenTransfer();
         $oauthRefreshTokenTransfer
             ->setIdentifier($refreshTokenEntity->getIdentifier())
+            ->setCustomerReference($customerReference)
             ->setUserIdentifier($userIdentifier)
             ->setExpiresAt($refreshTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
             ->setIdOauthClient($refreshTokenEntity->getAccessToken()->getClient()->getIdentifier())
@@ -99,6 +101,18 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     }
 
     /**
+     * @inheritDoc
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     *
+     * @return void
+     */
+    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void
+    {
+        $this->oauthEntityManager->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
+    }
+
+    /**
      * Check if the refresh token has been revoked.
      *
      * @param string $tokenId
@@ -111,5 +125,18 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
             ->setIdentifier($tokenId);
 
         return $this->oauthRepository->isRefreshTokenRevoked($oauthRefreshTokenTransfer);
+    }
+
+    /**
+     * @param string|null $userIdentifier
+     *
+     * @return string|null
+     */
+    protected function getCustomerReference(?string $userIdentifier): ?string
+    {
+        $encodedUserIdentifier = $this->utilEncodingService
+            ->decodeJson($userIdentifier);
+
+        return $encodedUserIdentifier->customer_reference ?? null;
     }
 }

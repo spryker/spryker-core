@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oauth;
 
-use DateInterval;
 use Spryker\Shared\Oauth\OauthConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -52,11 +51,11 @@ class OauthConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \DateInterval|null
+     * @return string
      */
-    public function getRefreshTokenRetentionInterval(): ?DateInterval
+    public function getRefreshTokenRetention(): string
     {
-        return $this->getSharedConfig()->getRefreshTokenRetentionInterval();
+        return $this->getSharedConfig()->getRefreshTokenRetention();
     }
 
     /**

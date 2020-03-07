@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Oauth\Business;
 
 use Codeception\Test\Unit;
-use DateInterval;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
@@ -306,7 +305,7 @@ class OauthFacadeTest extends Unit
         // Arrange
         $this->tester->deleteAllOauthRefreshTokens();
         $oauthConfigMock = $this->getOauthConfigMock();
-        $oauthConfigMock->method('getRefreshTokenRetentionInterval')->willReturn(new DateInterval($interval));
+        $oauthConfigMock->method('getRefreshTokenRetention')->willReturn($interval);
         $this->setUserProviderPluginMock();
         $customerTransfer = $this->tester->createCustomerTransfer();
         $this->tester->haveAuthorizationToGlue($customerTransfer);

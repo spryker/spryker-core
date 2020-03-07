@@ -7,21 +7,18 @@
 
 namespace Spryker\Zed\Oauth\Business\Model;
 
-use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
-use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
 class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 {
-    use TransactionTrait;
     use CryptTrait;
 
     protected const REFRESH_TOKEN_INVALID_ERROR_MESSAGE = 'Invalid Refresh Token';
@@ -35,7 +32,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected $oauthRepository;
 
     /**
-     * @var \League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface
      */
     protected $refreshTokenRepository;
 
@@ -45,7 +42,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected $utilEncodingService;
 
     /**
-     * @param \League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
@@ -115,23 +112,9 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)
             ->getOauthRefreshTokens();
 
-        $this->executeRevokeRefreshTokensTransaction($oauthRefreshTokenTransfers);
+        $this->refreshTokenRepository->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
 
         return (new RevokeRefreshTokenResponseTransfer())->setIsSuccessful(true);
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
-     *
-     * @return void
-     */
-    protected function executeRevokeRefreshTokensTransaction(ArrayObject $oauthRefreshTokenTransfers): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($oauthRefreshTokenTransfers): void {
-            foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
-                $this->refreshTokenRepository->revokeRefreshToken($oauthRefreshTokenTransfer->getIdentifier());
-            }
-        });
     }
 
     /**

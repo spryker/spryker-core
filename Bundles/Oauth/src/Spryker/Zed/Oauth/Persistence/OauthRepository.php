@@ -22,8 +22,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class OauthRepository extends AbstractRepository implements OauthRepositoryInterface
 {
-    public const CUSTOMER_REFERENCE_PATTERN = '%%"customer_reference":"%s"%%';
-
     /**
      * @param string $identifier
      *
@@ -144,14 +142,12 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
         SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery,
         OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
     ): SpyOauthRefreshTokenQuery {
-        if ($oauthTokenCriteriaFilterTransfer->getCustomerReference()) {
-            $oauthRefreshTokenQuery->filterByUserIdentifier_Like(
-                sprintf(static::CUSTOMER_REFERENCE_PATTERN, $oauthTokenCriteriaFilterTransfer->getCustomerReference())
-            );
-        }
-
         if ($oauthTokenCriteriaFilterTransfer->getIdentifier()) {
             $oauthRefreshTokenQuery->filterByIdentifier($oauthTokenCriteriaFilterTransfer->getIdentifier());
+        }
+
+        if ($oauthTokenCriteriaFilterTransfer->getCustomerReference()) {
+            $oauthRefreshTokenQuery->filterByCustomerReference($oauthTokenCriteriaFilterTransfer->getCustomerReference());
         }
 
         $oauthRefreshTokenQuery->filterByRevokedAt(

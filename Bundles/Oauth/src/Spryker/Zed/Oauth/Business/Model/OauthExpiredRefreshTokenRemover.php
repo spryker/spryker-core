@@ -27,21 +27,21 @@ class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemover
     /**
      * @var \DateTime
      */
-    protected $dateTime;
+    protected $presentDateTime;
 
     /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
-     * @param \DateTime $dateTime
+     * @param \DateTime $presentDateTime
      */
     public function __construct(
         OauthEntityManagerInterface $oauthEntityManager,
         OauthConfig $oauthConfig,
-        DateTime $dateTime
+        DateTime $presentDateTime
     ) {
         $this->oauthEntityManager = $oauthEntityManager;
         $this->oauthConfig = $oauthConfig;
-        $this->dateTime = $dateTime;
+        $this->presentDateTime = $presentDateTime;
     }
 
     /**
@@ -49,22 +49,19 @@ class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemover
      */
     public function deleteExpiredRefreshTokens(): ?int
     {
-        $refreshTokenRetentionInterval = $this->oauthConfig->getRefreshTokenRetentionInterval();
-        if ($refreshTokenRetentionInterval === null) {
-            return null;
-        }
+        $refreshTokenRetentionInterval = new DateInterval($this->oauthConfig->getRefreshTokenRetention());
 
         return $this->oauthEntityManager->deleteExpiredRefreshTokens($this->getExpiresAt($refreshTokenRetentionInterval));
     }
 
     /**
-     * @param \DateInterval|null $refreshTokenRetentionInterval
+     * @param \DateInterval $refreshTokenRetentionInterval
      *
      * @return string
      */
-    protected function getExpiresAt(?DateInterval $refreshTokenRetentionInterval)
+    protected function getExpiresAt(DateInterval $refreshTokenRetentionInterval): string
     {
-        return $this->dateTime
+        return $this->presentDateTime
             ->add($refreshTokenRetentionInterval)
             ->format('Y-m-d H:i:s');
     }

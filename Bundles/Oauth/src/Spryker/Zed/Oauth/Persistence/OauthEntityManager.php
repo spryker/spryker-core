@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
@@ -52,16 +53,29 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshToken
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return void
      */
-    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void
+    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
     {
-        $oauthRefreshToken->requireIdentifier();
+        $oauthRefreshTokenTransfer->requireIdentifier();
         $this->getFactory()
             ->createRefreshTokenQuery()
-            ->filterByIdentifier($oauthRefreshToken->getIdentifier())
+            ->filterByIdentifier($oauthRefreshTokenTransfer->getIdentifier())
+            ->update([static::COLUMN_REVOKED_AT => (new DateTime())->format('Y-m-d H:i:s')]);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     *
+     * @return void
+     */
+    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void
+    {
+        $this->getFactory()
+            ->createRefreshTokenQuery()
+            ->filterByIdentifier_In($this->getIdentifiersFromTransfers($oauthRefreshTokenTransfers))
             ->update([static::COLUMN_REVOKED_AT => (new DateTime())->format('Y-m-d H:i:s')]);
     }
 
@@ -119,5 +133,21 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
             ->createRefreshTokenQuery()
             ->filterByExpiresAt($expiresAt, Criteria::LESS_EQUAL)
             ->delete();
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     *
+     * @return string[]
+     */
+    protected function getIdentifiersFromTransfers(ArrayObject $oauthRefreshTokenTransfers): array
+    {
+        $identifiers = [];
+        foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
+            $oauthRefreshTokenTransfer->requireIdentifier();
+            $identifiers[] = $oauthRefreshTokenTransfer->getIdentifier();
+        }
+
+        return $identifiers;
     }
 }

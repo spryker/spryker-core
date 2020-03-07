@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
@@ -50,11 +51,18 @@ interface OauthEntityManagerInterface
     public function deleteAccessTokenByIdentifier(string $identifier): void;
 
     /**
-     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshToken
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return void
      */
-    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshToken): void;
+    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     *
+     * @return void
+     */
+    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void;
 
     /**
      * @param string $expiresAt
