@@ -70,6 +70,9 @@
         <index name="index-spy_oauth_refresh_token-customer_reference">
             <index-column name="customer_reference"/>
         </index>
+        <index name="index-spy_oauth_refresh_token-fk_oauth_client">
+            <index-column name="fk_oauth_client"/>
+        </index>
         <index name="index-spy_oauth_refresh_token-user_identifier">
             <index-column name="user_identifier"/>
         </index>
