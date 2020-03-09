@@ -67,7 +67,8 @@ class RouterDebugYvesConsole extends Command
         $routes = $router->getRouteCollection();
 
         if ($name) {
-            if (!($route = $routes->get($name)) && $matchingRoutes = $this->findRouteNameContaining($name, $routes)) {
+            $route = $routes->get($name);
+            if (!$route && $matchingRoutes = $this->findRouteNameContaining($name, $routes)) {
                 $default = count($matchingRoutes) === 1 ? $matchingRoutes[0] : null;
                 $name = $io->choice('Select one of the matching routes', $matchingRoutes, $default);
                 $route = $routes->get($name);
