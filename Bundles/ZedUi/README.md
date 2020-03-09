@@ -7,6 +7,8 @@ This module provides base UI components for Zed application.
 
 ```
 composer require spryker/zed-ui
+npm install
+npm run build
 ```
 
 ## Documentation

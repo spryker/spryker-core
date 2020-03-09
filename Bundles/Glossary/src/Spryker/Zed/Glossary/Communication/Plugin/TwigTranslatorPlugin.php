@@ -30,6 +30,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     protected $localeName;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -40,6 +42,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -53,6 +57,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      * - Translates the given message.
      *
@@ -80,6 +85,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      * - Translates the given choice message by choosing a translation according to a number.
      *
@@ -124,6 +130,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $localeName
@@ -138,6 +146,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string|null
@@ -148,6 +158,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

@@ -3,13 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        <style>
+            [cloak] {
+                display: none;
+            }
+        </style>
         <title>
-            {% block headTitle %}
-                {% if title is defined %}
-                    {{ title | trans }}
-                {% endif %}
-            {% endblock %}
+            {% block headTitle %}{% endblock %}
         </title>
 
         {% block headCss %}
@@ -18,6 +18,12 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block footerJs %}{% endblock %}
+
+        {% block footerJs %}
+            <script src="{{ assetsPath('js/zed-ui/polyfills-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/zed-ui/main-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/zed-ui/polyfills-es5.js') }}" nomodule defer></script>
+            <script src="{{ assetsPath('js/zed-ui/main-es5.js') }}" nomodule defer></script>
+        {% endblock %}
     </body>
 </html>
