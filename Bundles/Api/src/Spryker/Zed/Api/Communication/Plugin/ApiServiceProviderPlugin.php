@@ -33,6 +33,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     protected $controllerListener;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Please remove usage of this setter. The needed ControllerListenerInterface is now retrieved by the Factory.
@@ -47,6 +49,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Silex\Application $app
@@ -81,6 +85,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Silex\Application $app

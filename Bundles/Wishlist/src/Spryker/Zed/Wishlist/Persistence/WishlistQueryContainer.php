@@ -16,6 +16,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
@@ -26,6 +28,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
@@ -36,6 +40,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -51,6 +57,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idWishlist

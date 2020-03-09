@@ -19,6 +19,8 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     public const FK_NAVIGATION = 'fkNavigation';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $localeNames
@@ -34,6 +36,8 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $navigationIds
@@ -48,6 +52,8 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $navigationNodeIds
@@ -65,6 +71,8 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $urlIds
@@ -84,6 +92,8 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $navigationIds

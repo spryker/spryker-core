@@ -28,6 +28,8 @@ class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageD
     protected $idStoreMapBuffer;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productData

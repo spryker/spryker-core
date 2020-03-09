@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin extends AbstractPlugin implements PriceProductDimensionExpanderStrategyPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Returns true if strategy can be used for the transfer.
      *
@@ -35,6 +36,7 @@ class MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin extends Ab
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Returns expanded transfer.
      *

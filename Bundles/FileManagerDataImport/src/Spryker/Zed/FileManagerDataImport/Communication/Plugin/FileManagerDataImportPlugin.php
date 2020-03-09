@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class FileManagerDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -31,6 +33,8 @@ class FileManagerDataImportPlugin extends AbstractPlugin implements DataImportPl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

@@ -394,8 +394,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * Specification:
-     * - Retrieves a current Store specific product abstract ids from Storage using specified mapping.
+     * {@inheritDoc}
      *
      * @api
      *

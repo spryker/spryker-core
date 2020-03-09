@@ -98,6 +98,8 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
