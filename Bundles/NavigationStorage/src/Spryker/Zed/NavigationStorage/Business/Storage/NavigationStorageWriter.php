@@ -102,7 +102,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     }
 
     /**
-     * @param NavigationTreeTransfer[][] $navigationTreeTransfers
+     * @param \Generated\Shared\Transfer\NavigationTreeTransfer[][] $navigationTreeTransfers
      * @param array $spyNavigationMenuTranslationStorageEntities
      *
      * @return void
