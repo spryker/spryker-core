@@ -14,12 +14,12 @@ interface OrderCustomReferenceClientInterface
 {
     /**
      * Specification:
-     * - Sets Quote with QuoteTransfer::orderCustomReference.
+     * - Sets QuoteTransfer::orderCustomReference.
      * - Makes Zed request.
-     * - Saves order custom reference in persistence.
+     * - Saves order custom reference in Persistence.
      * - Expects QuoteTransfer::idQuote to be provided.
      * - Expects QuoteTransfer::customer to be provided.
-     * - Expects $orderCustomReference length to be less than 255 symbols.
+     * - Validates the length of $orderCustomReference if is less than Config::getOrderCustomReferenceMaxLength().
      *
      * @api
      *
