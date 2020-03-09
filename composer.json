@@ -520,6 +520,8 @@
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/propel-query-builder": "*",
+    "spryker/publisher": "*",
+    "spryker/publisher-extension": "*",
     "spryker/queue": "*",
     "spryker/quick-order": "*",
     "spryker/quick-order-extension": "*",
