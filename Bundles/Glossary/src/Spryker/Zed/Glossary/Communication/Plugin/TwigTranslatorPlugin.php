@@ -46,7 +46,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @api
      *
-     * @return array
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters()
     {

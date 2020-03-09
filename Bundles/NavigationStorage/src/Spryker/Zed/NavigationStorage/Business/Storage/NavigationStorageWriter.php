@@ -102,7 +102,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     }
 
     /**
-     * @param array $navigationTreeTransfers
+     * @param NavigationTreeTransfer[][] $navigationTreeTransfers
      * @param array $spyNavigationMenuTranslationStorageEntities
      *
      * @return void
@@ -149,7 +149,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     /**
      * @param array $navigationIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer[][]
      */
     protected function getNavigationTreeTransfer(array $navigationIds)
     {
@@ -161,7 +161,12 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
             $navigationTransfer->setIdNavigation($navigationId);
             foreach ($locales as $locale) {
                 $localeTransfer = (new LocaleTransfer())->fromArray($locale->toArray(), true);
-                $navigationTrees[$navigationId][$localeTransfer->getLocaleName()] = $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
+                $navigationTreeTransfer = $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
+                if (!$navigationTreeTransfer) {
+                    continue;
+                }
+                
+                $navigationTrees[$navigationId][$localeTransfer->getLocaleName()] = $navigationTreeTransfer;
             }
         }
 

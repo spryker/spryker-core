@@ -34,7 +34,7 @@ class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
     }
 
     /**
-     * @uses SpyCustomerQuery
+     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      *
      * @param string $customerReference
      *
