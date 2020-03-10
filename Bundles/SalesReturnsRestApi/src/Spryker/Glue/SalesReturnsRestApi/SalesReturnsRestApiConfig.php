@@ -24,7 +24,7 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_RETURN_CANT_BE_CREATED = 'Return can\'t be created.';
 
     /**
-     * @return array
+     * @return (int|string)[][]
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

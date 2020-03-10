@@ -95,6 +95,7 @@
         <property name="idSalesOrderItem" type="int"/>
         <property name="state" type="ItemState"/>
         <property name="process" type="string"/>
+        <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
     </transfer>
 
     <transfer name="Locale">

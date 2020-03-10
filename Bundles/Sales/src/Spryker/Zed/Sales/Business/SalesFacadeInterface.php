@@ -336,22 +336,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Requires ItemTransfer::idSalesOrderItem to be set.
-     * - Expands item with order reference information.
-     * - Sets ItemTransfer::orderReference for each order item.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function expandOrderItemsWithOrderReference(array $itemTransfers): array;
-
-    /**
-     * Specification:
-     * - Retrieves order items from persistence.
-     * - Finds item records by criteria from OrderItemFilterTransfer.
+     * - Retrieves order items from persistence by criteria from OrderItemFilterTransfer.
      * - Executes OrderItemExpanderPluginInterface stack.
      *
      * @api

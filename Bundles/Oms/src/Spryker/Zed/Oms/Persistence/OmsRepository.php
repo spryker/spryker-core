@@ -103,4 +103,23 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 
         return new Decimal($productReservationTotalQuantity ?? 0);
     }
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
+     */
+    public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array
+    {
+        $omsOrderItemStateHistoryQuery = $this->getFactory()
+            ->createOmsOrderItemStateHistoryQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->leftJoinWithState()
+            ->leftJoinOrderItem()
+            ->groupByFkSalesOrderItem();
+
+        return $this->getFactory()
+            ->createOrderItemMapper()
+            ->mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers($omsOrderItemStateHistoryQuery->find());
+    }
 }

@@ -618,4 +618,17 @@ interface OmsFacadeInterface
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Hydrates history states for given order items.
+     * - Sets ItemTransfer::stateHistory.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateHistory(array $itemTransfers): array;
 }

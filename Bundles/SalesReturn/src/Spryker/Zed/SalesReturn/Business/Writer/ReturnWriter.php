@@ -82,18 +82,6 @@ class ReturnWriter implements ReturnWriterInterface
     {
         $this->assertReturnRequirements($createReturnRequestTransfer);
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($createReturnRequestTransfer) {
-            return $this->executeCreateReturnTransaction($createReturnRequestTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
-     */
-    protected function executeCreateReturnTransaction(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer
-    {
         if (!$this->checkReturnItemRequirements($createReturnRequestTransfer)) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR);
         }
@@ -105,6 +93,21 @@ class ReturnWriter implements ReturnWriterInterface
             return $returnResponseTransfer;
         }
 
+        return $this->getTransactionHandler()->handleTransaction(function () use ($createReturnRequestTransfer, $itemTransfers) {
+            return $this->executeCreateReturnTransaction($createReturnRequestTransfer, $itemTransfers);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    protected function executeCreateReturnTransaction(
+        CreateReturnRequestTransfer $createReturnRequestTransfer,
+        ArrayObject $itemTransfers
+    ): ReturnResponseTransfer {
         $returnTransfer = $this->createReturnTransfer($createReturnRequestTransfer);
         $returnTransfer = $this->createReturnItemTransfers($returnTransfer, $itemTransfers);
 

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Expander;
+namespace Spryker\Zed\Oms\Business\Expander;
 
-interface OrderReferenceExpanderInterface
+interface StateHistoryExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithOrderReference(array $itemTransfers): array;
+    public function expandOrderItemsWithStateHistory(array $itemTransfers): array;
 }

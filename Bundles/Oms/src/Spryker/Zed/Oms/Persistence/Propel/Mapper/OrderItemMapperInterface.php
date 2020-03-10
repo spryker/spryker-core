@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 
+use Propel\Runtime\Collection\ObjectCollection;
+
 interface OrderItemMapperInterface
 {
     /**
@@ -15,4 +17,13 @@ interface OrderItemMapperInterface
      * @return array
      */
     public function mapOrderItemMatrix(array $orderItemsMatrixResult): array;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory[] $omsOrderItemStateHistoryEntities
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
+     */
+    public function mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers(
+        ObjectCollection $omsOrderItemStateHistoryEntities
+    ): array;
 }

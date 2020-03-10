@@ -95,7 +95,10 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
      */
     public function createOmsEventTriggerer(): OmsEventTriggererInterface
     {
-        return new OmsEventTriggerer($this->getOmsFacade());
+        return new OmsEventTriggerer(
+            $this->getOmsFacade(),
+            $this->getConfig()
+        );
     }
 
     /**
