@@ -34,9 +34,11 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getCategoryImageEventQueueName(): ?string
     {
         return null;
     }

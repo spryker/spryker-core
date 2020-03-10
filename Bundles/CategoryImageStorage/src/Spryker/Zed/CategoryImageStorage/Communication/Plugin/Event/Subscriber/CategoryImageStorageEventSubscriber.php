@@ -52,7 +52,7 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImagePublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH, new CategoryImagePublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH, new CategoryImagePublishStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 
     /**
@@ -62,7 +62,7 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImageUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_UNPUBLISH, new CategoryImagePublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_UNPUBLISH, new CategoryImagePublishStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 
     /**
@@ -72,7 +72,7 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImageUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_UPDATE, new CategoryImageStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_UPDATE, new CategoryImageStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 
     /**
@@ -82,7 +82,7 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImageSetCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_CREATE, new CategoryImageSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_CREATE, new CategoryImageSetStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 
     /**
@@ -92,7 +92,7 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImageSetUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_UPDATE, new CategoryImageSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_UPDATE, new CategoryImageSetStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 
     /**
@@ -102,7 +102,7 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImageSetDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_DELETE, new CategoryImageSetStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_DELETE, new CategoryImageSetStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 
     /**
@@ -112,7 +112,7 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImageSetCategoryImageCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_CREATE, new CategoryImageSetCategoryImageStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_CREATE, new CategoryImageSetCategoryImageStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 
     /**
@@ -122,7 +122,7 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImageSetCategoryImageUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_UPDATE, new CategoryImageSetCategoryImageStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_UPDATE, new CategoryImageSetCategoryImageStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 
     /**
@@ -132,6 +132,6 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addCategoryImageSetCategoryImageDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_DELETE, new CategoryImageSetCategoryImageStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_DELETE, new CategoryImageSetCategoryImageStorageListener(), 0, null, $this->getConfig()->getCategoryImageEventQueueName());
     }
 }

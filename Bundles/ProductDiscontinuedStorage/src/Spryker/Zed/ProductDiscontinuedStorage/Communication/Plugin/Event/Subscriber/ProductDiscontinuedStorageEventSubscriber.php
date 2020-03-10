@@ -71,7 +71,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedPublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH, new ProductDiscontinuedStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH, new ProductDiscontinuedStoragePublishListener(), 0, null, $this->getConfig()->getProductDiscontinuedEventQueueName());
     }
 
     /**
@@ -82,7 +82,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedUnpublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH, new ProductDiscontinuedStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH, new ProductDiscontinuedStorageUnpublishListener(), 0, null, $this->getConfig()->getProductDiscontinuedEventQueueName());
     }
 
     /**
@@ -93,7 +93,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_CREATE, new ProductDiscontinuedStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_CREATE, new ProductDiscontinuedStoragePublishListener(), 0, null, $this->getConfig()->getProductDiscontinuedEventQueueName());
     }
 
     /**
@@ -104,7 +104,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_UPDATE, new ProductDiscontinuedStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_UPDATE, new ProductDiscontinuedStoragePublishListener(), 0, null, $this->getConfig()->getProductDiscontinuedEventQueueName());
     }
 
     /**
@@ -115,7 +115,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_DELETE, new ProductDiscontinuedStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_DELETE, new ProductDiscontinuedStorageUnpublishListener(), 0, null, $this->getConfig()->getProductDiscontinuedEventQueueName());
     }
 
     /**
@@ -126,7 +126,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedNoteCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_CREATE, new ProductDiscontinuedNoteStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_CREATE, new ProductDiscontinuedNoteStorageListener(), 0, null, $this->getConfig()->getProductDiscontinuedEventQueueName());
     }
 
     /**
@@ -137,7 +137,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedNoteUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_UPDATE, new ProductDiscontinuedNoteStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_UPDATE, new ProductDiscontinuedNoteStorageListener(), 0, null, $this->getConfig()->getProductDiscontinuedEventQueueName());
     }
 
     /**
@@ -148,6 +148,6 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedNoteDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_DELETE, new ProductDiscontinuedNoteStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_DELETE, new ProductDiscontinuedNoteStorageListener(), 0, null, $this->getConfig()->getProductDiscontinuedEventQueueName());
     }
 }

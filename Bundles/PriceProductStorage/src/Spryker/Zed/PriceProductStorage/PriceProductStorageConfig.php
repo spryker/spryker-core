@@ -44,9 +44,21 @@ class PriceProductStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getPriceProductAbstractEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getPriceProductConcreteEventQueueName(): ?string
     {
         return null;
     }

@@ -36,7 +36,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getProductCategoryFilterEventQueueName(): ?string
     {
         return null;
     }

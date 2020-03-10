@@ -36,7 +36,7 @@ class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getProductDiscontinuedEventQueueName(): ?string
     {
         return null;
     }

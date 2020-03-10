@@ -44,9 +44,21 @@ class ProductAlternativeStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getProductAlternativeEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductReplacementForEventQueueName(): ?string
     {
         return null;
     }

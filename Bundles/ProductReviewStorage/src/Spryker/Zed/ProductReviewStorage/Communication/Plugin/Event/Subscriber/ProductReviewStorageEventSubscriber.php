@@ -47,7 +47,7 @@ class ProductReviewStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductReviewPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_PUBLISH, new ProductReviewPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_PUBLISH, new ProductReviewPublishStorageListener(), 0, null, $this->getConfig()->getProductReviewEventQueueName());
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductReviewStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductReviewUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_UNPUBLISH, new ProductReviewPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_UNPUBLISH, new ProductReviewPublishStorageListener(), 0, null, $this->getConfig()->getProductReviewEventQueueName());
     }
 
     /**
@@ -67,7 +67,7 @@ class ProductReviewStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductReviewCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE, new ProductReviewStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE, new ProductReviewStorageListener(), 0, null, $this->getConfig()->getProductReviewEventQueueName());
     }
 
     /**
@@ -77,7 +77,7 @@ class ProductReviewStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductReviewUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_UPDATE, new ProductReviewStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_UPDATE, new ProductReviewStorageListener(), 0, null, $this->getConfig()->getProductReviewEventQueueName());
     }
 
     /**
@@ -87,6 +87,6 @@ class ProductReviewStorageEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductReviewDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_DELETE, new ProductReviewStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_DELETE, new ProductReviewStorageListener(), 0, null, $this->getConfig()->getProductReviewEventQueueName());
     }
 }

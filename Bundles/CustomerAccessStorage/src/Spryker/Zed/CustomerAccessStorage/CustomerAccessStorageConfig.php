@@ -36,7 +36,7 @@ class CustomerAccessStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getCustomerAccessEventQueueName(): ?string
     {
         return null;
     }

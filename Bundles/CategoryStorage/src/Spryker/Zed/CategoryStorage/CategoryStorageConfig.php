@@ -44,9 +44,21 @@ class CategoryStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getCategoryTreeEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getCategoryNodeEventQueueName(): ?string
     {
         return null;
     }

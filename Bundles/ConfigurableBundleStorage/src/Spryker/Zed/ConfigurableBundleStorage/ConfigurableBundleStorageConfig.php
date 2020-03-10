@@ -34,9 +34,21 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getConfigurableBundleTemplateEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getConfigurableBundleTemplateImageEventQueueName(): ?string
     {
         return null;
     }

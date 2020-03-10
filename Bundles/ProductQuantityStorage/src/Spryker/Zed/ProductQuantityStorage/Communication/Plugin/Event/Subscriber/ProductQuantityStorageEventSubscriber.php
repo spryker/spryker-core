@@ -30,7 +30,7 @@ class ProductQuantityStorageEventSubscriber extends AbstractPlugin implements Ev
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ProductQuantityEvents::PRODUCT_QUANTITY_PUBLISH, new ProductQuantityStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductQuantityEvents::PRODUCT_QUANTITY_PUBLISH, new ProductQuantityStorageListener(), 0, null, $this->getConfig()->getProductQuantityEventQueueName());
 
         return $eventCollection;
     }

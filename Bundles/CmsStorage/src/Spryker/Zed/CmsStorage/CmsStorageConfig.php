@@ -34,9 +34,11 @@ class CmsStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getCmsPageEventQueueName(): ?string
     {
         return null;
     }

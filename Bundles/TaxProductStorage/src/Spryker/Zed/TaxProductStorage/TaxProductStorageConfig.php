@@ -34,9 +34,11 @@ class TaxProductStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getTaxProductEventQueueName(): ?string
     {
         return null;
     }

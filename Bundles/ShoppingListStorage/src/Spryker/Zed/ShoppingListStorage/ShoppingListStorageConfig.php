@@ -24,7 +24,7 @@ class ShoppingListStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getShoppingListEventQueueName(): ?string
     {
         return null;
     }

@@ -44,7 +44,7 @@ class ProductCategoryFilterStorageEventSubscriber extends AbstractPlugin impleme
      */
     protected function addProductCategoryFilterCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE, new ProductCategoryFilterPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE, new ProductCategoryFilterPublishStorageListener(), 0, null, $this->getConfig()->getProductCategoryFilterEventQueueName());
     }
 
     /**
@@ -54,7 +54,7 @@ class ProductCategoryFilterStorageEventSubscriber extends AbstractPlugin impleme
      */
     protected function addProductCategoryFilterUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_UPDATE, new ProductCategoryFilterPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_UPDATE, new ProductCategoryFilterPublishStorageListener(), 0, null, $this->getConfig()->getProductCategoryFilterEventQueueName());
     }
 
     /**
@@ -64,6 +64,6 @@ class ProductCategoryFilterStorageEventSubscriber extends AbstractPlugin impleme
      */
     protected function addProductCategoryFilterDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE, new ProductCategoryFilterPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE, new ProductCategoryFilterPublishStorageListener(), 0, null, $this->getConfig()->getProductCategoryFilterEventQueueName());
     }
 }

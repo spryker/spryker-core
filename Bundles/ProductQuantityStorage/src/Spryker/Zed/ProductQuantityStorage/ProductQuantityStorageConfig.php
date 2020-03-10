@@ -22,9 +22,11 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getProductQuantityEventQueueName(): ?string
     {
         return null;
     }

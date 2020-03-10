@@ -46,9 +46,11 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getAvailabilityNotificationEventQueueName(): ?string
     {
         return null;
     }

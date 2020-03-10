@@ -53,7 +53,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH, new CmsBlockCategoryConnectorStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH, new CmsBlockCategoryConnectorStoragePublishListener(), 0, null, $this->getConfig()->getCmsBlockCategoryEventQueueName());
     }
 
     /**
@@ -63,7 +63,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH, new CmsBlockCategoryConnectorStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH, new CmsBlockCategoryConnectorStorageUnpublishListener(), 0, null, $this->getConfig()->getCmsBlockCategoryEventQueueName());
     }
 
     /**
@@ -73,7 +73,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE, new CmsBlockCategoryConnectorEntityStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE, new CmsBlockCategoryConnectorEntityStoragePublishListener(), 0, null, $this->getConfig()->getCmsBlockCategoryEventQueueName());
     }
 
     /**
@@ -83,7 +83,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE, new CmsBlockCategoryConnectorEntityStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE, new CmsBlockCategoryConnectorEntityStoragePublishListener(), 0, null, $this->getConfig()->getCmsBlockCategoryEventQueueName());
     }
 
     /**
@@ -93,7 +93,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE, new CmsBlockCategoryConnectorEntityStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE, new CmsBlockCategoryConnectorEntityStorageUnpublishListener(), 0, null, $this->getConfig()->getCmsBlockCategoryEventQueueName());
     }
 
     /**
@@ -103,7 +103,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryPositionCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_CREATE, new CmsBlockCategoryPositionStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_CREATE, new CmsBlockCategoryPositionStorageListener(), 0, null, $this->getConfig()->getCmsBlockCategoryEventQueueName());
     }
 
     /**
@@ -113,7 +113,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryPositionUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_UPDATE, new CmsBlockCategoryPositionStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_UPDATE, new CmsBlockCategoryPositionStorageListener(), 0, null, $this->getConfig()->getCmsBlockCategoryEventQueueName());
     }
 
     /**
@@ -123,6 +123,6 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryPositionDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_DELETE, new CmsBlockCategoryPositionStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_DELETE, new CmsBlockCategoryPositionStorageListener(), 0, null, $this->getConfig()->getCmsBlockCategoryEventQueueName());
     }
 }

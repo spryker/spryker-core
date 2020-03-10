@@ -44,9 +44,21 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getProductMeasurementUnitEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductConcreteMeasurementUnitEventQueueName(): ?string
     {
         return null;
     }

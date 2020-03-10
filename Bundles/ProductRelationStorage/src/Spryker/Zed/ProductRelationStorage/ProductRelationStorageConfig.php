@@ -34,9 +34,11 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getProductRelationEventQueueName(): ?string
     {
         return null;
     }

@@ -34,9 +34,11 @@ class CmsBlockCategoryStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getCmsBlockCategoryEventQueueName(): ?string
     {
         return null;
     }
