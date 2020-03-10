@@ -30,7 +30,7 @@ class MerchantUserTabExpanderPlugin extends AbstractPlugin implements MerchantFo
     public function expand(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $tabItemTransfer = (new TabItemTransfer())->setName('merchant-user')
-            ->setTitle('Merchant User')
+            ->setTitle('Users')
             ->setTemplate('@MerchantUserGui/_partials/merchant-user-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
