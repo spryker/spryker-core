@@ -13,6 +13,9 @@
   "require-dev": {
     "spryker/code-sniffer": "*"
   },
+  "suggest": {
+    "spryker/sales": "If you want to use Sales functionality, minimum required version: 11.0.0"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

@@ -77,7 +77,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())
-                        ->setMessage(static::MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED)
+                        ->setValue(static::MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED)
                 );
         }
 
@@ -86,7 +86,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())
-                        ->setMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH)
+                        ->setValue(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH)
                 );
         }
 

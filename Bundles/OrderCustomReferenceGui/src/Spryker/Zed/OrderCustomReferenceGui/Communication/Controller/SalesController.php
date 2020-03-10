@@ -60,7 +60,7 @@ class SalesController extends AbstractController
     protected function addErrorMessages(OrderCustomReferenceResponseTransfer $orderCustomReferenceResponseTransfer): void
     {
         foreach ($orderCustomReferenceResponseTransfer->getMessages() as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getMessage());
+            $this->addErrorMessage($messageTransfer->getValue());
         }
     }
 }

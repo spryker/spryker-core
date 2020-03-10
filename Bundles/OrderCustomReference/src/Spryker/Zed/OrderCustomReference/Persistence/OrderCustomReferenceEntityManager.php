@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\OrderCustomReference\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
- * @method \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferencePersistenceFactory getFactory()
+ * @module Sales
  */
 class OrderCustomReferenceEntityManager extends AbstractEntityManager implements OrderCustomReferenceEntityManagerInterface
 {
@@ -24,14 +25,8 @@ class OrderCustomReferenceEntityManager extends AbstractEntityManager implements
      */
     public function saveOrderCustomReference(int $idSalesOrder, string $orderCustomReference): void
     {
-        $salesOrderQuery = $this->getFactory()
-            ->getSalesOrderPropelQuery()
-            ->filterByIdSalesOrder($idSalesOrder);
-
-        if (!$salesOrderQuery->findOne()) {
-            return;
-        }
-
-        $salesOrderQuery->update([static::COLUMN_ORDER_CUSTOM_REFERENCE => $orderCustomReference]);
+        (new SpySalesOrderQuery())
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->update([static::COLUMN_ORDER_CUSTOM_REFERENCE => $orderCustomReference]);
     }
 }

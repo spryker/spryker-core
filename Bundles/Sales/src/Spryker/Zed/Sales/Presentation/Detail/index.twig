@@ -11,7 +11,11 @@
 {% block content %}
 
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
-    <div id="order-custom-reference">{% include '@OrderCustomReferenceGui/Sales/order-custom-reference.twig' ignore missing %}</div>
+    <div id="order-custom-reference">{% include '@OrderCustomReferenceGui/Sales/order-custom-reference.twig' ignore missing with {
+            data: {
+                backUrl: changeStatusRedirectUrl,
+            },
+        } %}</div>
     <div id="customer">{% include '@Sales/Detail/boxes/customer.twig' %}</div>
     <div id="items">{% include [
         '@ShipmentGui/Sales/boxes/items.twig',

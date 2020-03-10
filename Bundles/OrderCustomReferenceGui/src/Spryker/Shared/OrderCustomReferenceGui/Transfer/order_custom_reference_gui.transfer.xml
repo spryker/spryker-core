@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="Message">
-        <property name="message" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>
