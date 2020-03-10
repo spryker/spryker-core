@@ -7,6 +7,7 @@
         <property name="idSalesOrder" type="int"/>
         <property name="name" type="string"/>
         <property name="createdAt" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Mail">

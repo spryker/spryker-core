@@ -33,7 +33,9 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
     public function expandOrderItemsWithStateHistory(array $itemTransfers): array
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
-        $mappedItemStateTransfers = $this->omsRepository->getItemHistoryStatesByOrderItemIds($salesOrderItemIds);
+
+        $itemStateTransfers = $this->omsRepository->getItemHistoryStatesByOrderItemIds($salesOrderItemIds);
+        $mappedItemStateTransfers = $this->mapItemStatesByIdSalesOrderItem($itemStateTransfers);
 
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer->setStateHistory(
@@ -42,6 +44,22 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemStateTransfer[] $itemStateTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
+     */
+    protected function mapItemStatesByIdSalesOrderItem(array $itemStateTransfers): array
+    {
+        $mappedItemStateTransfers = [];
+
+        foreach ($itemStateTransfers as $itemStateTransfer) {
+            $mappedItemStateTransfers[$itemStateTransfer->getIdSalesOrderItem()][] = $itemStateTransfer;
+        }
+
+        return $mappedItemStateTransfers;
     }
 
     /**

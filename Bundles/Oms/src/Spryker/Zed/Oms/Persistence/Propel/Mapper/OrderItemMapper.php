@@ -37,7 +37,7 @@ class OrderItemMapper implements OrderItemMapperInterface
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory[] $omsOrderItemStateHistoryEntities
      *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[]
      */
     public function mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers(
         ObjectCollection $omsOrderItemStateHistoryEntities
@@ -45,9 +45,10 @@ class OrderItemMapper implements OrderItemMapperInterface
         $itemStateTransfers = [];
 
         foreach ($omsOrderItemStateHistoryEntities as $omsOrderItemStateHistory) {
-            $itemStateTransfers[$omsOrderItemStateHistory->getFkSalesOrderItem()][] = (new ItemStateTransfer())
+            $itemStateTransfers[] = (new ItemStateTransfer())
                 ->fromArray($omsOrderItemStateHistory->toArray(), true)
                 ->setName($omsOrderItemStateHistory->getState()->getName())
+                ->setIdSalesOrderItem($omsOrderItemStateHistory->getFkSalesOrderItem())
                 ->setIdSalesOrder($omsOrderItemStateHistory->getOrderItem()->getFkSalesOrder());
         }
 

@@ -95,7 +95,7 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
      */
-    public function createOmsOrderItemStateHistoryQuery()
+    public function createOmsOrderItemStateHistoryQuery(): SpyOmsOrderItemStateHistoryQuery
     {
         return SpyOmsOrderItemStateHistoryQuery::create();
     }
