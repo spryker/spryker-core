@@ -5,32 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
+namespace Spryker\Client\CompanyBusinessUnitSalesConnector;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 
-interface CompanyBusinessUnitSalesConnectorFacadeInterface
+interface CompanyBusinessUnitSalesConnectorClientInterface
 {
-    /**
-     * Specification:
-     * - Expands sales order with company business unit uuid and persists updated entity.
-     * - Requires SaveOrderTransfer::idSalesOrder to be set.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function updateOrderCompanyBusinessUnitUuid(
-        SaveOrderTransfer $saveOrderTransfer,
-        QuoteTransfer $quoteTransfer
-    ): void;
-
     /**
      * Specification:
      * - Returns company business units allowed for order history filtering.

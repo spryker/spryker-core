@@ -132,6 +132,21 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    public function getRawCompanyBusinessUnitCollection(
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
+        return $this->getRepository()->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null

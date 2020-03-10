@@ -8,11 +8,14 @@
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CompanyBusinessUnitSalesConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_COMPANY_BUSINESS_UNIT = 'CLIENT_COMPANY_BUSINESS_UNIT';
+
     public const PROPEL_QUERY_SALES_ORDER = 'PROPEL_QUERY_SALES_ORDER';
 
     /**
@@ -25,6 +28,36 @@ class CompanyBusinessUnitSalesConnectorDependencyProvider extends AbstractBundle
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addSalesOrderPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addCompanyBusinessUnitClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyBusinessUnitClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_COMPANY_BUSINESS_UNIT, function (Container $container) {
+            return new CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientBridge(
+                $container->getLocator()->companyBusinessUnit()->client()
+            );
+        });
 
         return $container;
     }

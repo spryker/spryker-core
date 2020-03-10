@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Reader\CompanyBusinessUnitReader;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Reader\CompanyBusinessUnitReaderInterface;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Writer\OrderWriter;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Writer\OrderWriterInterface;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorDependencyProvider;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -26,5 +30,23 @@ class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessF
             $this->getRepository(),
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Reader\CompanyBusinessUnitReaderInterface
+     */
+    public function createCompanyBusinessUnitReader(): CompanyBusinessUnitReaderInterface
+    {
+        return new CompanyBusinessUnitReader(
+            $this->getCompanyBusinessUnitClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface
+     */
+    public function getCompanyBusinessUnitClient(): CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitSalesConnectorDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
     }
 }

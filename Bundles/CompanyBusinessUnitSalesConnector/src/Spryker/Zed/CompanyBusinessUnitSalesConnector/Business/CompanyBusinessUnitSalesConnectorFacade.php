@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -35,5 +37,22 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
         $this->getFactory()
             ->createOrderWriter()
             ->updateOrderCompanyBusinessUnitUuid($saveOrderTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    public function getPermittedCompanyBusinessUnitCollection(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitReader()
+            ->getPermittedCompanyBusinessUnitCollection($companyUserTransfer);
     }
 }

@@ -105,6 +105,20 @@ interface CompanyBusinessUnitFacadeInterface
 
     /**
      * Specification:
+     * - Returns company business units collection without relations.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    public function getRawCompanyBusinessUnitCollection(
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+    ): CompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * Specification:
      * - Retrieve default business unit by company id.
      *
      * @api
