@@ -27,11 +27,11 @@ class OrderCustomReferenceFacade extends AbstractFacade implements OrderCustomRe
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): OrderCustomReferenceResponseTransfer
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createOrderCustomReferenceWriter()
             ->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
     }
@@ -46,28 +46,10 @@ class OrderCustomReferenceFacade extends AbstractFacade implements OrderCustomRe
      *
      * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function updateOrderCustomReference(
-        string $orderCustomReference,
-        OrderTransfer $orderTransfer
-    ): OrderCustomReferenceResponseTransfer {
+    public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): OrderCustomReferenceResponseTransfer
+    {
         return $this->getFactory()
             ->createOrderCustomReferenceWriter()
             ->updateOrderCustomReference($orderCustomReference, $orderTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return string[]
-     */
-    public function getOrderCustomReferenceQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
-    {
-        return $this->getFactory()
-            ->createQuoteFieldsProvider()
-            ->getOrderCustomReferenceQuoteFieldsAllowedForSaving($quoteTransfer);
     }
 }

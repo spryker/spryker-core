@@ -45,6 +45,11 @@ class OrderCustomReferenceFacadeTest extends Unit
     protected $quoteTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected $orderTransfer;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -54,6 +59,7 @@ class OrderCustomReferenceFacadeTest extends Unit
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
         $this->saveOrderTransfer = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
         $this->quoteTransfer = (new QuoteTransfer())->setOrderCustomReference(static::ORDER_CUSTOM_REFERENCE);
+        $this->orderTransfer = (new OrderTransfer())->setIdSalesOrder($this->saveOrderTransfer->getIdSalesOrder());
     }
 
     /**
@@ -62,15 +68,14 @@ class OrderCustomReferenceFacadeTest extends Unit
     public function testSaveOrderWithValidOrderCustomReferenceLength(): void
     {
         // Act
-        $this->tester->getFacade()->saveOrderCustomReference(
-            $this->quoteTransfer,
-            $this->saveOrderTransfer
-        );
-
-        $orderTransfer = $this->findOrder($this->saveOrderTransfer);
+        $orderCustomReferenceResponseTransfer = $this->tester->getFacade()
+            ->saveOrderCustomReference(
+                $this->quoteTransfer,
+                $this->saveOrderTransfer
+            );
 
         // Assert
-        $this->assertEquals($this->quoteTransfer->getOrderCustomReference(), $orderTransfer->getOrderCustomReference());
+        $this->assertTrue($orderCustomReferenceResponseTransfer->getIsSuccessful());
     }
 
     /**
@@ -94,6 +99,36 @@ class OrderCustomReferenceFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($this->quoteTransfer->getOrderCustomReference(), $orderTransfer->getOrderCustomReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateOrderCustomReferenceWithoutIdSalesOrder(): void
+    {
+        // Act
+        $orderCustomReferenceResponseTransfer = $this->tester->getFacade()->updateOrderCustomReference(
+            static::ORDER_CUSTOM_REFERENCE,
+            $this->orderTransfer->setIdSalesOrder(null)
+        );
+
+        // Assert
+        $this->assertFalse($orderCustomReferenceResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateOrderCustomReference(): void
+    {
+        // Act
+        $orderCustomReferenceResponseTransfer = $this->tester->getFacade()->updateOrderCustomReference(
+            static::ORDER_CUSTOM_REFERENCE,
+            $this->orderTransfer
+        );
+
+        // Assert
+        $this->assertTrue($orderCustomReferenceResponseTransfer->getIsSuccessful());
     }
 
     /**

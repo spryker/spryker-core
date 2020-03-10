@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OrderCustomReference\Persistence;
 
+use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -21,12 +22,22 @@ class OrderCustomReferenceEntityManager extends AbstractEntityManager implements
      * @param int $idSalesOrder
      * @param string $orderCustomReference
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function saveOrderCustomReference(int $idSalesOrder, string $orderCustomReference): void
+    public function saveOrderCustomReference(int $idSalesOrder, string $orderCustomReference): OrderCustomReferenceResponseTransfer
     {
-        (new SpySalesOrderQuery())
-            ->filterByIdSalesOrder($idSalesOrder)
-            ->update([static::COLUMN_ORDER_CUSTOM_REFERENCE => $orderCustomReference]);
+        $orderCustomReferenceResponseTransfer = (new OrderCustomReferenceResponseTransfer())->setIsSuccessful(true);
+
+        $salesOrderQuery = (new SpySalesOrderQuery())->filterByIdSalesOrder($idSalesOrder);
+
+        if (!$salesOrderQuery->findOne()) {
+            return $orderCustomReferenceResponseTransfer->setIsSuccessful(false);
+        }
+
+        if ($salesOrderQuery->update([static::COLUMN_ORDER_CUSTOM_REFERENCE => $orderCustomReference])) {
+            return $orderCustomReferenceResponseTransfer;
+        }
+
+        return $orderCustomReferenceResponseTransfer->setIsSuccessful(false);
     }
 }

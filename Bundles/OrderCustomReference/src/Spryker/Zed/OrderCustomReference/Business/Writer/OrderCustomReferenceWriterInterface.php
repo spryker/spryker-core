@@ -18,9 +18,9 @@ interface OrderCustomReferenceWriterInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+    public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): OrderCustomReferenceResponseTransfer;
 
     /**
      * @param string $orderCustomReference
@@ -28,8 +28,5 @@ interface OrderCustomReferenceWriterInterface
      *
      * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function updateOrderCustomReference(
-        string $orderCustomReference,
-        OrderTransfer $orderTransfer
-    ): OrderCustomReferenceResponseTransfer;
+    public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): OrderCustomReferenceResponseTransfer;
 }

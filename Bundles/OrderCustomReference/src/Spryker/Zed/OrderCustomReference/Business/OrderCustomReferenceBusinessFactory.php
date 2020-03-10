@@ -8,8 +8,6 @@
 namespace Spryker\Zed\OrderCustomReference\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProvider;
-use Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProviderInterface;
 use Spryker\Zed\OrderCustomReference\Business\Writer\OrderCustomReferenceWriter;
 use Spryker\Zed\OrderCustomReference\Business\Writer\OrderCustomReferenceWriterInterface;
 
@@ -25,13 +23,5 @@ class OrderCustomReferenceBusinessFactory extends AbstractBusinessFactory
     public function createOrderCustomReferenceWriter(): OrderCustomReferenceWriterInterface
     {
         return new OrderCustomReferenceWriter($this->getEntityManager(), $this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\OrderCustomReference\Business\Provider\QuoteFieldsProviderInterface
-     */
-    public function createQuoteFieldsProvider(): QuoteFieldsProviderInterface
-    {
-        return new QuoteFieldsProvider($this->getConfig());
     }
 }

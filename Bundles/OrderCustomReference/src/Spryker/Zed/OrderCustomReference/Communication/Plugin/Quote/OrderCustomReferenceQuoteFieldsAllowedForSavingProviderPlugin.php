@@ -29,6 +29,8 @@ class OrderCustomReferenceQuoteFieldsAllowedForSavingProviderPlugin extends Abst
      */
     public function execute(QuoteTransfer $quoteTransfer): array
     {
-        return $this->getFacade()->getOrderCustomReferenceQuoteFieldsAllowedForSaving($quoteTransfer);
+        return [
+            QuoteTransfer::ORDER_CUSTOM_REFERENCE,
+        ];
     }
 }

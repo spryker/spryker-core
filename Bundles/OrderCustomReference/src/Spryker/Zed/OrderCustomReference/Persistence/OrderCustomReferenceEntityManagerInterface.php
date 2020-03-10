@@ -7,13 +7,15 @@
 
 namespace Spryker\Zed\OrderCustomReference\Persistence;
 
+use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
+
 interface OrderCustomReferenceEntityManagerInterface
 {
     /**
      * @param int $idSalesOrder
      * @param string $orderCustomReference
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function saveOrderCustomReference(int $idSalesOrder, string $orderCustomReference): void;
+    public function saveOrderCustomReference(int $idSalesOrder, string $orderCustomReference): OrderCustomReferenceResponseTransfer;
 }
