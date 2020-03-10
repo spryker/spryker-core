@@ -65,11 +65,11 @@ class OrderCustomReferenceFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderWithValidOrderCustomReferenceLength(): void
+    public function testSaveOrderFromQuoteWithValidOrderCustomReferenceLength(): void
     {
         // Act
         $orderCustomReferenceResponseTransfer = $this->tester->getFacade()
-            ->saveOrderCustomReference(
+            ->saveOrderCustomReferenceFromQuote(
                 $this->quoteTransfer,
                 $this->saveOrderTransfer
             );
@@ -81,19 +81,21 @@ class OrderCustomReferenceFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderWithEmptyOrderCustomReferenceLength(): void
+    public function testSaveOrderFromQuoteWithEmptyOrderCustomReferenceLength(): void
     {
         // Arrange
-        $this->tester->getFacade()->saveOrderCustomReference(
-            $this->quoteTransfer,
-            $this->saveOrderTransfer
-        );
+        $this->tester->getFacade()
+            ->saveOrderCustomReferenceFromQuote(
+                $this->quoteTransfer,
+                $this->saveOrderTransfer
+            );
 
         // Act
-        $this->tester->getFacade()->saveOrderCustomReference(
-            (new QuoteTransfer()),
-            $this->saveOrderTransfer
-        );
+        $this->tester->getFacade()
+            ->saveOrderCustomReferenceFromQuote(
+                (new QuoteTransfer()),
+                $this->saveOrderTransfer
+            );
 
         $orderTransfer = $this->findOrder($this->saveOrderTransfer);
 

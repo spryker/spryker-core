@@ -26,7 +26,7 @@ interface OrderCustomReferenceFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): OrderCustomReferenceResponseTransfer;
+    public function saveOrderCustomReferenceFromQuote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): OrderCustomReferenceResponseTransfer;
 
     /**
      * Specification:

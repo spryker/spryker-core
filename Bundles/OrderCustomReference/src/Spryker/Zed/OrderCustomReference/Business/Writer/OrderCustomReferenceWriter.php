@@ -18,7 +18,7 @@ use Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManag
 class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
 {
     protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
-    protected const MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED = 'Order Custom Reference has not been changed.';
+    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED = 'order_custom_reference.reference_not_saved';
 
     /**
      * @var \Spryker\Zed\OrderCustomReference\Persistence\OrderCustomReferenceEntityManagerInterface
@@ -48,7 +48,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
      *
      * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function saveOrderCustomReference(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): OrderCustomReferenceResponseTransfer
+    public function saveOrderCustomReferenceFromQuote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): OrderCustomReferenceResponseTransfer
     {
         if ($quoteTransfer->getOrderCustomReference() && $saveOrderTransfer->getIdSalesOrder()) {
             return $this->orderCustomReferenceEntityManager
@@ -78,8 +78,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
             return $orderCustomReferenceResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())
-                        ->setValue(static::MESSAGE_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED)
                 );
         }
 

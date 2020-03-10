@@ -31,7 +31,7 @@ class OrderCustomReferenceOrderPostSavePlugin extends AbstractPlugin implements 
      */
     public function execute(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer
     {
-        $this->getFacade()->saveOrderCustomReference($quoteTransfer, $saveOrderTransfer);
+        $this->getFacade()->saveOrderCustomReferenceFromQuote($quoteTransfer, $saveOrderTransfer);
 
         return $saveOrderTransfer;
     }
