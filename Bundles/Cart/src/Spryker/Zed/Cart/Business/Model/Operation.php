@@ -207,14 +207,10 @@ class Operation implements OperationInterface
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
-
-        //expand items plugins
+        
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
-        //
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
-        //post save plugins
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
-        //
         $quoteTransfer = $this->recalculate($quoteTransfer);
 
         if ($this->isTerminated(static::TERMINATION_EVENT_NAME_ADD, $cartChangeTransfer, $quoteTransfer)) {
@@ -592,7 +588,7 @@ class Operation implements OperationInterface
      */
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
-        return $this->calculationFacade->recalculate($quoteTransfer);
+        return $this->calculationFacade->recalculate($quoteTransfer, false);
     }
 
     /**
