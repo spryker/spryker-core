@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Controller;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,6 +21,10 @@ class EditMerchantController extends AbstractController
 {
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
     public const REQUEST_ID_MERCHANT = 'id-merchant';
+
+    protected const MESSAGE_SUCCESS_DEACTIVATE = 'merchant.deactivated';
+    protected const MESSAGE_SUCCESS_ACTIVATE = 'merchant.activated';
+    protected const MESSAGE_MERCHANT_NOT_FOUND = 'merchant.not_found';
 
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'Merchant updated successfully.';
 
@@ -63,6 +69,26 @@ class EditMerchantController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function activateAction(Request $request): RedirectResponse
+    {
+        return $this->updateMerchantProfileActivityStatus($request, true, static::MESSAGE_SUCCESS_ACTIVATE);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deactivateAction(Request $request): RedirectResponse
+    {
+        return $this->updateMerchantProfileActivityStatus($request, false, static::MESSAGE_SUCCESS_DEACTIVATE);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $merchantForm
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -87,5 +113,39 @@ class EditMerchantController extends AbstractController
         }
 
         return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param bool $isActive
+     * @param string $successMessage
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function updateMerchantProfileActivityStatus(Request $request, bool $isActive, string $successMessage): RedirectResponse
+    {
+        $idMerchantProfile = $this->castId($request->query->get(static::REQUEST_ID_MERCHANT));
+
+        $merchantFacade = $this->getFactory()
+            ->getMerchantFacade();
+
+        $merchantTransfer = $merchantFacade->findOne(
+            (new MerchantCriteriaFilterTransfer())
+                ->setIdMerchant($idMerchantProfile)
+        );
+
+        if (!$merchantTransfer) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_NOT_FOUND);
+
+            return $this->redirectResponse($request->headers->get('referer'));
+        }
+
+        $merchantTransfer->setIsActive($isActive);
+
+        $merchantFacade->updateMerchant($merchantTransfer);
+
+        $this->addSuccessMessage($successMessage);
+
+        return $this->redirectResponse($request->headers->get('referer'));
     }
 }

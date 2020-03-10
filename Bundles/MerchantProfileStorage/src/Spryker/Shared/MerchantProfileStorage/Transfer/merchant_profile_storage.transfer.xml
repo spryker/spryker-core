@@ -67,7 +67,6 @@
     </transfer>
 
     <transfer name="MerchantProfile">
-        <property name="isActive" type="bool"/>
         <property name="fkMerchant" type="int"/>
     </transfer>
 

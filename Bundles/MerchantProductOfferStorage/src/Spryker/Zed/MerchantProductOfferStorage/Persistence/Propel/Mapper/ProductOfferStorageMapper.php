@@ -60,7 +60,7 @@ class ProductOfferStorageMapper
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject
      */
-    protected function getStoresByProductOfferEntity(SpyProductOffer $productOfferEntity): ArrayObject
+    public function getStoresByProductOfferEntity(SpyProductOffer $productOfferEntity): ArrayObject
     {
         $storeTransfers = [];
         foreach ($productOfferEntity->getSpyStores() as $storeEntity) {

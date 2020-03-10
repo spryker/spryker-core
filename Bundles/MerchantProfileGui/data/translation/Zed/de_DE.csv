@@ -14,13 +14,6 @@ Description,Beschreibung
 "Cancellation Policy",Widerrufsbelehrung
 Imprint,Impressum
 "Data Privacy",Datenschutz
-"Is Active","Ist Aktiv"
-active,Aktiv
-inactive,Inaktiv
-Activate,Aktivieren
-Deactivate,Deaktivieren
-merchant_profile.activated,"Händlerprofil erfolgreich aktiviert."
-merchant_profile.deactivated,"Händlerprofil erfolgreich deaktiviert."
 "Contact Person",Kontaktperson
 "Merchant Profile",Händler-Profil
 "Legal Information",Rechtsinformation

@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Persistence;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
@@ -21,6 +22,29 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductOfferStorageRepository extends AbstractRepository implements MerchantProductOfferStorageRepositoryInterface
 {
+    protected const CONCRETE_SKU = 'concreteSku';
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByMerchantIds(array $merchantIds): array
+    {
+        $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
+        $productOfferPropelQuery
+            ->innerJoinSpyMerchant()
+            ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
+            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $merchantIds, Criteria::IN));
+
+        return $productOfferPropelQuery
+            ->select(static::CONCRETE_SKU)
+            ->distinct()
+            ->withColumn(static::CONCRETE_SKU)
+            ->find()
+            ->getData();
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
@@ -31,9 +55,8 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferPropelQuery = $this->getFactory()
             ->getProductOfferPropelQuery()
-            ->joinWithSpyMerchant()
-            ->useSpyProductOfferStoreQuery()
-                ->joinWithSpyStore()
+            ->useSpyMerchantQuery()
+                ->filterByIsActive(true)
             ->endUse();
 
         $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaFilterTransfer);
@@ -43,6 +66,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferStorageMapper = $this->getFactory()->createProductOfferStorageMapper();
         foreach ($productOfferEntities as $productOfferEntity) {
             $productOfferTransfer = $productOfferStorageMapper->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
+            $productOfferTransfer->setStores($productOfferStorageMapper->getStoresByProductOfferEntity($productOfferEntity));
 
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
@@ -72,13 +96,20 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
             $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilterTransfer->getApprovalStatuses());
         }
 
-        if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null) {
+        if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null || $productOfferCriteriaFilterTransfer->getConcreteSkus()) {
             $productOfferQuery->addJoin(
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 Criteria::INNER_JOIN
             );
-            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, true);
+            if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null) {
+                $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct());
+            }
+            if ($productOfferCriteriaFilterTransfer->getConcreteSkus()) {
+                $productOfferQuery->addAnd(
+                    $productOfferQuery->getNewCriterion(SpyProductTableMap::COL_SKU, $productOfferCriteriaFilterTransfer->getConcreteSkus(), Criteria::IN)
+                );
+            }
         }
 
         return $productOfferQuery;

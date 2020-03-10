@@ -8,14 +8,11 @@
     </transfer>
 
     <transfer name="MerchantCriteriaFilter">
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="Merchant">
         <property name="merchantProfile" type="MerchantProfile"/>
-    </transfer>
-
-    <transfer name="MerchantProfile">
-        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

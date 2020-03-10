@@ -22,6 +22,16 @@ class MerchantGuiConfig extends AbstractBundleConfig
     public const URL_MERCHANT_EDIT = '/merchant-gui/edit-merchant';
 
     /**
+     * @uses \Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController::activateAction()
+     */
+    public const URL_MERCHANT_ACTIVATE = '/merchant-gui/edit-merchant/activate';
+
+    /**
+     * @uses \Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController::deactivateAction()
+     */
+    public const URL_MERCHANT_DEACTIVATE = '/merchant-gui/edit-merchant/deactivate';
+
+    /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\MerchantStatusController::indexAction()
      */
     public const URL_MERCHANT_STATUS = '/merchant-gui/merchant-status';

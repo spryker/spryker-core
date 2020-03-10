@@ -6,6 +6,7 @@
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
         <property name="merchantProfile" type="MerchantProfile"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="MerchantProfile">
@@ -26,8 +27,6 @@
         <property name="imprintGlossaryKey" type="string"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="fkMerchant" type="int"/>
-        <property name="isActive" type="bool"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantName" type="string"/>
         <property name="latitude" type="string"/>
         <property name="longitude" type="string"/>
@@ -66,7 +65,6 @@
         <property name="idMerchantProfile" type="int"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantProfileIds" type="int[]" singular="idMerchantProfile"/>
-        <property name="isActive" type="bool"/>
         <property name="merchantReference" type="string"/>
         <property name="filter" type="Filter"/>
     </transfer>
@@ -78,7 +76,7 @@
 
     <transfer name="Url">
         <property name="idUrl" type="int"/>
-        <property name="fkResourceMerchantProfile" type="int"/>
+        <property name="fkResourceMerchant" type="int"/>
         <property name="urlPrefix" type="string"/>
         <property name="localeName" type="string"/>
     </transfer>

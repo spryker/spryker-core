@@ -2,24 +2,24 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfile\Communication\Plugin\Checkout;
+namespace Spryker\Zed\Merchant\Communication\Plugin\Checkout;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
+ * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
+ * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()
  */
-class MerchantProfileCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
+class MerchantCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
     protected const GLOSSARY_KEY_INACTIVE_MERCHANT_PROFILE = 'merchant_profile.message.inactive';
     protected const GLOSSARY_KEY_REMOVED_MERCHANT_PROFILE = 'merchant_profile.message.removed';
@@ -48,23 +48,23 @@ class MerchantProfileCheckoutPreConditionPlugin extends AbstractPlugin implement
                 continue;
             }
 
-            $merchantProfileTransfer = $this->getFacade()->findOne(
-                (new MerchantProfileCriteriaFilterTransfer())
+            $merchantTransfer = $this->getFacade()->findOne(
+                (new MerchantCriteriaFilterTransfer())
                     ->setMerchantReference($itemTransfer->getMerchantReference())
             );
 
-            if (!$merchantProfileTransfer) {
+            if (!$merchantTransfer) {
                 $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
                     ->setMessage(static::GLOSSARY_KEY_REMOVED_MERCHANT_PROFILE)
                     ->setParameters([static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku()]);
             }
 
-            if (!$merchantProfileTransfer->getIsActive()) {
+            if (!$merchantTransfer->getIsActive()) {
                 $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
                     ->setMessage(static::GLOSSARY_KEY_INACTIVE_MERCHANT_PROFILE)
                     ->setParameters([
                         static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku(),
-                        static::GLOSSARY_PARAM_MERCHANT_NAME => $merchantProfileTransfer->getMerchantName(),
+                        static::GLOSSARY_PARAM_MERCHANT_NAME => $merchantTransfer->getName(),
                     ]);
             }
         }

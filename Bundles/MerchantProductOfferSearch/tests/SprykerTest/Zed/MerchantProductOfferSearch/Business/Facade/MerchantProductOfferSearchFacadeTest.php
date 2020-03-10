@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\MerchantProductOfferSearch\Business\Facade;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
@@ -55,10 +55,7 @@ class MerchantProductOfferSearchFacadeTest extends Unit
             ProductConcreteTransfer::IS_ACTIVE => true,
         ]);
 
-        $merchant = $this->tester->haveMerchant();
-        $this->tester->haveMerchantProfile($merchant, [
-            MerchantProfileTransfer::IS_ACTIVE => true,
-        ]);
+        $merchant = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true,]);
 
         $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),

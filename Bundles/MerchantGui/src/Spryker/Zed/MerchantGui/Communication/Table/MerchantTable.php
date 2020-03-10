@@ -18,6 +18,8 @@ use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
 class MerchantTable extends AbstractTable
 {
+    protected const REQUEST_ID_MERCHANT = 'id-merchant';
+
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
         MerchantGuiConfig::STATUS_APPROVED => 'label-info',
@@ -101,6 +103,7 @@ class MerchantTable extends AbstractTable
         $config->setRawColumns([
             MerchantTableConstants::COL_ACTIONS,
             MerchantTableConstants::COL_STATUS,
+            MerchantTableConstants::COL_IS_ACTIVE,
         ]);
         $config->setDefaultSortField(MerchantTableConstants::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
 
@@ -155,6 +158,7 @@ class MerchantTable extends AbstractTable
             MerchantTableConstants::COL_ID_MERCHANT => 'Merchant Id',
             MerchantTableConstants::COL_NAME => 'Name',
             MerchantTableConstants::COL_STATUS => 'Status',
+            MerchantTableConstants::COL_IS_ACTIVE => 'active',
         ];
         $externalData = $this->executeTableHeaderExpanderPlugins();
 
@@ -193,6 +197,7 @@ class MerchantTable extends AbstractTable
                 MerchantTableConstants::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
                 MerchantTableConstants::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
                 MerchantTableConstants::COL_STATUS => $this->createStatusLabel($item),
+                MerchantTableConstants::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_NAME]),
             ], $this->executeDataExpanderPlugins($item));
             $rowData[MerchantTableConstants::COL_ACTIONS] = $this->buildLinks($item);
             $results[] = $rowData;
@@ -214,6 +219,9 @@ class MerchantTable extends AbstractTable
             Url::generate(MerchantGuiConfig::URL_MERCHANT_EDIT, [EditMerchantController::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]]),
             'Edit'
         );
+        $buttons[] = ($item[MerchantTableConstants::COL_IS_ACTIVE]) ?
+            $this->createDeactivateButton($item[MerchantTableConstants::COL_ID_MERCHANT]) :
+            $this->createActivateButton($item[MerchantTableConstants::COL_ID_MERCHANT]);
 
         $buttons = array_merge(
             $buttons,
@@ -245,6 +253,46 @@ class MerchantTable extends AbstractTable
         }
 
         return $availableStatusButtons;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return string
+     */
+    protected function createActivateButton(int $idMerchant): string
+    {
+        return $this->generateButton(
+            Url::generate(
+                MerchantGuiConfig::URL_MERCHANT_ACTIVATE,
+                [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant]
+            ),
+            'Activate',
+            [
+                'class' => 'btn-view',
+                'icon' => 'fa fa-caret-right',
+            ]
+        );
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return string
+     */
+    protected function createDeactivateButton(int $idMerchant): string
+    {
+        return $this->generateButton(
+            Url::generate(
+                MerchantGuiConfig::URL_MERCHANT_DEACTIVATE,
+                [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant]
+            ),
+            'Deactivate',
+            [
+                    'class' => 'btn-remove',
+                    'icon' => 'fa fa-trash',
+                ]
+        );
     }
 
     /**
@@ -298,5 +346,15 @@ class MerchantTable extends AbstractTable
         }
 
         return $this->generateLabel($currentStatus, static::STATUS_CLASS_LABEL_MAPPING[$currentStatus]);
+    }
+
+    /**
+     * @param bool $isActive
+     *
+     * @return string
+     */
+    public function getActiveLabel(bool $isActive): string
+    {
+        return $isActive ? $this->generateLabel('Active', 'label-info') : $this->generateLabel('Inactive', 'label-danger');
     }
 }

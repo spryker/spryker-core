@@ -27,7 +27,6 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-                - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
     Business:
@@ -41,5 +40,4 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-                - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper

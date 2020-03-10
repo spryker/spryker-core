@@ -17,6 +17,7 @@ class MerchantWriterStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantDataSetInterface::MERCHANT_KEY,
+        MerchantDataSetInterface::MERCHANT_REFERENCE,
         MerchantDataSetInterface::NAME,
         MerchantDataSetInterface::REGISTRATION_NUMBER,
         MerchantDataSetInterface::STATUS,
@@ -42,6 +43,7 @@ class MerchantWriterStep implements DataImportStepInterface
             ->setStatus($dataSet[MerchantDataSetInterface::STATUS])
             ->setEmail($dataSet[MerchantDataSetInterface::EMAIL])
             ->setMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE])
+            ->setIsActive($dataSet[MerchantDataSetInterface::IS_ACTIVE])
             ->save();
     }
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueMerchantReference;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,11 +35,14 @@ class MerchantCreateForm extends AbstractType
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
     protected const FIELD_EMAIL = 'email';
     protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
+    protected const FIELD_IS_ACTIVE = 'is_active';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
     protected const LABEL_EMAIL = 'Email';
     protected const LABEL_MERCHANT_REFERENCE = 'Merchant Reference';
+
+    protected const LABEL_IS_ACTIVE = 'Is Active';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -73,7 +77,8 @@ class MerchantCreateForm extends AbstractType
             ->addNameField($builder)
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)
-            ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID]);
+            ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID])
+            ->addIsActiveField($builder);
 
         $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
     }
@@ -86,6 +91,22 @@ class MerchantCreateForm extends AbstractType
     protected function addIdMerchantField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_MERCHANT, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
+                'label' => static::LABEL_IS_ACTIVE,
+                'required' => false,
+            ]);
 
         return $this;
     }
