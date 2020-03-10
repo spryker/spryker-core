@@ -1,10 +1,12 @@
 {% if merchantForm.vars.tables.merchantUsersTable is defined %}
-    {{
-        createActionButton(
-            url('/merchant-user-gui/create-merchant-user', {'merchant-id': merchantForm.vars.value.idMerchant}),
-            'Add New User' | trans
-        )
-    }}
+    <div class="spacing-bottom">
+        {{
+            createActionButton(
+                url('/merchant-user-gui/create-merchant-user', {'merchant-id': merchantForm.vars.value.idMerchant}),
+                'Add New User' | trans
+            )
+        }}
+    </div>
 
     {{ merchantForm.vars.tables.merchantUsersTable | raw }}
 {% else %}
