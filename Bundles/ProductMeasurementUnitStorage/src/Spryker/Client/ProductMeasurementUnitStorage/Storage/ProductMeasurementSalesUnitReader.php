@@ -108,7 +108,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
             }
         }
 
-        return $this->getProductMeasurementSalesUnitTransfers(
+        return $this->convertToProductMeasurementSalesUnitTransfers(
             $productConcreteMeasurementSalesUnitTransfers,
             $this->getIndexedProductMeasurementUnitTransfers($productMeasurementUnitIds)
         );
@@ -120,7 +120,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    protected function getProductMeasurementSalesUnitTransfers(
+    protected function convertToProductMeasurementSalesUnitTransfers(
         array $productConcreteMeasurementSalesUnitTransfers,
         array $indexedProductMeasurementUnitTransfers
     ): array {
