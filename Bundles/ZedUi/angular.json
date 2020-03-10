@@ -18,7 +18,7 @@
           "builder": "ngx-build-plus:browser",
           "options": {
             "outputPath": "../../../../../public/Zed/assets/js/zed-ui",
-            "index": "",
+            "index": "src/Spryker/Zed/ZedUi/Presentation/Components/index.html",
             "main": "src/Spryker/Zed/ZedUi/Presentation/Components/main.ts",
             "polyfills": "src/Spryker/Zed/ZedUi/Presentation/Components/polyfills.ts",
             "tsConfig": "tsconfig.app.json",

@@ -11,22 +11,24 @@
         }
       },
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components",
       "prefix": "mp",
       "architect": {
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
             "outputPath": "../../../../../public/Zed/assets/js/mp-dashboard",
-            "index": "src/index.html",
-            "main": "src/main.ts",
+            "index": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/index.html",
+            "main": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/main.ts",
             "polyfills": "",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/assets"
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/assets"
             ],
-            "styles": [],
+            "styles": [
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/styles.less"
+            ],
             "scripts": [],
             "singleBundle": true
           },
@@ -34,8 +36,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/environments/environment.ts",
+                  "with": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -81,16 +83,16 @@
         "test": {
           "builder": "ngx-build-plus:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "main": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/test.ts",
+            "polyfills": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/favicon.ico",
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/styles.less"
             ],
             "scripts": []
           }
@@ -100,24 +102,11 @@
           "options": {
             "tsConfig": [
               "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mp-dashboard:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "mp-dashboard:serve:production"
-            }
           }
         }
       }

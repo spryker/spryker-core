@@ -1,13 +1,13 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
-  selector: 'zed-layout-main',
-  templateUrl: './zed-layout-main.component.html',
-  styleUrls: ['./zed-layout-main.component.less'],
+  selector: 'mp-layout-main',
+  templateUrl: './layout-main.component.html',
+  styleUrls: ['./layout-main.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class ZedLayoutMainComponent {
+export class LayoutMainComponent {
   @Input() navigationConfig = '';
 
   isCollapsed = false;

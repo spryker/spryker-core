@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { MpLayoutCenteredComponent } from './mp-layout-centered.component';
-import { MpAuthFooterModule } from '../mp-auth-footer/mp-auth-footer.module';
+import { LayoutCenteredComponent } from './layout-centered.component';
+import { AuthFooterModule } from '../auth-footer/auth-footer.module';
 
 describe('ZedLayoutCentralComponent', () => {
     let component: TestComponent;
@@ -19,8 +19,8 @@ describe('ZedLayoutCentralComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MpAuthFooterModule],
-            declarations: [MpLayoutCenteredComponent, TestComponent]
+            imports: [AuthFooterModule],
+            declarations: [LayoutCenteredComponent, TestComponent]
         }).compileComponents();
     }));
 

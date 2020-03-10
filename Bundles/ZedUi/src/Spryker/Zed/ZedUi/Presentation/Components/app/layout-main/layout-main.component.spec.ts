@@ -2,19 +2,19 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { ZedLayoutMainComponent } from './zed-layout-main.component';
+import { LayoutMainComponent } from './layout-main.component';
 
-describe('ZedLayoutMainComponent', () => {
+describe('LayoutMainComponent', () => {
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
 
   @Component({
     selector: 'test-component',
     template: `
-        <zed-layout-main [navigationConfig]="navigationConfig">
+        <mp-layout-main [navigationConfig]="navigationConfig">
           <div name="header">Header Slot</div>
           Main Slot
-        </zed-layout-main>
+        </mp-layout-main>
     `,
   })
   class TestComponent {
@@ -23,7 +23,7 @@ describe('ZedLayoutMainComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TestComponent, ZedLayoutMainComponent],
+      declarations: [TestComponent, LayoutMainComponent],
       schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
@@ -65,11 +65,11 @@ describe('ZedLayoutMainComponent', () => {
   });
 
   describe('isCollapsed property', () => {
-    let layoutComponent: ZedLayoutMainComponent;
-    let layoutFixture: ComponentFixture<ZedLayoutMainComponent>;
+    let layoutComponent: LayoutMainComponent;
+    let layoutFixture: ComponentFixture<LayoutMainComponent>;
 
     beforeEach(() => {
-      layoutFixture = TestBed.createComponent(ZedLayoutMainComponent);
+      layoutFixture = TestBed.createComponent(LayoutMainComponent);
       layoutComponent = layoutFixture.componentInstance;
     });
 
@@ -84,8 +84,8 @@ describe('ZedLayoutMainComponent', () => {
     });
 
     it('should show collapsed logo class if value is true', () => {
-      const collapsedClass = 'zed-layout-main__logo--collapsed';
-      const logoContainerElem = layoutFixture.debugElement.query(By.css('spy-sidebar .zed-layout-main__logo'));
+      const collapsedClass = 'layout-main__logo--collapsed';
+      const logoContainerElem = layoutFixture.debugElement.query(By.css('spy-sidebar .layout-main__logo'));
 
       layoutComponent.isCollapsed = true;
 
@@ -105,13 +105,13 @@ describe('ZedLayoutMainComponent', () => {
 
   describe('Slots', () => {
     it('should render correct info inside `header` slot', () => {
-      const headerSlotContainerElem = fixture.debugElement.query(By.css('.zed-layout-main__header'));
+      const headerSlotContainerElem = fixture.debugElement.query(By.css('.layout-main__header'));
 
       expect(headerSlotContainerElem.nativeElement.textContent).toMatch('Header Slot');
     });
 
     it('should render correct info inside main slot', () => {
-      const mainSlotContainerElem = fixture.debugElement.query(By.css('.zed-layout-main__content'));
+      const mainSlotContainerElem = fixture.debugElement.query(By.css('.layout-main__content'));
 
       expect(mainSlotContainerElem.nativeElement.textContent).toMatch('Main Slot');
     });
