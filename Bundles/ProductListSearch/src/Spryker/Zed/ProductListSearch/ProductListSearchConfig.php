@@ -12,9 +12,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductListSearchConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getProductListEventQueueName(): ?string
     {
         return null;
     }

@@ -16,9 +16,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 
 /**
- * @method \Spryker\Zed\ConfigurableBundleStorage\Communication\ConfigurableBundleStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\ConfigurableBundleStorage\Business\ConfigurableBundleStorageFacadeInterface getFacade()
- * @method \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig getConfig()
+ * @method \Spryker\Zed\ConfigurableBundlePageSearch\Communication\ConfigurableBundlePageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ConfigurableBundlePageSearch\Business\ConfigurableBundlePageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig getConfig()
  */
 class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -49,7 +49,10 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH,
-            new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
+            new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(),
+            0,
+            null,
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
         );
 
         return $this;
@@ -64,7 +67,10 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_UNPUBLISH,
-            new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
+            new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(),
+            0,
+            null,
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
         );
 
         return $this;
@@ -79,7 +85,10 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE,
-            new ProductImageSetConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
+            new ProductImageSetConfigurableBundlePageSearchPublishListener(),
+            0,
+            null,
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
         );
 
         return $this;
@@ -94,7 +103,10 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE,
-            new ProductImageSetConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
+            new ProductImageSetConfigurableBundlePageSearchPublishListener(),
+            0,
+            null,
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
         );
 
         return $this;
@@ -109,7 +121,10 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
     {
         $eventCollection->addListenerQueued(
             ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE,
-            new ProductImageSetConfigurableBundlePageSearchPublishListener(), 0, null, $this->getConfig()->getEventQueueName()
+            new ProductImageSetConfigurableBundlePageSearchPublishListener(),
+            0,
+            null,
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
         );
 
         return $this;

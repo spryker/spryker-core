@@ -22,9 +22,21 @@ class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getConfigurableBundlePageEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getConfigurableBundleTemplateImageEventQueueName(): ?string
     {
         return null;
     }

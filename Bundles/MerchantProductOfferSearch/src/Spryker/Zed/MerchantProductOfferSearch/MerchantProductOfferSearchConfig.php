@@ -12,9 +12,31 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MerchantProductOfferSearchConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getMerchantEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getMerchantProfileEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getMerchantProductOfferEventQueueName(): ?string
     {
         return null;
     }

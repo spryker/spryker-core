@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Subscriber;
 
-use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\MerchantProfileSearchEventListener;
 use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 
@@ -30,7 +30,7 @@ class MerchantProfileSearchEventSubscriber extends AbstractPlugin implements Eve
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileSearchEventListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileSearchEventListener(), 0, null, $this->getConfig()->getMerchantProfileEventQueueName());
 
         return $eventCollection;
     }

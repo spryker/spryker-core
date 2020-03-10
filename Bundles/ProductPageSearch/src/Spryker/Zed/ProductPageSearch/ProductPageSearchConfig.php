@@ -36,9 +36,21 @@ class ProductPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getEventQueueName(): ?string
+    public function getProductPageEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductConcretePageEventQueueName(): ?string
     {
         return null;
     }
