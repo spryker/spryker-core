@@ -48,6 +48,8 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer

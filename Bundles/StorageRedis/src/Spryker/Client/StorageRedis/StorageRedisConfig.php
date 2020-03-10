@@ -19,6 +19,8 @@ class StorageRedisConfig extends AbstractBundleConfig
     protected const SCAN_CHUNK_SIZE = 100;
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getDebugMode(): bool
@@ -27,6 +29,8 @@ class StorageRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\RedisConfigurationTransfer
      */
     public function getRedisConnectionConfiguration(): RedisConfigurationTransfer
@@ -44,6 +48,8 @@ class StorageRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRedisConnectionKey(): string
@@ -52,6 +58,8 @@ class StorageRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getRedisScanChunkSize(): int

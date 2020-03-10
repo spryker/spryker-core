@@ -11,8 +11,9 @@ interface RelatedProductsRestApiToProductRelationStorageClientInterface
 {
     /**
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract): array;
+    public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array;
 }

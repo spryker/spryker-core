@@ -66,6 +66,8 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     protected const CUSTOMER_SECURED_PATTERN = 'CUSTOMER_SECURED_PATTERN';
 
     /**
+     * @api
+     *
      * @param string $contentType
      *
      * @throws \Spryker\Client\CustomerAccessPermission\Exception\PermissionPluginNotFoundException
@@ -82,6 +84,8 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $contentType
      *
      * @return string
@@ -96,6 +100,8 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $contentType
      *
      * @return bool
@@ -106,6 +112,8 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Functionality was moved to Customer module. Method will be removed without replacement.
      *
      * @return string

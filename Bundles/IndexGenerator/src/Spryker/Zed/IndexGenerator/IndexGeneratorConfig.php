@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class IndexGeneratorConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getExcludedTables(): array
@@ -22,6 +24,8 @@ class IndexGeneratorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTargetDirectory(): string
@@ -41,6 +45,8 @@ class IndexGeneratorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPathToMergedSchemas(): string
@@ -49,6 +55,8 @@ class IndexGeneratorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPermissionMode(): int

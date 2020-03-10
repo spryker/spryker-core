@@ -78,7 +78,8 @@ class ProductLabelReader implements ProductLabelReaderInterface
 
         $labelTransfers = $this->productLabelStorageClient->findLabels(
             [$restRequest->getResource()->getId()],
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
+            APPLICATION_STORE
         );
 
         if (!count($labelTransfers)) {
@@ -120,7 +121,8 @@ class ProductLabelReader implements ProductLabelReaderInterface
 
         $productLabels = $this->productLabelStorageClient->findLabelsByIdProductAbstract(
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
-            $localeName
+            $localeName,
+            APPLICATION_STORE
         );
 
         return $this->prepareRestResourceCollection($productLabels);
@@ -137,7 +139,8 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $productAbstractIdsByProductConcreteSku = $this->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus, $localeName);
         $productLabels = $this->productLabelStorageClient->getProductLabelsByProductAbstractIds(
             array_unique($productAbstractIdsByProductConcreteSku),
-            $localeName
+            $localeName,
+            APPLICATION_STORE
         );
         $restResourceCollectionsByProductConcreteSku = [];
 
