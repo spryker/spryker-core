@@ -20,7 +20,7 @@ class OrderItemReader implements OrderItemReaderInterface
     protected $salesRepository;
 
     /**
-     * @var array|\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
      */
     protected $orderItemExpanderPlugins;
 
@@ -44,60 +44,12 @@ class OrderItemReader implements OrderItemReaderInterface
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
     {
         $itemTransfers = $this->salesRepository->getOrderItems($orderItemFilterTransfer);
-        $itemTransfers = $this->expandItemTransfers($itemTransfers);
+
+        $itemTransfers = $this->deriveOrderItemsUnitPrices($itemTransfers);
+        $itemTransfers = $this->executeOrderItemExpanderPlugins($itemTransfers);
 
         return (new ItemCollectionTransfer())
             ->setItems(new ArrayObject($itemTransfers));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function expandItemTransfers(array $itemTransfers): array
-    {
-        $itemTransfers = $this->expandOrderItemsWithStateHistory($itemTransfers);
-        $itemTransfers = $this->deriveOrderItemsUnitPrices($itemTransfers);
-
-        $itemTransfers = $this->executeOrderItemExpanderPlugins($itemTransfers);
-
-        return $itemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function expandOrderItemsWithStateHistory(array $itemTransfers): array
-    {
-        $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
-        $mappedItemStateTransfers = $this->salesRepository->getItemHistoryStatesByOrderItemIds($salesOrderItemIds);
-
-        foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->setStateHistory(
-                new ArrayObject($mappedItemStateTransfers[$itemTransfer->getIdSalesOrderItem()] ?? null)
-            );
-        }
-
-        return $itemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return int[]
-     */
-    protected function extractSalesOrderItemIds(array $itemTransfers): array
-    {
-        $salesOrderItemIds = [];
-
-        foreach ($itemTransfers as $itemTransfer) {
-            $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
-        }
-
-        return $salesOrderItemIds;
     }
 
     /**

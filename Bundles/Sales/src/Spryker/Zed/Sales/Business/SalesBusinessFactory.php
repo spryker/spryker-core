@@ -10,8 +10,6 @@ namespace Spryker\Zed\Sales\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
-use Spryker\Zed\Sales\Business\Expander\OrderReferenceExpander;
-use Spryker\Zed\Sales\Business\Expander\OrderReferenceExpanderInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseUpdater;
@@ -451,14 +449,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         };
 
         return new OrderHydratorStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Expander\OrderReferenceExpanderInterface
-     */
-    public function createOrderReferenceExpander(): OrderReferenceExpanderInterface
-    {
-        return new OrderReferenceExpander($this->getRepository());
     }
 
     /**

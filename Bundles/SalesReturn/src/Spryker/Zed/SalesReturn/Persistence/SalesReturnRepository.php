@@ -132,12 +132,12 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
     }
 
     /**
-     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function preparePagination(SpySalesReturnQuery $salesReturnQuery, PaginationTransfer $paginationTransfer): SpySalesReturnQuery
+    protected function preparePagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): ModelCriteria
     {
         $page = $paginationTransfer
             ->requirePage()
@@ -147,7 +147,7 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
             ->requireMaxPerPage()
             ->getMaxPerPage();
 
-        $propelModelPager = $salesReturnQuery->paginate($page, $maxPerPage);
+        $propelModelPager = $query->paginate($page, $maxPerPage);
 
         $paginationTransfer->setNbResults($propelModelPager->getNbResults())
             ->setFirstIndex($propelModelPager->getFirstIndex())

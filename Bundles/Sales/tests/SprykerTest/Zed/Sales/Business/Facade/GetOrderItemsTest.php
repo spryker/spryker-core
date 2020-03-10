@@ -78,6 +78,35 @@ class GetOrderItemsTest extends Test
     /**
      * @return void
      */
+    public function testGetOrderItemsCopyOrderReferenceToItems(): void
+    {
+        // Arrange
+        $saveOrderTransfer = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+        $idSalesOrderItem = $saveOrderTransfer
+            ->getOrderItems()
+            ->getIterator()
+            ->current()
+            ->getIdSalesOrderItem();
+
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
+            ->addSalesOrderItemId($idSalesOrderItem);
+
+        // Act
+        $itemTransfers = $this->tester
+            ->getFacade()
+            ->getOrderItems($orderItemFilterTransfer)
+            ->getItems();
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $itemTransfers->getIterator()->current();
+
+        // Assert
+        $this->assertSame($saveOrderTransfer->getOrderReference(), $itemTransfer->getOrderReference());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetOrderItemsRetrieveOrderItemsByFakeOrderItemId(): void
     {
         // Arrange
@@ -129,37 +158,6 @@ class GetOrderItemsTest extends Test
 
         // Assert
         $this->assertSame(static::FAKE_ID_SALES_ORDER_ITEM, $itemTransfers->getIterator()->current()->getIdSalesOrderItem());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetOrderItemsRetrieveOrderItemsWithHistoryStates(): void
-    {
-        // Arrange
-        $idSalesOrderItem = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME)
-            ->getOrderItems()
-            ->getIterator()
-            ->current()
-            ->getIdSalesOrderItem();
-
-        $this->tester->setItemState($idSalesOrderItem, static::FAKE_OMS_STATE);
-
-        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->addSalesOrderItemId($idSalesOrderItem);
-
-        // Act
-        $itemTransfers = $this->tester
-            ->getFacade()
-            ->getOrderItems($orderItemFilterTransfer)
-            ->getItems();
-
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = $itemTransfers->getIterator()->current();
-
-        // Assert
-        $this->assertCount(2, $itemTransfer->getStateHistory());
-        $this->assertSame(static::FAKE_OMS_STATE, $itemTransfer->getStateHistory()->offsetGet(1)->getName());
     }
 
     /**

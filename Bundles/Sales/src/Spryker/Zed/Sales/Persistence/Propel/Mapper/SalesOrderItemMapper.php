@@ -57,30 +57,11 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
             $itemTransfers[] = (new ItemTransfer())
                 ->fromArray($salesOrderItemEntity->toArray(), true)
                 ->setProcess($salesOrderItemEntity->getProcess()->getName())
+                ->setOrderReference($salesOrderItemEntity->getOrder()->getOrderReference())
                 ->setState($this->mapSalesOrderItemEntityToItemStateTransfer($salesOrderItemEntity, new ItemStateTransfer()));
         }
 
         return $itemTransfers;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory[] $omsOrderItemStateHistoryEntities
-     *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
-     */
-    public function mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers(
-        ObjectCollection $omsOrderItemStateHistoryEntities
-    ): array {
-        $itemStateTransfers = [];
-
-        foreach ($omsOrderItemStateHistoryEntities as $omsOrderItemStateHistory) {
-            $itemStateTransfers[$omsOrderItemStateHistory->getFkSalesOrderItem()][] = (new ItemStateTransfer())
-                ->fromArray($omsOrderItemStateHistory->toArray(), true)
-                ->setName($omsOrderItemStateHistory->getState()->getName())
-                ->setIdSalesOrder($omsOrderItemStateHistory->getOrderItem()->getFkSalesOrder());
-        }
-
-        return $itemStateTransfers;
     }
 
     /**

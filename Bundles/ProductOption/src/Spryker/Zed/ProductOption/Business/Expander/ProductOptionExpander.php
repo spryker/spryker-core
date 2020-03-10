@@ -33,15 +33,22 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
      */
     public function expandOrderItemsWithProductOptions(array $itemTransfers): array
     {
-        $mappedOrderItemsWithProductOptions = $this->getMappedOrderItemsWithProductOptions($itemTransfers);
-        $mappedProductOptionValueTransfers = $this->getMappedProductOptionValues($mappedOrderItemsWithProductOptions);
+        $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
+        $mappedOrderItemsWithProductOptions = $this->getMappedOrderItemsWithProductOptions($salesOrderItemIds);
+
+        $productOptionSkus = $this->extractProductOptionSkus($itemTransfers);
+        $mappedProductOptionValueTransfers = $this->getMappedProductOptionValues($productOptionSkus);
 
         foreach ($itemTransfers as $itemTransfer) {
-            $orderItemWithProductOptions = $mappedOrderItemsWithProductOptions[$itemTransfer->getIdSalesOrderItem()] ?? null;
-
-            if ($orderItemWithProductOptions) {
-                $this->expandOrderItemWithProductOptions($itemTransfer, $orderItemWithProductOptions, $mappedProductOptionValueTransfers);
+            if (!isset($mappedOrderItemsWithProductOptions[$itemTransfer->getIdSalesOrderItem()])) {
+                continue;
             }
+
+            $this->expandOrderItemWithProductOptions(
+                $itemTransfer,
+                $mappedOrderItemsWithProductOptions[$itemTransfer->getIdSalesOrderItem()],
+                $mappedProductOptionValueTransfers
+            );
         }
 
         return $itemTransfers;
@@ -80,13 +87,12 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param int[] $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getMappedOrderItemsWithProductOptions(array $itemTransfers): array
+    protected function getMappedOrderItemsWithProductOptions(array $salesOrderItemIds): array
     {
-        $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
         $orderItemsWithProductOptions = $this->productOptionRepository->getOrderItemsWithProductOptions($salesOrderItemIds);
 
         $mappedItemTransfers = [];
@@ -99,13 +105,12 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param string[] $productOptionSkus
      *
      * @return \Generated\Shared\Transfer\ProductOptionValueTransfer[]
      */
-    protected function getMappedProductOptionValues(array $itemTransfers): array
+    protected function getMappedProductOptionValues(array $productOptionSkus): array
     {
-        $productOptionSkus = $this->extractProductOptionSkus($itemTransfers);
         $productOptionValueTransfers = $this->productOptionRepository->getProductOptionValuesBySkus($productOptionSkus);
 
         $mappedProductOptionValueTransfers = [];

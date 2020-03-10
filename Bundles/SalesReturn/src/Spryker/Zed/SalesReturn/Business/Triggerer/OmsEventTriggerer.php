@@ -10,23 +10,30 @@ namespace Spryker\Zed\SalesReturn\Business\Triggerer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface;
+use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class OmsEventTriggerer implements OmsEventTriggererInterface
 {
-    // TODO: get from shared config?
-    protected const EVENT_RETURN = 'return';
-
     /**
      * @var \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface
      */
     protected $omsFacade;
 
     /**
-     * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface $omsFacade
+     * @var \Spryker\Zed\SalesReturn\SalesReturnConfig
      */
-    public function __construct(SalesReturnToOmsFacadeInterface $omsFacade)
-    {
+    protected $salesReturnConfig;
+
+    /**
+     * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface $omsFacade
+     * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
+     */
+    public function __construct(
+        SalesReturnToOmsFacadeInterface $omsFacade,
+        SalesReturnConfig $salesReturnConfig
+    ) {
         $this->omsFacade = $omsFacade;
+        $this->salesReturnConfig = $salesReturnConfig;
     }
 
     /**
@@ -38,7 +45,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($returnTransfer);
 
-        $this->omsFacade->triggerEventForOrderItems(static::EVENT_RETURN, $salesOrderItemIds);
+        $this->omsFacade->triggerEventForOrderItems($this->salesReturnConfig->getReturnEvent(), $salesOrderItemIds);
     }
 
     /**

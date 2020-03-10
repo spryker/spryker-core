@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery;
@@ -89,6 +90,14 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     public function createOmsProductReservationExportedVersionQuery()
     {
         return SpyOmsProductReservationLastExportedVersionQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    public function createOmsOrderItemStateHistoryQuery()
+    {
+        return SpyOmsOrderItemStateHistoryQuery::create();
     }
 
     /**

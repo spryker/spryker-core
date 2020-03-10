@@ -8,10 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -80,50 +77,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         return $this->getFactory()
             ->createSalesOrderItemMapper()
             ->mapSalesOrderItemEntityCollectionToOrderItemTransfers($salesOrderItemQuery->find());
-    }
-
-    /**
-     * @param int[] $salesOrderItemIds
-     *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
-     */
-    public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array
-    {
-        $omsOrderItemStateHistoryQuery = $this->getFactory()
-            ->createOmsOrderItemStateHistoryQuery()
-            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
-            ->leftJoinWithState()
-            ->leftJoinOrderItem()
-            ->groupByFkSalesOrderItem();
-
-        return $this->getFactory()
-            ->createSalesOrderItemMapper()
-            ->mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers($omsOrderItemStateHistoryQuery->find());
-    }
-
-    /**
-     * @param int[] $salesOrderItemIds
-     *
-     * @return string[][]
-     */
-    public function getOrderReferencesByOrderItemIds(array $salesOrderItemIds): array
-    {
-        if (!$salesOrderItemIds) {
-            return [];
-        }
-
-        return $this->getFactory()
-            ->createSalesOrderItemQuery()
-            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
-            ->leftJoinWithOrder()
-            ->withColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, ItemTransfer::ID_SALES_ORDER_ITEM)
-            ->withColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE, ItemTransfer::ORDER_REFERENCE)
-            ->select([
-                ItemTransfer::ID_SALES_ORDER_ITEM,
-                ItemTransfer::ORDER_REFERENCE,
-            ])
-            ->find()
-            ->toArray();
     }
 
     /**

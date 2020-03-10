@@ -301,7 +301,6 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Expands order item with product options.
      * - Hydrates product options for given order items.
      * - Sets ItemTransfer::sumProductOptionPriceAggregation, ItemTransfer::unitProductOptionPriceAggregation.
      *
