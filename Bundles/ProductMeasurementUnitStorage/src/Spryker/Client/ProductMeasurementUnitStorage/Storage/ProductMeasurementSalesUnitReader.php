@@ -108,8 +108,23 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
             }
         }
 
+        return $this->getProductMeasurementSalesUnitTransfers(
+            $productConcreteMeasurementSalesUnitTransfers,
+            $this->getIndexedProductMeasurementUnitTransfers($productMeasurementUnitIds)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer[] $productConcreteMeasurementSalesUnitTransfers
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $indexedProductMeasurementUnitTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    protected function getProductMeasurementSalesUnitTransfers(
+        array $productConcreteMeasurementSalesUnitTransfers,
+        array $indexedProductMeasurementUnitTransfers
+    ): array {
         $productMeasurementSalesUnitTransfers = [];
-        $indexedProductMeasurementUnitTransfers = $this->getIndexedProductMeasurementUnitTransfers($productMeasurementUnitIds);
         foreach ($productConcreteMeasurementSalesUnitTransfers as $productConcreteMeasurementSalesUnitTransfer) {
             $idProductMeasurementUnit = $productConcreteMeasurementSalesUnitTransfer->getIdProductMeasurementUnit();
             $productMeasurementUnitTransfer = $indexedProductMeasurementUnitTransfers[$idProductMeasurementUnit];
