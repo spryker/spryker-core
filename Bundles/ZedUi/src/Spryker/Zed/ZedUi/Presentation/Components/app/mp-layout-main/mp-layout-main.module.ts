@@ -5,25 +5,23 @@ import { HeaderModule } from '@spryker/header';
 import { SidebarModule } from '@spryker/sidebar';
 import { LogoModule } from '@spryker/logo';
 import { NavigationModule } from '@spryker/navigation';
-import { ICONS_TOKEN } from '@spryker/icon';
+import { provideIcons, Icon } from '@spryker/icon';
 
-import { ZedLayoutMainComponent } from './zed-layout-main.component';
+import { MpLayoutMainComponent } from './mp-layout-main.component';
 import dashboardIcon from '../../icons/dashboard';
+
+const icons: Icon[] = [
+  {
+    name: 'dashboard',
+    svg: dashboardIcon,
+  },
+];
 
 @NgModule({
   imports: [CommonModule, LayoutModule, HeaderModule, SidebarModule, LogoModule, NavigationModule],
-  providers: [
-    {
-      provide: ICONS_TOKEN,
-      useValue: {
-        name: 'dashboard',
-        svg: dashboardIcon,
-      },
-      multi: true,
-    },
-  ],
-  declarations: [ZedLayoutMainComponent],
-  exports: [ZedLayoutMainComponent],
+  providers: [provideIcons(icons)],
+  declarations: [MpLayoutMainComponent],
+  exports: [MpLayoutMainComponent],
 })
-export class ZedLayoutMainModule {
+export class MpLayoutMainModule {
 }
