@@ -9,5 +9,8 @@ namespace Spryker\Yves\StepEngine\Dependency\Step;
 
 interface StepWithCodeInterface
 {
+    /**
+     * @return string
+     */
     public function getCode(): string;
 }
