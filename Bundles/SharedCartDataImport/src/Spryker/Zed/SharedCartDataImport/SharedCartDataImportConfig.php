@@ -16,6 +16,8 @@ class SharedCartDataImportConfig extends DataImportConfig
     protected const FILE_NAME = 'shared_cart.csv';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getSharedCartDataImporterConfiguration(): DataImporterConfigurationTransfer

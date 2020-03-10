@@ -99,9 +99,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns the total stock amount of the abstract product for all its available stock types and store.
-     *  - Filters out stocks that are inactive.
+     * {@inheritDoc}
      *
      * @api
      *

@@ -370,7 +370,8 @@ class ObjectBuilder extends PropelObjectBuilder
         $fkQueryBuilder = $this->getNewStubQueryBuilder($fk->getForeignTable());
         $fkObjectBuilder = $this->getNewObjectBuilder($fk->getForeignTable())->getStubObjectBuilder();
         $returnDesc = '';
-        if ($interface = $fk->getInterface()) {
+        $interface = $fk->getInterface();
+        if ($interface) {
             $className = $this->declareClass($interface);
         } else {
             $className = $this->getClassNameFromBuilder($fkObjectBuilder); // get the ClassName that has maybe a prefix
@@ -605,7 +606,7 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPreInsertHook(): string
     {
         $script = '
-        
+
     /**
      * Code to be run before inserting to database
      * @param  \Propel\Runtime\Connection\ConnectionInterface $con
@@ -626,7 +627,7 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPreUpdateHook(): string
     {
         $script = '
-        
+
     /**
      * Code to be run before updating the object in database
      * @param  \Propel\Runtime\Connection\ConnectionInterface $con
@@ -647,7 +648,7 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPreSaveHook(): string
     {
         $script = '
-        
+
     /**
      * Code to be run before persisting the object
      * @param  \Propel\Runtime\Connection\ConnectionInterface $con
@@ -668,7 +669,7 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPreDeleteHook(): string
     {
         $script = '
-        
+
     /**
      * Code to be run before deleting the object in database
      * @param  \Propel\Runtime\Connection\ConnectionInterface $con
@@ -689,7 +690,7 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPostInsertHook(): string
     {
         $script = '
-        
+
     /**
      * Code to be run after inserting to database
      * @param \Propel\Runtime\Connection\ConnectionInterface $con
@@ -709,7 +710,7 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPostUpdateHook(): string
     {
         $script = '
-        
+
     /**
      * Code to be run after updating the object in database
      * @param \Propel\Runtime\Connection\ConnectionInterface $con
@@ -729,7 +730,7 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPostSaveHook(): string
     {
         $script = '
-        
+
     /**
      * Code to be run after persisting the object
      * @param \Propel\Runtime\Connection\ConnectionInterface $con
@@ -749,7 +750,7 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPostDeleteHook(): string
     {
         $script = '
-        
+
     /**
      * Code to be run after deleting the object in database
      * @param \Propel\Runtime\Connection\ConnectionInterface $con

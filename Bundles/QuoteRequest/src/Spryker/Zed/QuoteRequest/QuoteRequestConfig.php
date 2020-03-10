@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class QuoteRequestConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return int
      */
     public function getInitialVersion(): int
@@ -25,6 +27,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getInitialStatus(): string
@@ -33,6 +37,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving(): array
@@ -43,6 +49,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getCancelableStatuses(): array
@@ -51,6 +59,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getEditableStatuses(): array
@@ -59,6 +69,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getRevisableStatuses(): array
@@ -67,6 +79,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getUserCancelableStatuses(): array
@@ -75,6 +89,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getUserEditableStatuses(): array
@@ -83,6 +99,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getUserRevisableStatuses(): array
@@ -91,6 +109,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQuoteRequestReferenceFormat(): string

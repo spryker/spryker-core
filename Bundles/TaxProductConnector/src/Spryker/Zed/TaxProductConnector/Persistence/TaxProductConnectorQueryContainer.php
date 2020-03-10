@@ -26,6 +26,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     public const COL_COUNTRY_CODE = 'COUNTRY_CODE';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
@@ -50,6 +52,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
@@ -73,6 +77,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -87,6 +93,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -103,6 +111,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @module Country
@@ -136,6 +146,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @module Country
