@@ -33,6 +33,7 @@ class TestAuthPlugin extends AbstractPlugin implements CommandByOrderInterface
     {
         if (self::$count === 0) {
             self::$count++;
+
             throw new Exception('Expected exception.');
         }
 
