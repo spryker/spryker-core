@@ -95,7 +95,12 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return false;
         }
 
-        if (!$this->isCurrencyChanged($quoteTransfer) && !$quoteTransfer->getShipment()->getMethod()->getSourcePrice()) {
+        $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
+
+        if (
+            !$this->isCurrencyChanged($quoteTransfer)
+            && (!$shipmentMethodTransfer || !$shipmentMethodTransfer->getSourcePrice())
+        ) {
             return false;
         }
 
