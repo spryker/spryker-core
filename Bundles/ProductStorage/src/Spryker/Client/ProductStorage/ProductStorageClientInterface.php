@@ -109,8 +109,6 @@ interface ProductStorageClientInterface
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
 
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
      * @param int[] $productIds
@@ -210,8 +208,6 @@ interface ProductStorageClientInterface
     public function isProductConcreteRestricted(int $idProductConcrete): bool;
 
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
      * @param string $mappingType
@@ -241,12 +237,29 @@ interface ProductStorageClientInterface
      *
      * @api
      *
+     * @deprecated Use getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore instead.
+     *
      * @param int[] $productAbstractIds
      * @param string $localeName
      *
      * @return array
      */
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
+
+    /**
+     * Specification:
+     * - Finds product abstract data by the list of product abstract ids for given locale name and store name.
+     * - Result will be indexed by product abstract id, e.g. `[%product_abstract_id% => [%product_abstract_storage_data%]]`.
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(array $productAbstractIds, string $localeName, string $storeName): array;
 
     /**
      * Specification:

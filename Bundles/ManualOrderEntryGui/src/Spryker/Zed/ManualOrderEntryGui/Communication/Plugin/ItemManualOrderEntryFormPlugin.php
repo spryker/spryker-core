@@ -35,6 +35,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -45,6 +47,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -58,6 +62,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -81,6 +87,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -94,6 +102,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

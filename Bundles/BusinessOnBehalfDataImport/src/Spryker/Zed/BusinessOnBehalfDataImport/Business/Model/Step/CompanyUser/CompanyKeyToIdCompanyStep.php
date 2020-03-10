@@ -34,7 +34,7 @@ class CompanyKeyToIdCompanyStep implements DataImportStepInterface
     }
 
     /**
-     * @uses SpyCompanyQuery
+     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      *
      * @param string $companyKey
      *

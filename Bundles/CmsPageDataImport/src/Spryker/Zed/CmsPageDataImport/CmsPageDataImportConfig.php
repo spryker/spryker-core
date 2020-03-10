@@ -16,6 +16,8 @@ class CmsPageDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_CMS_PAGE_STORE = 'cms-page-store';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCmsPageDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -26,6 +28,8 @@ class CmsPageDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCmsPageStoreDataImporterConfiguration(): DataImporterConfigurationTransfer

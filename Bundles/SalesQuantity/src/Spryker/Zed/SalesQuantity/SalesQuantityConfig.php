@@ -17,6 +17,8 @@ class SalesQuantityConfig extends AbstractBundleConfig
     protected const ITEM_NONSPLIT_QUANTITY_THRESHOLD = null;
 
     /**
+     * @api
+     *
      * @return int|null
      */
     public function findItemQuantityThreshold(): ?int

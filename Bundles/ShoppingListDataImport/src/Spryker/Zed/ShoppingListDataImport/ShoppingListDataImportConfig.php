@@ -18,6 +18,8 @@ class ShoppingListDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_SHOPPING_LIST_COMPANY_BUSINESS_UNIT = 'shopping-list-company-business-unit';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getShoppingListDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -31,6 +33,8 @@ class ShoppingListDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getShoppingListItemDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -44,6 +48,8 @@ class ShoppingListDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getShoppingListCompanyUserDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -57,6 +63,8 @@ class ShoppingListDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getShoppingListCompanyBusinessUnitDataImporterConfiguration(): DataImporterConfigurationTransfer

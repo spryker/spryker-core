@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery;
@@ -104,7 +105,10 @@ class ShipmentMethodDataHelper extends Module
      */
     protected function assertCarrier(ShipmentMethodTransfer $shipmentMethodTransfer, array $overrideCarrier): ShipmentMethodTransfer
     {
-        if ($shipmentMethodTransfer->getFkShipmentCarrier() !== null) {
+        if (
+            $shipmentMethodTransfer->getFkShipmentCarrier() !== null
+            && SpyShipmentCarrierQuery::create()->findOneByIdShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier()) !== null
+        ) {
             return $shipmentMethodTransfer;
         }
 

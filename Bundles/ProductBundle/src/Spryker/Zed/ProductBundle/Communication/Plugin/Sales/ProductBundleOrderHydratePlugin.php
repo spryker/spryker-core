@@ -20,6 +20,8 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 class ProductBundleOrderHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
