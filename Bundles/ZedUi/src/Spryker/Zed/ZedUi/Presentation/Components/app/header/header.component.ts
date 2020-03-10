@@ -2,10 +2,10 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
 
 @Component({
   selector: 'mp-header',
-  templateUrl: './mp-header.component.html',
-  styleUrls: ['./mp-header.component.less'],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class MpHeaderComponent {
+export class HeaderComponent {
 }

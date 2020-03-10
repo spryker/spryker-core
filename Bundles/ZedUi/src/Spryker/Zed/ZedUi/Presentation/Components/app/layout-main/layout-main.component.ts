@@ -2,12 +2,12 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@a
 
 @Component({
   selector: 'mp-layout-main',
-  templateUrl: './mp-layout-main.component.html',
-  styleUrls: ['./mp-layout-main.component.less'],
+  templateUrl: './layout-main.component.html',
+  styleUrls: ['./layout-main.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class MpLayoutMainComponent {
+export class LayoutMainComponent {
   @Input() navigationConfig = '';
 
   isCollapsed = false;

@@ -7,7 +7,7 @@ import { LogoModule } from '@spryker/logo';
 import { NavigationModule } from '@spryker/navigation';
 import { provideIcons, Icon } from '@spryker/icon';
 
-import { MpLayoutMainComponent } from './mp-layout-main.component';
+import { LayoutMainComponent } from './layout-main.component';
 import dashboardIcon from '../../icons/dashboard';
 
 const icons: Icon[] = [
@@ -20,8 +20,8 @@ const icons: Icon[] = [
 @NgModule({
   imports: [CommonModule, LayoutModule, HeaderModule, SidebarModule, LogoModule, NavigationModule],
   providers: [provideIcons(icons)],
-  declarations: [MpLayoutMainComponent],
-  exports: [MpLayoutMainComponent],
+  declarations: [LayoutMainComponent],
+  exports: [LayoutMainComponent],
 })
-export class MpLayoutMainModule {
+export class LayoutMainModule {
 }
