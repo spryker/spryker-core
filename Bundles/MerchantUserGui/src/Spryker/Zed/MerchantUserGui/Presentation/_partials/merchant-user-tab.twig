@@ -8,5 +8,5 @@
 
     {{ merchantForm.vars.tables.merchantUsersTable | raw }}
 {% else %}
-    Save merchant, before you can create merchant users for him
+    {{ 'No users can be added till the merchant has been created. Please, add the required merchant information and save it.' | trans }}
 {% endif %}

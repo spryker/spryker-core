@@ -1,2 +1,8 @@
-merchant_user_gui.error_wrong_params,"Status can't be updated."
-merchant_user_gui.success_merchant_status_update,"Status has been updated."
+"Add Merchant User","Add Merchant User"
+"Back to Merchant Users","Back to Merchant Users"
+Create,Create
+"No users can be added till the merchant has been created. Please, add the required merchant information and save it.","No users can be added till the merchant has been created. Please, add the required merchant information and save it."
+Save,Save
+User status can't be updated.,"User status can't be updated."
+User status has been updated.,"User status has been updated."
+

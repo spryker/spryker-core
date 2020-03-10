@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MerchantUserStatusController extends AbstractController
 {
-    protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'merchant_user_gui.error_wrong_params';
-    protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'merchant_user_gui.success_merchant_status_update';
+    protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'User status can\'t be updated.';
+    protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'User status has been updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

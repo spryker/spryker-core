@@ -1,2 +1,7 @@
-merchant_user_gui.error_wrong_params,"Der Status kann nicht aktualisiert werden."
-merchant_user_gui.success_merchant_status_update,"Der Status wurde aktualisiert."
+"Add Merchant User","Händlerbenutzer hinzufügen"
+"Back to Merchant Users","Zurück zu Händlerbenutzern"
+Create,Erstellen
+"No users can be added till the merchant has been created. Please, add the required merchant information and save it.","Es können keine Benutzer hinzugefügt werden bis ein Händler erstellt wurde. Fügen Sie alle erforderlichen Händlerinformationen hinzu und speichern Sie sie."
+Save,Speichern
+User status can't be updated.,"Der Benutzerstatus kann nicht aktualisiert werden."
+User status has been updated.,"Der Benutzerstatus wurde aktualisiert."
