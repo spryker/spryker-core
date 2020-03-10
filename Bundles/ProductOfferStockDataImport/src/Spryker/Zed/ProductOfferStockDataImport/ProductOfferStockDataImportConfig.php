@@ -15,6 +15,8 @@ class ProductOfferStockDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_OFFER_STOCK = 'product-offer-stock';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductOfferStockDataImporterConfiguration(): DataImporterConfigurationTransfer

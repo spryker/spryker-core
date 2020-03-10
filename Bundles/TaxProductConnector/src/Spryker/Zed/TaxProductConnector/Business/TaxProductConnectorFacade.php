@@ -19,8 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConnectorFacadeInterface
 {
     /**
-     * Specification:
-     * - Save tax set id to product abstract table
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,8 +35,7 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     }
 
     /**
-     * Specification:
-     * - Read tax set from database and sets PriceProductTransfer on ProductAbstractTransfer
+     * {@inheritDoc}
      *
      * @api
      *

@@ -17,6 +17,8 @@ class ChartConfig extends AbstractSharedConfig
     public const CHART_TYPE_LINE = 'scatter';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getChartTypes(): array
@@ -29,6 +31,8 @@ class ChartConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultChartType(): string
@@ -37,6 +41,8 @@ class ChartConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ChartLayoutTransfer
      */
     public function getDefaultChartLayout(): ChartLayoutTransfer

@@ -46,6 +46,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
@@ -56,6 +58,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $productMeasurementUnitIds
@@ -68,6 +72,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
@@ -78,6 +84,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $salesUnitsIds
@@ -90,6 +98,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -102,6 +112,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

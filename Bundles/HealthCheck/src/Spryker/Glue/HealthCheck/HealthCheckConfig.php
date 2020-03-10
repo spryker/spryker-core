@@ -18,6 +18,8 @@ class HealthCheckConfig extends AbstractBundleConfig
     public const CONTROLLER_HEALTH_CHECK = 'health-check-resource';
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isHealthCheckEnabled(): bool

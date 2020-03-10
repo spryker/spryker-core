@@ -13,8 +13,6 @@ interface CmsStorageClientInterface
      * Specification:
      * - Maps raw CMS page storage data to transfer object.
      *
-     * {@inheritDoc}
-     *
      * @api
      *
      * @param array $data

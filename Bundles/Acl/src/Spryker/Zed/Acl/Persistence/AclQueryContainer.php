@@ -37,6 +37,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     public const GROUP_JOIN = 'groupJoin';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -53,6 +55,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -69,6 +73,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
@@ -79,6 +85,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
@@ -89,6 +97,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -105,6 +115,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idRole
@@ -120,6 +132,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -136,6 +150,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idGroup
@@ -154,6 +170,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idGroup
@@ -172,6 +190,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idGroup
@@ -201,6 +221,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idGroup
@@ -219,6 +241,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -235,6 +259,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $roleId
@@ -250,6 +276,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $relationshipCollection
@@ -265,6 +293,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idGroup
@@ -280,6 +310,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Broken and will be removed in the next major.
@@ -322,13 +354,15 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idAclRole
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int $type
+     * @param string $type
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
@@ -345,6 +379,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser
@@ -362,6 +398,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -389,6 +427,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idGroup

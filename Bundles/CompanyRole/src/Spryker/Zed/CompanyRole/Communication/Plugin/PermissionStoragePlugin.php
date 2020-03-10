@@ -18,6 +18,8 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
 class PermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int|string $identifier
