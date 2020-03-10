@@ -211,6 +211,8 @@ class OmsFacadeTest extends Unit
 
         //Act
         $omsFacade->triggerEvent('authorize', clone $orderItems, []);
+
+        //Assert
         $processedOrderItems = SpySalesOrderItemQuery::create()
             ->filterByFkSalesOrder_In([
                 $saveOrderTransfer1->getIdSalesOrder(),
@@ -219,17 +221,14 @@ class OmsFacadeTest extends Unit
             ->orderByIdSalesOrderItem(Criteria::ASC)
             ->find();
 
-        //Assert
-        $this->assertEquals(
-            $orderItems->shift()->getFkOmsOrderItemState(),
-            $processedOrderItems->shift()->getFkOmsOrderItemState()
+        $this->assertNotEquals(
+            $orderItems->offsetGet(0)->getFkOmsOrderItemState(),
+            $processedOrderItems->offsetGet(0)->getFkOmsOrderItemState()
         );
-        while ($orderItems->count()) {
-            $this->assertNotEquals(
-                $orderItems->shift()->getFkOmsOrderItemState(),
-                $processedOrderItems->shift()->getFkOmsOrderItemState()
-            );
-        }
+        $this->assertEquals(
+            $orderItems->offsetGet(1)->getFkOmsOrderItemState(),
+            $processedOrderItems->offsetGet(1)->getFkOmsOrderItemState()
+        );
     }
 
     /**
