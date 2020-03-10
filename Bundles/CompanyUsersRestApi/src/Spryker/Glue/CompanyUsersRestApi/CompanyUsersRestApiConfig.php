@@ -45,6 +45,11 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     protected const COMPANY_USER_RESOURCES = [];
 
     /**
+     * Specification:
+     * - Returns resources which are accessible only for company users.
+     *
+     * @api
+     *
      * @return string[]
      */
     public function getCompanyUserResources(): array

@@ -20,7 +20,7 @@ class CompanyUserRestUserValidatorPlugin extends AbstractPlugin implements RestU
     /**
      * {@inheritDoc}
      * - Checks that Rest user is a company user.
-     * - Returns null on successful validation and a collection of error messages on validation failure.
+     * - Returns null on successful validation and an error message on validation failure.
      *
      * @api
      *
