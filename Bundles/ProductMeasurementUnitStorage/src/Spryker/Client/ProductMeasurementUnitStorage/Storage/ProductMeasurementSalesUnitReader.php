@@ -118,7 +118,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      * @param \Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer[] $productConcreteMeasurementSalesUnitTransfers
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $indexedProductMeasurementUnitTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[][]
      */
     protected function convertToProductMeasurementSalesUnitTransfers(
         array $productConcreteMeasurementSalesUnitTransfers,

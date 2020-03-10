@@ -141,7 +141,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     {
         $storageKeyArray = explode(':', $storageKey);
 
-        return end($storageKeyArray);
+        return (int)end($storageKeyArray);
     }
 
     /**

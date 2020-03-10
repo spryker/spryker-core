@@ -128,7 +128,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     /**
      * @param string[] $productMeasurementUnitsStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
      */
     protected function mapProductMeasurementUnitStorageDataToProductMeasurementUnitStorageTransfers(
         array $productMeasurementUnitsStorageData
@@ -174,13 +174,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      */
     protected function getGeneratedStorageKey(string $reference): string
     {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer
-            ->setReference($reference);
-
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+            ->generateKey((new SynchronizationDataTransfer())->setReference($reference));
     }
 
     /**
