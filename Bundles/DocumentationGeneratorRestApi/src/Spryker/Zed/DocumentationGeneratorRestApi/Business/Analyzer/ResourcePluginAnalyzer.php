@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PathAnnotationsTransfer;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected const KEY_PATHS = 'paths';
     protected const KEY_SCHEMAS = 'schemas';
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
+    protected const SCHEMA_NAME_RELATIONSHIPS_DATA = 'RestRelationshipsData';
 
     protected const PATTERN_PATH_WITH_PARENT = '/%s/%s%s';
     protected const PATTERN_PATH_ID = '{%sId}';
@@ -55,21 +57,45 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected $textInflector;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface
+     */
+    protected $pluginResourceTypeStorage;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface
+     */
+    protected $resourceTransferAnalyzer;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
+     */
+    protected $resourceRelationshipPluginAnalyzer;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface $httpMethodProcessor
      * @param \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface $textInflector
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface $pluginResourceTypeStorage
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer
      */
     public function __construct(
         HttpMethodProcessorInterface $httpMethodProcessor,
         array $resourceRoutesPluginsProviderPlugins,
         GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser,
-        DocumentationGeneratorRestApiToTextInflectorInterface $textInflector
+        DocumentationGeneratorRestApiToTextInflectorInterface $textInflector,
+        PluginResourceTypeStorageInterface $pluginResourceTypeStorage,
+        ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
+        ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer
     ) {
         $this->httpMethodProcessor = $httpMethodProcessor;
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
         $this->glueAnnotationsAnalyser = $glueAnnotationsAnalyser;
         $this->textInflector = $textInflector;
+        $this->pluginResourceTypeStorage = $pluginResourceTypeStorage;
+        $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
+        $this->resourceRelationshipPluginAnalyzer = $resourceRelationshipPluginAnalyzer;
     }
 
     /**
@@ -77,6 +103,8 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      */
     public function createRestApiDocumentationFromPlugins(): array
     {
+        $this->addAllPluginResourceTypesToStorage();
+
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
             foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
                 $pathAnnotationsTransfer = $this->glueAnnotationsAnalyser->getResourceParametersFromPlugin($plugin);
@@ -96,6 +124,159 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             static::KEY_SCHEMAS => $this->httpMethodProcessor->getGeneratedSchemas(),
             static::KEY_SECURITY_SCHEMES => $this->httpMethodProcessor->getGeneratedSecuritySchemes(),
         ];
+    }
+
+    /**
+     * @return void
+     */
+    protected function addAllPluginResourceTypesToStorage(): void
+    {
+        foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
+            foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
+                $this->resourceRouteCollection = new ResourceRouteCollection();
+                $this->resourceRouteCollection = $plugin->configure($this->resourceRouteCollection);
+
+                $this->addPluginResourceTypeToStorage(
+                    $plugin,
+                    $this->glueAnnotationsAnalyser->getResourceParametersFromPlugin($plugin)
+                );
+            }
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\PathAnnotationsTransfer $pathAnnotationsTransfer
+     *
+     * @return void
+     */
+    protected function addPluginResourceTypeToStorage(ResourceRoutePluginInterface $plugin, PathAnnotationsTransfer $pathAnnotationsTransfer): void
+    {
+        $this->addPluginResourceTypeToStorageGetResourceByIdPath($plugin, $pathAnnotationsTransfer->getGetResourceById());
+        $this->addPluginResourceTypeToStorageGetResourceCollectionPath($plugin, $pathAnnotationsTransfer->getGetCollection());
+        $this->addPluginResourceTypeToStoragePostResourcePath($plugin, $pathAnnotationsTransfer->getPost());
+        $this->addPluginResourceTypeToStoragePatchResourcePath($plugin, $pathAnnotationsTransfer->getPatch());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    protected function addPluginResourceTypeToStorageGetResourceByIdPath(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer): void
+    {
+        if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
+            return;
+        }
+
+        $this->addResponseResourceDataSchemaNameToStorage($plugin, $annotationTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    protected function addPluginResourceTypeToStorageGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer): void
+    {
+        if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
+            return;
+        }
+
+        $this->addResponseCollectionDataSchemaNameToStorage($plugin, $annotationTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    protected function addPluginResourceTypeToStoragePostResourcePath(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer): void
+    {
+        if (!$this->resourceRouteCollection->has(Request::METHOD_POST)) {
+            return;
+        }
+
+        $this->addResponseResourceDataSchemaNameToStorage($plugin, $annotationTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    protected function addPluginResourceTypeToStoragePatchResourcePath(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer): void
+    {
+        if (!$this->resourceRouteCollection->has(Request::METHOD_PATCH)) {
+            return;
+        }
+
+        $this->addResponseResourceDataSchemaNameToStorage($plugin, $annotationTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    protected function addResponseResourceDataSchemaNameToStorage(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer)
+    {
+        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
+        $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
+        $this->pluginResourceTypeStorage->add($plugin->getResourceType(), $responseDataSchemaName);
+
+        if (!$plugin instanceof ResourceWithParentPluginInterface) {
+            $this->addResourceRelationshipsToStorage($plugin);
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    protected function addResponseCollectionDataSchemaNameToStorage(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer)
+    {
+        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
+        $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
+        $this->pluginResourceTypeStorage->add($plugin->getResourceType(), $responseDataSchemaName);
+        $this->addResourceRelationshipsToStorage($plugin);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     *
+     * @return void
+     */
+    protected function addResourceRelationshipsToStorage(ResourceRoutePluginInterface $plugin): void
+    {
+        $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
+        if ($resourceRelationships) {
+            foreach ($resourceRelationships as $key => $resourceRelationship) {
+                $this->pluginResourceTypeStorage->add($key, static::SCHEMA_NAME_RELATIONSHIPS_DATA);
+            }
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     *
+     * @return string
+     */
+    protected function resolveTransferClassNameForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
+    {
+        $transferClassName = $annotationTransfer && $annotationTransfer->getResponseAttributesClassName()
+            ? $annotationTransfer->getResponseAttributesClassName()
+            : $plugin->getResourceAttributesClassName();
+
+        return $transferClassName;
     }
 
     /**

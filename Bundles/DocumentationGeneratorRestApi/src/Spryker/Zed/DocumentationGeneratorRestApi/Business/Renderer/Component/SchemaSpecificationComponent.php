@@ -40,7 +40,7 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
             return [];
         }
 
-        if (count($this->schemaComponentTransfer->getProperties()) === 0) {
+        if (count($this->schemaComponentTransfer->getProperties()) === 0 && !$this->schemaComponentTransfer->getItems()) {
             //empty object is needed for generation of valid OpenAPI scheme
             return [
                 $this->schemaComponentTransfer->getName() => (object)[],
@@ -48,9 +48,17 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
         }
 
         $schemaData = [];
-        $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
+        if (count($this->schemaComponentTransfer->getProperties())) {
+            $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
+        }
+        if ($this->schemaComponentTransfer->getItems()) {
+            $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::ITEMS] = $this->schemaComponentTransfer->getItems();
+        }
         if ($this->schemaComponentTransfer->getRequired()) {
             $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::REQUIRED] = $this->schemaComponentTransfer->getRequired();
+        }
+        if ($this->schemaComponentTransfer->getType()) {
+            $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::TYPE] = $this->schemaComponentTransfer->getType();
         }
 
         return $schemaData;
@@ -66,7 +74,6 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
         }
 
         $this->schemaComponentTransfer->requireName();
-        $this->schemaComponentTransfer->requireProperties();
 
         return true;
     }

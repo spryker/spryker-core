@@ -33,6 +33,9 @@
 
     <transfer name="SchemaData">
         <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="items" type="SchemaItems"/>
+        <property name="items" type="SchemaItems"/>
         <property name="properties" singular="property" type="SchemaProperty[]"/>
         <property name="required" type="string[]" singular="required"/>
     </transfer>
@@ -44,6 +47,14 @@
         <property name="itemsReference" type="string"/>
         <property name="itemsType" type="string"/>
         <property name="isNullable" type="bool"/>
+        <property name="oneOf" type="string[]"/>
+    </transfer>
+
+    <transfer name="SchemaItems">
+        <property name="oneOf" type="string[]"/>
+    </transfer>
+
+    <transfer name="SchemaItemsComponent">
         <property name="oneOf" type="string[]"/>
     </transfer>
 
@@ -87,6 +98,8 @@
 
     <transfer name="SchemaComponent">
         <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="items" type="array"/>
         <property name="properties" type="array" singular="property"/>
         <property name="required" type="string[]" singular="required"/>
     </transfer>

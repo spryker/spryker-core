@@ -34,6 +34,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecific
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorage;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessor;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
@@ -44,6 +46,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRe
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponent;
@@ -210,7 +214,10 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createRestApiMethodProcessor(),
             [$this->createResourceRoutePluginsProviderPluginMock()],
             $this->createGlueAnnotationAnalyzer(),
-            $this->createInflector()
+            $this->createInflector(),
+            $this->createPluginResourceTypeStorage(),
+            $this->createResourceTransferAnalyzer(),
+            $this->createResourceRelationshipsPluginAnalyzer()
         );
     }
 
@@ -270,7 +277,8 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     {
         return new SchemaRenderer(
             $this->createSchemaSpecificationComponent(),
-            $this->createSchemaPropertySpecificationComponent()
+            $this->createSchemaPropertySpecificationComponent(),
+            $this->createSchemaItemsSpecificationComponent()
         );
     }
 
@@ -323,6 +331,14 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface
+     */
+    public function createSchemaItemsSpecificationComponent(): SchemaItemsSpecificationComponentInterface
+    {
+        return new SchemaItemsSpecificationComponent();
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface
      */
     public function createSchemaSpecificationComponent(): SchemaSpecificationComponentInterface
@@ -351,7 +367,10 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
      */
     public function createOpenApiSpecificationSchemaComponentBuilder(): SchemaComponentBuilderInterface
     {
-        return new OpenApiSpecificationSchemaComponentBuilder($this->createResourceTransferAnalyzer());
+        return new OpenApiSpecificationSchemaComponentBuilder(
+            $this->createResourceTransferAnalyzer(),
+            $this->createPluginResourceTypeStorage()
+        );
     }
 
     /**
@@ -386,6 +405,14 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     public function createInflector(): DocumentationGeneratorRestApiToTextInflectorInterface
     {
         return new DocumentationGeneratorRestApiToDoctrineInflectorAdapter();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface
+     */
+    public function createPluginResourceTypeStorage(): PluginResourceTypeStorageInterface
+    {
+        return new PluginResourceTypeStorage();
     }
 
     /**

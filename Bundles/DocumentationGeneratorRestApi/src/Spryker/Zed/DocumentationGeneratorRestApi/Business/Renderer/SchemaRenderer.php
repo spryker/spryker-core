@@ -9,8 +9,11 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer;
 
 use Generated\Shared\Transfer\SchemaComponentTransfer;
 use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaItemsComponentTransfer;
+use Generated\Shared\Transfer\SchemaItemsTransfer;
 use Generated\Shared\Transfer\SchemaPropertyComponentTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface;
 
@@ -27,15 +30,23 @@ class SchemaRenderer implements SchemaRendererInterface
     protected $schemaPropertySpecificationComponent;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface
+     */
+    protected $schemaItemsSpecificationComponent;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface $schemaSpecificationComponent
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface $schemaPropertySpecificationComponent
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface $schemaItemsSpecificationComponent
      */
     public function __construct(
         SchemaSpecificationComponentInterface $schemaSpecificationComponent,
-        SchemaPropertySpecificationComponentInterface $schemaPropertySpecificationComponent
+        SchemaPropertySpecificationComponentInterface $schemaPropertySpecificationComponent,
+        SchemaItemsSpecificationComponentInterface $schemaItemsSpecificationComponent
     ) {
         $this->schemaSpecificationComponent = $schemaSpecificationComponent;
         $this->schemaPropertySpecificationComponent = $schemaPropertySpecificationComponent;
+        $this->schemaItemsSpecificationComponent = $schemaItemsSpecificationComponent;
     }
 
     /**
@@ -49,6 +60,13 @@ class SchemaRenderer implements SchemaRendererInterface
         $schemaComponentTransfer->setName($schemaDataTransfer->getName());
         foreach ($schemaDataTransfer->getProperties() as $property) {
             $this->addSchemaProperty($schemaComponentTransfer, $property);
+        }
+
+        if ($schemaDataTransfer->getItems()) {
+            $this->addSchemaItems($schemaComponentTransfer, $schemaDataTransfer->getItems());
+        }
+        if ($schemaDataTransfer->getType()) {
+            $schemaComponentTransfer->setType($schemaDataTransfer->getType());
         }
         if ($schemaDataTransfer->getRequired()) {
             $schemaComponentTransfer->setRequired($schemaDataTransfer->getRequired());
@@ -91,6 +109,27 @@ class SchemaRenderer implements SchemaRendererInterface
 
         if ($schemaPropertySpecificationData) {
             $schemaComponent->addProperty($schemaPropertySpecificationData);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SchemaComponentTransfer $schemaComponent
+     * @param \Generated\Shared\Transfer\SchemaItemsTransfer $items
+     *
+     * @return void
+     */
+    protected function addSchemaItems(SchemaComponentTransfer $schemaComponent, SchemaItemsTransfer $items): void
+    {
+        $schemaPropertyComponentTransfer = new SchemaItemsComponentTransfer();
+        if ($items->getOneOf()) {
+            $schemaPropertyComponentTransfer->setOneOf($items->getOneOf());
+        }
+
+        $this->schemaItemsSpecificationComponent->setSchemaItemsComponentTransfer($schemaPropertyComponentTransfer);
+        $schemaItemsSpecificationData = $this->schemaItemsSpecificationComponent->getSpecificationComponentData();
+
+        if ($schemaItemsSpecificationData) {
+            $schemaComponent->setItems($schemaItemsSpecificationData);
         }
     }
 }

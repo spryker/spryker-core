@@ -23,4 +23,17 @@ interface ResourceRelationshipInterface
         string $transferClassName,
         string $responseDataSchemaName
     ): array;
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $transferClassName
+     * @param string $responseDataSchemaName
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
+     */
+    public function getIncludeSchemaDataTransfersFromForPlugin(
+        ResourceRoutePluginInterface $plugin,
+        string $transferClassName,
+        string $responseDataSchemaName
+    ): array;
 }

@@ -23,6 +23,7 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     protected const KEY_TYPE = 'type';
 
     protected const VALUE_TYPE_STRING = 'string';
+    protected const VALUE_TYPE_ARRAY = 'array';
     protected const SCHEMA_NAME_LINKS = 'RestLinks';
     protected const SCHEMA_NAME_RELATIONSHIPS = 'RestRelationships';
     protected const SCHEMA_NAME_RELATIONSHIPS_DATA = 'RestRelationshipsData';
@@ -210,9 +211,8 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     public function createIncludedDataSchema(string $schemaName, array $resourceRelationships): SchemaDataTransfer
     {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
-        foreach ($resourceRelationships as $resourceRelationship) {
-            $schemaData->addProperty($this->schemaComponentBuilder->createOneOfArrayTransfer($resourceRelationship, static::SCHEMA_NAME_RELATIONSHIPS_DATA));
-        }
+        $schemaData->setType(static::VALUE_TYPE_ARRAY);
+        $schemaData->setItems($this->schemaComponentBuilder->createItemsTransfer($resourceRelationships));
 
         return $schemaData;
     }

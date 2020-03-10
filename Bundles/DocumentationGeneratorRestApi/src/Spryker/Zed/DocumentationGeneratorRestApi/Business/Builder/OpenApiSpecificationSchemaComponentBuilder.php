@@ -8,9 +8,11 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaItemsTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface;
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
 {
@@ -38,11 +40,20 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     protected $resourceTransferAnalyzer;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface
      */
-    public function __construct(ResourceTransferAnalyzerInterface $resourceTransferAnalyzer)
-    {
+    protected $pluginResourceTypeStorage;
+
+    /**
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface $pluginResourceTypeStorage
+     */
+    public function __construct(
+        ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
+        PluginResourceTypeStorageInterface $pluginResourceTypeStorage
+    ) {
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
+        $this->pluginResourceTypeStorage = $pluginResourceTypeStorage;
     }
 
     /**
@@ -195,21 +206,22 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     }
 
     /**
-     * @param string $resourceRelationship
-     * @param string $schemaNameRelationshipsData
+     * @param array $resourceRelationships
      *
-     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaItemsTransfer
      */
-    public function createOneOfArrayTransfer(string $resourceRelationship, string $schemaNameRelationshipsData): SchemaPropertyTransfer
+    public function createItemsTransfer(array $resourceRelationships): SchemaItemsTransfer
     {
-        $schema = new SchemaPropertyTransfer();
-        $schema->setName($schemaNameRelationshipsData)
-            ->setType(static::VALUE_TYPE_ARRAY);
+        $schema = new SchemaItemsTransfer();
 
-        // TODO: replace this with the real schema.
-        $schema->addOneOf(
-            sprintf(static::PATTERN_SCHEMA_REFERENCE, $resourceRelationship)
-        );
+        foreach ($resourceRelationships as $resourceRelationship) {
+            $schema->addOneOf(
+                sprintf(
+                    static::PATTERN_SCHEMA_REFERENCE,
+                    $this->pluginResourceTypeStorage->getResponseAttributesSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType())
+                )
+            );
+        }
 
         return $schema;
     }

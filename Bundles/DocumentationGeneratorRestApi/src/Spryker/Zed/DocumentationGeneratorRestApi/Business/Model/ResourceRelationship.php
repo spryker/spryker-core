@@ -9,6 +9,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Model;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface;
 
@@ -30,18 +31,26 @@ class ResourceRelationship implements ResourceRelationshipInterface
     protected $schemaBuilder;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface
+     */
+    protected $resourceRelationshipsPluginAnnotationAnalyzer;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface $schemaBuilder
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
      */
     public function __construct(
         ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer,
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
-        SchemaBuilderInterface $schemaBuilder
+        SchemaBuilderInterface $schemaBuilder,
+        ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
     ) {
         $this->resourceRelationshipPluginAnalyzer = $resourceRelationshipPluginAnalyzer;
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
         $this->schemaBuilder = $schemaBuilder;
+        $this->resourceRelationshipsPluginAnnotationAnalyzer = $resourceRelationshipsPluginAnnotationAnalyzer;
     }
 
     /**
@@ -57,10 +66,26 @@ class ResourceRelationship implements ResourceRelationshipInterface
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         if ($resourceRelationships) {
-            $schemaDataTransfers = array_merge(
-                $this->createResourceRelationshipSchemaDataTransfers($responseDataSchemaName, $resourceRelationships, $transferClassName),
-                $this->createIncludedSchemaDataTransfers($responseDataSchemaName, $resourceRelationships, $transferClassName)
-            );
+            $schemaDataTransfers = $this->createResourceRelationshipSchemaDataTransfers($responseDataSchemaName, array_keys($resourceRelationships), $transferClassName);
+        }
+
+        return $schemaDataTransfers;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $transferClassName
+     * @param string $responseSchemaName
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
+     */
+    public function getIncludeSchemaDataTransfersFromForPlugin(ResourceRoutePluginInterface $plugin, string $transferClassName, string $responseSchemaName): array
+    {
+        $schemaDataTransfers = [];
+        $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
+
+        if ($resourceRelationships) {
+            $schemaDataTransfers = $this->createIncludedSchemaDataTransfers($responseSchemaName, $resourceRelationships, $transferClassName);
         }
 
         return $schemaDataTransfers;

@@ -34,6 +34,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecific
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorage;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationship;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshipInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessor;
@@ -46,6 +48,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRe
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponent;
@@ -156,7 +160,10 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createRestApiMethodProcessor(),
             $this->getResourceRoutesPluginProviderPlugins(),
             $this->createGlueAnnotationAnalyzer(),
-            $this->getTextInflector()
+            $this->getTextInflector(),
+            $this->createPluginResourceTypeStorage(),
+            $this->createResourceTransferAnalyzer(),
+            $this->createResourceRelationshipsPluginAnalyzer()
         );
     }
 
@@ -166,8 +173,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     public function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
         return new ResourceRelationshipsPluginAnalyzer(
-            $this->getResourceRelationshipCollectionProviderPlugin(),
-            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
+            $this->getResourceRelationshipCollectionProviderPlugin()
         );
     }
 
@@ -211,7 +217,8 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     {
         return new SchemaRenderer(
             $this->createSchemaSpecificationComponent(),
-            $this->createSchemaPropertySpecificationComponent()
+            $this->createSchemaPropertySpecificationComponent(),
+            $this->createSchemaItemsSpecificationComponent()
         );
     }
 
@@ -264,6 +271,14 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface
+     */
+    public function createSchemaItemsSpecificationComponent(): SchemaItemsSpecificationComponentInterface
+    {
+        return new SchemaItemsSpecificationComponent();
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface
      */
     public function createSchemaSpecificationComponent(): SchemaSpecificationComponentInterface
@@ -310,8 +325,17 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
         return new ResourceRelationship(
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createResourceTransferAnalyzer(),
-            $this->createOpenApiSpecificationSchemaBuilder()
+            $this->createOpenApiSpecificationSchemaBuilder(),
+            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface
+     */
+    public function createPluginResourceTypeStorage(): PluginResourceTypeStorageInterface
+    {
+        return new PluginResourceTypeStorage();
     }
 
     /**
@@ -327,7 +351,10 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
      */
     public function createOpenApiSpecificationSchemaComponentBuilder(): SchemaComponentBuilderInterface
     {
-        return new OpenApiSpecificationSchemaComponentBuilder($this->createResourceTransferAnalyzer());
+        return new OpenApiSpecificationSchemaComponentBuilder(
+            $this->createResourceTransferAnalyzer(),
+            $this->createPluginResourceTypeStorage()
+        );
     }
 
     /**

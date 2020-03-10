@@ -139,7 +139,10 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
 
         if (!$plugin instanceof ResourceWithParentPluginInterface) {
-            $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
+            $this
+
+                ->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
+            $this->addIncludeSchemas($plugin, $transferClassName, $responseSchemaName);
         }
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
@@ -165,6 +168,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
 
         $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
+        $this->addIncludeSchemas($plugin, $transferClassName, $responseSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
     }
@@ -320,9 +324,34 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      *
      * @return void
      */
-    protected function addRelationshipSchemas(ResourceRoutePluginInterface $plugin, string $transferClassName, string $responseDataSchemaName): void
-    {
+    protected function addRelationshipSchemas(
+        ResourceRoutePluginInterface $plugin,
+        string $transferClassName,
+        string $responseDataSchemaName
+    ): void {
         $relationshipSchemaDataTransfers = $this->resourceRelationship->getSchemaDataTransfersFromForPlugin($plugin, $transferClassName, $responseDataSchemaName);
+
+        if ($relationshipSchemaDataTransfers) {
+            foreach ($relationshipSchemaDataTransfers as $relationshipSchemaDataTransfer) {
+                $this->addSchemaData($relationshipSchemaDataTransfer);
+            }
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $transferClassName
+     * @param string $responseSchemaName
+     *
+     * @return void
+     */
+    protected function addIncludeSchemas(
+        ResourceRoutePluginInterface $plugin,
+        string $transferClassName,
+        string $responseSchemaName
+    ): void {
+        $relationshipSchemaDataTransfers = $this->resourceRelationship->getIncludeSchemaDataTransfersFromForPlugin($plugin, $transferClassName, $responseSchemaName);
+
         if ($relationshipSchemaDataTransfers) {
             foreach ($relationshipSchemaDataTransfers as $relationshipSchemaDataTransfer) {
                 $this->addSchemaData($relationshipSchemaDataTransfer);

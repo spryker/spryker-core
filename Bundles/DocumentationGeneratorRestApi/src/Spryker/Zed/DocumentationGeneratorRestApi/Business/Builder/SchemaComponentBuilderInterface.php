@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaItemsTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
 
 interface SchemaComponentBuilderInterface
@@ -98,10 +99,9 @@ interface SchemaComponentBuilderInterface
     public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
 
     /**
-     * @param string $resourceRelationship
-     * @param string $schemaNameRelationshipsData
+     * @param array $resourceRelationships
      *
-     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaItemsTransfer
      */
-    public function createOneOfArrayTransfer(string $resourceRelationship, string $schemaNameRelationshipsData): SchemaPropertyTransfer;
+    public function createItemsTransfer(array $resourceRelationships): SchemaItemsTransfer;
 }
