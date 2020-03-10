@@ -18,12 +18,14 @@
 
     <transfer name="ProductMeasurementUnit">
         <property name="code" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ProductMeasurementSalesUnit">
         <property name="code" type="string"/>
         <property name="idProductMeasurementSalesUnit" type="int"/>
         <property name="value" type="int"/>
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
     </transfer>
 
     <transfer name="CartItemRequest">
@@ -60,14 +62,31 @@
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="amount" type="decimal"/>
     </transfer>
 
     <transfer name="RestItemsAttributes">
         <property name="salesUnit" type="RestCartItemsSalesUnitAttributes"/>
+        <property name="sku" type="string" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
         <property name="salesUnit" type="RestOrdersSalesUnitAttributes"/>
+    </transfer>
+
+    <transfer name="ProductConcreteProductMeasurementSalesUnit">
+        <property name="idProductConcrete" type="int"/>
+        <property name="productMeasurementSalesUnits" type="ProductMeasurementSalesUnit[]" singular="productMeasurementSalesUnit"/>
+    </transfer>
+
+    <transfer name="ConcreteProductsRestAttributes">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
     </transfer>
 
 </transfers>
