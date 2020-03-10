@@ -21,6 +21,8 @@ class ProductReviewStorageQueryContainer extends AbstractQueryContainer implemen
     public const FIELD_COUNT = ProductReviewStorageTransfer::REVIEW_COUNT;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -36,6 +38,8 @@ class ProductReviewStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -57,6 +61,8 @@ class ProductReviewStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $productReviewsIds

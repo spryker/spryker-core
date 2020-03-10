@@ -57,6 +57,8 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     public const PRICE_MODE_NET = 'NET_MODE';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionMerchantRelationship()
@@ -65,6 +67,8 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getPriceProductConcreteMerchantRelationSynchronizationPoolName(): ?string
@@ -73,6 +77,8 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getPriceProductAbstractMerchantRelationSynchronizationPoolName(): ?string
@@ -81,6 +87,8 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @return bool

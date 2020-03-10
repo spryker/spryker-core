@@ -15,6 +15,8 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\PostgreSq
 class PropelQueryBuilderConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getDbEngineName()
@@ -23,6 +25,8 @@ class PropelQueryBuilderConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getJsonMapperClassNameMappings()
@@ -36,6 +40,8 @@ class PropelQueryBuilderConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getJsonMapperClassName()

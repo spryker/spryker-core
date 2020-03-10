@@ -18,6 +18,8 @@ class RedisConfig extends AbstractBundleConfig
      * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
      * - Can return int, float or null to disable timeout.
      *
+     * @api
+     *
      * @return int|float|null
      */
     public function getProcessTimeout()

@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getConfigurableBundlePageSynchronizationPoolName(): ?string

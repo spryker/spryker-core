@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -30,6 +32,8 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -43,6 +47,8 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -61,6 +67,8 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -80,6 +88,8 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request

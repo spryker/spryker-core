@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PriceProductStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @return bool
@@ -22,6 +24,8 @@ class PriceProductStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getPriceProductAbstractSynchronizationPoolName(): ?string
@@ -30,6 +34,8 @@ class PriceProductStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getPriceProductConcreteSynchronizationPoolName(): ?string

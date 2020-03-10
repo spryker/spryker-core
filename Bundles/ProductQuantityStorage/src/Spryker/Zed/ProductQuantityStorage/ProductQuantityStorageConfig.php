@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductQuantityStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getProductQuantitySynchronizationPoolName(): ?string

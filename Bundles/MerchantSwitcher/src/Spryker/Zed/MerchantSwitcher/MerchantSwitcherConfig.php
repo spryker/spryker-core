@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MerchantSwitcherConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isMerchantSwitcherEnabled(): bool

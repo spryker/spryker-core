@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MerchantProfileStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getMerchantProfileSynchronizationPoolName(): ?string
@@ -20,6 +22,8 @@ class MerchantProfileStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool

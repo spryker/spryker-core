@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @return bool
@@ -22,6 +24,8 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getProductPackagingUnitSynchronizationPoolName(): ?string

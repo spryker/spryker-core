@@ -22,6 +22,8 @@ class ProductAttributeGuiConfig extends AbstractBundleConfig
     public const LOCALE_CODE = 'locale_code';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultLocaleCode()

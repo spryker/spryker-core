@@ -23,6 +23,8 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
     public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $abstractProductIds
@@ -37,6 +39,8 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $availabilityAbstractIds
@@ -68,6 +72,8 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $availabilityAbstractIds
@@ -92,6 +98,8 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $abstractProductSkus
@@ -108,6 +116,8 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $abstractProductIds
@@ -124,6 +134,8 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $abstractProductIds

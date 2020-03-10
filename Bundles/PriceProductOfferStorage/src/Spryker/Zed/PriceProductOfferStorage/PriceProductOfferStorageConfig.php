@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PriceProductOfferStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getPriceProductOfferSynchronizationPoolName(): ?string
