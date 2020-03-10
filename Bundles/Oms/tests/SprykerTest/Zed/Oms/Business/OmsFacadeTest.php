@@ -223,11 +223,13 @@ class OmsFacadeTest extends Unit
 
         $this->assertNotEquals(
             $orderItems->offsetGet(0)->getFkOmsOrderItemState(),
-            $processedOrderItems->offsetGet(0)->getFkOmsOrderItemState()
+            $processedOrderItems->offsetGet(0)->getFkOmsOrderItemState(),
+            'Order item state is not ID does not equal to an expected value.'
         );
         $this->assertEquals(
             $orderItems->offsetGet(1)->getFkOmsOrderItemState(),
-            $processedOrderItems->offsetGet(1)->getFkOmsOrderItemState()
+            $processedOrderItems->offsetGet(1)->getFkOmsOrderItemState(),
+            'Order item state is not ID does not equal to an expected value.'
         );
     }
 
