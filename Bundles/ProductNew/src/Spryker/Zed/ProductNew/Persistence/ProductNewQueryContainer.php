@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductNewQueryContainer extends AbstractQueryContainer implements ProductNewQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $labelName
@@ -33,6 +35,8 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -58,6 +62,8 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductLabel

@@ -86,7 +86,7 @@ class IndexInstallerTest extends Unit
     }
 
     /**
-     * @uses IndexInstaller::getIndexState()
+     * @uses \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstaller::getIndexState()
      *
      * @param \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index $indexMock
      *

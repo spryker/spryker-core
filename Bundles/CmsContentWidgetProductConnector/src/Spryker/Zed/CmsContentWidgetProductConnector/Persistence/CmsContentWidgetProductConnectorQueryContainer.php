@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CmsContentWidgetProductConnectorQueryContainer extends AbstractQueryContainer implements CmsContentWidgetProductConnectorQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string[] $skuList

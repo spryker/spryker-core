@@ -24,6 +24,8 @@ use Symfony\Component\Validator\Constraints\Type;
 class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface, DiscountCalculatorPluginWithAmountInputTypeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
@@ -37,6 +39,8 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param float $value
@@ -49,6 +53,8 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $value
@@ -61,6 +67,8 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $amount
@@ -74,6 +82,8 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -94,6 +104,8 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

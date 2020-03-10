@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductRelationStorageQueryContainer extends AbstractQueryContainer implements ProductRelationStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -30,6 +32,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -47,6 +51,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -62,6 +68,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -77,6 +85,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $productRelationIds
