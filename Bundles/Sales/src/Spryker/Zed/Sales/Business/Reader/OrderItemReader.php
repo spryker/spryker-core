@@ -79,23 +79,6 @@ class OrderItemReader implements OrderItemReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function updateLatestOrderItemState(ItemTransfer $itemTransfer): ItemTransfer
-    {
-        $itemStateTransfers = $itemTransfer->getStateHistory();
-        $latestOrderItemState = end($itemStateTransfers);
-
-        if ($latestOrderItemState && $itemTransfer->getState()) {
-            $itemTransfer->getState()->setCreatedAt($latestOrderItemState->getCreatedAt());
-        }
-
-        return $itemTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesReturn\Business\Checker;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 
 interface OrderItemCheckerInterface
 {
@@ -18,11 +17,4 @@ interface OrderItemCheckerInterface
      * @return bool
      */
     public function isOrderItemsInReturnableStates(ArrayObject $itemTransfers): bool;
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    public function isOrderItemInReturnableStates(ItemTransfer $itemTransfer): bool;
 }

@@ -142,6 +142,13 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
                 ->endUse();
         }
 
+        if ($orderItemFilterTransfer->getItemStates()) {
+            $salesOrderItemQuery
+                ->useStateQuery()
+                    ->filterByName_In(array_unique($orderItemFilterTransfer->getItemStates()))
+                ->endUse();
+        }
+
         return $salesOrderItemQuery;
     }
 }

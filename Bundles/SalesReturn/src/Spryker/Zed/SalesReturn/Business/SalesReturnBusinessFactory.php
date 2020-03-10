@@ -143,7 +143,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new ReturnableItemReader(
             $this->getSalesFacade(),
-            $this->createOrderItemChecker()
+            $this->createOrderItemChecker(),
+            $this->getConfig()
         );
     }
 

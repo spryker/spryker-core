@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business\Expander;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class StateHistoryExpander implements StateHistoryExpanderInterface
@@ -39,9 +40,28 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
             $itemTransfer->setStateHistory(
                 new ArrayObject($mappedItemStateTransfers[$itemTransfer->getIdSalesOrderItem()] ?? [])
             );
+
+            $this->updateLatestOrderItemState($itemTransfer);
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function updateLatestOrderItemState(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $itemStateTransfers = $itemTransfer->getStateHistory();
+        $latestOrderItemState = end($itemStateTransfers);
+
+        if ($latestOrderItemState && $itemTransfer->getState()) {
+            $itemTransfer->getState()->setCreatedAt($latestOrderItemState->getCreatedAt());
+        }
+
+        return $itemTransfer;
     }
 
     /**

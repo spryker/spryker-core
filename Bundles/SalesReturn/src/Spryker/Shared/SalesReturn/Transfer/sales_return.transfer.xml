@@ -101,6 +101,7 @@
         <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
         <property name="customerReference" type="string"/>
         <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
     </transfer>
 
     <transfer name="ReturnableItemFilter">

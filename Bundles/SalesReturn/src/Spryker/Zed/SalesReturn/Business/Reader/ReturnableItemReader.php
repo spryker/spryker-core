@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface;
+use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class ReturnableItemReader implements ReturnableItemReaderInterface
 {
@@ -27,15 +28,23 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
     protected $orderItemChecker;
 
     /**
+     * @var \Spryker\Zed\SalesReturn\SalesReturnConfig
+     */
+    protected $salesReturnConfig;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface $orderItemChecker
+     * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
      */
     public function __construct(
         SalesReturnToSalesFacadeInterface $salesFacade,
-        OrderItemCheckerInterface $orderItemChecker
+        OrderItemCheckerInterface $orderItemChecker,
+        SalesReturnConfig $salesReturnConfig
     ) {
         $this->salesFacade = $salesFacade;
         $this->orderItemChecker = $orderItemChecker;
+        $this->salesReturnConfig = $salesReturnConfig;
     }
 
     /**
@@ -46,15 +55,11 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
     public function getReturnableItems(ReturnableItemFilterTransfer $returnableItemFilterTransfer): ItemCollectionTransfer
     {
         $returnableItemFilterTransfer->requireCustomerReference();
-
-        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->fromArray($returnableItemFilterTransfer->toArray(), true);
+        $orderItemFilterTransfer = $this->createOrderItemFilter($returnableItemFilterTransfer);
 
         $itemTransfers = $this->salesFacade
             ->getOrderItems($orderItemFilterTransfer)
             ->getItems();
-
-        $itemTransfers = $this->extractNonReturnableItems($itemTransfers);
 
         // TODO: execute ReturnPolicyPluginInterface plugin stack.
 
@@ -63,20 +68,14 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\ReturnableItemFilterTransfer $returnableItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\OrderItemFilterTransfer
      */
-    protected function extractNonReturnableItems(ArrayObject $itemTransfers): array
+    protected function createOrderItemFilter(ReturnableItemFilterTransfer $returnableItemFilterTransfer): OrderItemFilterTransfer
     {
-        $returnableItemTransfers = [];
-
-        foreach ($itemTransfers as $itemTransfer) {
-            if ($this->orderItemChecker->isOrderItemInReturnableStates($itemTransfer)) {
-                $returnableItemTransfers[] = $itemTransfer;
-            }
-        }
-
-        return $returnableItemTransfers;
+        return (new OrderItemFilterTransfer())
+            ->fromArray($returnableItemFilterTransfer->toArray(), true)
+            ->setItemStates($this->salesReturnConfig->getReturnableStateNames());
     }
 }

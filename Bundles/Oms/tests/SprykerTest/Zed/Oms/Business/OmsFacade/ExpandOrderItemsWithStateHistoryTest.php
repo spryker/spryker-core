@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Oms\Business\OmsFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
@@ -62,6 +63,28 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
 
         // Assert
         $this->assertCount(2, $itemTransfers[0]->getStateHistory());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderItemsWithStateHistoryUpdatesItemStateCreateAtFromLatestHistoryState(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+        $itemTransfer->setState(new ItemStateTransfer());
+
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+        // Act
+        $itemTransfers = $this->tester
+            ->getFacade()
+            ->expandOrderItemsWithStateHistory($orderTransfer->getItems()->getArrayCopy());
+
+        // Assert
+        $this->assertNotNull($itemTransfers[0]->getState()->getCreatedAt());
     }
 
     /**

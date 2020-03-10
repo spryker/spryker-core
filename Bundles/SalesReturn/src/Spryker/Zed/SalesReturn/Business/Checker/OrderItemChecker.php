@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesReturn\Business\Checker;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class OrderItemChecker implements OrderItemCheckerInterface
@@ -36,7 +35,10 @@ class OrderItemChecker implements OrderItemCheckerInterface
         $returnableStateNames = $this->salesReturnConfig->getReturnableStateNames();
 
         foreach ($itemTransfers as $itemTransfer) {
-            $this->assertOrderItemRequirements($itemTransfer);
+            $itemTransfer
+                ->requireState()
+                ->getState()
+                    ->requireName();
 
             if (!in_array($itemTransfer->getState()->getName(), $returnableStateNames, true)) {
                 return false;
@@ -44,34 +46,5 @@ class OrderItemChecker implements OrderItemCheckerInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    public function isOrderItemInReturnableStates(ItemTransfer $itemTransfer): bool
-    {
-        $this->assertOrderItemRequirements($itemTransfer);
-
-        if (!in_array($itemTransfer->getState()->getName(), $this->salesReturnConfig->getReturnableStateNames(), true)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function assertOrderItemRequirements(ItemTransfer $itemTransfer): void
-    {
-        $itemTransfer
-            ->requireState()
-            ->getState()
-                ->requireName();
     }
 }

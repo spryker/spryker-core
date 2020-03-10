@@ -41,8 +41,10 @@ class SalesBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function createOrderByStateMachineProcessName(string $stateMachineProcessName, ?CustomerTransfer $customerTransfer = null): OrderTransfer
-    {
+    public function createOrderByStateMachineProcessName(
+        string $stateMachineProcessName,
+        ?CustomerTransfer $customerTransfer = null
+    ): OrderTransfer {
         $quoteTransfer = $this->createFakeQuote(
             $customerTransfer ?? $this->haveCustomer(),
             $this->haveStore([StoreTransfer::NAME => 'DE'])

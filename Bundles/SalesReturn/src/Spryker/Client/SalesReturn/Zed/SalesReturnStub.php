@@ -87,6 +87,8 @@ class SalesReturnStub implements SalesReturnStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\SalesReturn\Communication\Controller\GatewayController::getReturnableItemsAction()
+     *
      * @param \Generated\Shared\Transfer\ReturnableItemFilterTransfer $returnableItemFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer

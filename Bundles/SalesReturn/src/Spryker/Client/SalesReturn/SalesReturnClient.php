@@ -67,7 +67,6 @@ class SalesReturnClient extends AbstractClient implements SalesReturnClientInter
 
     /**
      * {@inheritDoc}
-     * - ...
      *
      * @api
      *

@@ -95,9 +95,8 @@ class ReturnResourceMapper implements ReturnResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer[]
      */
-    public function mapItemCollectionTransferToRestOrderItemsAttributesTransfers(
-        ItemCollectionTransfer $itemCollectionTransfer
-    ): array {
+    public function mapItemCollectionTransferToRestOrderItemsAttributesTransfers(ItemCollectionTransfer $itemCollectionTransfer): array
+    {
         $restReturnItemsAttributesTransfer = [];
 
         foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {

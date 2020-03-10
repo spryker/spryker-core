@@ -334,6 +334,7 @@
         <property name="customerReference" type="string"/>
         <property name="filter" type="Filter"/>
         <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
     </transfer>
 
 </transfers>
