@@ -89,7 +89,7 @@ class PriceProductMapper implements PriceProductMapperInterface
      * @param int $idMerchantRelationship
      * @param string $currencyCode
      * @param string $priceType
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

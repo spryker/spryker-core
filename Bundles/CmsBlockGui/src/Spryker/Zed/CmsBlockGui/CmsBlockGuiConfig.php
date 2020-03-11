@@ -14,6 +14,8 @@ class CmsBlockGuiConfig extends AbstractBundleConfig
     public const CMS_BLOCK_TEMPLATE_PATH = '@CmsBlock/template/';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTemplatePath()

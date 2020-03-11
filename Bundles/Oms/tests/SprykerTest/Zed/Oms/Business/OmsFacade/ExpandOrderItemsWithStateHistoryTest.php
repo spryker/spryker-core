@@ -90,6 +90,28 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     /**
      * @return void
      */
+    public function testExpandOrderItemsWithStateHistoryCompareIdSalesOrderItemIds(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+        // Act
+        $itemTransfers = $this->tester
+            ->getFacade()
+            ->expandOrderItemsWithStateHistory($orderTransfer->getItems()->getArrayCopy());
+
+        // Assert
+        $this->assertSame($itemTransfer->getIdSalesOrderItem(), $itemTransfers[0]->getStateHistory()->offsetGet(0)->getIdSalesOrderItem());
+        $this->assertSame($itemTransfer->getIdSalesOrderItem(), $itemTransfers[0]->getStateHistory()->offsetGet(1)->getIdSalesOrderItem());
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandOrderItemsWithStateHistoryWithoutSalesOrderItemId(): void
     {
         // Act

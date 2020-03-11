@@ -19,6 +19,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
 class TaxSetProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

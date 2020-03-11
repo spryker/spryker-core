@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Add quote permissions for customer company user to customer.
      *

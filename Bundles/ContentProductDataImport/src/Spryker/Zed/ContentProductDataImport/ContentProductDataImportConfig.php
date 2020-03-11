@@ -16,6 +16,8 @@ class ContentProductDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_CONTENT_PRODUCT = 'content-product-abstract-list';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getContentProductAbstractListDataImporterConfiguration(): DataImporterConfigurationTransfer

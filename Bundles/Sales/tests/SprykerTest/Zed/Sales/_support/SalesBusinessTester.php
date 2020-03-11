@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\DataBuilder\OrderListRequestBuilder;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 
 /**
  * Inherited Methods
@@ -82,5 +84,15 @@ class SalesBusinessTester extends Actor
             ->setStore($storeTransfer);
 
         return $quoteTransfer;
+    }
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\OrderListRequestTransfer
+     */
+    public function createOrderListRequestTransfer(array $seed): OrderListRequestTransfer
+    {
+        return (new OrderListRequestBuilder($seed))
+            ->build();
     }
 }

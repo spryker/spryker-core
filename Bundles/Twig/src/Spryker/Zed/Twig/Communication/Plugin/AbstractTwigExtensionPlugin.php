@@ -37,6 +37,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
      * Initializes the runtime environment.
      *
      * This is where you can load some file that contains filter functions for instance.
@@ -52,11 +53,12 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
      * Returns the token parser instances to add to the existing list.
      *
      * @api
      *
-     * @return array An array of TokenParserInterface or TokenParserBrokerInterface instances
+     * @return \Twig\TokenParser\TokenParserInterface[] An array of TokenParserInterface or TokenParserBrokerInterface instances
      */
     public function getTokenParsers()
     {
@@ -64,6 +66,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
      * Returns the node visitor instances to add to the existing list.
      *
      * @api
@@ -76,11 +79,12 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
      * Returns a list of filters to add to the existing list.
      *
      * @api
      *
-     * @return array An array of filters
+     * @return \Twig\TwigFilter[] An array of filters
      */
     public function getFilters()
     {
@@ -88,11 +92,12 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
      * Returns a list of tests to add to the existing list.
      *
      * @api
      *
-     * @return array An array of tests
+     * @return \Twig\TwigTest[] An array of tests
      */
     public function getTests()
     {
@@ -100,11 +105,12 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
      * Returns a list of functions to add to the existing list.
      *
      * @api
      *
-     * @return array An array of functions
+     * @return \Twig\TwigFunction[] An array of functions
      */
     public function getFunctions()
     {
@@ -112,6 +118,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
      * Returns a list of operators to add to the existing list.
      *
      * @api
@@ -124,6 +131,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
      * Returns a list of global variables to add to the existing list.
      *
      * @api
@@ -136,6 +144,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated since 1.26 (to be removed in 2.0), not used anymore internally

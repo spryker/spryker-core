@@ -26,6 +26,8 @@ class SessionConfig extends AbstractBundleConfig
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSessionStorageOptions()
@@ -79,6 +81,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getConfiguredSessionHandlerNameZed()
@@ -87,6 +91,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getConfiguredSessionHandlerNameYves()
@@ -95,6 +101,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSessionLifeTime()
@@ -103,6 +111,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @return array|string
@@ -119,6 +129,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @return array
@@ -129,6 +141,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @return string
@@ -203,6 +217,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @return string
@@ -219,6 +235,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @return array|string
@@ -235,6 +253,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @return array
@@ -245,6 +265,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @return string

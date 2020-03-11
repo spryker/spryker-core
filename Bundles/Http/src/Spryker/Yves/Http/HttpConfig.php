@@ -19,6 +19,8 @@ class HttpConfig extends AbstractBundleConfig
     protected const DEFAULT_REQUEST_HTTPS_PORT = 443;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getHttpPort(): int
@@ -27,6 +29,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getHttpsPort(): int
@@ -35,6 +39,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTrustedHeaderSet(): int
@@ -43,6 +49,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedProxies(): array
@@ -51,6 +59,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedHosts(): array
@@ -59,6 +69,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isHstsEnabled(): bool
@@ -67,6 +79,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getHstsConfig(): array
@@ -75,6 +89,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHttpFragmentPath(): string
@@ -83,6 +99,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getUriSignerSecret(): string
@@ -91,6 +109,8 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getHIncludeRendererGlobalTemplate(): ?string

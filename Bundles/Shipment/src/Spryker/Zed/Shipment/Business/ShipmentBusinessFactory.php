@@ -543,7 +543,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array[]
+     * @return array
      */
     public function getShipmentMethodPlugins(): array
     {

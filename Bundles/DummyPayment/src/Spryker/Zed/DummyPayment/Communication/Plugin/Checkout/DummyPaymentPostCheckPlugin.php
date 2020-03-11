@@ -24,6 +24,8 @@ class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPost
     public const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -40,7 +40,7 @@ interface OmsRepositoryInterface
     /**
      * @param int[] $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[]
      */
     public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array;
 }

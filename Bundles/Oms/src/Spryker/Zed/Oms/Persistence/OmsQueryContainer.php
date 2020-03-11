@@ -33,6 +33,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public const DATE_WINDOW = 'dateWindow';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $states
@@ -52,6 +54,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -67,6 +71,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -81,6 +87,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -96,6 +104,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -117,6 +127,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \DateTime $now
@@ -134,6 +146,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()` instead.
@@ -172,6 +186,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()` instead.
@@ -198,6 +214,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
@@ -228,6 +246,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $orderItemIds
@@ -243,6 +263,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -258,6 +280,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string[] $activeProcesses
@@ -273,6 +297,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $orderItemStates
@@ -288,6 +314,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use `queryGroupedMatrixOrderItems()` instead
@@ -312,6 +340,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $processIds
@@ -351,6 +381,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string[] $orderItemStates
@@ -365,6 +397,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \DateTime $expirationDate
@@ -379,6 +413,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $identifier
@@ -393,6 +429,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -407,6 +445,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -423,6 +463,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -438,6 +480,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -452,6 +496,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
@@ -471,6 +517,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $lastExportedVersion
@@ -506,6 +554,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery
@@ -516,6 +566,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOmsProductReservation
