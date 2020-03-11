@@ -9,13 +9,13 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
