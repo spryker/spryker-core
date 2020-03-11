@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
-use Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
@@ -23,27 +22,19 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
     protected $salesFacade;
 
     /**
-     * @var \Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface
-     */
-    protected $orderItemChecker;
-
-    /**
      * @var \Spryker\Zed\SalesReturn\SalesReturnConfig
      */
     protected $salesReturnConfig;
 
     /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
-     * @param \Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface $orderItemChecker
      * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
      */
     public function __construct(
         SalesReturnToSalesFacadeInterface $salesFacade,
-        OrderItemCheckerInterface $orderItemChecker,
         SalesReturnConfig $salesReturnConfig
     ) {
         $this->salesFacade = $salesFacade;
-        $this->orderItemChecker = $orderItemChecker;
         $this->salesReturnConfig = $salesReturnConfig;
     }
 
