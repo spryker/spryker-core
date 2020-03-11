@@ -55,8 +55,18 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $itemTransfers[] = (new ItemTransfer())
                 ->fromArray($salesOrderItemEntity->toArray(), true)
-                ->setProcess($salesOrderItemEntity->getProcess()->getName())
                 ->setOrderReference($salesOrderItemEntity->getOrder()->getOrderReference())
+                ->setSumGrossPrice($salesOrderItemEntity->getGrossPrice())
+                ->setSumNetPrice($salesOrderItemEntity->getNetPrice())
+                ->setSumPrice($salesOrderItemEntity->getPrice())
+                ->setSumSubtotalAggregation($salesOrderItemEntity->getSubtotalAggregation())
+                ->setSumDiscountAmountAggregation($salesOrderItemEntity->getDiscountAmountAggregation())
+                ->setSumDiscountAmountFullAggregation($salesOrderItemEntity->getDiscountAmountFullAggregation())
+                ->setSumExpensePriceAggregation($salesOrderItemEntity->getExpensePriceAggregation())
+                ->setSumTaxAmount($salesOrderItemEntity->getTaxAmount())
+                ->setSumTaxAmountFullAggregation($salesOrderItemEntity->getTaxAmountFullAggregation())
+                ->setSumPriceToPayAggregation($salesOrderItemEntity->getPriceToPayAggregation())
+                ->setProcess($salesOrderItemEntity->getProcess()->getName())
                 ->setState($this->mapSalesOrderItemEntityToItemStateTransfer($salesOrderItemEntity, new ItemStateTransfer()));
         }
 
