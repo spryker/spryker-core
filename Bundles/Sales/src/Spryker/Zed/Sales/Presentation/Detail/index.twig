@@ -14,6 +14,7 @@
     <div id="order-custom-reference">{% include '@OrderCustomReferenceGui/Sales/order-custom-reference.twig' ignore missing with {
             data: {
                 backUrl: changeStatusRedirectUrl,
+                order: order,
             },
         } only %}</div>
     <div id="customer">{% include '@Sales/Detail/boxes/customer.twig' %}</div>

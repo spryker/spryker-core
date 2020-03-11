@@ -11,14 +11,13 @@ use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
-/**
- * @module Sales
- */
 class OrderCustomReferenceEntityManager extends AbstractEntityManager implements OrderCustomReferenceEntityManagerInterface
 {
     protected const COLUMN_ORDER_CUSTOM_REFERENCE = 'OrderCustomReference';
 
     /**
+     * @module Sales
+     *
      * @param int $idSalesOrder
      * @param string $orderCustomReference
      *
