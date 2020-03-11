@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -143,6 +144,18 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculateBundlePrice(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculates CalculableObjectTransfer::bundleItems prices.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateBundlePriceForCalculableObjectTransfer(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
 
     /**
      * Specification:

@@ -7,32 +7,29 @@
 
 namespace Spryker\Zed\ProductBundle\Communication\Plugin\Calculation;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `CalculateBundlePricesPlugin` instead.
- * @see \Spryker\Zed\ProductBundle\Communication\Plugin\Calculation\CalculateBundlePricesPlugin
- *
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
-class CalculateBundlePricePlugin extends AbstractPlugin implements CalculatorPluginInterface
+class CalculateBundlePricesPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
      * {@inheritDoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->getFacade()->calculateBundlePrice($quoteTransfer);
+        $this->getFacade()->calculateBundlePriceForCalculableObjectTransfer($calculableObjectTransfer);
     }
 }

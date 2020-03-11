@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -171,6 +172,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
          return $this->getFactory()
              ->createProductBundlePriceCalculator()
              ->calculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateBundlePriceForCalculableObjectTransfer(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        return $this->getFactory()
+            ->createProductBundlePriceCalculator()
+            ->calculateForCalculableObjectTransfer($calculableObjectTransfer);
     }
 
     /**

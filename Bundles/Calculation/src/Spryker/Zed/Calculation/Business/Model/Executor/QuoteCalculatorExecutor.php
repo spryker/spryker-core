@@ -58,7 +58,9 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         }
 
         $quoteTransfer = $this->mapQuoteTransfer($quoteTransfer, $calculableObjectTransfer);
-        $quoteTransfer = $this->executeQuotePostRecalculatePlugins($quoteTransfer);
+        if ($executeQuotePlugins) {
+            $quoteTransfer = $this->executeQuotePostRecalculatePlugins($quoteTransfer);
+        }
 
         return $quoteTransfer;
     }
