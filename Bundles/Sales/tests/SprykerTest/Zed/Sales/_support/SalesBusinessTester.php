@@ -8,13 +8,13 @@
 namespace SprykerTest\Zed\Sales;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\OrderListRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Generated\Shared\DataBuilder\OrderListRequestBuilder;
-use Generated\Shared\Transfer\OrderListRequestTransfer;
 
 /**
  * Inherited Methods
@@ -85,6 +85,7 @@ class SalesBusinessTester extends Actor
 
         return $quoteTransfer;
     }
+
     /**
      * @param array $seed
      *
