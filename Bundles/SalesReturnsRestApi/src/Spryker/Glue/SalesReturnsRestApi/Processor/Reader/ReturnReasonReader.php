@@ -53,7 +53,7 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getReturnReasonAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    public function getReturnReasons(RestRequestInterface $restRequest): RestResponseInterface
     {
         $returnReasonFilterTransfer = $this->createReturnReasonFilter($restRequest);
 

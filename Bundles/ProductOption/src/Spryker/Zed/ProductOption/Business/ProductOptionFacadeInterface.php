@@ -298,4 +298,17 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
      */
     public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Hydrates product options for given order items.
+     * - Sets ItemTransfer::sumProductOptionPriceAggregation, ItemTransfer::unitProductOptionPriceAggregation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductOptions(array $itemTransfers): array;
 }

@@ -12,6 +12,7 @@
     <transfer name="Return">
         <property name="idSalesReturn" type="int"/>
         <property name="returnReference" type="string"/>
+        <property name="customerReference" type="string"/>
         <property name="store" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="returnTotals" type="ReturnTotals"/>
@@ -19,6 +20,7 @@
 
     <transfer name="ReturnItem">
         <property name="idSalesReturnItem" type="int"/>
+        <property name="idSalesReturn" type="int"/>
         <property name="uuid" type="string"/>
         <property name="reason" type="string"/>
         <property name="orderItem" type="Item"/>
@@ -34,8 +36,12 @@
     </transfer>
 
     <transfer name="ReturnFilter">
-        <property name="customerReference" type="string"/>
         <property name="returnReference" type="string"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ReturnItemFilter">
+        <property name="returnIds" type="array" singular="idReturn"/>
     </transfer>
 
     <transfer name="ReturnReasonFilter">
@@ -62,6 +68,8 @@
         <property name="uuid" type="string"/>
         <property name="remunerationAmount" type="int"/>
         <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="state" type="ItemState"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">
@@ -70,6 +78,7 @@
 
     <transfer name="ReturnCollection">
         <property name="returns" type="Return[]" singular="return"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ReturnResponse">
@@ -85,6 +94,40 @@
     <transfer name="CalculableObject">
         <property name="totals" type="Totals"/>
         <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="totals" type="Totals"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
+    <transfer name="ItemState">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

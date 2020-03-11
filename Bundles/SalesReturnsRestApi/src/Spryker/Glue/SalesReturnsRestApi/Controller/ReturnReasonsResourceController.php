@@ -35,6 +35,6 @@ class ReturnReasonsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createReturnReasonReader()->getReturnReasonAttributes($restRequest);
+        return $this->getFactory()->createReturnReasonReader()->getReturnReasons($restRequest);
     }
 }

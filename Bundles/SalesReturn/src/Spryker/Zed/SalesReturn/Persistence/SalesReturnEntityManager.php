@@ -8,6 +8,10 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ReturnItemTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
+use Orm\Zed\SalesReturn\Persistence\SpySalesReturn;
+use Orm\Zed\SalesReturn\Persistence\SpySalesReturnItem;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -32,5 +36,39 @@ class SalesReturnEntityManager extends AbstractEntityManager implements SalesRet
         $salesOrderItemEntity->save();
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function createReturn(ReturnTransfer $returnTransfer): ReturnTransfer
+    {
+        $salesReturnEntity = $this->getFactory()
+            ->createReturnMapper()
+            ->mapReturnTransferToSalesReturnEntity($returnTransfer, new SpySalesReturn());
+
+        $salesReturnEntity->save();
+        $returnTransfer->fromArray($salesReturnEntity->toArray(), true);
+
+        return $returnTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnItemTransfer $returnItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnItemTransfer
+     */
+    public function createReturnItem(ReturnItemTransfer $returnItemTransfer): ReturnItemTransfer
+    {
+        $salesReturnItemEntity = $this->getFactory()
+            ->createReturnMapper()
+            ->mapReturnItemTransferToSalesReturnItemEntity($returnItemTransfer, new SpySalesReturnItem());
+
+        $salesReturnItemEntity->save();
+        $returnItemTransfer->fromArray($salesReturnItemEntity->toArray(), true);
+
+        return $returnItemTransfer;
     }
 }

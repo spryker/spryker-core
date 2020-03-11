@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -353,15 +355,14 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Requires OrderTransfer::orderReference to be set.
-     * - Expands item with order reference information.
-     * - Copies OrderTransfer::orderReference to ItemTransfer::orderReference for each order item.
+     * - Retrieves order items from persistence by criteria from OrderItemFilterTransfer.
+     * - Executes OrderItemExpanderPluginInterface stack.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function expandOrderItemsWithOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer;
 }

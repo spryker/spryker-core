@@ -33,7 +33,9 @@ interface SalesReturnFacadeInterface
 
     /**
      * Specification:
-     * - ...
+     * - Retrieves returns from Persistence.
+     * - Filters by criteria from ReturnFilterTransfer.
+     * - Expands found returns with return item, totals, sales order items.
      *
      * @api
      *
@@ -45,7 +47,14 @@ interface SalesReturnFacadeInterface
 
     /**
      * Specification:
-     * - ...
+     * - Creates return.
+     * - Validates return request.
+     * - Generates unique reference number.
+     * - Stores return.
+     * - Stores return items.
+     * - Triggers return event for provided order items.
+     * - Returns "isSuccessful=true" and return transfer on success.
+     * - Returns "isSuccessful=false" and error messages otherwise.
      *
      * @api
      *

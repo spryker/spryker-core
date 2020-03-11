@@ -10,8 +10,6 @@ namespace Spryker\Zed\Sales\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
-use Spryker\Zed\Sales\Business\Expander\OrderReferenceExpander;
-use Spryker\Zed\Sales\Business\Expander\OrderReferenceExpanderInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseUpdater;
@@ -47,6 +45,8 @@ use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShipping
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
+use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
+use Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
@@ -466,11 +466,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Expander\OrderReferenceExpanderInterface
+     * @return \Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface
      */
-    public function createOrderReferenceExpander(): OrderReferenceExpanderInterface
+    public function createOrderItemReader(): OrderItemReaderInterface
     {
-        return new OrderReferenceExpander();
+        return new OrderItemReader(
+            $this->getRepository(),
+            $this->getOrderItemExpanderPlugins()
+        );
     }
 
     /**
@@ -495,5 +498,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getUniqueOrderItemsExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     */
+    public function getOrderItemExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER);
     }
 }

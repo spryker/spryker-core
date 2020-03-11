@@ -8,9 +8,11 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\SalesReturn\Persistence\SpySalesReturnItemQuery;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\SalesReturn\Persistence\Propel\Mapper\ReturnMapper;
 use Spryker\Zed\SalesReturn\Persistence\Propel\Mapper\ReturnReasonMapper;
 use Spryker\Zed\SalesReturn\SalesReturnDependencyProvider;
 
@@ -30,6 +32,14 @@ class SalesReturnPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnItemQuery
+     */
+    public function getSalesReturnItemPropelQuery(): SpySalesReturnItemQuery
+    {
+        return SpySalesReturnItemQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery
      */
     public function getSalesReturnReasonPropelQuery(): SpySalesReturnReasonQuery
@@ -43,6 +53,14 @@ class SalesReturnPersistenceFactory extends AbstractPersistenceFactory
     public function createReturnReasonMapper(): ReturnReasonMapper
     {
         return new ReturnReasonMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturn\Persistence\Propel\Mapper\ReturnMapper
+     */
+    public function createReturnMapper(): ReturnMapper
+    {
+        return new ReturnMapper();
     }
 
     /**

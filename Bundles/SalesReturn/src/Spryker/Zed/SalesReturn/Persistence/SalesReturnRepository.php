@@ -8,7 +8,12 @@
 namespace Spryker\Zed\SalesReturn\Persistence;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ReturnCollectionTransfer;
+use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Generated\Shared\Transfer\ReturnItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -55,5 +60,103 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
         return $this->getFactory()
             ->createReturnReasonMapper()
             ->mapReturnReasonEntityCollectionToReturnReasonTransfers($returnReasonQuery->find());
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return int
+     */
+    public function countCustomerReturns(string $customerReference): int
+    {
+        return $this->getFactory()
+            ->getSalesReturnPropelQuery()
+            ->filterByCustomerReference($customerReference)
+            ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     */
+    public function getReturnCollectionByFilter(ReturnFilterTransfer $returnFilterTransfer): ReturnCollectionTransfer
+    {
+        $salesReturnQuery = $this->getFactory()->getSalesReturnPropelQuery();
+
+        $salesReturnQuery = $this->setSalesReturnFilters($salesReturnQuery, $returnFilterTransfer);
+
+        return $this->getFactory()
+            ->createReturnMapper()
+            ->mapReturnEntityCollectionToReturnCollection($salesReturnQuery->find())
+            ->setPagination($returnFilterTransfer->getPagination());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnItemFilterTransfer $returnItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnItemTransfer[]
+     */
+    public function getReturnItemsByFilter(ReturnItemFilterTransfer $returnItemFilterTransfer): array
+    {
+        $salesReturnItemQuery = $this->getFactory()->getSalesReturnItemPropelQuery();
+
+        if ($returnItemFilterTransfer->getReturnIds()) {
+            $salesReturnItemQuery->filterByFkSalesReturn_In($returnItemFilterTransfer->getReturnIds());
+        }
+
+        return $this->getFactory()
+            ->createReturnMapper()
+            ->mapReturnItemEntityCollectionToReturnTransfers($salesReturnItemQuery->find());
+    }
+
+    /**
+     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery
+     * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
+     *
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
+     */
+    protected function setSalesReturnFilters(
+        SpySalesReturnQuery $salesReturnQuery,
+        ReturnFilterTransfer $returnFilterTransfer
+    ): SpySalesReturnQuery {
+        if ($returnFilterTransfer->getReturnReference()) {
+            $salesReturnQuery->filterByReturnReference($returnFilterTransfer->getReturnReference());
+        }
+
+        if ($returnFilterTransfer->getPagination()) {
+            $salesReturnQuery = $this->preparePagination($salesReturnQuery, $returnFilterTransfer->getPagination());
+        }
+
+        return $salesReturnQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function preparePagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): ModelCriteria
+    {
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        $propelModelPager = $query->paginate($page, $maxPerPage);
+
+        $paginationTransfer->setNbResults($propelModelPager->getNbResults())
+            ->setFirstIndex($propelModelPager->getFirstIndex())
+            ->setLastIndex($propelModelPager->getLastIndex())
+            ->setFirstPage($propelModelPager->getFirstPage())
+            ->setLastPage($propelModelPager->getLastPage())
+            ->setNextPage($propelModelPager->getNextPage())
+            ->setPreviousPage($propelModelPager->getPreviousPage());
+
+        return $propelModelPager->getQuery();
     }
 }
