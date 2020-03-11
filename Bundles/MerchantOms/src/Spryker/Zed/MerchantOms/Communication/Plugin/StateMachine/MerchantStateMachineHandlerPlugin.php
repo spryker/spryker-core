@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Communication\Plugin\StateMachine;
 
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantOms\MerchantOmsConfig;
@@ -14,6 +15,7 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 /**
  * @method \Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantOms\Communication\MerchantOmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
  */
 class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateMachineHandlerInterface
@@ -81,7 +83,13 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      */
     public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer): bool
     {
-        return true;
+        $merchantOrderItemResponseTransfer = $this->getFactory()->getMerchantSalesOrderFacade()->updateMerchantOrderItem(
+            (new MerchantOrderItemTransfer())
+                ->setIdMerchantOrderItem($stateMachineItemTransfer->getIdentifier())
+                ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState())
+        );
+
+        return $merchantOrderItemResponseTransfer->getIsSuccessful();
     }
 
     /**

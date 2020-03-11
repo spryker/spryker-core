@@ -30,6 +30,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addMerchantFacade($container);
         $container = $this->addStateMachineFacade($container);
 
@@ -44,6 +45,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addMerchantSalesOrderFacade($container);
 
         return $container;

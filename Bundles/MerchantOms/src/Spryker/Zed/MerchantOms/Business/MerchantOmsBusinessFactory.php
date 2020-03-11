@@ -13,7 +13,6 @@ use Spryker\Zed\MerchantOms\Business\EventTrigger\MerchantOmsEventTriggerInterfa
 use Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReader;
 use Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReaderInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface;
-use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
 
@@ -56,13 +55,5 @@ class MerchantOmsBusinessFactory extends AbstractBusinessFactory
     public function getMerchantFacade(): MerchantOmsToMerchantFacadeInterface
     {
         return $this->getProvidedDependency(MerchantOmsDependencyProvider::FACADE_MERCHANT);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface
-     */
-    public function getMerchantSalesOrderFacade(): MerchantOmsToMerchantSalesOrderFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantOmsDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
     }
 }
