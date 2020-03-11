@@ -139,9 +139,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
 
         if (!$plugin instanceof ResourceWithParentPluginInterface) {
-            $this
-
-                ->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
+            $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
             $this->addIncludeSchemas($plugin, $transferClassName, $responseSchemaName);
         }
 
