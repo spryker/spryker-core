@@ -22,6 +22,8 @@ class ReadSharedCartPermissionPlugin extends AbstractPlugin implements Executabl
     public const KEY = 'ReadSharedCartPermissionPlugin';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -32,6 +34,8 @@ class ReadSharedCartPermissionPlugin extends AbstractPlugin implements Executabl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $configuration
@@ -49,6 +53,8 @@ class ReadSharedCartPermissionPlugin extends AbstractPlugin implements Executabl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

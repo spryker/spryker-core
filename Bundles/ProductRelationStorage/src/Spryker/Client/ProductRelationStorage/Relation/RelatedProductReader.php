@@ -51,12 +51,12 @@ class RelatedProductReader implements RelatedProductReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findRelatedProducts($idProductAbstract, $localeName, string $storeName)
+    public function findRelatedProducts(int $idProductAbstract, string $localeName, string $storeName)
     {
         $relatedProductAbstractIds = $this->findRelatedAbstractProductIds($idProductAbstract);
         $productStorageDataCollection = $this
             ->productStorageClient
-            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleNameAndStore($relatedProductAbstractIds, $localeName, $storeName);
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore($relatedProductAbstractIds, $localeName, APPLICATION_STORE);
 
         return $this->mapProductViewTransfers($productStorageDataCollection, $localeName);
     }
@@ -79,30 +79,24 @@ class RelatedProductReader implements RelatedProductReaderInterface
 
     /**
      * @param int $idProductAbstract
-     * @param string|null $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract, ?string $storeName = null): array
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array
     {
-        if (!$storeName) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
-        $relationIds = $this->getRelationIds($idProductAbstract, $storeName);
+        $relationIds = $this->getRelationIds($idProductAbstract);
 
         return $this->getSortedProductAbstractIds($relationIds);
     }
 
     /**
      * @param int $idProductAbstract
-     * @param string|null $storeName
      *
      * @return array
      */
-    protected function getRelationIds($idProductAbstract, ?string $storeName = null)
+    protected function getRelationIds($idProductAbstract)
     {
-        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract, $storeName);
+        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract);
 
         if (!$productAbstractRelationStorageTransfer) {
             return [];

@@ -22,6 +22,8 @@ class StorageConfig extends AbstractBundleConfig
     protected const PROCESS_TIMEOUT = 60;
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::getRedisPort()` instead.
      *
      * @return int
@@ -32,6 +34,8 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::getRdbDumpPath()` instead.
      *
      * Specification:
@@ -45,6 +49,8 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getGuiDefaultPageLength(): int
@@ -53,6 +59,8 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `Spryker\Zed\Redis\RedisConfig::getProcessTimeout()` instead.
      *
      * Specification:

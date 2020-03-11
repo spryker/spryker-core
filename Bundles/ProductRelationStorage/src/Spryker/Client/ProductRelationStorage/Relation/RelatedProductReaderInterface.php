@@ -16,13 +16,12 @@ interface RelatedProductReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findRelatedProducts($idProductAbstract, $localeName, string $storeName);
+    public function findRelatedProducts(int $idProductAbstract, string $localeName, string $storeName);
 
     /**
      * @param int $idProductAbstract
-     * @param string|null $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract, ?string $storeName = null): array;
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array;
 }

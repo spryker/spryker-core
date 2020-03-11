@@ -53,10 +53,6 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
-        if (!$quoteTransfer->getStore()) {
-            trigger_error('Pass the QuoteTransfer.Store parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         $upSellingProductAbstractIds = $this->findUpSellingAbstractProductIds($quoteTransfer);
 
         $relatedProducts = [];
@@ -78,10 +74,6 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      */
     public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array
     {
-        if (!$quoteTransfer->getStore()) {
-            trigger_error('Pass the QuoteTransfer.Store parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         $productAbstractIds = $this->findSubjectProductAbstractIds($quoteTransfer);
         $relationIds = $this->findRelationIds($productAbstractIds);
 

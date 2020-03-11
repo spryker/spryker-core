@@ -22,6 +22,8 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     protected const SUPPORTED_SOURCE_IDENTIFIERS = [];
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getClientConfig(): array
@@ -48,6 +50,8 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getSupportedSourceIdentifiers(): array
