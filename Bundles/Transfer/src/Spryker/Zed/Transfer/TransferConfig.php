@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class TransferConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getClassTargetDirectory()
@@ -20,6 +22,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDataBuilderTargetDirectory()
@@ -28,6 +32,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getSourceDirectories()
@@ -41,6 +47,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getDataBuilderSourceDirectories()
@@ -54,6 +62,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDataBuilderFileNamePattern()
@@ -62,6 +72,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getEntityFileNamePattern()
@@ -116,6 +128,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getEntitiesSourceDirectories()
@@ -132,6 +146,8 @@ class TransferConfig extends AbstractBundleConfig
      * Defaults to false for BC reasons. Enable on project level if all modules in question
      * have been upgraded to the version they are fixed in.
      *
+     * @api
+     *
      * @return bool
      */
     public function isTransferNameValidated(): bool
@@ -146,6 +162,8 @@ class TransferConfig extends AbstractBundleConfig
      * Defaults to false for BC reasons. Enable on project level if all modules in question
      * have been upgraded to the version they are fixed in.
      *
+     * @api
+     *
      * @return bool
      */
     public function isCaseValidated(): bool
@@ -159,6 +177,8 @@ class TransferConfig extends AbstractBundleConfig
      *
      * Defaults to false for BC reasons. Enable on project level if all modules in question
      * have been upgraded to the version they comply with this rule.
+     *
+     * @api
      *
      * @return bool
      */

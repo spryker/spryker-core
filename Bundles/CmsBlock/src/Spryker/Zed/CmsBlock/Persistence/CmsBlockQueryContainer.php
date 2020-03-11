@@ -26,6 +26,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     public const COLUMN_TEMPLATE_NAME = 'template_name';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -39,6 +41,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -54,6 +58,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -70,6 +76,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -83,6 +91,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
@@ -98,6 +108,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -111,6 +123,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
@@ -122,6 +136,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $path
@@ -135,6 +151,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlockTemplate
@@ -148,6 +166,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $placeholders
@@ -165,6 +185,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idGlossaryKeyMapping
@@ -178,6 +200,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $key
@@ -191,6 +215,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -207,6 +233,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -225,6 +253,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock

@@ -146,13 +146,11 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($discountPromotionEntity->getAbstractSku());
 
         $promotionItemTransfer = (new PromotionItemTransfer())
-            ->setIdDiscountPromotion($discountPromotionEntity->getIdDiscountPromotion())
-            ->setAbstractSku($discountPromotionEntity->getAbstractSku())
             ->setIdProductAbstract($idProductAbstract)
             ->setMaxQuantity($promotionProductMaximumQuantity)
             ->setDiscount($discountTransfer);
 
-        return $promotionItemTransfer;
+        return $promotionItemTransfer->fromArray($discountPromotionEntity->toArray(), true);
     }
 
     /**

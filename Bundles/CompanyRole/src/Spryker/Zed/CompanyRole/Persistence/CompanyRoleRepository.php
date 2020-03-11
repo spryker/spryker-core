@@ -191,17 +191,22 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      * @module Permission
      *
      * @param string $permissionKey
+     * @param int|null $idCompany
      *
      * @return int[]
      */
-    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey, ?int $idCompany = null): array
     {
-        return $this->getFactory()
-            ->createCompanyRoleQuery()
-            ->joinSpyCompanyRoleToCompanyUser()
+        $companyRoleQuery = $this->getFactory()->createCompanyRoleQuery();
+
+        if ($idCompany) {
+            $companyRoleQuery->filterByFkCompany($idCompany);
+        }
+
+        return $companyRoleQuery->joinSpyCompanyRoleToCompanyUser()
             ->useSpyCompanyRoleToPermissionQuery()
                 ->usePermissionQuery()
-                   ->filterByKey($permissionKey)
+                    ->filterByKey($permissionKey)
                 ->endUse()
             ->endUse()
             ->select([SpyCompanyRoleToCompanyUserTableMap::COL_FK_COMPANY_USER])

@@ -26,6 +26,8 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidator;
 use Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlNameValidator;
+use Spryker\Zed\Propel\Business\SchemaElementFilter\PropelSchemaElementFilter;
+use Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface;
 use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
 use Spryker\Zed\Propel\Communication\Console\BuildSqlConsole;
 use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
@@ -113,6 +115,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         $propelSchemaMerger = new PropelSchemaMerger(
             $this->getUtilTextService(),
+            $this->createPropelSchemaElementFilter(),
             $this->getConfig()
         );
 
@@ -415,5 +418,21 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createPropelHealthChecker(): HealthCheckInterface
     {
         return new PropelHealthCheck();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface
+     */
+    public function createPropelSchemaElementFilter(): SchemaElementFilterInterface
+    {
+        return new PropelSchemaElementFilter($this->getPropelSchemaElementFilterPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
+     */
+    public function getPropelSchemaElementFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(PropelDependencyProvider::PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER);
     }
 }

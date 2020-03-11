@@ -13,6 +13,7 @@ use DOMElement;
 use DOMNodeList;
 use SimpleXMLElement;
 use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
+use Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface;
 use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
@@ -36,15 +37,23 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     protected $utilTextService;
 
     /**
+     * @var \Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface
+     */
+    protected $schemaElementFilter;
+
+    /**
      * @param \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface $utilTextService
+     * @param \Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface $schemaElementFilter
      * @param \Spryker\Zed\Propel\PropelConfig|null $config
      */
     public function __construct(
         PropelToUtilTextServiceInterface $utilTextService,
+        SchemaElementFilterInterface $schemaElementFilter,
         ?PropelConfig $config = null
     ) {
         $this->config = $config;
         $this->utilTextService = $utilTextService;
+        $this->schemaElementFilter = $schemaElementFilter;
     }
 
     /**
@@ -195,6 +204,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $mergeTargetXmlElement = $this->mergeSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement, $source);
         }
 
+        $mergeTargetXmlElement = $this->schemaElementFilter->filter($mergeTargetXmlElement);
         $content = $this->prettyPrint($mergeTargetXmlElement);
 
         return $content;

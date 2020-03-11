@@ -17,6 +17,8 @@ class ProductPackagingUnitDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_PACKAGING_UNIT_TYPE = 'product-packaging-unit-type';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductPackagingUnitDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -28,6 +30,8 @@ class ProductPackagingUnitDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductPackagingUnitTypeDataImporterConfiguration(): DataImporterConfigurationTransfer

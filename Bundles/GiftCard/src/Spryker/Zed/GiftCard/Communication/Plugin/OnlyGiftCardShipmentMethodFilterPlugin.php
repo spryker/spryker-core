@@ -23,6 +23,8 @@ use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 class OnlyGiftCardShipmentMethodFilterPlugin extends AbstractPlugin implements ShipmentMethodFilterPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods

@@ -47,6 +47,8 @@ class OfferGuiConfig extends AbstractBundleConfig
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeNet()
@@ -55,6 +57,8 @@ class OfferGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeGross()

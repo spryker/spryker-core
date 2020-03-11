@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class StoreQueryContainer extends AbstractQueryContainer implements StoreQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $storeName
@@ -30,6 +32,8 @@ class StoreQueryContainer extends AbstractQueryContainer implements StoreQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $stores
@@ -44,6 +48,8 @@ class StoreQueryContainer extends AbstractQueryContainer implements StoreQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idStore

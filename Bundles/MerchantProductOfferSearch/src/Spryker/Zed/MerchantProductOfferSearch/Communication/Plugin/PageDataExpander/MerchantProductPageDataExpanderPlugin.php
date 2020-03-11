@@ -32,5 +32,6 @@ class MerchantProductPageDataExpanderPlugin extends AbstractPlugin implements Pr
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
         $productAbstractPageSearchTransfer->setMerchantNames($productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getMerchantNames());
+        $productAbstractPageSearchTransfer->setMerchantReferences($productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getMerchantReferences());
     }
 }
