@@ -9,12 +9,12 @@ namespace Spryker\Zed\Oauth\Business\Model\League;
 
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\AccessTokenRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\ClientRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepository;
+use Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\ScopeRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepository;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
