@@ -18,6 +18,8 @@ class SecurityConfig extends AbstractBundleConfig
     protected const DEFAULT_REQUEST_HTTPS_PORT = 443;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getHttpPort(): int
@@ -26,6 +28,8 @@ class SecurityConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getHttpsPort(): int
@@ -34,6 +38,8 @@ class SecurityConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hideUserNotFoundException(): bool
@@ -42,6 +48,8 @@ class SecurityConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getBCryptCost(): int

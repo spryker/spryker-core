@@ -26,37 +26,29 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
         array $restShipmentMethodAttributeTransfers,
         RestRequestInterface $restRequest
     ): array {
-        $sorts = array_values($this->filterSorts($restRequest->getSort()));
+        $resourceSorts = array_values($this->filterSortsByResource($restRequest->getSort(), ShipmentsRestApiConfig::RESOURCE_SHIPMENT_METHODS));
 
-        if (!$sorts) {
+        if (!$resourceSorts) {
             return $restShipmentMethodAttributeTransfers;
         }
-        $sortsCount = count($sorts) - 1;
-        $lastSort = $sorts[$sortsCount];
-        uasort(
-            $restShipmentMethodAttributeTransfers,
-            function (
-                RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
-                RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer
-            ) use (
-                $sorts,
-                $sortsCount,
-                $lastSort
-            ) {
-                for ($sortIndex = 0; $sortIndex < $sortsCount; $sortIndex++) {
-                    $currentSortedPropertyValue = $this->getPropertyValue($currentRestShipmentMethodAttributeTransfer, $sorts[$sortIndex]);
-                    $nextSortedPropertyValue = $this->getPropertyValue($nextRestShipmentMethodAttributeTransfer, $sorts[$sortIndex]);
 
-                    if ($currentSortedPropertyValue != $nextSortedPropertyValue) {
-                        return $this->compareValues($currentSortedPropertyValue, $nextSortedPropertyValue, $sorts[$sortIndex]);
-                    }
+        $callback = function (
+            RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
+            RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer
+        ) use (
+            $resourceSorts
+        ) {
+            foreach ($resourceSorts as $resourceSort) {
+                $currentSortedPropertyValue = $this->getPropertyValueBySort($currentRestShipmentMethodAttributeTransfer, $resourceSort);
+                $nextSortedPropertyValue = $this->getPropertyValueBySort($nextRestShipmentMethodAttributeTransfer, $resourceSort);
+
+                if ($currentSortedPropertyValue != $nextSortedPropertyValue) {
+                    return $this->compareValues($currentSortedPropertyValue, $nextSortedPropertyValue, $resourceSort);
                 }
-                $currentSortedPropertyValue = $this->getPropertyValue($currentRestShipmentMethodAttributeTransfer, $lastSort);
-                $nextSortedPropertyValue = $this->getPropertyValue($nextRestShipmentMethodAttributeTransfer, $lastSort);
-
-                return $this->compareValues($currentSortedPropertyValue, $nextSortedPropertyValue, $lastSort);
             }
-        );
+        };
+
+        uasort($restShipmentMethodAttributeTransfers, $callback);
 
         return $restShipmentMethodAttributeTransfers;
     }
@@ -82,7 +74,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
      *
      * @return string|null
      */
-    protected function getPropertyValue(RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer, SortInterface $currentSort): ?string
+    protected function getPropertyValueBySort(RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer, SortInterface $currentSort): ?string
     {
         $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1];
 
@@ -92,13 +84,14 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param string $resource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
      */
-    protected function filterSorts(array $sorts): array
+    protected function filterSortsByResource(array $sorts, string $resource): array
     {
-        return array_filter($sorts, function (SortInterface $sort) {
-            return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] === ShipmentsRestApiConfig::RESOURCE_SHIPMENT_METHODS;
+        return array_filter($sorts, function (SortInterface $sort) use ($resource) {
+            return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] === $resource;
         });
     }
 }

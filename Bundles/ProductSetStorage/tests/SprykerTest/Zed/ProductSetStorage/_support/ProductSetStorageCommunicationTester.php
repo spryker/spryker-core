@@ -129,7 +129,7 @@ class ProductSetStorageCommunicationTester extends Actor
     /**
      * @param int $idProductSet
      *
-     * @return array[]
+     * @return array
      */
     public function getProductSetImages(int $idProductSet): array
     {

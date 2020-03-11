@@ -31,14 +31,11 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
             $restShipmentMethodsAttributesTransfer = (new RestShipmentMethodsAttributesTransfer())
                 ->fromArray($shipmentMethodTransfer->toArray(), true);
 
-            $moneyValueTransfer = $shipmentMethodTransfer->getPrices()->getIterator()->current();
-
-            if (!$moneyValueTransfer) {
+            $currencyPrice = $shipmentMethodTransfer->getStoreCurrencyPrice();
+            if (!$currencyPrice) {
                 continue;
             }
-
-            $restShipmentMethodsAttributesTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
-            $restShipmentMethodsAttributesTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
+            $restShipmentMethodsAttributesTransfer->setPrice($currencyPrice);
 
             $restShipmentMethodsAttributesTransfers[$shipmentMethodTransfer->getIdShipmentMethod()] = $restShipmentMethodsAttributesTransfer;
         }
@@ -93,15 +90,6 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
             ->fromArray($shipmentMethodTransfer->toArray(), true)
             ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
             ->setId($shipmentMethodTransfer->getIdShipmentMethod());
-
-        $moneyValueTransfer = $shipmentMethodTransfer->getPrices()->getIterator()->current();
-
-        if (!$moneyValueTransfer) {
-            return $restShipmentMethodTransfer;
-        }
-
-        $restShipmentMethodTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
-        $restShipmentMethodTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
 
         return $restShipmentMethodTransfer;
     }

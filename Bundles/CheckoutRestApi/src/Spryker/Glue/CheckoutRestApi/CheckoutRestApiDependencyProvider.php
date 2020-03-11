@@ -102,9 +102,9 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutDataResponseMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER] = function () {
+        $container->set(static::PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER, function () {
             return $this->getCheckoutDataResponseMapperPlugins();
-        };
+        });
 
         return $container;
     }

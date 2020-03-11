@@ -18,6 +18,8 @@ class EntityTagsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_IF_MATCH_HEADER_INVALID = 'If-Match header value is invalid.';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getEntityTagRequiredResources(): array

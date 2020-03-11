@@ -137,7 +137,7 @@ interface StorageClientInterface
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface
      */
     public function getService();
 

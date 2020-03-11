@@ -10,6 +10,17 @@
         <property name="priceMode" type="string"/>
     </transfer>
 
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="surrogateIdentifier" type="int"/>
+    </transfer>
+
+    <transfer name="OrderListRequest">
+        <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
     <transfer name="RestOrderDetailsAttributes">
         <property name="createdAt" type="string"/>
         <property name="totals" type="RestOrderTotalsAttributes"/>

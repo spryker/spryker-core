@@ -52,15 +52,16 @@ class EventQueueProducer implements EventQueueProducerInterface
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      * @param string $listener
      * @param string|null $queuePoolName
+     * @param string|null $eventQueueName
      *
      * @return void
      */
-    public function enqueueListenerBulk($eventName, array $transfers, $listener, $queuePoolName = null): void
+    public function enqueueListenerBulk($eventName, array $transfers, $listener, $queuePoolName = null, $eventQueueName = null): void
     {
         $transfers = array_chunk($transfers, $this->eventConfig->getEnqueueEventMessageChunkSize());
 
         foreach ($transfers as $transfersChunk) {
-            $this->enqueueListenerBulkChunk($eventName, $transfersChunk, $listener, $queuePoolName);
+            $this->enqueueListenerBulkChunk($eventName, $transfersChunk, $listener, $queuePoolName, $eventQueueName);
         }
     }
 
@@ -69,14 +70,17 @@ class EventQueueProducer implements EventQueueProducerInterface
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param string $listener
      * @param string|null $queuePoolName
+     * @param string|null $eventQueueName
      *
      * @return void
      */
-    public function enqueueListener($eventName, TransferInterface $transfer, $listener, $queuePoolName = null)
+    public function enqueueListener($eventName, TransferInterface $transfer, $listener, $queuePoolName = null, $eventQueueName = null)
     {
         $messageTransfer = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);
 
-        $this->queueClient->sendMessage(EventConstants::EVENT_QUEUE, $messageTransfer);
+        $queueName = $eventQueueName ?? EventConstants::EVENT_QUEUE;
+
+        $this->queueClient->sendMessage($queueName, $messageTransfer);
     }
 
     /**
@@ -84,17 +88,20 @@ class EventQueueProducer implements EventQueueProducerInterface
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      * @param string $listener
      * @param string|null $queuePoolName
+     * @param string|null $eventQueueName
      *
      * @return void
      */
-    protected function enqueueListenerBulkChunk(string $eventName, array $transfers, string $listener, ?string $queuePoolName = null): void
+    protected function enqueueListenerBulkChunk(string $eventName, array $transfers, string $listener, ?string $queuePoolName = null, ?string $eventQueueName = null): void
     {
         $queueSendMessageTransfers = [];
         foreach ($transfers as $transfer) {
             $queueSendMessageTransfers[] = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);
         }
 
-        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $queueSendMessageTransfers);
+        $queueName = $eventQueueName ?? EventConstants::EVENT_QUEUE;
+
+        $this->queueClient->sendMessages($queueName, $queueSendMessageTransfers);
     }
 
     /**

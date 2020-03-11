@@ -27,7 +27,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -43,8 +43,8 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param array $productAbstractIds
-     * @param array $pageDataExpanderPluginNames
+     * @param int[] $productAbstractIds
+     * @param string[] $pageDataExpanderPluginNames
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

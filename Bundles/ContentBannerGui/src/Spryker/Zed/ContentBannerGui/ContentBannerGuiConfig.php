@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ContentBannerGuiConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return array
      */
     public function getContentWidgetTemplates(): array
@@ -23,6 +25,8 @@ class ContentBannerGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigFunctionName(): string

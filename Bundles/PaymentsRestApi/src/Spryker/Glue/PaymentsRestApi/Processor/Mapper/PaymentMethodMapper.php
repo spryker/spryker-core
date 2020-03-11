@@ -151,8 +151,9 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         PaymentMethodTransfer $paymentMethodTransfer
     ): bool {
+        $paymentMethodName = $paymentMethodTransfer->getName();
         foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
-            if ($paymentMethodTransfer->getName() === $restPaymentTransfer->getPaymentMethodName()) {
+            if ($paymentMethodName === $restPaymentTransfer->getPaymentMethodName()) {
                 return true;
             }
         }

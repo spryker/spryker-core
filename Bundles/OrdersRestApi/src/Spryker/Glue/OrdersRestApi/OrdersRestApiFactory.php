@@ -17,6 +17,8 @@ use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapper;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReader;
 use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface;
+use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilder;
+use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface;
 
 class OrdersRestApiFactory extends AbstractFactory
 {
@@ -27,8 +29,7 @@ class OrdersRestApiFactory extends AbstractFactory
     {
         return new OrderReader(
             $this->getSalesClient(),
-            $this->getResourceBuilder(),
-            $this->createOrderMapper()
+            $this->createOrderRestResponseBuilder()
         );
     }
 
@@ -49,6 +50,17 @@ class OrdersRestApiFactory extends AbstractFactory
     public function createOrderShipmentMapper(): OrderShipmentMapperInterface
     {
         return new OrderShipmentMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface
+     */
+    public function createOrderRestResponseBuilder(): OrderRestResponseBuilderInterface
+    {
+        return new OrderRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createOrderMapper()
+        );
     }
 
     /**
