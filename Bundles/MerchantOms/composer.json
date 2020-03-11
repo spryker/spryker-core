@@ -12,7 +12,11 @@
     "spryker/state-machine": "^2.8.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
+    "spryker/propel": "*",
+    "spryker/sales": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
