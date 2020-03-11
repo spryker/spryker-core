@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\Writer;
 
-use Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -49,10 +48,8 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
     {
         $merchantOrderItemTransfer->requireIdMerchantOrderItem();
         $merchantOrderItemResponseTransfer = (new MerchantOrderItemResponseTransfer())->setIsSuccessful(true);
-        $merchantOrderItemCriteriaFilterTransfer = (new MerchantOrderItemCriteriaFilterTransfer())
-            ->setIdMerchantOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
 
-        if (!$this->merchantSalesOrderRepository->existsMerchantOrderItem($merchantOrderItemCriteriaFilterTransfer->getIdMerchantOrderItem())) {
+        if (!$this->merchantSalesOrderRepository->existsMerchantOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem())) {
             return $this->addErrorMessage($merchantOrderItemResponseTransfer, static::MESSAGE_MERCHANT_ORDER_ITEM_NOT_FOUND);
         }
 
