@@ -137,7 +137,6 @@ class ProductPackagingUnitBusinessTester extends Actor
                 ->setSku($sku)
                 ->setAmount($amount)
                 ->setProductPackagingUnit(new ProductPackagingUnitTransfer())
-                ->setAmountSalesUnit(new ProductMeasurementSalesUnitTransfer())
         );
     }
 

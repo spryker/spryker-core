@@ -52,6 +52,10 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
      */
     public function getProductMeasurementUnits(array $productMeasurementUnitIds): array
     {
+        if (!$productMeasurementUnitIds) {
+            return [];
+        }
+
         $productMeasurementUnitStorageTransfers = $this->productMeasurementUnitStorageReader
             ->getProductMeasurementUnitStorageCollection($productMeasurementUnitIds);
 

@@ -99,30 +99,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      */
     public function getProductMeasurementUnitStorageCollection(array $productMeasurementUnitIds): array
     {
-        if (!$productMeasurementUnitIds) {
-            return [];
-        }
+        $mappingData = $this->storageClient->getMulti($this->generateKeys($productMeasurementUnitIds));
 
-        return $this->mapProductMeasurementUnitStorageDataToProductMeasurementUnitStorageTransfers(
-            $this->storageClient->getMulti(
-                $this->generateKeys($productMeasurementUnitIds)
-            )
-        );
-    }
-
-    /**
-     * @param array $productMeasurementUnitIds
-     *
-     * @return array
-     */
-    protected function generateKeys(array $productMeasurementUnitIds): array
-    {
-        $productMeasurementUnitStorageKeys = [];
-        foreach ($productMeasurementUnitIds as $idProductMeasurementUnit) {
-            $productMeasurementUnitStorageKeys[] = $this->getGeneratedStorageKey((string)$idProductMeasurementUnit);
-        }
-
-        return $productMeasurementUnitStorageKeys;
+        return $this->mapProductMeasurementUnitStorageDataToProductMeasurementUnitStorageTransfers($mappingData);
     }
 
     /**
@@ -149,6 +128,21 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
         }
 
         return $productConcreteMeasurementUnitStorageTransfers;
+    }
+
+    /**
+     * @param array $productMeasurementUnitIds
+     *
+     * @return array
+     */
+    protected function generateKeys(array $productMeasurementUnitIds): array
+    {
+        $productMeasurementUnitStorageKeys = [];
+        foreach ($productMeasurementUnitIds as $idProductMeasurementUnit) {
+            $productMeasurementUnitStorageKeys[] = $this->getGeneratedStorageKey((string)$idProductMeasurementUnit);
+        }
+
+        return $productMeasurementUnitStorageKeys;
     }
 
     /**

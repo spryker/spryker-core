@@ -120,11 +120,12 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
                 continue;
             }
 
-            $idProductConcrete = $this->getIdProductConcrete($storageKey);
             $productConcreteMeasurementUnitStorageData = $this->utilEncodingService->decodeJson($dataItem, true);
             if (!$productConcreteMeasurementUnitStorageData) {
                 continue;
             }
+
+            $idProductConcrete = $this->getIdProductConcrete($storageKey);
             $productConcreteMeasurementUnitStorageTransfers[$idProductConcrete] =
                 $this->mapToProductConcreteMeasurementUnitStorage($productConcreteMeasurementUnitStorageData);
         }
