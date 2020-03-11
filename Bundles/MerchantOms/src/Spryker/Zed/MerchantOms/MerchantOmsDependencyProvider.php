@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms;
 
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeBridge;
@@ -21,6 +22,8 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const FACADE_STATE_MACHINE = 'FACADE_STATE_MACHINE';
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
+
+    public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +50,34 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addMerchantSalesOrderFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addMerchantSalesOrderItemPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSalesOrderItemPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM, function (): SpyMerchantSalesOrderItemQuery {
+            return SpyMerchantSalesOrderItemQuery::create();
+        });
 
         return $container;
     }

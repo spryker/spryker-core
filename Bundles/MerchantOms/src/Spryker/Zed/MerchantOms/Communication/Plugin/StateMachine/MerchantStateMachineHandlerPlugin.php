@@ -101,6 +101,6 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      */
     public function getStateMachineItemsByStateIds(array $stateIds = []): array
     {
-        return [];
+        return $this->getFacade()->getStateMachineItemsByStateIds($stateIds);
     }
 }

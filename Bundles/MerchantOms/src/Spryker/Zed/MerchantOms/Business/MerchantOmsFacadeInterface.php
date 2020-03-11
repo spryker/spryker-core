@@ -39,4 +39,17 @@ interface MerchantOmsFacadeInterface
      * @return void
      */
     public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void;
+
+    /**
+     * Specification:
+     * - Finds merchant order items with provided state ids.
+     * - Returns array of StateMachineItem transfers with identifier(id of merchant order item) and idItemState.
+     *
+     * @api
+     *
+     * @param int[] $stateIds
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     */
+    public function getStateMachineItemsByStateIds(array $stateIds): array;
 }
