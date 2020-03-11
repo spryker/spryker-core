@@ -9,9 +9,10 @@ namespace Spryker\Zed\MerchantSalesOrder\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
-use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
@@ -82,6 +83,21 @@ interface MerchantSalesOrderFacadeInterface
     public function findMerchantOrder(
         MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
     ): ?MerchantOrderTransfer;
+
+    /**
+     * Specification:
+     * - Returns a merchant order item found using provided criteria.
+     * - Returns NULL if merchant order item is not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
+     */
+    public function findMerchantOrderItem(
+        MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+    ): ?MerchantOrderItemTransfer;
 
     /**
      * Specification:
