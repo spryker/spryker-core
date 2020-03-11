@@ -53,7 +53,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      */
     public function findRelatedProducts(int $idProductAbstract, string $localeName, string $storeName)
     {
-        $relatedProductAbstractIds = $this->findRelatedAbstractProductIds($idProductAbstract);
+        $relatedProductAbstractIds = $this->findRelatedAbstractProductIds($idProductAbstract, $storeName);
         $productStorageDataCollection = $this
             ->productStorageClient
             ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore($relatedProductAbstractIds, $localeName, APPLICATION_STORE);
@@ -79,24 +79,26 @@ class RelatedProductReader implements RelatedProductReaderInterface
 
     /**
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract): array
+    public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array
     {
-        $relationIds = $this->getRelationIds($idProductAbstract);
+        $relationIds = $this->getRelationIds($idProductAbstract, $storeName);
 
         return $this->getSortedProductAbstractIds($relationIds);
     }
 
     /**
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return array
      */
-    protected function getRelationIds($idProductAbstract)
+    protected function getRelationIds(int $idProductAbstract, string $storeName): array
     {
-        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract);
+        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract, $storeName);
 
         if (!$productAbstractRelationStorageTransfer) {
             return [];
@@ -124,6 +126,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      */
     protected function getSortedProductAbstractIds(array $relationIds)
     {
+        $relationIds = array_values($relationIds);
         asort($relationIds, SORT_NATURAL);
 
         return array_keys($relationIds);

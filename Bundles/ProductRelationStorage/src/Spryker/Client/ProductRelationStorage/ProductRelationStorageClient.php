@@ -28,10 +28,6 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      */
     public function findRelatedProducts($idProductAbstract, $localeName, string $storeName)
     {
-        if (!$storeName) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
             ->createRelatedProductReader()
             ->findRelatedProducts($idProductAbstract, $localeName, $storeName);
@@ -64,19 +60,15 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      * @api
      *
      * @param int $idProductAbstract
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract, ?string $storeName = null): array
+    public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array
     {
-        if (!$storeName) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
             ->createRelatedProductReader()
-            ->findRelatedAbstractProductIds($idProductAbstract);
+            ->findRelatedAbstractProductIds($idProductAbstract, $storeName);
     }
 
     /**

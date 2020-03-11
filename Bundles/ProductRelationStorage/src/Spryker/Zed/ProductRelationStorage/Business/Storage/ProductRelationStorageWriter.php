@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductRelationStorage\Business\Storage;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
 use Generated\Shared\Transfer\ProductRelationStorageTransfer;
+use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToProductRelationFacadeInterface;
 use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageEntityManagerInterface;
@@ -136,15 +137,28 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
             $productRelationStorageTransfer = new ProductRelationStorageTransfer();
             $productRelationStorageTransfer->setIsActive($productRelationTransfer->getIsActive());
             $productRelationStorageTransfer->setKey($productRelationTransfer->getProductRelationType()->getKey());
-            foreach ($productRelationTransfer->getRelatedProducts() as $productRelationRelatedProductTransfer) {
-                $productRelationStorageTransfer->addProductAbstractIds([
-                    $productRelationRelatedProductTransfer->getFkProductAbstract() => $productRelationRelatedProductTransfer->getOrder(),
-                ]);
-            }
+            $productRelationStorageTransfer->setProductAbstractIds($this->fillProductAbstractIds($productRelationTransfer));
             $productRelationStorageTransfers->append($productRelationStorageTransfer);
         }
 
         return $productRelationStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return int[]
+     */
+    protected function fillProductAbstractIds(
+        ProductRelationTransfer $productRelationTransfer
+    ): array {
+        $productAbstractIds = [];
+
+        foreach ($productRelationTransfer->getRelatedProducts() as $productRelationRelatedProductTransfer) {
+            $productAbstractIds[$productRelationRelatedProductTransfer->getFkProductAbstract()] = $productRelationRelatedProductTransfer->getOrder();
+        }
+
+        return $productAbstractIds;
     }
 
     /**

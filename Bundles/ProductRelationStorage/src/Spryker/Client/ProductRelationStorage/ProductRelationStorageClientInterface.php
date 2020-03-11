@@ -53,11 +53,11 @@ interface ProductRelationStorageClientInterface
      * @api
      *
      * @param int $idProductAbstract
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract, ?string $storeName = null): array;
+    public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array;
 
     /**
      * Specification:
