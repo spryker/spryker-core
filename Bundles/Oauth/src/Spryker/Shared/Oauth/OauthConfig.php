@@ -84,7 +84,7 @@ class OauthConfig extends AbstractSharedConfig
      *
      * @return string
      */
-    public function getRefreshTokenRetention(): string
+    public function getRefreshTokenRetentionInterval(): string
     {
         return 'PT0M';
     }

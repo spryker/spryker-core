@@ -305,7 +305,7 @@ class OauthFacadeTest extends Unit
         // Arrange
         $this->tester->deleteAllOauthRefreshTokens();
         $oauthConfigMock = $this->getOauthConfigMock();
-        $oauthConfigMock->method('getRefreshTokenRetention')->willReturn($interval);
+        $oauthConfigMock->method('getRefreshTokenRetentionInterval')->willReturn($interval);
         $this->setUserProviderPluginMock();
         $customerTransfer = $this->tester->createCustomerTransfer();
         $this->tester->haveAuthorizationToGlue($customerTransfer);
