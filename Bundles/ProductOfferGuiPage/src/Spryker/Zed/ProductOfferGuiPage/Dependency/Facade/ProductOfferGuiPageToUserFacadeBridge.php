@@ -2,12 +2,10 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOfferGuiPage\Dependency\Facade;
-
-use Generated\Shared\Transfer\UserTransfer;
 
 class ProductOfferGuiPageToUserFacadeBridge implements ProductOfferGuiPageToUserFacadeInterface
 {
@@ -27,7 +25,7 @@ class ProductOfferGuiPageToUserFacadeBridge implements ProductOfferGuiPageToUser
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser(): UserTransfer
+    public function getCurrentUser()
     {
         return $this->userFacade->getCurrentUser();
     }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductImage\Persistence;
 
 use Generated\Shared\Transfer\ProductImageFilterTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
@@ -132,28 +134,35 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param array $productConcreteIds
-     * @param int $localeId
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
      */
-    public function getProductImageSetsByProductConcreteIdsAndLocaleId(array $productConcreteIds, int $localeId): array
+    public function getProductImageSets(ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer): ProductImageSetCollectionTransfer
     {
         $productImageSetQuery = $this->getFactory()
             ->createProductImageSetQuery()
             ->joinWithSpyProductImageSetToProductImage()
-                ->useSpyProductImageSetToProductImageQuery()
-                    ->joinWithSpyProductImage()
-                ->endUse()
-            ->filterByFkLocale(
-                $localeId
-            )
-            ->filterByFkProduct_In($productConcreteIds);
+            ->useSpyProductImageSetToProductImageQuery()
+                ->joinWithSpyProductImage()
+            ->endUse();
 
+        if ($productImageSetCriteriaTransfer->getLocaleId()) {
+            $productImageSetQuery->filterByFkLocale($productImageSetCriteriaTransfer->getLocaleId());
+        }
+
+        if ($productImageSetCriteriaTransfer->getProductConcreteIds()) {
+            $productImageSetQuery->filterByFkProduct_In($productImageSetCriteriaTransfer->getProductConcreteIds());
+        }
+
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $results */
         $results = $productImageSetQuery->find();
 
         return $this->getFactory()
             ->createProductImageMapper()
-            ->mapProductImageSetEntitiesToProductImageSetTransfers($results);
+            ->mapProductImageSetEntitiesToProductImageSetCollectionTransfer(
+                $results,
+                new ProductImageSetCollectionTransfer()
+            );
     }
 }

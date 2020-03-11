@@ -2,23 +2,23 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductTableListCriteriaBuilder;
+namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\ProductListTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\CategoryProductListTableFilterDataProvider;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\IsActiveProductListTableFilterDataProvider;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter\StoresProductListTableFilterDataProvider;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\CategoryProductTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\StoresProductTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface;
 
-class ProductListTableCriteriaBuilder implements ProductListTableCriteriaBuilderInterface
+class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterface
 {
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface
@@ -76,17 +76,17 @@ class ProductListTableCriteriaBuilder implements ProductListTableCriteriaBuilder
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductListTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
      */
-    public function build(): ProductListTableCriteriaTransfer
+    public function build(): ProductTableCriteriaTransfer
     {
-        $productListTableCriteriaTransfer = $this->buildProductListTableCriteriaTransfer();
-        $productListTableCriteriaTransfer->setSearchTerm($this->searchTerm);
-        $productListTableCriteriaTransfer->setOrderBy($this->sorting);
-        $productListTableCriteriaTransfer->setPagination($this->buildPaginationTransfer());
-        $productListTableCriteriaTransfer = $this->addFilterDataToProductListTableCriteriaTransfer($productListTableCriteriaTransfer);
+        $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer();
+        $productTableCriteriaTransfer->setSearchTerm($this->searchTerm);
+        $productTableCriteriaTransfer->setOrderBy($this->sorting);
+        $productTableCriteriaTransfer->setPagination($this->buildPaginationTransfer());
+        $productTableCriteriaTransfer = $this->addFilterData($productTableCriteriaTransfer);
 
-        return $productListTableCriteriaTransfer;
+        return $productTableCriteriaTransfer;
     }
 
     /**
@@ -150,15 +150,15 @@ class ProductListTableCriteriaBuilder implements ProductListTableCriteriaBuilder
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductListTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
      */
-    protected function buildProductListTableCriteriaTransfer(): ProductListTableCriteriaTransfer
+    protected function buildProductTableCriteriaTransfer(): ProductTableCriteriaTransfer
     {
-        $productListTableCriteriaTransfer = new ProductListTableCriteriaTransfer();
-        $productListTableCriteriaTransfer->setMerchantUser($this->getCurrentMerchantUser());
-        $productListTableCriteriaTransfer->setLocale($this->localeFacade->getCurrentLocale());
+        $productTableCriteriaTransfer = new ProductTableCriteriaTransfer();
+        $productTableCriteriaTransfer->setMerchantUser($this->getCurrentMerchantUser());
+        $productTableCriteriaTransfer->setLocale($this->localeFacade->getCurrentLocale());
 
-        return $productListTableCriteriaTransfer;
+        return $productTableCriteriaTransfer;
     }
 
     /**
@@ -184,32 +184,32 @@ class ProductListTableCriteriaBuilder implements ProductListTableCriteriaBuilder
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListTableCriteriaTransfer $productListTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
      */
-    protected function addFilterDataToProductListTableCriteriaTransfer(ProductListTableCriteriaTransfer $productListTableCriteriaTransfer): ProductListTableCriteriaTransfer
+    protected function addFilterData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableCriteriaTransfer
     {
         if (!$this->filters) {
-            return $productListTableCriteriaTransfer;
+            return $productTableCriteriaTransfer;
         }
 
-        if (array_key_exists(CategoryProductListTableFilterDataProvider::FILTER_NAME, $this->filters)) {
-            $productListTableCriteriaTransfer->setInCategories(
-                $this->filters[CategoryProductListTableFilterDataProvider::FILTER_NAME]
+        if (array_key_exists(CategoryProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
+            $productTableCriteriaTransfer->setInCategories(
+                $this->filters[CategoryProductTableFilterDataProvider::FILTER_NAME]
             );
         }
 
-        if (array_key_exists(IsActiveProductListTableFilterDataProvider::FILTER_NAME, $this->filters)) {
-            $productListTableCriteriaTransfer->setIsActive(true);
+        if (array_key_exists(IsActiveProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
+            $productTableCriteriaTransfer->setIsActive(true);
         }
 
-        if (array_key_exists(StoresProductListTableFilterDataProvider::FILTER_NAME, $this->filters)) {
-            $productListTableCriteriaTransfer->setInStores(
-                $this->filters[StoresProductListTableFilterDataProvider::FILTER_NAME]
+        if (array_key_exists(StoresProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
+            $productTableCriteriaTransfer->setInStores(
+                $this->filters[StoresProductTableFilterDataProvider::FILTER_NAME]
             );
         }
 
-        return $productListTableCriteriaTransfer;
+        return $productTableCriteriaTransfer;
     }
 }

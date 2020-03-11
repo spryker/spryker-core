@@ -40,9 +40,12 @@
     </transfer>
 
     <transfer name="ProductImageSetCollection">
+        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
     </transfer>
 
     <transfer name="ProductImageSetCriteria">
+        <property name="productConcreteIds" type="int[]" singular="productConcreteId"/>
+        <property name="localeId" type="int"/>
     </transfer>
 
 </transfers>

@@ -2,19 +2,21 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductListTableDataProvider;
+namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductTableDataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductListTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToProductImageFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface;
 
-class ProductListTableDataProvider implements ProductListTableDataProviderInterface
+class ProductTableDataProvider implements ProductTableDataProviderInterface
 {
     protected const EXTENDED_PRODUCT_CONCRETE_NAME_SEPARATOR = ', ';
 
@@ -42,17 +44,17 @@ class ProductListTableDataProvider implements ProductListTableDataProviderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListTableCriteriaTransfer $productListTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
-    public function getProductListTableData(ProductListTableCriteriaTransfer $productListTableCriteriaTransfer): ProductConcreteCollectionTransfer
+    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductConcreteCollectionTransfer
     {
         $productConcreteCollectionTransfer = $this->productOfferGuiPageRepository
-            ->getConcreteProductsForProductListTable($productListTableCriteriaTransfer);
+            ->getConcreteProductsForProductTable($productTableCriteriaTransfer);
         $productConcreteCollectionTransfer = $this->addProductImagesToConcreteProducts(
             $productConcreteCollectionTransfer,
-            $productListTableCriteriaTransfer->requireLocale()->getLocale()
+            $productTableCriteriaTransfer->requireLocale()->getLocale()
         );
         $productConcreteCollectionTransfer = $this->transformProductConcreteNames($productConcreteCollectionTransfer);
 
@@ -82,29 +84,33 @@ class ProductListTableDataProvider implements ProductListTableDataProviderInterf
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
      */
     protected function findProductConcreteProductImageSetsForLocale(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer,
         LocaleTransfer $localeTransfer
-    ): array {
-        $productConcreteIds = $this->extractProductConcreteIds($productConcreteCollectionTransfer);
+    ): ProductImageSetCollectionTransfer {
+        $productImageSetCriteriaTransfer = new ProductImageSetCriteriaTransfer();
+        $productImageSetCriteriaTransfer->setProductConcreteIds(
+            $this->extractProductConcreteIds($productConcreteCollectionTransfer)
+        );
+        $productImageSetCriteriaTransfer->setLocaleId($localeTransfer->requireIdLocale()->getIdLocale());
 
-        return $this->productImageFacade->getProductImageSetsByProductConcreteIdsAndLocaleId($productConcreteIds, $localeTransfer->requireIdLocale()->getIdLocale());
+        return $this->productImageFacade->getProductImageSets($productImageSetCriteriaTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param \Generated\Shared\Transfer\ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
     protected function mergeConcreteProductsWithProductImageSets(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer,
-        array $productImageSetTransfers
+        ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
     ): ProductConcreteCollectionTransfer {
         foreach ($productConcreteCollectionTransfer->getConcreteProducts() as $productConcreteTransfer) {
-            foreach ($productImageSetTransfers as $productImageSetTransfer) {
+            foreach ($productImageSetCollectionTransfer->getProductImageSets() as $productImageSetTransfer) {
                 if ($productConcreteTransfer->getIdProduct() === $productImageSetTransfer->getIdProduct()) {
                     $productConcreteTransfer->addImageSet($productImageSetTransfer);
 

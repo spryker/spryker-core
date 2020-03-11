@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageFilterTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
@@ -255,15 +257,14 @@ interface ProductImageFacadeInterface
 
     /**
      * Specification:
-     * - Gets product image sets by a list of concrete product ids and locale id.
+     * - Gets product image sets by product image set criteria.
      * - Each image set is represented by ProductImageSetTransfer.
      *
      * @api
      *
-     * @param int[] $productIds
-     * @param int $localeId
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
      */
-    public function getProductImageSetsByProductConcreteIdsAndLocaleId(array $productIds, int $localeId): array;
+    public function getProductImageSets(ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer): ProductImageSetCollectionTransfer;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
@@ -46,13 +47,14 @@ class ProductImageMapper
 
     /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntities
+     * @param \Generated\Shared\Transfer\ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
      */
-    public function mapProductImageSetEntitiesToProductImageSetTransfers(ObjectCollection $productImageSetEntities): array
-    {
-        $productImageSetTransfers = [];
-
+    public function mapProductImageSetEntitiesToProductImageSetCollectionTransfer(
+        ObjectCollection $productImageSetEntities,
+        ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
+    ): ProductImageSetCollectionTransfer {
         foreach ($productImageSetEntities as $productImageSetEntity) {
             $productImageSetTransfer = $this->mapProductImageSetEntityToProductImageSetTransfer(
                 $productImageSetEntity,
@@ -67,9 +69,9 @@ class ProductImageMapper
                 $productImageSetTransfer->addProductImage($productImageTransfer);
             }
 
-            $productImageSetTransfers[] = $productImageSetTransfer;
+            $productImageSetCollectionTransfer->addProductImageSet($productImageSetTransfer);
         }
 
-        return $productImageSetTransfers;
+        return $productImageSetCollectionTransfer;
     }
 }

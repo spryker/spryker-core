@@ -1,7 +1,7 @@
 {
-  "name": "spryker/product-gui-page",
+  "name": "spryker/product-offer-gui-page",
   "type": "library",
-  "description": "ProductGuiPage module",
+  "description": "ProductOfferGuiPage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
@@ -10,8 +10,10 @@
     "spryker/locale": "^3.0.0",
     "spryker/merchant-user": "^0.2.0",
     "spryker/product": "^6.18.0",
+    "spryker/product-category": "^4.7.0",
     "spryker/product-image": "^3.10.0",
     "spryker/product-offer": "^0.3.0",
+    "spryker/product-validity": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
@@ -19,8 +21,7 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -30,8 +31,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {

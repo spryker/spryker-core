@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOfferGuiPage\Dependency\Service;
@@ -17,7 +17,7 @@ interface ProductOfferGuiPageToUtilEncodingServiceInterface
      *
      * @return mixed|null
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null);
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 
     /**
      * @param array $value
@@ -26,5 +26,5 @@ interface ProductOfferGuiPageToUtilEncodingServiceInterface
      *
      * @return string|null
      */
-    public function encodeJson(array $value, ?int $options = null, ?int $depth = null): ?string;
+    public function encodeJson($value, $options = null, $depth = null);
 }

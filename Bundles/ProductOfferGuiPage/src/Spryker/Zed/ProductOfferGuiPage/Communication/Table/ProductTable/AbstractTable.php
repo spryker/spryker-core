@@ -2,33 +2,22 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable;
+namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable;
 
 use Generated\Shared\Transfer\TableConfigurationTransfer;
 use Generated\Shared\Transfer\TableDataTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidPaginationDataException;
 use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingDataException;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
 {
-    protected const RESULT_KEY_DATA = 'data';
-    protected const RESULT_KEY_PAGINATION = 'pagination';
-
     protected const CONFIG_COLUMNS = 'columns';
-    protected const CONFIG_AVAILABLE_PAGE_SIZES = 'availablePageSizes';
+    protected const CONFIG_AVAILABLE_PAGE_SIZES = 'pageSizes';
     protected const CONFIG_FILTERS = 'filters';
-
-    protected const PAGINATION_KEY_CURRENT_PAGE = 'currentPage';
-    protected const PAGINATION_KEY_LAST_PAGE = 'lastPage';
-    protected const PAGINATION_KEY_PAGE_SIZE = 'pageSize';
-    protected const PAGINATION_KEY_TOTAL_COUNT = 'totalCount';
-    protected const PAGINATION_KEY_PREVIOUS_PAGE = 'previousPage';
-    protected const PAGINATION_KEY_NEXT_PAGE = 'nextPage';
-    protected const PAGINATION_KEY_FIRST_PAGE = 'firstPage';
+    protected const CONFIG_ROW_ACTIONS = 'rowActions';
 
     protected const PARAM_PAGE = 'page';
     protected const PARAM_PAGE_SIZE = 'pageSize';
@@ -69,33 +58,14 @@ abstract class AbstractTable
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidPaginationDataException
-     *
      * @return array
      */
     public function getData(Request $request): array
     {
         $this->initialize($request);
-
         $tableDataTransfer = $this->provideTableData();
-        $paginationTransfer = $tableDataTransfer->getPagination();
 
-        if (!$paginationTransfer) {
-            throw new InvalidPaginationDataException('Pagination data is not present.');
-        }
-
-        return [
-            static::RESULT_KEY_DATA => $tableDataTransfer->getRows(),
-            static::RESULT_KEY_PAGINATION => [
-                static::PAGINATION_KEY_CURRENT_PAGE => $paginationTransfer->getPage(),
-                static::PAGINATION_KEY_LAST_PAGE => $paginationTransfer->getLastPage(),
-                static::PAGINATION_KEY_PAGE_SIZE => $paginationTransfer->getMaxPerPage(),
-                static::PAGINATION_KEY_TOTAL_COUNT => $paginationTransfer->getNbResults(),
-                static::PAGINATION_KEY_PREVIOUS_PAGE => $paginationTransfer->getPreviousPage(),
-                static::PAGINATION_KEY_NEXT_PAGE => $paginationTransfer->getNextPage(),
-                static::PAGINATION_KEY_FIRST_PAGE => $paginationTransfer->getFirstPage(),
-            ],
-        ];
+        return $tableDataTransfer->toArray();
     }
 
     /**
@@ -109,6 +79,7 @@ abstract class AbstractTable
             static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($tableConfigurationTransfer),
             static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($tableConfigurationTransfer),
             static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($tableConfigurationTransfer),
+            static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($tableConfigurationTransfer),
         ];
     }
 
@@ -122,7 +93,7 @@ abstract class AbstractTable
         $columnsData = [];
 
         foreach ($tableConfigurationTransfer->getColumns() as $columnTransfer) {
-            $columnsData[] = $columnTransfer->toArray();
+            $columnsData[] = $columnTransfer->modifiedToArray();
         }
 
         return $columnsData;
@@ -154,6 +125,22 @@ abstract class AbstractTable
         }
 
         return $filtersData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareRowActions(TableConfigurationTransfer $tableConfigurationTransfer): array
+    {
+        $rowActions = [];
+
+        foreach ($tableConfigurationTransfer->getRowActions() as $rowActionTransfer) {
+            $rowActions[] = $rowActionTransfer->toArray();
+        }
+
+        return $rowActions;
     }
 
     /**

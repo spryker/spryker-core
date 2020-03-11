@@ -5,20 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Business;
+namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductTableDataProvider;
 
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 
-interface ProductOfferGuiPageFacadeInterface
+interface ProductTableDataProviderInterface
 {
     /**
-     * Specification:
-     * - Gets the list of concrete products and pagination data for product list table.
-     * - Returns ProductConcreteCollectionTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer

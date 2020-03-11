@@ -2,19 +2,19 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\ProductTableListCriteriaBuilder;
+namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder;
 
-use Generated\Shared\Transfer\ProductListTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 
-interface ProductListTableCriteriaBuilderInterface
+interface ProductTableCriteriaBuilderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ProductListTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
      */
-    public function build(): ProductListTableCriteriaTransfer;
+    public function build(): ProductTableCriteriaTransfer;
 
     /**
      * @param int $page

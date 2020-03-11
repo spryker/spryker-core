@@ -2,15 +2,15 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductListTable\Filter;
+namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter;
 
 use Generated\Shared\Transfer\TableFilterTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface;
 
-class StoresProductListTableFilterDataProvider implements ProductListTableFilterDataProviderInterface
+class StoresProductTableFilterDataProvider implements ProductTableFilterDataProviderInterface
 {
     public const FILTER_NAME = 'store';
 
@@ -42,8 +42,8 @@ class StoresProductListTableFilterDataProvider implements ProductListTableFilter
             ->setKey(static::FILTER_NAME)
             ->setTitle('Stores')
             ->setType('select')
-            ->setIsMultiselect(true)
-            ->setOptions($indexedStoreNames);
+            ->addOption(static::OPTION_NAME_MULTISELECT, true)
+            ->addOption(static::OPTION_NAME_VALUES, $indexedStoreNames);
     }
 
     /**
@@ -57,8 +57,8 @@ class StoresProductListTableFilterDataProvider implements ProductListTableFilter
 
         foreach ($storeTransfers as $storeTransfer) {
             $indexedStoreNames[] = [
-                static::KEY_KEY => $storeTransfer->getIdStore(),
-                static::KEY_VALUE => $storeTransfer->getName(),
+                static::OPTION_VALUE_KEY_TITLE => $storeTransfer->getName(),
+                static::OPTION_VALUE_KEY_VALUE => $storeTransfer->getIdStore(),
             ];
         }
 
