@@ -25,6 +25,8 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -84,6 +86,8 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

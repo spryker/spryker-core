@@ -12,6 +12,8 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class CommentConfig extends AbstractSharedConfig
 {
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getAvailableCommentTags(): array

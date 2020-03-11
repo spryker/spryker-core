@@ -21,6 +21,8 @@ use Spryker\Zed\ProductApi\ProductApiConfig;
 class ProductApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -31,6 +33,8 @@ class ProductApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
