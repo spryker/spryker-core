@@ -21,8 +21,6 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByPr
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitsByCartItemResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitsByCartItemResourceRelationshipExpanderInterface;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapper;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\SalesUnitMapper;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\SalesUnitMapperInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Reader\ProductMeasurementUnitReader;
@@ -135,10 +133,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
      */
     public function createProductMeasurementUnitRestResponseBuilder(): ProductMeasurementUnitRestResponseBuilderInterface
     {
-        return new ProductMeasurementUnitRestResponseBuilder(
-            $this->getResourceBuilder(),
-            $this->createProductMeasurementUnitMapper()
-        );
+        return new ProductMeasurementUnitRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**
@@ -150,14 +145,6 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createSalesUnitMapper()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface
-     */
-    public function createProductMeasurementUnitMapper(): ProductMeasurementUnitMapperInterface
-    {
-        return new ProductMeasurementUnitMapper();
     }
 
     /**

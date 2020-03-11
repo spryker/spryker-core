@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\RestProductMeasurementUnitsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,20 +24,11 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface
-     */
-    protected $productMeasurementUnitMapper;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Mapper\ProductMeasurementUnitMapperInterface $productMeasurementUnitMapper
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        ProductMeasurementUnitMapperInterface $productMeasurementUnitMapper
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->productMeasurementUnitMapper = $productMeasurementUnitMapper;
     }
 
     /**
@@ -60,11 +50,8 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
      */
     public function createProductMeasurementUnitRestResource(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResourceInterface
     {
-        $restProductMeasurementUnitsAttributesTransfer = $this->productMeasurementUnitMapper
-            ->mapProductMeasurementUnitTransferToRestProductMeasurementUnitsAttributesTransfer(
-                $productMeasurementUnitTransfer,
-                new RestProductMeasurementUnitsAttributesTransfer()
-            );
+        $restProductMeasurementUnitsAttributesTransfer = (new RestProductMeasurementUnitsAttributesTransfer())
+            ->fromArray($productMeasurementUnitTransfer->toArray(), true);
 
         $resourceId = $productMeasurementUnitTransfer->getCode();
 
