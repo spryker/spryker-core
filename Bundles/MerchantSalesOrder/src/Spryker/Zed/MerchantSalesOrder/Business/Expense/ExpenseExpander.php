@@ -31,9 +31,9 @@ class ExpenseExpander implements ExpenseExpanderInterface
             return $expenseTransfer;
         }
 
-        $shipmentGroupTransfer->requireItems();
+        $merchantReference = $this->findExclusiveMerchantReference($shipmentGroupTransfer);
 
-        return $expenseTransfer->setMerchantReference($this->findExclusiveMerchantReference($shipmentGroupTransfer));
+        return $expenseTransfer->setMerchantReference($merchantReference);
     }
 
     /**
@@ -43,22 +43,21 @@ class ExpenseExpander implements ExpenseExpanderInterface
      */
     protected function findExclusiveMerchantReference(ShipmentGroupTransfer $shipmentGroupTransfer): ?string
     {
-        $merchantReferences = [];
+        $shipmentGroupTransfer->requireItems();
+        $merchantReference = null;
 
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getMerchantReference()) {
-                return null;
+            if ($merchantReference === null) {
+                $merchantReference = $itemTransfer->getMerchantReference();
+
+                continue;
             }
 
-            $merchantReferences[] = $itemTransfer->getMerchantReference();
+            if ($merchantReference !== $itemTransfer->getMerchantReference()) {
+                return null;
+            }
         }
 
-        $uniqueMerchantReferences = array_unique($merchantReferences);
-
-        if (count($uniqueMerchantReferences) !== 1) {
-            return null;
-        }
-
-        return $uniqueMerchantReferences[0];
+        return $merchantReference;
     }
 }

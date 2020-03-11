@@ -18,7 +18,7 @@ interface ShipmentExpenseExpanderPluginInterface
     /**
      * Specification:
      *  - Expands shipment expense with data.
-     *  - Plugin stack is called before expense transfer created\updated.
+     *  - Plugin stack is called before expense transfer is created\updated.
      *
      * @api
      *
