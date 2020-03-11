@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 /**
- * Provides shipment expense expand ability before entity is saved to database.
+ * Provides the ability to expand shipment expense before storing it into the database.
  */
 interface ShipmentExpenseExpanderPluginInterface
 {

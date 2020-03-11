@@ -14,8 +14,8 @@ use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\Expander\ExpenseExpander;
-use Spryker\Zed\MerchantSalesOrder\Business\Expander\ExpenseExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpander;
+use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
@@ -41,7 +41,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expander\ExpenseExpanderInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface
      */
     public function createExpenseExpander(): ExpenseExpanderInterface
     {

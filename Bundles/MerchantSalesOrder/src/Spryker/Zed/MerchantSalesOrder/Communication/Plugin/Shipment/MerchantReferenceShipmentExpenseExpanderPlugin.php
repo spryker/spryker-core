@@ -16,12 +16,12 @@ use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPlugi
  * @method \Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface getFacade()
  */
-class MerchantShipmentExpenseExpanderPlugin extends AbstractPlugin implements ShipmentExpenseExpanderPluginInterface
+class MerchantReferenceShipmentExpenseExpanderPlugin extends AbstractPlugin implements ShipmentExpenseExpanderPluginInterface
 {
     /**
      * Specification
      * - Expands expense transfer with merchant reference from items.
-     * - Don't expand if items have different merchant references.
+     * - Doesn't expand if items have different merchant references or given expense is not of shipment type.
      * - Requires ShipmentGroup.items property to be set.
      * - Returns expanded expense transfer.
      *

@@ -87,7 +87,7 @@ interface MerchantSalesOrderFacadeInterface
     /**
      * Specification
      * - Expands expense transfer with merchant reference from items.
-     * - Don't expand if items have different merchant references.
+     * - Doesn't expand if items have different merchant references or given expense is not of shipment type.
      * - Requires ShipmentGroup.items property to be set.
      * - Returns expanded expense transfer.
      *
