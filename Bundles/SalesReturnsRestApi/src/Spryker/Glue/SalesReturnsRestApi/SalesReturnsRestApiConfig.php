@@ -20,8 +20,10 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
 
     // TODO: clarify it.
     public const RESPONSE_RETURN_CANT_BE_CREATED = '3302';
+    public const RESPONSE_CANT_FIND_RETURN = '801';
 
     public const EXCEPTION_MESSAGE_RETURN_CANT_BE_CREATED = 'Return can\'t be created.';
+    public const EXCEPTION_MESSAGE_CANT_FIND_RETURN = 'Can\'t find return by the given return reference';
 
     /**
      * @return (int|string)[][]
@@ -33,6 +35,11 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_RETURN_CANT_BE_CREATED,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_RETURN_CANT_BE_CREATED,
+            ],
+            SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURN_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => static::EXCEPTION_MESSAGE_CANT_FIND_RETURN,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_CANT_FIND_RETURN,
             ],
         ];
     }

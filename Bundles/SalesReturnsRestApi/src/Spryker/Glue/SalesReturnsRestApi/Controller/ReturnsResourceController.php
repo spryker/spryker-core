@@ -19,6 +19,45 @@ class ReturnsResourceController extends AbstractController
 {
     /**
      * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves return by id."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestReturnDetailsAttributesTransfer",
+     *          "responses": {
+     *              "403": "Unauthorized request.",
+     *              "404": "Retrun not found."
+     *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves list of returns."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "403": "Unauthorized request."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()->createReturnReader()->getReturns($restRequest);
+    }
+
+    /**
+     * @Glue({
      *     "post": {
      *          "summary": [
      *              "Creates a return."

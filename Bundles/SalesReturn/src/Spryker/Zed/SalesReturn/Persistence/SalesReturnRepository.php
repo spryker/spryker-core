@@ -86,6 +86,13 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
 
         $salesReturnQuery = $this->setSalesReturnFilters($salesReturnQuery, $returnFilterTransfer);
 
+        $returnReasonQuery = $this->buildQueryFromCriteria(
+            $salesReturnQuery,
+            $returnFilterTransfer->getFilter()
+        );
+
+        $returnReasonQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
+
         return $this->getFactory()
             ->createReturnMapper()
             ->mapReturnEntityCollectionToReturnCollection($salesReturnQuery->find())
@@ -122,6 +129,10 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
     ): SpySalesReturnQuery {
         if ($returnFilterTransfer->getReturnReference()) {
             $salesReturnQuery->filterByReturnReference($returnFilterTransfer->getReturnReference());
+        }
+
+        if ($returnFilterTransfer->getCustomerReference()) {
+            $salesReturnQuery->filterByCustomerReference($returnFilterTransfer->getCustomerReference());
         }
 
         if ($returnFilterTransfer->getPagination()) {

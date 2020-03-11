@@ -10,10 +10,13 @@ namespace SprykerTest\Zed\SalesReturn;
 use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ReturnItemTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
@@ -38,6 +41,8 @@ use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 class SalesReturnBusinessTester extends Actor
 {
     use _generated\SalesReturnBusinessTesterActions;
+
+    protected const SHIPPED_STATE_NAME = 'shipped';
 
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -64,6 +69,37 @@ class SalesReturnBusinessTester extends Actor
     public function ensureReturnReasonTablesIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getSalesReturnReasonQuery());
+    }
+
+    /**
+     * @param string $stateMachineProcessName
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer|null
+     */
+    public function createReturnByStateMachineProcessName(
+        string $stateMachineProcessName,
+        ?CustomerTransfer $customerTransfer = null
+    ): ?ReturnTransfer {
+        $orderTransfer = $this->createOrderByStateMachineProcessName($stateMachineProcessName, $customerTransfer);
+
+        $firstItemTransfer = $orderTransfer->getItems()->offsetGet(0);
+        $secondItemTransfer = $orderTransfer->getItems()->offsetGet(1);
+
+        $this->setItemState($firstItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+        $this->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+            ->setCustomer($customerTransfer ?? $orderTransfer->getCustomer())
+            ->setStore($orderTransfer->getStore())
+            ->addReturnItem((new ReturnItemTransfer())->setOrderItem($firstItemTransfer))
+            ->addReturnItem((new ReturnItemTransfer())->setOrderItem($secondItemTransfer));
+
+        return $this->getLocator()
+            ->salesReturn()
+            ->facade()
+            ->createReturn($createReturnRequestTransfer)
+            ->getReturn();
     }
 
     /**
