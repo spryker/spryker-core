@@ -97,7 +97,7 @@ class ProductMeasurementUnitBusinessTester extends Actor
             (new ItemTransfer())
                 ->setSku($sku)
                 ->setQuantity($quantity)
-                ->setAmountSalesUnit($amountSalesUnit)
+                ->setQuantitySalesUnit($amountSalesUnit)
         );
     }
 
