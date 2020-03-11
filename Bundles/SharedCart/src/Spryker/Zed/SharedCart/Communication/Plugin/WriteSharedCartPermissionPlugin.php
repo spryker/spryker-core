@@ -22,6 +22,8 @@ class WriteSharedCartPermissionPlugin extends AbstractPlugin implements Executab
     public const KEY = 'WriteSharedCartPermissionPlugin';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -32,6 +34,8 @@ class WriteSharedCartPermissionPlugin extends AbstractPlugin implements Executab
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $configuration
@@ -49,6 +53,8 @@ class WriteSharedCartPermissionPlugin extends AbstractPlugin implements Executab
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

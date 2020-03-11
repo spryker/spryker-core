@@ -12,6 +12,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class AuthRestApiConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
@@ -24,6 +26,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * The client id as is store in spy_oauth_client database table

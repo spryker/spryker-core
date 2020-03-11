@@ -18,6 +18,8 @@ class StorageRedisConfig extends AbstractBundleConfig
     protected const DEFAULT_STORAGE_REDIS_PORT = 6379;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getRedisPort(): int
@@ -26,6 +28,8 @@ class StorageRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRdbDumpPath(): string

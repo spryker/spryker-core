@@ -46,6 +46,7 @@
     </transfer>
 
     <transfer name="GroupCriteria">
+        <property name="idAclGroup" type="int"/>
     </transfer>
 
     <transfer name="NavigationItem">

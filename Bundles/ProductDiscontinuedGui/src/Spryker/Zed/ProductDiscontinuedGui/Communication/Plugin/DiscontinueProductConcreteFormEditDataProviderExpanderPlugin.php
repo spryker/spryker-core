@@ -17,6 +17,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteForm
 class DiscontinueProductConcreteFormEditDataProviderExpanderPlugin extends AbstractPlugin implements ProductConcreteFormEditDataProviderExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Adds discontinued product information to ProductConcreteEditForm data
      *

@@ -15,6 +15,8 @@ class TranslatorConfig extends AbstractBundleConfig
     public const ZED_CSV_FILE_DELIMITER = ',';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getTranslationFilePathPatterns(): array
@@ -23,6 +25,8 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getCoreTranslationFilePathPatterns(): array
@@ -33,6 +37,8 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getValidatorTranslationFilePatterns(): array
@@ -43,6 +49,8 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getProjectTranslationFilePathPatterns(): array
@@ -51,6 +59,8 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $localeCode
      *
      * @return string[]
@@ -63,6 +73,8 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTranslatorCacheDirectory(): string
@@ -71,6 +83,8 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCsvFileDelimiter(): string
@@ -79,6 +93,8 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isZedTranslatorDebugEnabled(): bool
