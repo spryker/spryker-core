@@ -17,7 +17,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
-     * @uses SpyCompanyUserQuery
+     * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *

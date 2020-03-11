@@ -595,7 +595,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPathToInternalNamespace(string $namespace): ?string
     {
-        if ($pathToSprykerRoot = $this->checkPathToSprykerRoot($namespace)) {
+        $pathToSprykerRoot = $this->checkPathToSprykerRoot($namespace);
+        if ($pathToSprykerRoot) {
             return $pathToSprykerRoot;
         }
 

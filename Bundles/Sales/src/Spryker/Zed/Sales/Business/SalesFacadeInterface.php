@@ -137,7 +137,9 @@ interface SalesFacadeInterface
     public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer;
 
     /**
-     * Returns a list of of orders for the given customer id and (optional) filters.
+     * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters.
+     *  - Aggregates order totals calls -> SalesAggregator
      *
      * @api
      *

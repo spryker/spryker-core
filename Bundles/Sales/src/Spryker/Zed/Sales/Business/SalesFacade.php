@@ -90,9 +90,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns a list of of orders for the given customer id and (optional) filters.
-     *  - Aggregates order totals calls -> SalesAggregator
+     * {@inheritDoc}
      *
      * @api
      *
@@ -212,9 +210,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Adds username to comment
-     * - Saves comment to database
+     * {@inheritDoc}
      *
      * @CR check why return wrong
      *
@@ -248,8 +244,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns all comments for the given order id
+     * {@inheritDoc}
      *
      * @api
      *
@@ -265,9 +260,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification
-     * - Updates sales order with data from order transfer
-     * - Returns true if order was successfully updated
+     * {@inheritDoc}
      *
      * @api
      *

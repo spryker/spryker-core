@@ -29,6 +29,7 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     public const SERVICE_ARGUMENT_RESOLVER = 'argument-resolver';
 
     /**
+     * {@inheritDoc}
      * Specification:
      * - Adds a ChainRouter to the Application.
      * - Adds a ControllerResolver to the Application which is used in the HttpKernel.

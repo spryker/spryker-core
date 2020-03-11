@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class NavigationQueryContainer extends AbstractQueryContainer implements NavigationQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNavigation
@@ -30,6 +32,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNavigationNode
@@ -44,6 +48,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNavigationNodeLocalizedAttributes
@@ -58,6 +64,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNavigation
@@ -75,6 +83,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $fkParentNavigationNode
@@ -91,6 +101,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
@@ -101,6 +113,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
@@ -111,6 +125,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $fkUrl
@@ -126,6 +142,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $fkUrl
