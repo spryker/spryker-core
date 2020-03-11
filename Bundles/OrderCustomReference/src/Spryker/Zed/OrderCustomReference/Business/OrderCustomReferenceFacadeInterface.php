@@ -16,8 +16,9 @@ interface OrderCustomReferenceFacadeInterface
 {
     /**
      * Specification:
-     * - Persists `orderCustomReference` in `spy_sales_order` schema.
-     * - Expects SaveOrderTransfer::idSalesOrder to be provided.
+     * - Persists `QuoteTransfer::orderCustomReference` transfer property in `spy_sales_order` schema.
+     * - Expects `SaveOrderTransfer::idSalesOrder` transfer property to identify target sales order.
+     * - Returns with `isSuccessful=false` if order custom reference was not persisted.
      *
      * @api
      *
@@ -31,7 +32,9 @@ interface OrderCustomReferenceFacadeInterface
     /**
      * Specification:
      * - Persists `orderCustomReference` in `spy_sales_order` schema.
-     * - Expects OrderTransfer::idSalesOrder to be provided.
+     * - Validates the length of `orderCustomReference` if is less than Config::getOrderCustomReferenceMaxLength().
+     * - Expects `OrderTransfer::idSalesOrder` transfer property to identify target sales order.
+     * - Returns with `isSuccessful=false` if order custom reference was not persisted.
      *
      * @api
      *
