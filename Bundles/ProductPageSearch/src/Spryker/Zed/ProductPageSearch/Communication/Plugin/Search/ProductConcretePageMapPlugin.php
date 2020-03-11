@@ -28,6 +28,8 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
     public const KEY_ID_PRODUCT = 'id_product';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -65,6 +67,8 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

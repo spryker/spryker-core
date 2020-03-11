@@ -19,6 +19,8 @@ class ConsoleLogPlugin implements EventSubscriberInterface
     use LoggerTrait;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Event\ConsoleCommandEvent $event
@@ -36,6 +38,8 @@ class ConsoleLogPlugin implements EventSubscriberInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
@@ -48,6 +52,8 @@ class ConsoleLogPlugin implements EventSubscriberInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Event\ConsoleErrorEvent $event
@@ -66,6 +72,8 @@ class ConsoleLogPlugin implements EventSubscriberInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

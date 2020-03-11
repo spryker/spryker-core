@@ -94,7 +94,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[] $configurableBundleTemplateTransfers
-     * @param array $groupedConfigurableBundleTemplatePageSearchTransfers
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[][] $groupedConfigurableBundleTemplatePageSearchTransfers
      *
      * @return void
      */

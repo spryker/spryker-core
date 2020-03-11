@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class DiscountPromotionQueryContainer extends AbstractQueryContainer implements DiscountPromotionQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idDiscount
@@ -30,6 +32,8 @@ class DiscountPromotionQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idDiscountPromotion

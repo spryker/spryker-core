@@ -14,6 +14,8 @@ class MerchantUserAuthGuiPageConfig extends AbstractBundleConfig
     protected const MERCHANT_USER_DEFAULT_URL_REDIRECT = '/';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultTargetPath(): string

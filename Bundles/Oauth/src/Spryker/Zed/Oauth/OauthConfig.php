@@ -19,6 +19,8 @@ class OauthConfig extends AbstractBundleConfig
     public const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPublicKeyPath(): string
@@ -27,6 +29,8 @@ class OauthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPrivateKeyPath(): string
@@ -35,6 +39,8 @@ class OauthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getEncryptionKey(): string
@@ -43,6 +49,8 @@ class OauthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRefreshTokenTTL(): string
@@ -51,6 +59,8 @@ class OauthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAccessTokenTTL(): string
@@ -61,6 +71,8 @@ class OauthConfig extends AbstractBundleConfig
     /**
      * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
      *
+     * @api
+     *
      * @return string
      */
     public function getClientSecret(): string
@@ -70,6 +82,8 @@ class OauthConfig extends AbstractBundleConfig
 
     /**
      * The client id as is store in spy_oauth_client database table
+     *
+     * @api
      *
      * @return string
      */

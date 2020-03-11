@@ -31,9 +31,7 @@ class ProductRelationDataImportPlugin extends AbstractPlugin implements DataImpo
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        $dataImporterReportTransfer = $this->getFacade()->importProductRelations($dataImporterConfigurationTransfer);
-
-        return $dataImporterReportTransfer;
+        return $this->getFacade()->importProductRelations($dataImporterConfigurationTransfer);
     }
 
     /**
