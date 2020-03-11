@@ -528,6 +528,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
@@ -540,6 +542,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity

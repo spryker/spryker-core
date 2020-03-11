@@ -15,6 +15,8 @@ class MerchantDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT = 'merchant';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantDataImporterConfiguration(): DataImporterConfigurationTransfer

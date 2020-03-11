@@ -16,6 +16,8 @@ class StorageConfig extends AbstractBundleConfig
      * Specification:
      * - Returns the name of the strategy to be used for the StorageKeyCache.
      *
+     * @api
+     *
      * @return string
      */
     public function getStorageKeyCacheStrategy()

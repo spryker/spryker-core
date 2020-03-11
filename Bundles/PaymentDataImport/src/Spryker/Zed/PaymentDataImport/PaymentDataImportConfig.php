@@ -16,6 +16,8 @@ class PaymentDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PAYMENT_METHOD_STORE = 'payment-method-store';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getPaymentMethodDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -26,6 +28,8 @@ class PaymentDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getPaymentMethodStoreDataImporterConfiguration(): DataImporterConfigurationTransfer

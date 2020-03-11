@@ -18,6 +18,7 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscon
 class DiscontinueBundlePostProductDiscontinuePlugin extends AbstractPlugin implements PostProductDiscontinuePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Mark bundle product related to discontinued product as discontinue.
      *

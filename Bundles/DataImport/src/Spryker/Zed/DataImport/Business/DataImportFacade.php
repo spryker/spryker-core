@@ -34,7 +34,7 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function listImporters(): array
     {
