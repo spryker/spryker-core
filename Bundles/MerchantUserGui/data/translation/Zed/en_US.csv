@@ -3,6 +3,5 @@
 Create,Create
 "No users can be added till the merchant has been created. Please, add the required merchant information and save it.","No users can be added till the merchant has been created. Please, add the required merchant information and save it."
 Save,Save
-User status can't be updated.,"User status can't be updated."
-User status has been updated.,"User status has been updated."
-
+"User status can't be updated.","User status can't be updated."
+"User status has been updated.","User status has been updated."
