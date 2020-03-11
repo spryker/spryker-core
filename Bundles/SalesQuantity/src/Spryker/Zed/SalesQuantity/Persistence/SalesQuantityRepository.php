@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesQuantity\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**

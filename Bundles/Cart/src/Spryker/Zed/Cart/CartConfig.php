@@ -14,14 +14,4 @@ class CartConfig extends AbstractBundleConfig
     public const OPERATION_ADD = 'add';
 
     public const OPERATION_REMOVE = 'remove';
-
-    protected const DEFAULT_OPERATION_PLUGINS_EXECUTOR_BATCH_SIZE = 1000;
-
-    /**
-     * @return int
-     */
-    protected function getOperationPluginsExecutorButchSize(): int
-    {
-        return static::DEFAULT_OPERATION_PLUGINS_EXECUTOR_BATCH_SIZE;
-    }
 }

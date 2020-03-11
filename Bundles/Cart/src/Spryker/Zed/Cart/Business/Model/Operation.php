@@ -203,11 +203,10 @@ class Operation implements OperationInterface
             $this->getNotificationMessages($cartChangeTransfer)
         );
 
-        //pre-check plugins
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
-        
+
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);

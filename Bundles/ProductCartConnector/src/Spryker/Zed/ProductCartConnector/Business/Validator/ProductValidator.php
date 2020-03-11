@@ -21,8 +21,8 @@ class ProductValidator implements ProductValidatorInterface
     public const MESSAGE_PARAM_SKU = 'sku';
     public const MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE = 'product-cart.validation.error.concrete-product-inactive';
 
-    protected const CONCRETE_SKU = 'concreteSku';
-    protected const ABSTRACT_SKU = 'abstractSku';
+    protected const SKU_CONCRETE = 'SKU_CONCRETE';
+    protected const SKU_ABSTRACT = 'SKU_ABSTRACT';
 
     /**
      * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
@@ -47,8 +47,8 @@ class ProductValidator implements ProductValidatorInterface
         $responseTransfer = new CartPreCheckResponseTransfer();
 
         $skus = $this->getProductSkusFromCartChangeTransfer($cartChangeTransfer);
-        $indexedProductConcreteTransfers = $this->getIndexedProductConcretesByProductConcreteSkus($skus[static::CONCRETE_SKU]);
-        $indexedProductAbstractTransfers = $this->getIndexedProductAbstractsByProductAbstractSkus($skus[static::ABSTRACT_SKU]);
+        $indexedProductConcreteTransfers = $this->getIndexedProductConcretesByProductConcreteSkus($skus[static::SKU_CONCRETE]);
+        $indexedProductAbstractTransfers = $this->getIndexedProductAbstractsByProductAbstractSkus($skus[static::SKU_ABSTRACT]);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku()) {
@@ -191,17 +191,17 @@ class ProductValidator implements ProductValidatorInterface
     protected function getProductSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {
         $skus = [
-            static::CONCRETE_SKU => [],
-            static::ABSTRACT_SKU => [],
+            static::SKU_CONCRETE => [],
+            static::SKU_ABSTRACT => [],
         ];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku()) {
-                $skus[static::CONCRETE_SKU][] = $itemTransfer->getSku();
+                $skus[static::SKU_CONCRETE][] = $itemTransfer->getSku();
 
                 continue;
             }
 
-            $skus[static::ABSTRACT_SKU][] = $itemTransfer->getAbstractSku();
+            $skus[static::SKU_ABSTRACT][] = $itemTransfer->getAbstractSku();
         }
 
         return $skus;
