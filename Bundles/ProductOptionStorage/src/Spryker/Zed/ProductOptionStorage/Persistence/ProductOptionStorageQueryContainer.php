@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductOptionStorageQueryContainer extends AbstractQueryContainer implements ProductOptionStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -36,6 +38,8 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -52,6 +56,8 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -89,6 +95,8 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productOptionGroupsIds
@@ -106,6 +114,8 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productOptionValueIds

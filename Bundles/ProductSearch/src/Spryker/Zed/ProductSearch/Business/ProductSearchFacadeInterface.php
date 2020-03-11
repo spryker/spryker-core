@@ -109,7 +109,7 @@ interface ProductSearchFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function createProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 
@@ -121,7 +121,7 @@ interface ProductSearchFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function updateProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 

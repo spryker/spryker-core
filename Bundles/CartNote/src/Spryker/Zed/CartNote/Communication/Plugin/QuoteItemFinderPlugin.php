@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class QuoteItemFinderPlugin extends AbstractPlugin implements QuoteItemFinderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Find item in quote
      *

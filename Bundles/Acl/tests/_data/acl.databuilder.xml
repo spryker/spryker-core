@@ -7,7 +7,6 @@
 
     <transfer name="Group">
         <property name="name" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="reference" dataBuilderRule="unique()->sentence(5)"/>
     </transfer>
 
 </transfers>

@@ -36,6 +36,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     public const COL_PRICE_PRODUCT = 'spy_price_product.price';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery
@@ -47,6 +49,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -58,6 +62,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $key
@@ -72,6 +78,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -86,6 +94,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductRelationType
@@ -100,6 +110,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -118,6 +130,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -134,6 +148,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -148,6 +164,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -204,6 +222,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -237,6 +257,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -269,6 +291,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
@@ -283,6 +307,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -295,6 +321,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery
@@ -310,6 +338,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -322,6 +352,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -333,6 +365,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
@@ -357,6 +391,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale

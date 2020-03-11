@@ -18,6 +18,8 @@ class MultiCartConfig extends AbstractSharedConfig
     public const QUOTE_NAME_QUICK_ORDER = 'Quick order %s';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGuestQuoteDefaultName(): string
@@ -26,6 +28,8 @@ class MultiCartConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCustomerQuoteDefaultName(): string
@@ -34,6 +38,8 @@ class MultiCartConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDuplicatedQuoteName(): string
@@ -42,6 +48,8 @@ class MultiCartConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getReorderQuoteName(): string
@@ -50,6 +58,8 @@ class MultiCartConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQuickOrderQuoteName(): string

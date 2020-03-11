@@ -19,6 +19,8 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
 class TwigConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return array
      */
     public function getTemplatePaths()
@@ -61,6 +63,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getProjectNamespaces(): array
@@ -69,6 +73,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCoreNamespaces(): array
@@ -94,6 +100,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getThemeName(): string
@@ -102,6 +110,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getThemeNameDefault(): string
@@ -118,6 +128,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCacheFilePath()
@@ -126,6 +138,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isPathCacheEnabled()
@@ -134,6 +148,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPermissionMode(): int
@@ -142,6 +158,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTwigOptions(): array
@@ -150,6 +168,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getFormTemplateDirectories(): array

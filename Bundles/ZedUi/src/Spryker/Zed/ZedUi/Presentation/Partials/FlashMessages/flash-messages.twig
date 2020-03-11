@@ -1,0 +1,3 @@
+{% for message in app.session.flashbag.get('flash.messages.error') %}
+    <spy-alert type="error">{{ message | trans }}</spy-alert>
+{% endfor %}

@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
@@ -20,6 +22,8 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getProductOfferAvailabilitySynchronizationPoolName(): ?string

@@ -14,6 +14,8 @@ class CustomerAccessConfig extends AbstractBundleConfig
     /**
      * Gets list of content types for which admin will be able to define permissions
      *
+     * @api
+     *
      * @return string[]
      */
     public function getContentTypes(): array
@@ -24,6 +26,8 @@ class CustomerAccessConfig extends AbstractBundleConfig
     /**
      * Gets content type access for install.
      *
+     * @api
+     *
      * @return bool
      */
     public function getContentTypeAccess(): bool
@@ -33,6 +37,8 @@ class CustomerAccessConfig extends AbstractBundleConfig
 
     /**
      * Returns content access by type for install.
+     *
+     * @api
      *
      * @return bool[]
      */

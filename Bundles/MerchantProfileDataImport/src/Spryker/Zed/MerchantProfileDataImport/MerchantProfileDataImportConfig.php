@@ -16,6 +16,8 @@ class MerchantProfileDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT_PROFILE_ADDRESS = 'merchant-profile-address';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantProfileDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -26,6 +28,8 @@ class MerchantProfileDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantProfileAddressDataImporterConfiguration(): DataImporterConfigurationTransfer
