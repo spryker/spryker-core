@@ -68,7 +68,7 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemsWithStateHistoryUpdatesItemStateCreateAtFromLatestHistoryState(): void
+    public function testExpandOrderItemsWithStateHistoryUpdatesItemStateCreatedAtFromLatestHistoryState(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
