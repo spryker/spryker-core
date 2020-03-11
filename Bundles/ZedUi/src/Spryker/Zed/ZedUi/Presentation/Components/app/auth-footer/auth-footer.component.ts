@@ -2,11 +2,11 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
 
 @Component({
     selector: 'mp-auth-footer',
-    templateUrl: './mp-auth-footer.component.html',
-    styleUrls: ['./mp-auth-footer.component.less'],
+    templateUrl: './auth-footer.component.html',
+    styleUrls: ['./auth-footer.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class MpAuthFooterComponent {
+export class AuthFooterComponent {
     todayDate = new Date();
 }

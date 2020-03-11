@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "zed-ui": {
+    "mp-dashboard": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -11,31 +11,33 @@
         }
       },
       "root": "",
-      "sourceRoot": "src/Spryker/Zed/ZedUi/Presentation/Components",
-      "prefix": "zed",
+      "sourceRoot": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components",
+      "prefix": "mp",
       "architect": {
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "../../../../../public/Zed/assets/js/zed-ui",
-            "index": "src/Spryker/Zed/ZedUi/Presentation/Components/index.html",
-            "main": "src/Spryker/Zed/ZedUi/Presentation/Components/main.ts",
-            "polyfills": "src/Spryker/Zed/ZedUi/Presentation/Components/polyfills.ts",
+            "outputPath": "../../../../../public/Zed/assets/js/mp-dashboard",
+            "index": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/index.html",
+            "main": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/main.ts",
+            "polyfills": "",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/Spryker/Zed/ZedUi/Presentation/Components/assets"
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/assets"
             ],
-            "styles": ["src/Spryker/Zed/ZedUi/Presentation/Components/styles.less"],
-            "singleBundle": true,
-            "scripts": []
+            "styles": [
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/styles.less"
+            ],
+            "scripts": [],
+            "singleBundle": true
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/Spryker/Zed/ZedUi/Presentation/Components/environments/environment.ts",
-                  "with": "src/Spryker/Zed/ZedUi/Presentation/Components/environments/environment.prod.ts"
+                  "replace": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/environments/environment.ts",
+                  "with": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -64,29 +66,34 @@
         "serve": {
           "builder": "ngx-build-plus:dev-server",
           "options": {
-            "browserTarget": "zed-ui:build"
+            "browserTarget": "mp-dashboard:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "zed-ui:build:production"
+              "browserTarget": "mp-dashboard:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "zed-ui:build"
+            "browserTarget": "mp-dashboard:build"
           }
         },
         "test": {
           "builder": "ngx-build-plus:karma",
           "options": {
-            "main": "src/Spryker/Zed/ZedUi/Presentation/Components/test.ts",
-            "polyfills": "src/Spryker/Zed/ZedUi/Presentation/Components/polyfills.ts",
+            "main": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/test.ts",
+            "polyfills": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [],
-            "styles": [],
+            "assets": [
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/favicon.ico",
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/assets"
+            ],
+            "styles": [
+              "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/styles.less"
+            ],
             "scripts": []
           }
         },
@@ -105,7 +112,7 @@
       }
     }
   },
-  "defaultProject": "zed-ui",
+  "defaultProject": "mp-dashboard",
   "cli": {
     "analytics": false
   }
