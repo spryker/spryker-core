@@ -20,17 +20,20 @@ class ProductRelationClient extends AbstractClient implements ProductRelationCli
      * @api
      *
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
-    public function getProductRelationsByIdProductAbstract($idProductAbstract)
-    {
+    public function getProductRelationsByIdProductAbstract(
+        int $idProductAbstract,
+        string $storeName
+    ): array {
          $localeName = $this->getFactory()
              ->getLocaleClient()
              ->getCurrentLocale();
 
          return $this->getFactory()
              ->createProductRelationStorage($localeName)
-             ->getAll($idProductAbstract);
+             ->getAll($idProductAbstract, $storeName);
     }
 }

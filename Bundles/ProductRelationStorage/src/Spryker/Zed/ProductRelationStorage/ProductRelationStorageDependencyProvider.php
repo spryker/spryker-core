@@ -11,6 +11,7 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToProductRelationFacadeBridge;
 use Spryker\Zed\ProductRelationStorage\Dependency\QueryContainer\ProductRelationStorageToProductQueryContainerBridge;
 use Spryker\Zed\ProductRelationStorage\Dependency\QueryContainer\ProductRelationStorageToProductRelationQueryContainerBridge;
 
@@ -22,6 +23,7 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     public const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_PRODUCT_RELATION = 'FACADE_PRODUCT_RELATION';
     public const PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT';
 
     /**
@@ -43,11 +45,41 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addProductRelationFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function providePersistenceLayerDependencies(Container $container)
     {
         $this->addProductRelationQueryContainer($container);
         $this->addProductQueryContainer($container);
         $this->addPropelProductRelationProductAbstractQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductRelationFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_RELATION, function (Container $container) {
+            return new ProductRelationStorageToProductRelationFacadeBridge(
+                $container->getLocator()->productRelation()->facade()
+            );
+        });
 
         return $container;
     }

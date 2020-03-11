@@ -157,4 +157,16 @@ interface ProductRelationFacadeInterface
      * @return array
      */
     public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
+
+    /**
+     * Specification:
+     * - Gets all product relations by given product abstract identifiers.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function getProductRelationsByIdProductAbstracts(array $productAbstractIds): array;
 }

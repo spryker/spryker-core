@@ -47,16 +47,12 @@ class RelatedProductReader implements RelatedProductReaderInterface
     /**
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findRelatedProducts($idProductAbstract, $localeName, ?string $storeName = null)
+    public function findRelatedProducts($idProductAbstract, $localeName, string $storeName)
     {
-        if (!$storeName) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         $relatedProductAbstractIds = $this->findRelatedAbstractProductIds($idProductAbstract);
         $productStorageDataCollection = $this
             ->productStorageClient

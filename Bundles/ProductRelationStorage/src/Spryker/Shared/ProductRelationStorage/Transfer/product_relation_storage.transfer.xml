@@ -11,6 +11,7 @@
 
     <transfer name="ProductAbstractRelationStorage">
         <property name="idProductAbstract" type="int"/>
+        <property name="store" type="string"/>
         <property name="productRelations" singular="productRelations" type="ProductRelationStorage[]"/>
     </transfer>
 

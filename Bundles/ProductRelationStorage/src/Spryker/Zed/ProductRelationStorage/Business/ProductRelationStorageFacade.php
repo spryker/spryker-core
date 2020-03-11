@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageEntityManagerInterface getEntityManager()
  */
 class ProductRelationStorageFacade extends AbstractFacade implements ProductRelationStorageFacadeInterface
 {

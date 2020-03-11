@@ -15,6 +15,7 @@ use Spryker\Zed\ProductRelationStorage\ProductRelationStorageDependencyProvider;
  * @method \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig getConfig()
  * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageEntityManagerInterface getEntityManager()
  */
 class ProductRelationStorageCommunicationFactory extends AbstractCommunicationFactory
 {

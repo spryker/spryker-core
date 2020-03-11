@@ -10,77 +10,61 @@ namespace Spryker\Zed\ProductRelationStorage\Business\Storage;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
 use Generated\Shared\Transfer\ProductRelationStorageTransfer;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
-use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
-use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
-use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage;
-use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToProductRelationFacadeInterface;
+use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageEntityManagerInterface;
 use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface;
 
 class ProductRelationStorageWriter implements ProductRelationStorageWriterInterface
 {
     /**
-     * @var \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
      * @var \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface
      */
-    protected $repository;
+    protected $productRelationStorageRepository;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
-     *
-     * @var bool
+     * @var \Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToProductRelationFacadeInterface
      */
-    protected $isSendingToQueue = true;
+    protected $productRelationFacade;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageEntityManagerInterface
      */
-    protected $relationProductsCache = [];
+    protected $productRelationStorageEntityManager;
 
     /**
-     * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface $repository
-     * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface $productRelationStorageRepository
+     * @param \Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToProductRelationFacadeInterface $productRelationFacade
+     * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageEntityManagerInterface $productRelationStorageEntityManager
      */
     public function __construct(
-        ProductRelationStorageQueryContainerInterface $queryContainer,
-        ProductRelationStorageRepositoryInterface $repository,
-        $isSendingToQueue
+        ProductRelationStorageRepositoryInterface $productRelationStorageRepository,
+        ProductRelationStorageToProductRelationFacadeInterface $productRelationFacade,
+        ProductRelationStorageEntityManagerInterface $productRelationStorageEntityManager
     ) {
-        $this->queryContainer = $queryContainer;
-        $this->repository = $repository;
-        $this->isSendingToQueue = $isSendingToQueue;
+        $this->productRelationStorageRepository = $productRelationStorageRepository;
+        $this->productRelationFacade = $productRelationFacade;
+        $this->productRelationStorageEntityManager = $productRelationStorageEntityManager;
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds)
     {
-        $productRelationEntities = $this->findProductRelationAbstractEntities($productAbstractIds);
-
-        $this->relationProductsCache = $this->getRelationProductsCache(
-            $this->getIdsFromProductRelationEntities($productRelationEntities)
-        );
+        $productRelationTransfers = $this->productRelationFacade
+            ->getProductRelationsByIdProductAbstracts($productAbstractIds);
 
         $productRelations = [];
-        foreach ($productRelationEntities as $productRelationEntity) {
-            $productRelations[$productRelationEntity->getFkProductAbstract()][] = $productRelationEntity;
+        foreach ($productRelationTransfers as $productRelationTransfer) {
+            foreach ($productRelationTransfer->getStoreRelation()->getStores() as $storeTransfer) {
+                $productRelations[$productRelationTransfer->getFkProductAbstract()][$storeTransfer->getName()][] = $productRelationTransfer;
+            }
         }
 
-        $spyProductAbstractLocalizedAttributeEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
-        $spyProductAbstractRelationStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
-
-        $this->storeData($spyProductAbstractLocalizedAttributeEntities, $spyProductAbstractRelationStorageEntities, $productRelations);
+        $this->storeData($productRelations);
     }
 
     /**
@@ -90,219 +74,93 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      */
     public function unpublish(array $productAbstractIds)
     {
-        $spyProductAbstractRelationStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyProductAbstractRelationStorageEntities as $spyProductAbstractRelationStorageEntity) {
-            $spyProductAbstractRelationStorageEntity->delete();
-        }
+        $this->productRelationStorageEntityManager->deleteProductAbstractRelationStorageEntitiesByProductAbstractIds($productAbstractIds);
     }
 
     /**
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation[] $productRelationEntities
-     *
-     * @return array
-     */
-    protected function getIdsFromProductRelationEntities(array $productRelationEntities): array
-    {
-        $productRelationIds = [];
-        foreach ($productRelationEntities as $productRelationEntity) {
-            $productRelationIds[] = $productRelationEntity->getIdProductRelation();
-        }
-
-        return $productRelationIds;
-    }
-
-    /**
-     * @param array $relationIds
-     *
-     * @return array
-     */
-    protected function getRelationProductsCache(array $relationIds): array
-    {
-        $relationProducts = $this->repository->getProductRelationsWithProductAbstractByIdRelationIn($relationIds);
-
-        return $this->mapRelationProductsCache($relationProducts);
-    }
-
-    /**
-     * @param array $relationProducts
-     *
-     * @return array
-     */
-    protected function mapRelationProductsCache(array $relationProducts): array
-    {
-        $mappedRelationProducts = [];
-        foreach ($relationProducts as $relationProduct) {
-            $idProductRelation = $relationProduct[SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION];
-            $idLocale = $relationProduct[SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE];
-
-            $mappedRelationProducts[$idProductRelation][$idLocale][] = $relationProduct;
-        }
-
-        return $mappedRelationProducts;
-    }
-
-    /**
-     * @param array $spyProductAbstractLocalizedEntities
-     * @param array $spyProductAbstractRelationStorageEntities
-     * @param array $productRelations
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer[][][] $productRelations
      *
      * @return void
      */
-    protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractRelationStorageEntities, array $productRelations)
+    protected function storeData(array $productRelations)
     {
-        $storedEntities = [];
-        foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
-            $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
-            if (in_array($idProduct, $storedEntities)) {
-                continue;
+        foreach ($productRelations as $idProduct => $productRelationTransfersByStore) {
+            foreach ($productRelationTransfersByStore as $store => $productRelationTransfers) {
+                $this->storeDataSet($idProduct, $store, $productRelationTransfers);
             }
-
-            $storedEntities[] = $idProduct;
-
-            if (isset($spyProductAbstractRelationStorageEntities[$idProduct])) {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations, $spyProductAbstractRelationStorageEntities[$idProduct]);
-
-                continue;
-            }
-
-            $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations);
         }
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
-     * @param array $productRelations
-     * @param \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage|null $spyProductAbstractRelationStorageEntity
+     * @param int $idProductAbstract
+     * @param string $store
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer[] $productRelations
      *
      * @return void
      */
     protected function storeDataSet(
-        SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity,
-        array $productRelations,
-        ?SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity = null
+        int $idProductAbstract,
+        string $store,
+        array $productRelations
     ) {
-        if ($spyProductAbstractRelationStorageEntity === null) {
-            $spyProductAbstractRelationStorageEntity = new SpyProductAbstractRelationStorage();
-        }
+        $productRelationStorageTransfers = $this->fillProductRelationStorageTransfers($productRelations, $store);
 
-        if (empty($productRelations[$spyProductAbstractLocalizedEntity->getFkProductAbstract()])) {
-            if (!$spyProductAbstractRelationStorageEntity->isNew()) {
-                $spyProductAbstractRelationStorageEntity->delete();
-            }
-
-            return;
-        }
-
-        $productRelationStorageTransfers = $this->getProductRelationStorageTransfers($spyProductAbstractLocalizedEntity, $productRelations);
         $productAbstractRelationStorageTransfer = new ProductAbstractRelationStorageTransfer();
-        $productAbstractRelationStorageTransfer->setIdProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
+        $productAbstractRelationStorageTransfer->setIdProductAbstract($idProductAbstract);
         $productAbstractRelationStorageTransfer->setProductRelations($productRelationStorageTransfers);
+        $productAbstractRelationStorageTransfer->setStore($store);
 
-        $spyProductAbstractRelationStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
-        $spyProductAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray());
-        $spyProductAbstractRelationStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
-        $spyProductAbstractRelationStorageEntity->save();
+        $this->productRelationStorageEntityManager->saveProductAbstractRelationStorageEntity(
+            $idProductAbstract,
+            $productAbstractRelationStorageTransfer
+        );
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
-     * @param array $productRelations
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer[] $productRelations
+     * @param string $store
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductRelationStorageTransfer[]
      */
-    protected function getProductRelationStorageTransfers(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productRelations)
+    protected function fillProductRelationStorageTransfers(array $productRelations, string $store)
     {
-        $result = $this->findRelatedProductAbstract(
-            $productRelations[$spyProductAbstractLocalizedEntity->getFkProductAbstract()],
-            $spyProductAbstractLocalizedEntity->getFkLocale()
-        );
-
         $productRelationStorageTransfers = new ArrayObject();
-        foreach ($result as $key => $value) {
+
+        foreach ($productRelations as $productRelationTransfer) {
+            $storeNames = $this->extractStoreNamesFromStoreRelation($productRelationTransfer->getStoreRelation());
+
+            if (!in_array($store, $storeNames)) {
+                continue;
+            }
+
             $productRelationStorageTransfer = new ProductRelationStorageTransfer();
-            $productRelationStorageTransfer->setKey($key);
-            $productRelationStorageTransfer->setIsActive($result[$key][ProductRelationStorageTransfer::IS_ACTIVE]);
-            $productRelationStorageTransfer->setProductAbstractIds($result[$key][ProductRelationStorageTransfer::PRODUCT_ABSTRACT_IDS]);
-            $productRelationStorageTransfers[] = $productRelationStorageTransfer;
+            $productRelationStorageTransfer->setIsActive($productRelationTransfer->getIsActive());
+            $productRelationStorageTransfer->setKey($productRelationTransfer->getProductRelationType()->getKey());
+            foreach ($productRelationTransfer->getRelatedProducts() as $productRelationRelatedProductTransfer) {
+                $productRelationStorageTransfer->addProductAbstractIds([
+                    $productRelationRelatedProductTransfer->getFkProductAbstract() => $productRelationRelatedProductTransfer->getOrder(),
+                ]);
+            }
+            $productRelationStorageTransfers->append($productRelationStorageTransfer);
         }
 
         return $productRelationStorageTransfers;
     }
 
     /**
-     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation[] $productRelations
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
-     * @return array
+     * @return string[]
      */
-    public function findRelatedProductAbstract(array $productRelations, $idLocale)
-    {
-        $results = [];
-        foreach ($productRelations as $productRelation) {
-            $relationProducts = $this->findRelationProducts($productRelation->getIdProductRelation(), $idLocale);
+    protected function extractStoreNamesFromStoreRelation(
+        StoreRelationTransfer $storeRelationTransfer
+    ): array {
+        $storeNames = [];
 
-            foreach ($relationProducts as $relationProduct) {
-                if (!isset($results[$relationProduct[SpyProductRelationTypeTableMap::COL_KEY]])) {
-                    $results[$relationProduct[SpyProductRelationTypeTableMap::COL_KEY]] = [
-                        ProductRelationStorageTransfer::PRODUCT_ABSTRACT_IDS => [],
-                        ProductRelationStorageTransfer::IS_ACTIVE => $productRelation->getIsActive(),
-                    ];
-                }
-                $relationName = $relationProduct[SpyProductRelationTypeTableMap::COL_KEY];
-                $idProductAbstract = $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
-                $order = $relationProduct[SpyProductRelationProductAbstractTableMap::COL_ORDER];
-
-                $results[$relationName][ProductRelationStorageTransfer::PRODUCT_ABSTRACT_IDS][$idProductAbstract] = $order;
-            }
+        foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
+            $storeNames[] = $storeTransfer->getName();
         }
 
-        return $results;
-    }
-
-    /**
-     * @param int $idProductRelation
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function findRelationProducts($idProductRelation, $idLocale)
-    {
-        return $this->relationProductsCache[$idProductRelation][$idLocale] ?? [];
-    }
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]
-     */
-    protected function findProductRelationAbstractEntities(array $productAbstractIds)
-    {
-        return $this->queryContainer->queryProductRelations($productAbstractIds)->find()->getData();
-    }
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return array
-     */
-    protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
-    {
-        return $this->queryContainer->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
-    }
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return array
-     */
-    protected function findProductStorageEntitiesByProductAbstractIds(array $productAbstractIds)
-    {
-        $productAbstractRelationStorageEntities = $this->queryContainer->queryProductAbstractRelationStorageByIds($productAbstractIds)->find();
-        $productAbstractStorageRelationEntitiesById = [];
-        foreach ($productAbstractRelationStorageEntities as $productAbstractRelationStorageEntity) {
-            $productAbstractStorageRelationEntitiesById[$productAbstractRelationStorageEntity->getFkProductAbstract()] = $productAbstractRelationStorageEntity;
-        }
-
-        return $productAbstractStorageRelationEntitiesById;
+        return $storeNames;
     }
 }

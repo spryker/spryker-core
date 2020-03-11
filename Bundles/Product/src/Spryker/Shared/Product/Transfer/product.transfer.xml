@@ -115,4 +115,9 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="ProductAbstractLocalizedAttributes">
+        <property name="idProductAbstract" type="int"/>
+        <property name="localizedAttributes" type="LocalizedAttributes"/>
+    </transfer>
+
 </transfers>

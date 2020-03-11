@@ -22,11 +22,11 @@ interface ProductRelationStorageClientInterface
      *
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findRelatedProducts($idProductAbstract, $localeName, ?string $storeName = null);
+    public function findRelatedProducts($idProductAbstract, $localeName, string $storeName);
 
     /**
      * Specification:

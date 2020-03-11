@@ -19,8 +19,12 @@ interface ProductRelationClientInterface
      * @api
      *
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
-    public function getProductRelationsByIdProductAbstract($idProductAbstract);
+    public function getProductRelationsByIdProductAbstract(
+        int $idProductAbstract,
+        string $storeName
+    ): array;
 }

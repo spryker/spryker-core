@@ -140,7 +140,7 @@ class ProductRelationStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransferRelated->getIdProductAbstract()),
-            (new EventEntityTransfer())->setId($this->productAbstractTransferRelatedForAnotherStore->getIdProductAbstract())
+            (new EventEntityTransfer())->setId($this->productAbstractTransferRelatedForAnotherStore->getIdProductAbstract()),
         ];
         $productRelationPublishStorageListener->handleBulk($eventTransfers, ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH);
 
