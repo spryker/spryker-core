@@ -55,7 +55,7 @@ class MerchantProductOfferSearchFacadeTest extends Unit
             ProductConcreteTransfer::IS_ACTIVE => true,
         ]);
 
-        $merchant = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true,]);
+        $merchant = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
 
         $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),

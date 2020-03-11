@@ -22,7 +22,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
-    "spryker/merchant": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
