@@ -41,11 +41,4 @@ interface MerchantSalesOrderRepositoryInterface
     public function findMerchantOrderItem(
         MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
     ): ?MerchantOrderItemTransfer;
-
-    /**
-     * @param int $idMerchantOrderItem
-     *
-     * @return bool
-     */
-    public function existsMerchantOrderItem(int $idMerchantOrderItem): bool;
 }

@@ -252,19 +252,6 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     }
 
     /**
-     * @param int $idMerchantOrderItem
-     *
-     * @return bool
-     */
-    public function existsMerchantOrderItem(int $idMerchantOrderItem): bool
-    {
-        return $this->getFactory()
-            ->createMerchantSalesOrderItemQuery()
-            ->filterByIdMerchantSalesOrderItem($idMerchantOrderItem)
-            ->exists();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
