@@ -152,8 +152,6 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      */
     protected function getItemAddCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
-        $quoteQuantityMapByGroupKey = $this->getQuoteQuantityMap($cartChangeTransfer);
-
         $cartQuantityMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$this->isItemTransferNormalizable($itemTransfer)) {
@@ -161,31 +159,9 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             }
             $productGroupKey = $itemTransfer->getGroupKey();
             $cartQuantityMap[$productGroupKey] = $itemTransfer->getQuantity();
-
-            if (isset($quoteQuantityMapByGroupKey[$productGroupKey])) {
-                $cartQuantityMap[$productGroupKey] += $quoteQuantityMapByGroupKey[$productGroupKey];
-            }
         }
 
         return $cartQuantityMap;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return array
-     */
-    protected function getQuoteQuantityMap(CartChangeTransfer $cartChangeTransfer): array
-    {
-        $quoteQuantityMap = [];
-        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            if (!$this->isItemTransferNormalizable($itemTransfer)) {
-                continue;
-            }
-            $quoteQuantityMap[$itemTransfer->getGroupKey()] = $itemTransfer->getQuantity();
-        }
-
-        return $quoteQuantityMap;
     }
 
     /**
