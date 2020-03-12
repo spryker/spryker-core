@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Service\PriceProductOfferVolume\Plugin\PriceProductOffer;
+namespace SprykerTest\Service\PriceProductOfferVolume;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Service\PriceProductOfferVolume\Plugin\PriceProductOffer\PriceProductOfferVolumeFilterPlugin;
 
 /**
  * Auto-generated group annotations
@@ -18,12 +17,10 @@ use Spryker\Service\PriceProductOfferVolume\Plugin\PriceProductOffer\PriceProduc
  * @group SprykerTest
  * @group Service
  * @group PriceProductOfferVolume
- * @group Plugin
- * @group PriceProductOffer
- * @group PriceProductOfferVolumeFilterPluginTest
+ * @group PriceProductOfferVolumeServiceTest
  * Add your own group annotations below this line
  */
-class PriceProductOfferVolumeFilterPluginTest extends Unit
+class PriceProductOfferVolumeServiceTest extends Unit
 {
     /**
      * @var \SprykerTest\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceTester
@@ -33,7 +30,7 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFilterSuccessful(): void
+    public function testGetMinPriceProductsSuccessful(): void
     {
         // Arrange
         $priceProductTransfer1 = $this->tester->havePriceProduct([
@@ -53,8 +50,9 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
         ];
 
         // Act
-        $priceProductOfferVolumeFilterPlugin = new PriceProductOfferVolumeFilterPlugin();
-        $minPriceProductTransfers = $priceProductOfferVolumeFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
+        $minPriceProductTransfers = $this->tester
+            ->getPriceProductOfferVolumeService()
+            ->getMinPriceProducts($priceProductTransfers, $priceProductFilterTransfer);
 
         // Assert
         $this->assertCount(1, $minPriceProductTransfers);
@@ -64,7 +62,7 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFilterWithPriceProductFilterQuantityEqualOne(): void
+    public function testGetMinPriceProductsWithPriceProductFilterQuantityEqualOne(): void
     {
         // Arrange
         $priceProductTransfer1 = $this->tester->havePriceProduct([
@@ -84,8 +82,9 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
         ];
 
         // Act
-        $priceProductOfferVolumeFilterPlugin = new PriceProductOfferVolumeFilterPlugin();
-        $minPriceProductTransfers = $priceProductOfferVolumeFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
+        $minPriceProductTransfers = $this->tester
+            ->getPriceProductOfferVolumeService()
+            ->getMinPriceProducts($priceProductTransfers, $priceProductFilterTransfer);
 
         // Assert
         $this->assertCount(0, $minPriceProductTransfers);
@@ -94,7 +93,7 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFilterIsSingleItemPrice(): void
+    public function testGetMinPriceProductsIsSingleItemPrice(): void
     {
         // Arrange
         $priceProductTransfer1 = $this->tester->havePriceProduct([
@@ -113,8 +112,9 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setQuantity(1);
 
         // Act
-        $priceProductOfferVolumeFilterPlugin = new PriceProductOfferVolumeFilterPlugin();
-        $minPriceProductTransfers = $priceProductOfferVolumeFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
+        $minPriceProductTransfers = $this->tester
+            ->getPriceProductOfferVolumeService()
+            ->getMinPriceProducts($priceProductTransfers, $priceProductFilterTransfer);
 
         // Assert
         $this->assertCount(1, $minPriceProductTransfers);

@@ -8,6 +8,7 @@
 namespace SprykerTest\Service\PriceProductOfferVolume;
 
 use Codeception\Actor;
+use Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceInterface;
 
 /**
  * Inherited Methods
@@ -29,7 +30,11 @@ class PriceProductOfferVolumeServiceTester extends Actor
 {
     use _generated\PriceProductOfferVolumeServiceTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceInterface
+     */
+    public function getPriceProductOfferVolumeService(): PriceProductOfferVolumeServiceInterface
+    {
+        return $this->getLocator()->priceProductOfferVolume()->service();
+    }
 }
