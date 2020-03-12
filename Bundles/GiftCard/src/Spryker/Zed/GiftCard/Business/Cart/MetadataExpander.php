@@ -63,7 +63,6 @@ class MetadataExpander implements MetadataExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
      * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[] $indexedGiftCardAbstractConfigurationForAbstractProductTransfers
      * @param \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[] $indexedGiftCartConfigurationForProductTransfers
      *

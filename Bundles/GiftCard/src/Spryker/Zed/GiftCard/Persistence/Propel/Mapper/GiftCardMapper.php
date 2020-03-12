@@ -46,8 +46,9 @@ class GiftCardMapper
      *
      * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    public function mapGiftCardProductAbstractConfigurationEntitiesToGiftCardAbstractProductConfigurationForProductAbstractTransfers(ObjectCollection $giftCardProductAbstractConfigurationEntities): array
-    {
+    public function mapGiftCardProductAbstractConfigurationEntitiesToGiftCardAbstractProductConfigurationForProductAbstractTransfers(
+        ObjectCollection $giftCardProductAbstractConfigurationEntities
+    ): array {
         $giftCardAbstractProductConfigurationForProductAbstractTransfers = [];
 
         foreach ($giftCardProductAbstractConfigurationEntities as $giftCardProductAbstractConfigurationEntity) {

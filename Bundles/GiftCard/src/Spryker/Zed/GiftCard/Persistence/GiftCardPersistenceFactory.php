@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
  */
 class GiftCardPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterface
 {

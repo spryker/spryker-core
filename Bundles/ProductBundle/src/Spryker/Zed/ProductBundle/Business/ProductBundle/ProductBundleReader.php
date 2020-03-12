@@ -170,7 +170,6 @@ class ProductBundleReader implements ProductBundleReaderInterface
             if ($this->productBundleCache->hasProductForBundleTransfersBySku($sku)) {
                 $productForBundlesBySku[$sku] = $this->productBundleCache->getProductForBundleTransfersBySku($sku);
             }
-
         }
 
         return $productForBundlesBySku;

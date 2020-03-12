@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;

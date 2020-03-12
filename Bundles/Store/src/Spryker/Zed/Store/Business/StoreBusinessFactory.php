@@ -48,6 +48,9 @@ class StoreBusinessFactory extends AbstractBusinessFactory
         return new StoreValidator($this->createStoreReader());
     }
 
+    /**
+     * @return \Spryker\Zed\Store\Business\Cache\StoreCacheInterface
+     */
     public function createStoreCache(): StoreCacheInterface
     {
         return new StoreCache();

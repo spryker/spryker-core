@@ -325,6 +325,9 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new QuoteItemsGrouper();
     }
 
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface
+     */
     public function createProductBundleCache(): ProductBundleCacheInterface
     {
         return new ProductBundleCache();

@@ -16,15 +16,12 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use OutOfBoundsException;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {

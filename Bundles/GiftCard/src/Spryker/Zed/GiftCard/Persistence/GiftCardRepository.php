@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class GiftCardRepository extends AbstractRepository implements GiftCardRepositoryInterface
 {
-
     /**
      * @module Product
      *

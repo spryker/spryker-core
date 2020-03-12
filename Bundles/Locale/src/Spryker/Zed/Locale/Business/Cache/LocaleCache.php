@@ -28,6 +28,8 @@ class LocaleCache implements LocaleCacheInterface
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
     public function set(LocaleTransfer $localeTransfer): void
     {

@@ -20,6 +20,8 @@ class ProductBundleCache implements ProductBundleCacheInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     *
+     * @return void
      */
     public function cacheProductForBundleTransfersBySku(array $productForBundleTransfers): void
     {
