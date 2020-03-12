@@ -3,13 +3,13 @@
 Activate,Activate
 "Add Product Relations","Add Product Relations"
 "Assign related products","Assign related products"
-"Create relation","Create relation"
+"Create Product Relation","Create Product Relation"
 Deactivate,Deactivate
 Edit,Edit
 "Edit Product Relations","Edit Product Relations"
 "Failed to delete relation.","Failed to delete relation."
 "Is active:","Is active:"
-"List Product relations","List of product relations"
+"List of Product Relations","List of Product Relations"
 "Number of products","Number of products"
 "Please select product from the list below","Please select product from the list below"
 "Product relation successfully created","Product relation successfully created"
@@ -41,3 +41,4 @@ Inactive,Inactive
 "General information","General information"
 "Store relation","Store relation"
 Stores,Stores
+"Product Relations","Product Relations"

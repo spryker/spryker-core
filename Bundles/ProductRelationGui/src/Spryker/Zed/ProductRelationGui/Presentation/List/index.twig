@@ -1,12 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Product relations' %}
+{% set widget_title = 'List of Product Relations' | trans %}
 
 {% block section_title widget_title | trans %}
 {% block head_title widget_title | trans %}
 
 {% block action %}
-    {{ createActionButton('/product-relation-gui/create/index', 'Create relation' | trans) }}
+    {{ createActionButton('/product-relation-gui/create/index', 'Create Product Relation' | trans) }}
 {% endblock %}
 
 {% block content %}
