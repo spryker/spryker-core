@@ -25,7 +25,7 @@
         <property name="createdAt" type="string"/>
     </transfer>
 
-    <transfer name="ShoppingListRequest">
+    <transfer name="RestShoppingListRequestAttributes">
         <property name="name" type="string" restRequestParameter="required"/>
     </transfer>
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestRequest;
 
-use Generated\Shared\Transfer\ShoppingListRequestTransfer;
+use Generated\Shared\Transfer\RestShoppingListRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListMapperInterface;
@@ -29,24 +29,24 @@ class ShoppingListRestRequestReader implements ShoppingListRestRequestReaderInte
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\ShoppingListRequestTransfer|null $shoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestAttributesTransfer $restShoppingListRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function readShoppingListTransferFromRequest(
         RestRequestInterface $restRequest,
-        ?ShoppingListRequestTransfer $shoppingListRequestTransfer = null
+        ?RestShoppingListRequestAttributesTransfer $restShoppingListRequestAttributesTransfer = null
     ): ShoppingListTransfer {
         $shoppingListTransfer = new ShoppingListTransfer();
         $shoppingListTransfer->setUuid($restRequest->getResource()->getId())
             ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
-        if (!$shoppingListRequestTransfer) {
+        if (!$restShoppingListRequestAttributesTransfer) {
             return $shoppingListTransfer;
         }
 
         return $this->shoppingListResourceMapper->mapRestShoppingListsAttributesTransferToShoppingListTransfer(
-            $shoppingListRequestTransfer,
+            $restShoppingListRequestAttributesTransfer,
             $shoppingListTransfer
         );
     }

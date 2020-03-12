@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Controller;
 
-use Generated\Shared\Transfer\ShoppingListRequestTransfer;
+use Generated\Shared\Transfer\RestShoppingListRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -85,17 +85,17 @@ class ShoppingListsResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\ShoppingListRequestTransfer $shoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestAttributesTransfer $restShoppingListRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
         RestRequestInterface $restRequest,
-        ShoppingListRequestTransfer $shoppingListRequestTransfer
+        RestShoppingListRequestAttributesTransfer $restShoppingListRequestAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
             ->createShoppingListCreator()
-            ->createShoppingList($restRequest, $shoppingListRequestTransfer);
+            ->createShoppingList($restRequest, $restShoppingListRequestAttributesTransfer);
     }
 
     /**
@@ -119,17 +119,17 @@ class ShoppingListsResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\ShoppingListRequestTransfer $shoppingListRequestTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestAttributesTransfer $restShoppingListRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function patchAction(
         RestRequestInterface $restRequest,
-        ShoppingListRequestTransfer $shoppingListRequestTransfer
+        RestShoppingListRequestAttributesTransfer $restShoppingListRequestAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
             ->createShoppingListUpdater()
-            ->updateShoppingList($restRequest, $shoppingListRequestTransfer);
+            ->updateShoppingList($restRequest, $restShoppingListRequestAttributesTransfer);
     }
 
     /**
