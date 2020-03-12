@@ -15,6 +15,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ConsoleConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function shouldCatchExceptions(): bool

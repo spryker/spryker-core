@@ -15,6 +15,8 @@ class MerchantRelationshipSalesOrderThresholdDataImportConfig extends DataImport
     public const IMPORT_TYPE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD = 'merchant-relationship-sales-order-threshold';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantRelationshipSalesOrderThresholdDataImporterConfiguration(): DataImporterConfigurationTransfer

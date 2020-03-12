@@ -24,6 +24,8 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
     public const COL_ALIAS_POSITION = 'position';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -42,6 +44,8 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -62,6 +66,8 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet
@@ -87,6 +93,8 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet
@@ -112,6 +120,8 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
@@ -126,6 +136,8 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $productSetKey

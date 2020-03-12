@@ -20,6 +20,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginI
 class IsQuantitySplittableOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Allows to manipulate SpySalesOrderItemEntity transfer object data before storing in Persistence.
      *

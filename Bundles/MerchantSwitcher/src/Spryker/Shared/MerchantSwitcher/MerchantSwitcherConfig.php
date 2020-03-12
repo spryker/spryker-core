@@ -20,6 +20,8 @@ class MerchantSwitcherConfig extends AbstractBundleConfig
      * Specification:
      * - Enables/disables merchant switcher functionality.
      *
+     * @api
+     *
      * @return bool
      */
     public function isMerchantSwitcherEnabled(): bool
