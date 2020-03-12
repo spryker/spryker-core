@@ -77,26 +77,6 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     }
 
     /**
-     * @param int $idProductRelation
-     *
-     * @return void
-     */
-    public function activateProductRelation($idProductRelation)
-    {
-        $this->productRelationFacade->activateProductRelation($idProductRelation);
-    }
-
-    /**
-     * @param int $idProductRelation
-     *
-     * @return void
-     */
-    public function deactivateProductRelation($idProductRelation)
-    {
-        $this->productRelationFacade->deactivateProductRelation($idProductRelation);
-    }
-
-    /**
      * @param int $idProductAbstract
      * @param int $idLocale
      *

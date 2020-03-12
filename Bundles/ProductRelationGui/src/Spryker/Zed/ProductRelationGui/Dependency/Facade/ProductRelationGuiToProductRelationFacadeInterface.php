@@ -51,24 +51,6 @@ interface ProductRelationGuiToProductRelationFacadeInterface
     public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer;
 
     /**
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function activateProductRelation($idProductRelation);
-
-    /**
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function deactivateProductRelation($idProductRelation);
-
-    /**
      * @param int $idProductAbstract
      * @param int $idLocale
      *

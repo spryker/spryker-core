@@ -100,42 +100,6 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @api
      *
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function activateProductRelation($idProductRelation)
-    {
-        $this->getFactory()
-            ->createProductRelationActivator()
-            ->activate($idProductRelation);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function deactivateProductRelation($idProductRelation)
-    {
-        $this->getFactory()
-            ->createProductRelationActivator()
-            ->deactivate($idProductRelation);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function rebuildRelations()

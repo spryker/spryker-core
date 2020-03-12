@@ -7,7 +7,6 @@
 
 {% block action %}
     {% set redirectUrl = url('/product-relation-gui/view/index', {'id-product-relation' : productRelation.idProductRelation}) %}
-    {{ include ('@ProductRelationGui/_partial/activate-button.twig', { 'idProductRelation': productRelation.idProductRelation, 'isActive': productRelation.isActive}) }}
 
     {{ editActionButton(url('/product-relation-gui/edit/index', { 'id-product-relation': productRelation.idProductRelation }), 'Edit' | trans) }}
     {{ backActionButton('/product-relation-gui/list/index', 'List Product relations' | trans) }}
