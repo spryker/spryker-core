@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DummyMarketplacePaymentExpander implements DummyMarketplacePaymentExpanderInterface
 {
+    protected const PAYMENT_METHOD = 'Marketplace Invoice';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -24,7 +26,7 @@ class DummyMarketplacePaymentExpander implements DummyMarketplacePaymentExpander
         $quoteTransfer
             ->getPayment()
             ->setPaymentProvider(DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME)
-            ->setPaymentMethod($quoteTransfer->getPayment()->getPaymentSelection());
+            ->setPaymentMethod(static::PAYMENT_METHOD);
 
         return $quoteTransfer;
     }

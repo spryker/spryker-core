@@ -1,9 +1,9 @@
-{% extends model('template') %}
-
-{% define data = {
-    form: form
-} %}
-
-{% block body %}
-    {{ form_widget(data.form.marketplacePaymentInvoice) }}
-{% endblock %}
+<div class="small-12 medium-9 large-6">
+    <div class="small-12 columns">
+        <label>
+            {{ 'dummyMarketplacePaymentInvoice.date_of_birth' | trans }}*
+            {{ form_widget(form.dummyMarketplacePaymentInvoice.date_of_birth, { 'attr': {'placeholder': 'Format: DD.MM.YYYY'} }) }}
+        </label>
+        {{ form_errors(form.dummyMarketplacePaymentInvoice.date_of_birth) }}
+    </div>
+</div>

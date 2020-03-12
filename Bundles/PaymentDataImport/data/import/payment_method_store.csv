@@ -5,3 +5,6 @@ dummyPaymentInvoice,US
 dummyPaymentCreditCard,DE
 dummyPaymentCreditCard,AT
 dummyPaymentCreditCard,US
+dummyMarketplacePaymentCreditCard,DE
+dummyMarketplacePaymentCreditCard,AT
+dummyMarketplacePaymentCreditCard,US

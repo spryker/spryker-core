@@ -7,8 +7,10 @@
 
 namespace Spryker\Shared\DummyMarketplacePayment;
 
-class DummyMarketplacePaymentConfig
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
+interface DummyMarketplacePaymentConstants
 {
-    public const PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';
-    public const PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE = 'dummyMarketplacePaymentInvoice';
+    public const DUMMY_MARKETPLACE_PAYMENT_METHODS = 'DUMMY_MARKETPLACE_PAYMENT_METHODS';
 }
