@@ -15,6 +15,8 @@ class DatasetConfig extends AbstractBundleConfig
     protected const DEFAULT_SIZE = '1M';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMaxFileSize(): string

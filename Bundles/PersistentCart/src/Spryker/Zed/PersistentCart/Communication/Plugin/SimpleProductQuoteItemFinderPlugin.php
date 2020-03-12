@@ -14,6 +14,8 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginI
 class SimpleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

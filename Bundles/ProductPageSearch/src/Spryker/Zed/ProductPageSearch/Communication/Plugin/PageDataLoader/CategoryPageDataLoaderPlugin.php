@@ -20,6 +20,8 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
 class CategoryPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer

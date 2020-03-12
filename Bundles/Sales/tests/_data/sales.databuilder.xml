@@ -34,4 +34,13 @@
         <property name="address1" dataBuilderRule="address"/>
     </transfer>
 
+    <transfer name="OrderListRequest">
+        <property name="filter" dataBuilderRule="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" dataBuilderRule="0"/>
+        <property name="limit" dataBuilderRule="10"/>
+    </transfer>
+
 </transfers>

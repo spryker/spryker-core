@@ -37,6 +37,8 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
     protected static $categoryName;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
