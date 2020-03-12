@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\PriceProductOfferVolume;
+namespace SprykerTest\Client\PriceProductOfferVolume;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 /**
  * Inherited Methods
@@ -30,7 +31,16 @@ class PriceProductOfferVolumeTester extends Actor
 {
     use _generated\PriceProductOfferVolumeTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":3,"net_price":350,"gross_price":385},{"quantity":8,"net_price":340,"gross_price":375}]}';
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function preparePriceProductsWithVolumePrices(): array
+    {
+        $priceProductTransfer = $this->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test']);
+        $priceProductTransfer->getMoneyValue()->setPriceData(static::PRICE_DATA_VOLUME);
+
+        return [$priceProductTransfer];
+    }
 }

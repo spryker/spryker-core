@@ -26,6 +26,7 @@ class PriceProductOfferDataImportDependencyProvider extends DataImportDependency
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addPriceProductFacade($container);
 
         return $container;

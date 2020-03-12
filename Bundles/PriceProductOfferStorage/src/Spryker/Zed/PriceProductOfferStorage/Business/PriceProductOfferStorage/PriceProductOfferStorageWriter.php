@@ -220,14 +220,14 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     protected function savePriceProductOfferStorage(array $priceProductOffers, array $productSkuToIdMap): void
     {
-        $groupedByStoreAndProductSkuProductOffers = [];
+        $groupedProductOffersByStoreAndProductSku = [];
         foreach ($priceProductOffers as $productOffer) {
             $priceProductOfferStorageTransfer = $this->createPriceProductOfferStorageTransfer($productOffer);
-            $groupedByStoreAndProductSkuProductOffers[$productOffer[SpyStoreTableMap::COL_NAME]][$productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU]][] = array_filter($priceProductOfferStorageTransfer->toArray());
+            $groupedProductOffersByStoreAndProductSku[$productOffer[SpyStoreTableMap::COL_NAME]][$productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU]][] = $priceProductOfferStorageTransfer->modifiedToArray();
         }
 
-        foreach ($groupedByStoreAndProductSkuProductOffers as $storeName => $groupedByProductSkuProductOffers) {
-            foreach ($groupedByProductSkuProductOffers as $productSku => $priceProductOffers) {
+        foreach ($groupedProductOffersByStoreAndProductSku as $storeName => $groupedProductOffersByProductSku) {
+            foreach ($groupedProductOffersByProductSku as $productSku => $priceProductOffers) {
                 if (isset($productSkuToIdMap[$productSku])) {
                     $productConcreteProductOfferPriceStorageEntity = SpyProductConcreteProductOfferPriceStorageQuery::create()
                         ->filterByFkProduct($productSkuToIdMap[$productSku])

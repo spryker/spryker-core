@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/price-product-offer-volume.svg)](https://travis-ci.org/spryker/price-product-offer-volume)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-PriceProductOfferVolume provides functionality to handle offer volume prices for product offer.
+PriceProductOfferVolume provides functionality to handle volume prices for product offers.
 
 ## Installation
 

@@ -8,11 +8,13 @@
 namespace Spryker\Service\PriceProductOfferVolume\Plugin\PriceProductOffer;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
 use Spryker\Shared\PriceProductOfferVolume\PriceProductOfferVolumeConfig;
 
+/**
+ * @method \Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceFactory getFactory()
+ */
 class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
@@ -27,24 +29,9 @@ class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements Pric
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
-        if ($priceProductFilterTransfer->getQuantity() <= 1) {
-            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
-
-            return $priceProductTransfers;
-        }
-
-        $minPriceProductTransfer = $this->findMinPrice(
-            $priceProductTransfers,
-            $priceProductFilterTransfer->getQuantity()
-        );
-
-        if ($minPriceProductTransfer === null) {
-            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
-
-            return $priceProductTransfers;
-        }
-
-        return [$minPriceProductTransfer];
+        return $this->getFactory()
+            ->createPriceProductReader()
+            ->getMinPriceProducts($priceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**
@@ -57,59 +44,5 @@ class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements Pric
     public function getDimensionName(): string
     {
         return PriceProductOfferVolumeConfig::DIMENSION_TYPE_PRICE_PRODUCT_OFFER_VOLUME;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param int $filterQuantity
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    protected function findMinPrice(array $priceProductTransfers, int $filterQuantity): ?PriceProductTransfer
-    {
-        $minPriceProductTransfer = null;
-
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            if (!$priceProductTransfer->getVolumeQuantity()) {
-                continue;
-            }
-
-            if ($priceProductTransfer->getVolumeQuantity() <= $filterQuantity) {
-                if ($minPriceProductTransfer === null) {
-                    $minPriceProductTransfer = $priceProductTransfer;
-
-                    continue;
-                }
-
-                $minPriceProductTransfer = $this->resolvePrice($minPriceProductTransfer, $priceProductTransfer);
-            }
-        }
-
-        return $minPriceProductTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $minPrice
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceToCompare
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function resolvePrice(PriceProductTransfer $minPrice, PriceProductTransfer $priceToCompare): PriceProductTransfer
-    {
-        if ($minPrice->getVolumeQuantity() > $priceToCompare->getVolumeQuantity()) {
-            return $minPrice;
-        }
-
-        return $priceToCompare;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return bool
-     */
-    protected function filterVolumePrices(PriceProductTransfer $priceProductTransfer): bool
-    {
-        return $priceProductTransfer->getVolumeQuantity() === null;
     }
 }

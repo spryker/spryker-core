@@ -15,8 +15,9 @@ interface PriceProductOfferDataSetInterface
     public const CURRENCY = 'currency';
     public const VALUE_NET = 'value_net';
     public const VALUE_GROSS = 'value_gross';
+    public const PRICE_DATA_VOLUME_PRICES = 'price_data.volume_prices';
+    public const VOLUME_PRICES = 'volume_prices';
 
-    public const KEY_PRICE_DATA_PREFIX = 'price_data.';
     public const KEY_PRICE_DATA = 'price_data';
     public const KEY_PRICE_DATA_CHECKSUM = 'price_data_checksum';
 

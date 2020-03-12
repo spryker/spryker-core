@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\PriceProductOfferVolume\VolumePriceExtractor;
 
-interface VolumePriceExtractorInterface
+interface ProductOfferVolumePriceExtractorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers

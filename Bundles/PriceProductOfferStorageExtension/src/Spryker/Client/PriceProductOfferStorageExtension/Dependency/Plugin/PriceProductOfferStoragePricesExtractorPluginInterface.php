@@ -11,7 +11,7 @@ interface PriceProductOfferStoragePricesExtractorPluginInterface
 {
     /**
      * Specification:
-     * - Extracts additional product offer prices from price product offer data
+     * - Extracts additional product offer prices from price product offers data.
      *
      * @api
      *

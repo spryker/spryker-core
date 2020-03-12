@@ -1,4 +1,4 @@
-namespace: SprykerTest\Client\PriceProductOfferVolume
+namespace: SprykerTest\Service\PriceProductOfferVolume
 
 paths:
   tests: .
@@ -12,9 +12,9 @@ coverage:
   whitelist: { include: ['../../../../src/*'] }
 
 suites:
-  Client:
+  Service:
     path: .
-    class_name: PriceProductOfferVolumeTester
+    class_name: PriceProductOfferVolumeServiceTester
     modules:
       enabled:
         - Asserts

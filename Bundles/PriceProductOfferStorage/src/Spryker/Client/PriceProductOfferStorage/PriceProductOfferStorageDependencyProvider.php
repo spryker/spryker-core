@@ -20,7 +20,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const FACADE_STORE_CLIENT = 'FACADE_STORE_CLIENT';
     public const FACADE_PRICE_PRODUCT_SERVICE = 'FACADE_PRICE_PRODUCT_SERVICE';
-    public const PLUGIN_PRICE_PRODUCT_OFFER_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_OFFER_PRICES_EXTRACTOR';
+    public const PLUGIN_PRICE_PRODUCT_OFFER_PRICE_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_OFFER_PRICE_EXTRACTOR';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -103,8 +103,8 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
      */
     protected function addPriceProductOfferFilterExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_PRICE_PRODUCT_OFFER_PRICES_EXTRACTOR, function () {
-            return $this->getPriceProductOfferPricesExtractorPlugins();
+        $container->set(static::PLUGIN_PRICE_PRODUCT_OFFER_PRICE_EXTRACTOR, function () {
+            return $this->getPriceProductOfferPriceExtractorPlugins();
         });
 
         return $container;
@@ -113,7 +113,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
     /**
      * @return \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePricesExtractorPluginInterface[]
      */
-    protected function getPriceProductOfferPricesExtractorPlugins(): array
+    protected function getPriceProductOfferPriceExtractorPlugins(): array
     {
         return [];
     }
