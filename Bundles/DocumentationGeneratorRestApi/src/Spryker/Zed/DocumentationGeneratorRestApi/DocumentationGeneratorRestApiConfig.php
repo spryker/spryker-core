@@ -101,6 +101,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAnnotationPluginSourceDirectories(): array
