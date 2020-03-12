@@ -30,11 +30,6 @@ class OrderReader implements OrderReaderInterface
     protected $orderRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface
-     */
-    protected $orderMapper;
-
-    /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface $orderRestResponseBuilder
      */
