@@ -195,6 +195,7 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Executes shipment expense expander plugins before shipment saving in case of multi shipment.
      * - Creates sales shipments for sales order.
      * - Creates sales shipping addresses for each item level shipment.
      *
@@ -278,6 +279,7 @@ interface ShipmentFacadeInterface
      * - Creates new or update existing shipment for specified order in Zed.
      * - Uses shipment saving logic from the saveOrderShipment() method.
      * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Executes shipment expense expander plugins before shipment saving.
      * - Creates or updates sales shipment.
      * - Creates or updates sales shipping addresses.
      *
