@@ -54,7 +54,7 @@ class QueueWriter implements QueueWriterInterface
     }
 
     /**
-     * @param array $dataSetItemTransfers
+     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItemTransfers
      *
      * @return \Generated\Shared\Transfer\QueueSendMessageTransfer[]
      */
