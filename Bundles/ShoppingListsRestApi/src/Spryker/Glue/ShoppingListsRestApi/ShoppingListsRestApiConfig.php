@@ -50,6 +50,8 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_LIST_ITEM_PRODUCT_NOT_ACTIVE = 'Product is not active.';
 
     /**
+     * @api
+     *
      * @return array
      */
     public static function getErrorIdentifierToRestErrorMapping(): array

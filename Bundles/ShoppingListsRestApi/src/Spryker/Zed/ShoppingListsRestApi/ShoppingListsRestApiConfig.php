@@ -58,6 +58,8 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED = 'shopping_list.pre.check.product_discontinued';
 
     /**
+     * @api
+     *
      * @return array
      */
     public static function getResponseErrorMapping(): array
