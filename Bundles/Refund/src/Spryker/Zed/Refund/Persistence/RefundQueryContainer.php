@@ -16,8 +16,6 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
 {
     /**
      * {@inheritDoc}
-     * Specification:
-     * - Returns SpyRefundQuery ordered by id descending.
      *
      * @api
      *
