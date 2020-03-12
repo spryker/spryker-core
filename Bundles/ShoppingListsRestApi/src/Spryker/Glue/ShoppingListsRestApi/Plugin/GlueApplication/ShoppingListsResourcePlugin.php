@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestShoppingListRequestAttributesTransfer;
-use Generated\Shared\Transfer\ShoppingListRequestTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;

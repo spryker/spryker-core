@@ -15,7 +15,7 @@ interface ShoppingListRestRequestReaderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListRequestAttributesTransfer $restShoppingListRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestAttributesTransfer|null $restShoppingListRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
