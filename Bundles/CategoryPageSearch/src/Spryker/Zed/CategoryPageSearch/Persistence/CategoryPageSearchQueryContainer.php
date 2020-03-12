@@ -125,9 +125,9 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryNodeIdsByCategoryIds(array $categoryIds)
     {
@@ -144,7 +144,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
      */
@@ -160,9 +160,9 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @param array $categoryTemplateIds
+     * @param int[] $categoryTemplateIds
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryNodeIdsByTemplateIds(array $categoryTemplateIds)
     {

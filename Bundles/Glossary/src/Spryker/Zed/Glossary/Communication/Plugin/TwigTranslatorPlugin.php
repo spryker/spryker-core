@@ -46,7 +46,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @api
      *
-     * @return array
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters()
     {
@@ -181,8 +181,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     protected function getLocaleTransfer()
     {
         if (!$this->localeTransfer) {
-            if ($this->getLocale() === null) {
-                throw new InvalidArgumentException('No locale or localeTransfer specified. You need to set a localeName or a LocaleTransfer, otherwise translation can not properly work.');
+            if ($this->localeName === null) {
+                throw new InvalidArgumentException('No $localeTransfer or $localeName specified. You need to set one, otherwise translation can not properly work.');
             }
             $localeTransfer = new LocaleTransfer();
             $localeTransfer->setLocaleName($this->localeName);
