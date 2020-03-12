@@ -13,7 +13,7 @@ use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPl
 use Spryker\Shared\PriceProductOfferVolume\PriceProductOfferVolumeConfig;
 
 /**
- * @method \Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceFactory getFactory()
+ * @method \Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceInterface getService()
  */
 class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
@@ -29,9 +29,7 @@ class PriceProductOfferVolumeFilterPlugin extends AbstractPlugin implements Pric
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
-        return $this->getFactory()
-            ->createPriceProductReader()
-            ->getMinPriceProducts($priceProductTransfers, $priceProductFilterTransfer);
+        return $this->getService()->getMinPriceProducts($priceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**

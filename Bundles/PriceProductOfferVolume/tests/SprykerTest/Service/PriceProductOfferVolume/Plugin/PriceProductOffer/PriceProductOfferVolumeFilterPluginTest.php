@@ -31,48 +31,34 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
     protected $tester;
 
     /**
-     * @var \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected $priceProductTransfer1;
-
-    /**
-     * @var \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected $priceProductTransfer2;
-
-    /**
-     * @var \Generated\Shared\Transfer\PriceProductFilterTransfer
-     */
-    protected $priceProductFilterTransfer;
-
-    /**
-     * @return void
-     */
-    public function _before(): void
-    {
-        $this->priceProductTransfer1 = $this->tester->havePriceProduct([
-            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test_1',
-            PriceProductTransfer::VOLUME_QUANTITY => 5,
-        ]);
-        $this->priceProductTransfer2 = $this->tester->havePriceProduct([
-            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test_2',
-            PriceProductTransfer::VOLUME_QUANTITY => 4,
-        ]);
-
-        $this->priceProductFilterTransfer = (new PriceProductFilterTransfer())->setQuantity(10);
-    }
-
-    /**
      * @return void
      */
     public function testFilterSuccessful(): void
     {
+        // Arrange
+        $priceProductTransfer1 = $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test_1',
+            PriceProductTransfer::VOLUME_QUANTITY => 5,
+        ]);
+        $priceProductTransfer2 = $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test_2',
+            PriceProductTransfer::VOLUME_QUANTITY => 4,
+        ]);
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setQuantity(10);
+
+        $priceProductTransfers = [
+            $priceProductTransfer1,
+            $priceProductTransfer2,
+        ];
+
         // Act
-        $minPriceProductTransfers = $this->runPluginFilter();
+        $priceProductOfferVolumeFilterPlugin = new PriceProductOfferVolumeFilterPlugin();
+        $minPriceProductTransfers = $priceProductOfferVolumeFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
 
         // Assert
         $this->assertCount(1, $minPriceProductTransfers);
-        $this->assertSame($this->priceProductTransfer1, $minPriceProductTransfers[0]);
+        $this->assertSame($priceProductTransfer1, $minPriceProductTransfers[0]);
     }
 
     /**
@@ -81,10 +67,25 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
     public function testFilterWithPriceProductFilterQuantityEqualOne(): void
     {
         // Arrange
-        $this->priceProductFilterTransfer->setQuantity(1);
+        $priceProductTransfer1 = $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test_1',
+            PriceProductTransfer::VOLUME_QUANTITY => 5,
+        ]);
+        $priceProductTransfer2 = $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test_2',
+            PriceProductTransfer::VOLUME_QUANTITY => 4,
+        ]);
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setQuantity(1);
+
+        $priceProductTransfers = [
+            $priceProductTransfer1,
+            $priceProductTransfer2,
+        ];
 
         // Act
-        $minPriceProductTransfers = $this->runPluginFilter();
+        $priceProductOfferVolumeFilterPlugin = new PriceProductOfferVolumeFilterPlugin();
+        $minPriceProductTransfers = $priceProductOfferVolumeFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
 
         // Assert
         $this->assertCount(0, $minPriceProductTransfers);
@@ -96,31 +97,27 @@ class PriceProductOfferVolumeFilterPluginTest extends Unit
     public function testFilterIsSingleItemPrice(): void
     {
         // Arrange
-        $this->priceProductTransfer1->setVolumeQuantity(null);
-        $this->priceProductFilterTransfer->setQuantity(1);
+        $priceProductTransfer1 = $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test_1',
+        ]);
+        $priceProductTransfer2 = $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'test_2',
+            PriceProductTransfer::VOLUME_QUANTITY => 4,
+        ]);
+
+        $priceProductTransfers = [
+            $priceProductTransfer1,
+            $priceProductTransfer2,
+        ];
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setQuantity(1);
 
         // Act
-        $minPriceProductTransfers = $this->runPluginFilter();
+        $priceProductOfferVolumeFilterPlugin = new PriceProductOfferVolumeFilterPlugin();
+        $minPriceProductTransfers = $priceProductOfferVolumeFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
 
         // Assert
         $this->assertCount(1, $minPriceProductTransfers);
-        $this->assertSame($this->priceProductTransfer1, $minPriceProductTransfers[0]);
-    }
-
-    /**
-     * @return array
-     */
-    protected function runPluginFilter(): array
-    {
-        // Arrange
-        $priceProductTransfers = [
-            $this->priceProductTransfer1,
-            $this->priceProductTransfer2,
-        ];
-
-        $priceProductOfferVolumeFilterPlugin = new PriceProductOfferVolumeFilterPlugin();
-
-        // Act
-        return $priceProductOfferVolumeFilterPlugin->filter($priceProductTransfers, $this->priceProductFilterTransfer);
+        $this->assertSame($priceProductTransfer1, $minPriceProductTransfers[0]);
     }
 }

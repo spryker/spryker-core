@@ -44,7 +44,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
     protected $priceProductService;
 
     /**
-     * @var \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePricesExtractorPluginInterface[]
+     * @var \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[]
      */
     protected $priceProductOfferPriceExtractorPlugins;
 
@@ -54,7 +54,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStoreClientInterface $storeClient
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceInterface $priceProductService
-     * @param \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePricesExtractorPluginInterface[] $priceProductOfferPriceExtractorPlugins
+     * @param \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[] $priceProductOfferPriceExtractorPlugins
      */
     public function __construct(
         PriceProductOfferStorageMapperInterface $priceProductMapper,
@@ -95,8 +95,8 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
             $priceProductTransfers[] = $priceProductTransfer;
         }
 
-        foreach ($this->priceProductOfferPriceExtractorPlugins as $priceProductOfferPricesExtractorPlugin) {
-            $priceProductTransfers = array_merge($priceProductTransfers, $priceProductOfferPricesExtractorPlugin->extractProductPricesForProductOffer($priceProductTransfers));
+        foreach ($this->priceProductOfferPriceExtractorPlugins as $priceProductOfferPriceExtractorPlugin) {
+            $priceProductTransfers = array_merge($priceProductTransfers, $priceProductOfferPriceExtractorPlugin->extractProductPricesForProductOffer($priceProductTransfers));
         }
 
         return $priceProductTransfers;

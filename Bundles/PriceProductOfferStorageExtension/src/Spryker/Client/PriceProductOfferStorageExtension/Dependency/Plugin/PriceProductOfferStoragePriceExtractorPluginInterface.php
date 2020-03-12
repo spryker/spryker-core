@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin;
 
-interface PriceProductOfferStoragePricesExtractorPluginInterface
+interface PriceProductOfferStoragePriceExtractorPluginInterface
 {
     /**
      * Specification:

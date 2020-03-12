@@ -6,6 +6,7 @@
     <transfer name="PriceProductFilter">
         <property name="quantity" type="int"/>
     </transfer>
+
     <transfer name="PriceProduct">
         <property name="volumeQuantity" type="int"/>
         <property name="groupKey" type="string"/>
