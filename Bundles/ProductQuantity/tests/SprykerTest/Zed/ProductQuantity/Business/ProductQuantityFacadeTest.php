@@ -347,7 +347,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testNormalizeCartChangeTransferItemsWillNotChangeQuantityIf(): void
+    public function testNormalizeCartChangeTransferItemsWillNormalizeQuantityWHenQuoteAlreadyHaveSameItem(): void
     {
         //Arrange
         $expectedQuantity = 10;
