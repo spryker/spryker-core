@@ -34,7 +34,7 @@ class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterf
     }
 
     /**
-     * @uses SpyCompanyBusinessUnitQuery
+     * @uses \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      *
      * @param string $businessUnitKey
      *

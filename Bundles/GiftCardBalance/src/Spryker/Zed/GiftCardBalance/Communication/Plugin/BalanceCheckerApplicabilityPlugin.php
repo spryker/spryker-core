@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class BalanceCheckerApplicabilityPlugin extends AbstractPlugin implements GiftCardDecisionRulePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - This decision rule is a part of gift card balance log strategy
      *

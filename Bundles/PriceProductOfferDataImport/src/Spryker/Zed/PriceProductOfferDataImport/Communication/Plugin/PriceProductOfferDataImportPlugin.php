@@ -20,6 +20,8 @@ use Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig;
 class PriceProductOfferDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -32,6 +34,8 @@ class PriceProductOfferDataImportPlugin extends AbstractPlugin implements DataIm
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

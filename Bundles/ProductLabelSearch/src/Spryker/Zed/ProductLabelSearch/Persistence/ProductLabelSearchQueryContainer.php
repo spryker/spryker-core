@@ -18,6 +18,8 @@ class ProductLabelSearchQueryContainer extends AbstractQueryContainer implements
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productLabelIds

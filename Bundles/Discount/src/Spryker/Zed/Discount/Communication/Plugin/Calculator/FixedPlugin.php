@@ -23,6 +23,8 @@ use Symfony\Component\Validator\Constraints\Type;
 class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface, DiscountCalculatorPluginWithAmountInputTypeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
@@ -46,6 +48,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param float $value
@@ -58,6 +62,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $value
@@ -70,6 +76,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $amount
@@ -85,6 +93,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -100,6 +110,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

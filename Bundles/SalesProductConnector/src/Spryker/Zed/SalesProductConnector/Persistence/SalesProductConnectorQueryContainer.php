@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class SalesProductConnectorQueryContainer extends AbstractQueryContainer implements SalesProductConnectorQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $fkSalesOrderItem
@@ -28,6 +30,8 @@ class SalesProductConnectorQueryContainer extends AbstractQueryContainer impleme
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -41,6 +45,8 @@ class SalesProductConnectorQueryContainer extends AbstractQueryContainer impleme
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $attributeKeys

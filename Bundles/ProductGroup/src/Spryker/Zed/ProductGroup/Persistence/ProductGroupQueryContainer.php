@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductGroupQueryContainer extends AbstractQueryContainer implements ProductGroupQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductGroup
@@ -30,6 +32,8 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
@@ -41,6 +45,8 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
@@ -52,6 +58,8 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductGroup
@@ -67,6 +75,8 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract

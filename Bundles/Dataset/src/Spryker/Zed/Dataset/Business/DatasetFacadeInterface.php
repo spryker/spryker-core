@@ -114,8 +114,6 @@ interface DatasetFacadeInterface
     public function existsDatasetByName(DatasetTransfer $datasetTransfer): bool;
 
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DatasetFilenameTransfer $datasetFilenameTransfer

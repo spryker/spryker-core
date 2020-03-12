@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CacheFacade extends AbstractFacade implements CacheFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use emptyCache() instead
@@ -40,6 +42,8 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use emptyAutoLoaderCache() instead
