@@ -8,12 +8,12 @@
 namespace Spryker\Client\PriceProductOfferVolume\Plugin\PriceProductOfferStorageExtension;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePricesExtractorPluginInterface;
+use Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface;
 
 /**
  * @method \Spryker\Client\PriceProductOfferVolume\PriceProductOfferVolumeClientInterface getClient()
  */
-class PriceProductOfferVolumeExtractorPlugin extends AbstractPlugin implements PriceProductOfferStoragePricesExtractorPluginInterface
+class PriceProductOfferVolumeExtractorPlugin extends AbstractPlugin implements PriceProductOfferStoragePriceExtractorPluginInterface
 {
     /**
      * {@inheritDoc}
