@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -54,5 +55,40 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
         return $this->getFactory()
             ->createCompanyBusinessUnitReader()
             ->getPermittedCompanyBusinessUnitCollection($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer {
+        return $this->getFactory()
+            ->createOrderSearchQueryExpander()
+            ->expandQueryJoinCollectionWithCompanyBusinessUnitFilter($filterFieldTransfers, $queryJoinCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCompanyBusinessUnitFilterApplicable(array $filterFieldTransfers): bool
+    {
+        return $this->getFactory()
+            ->createFilterFieldChecker()
+            ->isCompanyBusinessUnitFilterApplicable($filterFieldTransfers);
     }
 }

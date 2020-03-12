@@ -71,9 +71,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer->requireFormat()
-            ->requirePagination()
-            ->requireCustomer();
+        $orderListTransfer
+            ->requireFormat()
+            ->requirePagination();
 
         $salesOrderQuery = $this->getFactory()
             ->createSalesOrderQuery()
@@ -110,12 +110,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         SpySalesOrderQuery $salesOrderQuery,
         OrderListTransfer $orderListTransfer
     ): SpySalesOrderQuery {
-        $customerReference = $orderListTransfer->getCustomer()->getCustomerReference();
-
-        if ($customerReference) {
-            $salesOrderQuery->filterByCustomerReference($customerReference);
-        }
-
         $salesOrderQuery = $this->getFactory()
             ->createOrderSearchFilterFieldQueryBuilder()
             ->addSalesOrderQueryFilters($salesOrderQuery, $orderListTransfer);

@@ -51,6 +51,8 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
         'date' => SpySalesOrderTableMap::COL_CREATED_AT,
     ];
 
+    protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
+
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
@@ -122,6 +124,12 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
                     $salesOrderQuery,
                     $filterFieldTransfer
                 );
+
+                continue;
+            }
+
+            if ($filterFieldType === static::FILTER_FIELD_TYPE_CUSTOMER_REFERENCE) {
+                $salesOrderQuery->filterByCustomerReference($filterFieldTransfer->getValue());
             }
         }
 

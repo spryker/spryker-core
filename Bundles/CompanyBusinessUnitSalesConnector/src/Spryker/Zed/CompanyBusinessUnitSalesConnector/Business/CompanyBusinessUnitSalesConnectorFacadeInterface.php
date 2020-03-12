@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
@@ -45,4 +46,32 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
     public function getPermittedCompanyBusinessUnitCollection(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfer to filter by company business unit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if filtering by company business unit could be applied, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCompanyBusinessUnitFilterApplicable(array $filterFieldTransfers): bool;
 }

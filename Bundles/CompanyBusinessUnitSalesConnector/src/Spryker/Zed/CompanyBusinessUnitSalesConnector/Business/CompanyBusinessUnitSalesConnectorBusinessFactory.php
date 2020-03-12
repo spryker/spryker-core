@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\FilterFieldChecker;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\FilterFieldCheckerInterface;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpanderInterface;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Reader\CompanyBusinessUnitReader;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Reader\CompanyBusinessUnitReaderInterface;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Writer\OrderWriter;
@@ -40,6 +44,22 @@ class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessF
         return new CompanyBusinessUnitReader(
             $this->getCompanyBusinessUnitClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\FilterFieldCheckerInterface
+     */
+    public function createFilterFieldChecker(): FilterFieldCheckerInterface
+    {
+        return new FilterFieldChecker();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpanderInterface
+     */
+    public function createOrderSearchQueryExpander(): OrderSearchQueryExpanderInterface
+    {
+        return new OrderSearchQueryExpander();
     }
 
     /**

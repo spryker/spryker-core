@@ -38,4 +38,23 @@
         <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
+    <transfer name="FilterField">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="QueryJoinCollection">
+        <property name="queryJoins" type="QueryJoin[]" singular="queryJoin"/>
+    </transfer>
+
+    <transfer name="QueryWhereCondition">
+        <property name="column" type="string"/>
+        <property name="value" type="string"/>
+        <property name="comparison" type="string"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="queryWhereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
+    </transfer>
+
 </transfers>

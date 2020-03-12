@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Business;
 
+use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -33,5 +34,40 @@ class CompanySalesConnectorFacade extends AbstractFacade implements CompanySales
         $this->getFactory()
             ->createOrderWriter()
             ->updateOrderCompanyUuid($saveOrderTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCompanyFilter(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer {
+        return $this->getFactory()
+            ->createOrderSearchQueryExpander()
+            ->expandQueryJoinCollectionWithCompanyFilter($filterFieldTransfers, $queryJoinCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCompanyFilterApplicable(array $filterFieldTransfers): bool
+    {
+        return $this->getFactory()
+            ->createFilterFieldChecker()
+            ->isCompanyFilterApplicable($filterFieldTransfers);
     }
 }

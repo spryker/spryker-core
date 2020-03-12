@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\SearchReader;
 
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class OrderSearchReader implements OrderSearchReaderInterface
@@ -18,11 +19,20 @@ class OrderSearchReader implements OrderSearchReaderInterface
     protected $salesRepository;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface[]
      */
-    public function __construct(SalesRepositoryInterface $salesRepository)
-    {
+    protected $orderSearchQueryExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface[] $orderSearchQueryExpanderPlugins
+     */
+    public function __construct(
+        SalesRepositoryInterface $salesRepository,
+        array $orderSearchQueryExpanderPlugins
+    ) {
         $this->salesRepository = $salesRepository;
+        $this->orderSearchQueryExpanderPlugins = $orderSearchQueryExpanderPlugins;
     }
 
     /**
@@ -32,6 +42,30 @@ class OrderSearchReader implements OrderSearchReaderInterface
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
+        $orderListTransfer = $this->executeOrderSearchQueryExpanderPlugins($orderListTransfer);
+
         return $this->salesRepository->searchOrders($orderListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function executeOrderSearchQueryExpanderPlugins(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
+        $filterTransfers = $orderListTransfer->getFilterFields()->getArrayCopy();
+
+        foreach ($this->orderSearchQueryExpanderPlugins as $orderSearchQueryExpanderPlugin) {
+            if ($orderSearchQueryExpanderPlugin->isApplicable($filterTransfers)) {
+                $queryJoinCollectionTransfer = $orderSearchQueryExpanderPlugin->expand(
+                    $filterTransfers,
+                    $queryJoinCollectionTransfer
+                );
+            }
+        }
+
+        return $orderListTransfer->setQueryJoins($queryJoinCollectionTransfer);
     }
 }
