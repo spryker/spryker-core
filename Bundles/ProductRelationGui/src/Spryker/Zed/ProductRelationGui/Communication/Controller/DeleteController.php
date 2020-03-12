@@ -57,7 +57,7 @@ class DeleteController extends AbstractController
             ->getProductRelationFacade()
             ->deleteProductRelation($idProductRelation);
 
-        if (!$productRelationResponseTransfer->getIsSuccess()) {
+        if (!$productRelationResponseTransfer->getIsSuccessful()) {
             $this->processErrorMessages($productRelationResponseTransfer);
 
             return $this->redirectResponse($redirectUrl);

@@ -45,3 +45,6 @@ Stores,Stores
 "It is impossible to update product relation #%d","It is impossible to update product relation #%d"
 General,General
 "Select Stores","Select Stores"
+"Delete Product Relation","Delete Product Relation"
+"Are you sure about deleting this product relation?","Are you sure about deleting this product relation?"
+"No, I want to keep this product relation","No, I want to keep this product relation"

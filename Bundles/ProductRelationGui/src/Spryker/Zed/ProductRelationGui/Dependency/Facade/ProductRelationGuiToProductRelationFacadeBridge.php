@@ -77,26 +77,6 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     }
 
     /**
-     * @param int $idProductRelation
-     *
-     * @return void
-     */
-    public function activateProductRelation($idProductRelation)
-    {
-        $this->productRelationFacade->activateProductRelation($idProductRelation);
-    }
-
-    /**
-     * @param int $idProductRelation
-     *
-     * @return void
-     */
-    public function deactivateProductRelation($idProductRelation)
-    {
-        $this->productRelationFacade->deactivateProductRelation($idProductRelation);
-    }
-
-    /**
      * @param int $idProductAbstract
      * @param int $idLocale
      *
@@ -105,15 +85,5 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array
     {
         return $this->productRelationFacade->getProductAbstractDataById($idProductAbstract, $idLocale);
-    }
-
-    /**
-     * @param string $productRelationKey
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer
-    {
-        return $this->productRelationFacade->findProductRelationByKey($productRelationKey);
     }
 }

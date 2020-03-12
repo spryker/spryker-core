@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelationGui\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -24,14 +25,17 @@ class ProductRelationKeyUniqueConstraintValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ProductRelationKeyUniqueConstraint) {
-            throw new UnexpectedTypeException($constraint, ProductRelationKeyUniqueConstraint::CLASS_CONSTRAINT);
+            throw new UnexpectedTypeException($constraint, ProductRelationKeyUniqueConstraint::class);
         }
 
         if ($value === null) {
             return;
         }
 
-        $productRelationTransfer = $constraint->getProductRelationFacade()->findProductRelationByKey($value);
+        $productRelationCriteriaTransfer = $this->createProductRelationCriteriaTransfer($value);
+
+        $productRelationTransfer = $constraint->getProductRelationFacade()
+            ->findProductRelationByCriteria($productRelationCriteriaTransfer);
 
         if (!$productRelationTransfer) {
             return;
@@ -44,5 +48,17 @@ class ProductRelationKeyUniqueConstraintValidator extends ConstraintValidator
         $this->context
             ->buildViolation($constraint->getMessage())
             ->addViolation();
+    }
+
+    /**
+     * @param string $productRelationKey
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationCriteriaTransfer
+     */
+    protected function createProductRelationCriteriaTransfer(
+        string $productRelationKey
+    ): ProductRelationCriteriaTransfer {
+        return (new ProductRelationCriteriaTransfer())
+            ->setProductRelationKey($productRelationKey);
     }
 }

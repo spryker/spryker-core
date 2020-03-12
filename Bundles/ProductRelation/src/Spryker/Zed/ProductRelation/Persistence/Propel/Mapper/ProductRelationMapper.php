@@ -156,10 +156,15 @@ class ProductRelationMapper
      */
     protected function encodeQuerySet(ProductRelationTransfer $productRelationTransfer): string
     {
+        $querySetTransfer = $productRelationTransfer->getQuerySet();
+        $querySetData = [];
+
+        if ($querySetTransfer !== null) {
+            $querySetData = $querySetTransfer->toArray();
+        }
+
         return $this->utilEncodingService->encodeJson(
-            $productRelationTransfer
-                ->getQuerySet()
-                ->toArray()
+            $querySetData
         );
     }
 }

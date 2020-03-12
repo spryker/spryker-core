@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelation\Business\Relation;
+namespace Spryker\Zed\ProductRelation\Business\Relation\Reader;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
@@ -47,7 +47,7 @@ class ProductRelationReader implements ProductRelationReaderInterface
         }
 
         return $productRelationResponseTransfer
-            ->setIsSuccess(true)
+            ->setIsSuccessful(true)
             ->setProductRelation($productRelationTransfer);
     }
 
@@ -68,6 +68,6 @@ class ProductRelationReader implements ProductRelationReaderInterface
     protected function createProductRelationResponseTransfer(): ProductRelationResponseTransfer
     {
         return (new ProductRelationResponseTransfer())
-            ->setIsSuccess(false);
+            ->setIsSuccessful(false);
     }
 }

@@ -62,7 +62,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
                 return;
             }
 
-            $this->productRelationUpdater->updateRelation($productRelationTransfer);
+            $this->productRelationUpdater->updateProductRelation($productRelationTransfer);
         } catch (Exception $exception) {
             $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);
         }

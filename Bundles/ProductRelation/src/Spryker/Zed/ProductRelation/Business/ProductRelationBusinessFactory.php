@@ -15,7 +15,7 @@ use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreator
 use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleter;
 use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleterInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationActivator;
-use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationReader;
+use Spryker\Zed\ProductRelation\Business\Relation\Reader\ProductRelationReader;
 use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReader;
 use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdater;
@@ -108,7 +108,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Business\Relation\ProductRelationReaderInterface
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Reader\ProductRelationReaderInterface
      */
     public function createProductRelationReader()
     {

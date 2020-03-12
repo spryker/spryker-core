@@ -80,12 +80,12 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
             );
         }
 
-        $this->productRelationEntityManager->deleteProductRelationById($idProductRelation);
         $this->removeRelatedProducts($idProductRelation);
         $this->removeStoreRelations($idProductRelation);
         $this->touchRelationDeleted($productRelationTransfer);
+        $this->productRelationEntityManager->deleteProductRelationById($idProductRelation);
 
-        return $productRelationResponseTransfer->setIsSuccess(true);
+        return $productRelationResponseTransfer->setIsSuccessful(true);
     }
 
     /**
@@ -129,7 +129,7 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
     protected function createProductRelationResponseTransfer(): ProductRelationResponseTransfer
     {
         return (new ProductRelationResponseTransfer())
-            ->setIsSuccess(false);
+            ->setIsSuccessful(false);
     }
 
     /**

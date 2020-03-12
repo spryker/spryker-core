@@ -18,10 +18,13 @@ interface ProductRelationFacadeInterface
 {
     /**
      * Specification:
-     *  - Create product relation type is not persisted
-     *  - Create Product relation
-     *  - Save related product based on given query
-     *  - Touch product relation collector
+     *  - Expects product relation TYPE to be provided.
+     *  - Expects product abstract ID to be provided.
+     *  - Create product relation type is not persisted.
+     *  - Create Product relation.
+     *  - Save related product based on given query.
+     *  - Updates product relation store relationships.
+     *  - Touch product relation collector.
      *
      * @api
      *
@@ -33,10 +36,13 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
-     *  - Create product relation type is not persisted
-     *  - Update Product relation
-     *  - Save related product based on given query, remove old relations
-     *  - Touch product relation collector
+     *  - Expects product relation TYPE to be provided.
+     *  - Expects product abstract ID to be provided.
+     *  - Create product relation type is not persisted.
+     *  - Update Product relation.
+     *  - Save related product based on given query, remove old relations.
+     *  - Updates product relation store relationships.
+     *  - Touch product relation collector.
      *
      * @api
      *
@@ -60,18 +66,6 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
-     * - Finds product relation by provided product relation key.
-     *
-     * @api
-     *
-     * @param string $productRelationKey
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer;
-
-    /**
-     * Specification:
      *  - Returns product relation type list as stored in persistence
      *
      * @api
@@ -79,34 +73,6 @@ interface ProductRelationFacadeInterface
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
      */
     public function getProductRelationTypeList();
-
-    /**
-     * Specification:
-     * - Activates product relation and touches relation collector
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function activateProductRelation($idProductRelation);
-
-    /**
-     * Specification:
-     * - Deactivates product relation and touches relation collector
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function deactivateProductRelation($idProductRelation);
 
     /**
      * Specification:

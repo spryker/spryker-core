@@ -32,7 +32,7 @@ class ViewController extends AbstractController
             ->getProductRelationFacade()
             ->findProductRelationById($idProductRelation);
 
-        if (!$productRelationResponseTransfer->getIsSuccess()) {
+        if (!$productRelationResponseTransfer->getIsSuccessful()) {
             $this->processErrorMessages($productRelationResponseTransfer);
 
             return $this->redirectResponse(static::REDIRECT_URL);
