@@ -19,7 +19,7 @@ use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPlugi
 class MerchantReferenceShipmentExpenseExpanderPlugin extends AbstractPlugin implements ShipmentExpenseExpanderPluginInterface
 {
     /**
-     * Specification
+     * {@inheritDoc}
      * - Expands expense transfer with merchant reference from items.
      * - Doesn't expand if items have different merchant references or given expense is not of shipment type.
      * - Requires ShipmentGroup.items property to be set.
