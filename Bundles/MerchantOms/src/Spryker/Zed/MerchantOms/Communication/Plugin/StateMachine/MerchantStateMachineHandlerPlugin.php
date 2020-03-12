@@ -20,9 +20,9 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
  */
 class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateMachineHandlerInterface
 {
-    protected const STATE_MACHINE_INITIAL_STATE = 'new';
-
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
@@ -33,6 +33,8 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
@@ -43,6 +45,8 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -53,6 +57,8 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string[]
@@ -71,10 +77,13 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      */
     public function getInitialStateForProcess($processName): string
     {
-        return static::STATE_MACHINE_INITIAL_STATE;
+        return $this->getConfig()->getMerchantStateMachineInitialState();
     }
 
     /**
+     * {@inheritDoc}
+     * - Updates merchant order item state.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -93,6 +102,10 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
     }
 
     /**
+     * {@inheritDoc}
+     * - Finds merchant order items with provided state ids.
+     * - Returns array of StateMachineItem transfers with identifier(id of merchant order item) and idItemState.
+     *
      * @api
      *
      * @param array $stateIds

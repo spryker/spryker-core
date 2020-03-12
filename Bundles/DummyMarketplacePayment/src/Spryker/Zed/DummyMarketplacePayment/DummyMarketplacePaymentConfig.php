@@ -29,6 +29,8 @@ class DummyMarketplacePaymentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getDummyMarketplaceDefaultPaymentMethods(): array

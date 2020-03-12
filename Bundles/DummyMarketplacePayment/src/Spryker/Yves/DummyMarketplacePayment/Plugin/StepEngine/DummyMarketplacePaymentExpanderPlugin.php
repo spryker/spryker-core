@@ -20,7 +20,7 @@ class DummyMarketplacePaymentExpanderPlugin extends AbstractPlugin implements St
 {
     /**
      * {@inheritDoc}
-     * - Expands `PaymentTransfer` with payment provider and payment selection.
+     * - Expands Payment transfer with payment provider and payment selection.
      *
      * @api
      *

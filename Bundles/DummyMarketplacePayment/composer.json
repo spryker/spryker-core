@@ -16,7 +16,9 @@
     "spryker/sales": "*"
   },
   "suggest": {
-    "spryker/payment": "If you want to use Payment command plugins."
+    "spryker/oms": "If you want to use OMS constants.",
+    "spryker/payment": "If you want to use Payment command plugins.",
+    "spryker/sales": "If you want to use Sales constants."
   },
   "autoload": {
     "psr-4": {

@@ -15,6 +15,8 @@ class MerchantOmsDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT_OMS_PROCESS = 'merchant-oms-process';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantOmsProcessDataImporterConfiguration(): DataImporterConfigurationTransfer

@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostC
 
 /**
  * @method \Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantOms\Communication\MerchantOmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
  */
 class EventTriggerMerchantOrderPostCreatePlugin extends AbstractPlugin implements MerchantOrderPostCreatePluginInterface
