@@ -86,12 +86,12 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
 
         $salesReturnQuery = $this->setSalesReturnFilters($salesReturnQuery, $returnFilterTransfer);
 
-        $returnReasonQuery = $this->buildQueryFromCriteria(
+        $salesReturnQuery = $this->buildQueryFromCriteria(
             $salesReturnQuery,
             $returnFilterTransfer->getFilter()
         );
 
-        $returnReasonQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
+        $salesReturnQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
         return $this->getFactory()
             ->createReturnMapper()
