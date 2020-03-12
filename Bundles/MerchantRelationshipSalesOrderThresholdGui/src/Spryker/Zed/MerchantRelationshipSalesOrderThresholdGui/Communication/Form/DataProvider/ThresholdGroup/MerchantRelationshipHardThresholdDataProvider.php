@@ -19,8 +19,10 @@ class MerchantRelationshipHardThresholdDataProvider extends AbstractMerchantRela
      *
      * @return array
      */
-    public function mapSalesOrderThresholdValueTransferToFormData(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer, array $data): array
-    {
+    public function mapSalesOrderThresholdValueTransferToFormData(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer,
+        array $data
+    ): array {
         $thresholdData = $data[MerchantRelationshipThresholdType::FIELD_HARD] ?? [];
         $thresholdData[MerchantRelationshipHardThresholdType::FIELD_ID_THRESHOLD] = $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold();
         $thresholdData[MerchantRelationshipHardThresholdType::FIELD_THRESHOLD] = $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold();

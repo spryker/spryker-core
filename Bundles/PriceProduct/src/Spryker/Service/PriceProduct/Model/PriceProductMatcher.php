@@ -42,8 +42,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceValueByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
-    {
+    public function matchPriceValueByPriceProductCriteria(
+        array $priceProductTransfers,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ?PriceProductTransfer {
         $priceProductCriteriaTransfer
             ->requirePriceMode()
             ->requirePriceType()

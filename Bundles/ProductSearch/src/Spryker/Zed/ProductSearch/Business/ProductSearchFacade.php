@@ -61,8 +61,11 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function mapDynamicProductAttributesToSearchData(ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes): PageMapTransfer
-    {
+    public function mapDynamicProductAttributesToSearchData(
+        ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $attributes
+    ): PageMapTransfer {
         return $this->getFactory()
             ->createProductSearchAttributeMapper()
             ->mapDynamicProductAttributesToSearchData($pageMapBuilder, $pageMapTransfer, $attributes);

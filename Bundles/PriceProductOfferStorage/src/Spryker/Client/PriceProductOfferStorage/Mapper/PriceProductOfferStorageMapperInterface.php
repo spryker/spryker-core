@@ -17,5 +17,8 @@ interface PriceProductOfferStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function mapPriceProductOfferStorageDataToPriceProductTransfer(array $priceProductOffer, PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
+    public function mapPriceProductOfferStorageDataToPriceProductTransfer(
+        array $priceProductOffer,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer;
 }
