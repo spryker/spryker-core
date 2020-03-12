@@ -137,6 +137,8 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isShipmentMethodsMappedToAttributes(): bool
@@ -145,6 +147,8 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isPaymentProvidersMappedToAttributes(): bool
