@@ -32,7 +32,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
     {
         return $this->getFactory()
             ->createProductRelationCreator()
-            ->createRelation($productRelationTransfer);
+            ->createProductRelation($productRelationTransfer);
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
     {
         return $this->getFactory()
             ->createProductRelationUpdater()
-            ->updateRelation($productRelationTransfer);
+            ->updateProductRelation($productRelationTransfer);
     }
 
     /**
@@ -65,20 +65,6 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
         return $this->getFactory()
             ->createProductRelationReader()
             ->findProductRelationById($idProductRelation);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $productRelationKey
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer
-    {
-        return $this->getRepository()->findProductRelationByKey($productRelationKey);
     }
 
     /**

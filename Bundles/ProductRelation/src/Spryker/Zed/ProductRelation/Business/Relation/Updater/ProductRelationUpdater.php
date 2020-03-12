@@ -65,7 +65,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function updateRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($productRelationTransfer) {
             return $this->executeUpdateRelationTransaction($productRelationTransfer);
@@ -100,7 +100,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
         $this->touchRelationActive($productRelationTransfer->getFkProductAbstract());
 
         return $productRelationResponseTransfer
-            ->setIsSuccess(true)
+            ->setIsSuccessful(true)
             ->setProductRelation($productRelationTransfer);
     }
 
@@ -159,7 +159,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     protected function createProductRelationResponseTransfer(): ProductRelationResponseTransfer
     {
         return (new ProductRelationResponseTransfer())
-            ->setIsSuccess(false);
+            ->setIsSuccessful(false);
     }
 
     /**

@@ -30,15 +30,28 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     public function findProductRelationByCriteria(
         ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
     ): ?ProductRelationTransfer {
-        $productRelationCriteriaTransfer->requireFkProductAbstract()
-            ->requireRelationTypeKey();
-        $productRelationEntity = $this->getFactory()
-            ->createProductRelationQuery()
-            ->useSpyProductRelationTypeQuery()
-                ->filterByKey($productRelationCriteriaTransfer->getRelationTypeKey())
-            ->endUse()
-            ->filterByFkProductAbstract($productRelationCriteriaTransfer->getFkProductAbstract())
-            ->findOne();
+        $productRelationQuery = $this->getFactory()
+            ->createProductRelationQuery();
+        $idProductAbstract = $productRelationCriteriaTransfer->getFkProductAbstract();
+        $relationTypeKey = $productRelationCriteriaTransfer->getRelationTypeKey();
+        $productRelationKey = $productRelationCriteriaTransfer->getProductRelationKey();
+
+        if ($idProductAbstract !== null) {
+            $productRelationQuery->filterByFkProductAbstract($idProductAbstract);
+        }
+
+        if ($relationTypeKey !== null) {
+            $productRelationQuery
+                ->useSpyProductRelationTypeQuery()
+                    ->filterByKey($productRelationCriteriaTransfer->getRelationTypeKey())
+                ->endUse();
+        }
+
+        if ($productRelationKey !== null) {
+            $productRelationQuery->filterByProductRelationKey($productRelationKey);
+        }
+
+        $productRelationEntity = $productRelationQuery->findOne();
 
         if (!$productRelationEntity) {
             return null;
@@ -162,30 +175,6 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
         return $this->getFactory()
             ->createProductRelationMapper()
             ->mapProductRelationEntitiesToProductRelationTransfers($productRelationEntities, []);
-    }
-
-    /**
-     * @param string $productRelationKey
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer
-    {
-        $productRelationEntity = $this->getFactory()
-            ->createProductRelationQuery()
-            ->filterByProductRelationKey($productRelationKey)
-            ->findOne();
-
-        if (!$productRelationEntity) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createProductRelationMapper()
-            ->mapProductRelationEntityToProductRelationTransfer(
-                $productRelationEntity,
-                new ProductRelationTransfer()
-            );
     }
 
     /**

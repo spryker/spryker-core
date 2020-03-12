@@ -76,7 +76,7 @@ class CreateController extends BaseProductRelationController
             ->getProductRelationFacade()
             ->createProductRelation($productRelationForm->getData());
 
-        if (!$productRelationResponseTransfer->getIsSuccess()) {
+        if (!$productRelationResponseTransfer->getIsSuccessful()) {
             $this->processErrorMessages($productRelationResponseTransfer);
 
             return $this->redirectResponse(static::REDIRECT_URL_LIST);

@@ -17,7 +17,7 @@ class ProductRelationConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public function getProductRelationUpdateChunkSize(): int
+    public function getRelatedProductsReadChunkSize(): int
     {
         return static::PRODUCT_RELATION_UPDATE_CHUNK_SIZE;
     }

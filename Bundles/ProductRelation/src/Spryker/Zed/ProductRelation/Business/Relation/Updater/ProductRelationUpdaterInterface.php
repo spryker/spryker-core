@@ -17,5 +17,5 @@ interface ProductRelationUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function updateRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer;
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer;
 }

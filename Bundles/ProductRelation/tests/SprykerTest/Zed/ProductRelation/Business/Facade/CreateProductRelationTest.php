@@ -89,7 +89,6 @@ class CreateProductRelationTest extends Unit
             ProductRelationTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductRelationTransfer::PRODUCT_RELATION_KEY => static::SECOND_FIXTURE_VALUE,
             ProductRelationTransfer::STORE_RELATION => $storeRelationTransfer,
-            ProductRelationTransfer::QUERY_SET => $ruleQuerySetTransfer,
         ])->build();
 
         // Act

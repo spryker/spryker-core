@@ -68,13 +68,6 @@ interface ProductRelationRepositoryInterface
     public function getActiveProductRelations(): array;
 
     /**
-     * @param string $productRelationKey
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer;
-
-    /**
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
      */
     public function getProductRelationTypes(): array;

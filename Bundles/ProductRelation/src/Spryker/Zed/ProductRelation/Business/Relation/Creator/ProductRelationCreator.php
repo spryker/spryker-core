@@ -64,9 +64,10 @@ class ProductRelationCreator implements ProductRelationCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function createRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
+    public function createProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
-        $productRelationTransfer->requireProductRelationType();
+        $productRelationTransfer->requireProductRelationType()
+            ->requireProductRelationKey();
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($productRelationTransfer) {
             return $this->executeCreateRelationTransaction($productRelationTransfer);
@@ -92,7 +93,7 @@ class ProductRelationCreator implements ProductRelationCreatorInterface
 
         $this->touchRelationActive($productRelationTransfer->getFkProductAbstract());
 
-        return $productRelationResponseTransfer->setIsSuccess(true)
+        return $productRelationResponseTransfer->setIsSuccessful(true)
             ->setProductRelation($productRelationTransfer);
     }
 
@@ -139,7 +140,7 @@ class ProductRelationCreator implements ProductRelationCreatorInterface
     protected function createProductRelationResponseTransfer(): ProductRelationResponseTransfer
     {
         return (new ProductRelationResponseTransfer())
-            ->setIsSuccess(false);
+            ->setIsSuccessful(false);
     }
 
     /**

@@ -96,6 +96,7 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
             ->createProductRelationStoreQuery()
             ->filterByFkProductRelation($idProductRelation)
             ->filterByFkStore_In($idStores)
+            ->find()
             ->delete();
     }
 
@@ -161,6 +162,7 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
         $this->getFactory()
             ->createProductRelationProductAbstractQuery()
             ->filterByFkProductRelation($idProductRelation)
+            ->find()
             ->delete();
     }
 

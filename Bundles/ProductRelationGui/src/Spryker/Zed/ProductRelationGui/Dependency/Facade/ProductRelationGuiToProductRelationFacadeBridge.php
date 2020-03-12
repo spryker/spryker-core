@@ -106,14 +106,4 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     {
         return $this->productRelationFacade->getProductAbstractDataById($idProductAbstract, $idLocale);
     }
-
-    /**
-     * @param string $productRelationKey
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer
-    {
-        return $this->productRelationFacade->findProductRelationByKey($productRelationKey);
-    }
 }

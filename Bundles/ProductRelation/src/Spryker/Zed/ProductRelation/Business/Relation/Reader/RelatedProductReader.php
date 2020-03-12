@@ -42,11 +42,11 @@ class RelatedProductReader implements RelatedProductReaderInterface
      *
      * @return \Generator|\Generated\Shared\Transfer\ProductAbstractTransfer[][]
      */
-    public function findMatchingProducts(ProductRelationTransfer $productRelationTransfer): Generator
+    public function getRelatedProducts(ProductRelationTransfer $productRelationTransfer): Generator
     {
         $count = $this->productRelationRepository->getRelatedProductsCount($productRelationTransfer);
 
-        $limit = $this->productRelationConfig->getProductRelationUpdateChunkSize();
+        $limit = $this->productRelationConfig->getRelatedProductsReadChunkSize();
 
         for ($offset = 0; $offset <= $count; $offset += $limit) {
             $productRelationCriteriaFilterTransfer = $this->createProductRelationCriteriaFilterTransfer(

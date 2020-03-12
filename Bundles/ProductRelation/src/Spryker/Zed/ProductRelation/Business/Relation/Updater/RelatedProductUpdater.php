@@ -42,17 +42,31 @@ class RelatedProductUpdater implements RelatedProductUpdaterInterface
      */
     public function updateAllRelatedProducts(ProductRelationTransfer $productRelationTransfer): void
     {
-        foreach ($this->relatedProductReader->findMatchingProducts($productRelationTransfer) as $relatedProductTransfers) {
-            $productAbstractIds = [];
-
-            foreach ($relatedProductTransfers as $relatedProductTransfer) {
-                $productAbstractIds[] = $relatedProductTransfer->getIdProductAbstract();
-            }
+        $productRelationTransfer->requireIdProductRelation();
+        
+        foreach ($this->relatedProductReader->getRelatedProducts($productRelationTransfer) as $relatedProductTransfers) {
+            $productAbstractIds = $this->collectProductAbstractIds($relatedProductTransfers);
 
             $this->productRelationEntityManager->saveRelatedProducts(
                 $productAbstractIds,
                 $productRelationTransfer->getIdProductRelation()
             );
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $relatedProductTransfers
+     *
+     * @return int[]
+     */
+    protected function collectProductAbstractIds(array $relatedProductTransfers): array
+    {
+        $productAbstractIds = [];
+
+        foreach ($relatedProductTransfers as $relatedProductTransfer) {
+            $productAbstractIds[] = $relatedProductTransfer->getIdProductAbstract();
+        }
+
+        return $productAbstractIds;
     }
 }

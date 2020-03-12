@@ -75,11 +75,4 @@ interface ProductRelationGuiToProductRelationFacadeInterface
      * @return array
      */
     public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
-
-    /**
-     * @param string $productRelationKey
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationByKey(string $productRelationKey): ?ProductRelationTransfer;
 }
