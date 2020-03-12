@@ -69,6 +69,8 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $processName
