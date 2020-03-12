@@ -25,4 +25,14 @@ class PublisherConfig extends AbstractBundleConfig
      * Defines retry queue name as used when with asynchronous event handling.
      */
     public const PUBLISH_RETRY_QUEUE = 'publish.retry';
+
+    /**
+     * Defines routing key for forwarding message to retry queue.
+     */
+    public const PUBLISH_ROUTING_KEY_RETRY = 'retry';
+
+    /**
+     * Defines routing key for forwarding message to error queue.
+     */
+    public const PUBLISH_ROUTING_KEY_ERROR = 'error';
 }

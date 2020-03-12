@@ -16,7 +16,7 @@ class PublisherConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getPublisherQueueName(): ?string
+    public function getPublishQueueName(): ?string
     {
         return null;
     }
