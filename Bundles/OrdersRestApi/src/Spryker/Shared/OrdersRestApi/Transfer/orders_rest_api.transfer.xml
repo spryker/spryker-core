@@ -65,6 +65,7 @@
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="taxRateAverageAggregation" type="float"/>
         <property name="taxAmountAfterCancellation" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="RestOrderTotalsAttributes">
