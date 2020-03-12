@@ -19,6 +19,8 @@ class OfferConfig extends AbstractBundleConfig
     public const STATUS_CLOSE = 'Close';
 
   /**
+   * @api
+   *
    * @return string
    */
     public function getStatusPending(): string
@@ -27,6 +29,8 @@ class OfferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStatusOrder(): string

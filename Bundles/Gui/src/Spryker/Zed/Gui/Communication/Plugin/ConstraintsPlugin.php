@@ -65,6 +65,8 @@ class ConstraintsPlugin extends AbstractPlugin
     public const MAXIMUM_LENGTH_CONSTRAINT = 255;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -79,6 +81,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -92,6 +96,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -104,6 +110,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Symfony\Component\Validator\Constraints\Blank
@@ -114,6 +122,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -126,6 +136,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -138,6 +150,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -150,6 +164,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -162,6 +178,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -174,6 +192,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -186,6 +206,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -198,6 +220,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -210,6 +234,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -222,6 +248,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -234,6 +262,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -246,6 +276,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -258,6 +290,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -270,6 +304,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -282,6 +318,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -294,6 +332,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -306,6 +346,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -318,6 +360,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -330,6 +374,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -342,6 +388,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -354,6 +402,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -366,6 +416,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -378,6 +430,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -390,6 +444,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -402,6 +458,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -414,6 +472,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -426,6 +486,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -438,6 +500,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -450,6 +514,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -462,6 +528,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -474,6 +542,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -486,6 +556,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -498,6 +570,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -510,6 +584,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -522,6 +598,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -534,6 +612,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -546,6 +626,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -558,6 +640,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -570,6 +654,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -582,6 +668,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -594,6 +682,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -606,6 +696,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options
@@ -618,6 +710,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $options

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 interface PriceProductStorageToPriceProductClientInterface
 {
     /**
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer

@@ -27,6 +27,7 @@
     </transfer>
 
     <transfer name="Quote">
+        <property name="store" type="Store"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
@@ -37,7 +38,11 @@
     </transfer>
 
     <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
         <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
     </transfer>
 
 </transfers>

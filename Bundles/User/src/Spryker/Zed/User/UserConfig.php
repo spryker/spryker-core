@@ -15,6 +15,8 @@ class UserConfig extends AbstractBundleConfig
     public const KEY_INSTALLER_DATA = 'installer_data';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSystemUsers()
@@ -30,6 +32,8 @@ class UserConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getInstallerUsers()

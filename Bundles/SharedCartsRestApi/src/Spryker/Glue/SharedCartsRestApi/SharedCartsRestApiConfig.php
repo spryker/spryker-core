@@ -67,6 +67,8 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_FAILED_TO_SAVE_SHARED_CART = 'Failed to save shared cart.';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getErrorIdentifierToRestErrorMapping(): array

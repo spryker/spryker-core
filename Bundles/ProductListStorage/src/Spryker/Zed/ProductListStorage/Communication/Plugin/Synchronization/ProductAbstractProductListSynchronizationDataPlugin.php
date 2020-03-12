@@ -23,6 +23,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -33,6 +35,8 @@ class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return bool
@@ -43,6 +47,8 @@ class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -53,6 +59,8 @@ class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -63,6 +71,8 @@ class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string|null
@@ -73,6 +83,8 @@ class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $ids
