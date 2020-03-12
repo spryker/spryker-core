@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
@@ -98,17 +99,17 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function executeBulkPostSavePlugins(array $shoppingListItems): array
+    public function executeBulkPostSavePlugins(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
     {
         foreach ($this->bulkPostSavePlugins as $bulkPostSavePlugin) {
-            $shoppingListItems = $bulkPostSavePlugin->execute($shoppingListItems);
+            $shoppingListItemTransfers = $bulkPostSavePlugin->execute($shoppingListItemTransfers);
         }
 
-        return $shoppingListItems;
+        return $shoppingListItemTransfers;
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Communication\Plugin\ShoppingList;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface;
 
@@ -22,13 +23,13 @@ class ShoppingListItemProductOptionBulkPostSavePlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function execute(array $shoppingListItems): array
+    public function execute(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
     {
         return $this->getFacade()
-            ->saveShoppingListItemProductOptionsBulk($shoppingListItems);
+            ->saveShoppingListItemProductOptionsForShoppingListItemCollection($shoppingListItemTransfers);
     }
 }

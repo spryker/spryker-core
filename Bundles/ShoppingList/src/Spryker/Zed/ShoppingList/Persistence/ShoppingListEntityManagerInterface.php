@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer;
@@ -150,10 +151,10 @@ interface ShoppingListEntityManagerInterface
     public function deleteCompanyBusinessUnitBlacklistByBusinessUnitId(int $idCompanyBusinessUnit): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItems(array $shoppingListItems, ShoppingListTransfer $shoppingListTransfer): array;
+    public function saveShoppingListItems(ShoppingListItemCollectionTransfer $shoppingListItemTransfers, ShoppingListTransfer $shoppingListTransfer): ShoppingListItemCollectionTransfer;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface;
@@ -56,15 +57,15 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemNoteForShoppingListItemBulk(array $shoppingListItems): array
+    public function saveShoppingListItemNoteForShoppingListItemBulk(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
     {
-        $result = [];
-        foreach ($shoppingListItems as $shoppinglitsItem) {
-            $result[] = $this->saveShoppingListItemNoteForShoppingListItem($shoppinglitsItem);
+        $result = new ShoppingListItemCollectionTransfer();
+        foreach ($shoppingListItemTransfers->getItems() as $shoppingListItem) {
+            $result->addItem($this->saveShoppingListItemNoteForShoppingListItem($shoppingListItem));
         }
 
         return $result;

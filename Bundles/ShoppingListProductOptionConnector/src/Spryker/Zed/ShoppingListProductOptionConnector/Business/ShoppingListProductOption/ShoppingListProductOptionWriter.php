@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOption;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface;
@@ -44,17 +45,17 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemProductOptionsBulk(array $shoppingListItemTransfers): array
+    public function saveShoppingListItemProductOptionsBulk(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfers) {
-            $result = [];
-            foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            $result = new ShoppingListItemCollectionTransfer();
+            foreach ($shoppingListItemTransfers->getItems() as $shoppingListItemTransfer) {
                 $this->executeSaveShoppingListItemProductOptionsTransaction($shoppingListItemTransfer);
-                $result[] = $shoppingListItemTransfer;
+                $result->addItem($shoppingListItemTransfer);
             }
 
             return $result;

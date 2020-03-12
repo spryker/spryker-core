@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOption;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListProductOptionWriterInterface
@@ -19,11 +20,11 @@ interface ShoppingListProductOptionWriterInterface
     public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemProductOptionsBulk(array $shoppingListItemTransfers): array;
+    public function saveShoppingListItemProductOptionsBulk(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer;
 
     /**
      * @param int $idShoppingListItem

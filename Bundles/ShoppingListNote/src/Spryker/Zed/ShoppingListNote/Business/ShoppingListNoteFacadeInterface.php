@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListNote\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
@@ -51,16 +52,15 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     * - Saves current state of shopping list item note, if the note is empty, it gets deleted.
-     * - Executes in bulk
+     * - Saves current state of shopping list item note in bulk, if the note is empty, it gets deleted.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemNoteForShoppingListItemBulk(array $shoppingListItems): array;
+    public function saveShoppingListItemNotesForShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer;
 
     /**
      * Specification:

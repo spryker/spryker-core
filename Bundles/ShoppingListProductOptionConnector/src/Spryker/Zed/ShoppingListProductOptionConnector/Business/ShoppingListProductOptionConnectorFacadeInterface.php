@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListProductOptionConnectorFacadeInterface
@@ -28,17 +29,17 @@ interface ShoppingListProductOptionConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Operates in bulk
+     * - Operates in bulk.
      * - Removes existing shopping list product options from persistence.
      * - Creates new shopping list product options in persistence.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemProductOptionsBulk(array $shoppingListItems): array;
+    public function saveShoppingListItemProductOptionsForShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer;
 
     /**
      * Specification:

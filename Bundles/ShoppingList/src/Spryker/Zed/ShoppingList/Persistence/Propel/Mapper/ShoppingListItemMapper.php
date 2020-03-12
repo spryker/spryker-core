@@ -57,4 +57,19 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
 
         return $shoppingListItemEntity;
     }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem $shoppingListItemEntity
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function mapEntityToTransfer(
+        SpyShoppingListItem $shoppingListItemEntity,
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer {
+        $shoppingListItemTransfer->fromArray($shoppingListItemEntity->toArray(), true);
+
+        return $shoppingListItemTransfer;
+    }
 }

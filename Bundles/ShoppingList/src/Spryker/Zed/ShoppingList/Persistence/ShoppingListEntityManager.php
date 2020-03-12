@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer;
@@ -442,35 +443,35 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItems(array $shoppingListItems, ShoppingListTransfer $shoppingListTransfer): array
+    public function saveShoppingListItems(ShoppingListItemCollectionTransfer $shoppingListItemTransfers, ShoppingListTransfer $shoppingListTransfer): ShoppingListItemCollectionTransfer
     {
-        if (empty($shoppingListItems)) {
-            return $shoppingListItems;
+        if (count($shoppingListItemTransfers->getItems()) == 0) {
+            return $shoppingListItemTransfers;
         }
 
         $shoppingListItemMapper = $this->getFactory()->createShoppingListItemMapper();
 
         /**
-         * @var \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListItemsCollection
+         * @var \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListItemEntityCollection
          */
-        $shoppingListItemsCollection = new ObjectCollection();
-        $shoppingListItemsCollection->setModel(SpyShoppingListItem::class);
-        foreach ($shoppingListItems as $shoppingListItemTransfer) {
+        $shoppingListItemEntityCollection = new ObjectCollection();
+        $shoppingListItemEntityCollection->setModel(SpyShoppingListItem::class);
+        foreach ($shoppingListItemTransfers->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemEntity = $shoppingListItemMapper->mapTransferToEntity($shoppingListItemTransfer, new SpyShoppingListItem());
-
-            $shoppingListItemsCollection->append($shoppingListItemEntity);
+            $shoppingListItemEntityCollection->append($shoppingListItemEntity);
         }
-        $shoppingListItemsCollection->save();
+        $shoppingListItemEntityCollection->save();
 
-        foreach ($shoppingListItemsCollection as $idx => $spyShoppingListItem) {
-            $shoppingListItems[$idx]->setIdShoppingListItem($spyShoppingListItem->getIdShoppingListItem());
+        $result = new ShoppingListItemCollectionTransfer();
+        foreach ($shoppingListItemEntityCollection as $spyShoppingListItem) {
+            $result->addItem($shoppingListItemMapper->mapEntityToTransfer($spyShoppingListItem, new ShoppingListItemTransfer()));
         }
 
-        return $shoppingListItems;
+        return $result;
     }
 }

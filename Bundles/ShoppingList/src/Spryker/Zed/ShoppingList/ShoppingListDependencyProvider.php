@@ -234,9 +234,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShoppingListItemBulkPostSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE] = function () {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE, function () {
             return $this->getShoppingListItemBulkPostSavePlugins();
-        };
+        });
 
         return $container;
     }

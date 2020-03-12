@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -40,11 +41,11 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemProductOptionsBulk(array $shoppingListItemTransfers): array
+    public function saveShoppingListItemProductOptionsForShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
     {
         return $this->getFactory()
             ->createShoppingListProductOptionWriter()
