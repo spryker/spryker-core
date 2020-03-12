@@ -10,8 +10,6 @@ namespace Spryker\Zed\SalesReturn\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculator;
 use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface;
-use Spryker\Zed\SalesReturn\Business\Checker\OrderItemChecker;
-use Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpander;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGenerator;
@@ -74,7 +72,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new ReturnValidator(
             $this->getStoreFacade(),
-            $this->createOrderItemChecker()
+            $this->getConfig()
         );
     }
 
@@ -145,14 +143,6 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->getSalesFacade(),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReturn\Business\Checker\OrderItemCheckerInterface
-     */
-    public function createOrderItemChecker(): OrderItemCheckerInterface
-    {
-        return new OrderItemChecker($this->getConfig());
     }
 
     /**

@@ -21,8 +21,7 @@ interface SalesReturnClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Retrieves return reasons from persistence.
-     * - Finds ReturnReason records by criteria from FilterTransfer.
+     * - Retrieves return reasons from persistence by criteria from FilterTransfer.
      *
      * @api
      *
@@ -35,8 +34,7 @@ interface SalesReturnClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Retrieves returns from Persistence.
-     * - Filters by criteria from ReturnFilterTransfer.
+     * - Retrieves returns from Persistence by criteria from ReturnFilterTransfer.
      * - Expands found returns with return item, totals, sales order items.
      *
      * @api
@@ -50,14 +48,13 @@ interface SalesReturnClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Creates return.
      * - Validates return request.
+     * - Expects order items state to be returnable.
      * - Generates unique reference number.
      * - Stores return.
      * - Stores return items.
      * - Triggers return event for provided order items.
-     * - Returns "isSuccessful=true" and return transfer on success.
-     * - Returns "isSuccessful=false" and error messages otherwise.
+     * - Returns "isSuccessful=true" and return transfer on success or `isSuccessful=false` otherwise.
      *
      * @api
      *
@@ -70,10 +67,9 @@ interface SalesReturnClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Retrieves order items from persistence.
      * - Requires ReturnableItemFilterTransfer::customerReference to be set.
-     * - Removes items in nonreturnable state.
-     * - Finds Item records by criteria from ReturnableItemFilterTransfer.
+     * - Adds additional filter by returnable states.
+     * - Retrieves order items from persistence by criteria from ReturnableItemFilterTransfer.
      * - Executes ReturnPolicyPluginInterface stack.
      *
      * @api
