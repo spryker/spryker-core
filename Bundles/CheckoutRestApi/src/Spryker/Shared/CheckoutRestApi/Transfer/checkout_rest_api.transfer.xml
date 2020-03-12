@@ -96,8 +96,6 @@
         <property name="price" type="int"/>
         <property name="taxRate" type="float" deprecated="Will be removed with next major release."/>
         <property name="deliveryTime" type="int"/>
-        <property name="defaultGrossPrice" type="int"/>
-        <property name="defaultNetPrice" type="int"/>
         <property name="currencyIsoCode" type="string"/>
     </transfer>
 

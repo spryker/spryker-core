@@ -212,14 +212,12 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
             ->setId($shipmentMethodTransfer->getIdShipmentMethod());
 
-        $moneyValueTransfer = $shipmentMethodTransfer->getPrices()->getIterator()->current();
-
-        if (!$moneyValueTransfer) {
+        $currencyPrice = $shipmentMethodTransfer->getStoreCurrencyPrice();
+        if (!$currencyPrice) {
             return $restShipmentMethodTransfer;
         }
 
-        $restShipmentMethodTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
-        $restShipmentMethodTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
+        $restShipmentMethodTransfer->setPrice($currencyPrice);
 
         return $restShipmentMethodTransfer;
     }

@@ -23,6 +23,8 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
 
     /**
+     * @api
+     *
      * @param string $paymentProviderName
      * @param string $paymentMethodName
      *
@@ -36,6 +38,8 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int[]
      */
     public function getPaymentMethodPriority(): array
