@@ -30,7 +30,8 @@ class ShoppingListsResourceController extends AbstractController
      *          "responses": {
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list is not found."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListsAttributesTransfer"
      *     },
      *     "getCollection": {
      *          "summary": [
@@ -42,7 +43,8 @@ class ShoppingListsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "403": "Unauthorized request."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListsAttributesTransfer"
      *     }
      * })
      *
