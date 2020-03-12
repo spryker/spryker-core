@@ -101,25 +101,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isCurrencyChanged(QuoteTransfer $quoteTransfer)
-    {
-        if (!$quoteTransfer->getShipment()->getMethod()) {
-            return false;
-        }
-
-        $shipmentCurrencyIsoCode = $quoteTransfer->getShipment()->getMethod()->getCurrencyIsoCode();
-        if ($shipmentCurrencyIsoCode !== $quoteTransfer->getCurrency()->getCode()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
