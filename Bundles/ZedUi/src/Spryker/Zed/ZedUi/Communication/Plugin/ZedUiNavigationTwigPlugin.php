@@ -15,6 +15,8 @@ use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
 class ZedUiNavigationTwigPlugin extends AbstractTwigExtensionPlugin
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Spryker\Shared\Twig\TwigFunction[]
