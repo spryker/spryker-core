@@ -106,7 +106,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
     /**
      * {@inheritDoc}
      * - Finds merchant order items with provided state ids.
-     * - Returns array of StateMachineItem transfers with identifier(id of merchant order item) and idItemState.
+     * - Returns StateMachineItem transfers with identifier(id of merchant order item) and idItemState.
      *
      * @api
      *
