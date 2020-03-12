@@ -25,7 +25,5 @@ interface MerchantOmsToMerchantSalesOrderFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
      */
-    public function findMerchantOrderItem(
-        MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
-    ): ?MerchantOrderItemTransfer;
+    public function findMerchantOrderItem(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): ?MerchantOrderItemTransfer;
 }

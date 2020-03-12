@@ -87,7 +87,7 @@ interface MerchantSalesOrderFacadeInterface
     /**
      * Specification:
      * - Returns a merchant order item found using provided criteria.
-     * - Returns NULL if merchant order item is not found.
+     * - Returns NULL if merchant order item was not found.
      *
      * @api
      *
@@ -95,9 +95,7 @@ interface MerchantSalesOrderFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
      */
-    public function findMerchantOrderItem(
-        MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
-    ): ?MerchantOrderItemTransfer;
+    public function findMerchantOrderItem(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): ?MerchantOrderItemTransfer;
 
     /**
      * Specification:

@@ -13,14 +13,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface;
 
 /**
- * @method \Spryker\Zed\Nopayment\Business\NopaymentFacadeInterface getFacade()
- * @method \Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
+ * @method \Spryker\Zed\DummyMarketplacePayment\Business\DummyMarketplacePaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\DummyMarketplacePayment\DummyMarketplacePaymentConfig getConfig()
  */
 class MerchantProductOfferPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Filters dummy marketplace payment methods.
+     * - If not all order items contain of product reference, then filters dummy marketplace payment methods out.
      *
      * @api
      *
@@ -29,8 +30,10 @@ class MerchantProductOfferPaymentMethodFilterPlugin extends AbstractPlugin imple
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
-    {
+    public function filterPaymentMethods(
+        PaymentMethodsTransfer $paymentMethodsTransfer,
+        QuoteTransfer $quoteTransfer
+    ): PaymentMethodsTransfer {
         return $this->getFacade()->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
     }
 }
