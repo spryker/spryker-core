@@ -69,8 +69,7 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     }
 
     /**
-     * Specification:
-     *  - Set tax rate for each item based on quote level (BC) or item level shipments.
+     * {@inheritDoc}
      *
      * @api
      *
