@@ -8,7 +8,6 @@
     <transfer name="MerchantOrderItem">
         <property name="idMerchantOrderItem" dataBuilderRule="="/>
         <property name="idOrderItem" dataBuilderRule="="/>
-        <property name="fkStateMachineItemState" dataBuilderRule="="/>
     </transfer>
 
     <transfer name="StateMachineItem">
