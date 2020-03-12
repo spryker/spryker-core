@@ -36,7 +36,7 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @api
      *
      * @return string[]
