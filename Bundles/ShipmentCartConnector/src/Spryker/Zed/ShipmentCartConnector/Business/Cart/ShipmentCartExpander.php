@@ -79,7 +79,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            if (!$this->isShipmentExpenseUpdateNeeded($quoteTransfer, $shipmentTransfer)) {
+            if (!$shipmentTransfer->getMethod() || !$shipmentTransfer->getMethod()->getIdShipmentMethod()) {
                 continue;
             }
 
@@ -110,23 +110,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         }
 
         return $cartChangeTransfer->setQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return bool
-     */
-    protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
-    {
-        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
-
-        if (!$shipmentMethodTransfer || !$shipmentMethodTransfer->getIdShipmentMethod()) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
