@@ -25,6 +25,10 @@
         <property name="createdAt" type="string"/>
     </transfer>
 
+    <transfer name="ShoppingListRequest">
+        <property name="name" type="string" restRequestParameter="required"/>
+    </transfer>
+
     <transfer name="ShoppingListItem">
         <property name="uuid" type="string"/>
         <property name="idCompanyUser" type="int"/>

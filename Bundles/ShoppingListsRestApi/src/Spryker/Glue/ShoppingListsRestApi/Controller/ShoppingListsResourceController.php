@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Controller;
 
-use Generated\Shared\Transfer\RestShoppingListsAttributesTransfer;
+use Generated\Shared\Transfer\ShoppingListRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -85,17 +85,17 @@ class ShoppingListsResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListRequestTransfer $shoppingListRequestTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
         RestRequestInterface $restRequest,
-        RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
+        ShoppingListRequestTransfer $shoppingListRequestTransfer
     ): RestResponseInterface {
         return $this->getFactory()
             ->createShoppingListCreator()
-            ->createShoppingList($restRequest, $restShoppingListsAttributesTransfer);
+            ->createShoppingList($restRequest, $shoppingListRequestTransfer);
     }
 
     /**
@@ -113,22 +113,23 @@ class ShoppingListsResourceController extends AbstractController
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list not found.",
      *              "422": "Cannot patch a shopping list."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListsAttributesTransfer"
      *     }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListRequestTransfer $shoppingListRequestTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function patchAction(
         RestRequestInterface $restRequest,
-        RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
+        ShoppingListRequestTransfer $shoppingListRequestTransfer
     ): RestResponseInterface {
         return $this->getFactory()
             ->createShoppingListUpdater()
-            ->updateShoppingList($restRequest, $restShoppingListsAttributesTransfer);
+            ->updateShoppingList($restRequest, $shoppingListRequestTransfer);
     }
 
     /**

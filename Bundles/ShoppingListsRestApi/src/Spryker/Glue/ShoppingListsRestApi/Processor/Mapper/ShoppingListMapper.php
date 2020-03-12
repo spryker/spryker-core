@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestShoppingListsAttributesTransfer;
+use Generated\Shared\Transfer\ShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
 class ShoppingListMapper implements ShoppingListMapperInterface
@@ -26,15 +27,15 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListRequestTransfer $shoppingListRequestTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function mapRestShoppingListsAttributesTransferToShoppingListTransfer(
-        RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer,
+        ShoppingListRequestTransfer $shoppingListRequestTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListTransfer {
-        return $shoppingListTransfer->fromArray($restShoppingListsAttributesTransfer->modifiedToArray(), true);
+        return $shoppingListTransfer->fromArray($shoppingListRequestTransfer->modifiedToArray(), true);
     }
 }

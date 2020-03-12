@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList;
 
-use Generated\Shared\Transfer\RestShoppingListsAttributesTransfer;
+use Generated\Shared\Transfer\ShoppingListRequestTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -48,17 +48,17 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListRequestTransfer $shoppingListRequestTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function updateShoppingList(
         RestRequestInterface $restRequest,
-        RestShoppingListsAttributesTransfer $restShoppingListsAttributesTransfer
+        ShoppingListRequestTransfer $shoppingListRequestTransfer
     ): RestResponseInterface {
         $shoppingListTransfer = $this->shoppingListRestRequestReader->readShoppingListTransferFromRequest(
             $restRequest,
-            $restShoppingListsAttributesTransfer
+            $shoppingListRequestTransfer
         );
 
         $shoppingListResponseTransfer = $this->shoppingListsRestApiClient->updateShoppingList($shoppingListTransfer);
