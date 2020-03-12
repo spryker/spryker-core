@@ -5,7 +5,7 @@
         <title>Dashboard</title>
         <icon>dashboard</icon>
         <bundle>merchant-dashboard-gui-page</bundle>
-        <controller>dashboard</controller>
+        <controller>merchant-dashboard</controller>
         <action>index</action>
     </merchant-dashboard-gui-page>
 </config>

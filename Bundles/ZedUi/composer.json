@@ -13,6 +13,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/zed-navigation": "If you want to use the navigation."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

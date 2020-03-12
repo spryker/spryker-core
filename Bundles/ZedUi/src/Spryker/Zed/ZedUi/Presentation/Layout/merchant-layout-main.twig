@@ -1,11 +1,13 @@
 {% extends '@ZedUi/Layout/layout.twig' %}
 
 {% block body %}
-    {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
+    {% if navigation is defined %}
+        {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
 
-    <mp-layout-main navigation-config="{{ navigationConfig }}">
-        <mp-header name="header"></mp-header>
+        <mp-layout-main navigation-config="{{ navigationConfig }}">
+            <mp-header name="header"></mp-header>
 
-        {% block content %}{% endblock %}
-    </mp-layout-main>
+            {% block content %}{% endblock %}
+        </mp-layout-main>
+    {% endif %}
 {% endblock %}

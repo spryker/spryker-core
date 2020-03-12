@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantDashboardGuiPage\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class DashboardController extends AbstractController
+class MerchantDashboardController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
