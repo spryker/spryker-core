@@ -47,15 +47,15 @@ class ExpenseExpander implements ExpenseExpanderInterface
         $merchantReference = null;
 
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-            if ($merchantReference === null) {
-                $merchantReference = $itemTransfer->getMerchantReference();
-
-                continue;
-            }
-
-            if ($merchantReference !== $itemTransfer->getMerchantReference()) {
+            if (!$itemTransfer->getMerchantReference()) {
                 return null;
             }
+
+            if ($merchantReference && $merchantReference !== $itemTransfer->getMerchantReference()) {
+                return null;
+            }
+
+            $merchantReference = $itemTransfer->getMerchantReference();
         }
 
         return $merchantReference;
