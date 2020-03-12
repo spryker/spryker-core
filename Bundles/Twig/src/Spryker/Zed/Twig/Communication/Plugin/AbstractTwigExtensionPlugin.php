@@ -58,7 +58,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @return array An array of TokenParserInterface or TokenParserBrokerInterface instances
+     * @return \Twig\TokenParser\TokenParserInterface[] An array of TokenParserInterface or TokenParserBrokerInterface instances
      */
     public function getTokenParsers()
     {
@@ -84,7 +84,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @return array An array of filters
+     * @return \Twig\TwigFilter[] An array of filters
      */
     public function getFilters()
     {
@@ -97,7 +97,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @return array An array of tests
+     * @return \Twig\TwigTest[] An array of tests
      */
     public function getTests()
     {
@@ -110,7 +110,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @return array An array of functions
+     * @return \Twig\TwigFunction[] An array of functions
      */
     public function getFunctions()
     {
