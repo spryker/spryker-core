@@ -212,7 +212,7 @@ class ProductRelationTable extends AbstractTable
     {
         return $this->productRelationQuery
             ->leftJoinWithSpyProductAbstract()
-            ->joinSpyProductRelationProductAbstract('num_alias')
+            ->leftJoinSpyProductRelationProductAbstract('num_alias')
             ->leftJoinWithSpyProductRelationType()
             ->useSpyProductAbstractQuery()
                 ->useSpyProductAbstractLocalizedAttributesQuery()
