@@ -126,10 +126,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return false;
         }
 
-        if (!$this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) && !$shipmentMethodTransfer->getSourcePrice()) {
-            return false;
-        }
-
         return true;
     }
 
