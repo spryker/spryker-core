@@ -41,7 +41,7 @@ class ProductImageToLocaleBridge implements ProductImageToLocaleInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableLocales()
     {
