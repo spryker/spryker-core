@@ -622,7 +622,7 @@ interface OmsFacadeInterface
     /**
      * Specification:
      * - Hydrates history states for given order items.
-     * - Updates ItemTransfer::state::createdAt with latest history state.
+     * - Copies createAt field from latest history state to ItemTransfer::state.
      * - Sets ItemTransfer::stateHistory.
      *
      * @api
