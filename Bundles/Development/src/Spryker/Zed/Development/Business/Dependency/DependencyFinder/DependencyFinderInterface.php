@@ -30,5 +30,8 @@ interface DependencyFinderInterface
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface;
+    public function findDependencies(
+        DependencyFinderContextInterface $context,
+        DependencyContainerInterface $dependencyContainer
+    ): DependencyContainerInterface;
 }

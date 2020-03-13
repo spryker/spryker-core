@@ -68,8 +68,10 @@ class WishlistItemsResourceController extends AbstractController
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
             ->createWishlistItemAdder()
             ->add($restWishlistItemsAttributesTransfer, $restRequest);

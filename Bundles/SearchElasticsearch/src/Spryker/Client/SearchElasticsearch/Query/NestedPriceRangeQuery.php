@@ -23,8 +23,12 @@ class NestedPriceRangeQuery extends NestedRangeQuery
      * @param \Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface $queryBuilder
      * @param \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface $moneyClient
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, SearchElasticsearchToMoneyClientInterface $moneyClient)
-    {
+    public function __construct(
+        FacetConfigTransfer $facetConfigTransfer,
+        $rangeValues,
+        QueryBuilderInterface $queryBuilder,
+        SearchElasticsearchToMoneyClientInterface $moneyClient
+    ) {
         $this->moneyClient = $moneyClient;
 
         parent::__construct($facetConfigTransfer, $rangeValues, $queryBuilder);

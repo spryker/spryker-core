@@ -163,8 +163,10 @@ class QuoteResolver implements QuoteResolverInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createNewQuote(CustomerTransfer $customerTransfer, ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null): QuoteResponseTransfer
-    {
+    protected function createNewQuote(
+        CustomerTransfer $customerTransfer,
+        ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
+    ): QuoteResponseTransfer {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCustomer($customerTransfer);
         $quoteTransfer->setCustomerReference($customerTransfer->getCustomerReference());

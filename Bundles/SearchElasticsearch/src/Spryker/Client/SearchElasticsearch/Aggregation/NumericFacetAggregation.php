@@ -35,8 +35,11 @@ class NumericFacetAggregation extends AbstractFacetAggregation
      * @param \Spryker\Client\SearchElasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
      * @param \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig $searchConfig
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, AggregationBuilderInterface $aggregationBuilder, SearchElasticsearchConfig $searchConfig)
-    {
+    public function __construct(
+        FacetConfigTransfer $facetConfigTransfer,
+        AggregationBuilderInterface $aggregationBuilder,
+        SearchElasticsearchConfig $searchConfig
+    ) {
         $this->facetConfigTransfer = $facetConfigTransfer;
         $this->aggregationBuilder = $aggregationBuilder;
         $this->searchConfig = $searchConfig;

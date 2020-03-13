@@ -192,8 +192,9 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
-    {
+    public function getShoppingListOverviewWithoutProductDetails(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer {
         return $this->getZedStub()->getShoppingListOverview($shoppingListOverviewRequestTransfer);
     }
 
@@ -252,8 +253,9 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         return $this->getZedStub()->getShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
     }
 
@@ -266,8 +268,9 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
-    {
+    public function addItemCollectionToCart(
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
+    ): ShoppingListAddToCartRequestCollectionTransfer {
         return $this->getFactory()->createCartHandler()->addItemCollectionToCart($shoppingListAddToCartRequestCollectionTransfer);
     }
 

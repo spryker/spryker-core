@@ -19,8 +19,9 @@ class MerchantInQuoteValidator implements MerchantInQuoteValidatorInterface
      *
      * @return \Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer
      */
-    public function validateMerchantInQuoteItems(SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer): SingleMerchantQuoteValidationResponseTransfer
-    {
+    public function validateMerchantInQuoteItems(
+        SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer
+    ): SingleMerchantQuoteValidationResponseTransfer {
         if (!$singleMerchantQuoteValidationRequestTransfer->getMerchantReference()) {
             return (new SingleMerchantQuoteValidationResponseTransfer())
                 ->setIsSuccessful(true);
