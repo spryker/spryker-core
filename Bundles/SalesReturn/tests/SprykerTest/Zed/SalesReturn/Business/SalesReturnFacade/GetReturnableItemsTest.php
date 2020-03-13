@@ -7,10 +7,13 @@
 
 namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\SalesReturn\SalesReturnDependencyProvider;
+use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPolicyPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -205,5 +208,48 @@ class GetReturnableItemsTest extends Unit
         $this->tester
             ->getFacade()
             ->getReturnableItems($returnableItemFilterTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnableItemsUsingReturnPolicyPluginStack(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesReturnDependencyProvider::PLUGINS_RETURN_POLICY,
+            [$this->getReturnPolicyPluginMock()]
+        );
+
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+
+        $returnableItemFilterTransfer = (new ReturnableItemFilterTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference());
+
+        // Act
+        $itemCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturnableItems($returnableItemFilterTransfer);
+
+        // Assert
+        $this->assertEmpty($itemCollectionTransfer->getItems());
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPolicyPluginInterface
+     */
+    protected function getReturnPolicyPluginMock(): ReturnPolicyPluginInterface
+    {
+        $returnPolicyPluginMock = $this
+            ->getMockBuilder(ReturnPolicyPluginInterface::class)
+            ->getMock();
+
+        $returnPolicyPluginMock
+            ->method('execute')
+            ->willReturn(new ArrayObject([]));
+
+        return $returnPolicyPluginMock;
     }
 }

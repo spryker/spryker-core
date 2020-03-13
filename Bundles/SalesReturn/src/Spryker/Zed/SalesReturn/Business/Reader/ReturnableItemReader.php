@@ -27,15 +27,23 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
     protected $salesReturnConfig;
 
     /**
+     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPolicyPluginInterface[]
+     */
+    protected $returnPolicyPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
+     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPolicyPluginInterface[] $returnPolicyPlugins
      */
     public function __construct(
         SalesReturnToSalesFacadeInterface $salesFacade,
-        SalesReturnConfig $salesReturnConfig
+        SalesReturnConfig $salesReturnConfig,
+        array $returnPolicyPlugins
     ) {
         $this->salesFacade = $salesFacade;
         $this->salesReturnConfig = $salesReturnConfig;
+        $this->returnPolicyPlugins = $returnPolicyPlugins;
     }
 
     /**
@@ -52,10 +60,24 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
             ->getOrderItems($orderItemFilterTransfer)
             ->getItems();
 
-        // TODO: execute ReturnPolicyPluginInterface plugin stack.
+        $itemTransfers = $this->executeReturnPolicyPlugins($itemTransfers);
 
         return (new ItemCollectionTransfer())
-            ->setItems(new ArrayObject($itemTransfers));
+            ->setItems($itemTransfers);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeReturnPolicyPlugins(ArrayObject $itemTransfers): ArrayObject
+    {
+        foreach ($this->returnPolicyPlugins as $returnPolicyPlugin) {
+            $itemTransfers = $returnPolicyPlugin->execute($itemTransfers);
+        }
+
+        return $itemTransfers;
     }
 
     /**

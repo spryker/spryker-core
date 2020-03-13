@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturn\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -106,4 +107,16 @@ interface SalesReturnFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Removes outdated order items.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function sanitizeOutdatedOrderItems(ArrayObject $itemTransfers): ArrayObject;
 }

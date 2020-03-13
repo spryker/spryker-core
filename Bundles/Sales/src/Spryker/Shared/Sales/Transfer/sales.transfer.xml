@@ -170,6 +170,7 @@
         <property name="sumProductOptionPriceAggregation" type="int"/>
         <property name="unitProductOptionPriceAggregation" type="int"/>
         <property name="orderReference" type="string"/>
+        <property name="createdAt" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">

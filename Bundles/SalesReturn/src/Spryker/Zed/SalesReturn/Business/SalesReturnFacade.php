@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturn\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -120,5 +121,21 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
         return $this->getFactory()
             ->createOrderRemunerationTotalExpander()
             ->expandOrderTotalsWithRemunerationTotal($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function sanitizeOutdatedOrderItems(ArrayObject $itemTransfers): ArrayObject
+    {
+        return $this->getFactory()
+            ->createOrderItemSanitizer()
+            ->sanitizeOutdatedOrderItems($itemTransfers);
     }
 }

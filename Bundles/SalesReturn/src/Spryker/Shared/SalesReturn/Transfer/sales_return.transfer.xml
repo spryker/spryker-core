@@ -70,6 +70,7 @@
         <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
         <property name="state" type="ItemState"/>
+        <property name="createdAt" type="string"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">
