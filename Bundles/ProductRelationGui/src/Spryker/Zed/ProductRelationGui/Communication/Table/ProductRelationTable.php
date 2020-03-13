@@ -128,9 +128,9 @@ class ProductRelationTable extends AbstractTable
             SpyProductAbstractTableMap::COL_SKU => static::HEADER_ABSTRACT_SKU,
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => static::HEADER_ABSTRACT_PRODUCT_NAME,
             SpyProductRelationTypeTableMap::COL_KEY => static::HEADER_RELATION_TYPE,
-            static::COL_NUMBER_OF_RELATED_PRODUCTS => static::HEADER_NUMBER_OF_PRODUCTS,
             SpyProductRelationTableMap::COL_IS_ACTIVE => static::HEADER_STATUS,
             SpyStoreTableMap::COL_NAME => static::HEADER_AVAILABLE_IN_STORE,
+            static::COL_NUMBER_OF_RELATED_PRODUCTS => static::HEADER_NUMBER_OF_PRODUCTS,
             static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
     }
@@ -212,7 +212,7 @@ class ProductRelationTable extends AbstractTable
     {
         return $this->productRelationQuery
             ->leftJoinWithSpyProductAbstract()
-            ->joinSpyProductRelationProductAbstract('num_alias')
+            ->leftJoinSpyProductRelationProductAbstract('num_alias')
             ->leftJoinWithSpyProductRelationType()
             ->useSpyProductAbstractQuery()
                 ->useSpyProductAbstractLocalizedAttributesQuery()
