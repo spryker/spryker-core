@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantUserAuthGuiPageConfig extends AbstractBundleConfig
 {
-    protected const MERCHANT_USER_DEFAULT_URL_REDIRECT = '/merchant-dashboard-gui-page/dashboard';
+    protected const MERCHANT_USER_DEFAULT_URL_REDIRECT = '/merchant-dashboard-gui-page/merchant-dashboard';
 
     /**
      * @api
