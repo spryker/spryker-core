@@ -76,7 +76,6 @@ class MerchantStockFacadeTest extends Unit
         $stockCollectionTransfer = $this->tester->getFacade()->getStockCollectionByMerchant($merchantTransfer);
 
         // Assert
-        $this->assertEquals(0, $stockCollectionTransfer->getStocks()->count());
         $this->assertEmpty($stockCollectionTransfer->getStocks());
     }
 }

@@ -21,7 +21,7 @@ class MerchantStockMapper
      *
      * @return \Generated\Shared\Transfer\StockTransfer
      */
-    public function mapStockDataToStockTransfer(
+    public function mapStockEntityToStockTransfer(
         SpyStock $stockEntity,
         StockTransfer $stockTransfer
     ): StockTransfer {
