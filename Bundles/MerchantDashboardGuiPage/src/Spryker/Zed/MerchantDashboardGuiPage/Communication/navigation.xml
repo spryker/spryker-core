@@ -2,7 +2,7 @@
 <config>
     <merchant-dashboard-gui-page>
         <label>Dashboard</label>
-        <title>Dashboard</title>
+        <title>Merchant Dashboard</title>
         <icon>dashboard</icon>
         <bundle>merchant-dashboard-gui-page</bundle>
         <controller>merchant-dashboard</controller>
