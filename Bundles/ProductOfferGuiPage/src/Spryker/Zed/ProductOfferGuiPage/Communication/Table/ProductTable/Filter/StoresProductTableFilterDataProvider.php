@@ -9,11 +9,10 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filte
 
 use Generated\Shared\Transfer\TableFilterTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class StoresProductTableFilterDataProvider implements ProductTableFilterDataProviderInterface
 {
-    public const FILTER_NAME = 'store';
-
     protected const KEY_KEY = 'key';
     protected const KEY_VALUE = 'value';
 
@@ -39,7 +38,7 @@ class StoresProductTableFilterDataProvider implements ProductTableFilterDataProv
         $indexedStoreNames = $this->getStoreNamesIndexedByStoreIds($storeTransfers);
 
         return (new TableFilterTransfer())
-            ->setKey(static::FILTER_NAME)
+            ->setKey(ProductOfferGuiPageConfig::PRODUCT_TABLE_STORES_FILTER_NAME)
             ->setTitle('Stores')
             ->setType('select')
             ->addOption(static::OPTION_NAME_MULTISELECT, true)

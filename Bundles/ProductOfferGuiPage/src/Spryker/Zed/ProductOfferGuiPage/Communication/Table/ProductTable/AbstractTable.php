@@ -195,7 +195,13 @@ abstract class AbstractTable
             return;
         }
 
+        $filterNameWhitelist = $this->getWhitelistedFilterNames();
+
         foreach ($filtersData as $filterName => $filterData) {
+            if (!in_array($filterName, $filterNameWhitelist, true)) {
+                continue;
+            }
+
             $this->filters[$filterName] = $filterData;
         }
     }
@@ -209,4 +215,9 @@ abstract class AbstractTable
      * @return \Generated\Shared\Transfer\TableConfigurationTransfer
      */
     abstract protected function provideTableConfiguration(): TableConfigurationTransfer;
+
+    /**
+     * @return string[]
+     */
+    abstract protected function getWhitelistedFilterNames(): array;
 }

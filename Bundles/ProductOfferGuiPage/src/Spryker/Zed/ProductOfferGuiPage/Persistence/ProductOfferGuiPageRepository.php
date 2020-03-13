@@ -266,6 +266,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
 
     /**
      * @module ProductCategory
+     * @module Category
      *
      * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer

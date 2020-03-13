@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\TableRowActionTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidPaginationDataException;
+use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class ProductTable extends AbstractTable
 {
@@ -47,18 +48,26 @@ class ProductTable extends AbstractTable
     protected $productTableCriteriaBuilder;
 
     /**
+     * @var \Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig
+     */
+    protected $productOfferGuiPageConfig;
+
+    /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface $productOfferGuiPageFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[] $productTableFilterDataProviders
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
+     * @param \Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig $productOfferGuiPageConfig
      */
     public function __construct(
         ProductOfferGuiPageFacadeInterface $productOfferGuiPageFacade,
         array $productTableFilterDataProviders,
-        ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
+        ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder,
+        ProductOfferGuiPageConfig $productOfferGuiPageConfig
     ) {
         $this->productOfferGuiPageFacade = $productOfferGuiPageFacade;
         $this->productTableFilterDataProviders = $productTableFilterDataProviders;
         $this->productTableCriteriaBuilder = $productTableCriteriaBuilder;
+        $this->productOfferGuiPageConfig = $productOfferGuiPageConfig;
     }
 
     /**
@@ -285,5 +294,13 @@ class ProductTable extends AbstractTable
         $tableConfigurationTransfer->addRowAction($tableRowActionTransfer);
 
         return $tableConfigurationTransfer;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getWhitelistedFilterNames(): array
+    {
+        return $this->productOfferGuiPageConfig->getFilterNameWhitelist();
     }
 }

@@ -148,6 +148,8 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
             ->endUse();
 
         if ($productImageSetCriteriaTransfer->getLocaleId()) {
+            $localeCriteria = new Criteria();
+
             $productImageSetQuery->filterByFkLocale($productImageSetCriteriaTransfer->getLocaleId());
         }
 

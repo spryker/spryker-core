@@ -12,11 +12,10 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TableFilterTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToCategoryFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class CategoryProductTableFilterDataProvider implements ProductTableFilterDataProviderInterface
 {
-    public const FILTER_NAME = 'category';
-
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToCategoryFacadeInterface
      */
@@ -51,8 +50,8 @@ class CategoryProductTableFilterDataProvider implements ProductTableFilterDataPr
         $indexedCategoryNames = $this->getCategoryNamesIndexedByCategoryIds($categoryCollectionTransfer);
 
         return (new TableFilterTransfer())
-            ->setKey(static::FILTER_NAME)
-            ->setTitle('Category')
+            ->setKey(ProductOfferGuiPageConfig::PRODUCT_TABLE_CATEGORIES_FILTER_NAME)
+            ->setTitle('Categories')
             ->setType('select')
             ->addOption(static::OPTION_NAME_MULTISELECT, false)
             ->addOption(static::OPTION_NAME_VALUES, $indexedCategoryNames);

@@ -27,6 +27,7 @@ use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig getConfig()
  */
 class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -38,7 +39,8 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
         return new ProductTable(
             $this->getFacade(),
             $this->createProductTableFilterDataProviders(),
-            $this->createProductTableCriteriaBuilder()
+            $this->createProductTableCriteriaBuilder(),
+            $this->getConfig()
         );
     }
 

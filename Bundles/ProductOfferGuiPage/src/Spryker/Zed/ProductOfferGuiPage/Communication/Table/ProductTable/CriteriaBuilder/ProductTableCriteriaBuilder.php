@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\CategoryProductTableFilterDataProvider;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\StoresProductTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterface
 {
@@ -194,19 +192,19 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
             return $productTableCriteriaTransfer;
         }
 
-        if (array_key_exists(CategoryProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
+        if (array_key_exists(ProductOfferGuiPageConfig::PRODUCT_TABLE_CATEGORIES_FILTER_NAME, $this->filters)) {
             $productTableCriteriaTransfer->setInCategories(
-                $this->filters[CategoryProductTableFilterDataProvider::FILTER_NAME]
+                $this->filters[ProductOfferGuiPageConfig::PRODUCT_TABLE_CATEGORIES_FILTER_NAME]
             );
         }
 
-        if (array_key_exists(IsActiveProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
+        if (array_key_exists(ProductOfferGuiPageConfig::PRODUCT_TABLE_IS_ACTIVE_FILTER_NAME, $this->filters)) {
             $productTableCriteriaTransfer->setIsActive(true);
         }
 
-        if (array_key_exists(StoresProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
+        if (array_key_exists(ProductOfferGuiPageConfig::PRODUCT_TABLE_STORES_FILTER_NAME, $this->filters)) {
             $productTableCriteriaTransfer->setInStores(
-                $this->filters[StoresProductTableFilterDataProvider::FILTER_NAME]
+                $this->filters[ProductOfferGuiPageConfig::PRODUCT_TABLE_STORES_FILTER_NAME]
             );
         }
 
