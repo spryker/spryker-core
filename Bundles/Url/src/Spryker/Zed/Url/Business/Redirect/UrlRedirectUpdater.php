@@ -34,8 +34,11 @@ class UrlRedirectUpdater implements UrlRedirectUpdaterInterface
      * @param \Spryker\Zed\Url\Business\Url\UrlUpdaterInterface $urlUpdater
      * @param \Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface $urlRedirectActivator
      */
-    public function __construct(UrlQueryContainerInterface $urlQueryContainer, UrlUpdaterInterface $urlUpdater, UrlRedirectActivatorInterface $urlRedirectActivator)
-    {
+    public function __construct(
+        UrlQueryContainerInterface $urlQueryContainer,
+        UrlUpdaterInterface $urlUpdater,
+        UrlRedirectActivatorInterface $urlRedirectActivator
+    ) {
         $this->urlQueryContainer = $urlQueryContainer;
         $this->urlUpdater = $urlUpdater;
         $this->urlRedirectActivator = $urlRedirectActivator;

@@ -154,8 +154,10 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    protected function saveMerchantProfileUrls(MerchantProfileTransfer $merchantProfileTransfer, ArrayObject $merchantProfileUrlTransfers): MerchantProfileTransfer
-    {
+    protected function saveMerchantProfileUrls(
+        MerchantProfileTransfer $merchantProfileTransfer,
+        ArrayObject $merchantProfileUrlTransfers
+    ): MerchantProfileTransfer {
         $urlTransferCollection = new ArrayObject();
         foreach ($merchantProfileUrlTransfers as $merchantProfileUrlTransfer) {
             $urlTransfer = new UrlTransfer();

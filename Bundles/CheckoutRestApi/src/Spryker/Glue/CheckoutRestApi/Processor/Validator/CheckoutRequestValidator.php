@@ -68,8 +68,10 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    protected function validateCustomer(RestRequestInterface $restRequest, RestErrorCollectionTransfer $restErrorCollectionTransfer): ?RestErrorCollectionTransfer
-    {
+    protected function validateCustomer(
+        RestRequestInterface $restRequest,
+        RestErrorCollectionTransfer $restErrorCollectionTransfer
+    ): ?RestErrorCollectionTransfer {
         if ($restRequest->getUser() === null) {
             $resErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)

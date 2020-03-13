@@ -19,5 +19,10 @@ interface ProductStorageDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [], ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null);
+    public function mapProductStorageData(
+        $locale,
+        array $productStorageData,
+        array $selectedAttributes = [],
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    );
 }

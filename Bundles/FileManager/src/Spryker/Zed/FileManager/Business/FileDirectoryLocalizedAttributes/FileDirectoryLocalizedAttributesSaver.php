@@ -47,8 +47,10 @@ class FileDirectoryLocalizedAttributesSaver implements FileDirectoryLocalizedAtt
      *
      * @return void
      */
-    protected function prepareFileDirectoryLocalizedAttributesTransfer(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer, int $fkFileDirectory)
-    {
+    protected function prepareFileDirectoryLocalizedAttributesTransfer(
+        FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer,
+        int $fkFileDirectory
+    ) {
         $fileDirectoryLocalizedAttributesTransfer->setFkFileDirectory($fkFileDirectory);
         $fileDirectoryLocalizedAttributesTransfer->setFkLocale(
             $fileDirectoryLocalizedAttributesTransfer->getLocale()->getIdLocale()
