@@ -18,6 +18,8 @@ class ProductRelationDataImportConfig extends DataImportConfig
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductRelationDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -28,6 +30,8 @@ class ProductRelationDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductRelationStoreDataImporterConfiguration(): DataImporterConfigurationTransfer
