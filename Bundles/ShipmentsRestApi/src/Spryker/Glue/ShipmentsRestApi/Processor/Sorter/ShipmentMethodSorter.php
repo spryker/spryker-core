@@ -76,7 +76,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
      */
     protected function getPropertyValueBySort(RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer, SortInterface $currentSort): ?string
     {
-        $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1];
+        $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1] ?? null;
 
         return $restShipmentMethodAttributeTransfer->offsetExists($field)
             ? (string)$restShipmentMethodAttributeTransfer->offsetGet($field) : null;
