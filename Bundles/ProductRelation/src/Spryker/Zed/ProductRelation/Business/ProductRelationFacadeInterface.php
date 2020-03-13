@@ -38,6 +38,7 @@ interface ProductRelationFacadeInterface
      * Specification:
      *  - Expects product relation TYPE to be provided.
      *  - Expects product abstract ID to be provided.
+     *  - Expects product relation ID to be provided.
      *  - Create product relation type is not persisted.
      *  - Update Product relation.
      *  - Save related product based on given query, remove old relations.

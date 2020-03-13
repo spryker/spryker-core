@@ -263,8 +263,8 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
         throw new MissingStoreRelationFormTypePluginException(
             sprintf(
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
-                'in your own ProductRelationGuiGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
-                'to be able to manage shipment methods.',
+                'in your own ProductRelationGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage product relations.',
                 FormTypeInterface::class
             )
         );

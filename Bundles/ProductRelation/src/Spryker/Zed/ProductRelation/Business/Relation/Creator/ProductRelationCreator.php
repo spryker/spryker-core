@@ -70,7 +70,7 @@ class ProductRelationCreator implements ProductRelationCreatorInterface
             ->requireProductRelationKey();
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($productRelationTransfer) {
-            return $this->executeCreateRelationTransaction($productRelationTransfer);
+            return $this->executeCreateProductRelationTransaction($productRelationTransfer);
         });
     }
 
@@ -79,7 +79,7 @@ class ProductRelationCreator implements ProductRelationCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    protected function executeCreateRelationTransaction(
+    protected function executeCreateProductRelationTransaction(
         ProductRelationTransfer $productRelationTransfer
     ): ProductRelationResponseTransfer {
         $productRelationResponseTransfer = $this->createProductRelationResponseTransfer();

@@ -13,7 +13,6 @@ use Generated\Shared\DataBuilder\ProductRelationTypeBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
@@ -74,12 +73,6 @@ class CreateProductRelationTest extends Unit
             ],
         ])->build();
 
-        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
-        $ruleQuerySetTransfer->setCondition('AND');
-
-        $ruleQuerySetTransfer->addRules($this->createProductAbstractSkuRuleTransfer(static::FIRST_FIXTURE_VALUE));
-
-        $ruleQuerySetTransfer->addRules($this->createProductCategoryNameRuleTransfer(static::FIRST_FIXTURE_VALUE));
         $productRelationTypeTransfer = (new ProductRelationTypeBuilder())->seed([
             ProductRelationTypeTransfer::KEY => 'up-selling',
         ])->build();
@@ -106,41 +99,5 @@ class CreateProductRelationTest extends Unit
 
         $this->assertTrue($productRelationExist, 'Product relation should exists');
         $this->assertTrue($storeRelationExist, 'Product relation store relation should exists');
-    }
-
-    /**
-     * @param string $skuValueForFilter
-     *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
-     */
-    protected function createProductAbstractSkuRuleTransfer(string $skuValueForFilter): PropelQueryBuilderRuleSetTransfer
-    {
-        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
-        $ruleQuerySetTransfer->setId('spy_product_abstract');
-        $ruleQuerySetTransfer->setField('spy_product_abstract.sku');
-        $ruleQuerySetTransfer->setType('string');
-        $ruleQuerySetTransfer->setInput('text');
-        $ruleQuerySetTransfer->setOperator('equal');
-        $ruleQuerySetTransfer->setValue($skuValueForFilter);
-
-        return $ruleQuerySetTransfer;
-    }
-
-    /**
-     * @param string $categoryName
-     *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
-     */
-    protected function createProductCategoryNameRuleTransfer(string $categoryName): PropelQueryBuilderRuleSetTransfer
-    {
-        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
-        $ruleQuerySetTransfer->setId('product_category_name');
-        $ruleQuerySetTransfer->setField('spy_category_attribute.name');
-        $ruleQuerySetTransfer->setType('string');
-        $ruleQuerySetTransfer->setInput('text');
-        $ruleQuerySetTransfer->setOperator('equal');
-        $ruleQuerySetTransfer->setValue($categoryName);
-
-        return $ruleQuerySetTransfer;
     }
 }

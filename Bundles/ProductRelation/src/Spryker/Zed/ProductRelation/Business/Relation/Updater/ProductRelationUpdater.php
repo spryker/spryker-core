@@ -68,7 +68,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($productRelationTransfer) {
-            return $this->executeUpdateRelationTransaction($productRelationTransfer);
+            return $this->executeUpdateProductRelationTransaction($productRelationTransfer);
         });
     }
 
@@ -77,7 +77,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    protected function executeUpdateRelationTransaction(
+    protected function executeUpdateProductRelationTransaction(
         ProductRelationTransfer $productRelationTransfer
     ): ProductRelationResponseTransfer {
         $this->assertUpdateRelation($productRelationTransfer);
