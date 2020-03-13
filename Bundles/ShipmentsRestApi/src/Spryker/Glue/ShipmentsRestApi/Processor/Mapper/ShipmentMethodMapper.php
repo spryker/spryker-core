@@ -29,13 +29,8 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
     ): array {
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
             $restShipmentMethodsAttributesTransfer = (new RestShipmentMethodsAttributesTransfer())
-                ->fromArray($shipmentMethodTransfer->toArray(), true);
-
-            $currencyPrice = $shipmentMethodTransfer->getStoreCurrencyPrice();
-            if (!$currencyPrice) {
-                continue;
-            }
-            $restShipmentMethodsAttributesTransfer->setPrice($currencyPrice);
+                ->fromArray($shipmentMethodTransfer->toArray(), true)
+                ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice());
 
             $restShipmentMethodsAttributesTransfers[$shipmentMethodTransfer->getIdShipmentMethod()] = $restShipmentMethodsAttributesTransfer;
         }
