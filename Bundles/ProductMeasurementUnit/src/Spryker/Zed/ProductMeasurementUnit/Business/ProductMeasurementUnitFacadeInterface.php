@@ -225,7 +225,7 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Checks if sales unit is found for item in CartChangeTransfer.
+     * - Checks if product measurement sales units are found for items with amount sales units in `CartChangeTransfer`.
      * - Returns `CartPreCheckResponseTransfer` with an error in case sales unit not found for item.
      *
      * @api
