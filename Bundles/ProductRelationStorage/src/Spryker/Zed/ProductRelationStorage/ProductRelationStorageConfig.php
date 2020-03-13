@@ -11,6 +11,20 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductRelationStorageConfig extends AbstractBundleConfig
 {
+    public const ENTITY_SPY_PRODUCT_RELATION_CREATE = 'Entity.spy_product_relation.create';
+    public const ENTITY_SPY_PRODUCT_RELATION_UPDATE = 'Entity.spy_product_relation.update';
+    public const ENTITY_SPY_PRODUCT_RELATION_DELETE = 'Entity.spy_product_relation.delete';
+
+    public const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
+    public const PRODUCT_ABSTRACT_RELATION_UNPUBLISH = 'ProductRelation.product_abstract_relation.unpublish';
+
+    public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_relation_product_abstract.create';
+    public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_relation_product_abstract.update';
+    public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_relation_product_abstract.delete';
+
+    public const ENTITY_SPY_PRODUCT_RELATION_STORE_CREATE = 'Entity.spy_product_relation_store.create';
+    public const ENTITY_SPY_PRODUCT_RELATION_STORE_DELETE = 'Entity.spy_product_relation_store.delete';
+
     /**
      * @api
      *

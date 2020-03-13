@@ -33,9 +33,9 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
-            return new ProductRelationStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -50,6 +50,7 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addProductRelationFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -64,6 +65,22 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
         $this->addProductRelationQueryContainer($container);
         $this->addProductQueryContainer($container);
         $this->addPropelProductRelationProductAbstractQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
+            return new ProductRelationStorageToEventBehaviorFacadeBridge(
+                $container->getLocator()->eventBehavior()->facade()
+            );
+        });
 
         return $container;
     }

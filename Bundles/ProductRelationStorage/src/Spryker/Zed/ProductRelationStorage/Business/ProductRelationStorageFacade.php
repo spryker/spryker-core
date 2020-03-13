@@ -43,4 +43,52 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
     {
         $this->getFactory()->createProductRelationStorageWriter()->unpublish($productAbstractIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductRelationEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductRelationStorageWriter()
+            ->writeProductRelationStorageCollectionByProductRelationEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductRelationPublishingEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductRelationStorageWriter()
+            ->writeProductRelationStorageCollectionByProductRelationPublishingEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductRelationProductAbstractEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductRelationStorageWriter()
+            ->writeProductRelationStorageCollectionByProductRelationProductAbstractEvents($eventTransfers);
+    }
 }

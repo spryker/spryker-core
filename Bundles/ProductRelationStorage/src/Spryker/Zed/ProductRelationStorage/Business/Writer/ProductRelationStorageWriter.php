@@ -5,13 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelationStorage\Business\Storage;
+namespace Spryker\Zed\ProductRelationStorage\Business\Writer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
 use Generated\Shared\Transfer\ProductRelationStorageTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationStoreTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
+use Spryker\Zed\ProductRelationStorage\Business\Grouper\ProductRelationStorageGrouperInterface;
+use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToProductRelationFacadeInterface;
 use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageEntityManagerInterface;
 use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface;
@@ -34,41 +39,104 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     protected $productRelationStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductRelationStorage\Business\Grouper\ProductRelationStorageGrouperInterface
+     */
+    protected $productRelationStorageGrouper;
+
+    /**
      * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface $productRelationStorageRepository
      * @param \Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToProductRelationFacadeInterface $productRelationFacade
      * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageEntityManagerInterface $productRelationStorageEntityManager
+     * @param \Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
+     * @param \Spryker\Zed\ProductRelationStorage\Business\Grouper\ProductRelationStorageGrouperInterface $productRelationStorageGrouper
      */
     public function __construct(
         ProductRelationStorageRepositoryInterface $productRelationStorageRepository,
         ProductRelationStorageToProductRelationFacadeInterface $productRelationFacade,
-        ProductRelationStorageEntityManagerInterface $productRelationStorageEntityManager
+        ProductRelationStorageEntityManagerInterface $productRelationStorageEntityManager,
+        ProductRelationStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
+        ProductRelationStorageGrouperInterface $productRelationStorageGrouper
     ) {
         $this->productRelationStorageRepository = $productRelationStorageRepository;
         $this->productRelationFacade = $productRelationFacade;
         $this->productRelationStorageEntityManager = $productRelationStorageEntityManager;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
+        $this->productRelationStorageGrouper = $productRelationStorageGrouper;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductRelationStorageCollectionByProductRelationStoreEvents(
+        array $eventTransfers
+    ): void {
+        $productRelationIds = $this->eventBehaviorFacade
+            ->getEventTransferForeignKeys($eventTransfers, SpyProductRelationStoreTableMap::COL_FK_PRODUCT_RELATION);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductRelationStorageCollectionByProductRelationPublishingEvents(
+        array $eventTransfers
+    ): void {
+        $productAbstractIds = $this->eventBehaviorFacade
+            ->getEventTransferIds($eventTransfers);
+
+        $this->writeCollection($productAbstractIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductRelationStorageCollectionByProductRelationEvents(array $eventTransfers): void
+    {
+        $productAbstractIds = $this->eventBehaviorFacade
+            ->getEventTransferForeignKeys($eventTransfers, SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT);
+
+        $this->writeCollection($productAbstractIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductRelationStorageCollectionByProductRelationProductAbstractEvents(
+        array $eventTransfers
+    ): void {
+        $productAbstractIds = $this->eventBehaviorFacade
+            ->getEventTransferForeignKeys($eventTransfers, SpyProductRelationProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT);
+
+        $this->writeCollection($productAbstractIds);
+    }
+
+    /**
+     * @deprecated
+     *
      * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds)
     {
-        $productRelationTransfers = $this->productRelationFacade
-            ->getProductRelationsByIdProductAbstracts($productAbstractIds);
-
-        $productRelations = [];
-        foreach ($productRelationTransfers as $productRelationTransfer) {
-            foreach ($productRelationTransfer->getStoreRelation()->getStores() as $storeTransfer) {
-                $productRelations[$productRelationTransfer->getFkProductAbstract()][$storeTransfer->getName()][] = $productRelationTransfer;
-            }
-        }
-
-        $this->storeData($productRelations);
+        $this->writeCollection($productAbstractIds);
     }
 
     /**
+     * @deprecated
+     *
      * @param array $productAbstractIds
      *
      * @return void
@@ -76,6 +144,22 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     public function unpublish(array $productAbstractIds)
     {
         $this->productRelationStorageEntityManager->deleteProductAbstractRelationStorageEntitiesByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    protected function writeCollection(array $productAbstractIds): void
+    {
+        $productRelationTransfers = $this->productRelationFacade
+            ->getProductRelationsByIdProductAbstracts($productAbstractIds);
+
+        $productRelations = $this->productRelationStorageGrouper
+            ->groupProductRelationsByProductAbstractAndStore($productRelationTransfers);
+
+        $this->storeData($productRelations);
     }
 
     /**
