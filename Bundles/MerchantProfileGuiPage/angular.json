@@ -1,0 +1,113 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "mp-profile": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "less"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components",
+      "prefix": "mp",
+      "architect": {
+        "build": {
+          "builder": "ngx-build-plus:browser",
+          "options": {
+            "singleBundle": true,
+            "outputPath": "../../../../../public/Zed/assets/js/mp-profile",
+            "index": "",
+            "main": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/main.ts",
+            "polyfills": "",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
+            "assets": [],
+            "styles": [
+              "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/styles.less"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/environments/environment.ts",
+                  "with": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "ngx-build-plus:dev-server",
+          "options": {
+            "browserTarget": "mp-profile:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "mp-profile:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "mp-profile:build"
+          }
+        },
+        "test": {
+          "builder": "ngx-build-plus:karma",
+          "options": {
+            "main": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/test.ts",
+            "polyfills": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [],
+            "styles": [],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "mp-profile",
+  "cli": {
+    "analytics": false
+  }
+}

@@ -1,0 +1,78 @@
+@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+
+.profile-container {
+  font-family: @font-family;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 40px;
+  }
+
+  &__title {
+    font-size: @heading-1-font-size;
+    font-weight: @font-weight-semi-bold;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+  }
+
+  &__col {
+    padding: 0 15px;
+
+    &--business-left {
+      width: 58.33%;
+    }
+
+    &--business-right {
+      width: 41.67%;
+    }
+
+    &--online-left {
+      width: 66.67%;
+    }
+
+    &--online-right {
+      width: 33.33%;
+    }
+
+    &--full {
+      width: 100%;
+    }
+
+    &--half {
+      width: 50%;
+    }
+
+    &--number {
+      width: 21%;
+    }
+
+    &--code {
+      width: 29%;
+    }
+  }
+
+  &__collapsible {
+    display: block;
+    margin-bottom: 18px;
+  }
+
+  &__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__status-title {
+    color: @green;
+  }
+}
+
