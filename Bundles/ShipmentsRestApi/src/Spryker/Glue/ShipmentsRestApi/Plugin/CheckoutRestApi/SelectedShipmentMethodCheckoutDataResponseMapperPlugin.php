@@ -23,6 +23,8 @@ class SelectedShipmentMethodCheckoutDataResponseMapperPlugin extends AbstractPlu
      * - Maps RestCheckoutDataResponseAttributesTransfer.selectedShipmentMethods.
      * - Uses RestCheckoutRequestAttributesTransfer.shipment information to find the shipment method in the RestCheckoutDataTransfer.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer

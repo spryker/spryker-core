@@ -23,6 +23,8 @@ class SelectedPaymentMethodCheckoutDataResponseMapperPlugin extends AbstractPlug
      * - Maps RestCheckoutDataResponseAttributesTransfer.selectedPaymentMethods.
      * - Uses RestCheckoutRequestAttributesTransfer.payments information to find the payment method in the RestCheckoutDataTransfer.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
