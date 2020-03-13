@@ -7,6 +7,8 @@ This module contains the dashboard and its related components for the Merchant p
 
 ```
 composer require spryker/merchant-dashboard-gui-page
+npm install
+npm run build
 ```
 
 ## Documentation

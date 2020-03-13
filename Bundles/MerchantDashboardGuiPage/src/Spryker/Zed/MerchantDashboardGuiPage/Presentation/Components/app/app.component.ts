@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+    selector: 'app-root',
 })
 export class AppComponent {
-  title = 'mp-dashboard';
+    title = 'mp-dashboard';
 }

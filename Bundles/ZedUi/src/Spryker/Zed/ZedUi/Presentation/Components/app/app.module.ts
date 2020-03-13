@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
 import { CustomElementModule } from '@spryker/web-components';
 
 import { LayoutCenteredComponent } from './layout-centered/layout-centered.component';
@@ -13,6 +14,7 @@ import { LayoutMainComponent } from './layout-main/layout-main.component';
 @NgModule({
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         HttpClientModule,
         LayoutCenteredModule,
         LayoutMainModule,
