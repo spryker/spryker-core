@@ -214,8 +214,11 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
      *
      * @return void
      */
-    protected function addLocalizedAttributesToFileStorageDataTransfer(FileStorageDataTransfer $fileStorageTransfer, ArrayObject $localizedAttributes, LocaleTransfer $localeTransfer)
-    {
+    protected function addLocalizedAttributesToFileStorageDataTransfer(
+        FileStorageDataTransfer $fileStorageTransfer,
+        ArrayObject $localizedAttributes,
+        LocaleTransfer $localeTransfer
+    ) {
         if (empty($localizedAttributes[$localeTransfer->getIdLocale()])) {
             return;
         }

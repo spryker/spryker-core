@@ -397,8 +397,9 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      *
      * @return void
      */
-    public function createShoppingListCompanyBusinessUnitBlacklist(ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer): void
-    {
+    public function createShoppingListCompanyBusinessUnitBlacklist(
+        ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer
+    ): void {
         $shoppingListCompanyBusinessUnitBlacklistEntity = new SpyShoppingListCompanyBusinessUnitBlacklist();
         $shoppingListCompanyBusinessUnitBlacklistEntity->fromArray($shoppingListCompanyBusinessUnitBlacklistTransfer->modifiedToArray());
         $shoppingListCompanyBusinessUnitBlacklistEntity->save();

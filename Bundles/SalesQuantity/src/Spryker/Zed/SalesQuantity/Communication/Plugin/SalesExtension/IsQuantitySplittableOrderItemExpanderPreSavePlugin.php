@@ -32,8 +32,11 @@ class IsQuantitySplittableOrderItemExpanderPreSavePlugin extends AbstractPlugin 
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
-    {
+    public function expandOrderItem(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer {
         $salesOrderItemEntity->setIsQuantitySplittable($itemTransfer->getIsQuantitySplittable());
 
         return $salesOrderItemEntity;

@@ -126,8 +126,10 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      *
      * @return array
      */
-    protected function filterInactiveAndEmptyLocalizedStorageEntityTransfers(array $glossaryTranslationEntityTransfers, array $mappedGlossaryStorageEntityTransfers): array
-    {
+    protected function filterInactiveAndEmptyLocalizedStorageEntityTransfers(
+        array $glossaryTranslationEntityTransfers,
+        array $mappedGlossaryStorageEntityTransfers
+    ): array {
         $glossaryStorageEntityTransfers = [];
         foreach ($glossaryTranslationEntityTransfers as $id => $glossaryTranslationEntityTransfer) {
             $idGlossaryKey = $glossaryTranslationEntityTransfer->getFkGlossaryKey();
@@ -175,8 +177,10 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer
      */
-    protected function storeDataSet(SpyGlossaryTranslationEntityTransfer $glossaryTranslationEntityTransfer, ?SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer = null)
-    {
+    protected function storeDataSet(
+        SpyGlossaryTranslationEntityTransfer $glossaryTranslationEntityTransfer,
+        ?SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer = null
+    ) {
         if ($glossaryStorageEntityTransfer === null) {
             $glossaryStorageEntityTransfer = new SpyGlossaryStorageEntityTransfer();
         }
