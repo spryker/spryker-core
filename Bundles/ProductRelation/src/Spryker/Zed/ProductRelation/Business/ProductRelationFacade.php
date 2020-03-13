@@ -8,12 +8,14 @@
 namespace Spryker\Zed\ProductRelation\Business;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
+use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationEntityManagerInterface getEntityManager()
  */
 class ProductRelationFacade extends AbstractFacade implements ProductRelationFacadeInterface
 {
@@ -24,13 +26,13 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function createProductRelation(ProductRelationTransfer $productRelationTransfer)
+    public function createProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
         return $this->getFactory()
-            ->createProductRelationWriter()
-            ->saveRelation($productRelationTransfer);
+            ->createProductRelationCreator()
+            ->createProductRelation($productRelationTransfer);
     }
 
     /**
@@ -40,46 +42,44 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @throws \Exception
-     * @throws \Throwable
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer)
-    {
-        $this->getFactory()
-            ->createProductRelationWriter()
-            ->updateRelation($productRelationTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
-     */
-    public function findProductRelationById($idProductRelation)
-    {
-        return $this->getRepository()->findProductRelationById($idProductRelation);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @return bool
-     */
-    public function deleteProductRelation($idProductRelation)
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
         return $this->getFactory()
-            ->createProductRelationWriter()
+            ->createProductRelationUpdater()
+            ->updateProductRelation($productRelationTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idProductRelation
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
+     */
+    public function findProductRelationById($idProductRelation): ProductRelationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductRelationReader()
+            ->findProductRelationById($idProductRelation);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idProductRelation
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
+     */
+    public function deleteProductRelation(int $idProductRelation): ProductRelationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductRelationDeleter()
             ->deleteProductRelation($idProductRelation);
     }
 
@@ -92,45 +92,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      */
     public function getProductRelationTypeList()
     {
-         return $this->getFactory()
-             ->createProductRelationReader()
-             ->getProductRelationTypeList();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function activateProductRelation($idProductRelation)
-    {
-        $this->getFactory()
-            ->createProductRelationActivator()
-            ->activate($idProductRelation);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function deactivateProductRelation($idProductRelation)
-    {
-        $this->getFactory()
-            ->createProductRelationActivator()
-            ->deactivate($idProductRelation);
+         return $this->getRepository()->getProductRelationTypes();
     }
 
     /**
@@ -143,7 +105,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
     public function rebuildRelations()
     {
         $this->getFactory()
-            ->createProductRelationUpdater()
+            ->createProductRelationBuilder()
             ->rebuildRelations();
     }
 

@@ -65,16 +65,16 @@ ProductSelector.prototype.addClickEventToCheckbox = function(element)
         self.updateSelectedProduct(selectedProduct);
 
         self.selectProductNotice.hide();
-        self.idProductAbstractElement.val(selectedProduct.id_product_abstract);
+        self.idProductAbstractElement.val(selectedProduct['spy_product_abstract.id_product_abstract']);
     });
 };
 
 ProductSelector.prototype.updateSelectedProduct = function (selectedProduct)
 {
-    var name = selectedProduct.name;
-    var description = selectedProduct.description;
+    var name = selectedProduct['spy_product_abstract_localized_attributes.name'];
+    var description = selectedProduct['spy_product_abstract_localized_attributes.description'];
     var categories = selectedProduct.assigned_categories;
-    var imageUrl = selectedProduct.external_url_small;
+    var imageUrl = selectedProduct['spy_product_image.external_url_small'];
 
     this.selectProductNotice.hide();
 

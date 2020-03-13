@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductRelation\Persistence;
 
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
@@ -26,6 +27,7 @@ use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationEntityManagerInterface getEntityManager()
  */
 class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -43,6 +45,14 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     public function createProductRelationTypeQuery()
     {
         return SpyProductRelationTypeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery
+     */
+    public function createProductRelationStoreQuery(): SpyProductRelationStoreQuery
+    {
+        return SpyProductRelationStoreQuery::create();
     }
 
     /**
@@ -81,7 +91,8 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
             $this->createProductRelationTypeMapper(),
             $this->createStoreRelationMapper(),
             $this->createRuleSetMapper(),
-            $this->createProductMapper()
+            $this->createProductMapper(),
+            $this->getUtilEncodingService()
         );
     }
 

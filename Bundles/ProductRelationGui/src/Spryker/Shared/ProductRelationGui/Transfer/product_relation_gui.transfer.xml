@@ -103,4 +103,10 @@
         <property name="key" type="string"/>
     </transfer>
 
+    <transfer name="ProductRelationResponse">
+        <property name="productRelation" type="ProductRelation"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
 </transfers>

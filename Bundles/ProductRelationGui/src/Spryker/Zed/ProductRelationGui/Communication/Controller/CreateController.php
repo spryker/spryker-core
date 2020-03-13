@@ -7,13 +7,24 @@
 
 namespace Spryker\Zed\ProductRelationGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreateController extends BaseProductRelationController
 {
-    protected const REDIRECT_URL = '/product-relation-gui/edit/index';
+    /**
+     * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
+     */
+    protected const REDIRECT_URL_EDIT = '/product-relation-gui/edit/index';
+
+    /**
+     * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\ListController::indexAction()
+     */
+    protected const REDIRECT_URL_LIST = '/product-relation-gui/list/index';
     protected const MESSAGE_SUCCESS = 'Product relation successfully created';
 
     /**
@@ -27,7 +38,10 @@ class CreateController extends BaseProductRelationController
             ->createProductRelationFormTypeDataProvider();
 
         $productRelationForm = $this->getFactory()
-            ->createRelationForm($productRelationFormTypeDataProvider);
+            ->createRelationForm(
+                $productRelationFormTypeDataProvider->getData(),
+                $productRelationFormTypeDataProvider->getOptions()
+            );
 
         $productRelationTabs = $this->getFactory()
             ->createProductRelationTabs();
@@ -35,20 +49,7 @@ class CreateController extends BaseProductRelationController
         $productRelationForm->handleRequest($request);
 
         if ($productRelationForm->isSubmitted() && $productRelationForm->isValid()) {
-            $idProductRelation = $this->getFactory()
-                ->getProductRelationFacade()
-                ->createProductRelation($productRelationForm->getData());
-
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS);
-
-            $editProductRelationUrl = Url::generate(
-                static::REDIRECT_URL,
-                [
-                    EditController::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
-                ]
-            )->build();
-
-            return $this->redirectResponse($editProductRelationUrl);
+            return $this->handleSubmitForm($productRelationForm);
         }
 
         $productTable = $this->getFactory()->createProductTable();
@@ -65,6 +66,38 @@ class CreateController extends BaseProductRelationController
     }
 
     /**
+     * @param \Symfony\Component\Form\FormInterface $productRelationForm
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleSubmitForm(FormInterface $productRelationForm): RedirectResponse
+    {
+        $productRelationResponseTransfer = $this->getFactory()
+            ->getProductRelationFacade()
+            ->createProductRelation($productRelationForm->getData());
+
+        if (!$productRelationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($productRelationResponseTransfer);
+
+            return $this->redirectResponse(static::REDIRECT_URL_LIST);
+        }
+
+        $productRelationTransfer = $productRelationResponseTransfer->requireProductRelation()
+            ->getProductRelation();
+
+        $this->addSuccessMessage(static::MESSAGE_SUCCESS);
+
+        $editProductRelationUrl = Url::generate(
+            static::REDIRECT_URL_EDIT,
+            [
+                EditController::URL_PARAM_ID_PRODUCT_RELATION => $productRelationTransfer->getIdProductRelation(),
+            ]
+        )->build();
+
+        return $this->redirectResponse($editProductRelationUrl);
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction(): JsonResponse
@@ -74,5 +107,18 @@ class CreateController extends BaseProductRelationController
         return $this->jsonResponse(
             $productTable->fetchData()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationResponseTransfer $productRelationResponseTransfer
+     *
+     * @return void
+     */
+    protected function processErrorMessages(
+        ProductRelationResponseTransfer $productRelationResponseTransfer
+    ): void {
+        foreach ($productRelationResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
+        }
     }
 }

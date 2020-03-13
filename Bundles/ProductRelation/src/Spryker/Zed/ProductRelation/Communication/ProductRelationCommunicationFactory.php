@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationEntityManagerInterface getEntityManager()
  */
 class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
 {

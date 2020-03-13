@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelation\Business\Updater;
+namespace Spryker\Zed\ProductRelationGui\Communication\Exception;
 
-interface ProductRelationUpdaterInterface
+use Exception;
+
+class MissingStoreRelationFormTypePluginException extends Exception
 {
-    /**
-     * @return void
-     */
-    public function rebuildRelations();
 }

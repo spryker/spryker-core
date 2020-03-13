@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelation\Business;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
+use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 
 /**
@@ -17,37 +18,40 @@ interface ProductRelationFacadeInterface
 {
     /**
      * Specification:
-     *  - Create product relation type is not persisted
-     *  - Create Product relation
-     *  - Save related product based on given query
-     *  - Touch product relation collector
+     *  - Expects product relation TYPE to be provided.
+     *  - Expects product abstract ID to be provided.
+     *  - Create product relation type is not persisted.
+     *  - Create Product relation.
+     *  - Save related product based on given query.
+     *  - Updates product relation store relationships.
+     *  - Touch product relation collector.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function createProductRelation(ProductRelationTransfer $productRelationTransfer);
+    public function createProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer;
 
     /**
      * Specification:
-     *  - Create product relation type is not persisted
-     *  - Update Product relation
-     *  - Save related product based on given query, remove old relations
-     *  - Touch product relation collector
+     *  - Expects product relation TYPE to be provided.
+     *  - Expects product abstract ID to be provided.
+     *  - Expects product relation ID to be provided.
+     *  - Create product relation type is not persisted.
+     *  - Update Product relation.
+     *  - Save related product based on given query, remove old relations.
+     *  - Updates product relation store relationships.
+     *  - Touch product relation collector.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @throws \Exception
-     * @throws \Throwable
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer);
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer;
 
     /**
      * Specification:
@@ -57,9 +61,9 @@ interface ProductRelationFacadeInterface
      *
      * @param int $idProductRelation
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function findProductRelationById($idProductRelation);
+    public function findProductRelationById($idProductRelation): ProductRelationResponseTransfer;
 
     /**
      * Specification:
@@ -70,34 +74,6 @@ interface ProductRelationFacadeInterface
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
      */
     public function getProductRelationTypeList();
-
-    /**
-     * Specification:
-     * - Activates product relation and touches relation collector
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function activateProductRelation($idProductRelation);
-
-    /**
-     * Specification:
-     * - Deactivates product relation and touches relation collector
-     *
-     * @api
-     *
-     * @param int $idProductRelation
-     *
-     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
-     *
-     * @return void
-     */
-    public function deactivateProductRelation($idProductRelation);
 
     /**
      * Specification:
@@ -118,9 +94,9 @@ interface ProductRelationFacadeInterface
      *
      * @param int $idProductRelation
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function deleteProductRelation($idProductRelation);
+    public function deleteProductRelation(int $idProductRelation): ProductRelationResponseTransfer;
 
     /**
      * Specification:

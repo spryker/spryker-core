@@ -12,8 +12,12 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductAbstractNotBlankConstraint;
+use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductRelationKeyUniqueConstraint;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeleteForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Transformer\RuleQuerySetTransformer;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProvider;
@@ -67,24 +71,53 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     {
         return new UniqueRelationTypeForProductAbstract([
             UniqueRelationTypeForProductAbstract::OPTION_PRODUCT_RELATION_FACADE => $this->getProductRelationFacade(),
+            'groups' => [
+                ProductRelationFormType::GROUP_AFTER,
+            ],
         ]);
     }
 
     /**
-     * @param \Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider $productRelationFormTypeDataProvider
-     * @param int|null $idProductRelation
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createProductRelationKeyUniqueConstraint(): Constraint
+    {
+        return new ProductRelationKeyUniqueConstraint([
+            ProductRelationKeyUniqueConstraint::OPTION_PRODUCT_RELATION_FACADE => $this->getProductRelationFacade(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createProductAbstractNotBlankConstraint(): Constraint
+    {
+        return new ProductAbstractNotBlankConstraint();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $data
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createRelationForm(
-        ProductRelationTypeDataProvider $productRelationFormTypeDataProvider,
-        ?int $idProductRelation = null
+        ProductRelationTransfer $data,
+        array $options
     ): FormInterface {
         return $this->getFormFactory()->create(
             ProductRelationFormType::class,
-            $productRelationFormTypeDataProvider->getData($idProductRelation),
-            $productRelationFormTypeDataProvider->getOptions()
+            $data,
+            $options
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductRelationDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ProductRelationDeleteForm::class);
     }
 
     /**
@@ -143,19 +176,19 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProviderInterface
-     */
-    public function createFilterProvider(): FilterProviderInterface
-    {
-        return new FilterProvider($this->getProductAttributeFacade());
-    }
-
-    /**
      * @return \Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface
      */
     public function createMappingProvider(): MappingProviderInterface
     {
         return new MappingProvider($this->getProductAttributeKeyPropelQuery());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProviderInterface
+     */
+    public function createFilterProvider(): FilterProviderInterface
+    {
+        return new FilterProvider($this->getProductAttributeFacade());
     }
 
     /**
@@ -257,5 +290,13 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getProductAttributeFacade(): ProductRelationGuiToProductAttributeFacadeInterface
     {
         return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        return $this->getProvidedDependency(ProductRelationGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 }

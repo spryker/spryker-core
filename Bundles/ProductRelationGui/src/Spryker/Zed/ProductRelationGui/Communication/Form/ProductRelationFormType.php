@@ -10,13 +10,16 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Form;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ProductRelationGui\Communication\ProductRelationGuiCommunicationFactory getFactory()
@@ -29,8 +32,14 @@ class ProductRelationFormType extends AbstractType
     public const FIELD_ID_PRODUCT_RELATION = 'idProductRelation';
     public const FIELD_QUERY_SET = 'querySet';
     public const FIELD_IS_REBUILD_SCHEDULED = 'isRebuildScheduled';
+    public const FIELD_IS_ACTIVE = 'isActive';
+    public const FIELD_STORE_RELATION = 'storeRelation';
+    public const FIELD_PRODUCT_RELATION_KEY = 'productRelationKey';
 
     public const OPTION_RELATION_CHOICES = 'productRelationType';
+
+    public const GROUP_AFTER = 'After';
+    public const GROUP_DEFAULT = 'Default';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -41,10 +50,13 @@ class ProductRelationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addRelationTypeField($builder, $options)
+            ->addProductRelationKeyField($builder, $options)
             ->addIdProductRelationField($builder)
             ->addQuerySetField($builder)
             ->addUpdateWithSchedulerField($builder)
-            ->addFkProductAbstractField($builder);
+            ->addIsActiveField($builder)
+            ->addFkProductAbstractField($builder)
+            ->addStoreRelationForm($builder);
     }
 
     /**
@@ -56,8 +68,17 @@ class ProductRelationFormType extends AbstractType
     {
         $resolver->setRequired(static::OPTION_RELATION_CHOICES);
 
+        $resolver->setRequired([
+            ProductRelationTypeDataProvider::OPTION_PRODUCT_RELATION_KEY_DISABLED,
+        ]);
+
         $resolver->setDefaults([
+            'validation_groups' => new GroupSequence([
+               static::GROUP_DEFAULT,
+                static::GROUP_AFTER,
+            ]),
             'constraints' => [
+                $this->getFactory()->createProductAbstractNotBlankConstraint(),
                 $this->getFactory()->createUniqueRelationTypeForProductAbstractConstraint(),
             ],
         ]);
@@ -90,8 +111,22 @@ class ProductRelationFormType extends AbstractType
     protected function addUpdateWithSchedulerField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_REBUILD_SCHEDULED, CheckboxType::class, [
-            'label' => 'Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation\'s conditions.',
+            'label' => 'Update regularly',
 
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
+            'label' => 'Is active',
         ]);
 
         return $this;
@@ -134,8 +169,46 @@ class ProductRelationFormType extends AbstractType
     protected function addFkProductAbstractField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_PRODUCT_ABSTRACT, TextType::class, [
+            'required' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+                'required' => false,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addProductRelationKeyField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_PRODUCT_RELATION_KEY, TextType::class, [
+            'label' => 'Product Relation Key',
+            'disabled' => $options[ProductRelationTypeDataProvider::OPTION_PRODUCT_RELATION_KEY_DISABLED],
             'constraints' => [
-                new NotBlank(['message' => 'Abstract product is not selected.']),
+                new NotBlank(),
+                new Required(),
+                $this->getFactory()->createProductRelationKeyUniqueConstraint(),
             ],
         ]);
 

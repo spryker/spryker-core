@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
 use Spryker\Shared\ProductRelation\ProductRelationTypes;
@@ -56,9 +57,11 @@ class ProductRelationDataHelper extends Module
 
         $productRelationTransfer = $this->createProductRelationTransfer($productAbstractSku, $idProductAbstract, $productRelationType);
 
-        $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
 
-        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationResponseTransfer = $productRelationFacade->findProductRelationById($productRelationTransfer->getIdProductRelation());
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
 
         $this->debug(sprintf(
             'Inserted Product Relation: %d',
@@ -111,6 +114,7 @@ class ProductRelationDataHelper extends Module
         $productRelationTypeTransfer = new ProductRelationTypeTransfer();
         $productRelationTypeTransfer->setKey($productRelationType);
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
+        $productRelationTransfer->setStoreRelation(new StoreRelationTransfer());
 
         return $productRelationTransfer;
     }

@@ -11,7 +11,9 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductRelationGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToMoneyFacadeBridge;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToPriceProductFacadeBridge;
@@ -41,6 +43,8 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
 
     public const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
 
+    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -57,6 +61,7 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addUtilEncodingService($container);
         $container = $this->addProductAttributeFacade($container);
         $container = $this->addProductRelationPropelQuery($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
         $container = $this->addProductAbstractPropelQuery($container);
         $container = $this->addProductAttributeKeyPropelQuery($container);
         $container = $this->addPropelQueryBuilderQueryContainer($container);
@@ -232,5 +237,36 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return $this->getStoreRelationFormTypePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\ProductRelationGui\Communication\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own ProductRelationGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage product relations.',
+                FormTypeInterface::class
+            )
+        );
     }
 }

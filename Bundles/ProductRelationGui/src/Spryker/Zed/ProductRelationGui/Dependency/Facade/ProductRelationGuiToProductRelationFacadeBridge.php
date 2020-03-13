@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelationGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
+use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 
 class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelationGuiToProductRelationFacadeInterface
@@ -28,9 +29,9 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     /**
      * @param int $idProductRelation
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function findProductRelationById($idProductRelation)
+    public function findProductRelationById($idProductRelation): ProductRelationResponseTransfer
     {
         return $this->productRelationFacade->findProductRelationById($idProductRelation);
     }
@@ -48,9 +49,9 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function createProductRelation(ProductRelationTransfer $productRelationTransfer)
+    public function createProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
         return $this->productRelationFacade->createProductRelation($productRelationTransfer);
     }
@@ -58,9 +59,9 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     /**
      * @param int $idProductRelation
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function deleteProductRelation($idProductRelation)
+    public function deleteProductRelation(int $idProductRelation): ProductRelationResponseTransfer
     {
         return $this->productRelationFacade->deleteProductRelation($idProductRelation);
     }
@@ -68,31 +69,11 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductRelationResponseTransfer
      */
-    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer)
+    public function updateProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationResponseTransfer
     {
-        $this->productRelationFacade->updateProductRelation($productRelationTransfer);
-    }
-
-    /**
-     * @param int $idProductRelation
-     *
-     * @return void
-     */
-    public function activateProductRelation($idProductRelation)
-    {
-        $this->productRelationFacade->activateProductRelation($idProductRelation);
-    }
-
-    /**
-     * @param int $idProductRelation
-     *
-     * @return void
-     */
-    public function deactivateProductRelation($idProductRelation)
-    {
-        $this->productRelationFacade->deactivateProductRelation($idProductRelation);
+        return $this->productRelationFacade->updateProductRelation($productRelationTransfer);
     }
 
     /**

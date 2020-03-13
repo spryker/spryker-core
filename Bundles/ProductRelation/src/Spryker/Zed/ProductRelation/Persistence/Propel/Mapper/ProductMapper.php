@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductRelation\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductRelationRelatedProductTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -47,5 +49,38 @@ class ProductMapper
         ProductRelationRelatedProductTransfer $productRelationRelatedProductTransfer
     ): ProductRelationRelatedProductTransfer {
         return $productRelationRelatedProductTransfer->fromArray($productRelationProductAbstractEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function mapProductAbstractEntitiesToProductAbstractTransfers(
+        ObjectCollection $productAbstractEntities,
+        array $productAbstractTransfers
+    ): array {
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractTransfers[] = $this->mapProductAbstractEntityToProductAbstractTransfer(
+                $productAbstractEntity,
+                new ProductAbstractTransfer()
+            );
+        }
+
+        return $productAbstractTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function mapProductAbstractEntityToProductAbstractTransfer(
+        SpyProductAbstract $productAbstractEntity,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+        return $productAbstractTransfer->fromArray($productAbstractEntity->toArray(), true);
     }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeInterface;
 
@@ -17,6 +18,8 @@ class ProductRelationTypeDataProvider
 {
     public const TYPE_RELATED_PRODUCTS = 'related-products';
     public const TYPE_UP_SELLING = 'up-selling';
+
+    public const OPTION_PRODUCT_RELATION_KEY_DISABLED = 'option_product_relation_key_disabled';
 
     /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeInterface
@@ -32,13 +35,16 @@ class ProductRelationTypeDataProvider
     }
 
     /**
+     * @param bool $isProductRelationKeyDisabled
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(bool $isProductRelationKeyDisabled = false): array
     {
         return [
             'data_class' => ProductRelationTransfer::class,
             ProductRelationFormType::OPTION_RELATION_CHOICES => $this->buildProductRelationTypeChoiceList(),
+            static::OPTION_PRODUCT_RELATION_KEY_DISABLED => $isProductRelationKeyDisabled,
         ];
     }
 
@@ -71,7 +77,9 @@ class ProductRelationTypeDataProvider
             return $this->createProductRelationTransfer();
         }
 
-        $productRelationTransfer = $this->productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationResponseTransfer = $this->productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
+
         if (!$productRelationTransfer) {
             $productRelationTransfer = $this->createProductRelationTransfer();
         }
@@ -88,6 +96,7 @@ class ProductRelationTypeDataProvider
         $productRelationTransfer->setIsActive(false);
         $productRelationTransfer->setQuerySet(new PropelQueryBuilderRuleSetTransfer());
         $productRelationTransfer->setProductRelationType(new ProductRelationTypeTransfer());
+        $productRelationTransfer->setStoreRelation(new StoreRelationTransfer());
 
         return $productRelationTransfer;
     }
