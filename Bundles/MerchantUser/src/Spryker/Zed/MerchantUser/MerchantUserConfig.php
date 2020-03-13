@@ -32,6 +32,8 @@ class MerchantUserConfig extends AbstractBundleConfig
     protected const MERCHANT_ADMIN_GROUP_REFERENCE = 'merchant_admin';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getUserCreationStatus(): string
@@ -40,6 +42,8 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMerchantAdminGroupReference(): string
@@ -48,6 +52,8 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMerchantAdminRoleName(): string
@@ -56,6 +62,8 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMerchantAdminGroupName(): string
@@ -64,6 +72,8 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function canUserHaveManyMerchants(): bool
@@ -72,6 +82,8 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\RoleTransfer[]
      */
     public function getInstallAclRoles(): array
@@ -107,6 +119,8 @@ class MerchantUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\GroupTransfer[]
      */
     public function getInstallAclGroups(): array

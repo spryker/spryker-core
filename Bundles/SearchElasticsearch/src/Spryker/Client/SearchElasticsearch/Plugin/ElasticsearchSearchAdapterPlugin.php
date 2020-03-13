@@ -101,7 +101,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      *
      * @api
      *
-     * @param array $searchDocumentTransfers
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return bool
      */

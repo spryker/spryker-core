@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionBusinessFactory getFactory()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepositoryInterface getRepository()
  */
 class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotionFacadeInterface
 {
@@ -48,7 +49,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     public function createPromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer)
     {
         return $this->getFactory()
-            ->createDiscountPromotionWriter()
+            ->createDiscountPromotionCreator()
             ->create($discountPromotionTransfer);
     }
 
@@ -64,7 +65,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     public function updatePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer)
     {
         return $this->getFactory()
-            ->createDiscountPromotionWriter()
+            ->createDiscountPromotionUpdater()
             ->update($discountPromotionTransfer);
     }
 
@@ -144,5 +145,20 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
         return $this->getFactory()
             ->createDiscountPromotionReader()
             ->findDiscountPromotionByIdDiscount($idDiscount);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     */
+    public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer
+    {
+        return $this->getRepository()
+            ->findDiscountPromotionByUuid($uuid);
     }
 }

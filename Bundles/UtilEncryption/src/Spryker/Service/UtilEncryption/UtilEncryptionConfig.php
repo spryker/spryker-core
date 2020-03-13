@@ -14,6 +14,8 @@ class UtilEncryptionConfig extends AbstractBundleConfig
     protected const OPEN_SSL_ENCRYPTION_METHOD = 'aes256';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultOpenSslEncryptionMethod(): string

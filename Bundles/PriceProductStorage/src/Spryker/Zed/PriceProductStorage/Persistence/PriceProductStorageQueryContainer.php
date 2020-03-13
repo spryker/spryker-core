@@ -24,6 +24,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     public const SKU = 'sku';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -45,6 +47,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -59,6 +63,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $priceTypeIds
@@ -76,6 +82,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $priceTypeIds
@@ -93,6 +101,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $priceProductIds
@@ -110,6 +120,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $priceProductIds
@@ -127,6 +139,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productConcreteIds
@@ -148,6 +162,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productConcreteIds
@@ -162,6 +178,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $priceProductStoreIds
@@ -181,6 +199,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $priceProductStoreIds

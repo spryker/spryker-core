@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class RemoveCustomerFromGroupPlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

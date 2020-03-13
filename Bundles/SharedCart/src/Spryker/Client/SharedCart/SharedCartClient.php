@@ -133,10 +133,7 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
     }
 
     /**
-     * Specification:
-     *  - Sends Zed Request to get share detail collection by quote id.
-     *  - Filters quote share detail from share details by company user id.
-     *  - Sends Zed request to update quote.
+     * {@inheritDoc}
      *
      * @api
      *

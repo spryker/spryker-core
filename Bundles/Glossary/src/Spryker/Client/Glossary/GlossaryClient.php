@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $id

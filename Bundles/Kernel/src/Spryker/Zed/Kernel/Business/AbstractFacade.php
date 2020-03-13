@@ -22,6 +22,8 @@ abstract class AbstractFacade
     private $factory;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory

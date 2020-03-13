@@ -69,6 +69,8 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory

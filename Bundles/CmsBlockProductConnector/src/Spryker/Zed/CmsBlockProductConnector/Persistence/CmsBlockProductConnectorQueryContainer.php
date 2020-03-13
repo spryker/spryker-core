@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer implements CmsBlockProductConnectorQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
@@ -28,6 +30,8 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -41,6 +45,8 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -62,6 +68,8 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract

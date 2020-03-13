@@ -23,6 +23,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     public const ID_CATEGORY_NODE = 'idCategoryNode';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $localeNames
@@ -38,6 +40,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -65,6 +69,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @module Url
@@ -100,6 +106,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -113,11 +121,13 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryNodeIdsByCategoryIds(array $categoryIds)
     {
@@ -130,9 +140,11 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
      */
@@ -144,11 +156,13 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $categoryTemplateIds
+     * @param int[] $categoryTemplateIds
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryNodeIdsByTemplateIds(array $categoryTemplateIds)
     {
@@ -163,6 +177,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $ids

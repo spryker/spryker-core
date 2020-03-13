@@ -23,6 +23,8 @@ class MerchantProfileGuiConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSalutationChoices(): array
@@ -31,6 +33,8 @@ class MerchantProfileGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getIsActiveColumnName(): string
@@ -39,6 +43,8 @@ class MerchantProfileGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMerchantUrlPrefix(): string

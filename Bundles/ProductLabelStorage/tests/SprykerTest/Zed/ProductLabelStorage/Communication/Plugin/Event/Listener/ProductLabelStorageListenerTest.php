@@ -206,10 +206,7 @@ class ProductLabelStorageListenerTest extends Unit
         $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
             ->filterByLocale($localeName)
             ->findOne();
-        $this->assertNotNull($spyProductLabelDictionaryStorage);
-        $data = $spyProductLabelDictionaryStorage->getData();
-        $labelsCount = $this->tester->getProductLabelsCountByLocaleName($localeName);
-        $this->assertSame($labelsCount - 1, count($data['items']));
+        $this->assertNull($spyProductLabelDictionaryStorage, 'Product label dictionary storage should be deleted');
     }
 
     /**

@@ -73,7 +73,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
         }
 
         $relatedProductAbstractIds = $this->productRelationStorageClient
-            ->findRelatedAbstractProductIds($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
+            ->findRelatedAbstractProductIds($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], APPLICATION_STORE);
 
         return $this->relatedProductRestResponseBuilder
             ->buildRelatedProductCollectionRestResponse($restRequest, $relatedProductAbstractIds);
