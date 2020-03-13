@@ -128,8 +128,9 @@ class ProductOfferAvailabilitySynchronizationDataBulkPlugin extends AbstractPlug
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    protected function createSynchronizationDataTransfer(SpyProductOfferAvailabilityStorageEntityTransfer $productOfferAvailabilityStorageEntityTransfer): SynchronizationDataTransfer
-    {
+    protected function createSynchronizationDataTransfer(
+        SpyProductOfferAvailabilityStorageEntityTransfer $productOfferAvailabilityStorageEntityTransfer
+    ): SynchronizationDataTransfer {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setData($productOfferAvailabilityStorageEntityTransfer->getData());
         $synchronizationDataTransfer->setKey($productOfferAvailabilityStorageEntityTransfer->getKey());

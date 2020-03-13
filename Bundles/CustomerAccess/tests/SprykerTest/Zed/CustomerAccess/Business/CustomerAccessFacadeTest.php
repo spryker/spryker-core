@@ -171,8 +171,10 @@ class CustomerAccessFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertCustomerAccessTransferContainsContentTypeAccess(CustomerAccessTransfer $customerAccessTransfer, ContentTypeAccessTransfer $contentTypeAccessTransfer): void
-    {
+    protected function assertCustomerAccessTransferContainsContentTypeAccess(
+        CustomerAccessTransfer $customerAccessTransfer,
+        ContentTypeAccessTransfer $contentTypeAccessTransfer
+    ): void {
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $contentTypeAccessTransfer->getContentType()) {
                 $this->assertEquals($contentTypeAccess, $contentTypeAccessTransfer);

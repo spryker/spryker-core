@@ -43,8 +43,9 @@ class AuthRestApiToOauthClientBridge implements AuthRestApiToOauthClientInterfac
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
-    {
+    public function validateAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer {
         return $this->oauthClient->validateAccessToken($authAccessTokenValidationRequestTransfer);
     }
 

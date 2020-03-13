@@ -116,8 +116,11 @@ class MySqlStorageReader extends AbstractStorageReader
      *
      * @return string
      */
-    protected function buildSelectQuerySql(string $tableName, string $keyPlaceholder = self::DEFAULT_PLACEHOLDER_KEY, string $aliasKeyPlaceholder = self::DEFAULT_PLACEHOLDER_ALIAS_KEY): string
-    {
+    protected function buildSelectQuerySql(
+        string $tableName,
+        string $keyPlaceholder = self::DEFAULT_PLACEHOLDER_KEY,
+        string $aliasKeyPlaceholder = self::DEFAULT_PLACEHOLDER_ALIAS_KEY
+    ): string {
         return sprintf(
             static::SELECT_STATEMENT_PATTERN,
             $keyPlaceholder,

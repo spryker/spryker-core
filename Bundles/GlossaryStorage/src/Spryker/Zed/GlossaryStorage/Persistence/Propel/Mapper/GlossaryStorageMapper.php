@@ -19,8 +19,10 @@ class GlossaryStorageMapper implements GlossaryStorageMapperInterface
      *
      * @return \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage
      */
-    public function hydrateSpyGlossaryStorageEntity(SpyGlossaryStorage $glossaryStorage, SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer): SpyGlossaryStorage
-    {
+    public function hydrateSpyGlossaryStorageEntity(
+        SpyGlossaryStorage $glossaryStorage,
+        SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer
+    ): SpyGlossaryStorage {
         $glossaryStorage->fromArray($glossaryStorageEntityTransfer->toArray(true));
 
         return $glossaryStorage;
