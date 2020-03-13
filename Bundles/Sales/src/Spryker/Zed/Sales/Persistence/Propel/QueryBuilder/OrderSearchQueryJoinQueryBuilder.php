@@ -112,15 +112,18 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
         array &$conditionGroups
     ): SpySalesOrderQuery {
         $conditionGroupName = uniqid('', true);
-        $conditionGroups[] = $conditionGroupName;
 
         $conditions = $this->createSalesOrderQueryWhereConditions($salesOrderQuery, $queryWhereConditionTransfers);
 
-        $salesOrderQuery->combine(
-            $conditions,
-            Criteria::LOGICAL_OR,
-            $conditionGroupName
-        );
+        if ($conditions) {
+            $salesOrderQuery->combine(
+                $conditions,
+                Criteria::LOGICAL_OR,
+                $conditionGroupName
+            );
+
+            $conditionGroups[] = $conditionGroupName;
+        }
 
         return $salesOrderQuery;
     }
@@ -150,6 +153,18 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
                 $comparison === Criteria::ILIKE ? sprintf('%%%s%%', $value) : $value,
                 $comparison
             );
+
+            $combineWithCondition = $queryWhereConditionTransfer->getMergeWithCondition();
+
+            if ($combineWithCondition) {
+                $salesOrderQuery->combine(
+                    [$combineWithCondition, $conditionName],
+                    $queryWhereConditionTransfer->getMergeOperator() ?? Criteria::LOGICAL_OR,
+                    $combineWithCondition
+                );
+
+                continue;
+            }
 
             $conditions[] = $conditionName;
         }

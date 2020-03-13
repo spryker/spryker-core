@@ -91,4 +91,39 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
             ->createFilterFieldChecker()
             ->isCompanyBusinessUnitFilterApplicable($filterFieldTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCompanyUserEmailFilter(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer {
+        return $this->getFactory()
+            ->createOrderSearchQueryExpander()
+            ->expandQueryJoinCollectionWithCompanyUserEmailFilter($filterFieldTransfers, $queryJoinCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCompanyUserEmailFilterApplicable(array $filterFieldTransfers): bool
+    {
+        return $this->getFactory()
+            ->createFilterFieldChecker()
+            ->isCompanyUserEmailFilterApplicable($filterFieldTransfers);
+    }
 }

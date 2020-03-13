@@ -15,4 +15,11 @@ interface FilterFieldCheckerInterface
      * @return bool
      */
     public function isCompanyBusinessUnitFilterApplicable(array $filterFieldTransfers): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCompanyUserEmailFilterApplicable(array $filterFieldTransfers): bool;
 }

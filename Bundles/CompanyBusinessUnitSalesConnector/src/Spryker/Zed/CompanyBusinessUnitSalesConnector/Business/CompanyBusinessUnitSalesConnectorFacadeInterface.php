@@ -74,4 +74,32 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
      * @return bool
      */
     public function isCompanyBusinessUnitFilterApplicable(array $filterFieldTransfers): bool;
+
+    /**
+     * Specification:
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfer to filter by company user email.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCompanyUserEmailFilter(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if filtering by company user email could be applied, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCompanyUserEmailFilterApplicable(array $filterFieldTransfers): bool;
 }

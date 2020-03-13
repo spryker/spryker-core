@@ -17,9 +17,14 @@ use Propel\Runtime\ActiveQuery\Criteria;
 class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryBuilderInterface
 {
     /**
+     * Used as a name for `all` search condition group binding to have a hook to extend and bind afterwards.
+     */
+    public const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
+
+    /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
      */
-    protected const SEARCH_TYPE_ALL = 'all';
+    public const SEARCH_TYPE_ALL = 'all';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
@@ -195,7 +200,8 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
         $salesOrderQuery->combine(
             $conditions,
-            Criteria::LOGICAL_OR
+            Criteria::LOGICAL_OR,
+            static::CONDITION_GROUP_ALL
         );
 
         return $salesOrderQuery;

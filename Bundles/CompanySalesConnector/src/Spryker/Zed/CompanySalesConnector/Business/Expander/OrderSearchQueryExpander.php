@@ -17,12 +17,12 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     public const FILTER_FIELD_TYPE_COMPANY = 'company';
 
     /**
-     * @see Criteria::EQUAL
+     * @see \Propel\Runtime\ActiveQuery\Criteria::EQUAL
      */
     protected const COMPARISON_EQUAL = '=';
 
     /**
-     * @see SpySalesOrderTableMap::COL_COMPANY_UUID
+     * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_UUID
      */
     protected const COLUMN_COMPANY_UUID = 'company_uuid';
 

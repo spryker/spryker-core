@@ -12,14 +12,47 @@ use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQ
 class FilterFieldChecker implements FilterFieldCheckerInterface
 {
     /**
+     * @uses \Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY
+     */
+    protected const FILTER_FIELD_TYPE_COMPANY = 'company';
+
+    /**
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
      *
      * @return bool
      */
     public function isCompanyBusinessUnitFilterApplicable(array $filterFieldTransfers): bool
     {
+        return $this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCompanyUserEmailFilterApplicable(array $filterFieldTransfers): bool
+    {
+        if (
+            !$this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT)
+            && !$this->isFilterFieldSet($filterFieldTransfers, static::FILTER_FIELD_TYPE_COMPANY)
+        ) {
+            return false;
+        }
+
+        return $this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_ALL);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isFilterFieldSet(array $filterFieldTransfers, string $type): bool
+    {
         foreach ($filterFieldTransfers as $filterFieldTransfer) {
-            if ($filterFieldTransfer->getType() === OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT) {
+            if ($filterFieldTransfer->getType() === $type) {
                 return true;
             }
         }

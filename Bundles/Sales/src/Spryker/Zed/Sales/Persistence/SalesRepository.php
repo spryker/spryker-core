@@ -18,6 +18,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesPersistenceFactory getFactory()
@@ -83,6 +84,10 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             $salesOrderQuery,
             $orderListTransfer
         );
+
+        if ($this->isSearchByAllFilterFieldSet($orderListTransfer->getFilterFields())) {
+            $salesOrderQuery->where([OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL]);
+        }
 
         $salesOrderQuery = $this->buildQueryFromCriteria(
             $salesOrderQuery,
@@ -261,5 +266,21 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $salesOrderIds;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    protected function isSearchByAllFilterFieldSet(ArrayObject $filterFieldTransfers): bool
+    {
+        foreach ($filterFieldTransfers as $filterFieldTransfer) {
+            if ($filterFieldTransfer->getType() === OrderSearchFilterFieldQueryBuilder::SEARCH_TYPE_ALL) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

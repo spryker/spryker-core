@@ -357,6 +357,8 @@
         <property name="column" type="string"/>
         <property name="value" type="string"/>
         <property name="comparison" type="string"/>
+        <property name="mergeWithCondition" type="string"/>
+        <property name="mergeOperator" type="string"/>
     </transfer>
 
 </transfers>
