@@ -37,7 +37,7 @@ class OrderItemSanitizer implements OrderItemSanitizerInterface
         $sanitizedItemTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getCreatedAt() && !$this->isOrderItemOutdated($itemTransfer)) {
+            if (!$this->isOrderItemOutdated($itemTransfer)) {
                 $sanitizedItemTransfers[] = $itemTransfer;
             }
         }
@@ -52,11 +52,13 @@ class OrderItemSanitizer implements OrderItemSanitizerInterface
      */
     protected function isOrderItemOutdated(ItemTransfer $itemTransfer): bool
     {
+        if (!$itemTransfer->getCreatedAt()) {
+            return true;
+        }
+
         $currentTime = new DateTime('now');
         $createdAt = new DateTime($itemTransfer->getCreatedAt());
 
-        $interval = $currentTime->diff($createdAt);
-
-        return $interval->days >= $this->salesReturnConfig->getReturnableNumberOfDays();
+        return $currentTime->diff($createdAt)->days >= $this->salesReturnConfig->getReturnableNumberOfDays();
     }
 }
