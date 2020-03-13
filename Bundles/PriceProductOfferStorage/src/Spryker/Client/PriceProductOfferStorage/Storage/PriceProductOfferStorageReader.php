@@ -46,7 +46,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
     /**
      * @var \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[]
      */
-    protected $priceProductOfferPriceExtractorPlugins;
+    protected $priceProductOfferStoragePriceExtractorPlugins;
 
     /**
      * @param \Spryker\Client\PriceProductOfferStorage\Mapper\PriceProductOfferStorageMapperInterface $priceProductMapper
@@ -54,7 +54,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStoreClientInterface $storeClient
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceInterface $priceProductService
-     * @param \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[] $priceProductOfferPriceExtractorPlugins
+     * @param \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[] $priceProductOfferStoragePriceExtractorPlugins
      */
     public function __construct(
         PriceProductOfferStorageMapperInterface $priceProductMapper,
@@ -62,14 +62,14 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
         PriceProductOfferStorageToStorageClientInterface $storageClient,
         PriceProductOfferStorageToStoreClientInterface $storeClient,
         PriceProductOfferStorageToPriceProductServiceInterface $priceProductService,
-        array $priceProductOfferPriceExtractorPlugins
+        array $priceProductOfferStoragePriceExtractorPlugins
     ) {
         $this->priceProductMapper = $priceProductMapper;
         $this->synchronizationService = $synchronizationService;
         $this->storageClient = $storageClient;
         $this->storeClient = $storeClient;
         $this->priceProductService = $priceProductService;
-        $this->priceProductOfferPriceExtractorPlugins = $priceProductOfferPriceExtractorPlugins;
+        $this->priceProductOfferStoragePriceExtractorPlugins = $priceProductOfferStoragePriceExtractorPlugins;
     }
 
     /**
@@ -95,8 +95,8 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
             $priceProductTransfers[] = $priceProductTransfer;
         }
 
-        foreach ($this->priceProductOfferPriceExtractorPlugins as $priceProductOfferPriceExtractorPlugin) {
-            $priceProductTransfers = array_merge($priceProductTransfers, $priceProductOfferPriceExtractorPlugin->extractProductPricesForProductOffer($priceProductTransfers));
+        foreach ($this->priceProductOfferStoragePriceExtractorPlugins as $priceProductOfferStoragePriceExtractorPlugin) {
+            $priceProductTransfers = array_merge($priceProductTransfers, $priceProductOfferStoragePriceExtractorPlugin->extractProductPricesForProductOffer($priceProductTransfers));
         }
 
         return $priceProductTransfers;
