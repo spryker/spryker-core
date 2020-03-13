@@ -26,22 +26,6 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
-     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
-     *
-     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion
-     */
-    public function mapEntity(
-        SpyDiscountPromotion $discountPromotionEntity,
-        DiscountPromotionTransfer $discountPromotionTransfer
-    ) {
-
-        $discountPromotionEntity->fromArray($discountPromotionTransfer->toArray());
-
-        return $discountPromotionEntity;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
     protected function createDiscountPromotionTransfer()

@@ -119,7 +119,7 @@ interface ShipmentMapperInterface
 
     /**
      * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
-     * @param array $shipmentTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer[]
      */

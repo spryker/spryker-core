@@ -47,6 +47,8 @@ class ApplicationConfig extends AbstractBundleConfig
     protected const HEADER_FEATURE_POLICY_VALUE = '';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHostName()
@@ -55,6 +57,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isSslEnabled()
@@ -63,6 +67,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSslExcludedResources()
@@ -71,6 +77,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedProxies()
@@ -79,6 +87,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTrustedHeader(): int
@@ -87,6 +97,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedHosts()
@@ -95,6 +107,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSecurityHeaders(): array

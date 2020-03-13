@@ -74,8 +74,10 @@ class TaxStorageMapper
      *
      * @return \Generated\Shared\Transfer\TaxSetStorageTransfer
      */
-    protected function mapSpyTaxSetStorageToTaxSetStorageTransfer(SpyTaxSetStorage $spyTaxSetStorage, TaxSetStorageTransfer $taxSetStorageTransfer): TaxSetStorageTransfer
-    {
+    protected function mapSpyTaxSetStorageToTaxSetStorageTransfer(
+        SpyTaxSetStorage $spyTaxSetStorage,
+        TaxSetStorageTransfer $taxSetStorageTransfer
+    ): TaxSetStorageTransfer {
         $taxSetStorageTransfer->setIdTaxSet($spyTaxSetStorage->getFkTaxSet());
 
         return $taxSetStorageTransfer;

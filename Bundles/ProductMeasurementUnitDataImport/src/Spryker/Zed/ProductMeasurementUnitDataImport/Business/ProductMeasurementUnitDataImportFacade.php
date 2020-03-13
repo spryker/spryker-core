@@ -75,8 +75,9 @@ class ProductMeasurementUnitDataImportFacade extends AbstractFacade implements P
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importProductMeasurementSalesUnitStore(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
+    public function importProductMeasurementSalesUnitStore(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
         return $this->getFactory()
             ->getProductMeasurementSalesUnitStoreDataImporter()
             ->import($dataImporterConfigurationTransfer);

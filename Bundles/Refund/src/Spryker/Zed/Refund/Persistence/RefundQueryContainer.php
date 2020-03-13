@@ -15,8 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class RefundQueryContainer extends AbstractQueryContainer implements RefundQueryContainerInterface
 {
     /**
-     * Specification:
-     * - Returns SpyRefundQuery ordered by id descending.
+     * {@inheritDoc}
      *
      * @api
      *

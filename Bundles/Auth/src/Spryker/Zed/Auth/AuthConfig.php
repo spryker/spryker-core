@@ -17,6 +17,8 @@ class AuthConfig extends AbstractBundleConfig
     public const DEFAULT_URL_LOGIN = '/auth/login';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getLoginPageUrl()
@@ -61,6 +63,8 @@ class AuthConfig extends AbstractBundleConfig
     protected $envConfigurations = [];
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getIgnorable()
@@ -69,6 +73,8 @@ class AuthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -85,6 +91,8 @@ class AuthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getUsersCredentials()
@@ -111,6 +119,8 @@ class AuthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPasswordTokenExpirationInSeconds()

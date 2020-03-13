@@ -14,6 +14,8 @@ class FileManagerStorageConfig extends AbstractBundleConfig
     protected const STORAGE_COMPOSITE_KEY = 'composite_key';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorageCompositeKey()
@@ -22,6 +24,8 @@ class FileManagerStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getFileManagerSynchronizationPoolName(): ?string

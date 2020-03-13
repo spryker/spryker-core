@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductLabelGuiQueryContainer extends AbstractQueryContainer implements ProductLabelGuiQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -27,6 +29,8 @@ class ProductLabelGuiQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -42,6 +46,8 @@ class ProductLabelGuiQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -57,6 +63,8 @@ class ProductLabelGuiQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery

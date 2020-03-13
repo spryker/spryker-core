@@ -22,6 +22,8 @@ class ProductBundleConfig extends AbstractBundleConfig
     protected const PARAMETER_PRODUCT_SKU_AVAILABILITY = '%sku%';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAvailabilityErrorType(): string
@@ -30,6 +32,8 @@ class ProductBundleConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAvailabilityProductSkuParameter(): string

@@ -24,6 +24,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductStorageQueryContainer extends AbstractQueryContainer implements ProductStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -73,6 +75,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productIds
@@ -128,6 +132,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -145,6 +151,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productIds
@@ -162,6 +170,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param bool $isSuper
@@ -177,6 +187,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -203,6 +215,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -231,6 +245,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $attributeKeys
@@ -248,6 +264,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -264,6 +282,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery

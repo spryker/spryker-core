@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class OrderTaxTotalCalculationPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer

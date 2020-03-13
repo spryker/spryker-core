@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class DataImportEventBehaviorPlugin extends AbstractPlugin implements DataImportBeforeImportHookInterface, DataImportAfterImportHookInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -30,6 +32,8 @@ class DataImportEventBehaviorPlugin extends AbstractPlugin implements DataImport
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
