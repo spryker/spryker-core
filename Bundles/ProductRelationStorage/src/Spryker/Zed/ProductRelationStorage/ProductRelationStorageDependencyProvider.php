@@ -31,11 +31,12 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductRelationFacade($container);
 
         return $container;
     }

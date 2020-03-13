@@ -15,4 +15,13 @@ interface ProductRelationStorageRepositoryInterface
      * @return array
      */
     public function getProductRelationsWithProductAbstractByIdRelationIn(array $relationIds): array;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findProductRelationStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
 }

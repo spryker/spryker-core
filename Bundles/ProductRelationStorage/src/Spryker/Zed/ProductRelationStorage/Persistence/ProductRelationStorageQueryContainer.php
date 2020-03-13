@@ -19,6 +19,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $productAbstractIds
      *
      * @return \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery
@@ -35,6 +37,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param array $productAbstractIds
      *
@@ -55,6 +59,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductRelation
      * @param int $idLocale
      *
@@ -72,6 +78,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $productAbstractIds
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -88,6 +96,8 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int[] $productRelationIds
      *

@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\Product\Persistence\Mapper;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductMapperInterface
 {
@@ -61,37 +57,4 @@ interface ProductMapperInterface
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer;
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity
-     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer
-     */
-    public function mapProductAbstractLocalizedAttributesEntityToProductAbstractLocalizedAttributesTransfer(
-        SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity,
-        ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
-    ): ProductAbstractLocalizedAttributesTransfer;
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[] $productAbstractLocalizedAttributesEntities
-     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[] $localizedAttributesTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[]
-     */
-    public function mapProductAbstractLocalizedAttributesEntitiesToProductAbstractLocalizedAttributeTransfers(
-        ObjectCollection $productAbstractLocalizedAttributesEntities,
-        array $localizedAttributesTransfers
-    ): array;
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
-    public function mapProductAbstractLocalizedAttributesEntityToLocalizedAttributesTransfer(
-        SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity,
-        LocalizedAttributesTransfer $localizedAttributesTransfer
-    ): LocalizedAttributesTransfer;
 }

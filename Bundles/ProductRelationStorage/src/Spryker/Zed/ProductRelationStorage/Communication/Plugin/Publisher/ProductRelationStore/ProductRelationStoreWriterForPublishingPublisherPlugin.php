@@ -12,26 +12,26 @@ use Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
+ * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig getConfig()
  * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelationStorage\Communication\ProductRelationStorageCommunicationFactory getFactory()
  */
-class ProductRelationStoreWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class ProductRelationStoreWriterForPublishingPublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $transfers, $eventName)
     {
-        $this->getFacade()->writeCollectionByProductRelationStoreEvents($transfers);
+        $this->getFacade()->writeCollectionByProductRelationStorePublishingEvents($transfers);
     }
 
     /**
@@ -44,8 +44,8 @@ class ProductRelationStoreWritePublisherPlugin extends AbstractPlugin implements
     public function getSubscribedEvents(): array
     {
         return [
-            ProductRelationStorageConfig::ENTITY_SPY_PRODUCT_RELATION_STORE_CREATE,
-            ProductRelationStorageConfig::ENTITY_SPY_PRODUCT_RELATION_STORE_DELETE,
+            ProductRelationStorageConfig::ENTITY_SPY_PRODUCT_RELATION_STORE_PUBLISH,
+            ProductRelationStorageConfig::ENTITY_SPY_PRODUCT_RELATION_STORE_UNPUBLISH,
         ];
     }
 }

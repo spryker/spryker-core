@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -220,5 +221,42 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
                 $productRelationEntities,
                 []
             );
+    }
+
+    /**
+     * @param int[] $productRelationIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductRelationIds(
+        array $productRelationIds
+    ): array {
+        return $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByIdProductRelation_In($productRelationIds)
+            ->select([
+                SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT,
+            ])
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function findFilteredProductRelations(int $offset, int $limit): array
+    {
+        $productRelationEntities = $this->getFactory()
+            ->createProductRelationQuery()
+            ->setLimit($limit)
+            ->setOffset($offset)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductRelationMapper()
+            ->mapProductRelationEntitiesToProductRelationTransfers($productRelationEntities, []);
     }
 }

@@ -17,6 +17,8 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
 
     public const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
     public const PRODUCT_ABSTRACT_RELATION_UNPUBLISH = 'ProductRelation.product_abstract_relation.unpublish';
+    public const ENTITY_SPY_PRODUCT_RELATION_STORE_PUBLISH = 'ProductRelation.product_relation_store.publish';
+    public const ENTITY_SPY_PRODUCT_RELATION_STORE_UNPUBLISH = 'ProductRelation.product_relation_store.unpublish';
 
     public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_relation_product_abstract.create';
     public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_relation_product_abstract.update';
@@ -24,18 +26,6 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
 
     public const ENTITY_SPY_PRODUCT_RELATION_STORE_CREATE = 'Entity.spy_product_relation_store.create';
     public const ENTITY_SPY_PRODUCT_RELATION_STORE_DELETE = 'Entity.spy_product_relation_store.delete';
-
-    /**
-     * @api
-     *
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
-     *
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return true;
-    }
 
     /**
      * @api

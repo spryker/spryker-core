@@ -136,4 +136,31 @@ interface ProductRelationFacadeInterface
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
     public function getProductRelationsByIdProductAbstracts(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Gets product abstract IDs by product relation IDs.
+     *
+     * @api
+     *
+     * @param int[] $productRelationIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductRelationIds(
+        array $productRelationIds
+    ): array;
+
+    /**
+     * Specification:
+     * - Retrieves a collection of product relation transfers according to provided offset and limit.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function findFilteredProductRelations(int $offset, int $limit): array;
 }

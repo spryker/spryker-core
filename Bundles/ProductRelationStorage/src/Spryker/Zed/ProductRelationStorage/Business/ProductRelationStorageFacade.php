@@ -21,6 +21,8 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $productAbstractIds
      *
      * @return void
@@ -34,6 +36,8 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param array $productAbstractIds
      *
@@ -69,6 +73,38 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @return void
      */
+    public function writeCollectionByProductRelationStoreEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductRelationStorageWriter()
+            ->writeProductRelationStorageCollectionByProductRelationStoreEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductRelationStorePublishingEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductRelationStorageWriter()
+            ->writeProductRelationStorageCollectionByProductRelationStorePublishingEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
     public function writeCollectionByProductRelationPublishingEvents(array $eventTransfers): void
     {
         $this->getFactory()
@@ -90,5 +126,21 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
         $this->getFactory()
             ->createProductRelationStorageWriter()
             ->writeProductRelationStorageCollectionByProductRelationProductAbstractEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findProductRelationStorageDataTransferByIds(int $offset, int $limit, array $ids): array
+    {
+        return $this->getRepository()->findProductRelationStorageDataTransferByIds($offset, $limit, $ids);
     }
 }

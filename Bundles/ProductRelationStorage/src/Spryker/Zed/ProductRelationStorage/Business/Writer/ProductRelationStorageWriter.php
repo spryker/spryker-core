@@ -79,6 +79,24 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     ): void {
         $productRelationIds = $this->eventBehaviorFacade
             ->getEventTransferForeignKeys($eventTransfers, SpyProductRelationStoreTableMap::COL_FK_PRODUCT_RELATION);
+        $productAbstractIds = $this->productRelationFacade->getProductAbstractIdsByProductRelationIds($productRelationIds);
+
+        $this->writeCollection($productAbstractIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductRelationStorageCollectionByProductRelationStorePublishingEvents(
+        array $eventTransfers
+    ): void {
+        $productRelationIds = $this->eventBehaviorFacade
+            ->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->productRelationFacade->getProductAbstractIdsByProductRelationIds($productRelationIds);
+
+        $this->writeCollection($productAbstractIds);
     }
 
     /**
@@ -123,7 +141,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * @param int[] $productAbstractIds
      *
@@ -135,7 +153,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * @param array $productAbstractIds
      *
@@ -153,6 +171,9 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      */
     protected function writeCollection(array $productAbstractIds): void
     {
+        $this->productRelationStorageEntityManager
+            ->deleteProductAbstractRelationStorageEntitiesByProductAbstractIds($productAbstractIds);
+
         $productRelationTransfers = $this->productRelationFacade
             ->getProductRelationsByIdProductAbstracts($productAbstractIds);
 
@@ -179,16 +200,16 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     /**
      * @param int $idProductAbstract
      * @param string $store
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer[] $productRelations
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer[] $productRelationTransfers
      *
      * @return void
      */
     protected function storeDataSet(
         int $idProductAbstract,
         string $store,
-        array $productRelations
+        array $productRelationTransfers
     ) {
-        $productRelationStorageTransfers = $this->fillProductRelationStorageTransfers($productRelations, $store);
+        $productRelationStorageTransfers = $this->fillProductRelationStorageTransfers($productRelationTransfers, $store);
 
         $productAbstractRelationStorageTransfer = new ProductAbstractRelationStorageTransfer();
         $productAbstractRelationStorageTransfer->setIdProductAbstract($idProductAbstract);

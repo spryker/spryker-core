@@ -152,4 +152,34 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
     {
         return $this->getRepository()->getProductRelationsByIdProductAbstracts($productAbstractIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productRelationIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductRelationIds(
+        array $productRelationIds
+    ): array {
+        return $this->getRepository()->getProductAbstractIdsByProductRelationIds($productRelationIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function findFilteredProductRelations(int $offset, int $limit): array
+    {
+        return $this->getRepository()->findFilteredProductRelations($offset, $limit);
+    }
 }

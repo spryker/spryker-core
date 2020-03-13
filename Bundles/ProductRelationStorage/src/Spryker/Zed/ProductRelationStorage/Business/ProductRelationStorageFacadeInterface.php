@@ -50,6 +50,30 @@ interface ProductRelationStorageFacadeInterface
 
     /**
      * Specification:
+     * - Publishes product relation data by create and delete events from spy_product_relation_store table.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductRelationStoreEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Publishes product relation data publish and unpublish events from spy_product_relation_store table.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductRelationStorePublishingEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
      * - Publishes product relation data by publish and unpublish events from spy_product_relation table.
      *
      * @api
@@ -71,4 +95,18 @@ interface ProductRelationStorageFacadeInterface
      * @return void
      */
     public function writeCollectionByProductRelationProductAbstractEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Retrieves a collection of product relation storage transfer according to provided offset, limit and ids.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findProductRelationStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
 }
