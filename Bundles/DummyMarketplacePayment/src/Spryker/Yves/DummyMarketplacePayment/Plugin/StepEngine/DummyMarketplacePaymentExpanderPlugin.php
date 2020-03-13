@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\DummyMarketplacePayment\Plugin\StepEngine;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
@@ -29,7 +28,7 @@ class DummyMarketplacePaymentExpanderPlugin extends AbstractPlugin implements St
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer): QuoteTransfer
+    public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
     {
         return $this->getFactory()
             ->createMarketplacePaymentExpander()

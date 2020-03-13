@@ -30,7 +30,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
     /**
      * @return string
      */
-    public function getProviderName(): string
+    public function getProviderName()
     {
         return DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME;
     }
@@ -38,7 +38,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
     /**
      * @return string
      */
-    protected function getTemplatePath(): string
+    protected function getTemplatePath()
     {
         return DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
     }
@@ -46,7 +46,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
     /**
      * @return string
      */
-    public function getPropertyPath(): string
+    public function getPropertyPath()
     {
         return DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE;
     }
@@ -54,7 +54,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE;
     }
@@ -64,7 +64,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => DummyMarketplacePaymentTransfer::class,
@@ -77,7 +77,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addDateOfBirth($builder);
     }

@@ -24,10 +24,12 @@ class DummyMarketplacePaymentFacade extends AbstractFacade implements DummyMarke
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer|void
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
-    {
+    public function filterPaymentMethods(
+        PaymentMethodsTransfer $paymentMethodsTransfer,
+        QuoteTransfer $quoteTransfer
+    ): PaymentMethodsTransfer {
         return $this->getFactory()
             ->createPaymentMethodFilter()
             ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
