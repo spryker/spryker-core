@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class NewsletterQueryContainer extends AbstractQueryContainer implements NewsletterQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $email
@@ -39,6 +41,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $subscriberKey
@@ -62,6 +66,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -85,6 +91,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -98,6 +106,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $email
@@ -111,6 +121,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
@@ -121,6 +133,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
@@ -131,6 +145,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery

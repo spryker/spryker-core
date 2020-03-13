@@ -43,6 +43,8 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     protected const PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME = 'Default list';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getImportFileToTransferFieldsMap(): array
@@ -61,6 +63,8 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getFieldsList(): array
@@ -79,6 +83,8 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getFallbackPriceTypeList(): array
@@ -89,6 +95,8 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getApplyBatchSize(): int
@@ -97,6 +105,8 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionDefault(): string
@@ -105,6 +115,8 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceProductScheduleListDefaultName(): string

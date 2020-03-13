@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MonitoringConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return mixed
      */
     public function getIgnorableTransactions()

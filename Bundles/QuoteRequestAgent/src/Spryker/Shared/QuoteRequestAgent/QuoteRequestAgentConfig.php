@@ -42,6 +42,8 @@ class QuoteRequestAgentConfig extends AbstractSharedConfig
     public const STATUS_CLOSED = 'closed';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getCancelableStatuses(): array
@@ -55,6 +57,8 @@ class QuoteRequestAgentConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getRevisableStatuses(): array

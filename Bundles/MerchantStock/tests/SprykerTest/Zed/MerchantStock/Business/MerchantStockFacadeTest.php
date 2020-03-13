@@ -32,14 +32,14 @@ class MerchantStockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantStockByMerchantSuccessful(): void
+    public function testCreateDefaultMerchantStockSuccessful(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
 
         // Act
         $merchantTransfer = $this->tester->getFacade()
-            ->createDefaultStockForMerchant($merchantTransfer)
+            ->createDefaultMerchantStock($merchantTransfer)
             ->getMerchant();
 
         // Assert

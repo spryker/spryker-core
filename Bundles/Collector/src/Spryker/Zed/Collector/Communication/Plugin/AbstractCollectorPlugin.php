@@ -24,6 +24,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -47,6 +49,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     );
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -39,6 +41,8 @@ class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements Decision
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -49,6 +53,8 @@ class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements Decision
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

@@ -20,6 +20,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     public const STATUS = 'status';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $url
@@ -35,6 +37,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -50,6 +54,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -62,6 +68,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $resourceType
@@ -79,6 +87,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -94,6 +104,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
@@ -106,6 +118,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUrlRedirect
@@ -121,6 +135,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -133,6 +149,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -151,6 +169,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use `CategoryQueryContainer::queryResourceUrlByCategoryNodeAndLocaleId()` instead.
@@ -170,6 +190,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use `CategoryQueryContainer::queryResourceUrlByCategoryNodeId()` instead.
@@ -187,6 +209,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sourceUrl
@@ -203,6 +227,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUrl
@@ -219,6 +245,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
