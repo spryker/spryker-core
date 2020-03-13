@@ -47,8 +47,11 @@ class ProductPageSearchToProductSearchBridge implements ProductPageSearchToProdu
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function mapDynamicProductAttributesToSearchData(ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes)
-    {
+    public function mapDynamicProductAttributesToSearchData(
+        ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $attributes
+    ) {
         return $this->productSearchFacade->mapDynamicProductAttributesToSearchData($pageMapBuilder, $pageMapTransfer, $attributes);
     }
 }

@@ -20,5 +20,9 @@ interface MultiShipmentOrderSaverInterface extends ShipmentOrderSaverInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function saveOrderShipmentByShipmentGroup(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer, SaveOrderTransfer $saveOrderTransfer): ShipmentGroupTransfer;
+    public function saveOrderShipmentByShipmentGroup(
+        OrderTransfer $orderTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): ShipmentGroupTransfer;
 }

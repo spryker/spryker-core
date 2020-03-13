@@ -12,8 +12,9 @@ interface ProductNewToProductLabelStorageClientInterface
     /**
      * @param string $labelName
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByName($labelName, $localeName);
+    public function findLabelByName($labelName, $localeName, string $storeName);
 }

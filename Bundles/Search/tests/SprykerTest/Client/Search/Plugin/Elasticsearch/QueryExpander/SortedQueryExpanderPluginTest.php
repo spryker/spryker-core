@@ -38,8 +38,11 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testSortedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = []): void
-    {
+    public function testSortedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(
+        SearchConfigInterface $searchConfig,
+        Query $expectedQuery,
+        array $params = []
+    ): void {
         $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
 
         $queryExpander = new SortedQueryExpanderPlugin();

@@ -55,5 +55,7 @@ interface MerchantSwitcherFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer
      */
-    public function validateMerchantInQuoteItems(SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer): SingleMerchantQuoteValidationResponseTransfer;
+    public function validateMerchantInQuoteItems(
+        SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer
+    ): SingleMerchantQuoteValidationResponseTransfer;
 }
