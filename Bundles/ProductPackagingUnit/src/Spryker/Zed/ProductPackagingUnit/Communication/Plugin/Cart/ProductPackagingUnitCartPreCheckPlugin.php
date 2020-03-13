@@ -21,7 +21,7 @@ class ProductPackagingUnitCartPreCheckPlugin extends AbstractPlugin implements C
 {
     /**
      * {@inheritDoc}
-     * - Checks if packaging unit is found for item in CartChangeTransfer.
+     * - Checks if packaging units are found for items in `CartChangeTransfer`.
      * - Returns `CartPreCheckResponseTransfer` with an error in case packaging unit not found for item.
      * - Terminates on failure.
      *
