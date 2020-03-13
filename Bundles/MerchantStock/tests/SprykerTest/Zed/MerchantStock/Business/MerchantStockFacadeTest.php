@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantStock\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 
 /**
@@ -54,7 +55,10 @@ class MerchantStockFacadeTest extends Unit
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $stockTransfer = $this->tester->haveStock();
-        $this->tester->haveMerchantStock($merchantTransfer, $stockTransfer);
+        $this->tester->haveMerchantStock([
+            MerchantStockTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantStockTransfer::ID_STOCK => $stockTransfer->getIdStock(),
+        ]);
 
         // Act
         $stockCollectionTransfer = $this->tester->getFacade()->getStockCollectionByMerchant($merchantTransfer);

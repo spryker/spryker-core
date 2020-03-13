@@ -28,10 +28,11 @@ class MerchantStockHelper extends Module
         $merchantStockTransfer = (new MerchantStockBuilder($seedData))->build();
 
         $merchantStockEntity = new SpyMerchantStock();
-        $merchantStockEntity->fromArray($merchantStockTransfer->toArray());
+        $merchantStockEntity->setFkStock($merchantStockTransfer->getIdStock());
+        $merchantStockEntity->setFkMerchant($merchantStockTransfer->getIdMerchant());
         $merchantStockEntity->save();
 
-        $merchantStockTransfer->fromArray($merchantStockEntity->toArray());
+        $merchantStockTransfer->setIdMerchantStock($merchantStockEntity->getIdMerchantStock());
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantStockEntity): void {
             $this->cleanupMerchantStock($merchantStockEntity);
