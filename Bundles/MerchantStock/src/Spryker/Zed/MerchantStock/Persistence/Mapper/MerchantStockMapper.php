@@ -37,8 +37,6 @@ class MerchantStockMapper
         MerchantTransfer $merchantTransfer,
         SpyMerchantStock $merchantStockEntity
     ): SpyMerchantStock {
-        $merchantTransfer->requireIdMerchant();
-
         return $merchantStockEntity->setFkMerchant($merchantTransfer->getIdMerchant());
     }
 
@@ -52,8 +50,6 @@ class MerchantStockMapper
         StockTransfer $stockTransfer,
         SpyMerchantStock $merchantStockEntity
     ): SpyMerchantStock {
-        $stockTransfer->requireIdStock();
-
         return $merchantStockEntity->setFkStock($stockTransfer->getIdStock());
     }
 }

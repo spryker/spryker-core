@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantStock\Business\Writer;
 
-use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
@@ -52,15 +51,12 @@ class MerchantStockWriter implements MerchantStockWriterInterface
             ->setIsActive(true);
 
         $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
-        $merchantStockTransfer = $this->merchantStockEntityManager->createMerchantStock($merchantTransfer, $stockTransfer);
-
-        if (!$merchantStockTransfer->getIdMerchantStock()) {
-            return $this->createMerchantResponseTransfer($merchantTransfer, static::ERROR_MERCHANT_STOCK_CREATE);
-        }
-
+        $this->merchantStockEntityManager->createMerchantStock($merchantTransfer, $stockTransfer);
         $merchantTransfer->addStock($stockTransfer);
 
-        return $this->createMerchantResponseTransfer($merchantTransfer);
+        return (new MerchantResponseTransfer())
+            ->setIsSuccess(true)
+            ->setMerchant($merchantTransfer);
     }
 
     /**
@@ -77,28 +73,5 @@ class MerchantStockWriter implements MerchantStockWriterInterface
             'Warehouse',
             $merchantTransfer->getStocks()->count() + 1
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param string $errorMessage
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
-    protected function createMerchantResponseTransfer(
-        MerchantTransfer $merchantTransfer,
-        string $errorMessage = ''
-    ): MerchantResponseTransfer {
-        $merchantResponseTransfer = (new MerchantResponseTransfer())
-            ->setIsSuccess(true)
-            ->setMerchant($merchantTransfer);
-
-        if (!$errorMessage) {
-            return $merchantResponseTransfer;
-        }
-
-        $merchantErrorTransfer = (new MerchantErrorTransfer())->setMessage($errorMessage);
-
-        return $merchantResponseTransfer->setIsSuccess(false)->addError($merchantErrorTransfer);
     }
 }

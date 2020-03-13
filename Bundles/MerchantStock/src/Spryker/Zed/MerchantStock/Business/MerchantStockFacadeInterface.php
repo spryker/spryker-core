@@ -24,5 +24,5 @@ interface MerchantStockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createDefaultStockForMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function createDefaultMerchantStock(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }

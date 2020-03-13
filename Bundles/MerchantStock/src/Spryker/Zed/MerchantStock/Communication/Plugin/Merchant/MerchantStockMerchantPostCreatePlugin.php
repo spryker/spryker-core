@@ -31,6 +31,6 @@ class MerchantStockMerchantPostCreatePlugin extends AbstractPlugin implements Me
      */
     public function postCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        return $this->getFacade()->createDefaultStockForMerchant($merchantTransfer);
+        return $this->getFacade()->createDefaultMerchantStock($merchantTransfer);
     }
 }

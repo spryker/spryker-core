@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\DataSet\MerchantS
 class StockNameToIdStockStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
     protected $idStockCache = [];
 
