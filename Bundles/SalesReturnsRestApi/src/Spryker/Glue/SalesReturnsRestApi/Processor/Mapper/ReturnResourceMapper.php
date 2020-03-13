@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestReturnItemsAttributesTransfer;
+use Generated\Shared\Transfer\RestReturnsAttributesTransfer;
 use Generated\Shared\Transfer\RestReturnTotalsAttributesTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\RestApiResource\SalesReturnsRestApiToOrdersRestApiResourceInterface;
@@ -88,6 +89,27 @@ class ReturnResourceMapper implements ReturnResourceMapperInterface
             );
 
         return $restReturnDetailsAttributesTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnTransfer[] $returnTransfers
+     *
+     * @return \Generated\Shared\Transfer\RestReturnsAttributesTransfer[]
+     */
+    public function mapReturnTransfersToRestReturnsAttributesTransfers(ArrayObject $returnTransfers): array
+    {
+        $restReturnsAttributesTransfers = [];
+
+        foreach ($returnTransfers as $returnTransfer) {
+            $restReturnsAttributesTransfers[] = (new RestReturnsAttributesTransfer())
+                ->fromArray($returnTransfer->toArray(), true)
+                ->setReturnTotals(
+                    (new RestReturnTotalsAttributesTransfer())
+                        ->fromArray($returnTransfer->getReturnTotals()->toArray(), true)
+                );
+        }
+
+        return $restReturnsAttributesTransfers;
     }
 
     /**

@@ -125,4 +125,14 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="ReturnCollection">
+        <property name="returns" type="Return[]" singular="return"/>
+    </transfer>
+
+    <transfer name="ReturnFilter">
+        <property name="returnReference" type="string"/>
+        <property name="filter" type="Filter"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
 </transfers>

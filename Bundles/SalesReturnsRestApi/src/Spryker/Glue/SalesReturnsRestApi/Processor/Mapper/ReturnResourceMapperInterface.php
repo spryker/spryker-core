@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -36,6 +37,13 @@ interface ReturnResourceMapperInterface
         ReturnTransfer $returnTransfer,
         RestReturnDetailsAttributesTransfer $restReturnDetailsAttributesTransfer
     ): RestReturnDetailsAttributesTransfer;
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnTransfer[] $returnTransfers
+     *
+     * @return \Generated\Shared\Transfer\RestReturnsAttributesTransfer[]
+     */
+    public function mapReturnTransfersToRestReturnsAttributesTransfers(ArrayObject $returnTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
