@@ -26,7 +26,6 @@
     <transfer name="MerchantResponse">
         <property name="isSuccess" type="bool"/>
         <property name="merchant" type="Merchant"/>
-        <property name="errors" type="MerchantError[]" singular="error"/>
     </transfer>
 
     <transfer name="StockResponse">

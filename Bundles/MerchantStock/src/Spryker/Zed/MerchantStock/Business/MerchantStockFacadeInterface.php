@@ -15,7 +15,6 @@ interface MerchantStockFacadeInterface
     /**
      * Specification:
      * - Creates new stock for the provided merchant.
-     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant stock can not be created.
      * - Returns MerchantResponseTransfer.isSuccessful=true and MerchantResponseTransfer.merchant.stocks with related stocks.
      *
      * @api
