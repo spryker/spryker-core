@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantStock\Business;
 
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StockCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -30,5 +31,19 @@ class MerchantStockFacade extends AbstractFacade implements MerchantStockFacadeI
     public function createDefaultMerchantStock(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()->createMerchantStockWriter()->createDefaultMerchantStock($merchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStockCollectionByMerchant(MerchantTransfer $merchantTransfer): StockCollectionTransfer
+    {
+        return $this->getRepository()->getStockCollectionByMerchant($merchantTransfer);
     }
 }

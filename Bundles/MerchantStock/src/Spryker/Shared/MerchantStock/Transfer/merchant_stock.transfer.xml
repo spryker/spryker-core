@@ -32,4 +32,8 @@
         <property name="stock" type="Stock"/>
     </transfer>
 
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
 </transfers>

@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantStock\Business;
 
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StockCollectionTransfer;
 
 interface MerchantStockFacadeInterface
 {
@@ -24,4 +25,17 @@ interface MerchantStockFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
     public function createDefaultMerchantStock(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns StockCollectionTransfer with merchant related stocks.
+     * - Requires Merchant.idMerchant transfer field to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStockCollectionByMerchant(MerchantTransfer $merchantTransfer): StockCollectionTransfer;
 }

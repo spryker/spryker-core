@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\MerchantStock\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 
 /**
@@ -35,7 +35,7 @@ class MerchantStockFacadeTest extends Unit
     public function testCreateDefaultMerchantStockSuccessful(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => 'test_merchant']);
+        $merchantTransfer = $this->tester->haveMerchant();
 
         // Act
         $merchantTransfer = $this->tester->getFacade()
@@ -45,5 +45,41 @@ class MerchantStockFacadeTest extends Unit
         // Assert
         $this->assertNotEmpty($merchantTransfer->getStocks());
         $this->assertInstanceOf(StockTransfer::class, $merchantTransfer->getStocks()->getIterator()->current());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStockCollectionByMerchantReturnsRelatedStocks(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $stockTransfer = $this->tester->haveStock();
+        $this->tester->haveMerchantStock([
+            MerchantStockTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantStockTransfer::ID_STOCK => $stockTransfer->getIdStock(),
+        ]);
+
+        // Act
+        $stockCollectionTransfer = $this->tester->getFacade()->getStockCollectionByMerchant($merchantTransfer);
+
+        // Assert
+        $this->assertNotEmpty($stockCollectionTransfer->getStocks());
+        $this->assertSame($stockTransfer->getIdStock(), $stockCollectionTransfer->getStocks()->getIterator()->current()->getIdStock());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStockCollectionByMerchantReturnsEmptyStocks(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        // Act
+        $stockCollectionTransfer = $this->tester->getFacade()->getStockCollectionByMerchant($merchantTransfer);
+
+        // Assert
+        $this->assertEmpty($stockCollectionTransfer->getStocks());
     }
 }

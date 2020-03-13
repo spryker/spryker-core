@@ -11,9 +11,23 @@ use Generated\Shared\Transfer\MerchantStockTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
+use Orm\Zed\Stock\Persistence\SpyStock;
 
 class MerchantStockMapper
 {
+    /**
+     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    public function mapStockEntityToStockTransfer(
+        SpyStock $stockEntity,
+        StockTransfer $stockTransfer
+    ): StockTransfer {
+        return $stockTransfer->fromArray($stockEntity->toArray());
+    }
+
     /**
      * @param \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock $merchantStockEntity
      * @param \Generated\Shared\Transfer\MerchantStockTransfer $merchantStockTransfer
