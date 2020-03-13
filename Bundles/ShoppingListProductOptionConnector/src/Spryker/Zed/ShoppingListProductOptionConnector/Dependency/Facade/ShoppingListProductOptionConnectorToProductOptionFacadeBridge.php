@@ -30,8 +30,9 @@ class ShoppingListProductOptionConnectorToProductOptionFacadeBridge implements S
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
-    {
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer {
         return $this->productOptionFacade
             ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
     }

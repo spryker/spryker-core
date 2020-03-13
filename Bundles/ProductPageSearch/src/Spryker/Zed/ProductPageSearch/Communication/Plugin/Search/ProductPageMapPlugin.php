@@ -76,8 +76,12 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    protected function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         foreach ($this->getFactory()->getProductPageMapExpanderPlugins() as $productPageMapExpander) {
             $pageMapTransfer = $productPageMapExpander->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
         }

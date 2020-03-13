@@ -42,7 +42,9 @@ interface ShoppingListRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function findShoppingListPaginatedItems(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer;
+    public function findShoppingListPaginatedItems(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer;
 
     /**
      * @param string $customerReference
@@ -113,7 +115,10 @@ interface ShoppingListRepositoryInterface
      *
      * @return int[]
      */
-    public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(int $idCompanyBusinessUnit, string $shoppingListPermissionGroupName): array;
+    public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(
+        int $idCompanyBusinessUnit,
+        string $shoppingListPermissionGroupName
+    ): array;
 
     /**
      * @param int $idCompanyUser
@@ -156,7 +161,9 @@ interface ShoppingListRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer;
+    public function getShoppingListCompanyBusinessUnitsByShoppingListId(
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListCompanyBusinessUnitCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer

@@ -187,8 +187,9 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
      */
-    public function checkShoppingListItemProductIsNotDiscontinued(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer
-    {
+    public function checkShoppingListItemProductIsNotDiscontinued(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer {
         return $this->getFactory()
             ->createShoppingListAddItemPreCheck()
             ->checkShoppingListItemProductIsNotDiscontinued($shoppingListItemTransfer);

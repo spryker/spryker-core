@@ -203,8 +203,11 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      *
      * @return bool
      */
-    protected function executePreCheckPluginPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
-    {
+    protected function executePreCheckPluginPayment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        CheckoutPreCheckPluginInterface $plugin
+    ) {
         $errorCount = $checkoutResponseTransfer->getErrors()->count();
         $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
 
@@ -218,8 +221,11 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      *
      * @return void
      */
-    protected function executePreCheckPluginPaymentPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
-    {
+    protected function executePreCheckPluginPaymentPlugin(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        CheckoutPreCheckPluginInterface $plugin
+    ) {
         $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
     }
 
