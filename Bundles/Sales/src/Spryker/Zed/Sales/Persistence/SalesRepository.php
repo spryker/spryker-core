@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
@@ -75,10 +76,16 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderItemQuery()
             ->leftJoinWithOrder()
             ->leftJoinWithProcess()
-            ->leftJoinWithState()
-            ->leftJoinWithStateHistory();
+            ->leftJoinWithState();
 
         $salesOrderItemQuery = $this->setOrderItemFilters($salesOrderItemQuery, $orderItemFilterTransfer);
+
+        $salesOrderItemQuery = $this->buildQueryFromCriteria(
+            $salesOrderItemQuery,
+            $orderItemFilterTransfer->getFilter()
+        );
+
+        $salesOrderItemQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
         return $this->getFactory()
             ->createSalesOrderItemMapper()
@@ -175,6 +182,20 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             $salesOrderItemQuery
                 ->useOrderQuery()
                     ->filterByCustomerReference($orderItemFilterTransfer->getCustomerReference())
+                ->endUse();
+        }
+
+        if ($orderItemFilterTransfer->getOrderReferences()) {
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByOrderReference_In(array_unique($orderItemFilterTransfer->getOrderReferences()))
+                ->endUse();
+        }
+
+        if ($orderItemFilterTransfer->getItemStates()) {
+            $salesOrderItemQuery
+                ->useStateQuery()
+                    ->filterByName_In(array_unique($orderItemFilterTransfer->getItemStates()))
                 ->endUse();
         }
 

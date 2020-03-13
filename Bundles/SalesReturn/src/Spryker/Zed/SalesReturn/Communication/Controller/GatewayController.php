@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesReturn\Communication\Controller;
 
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
@@ -48,5 +50,15 @@ class GatewayController extends AbstractGatewayController
     public function createReturnAction(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer
     {
         return $this->getFacade()->createReturn($createReturnRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnableItemFilterTransfer $returnableItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getReturnableItemsAction(ReturnableItemFilterTransfer $returnableItemFilterTransfer): ItemCollectionTransfer
+    {
+        return $this->getFacade()->getReturnableItems($returnableItemFilterTransfer);
     }
 }

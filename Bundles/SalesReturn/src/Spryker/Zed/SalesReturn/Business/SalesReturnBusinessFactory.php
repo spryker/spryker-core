@@ -14,6 +14,8 @@ use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpander;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGenerator;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface;
+use Spryker\Zed\SalesReturn\Business\Reader\ReturnableItemReader;
+use Spryker\Zed\SalesReturn\Business\Reader\ReturnableItemReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReader;
@@ -128,6 +130,17 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new ReturnReferenceGenerator(
             $this->getRepository(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturn\Business\Reader\ReturnableItemReaderInterface
+     */
+    public function createReturnableItemReader(): ReturnableItemReaderInterface
+    {
+        return new ReturnableItemReader(
+            $this->getSalesFacade(),
             $this->getConfig()
         );
     }

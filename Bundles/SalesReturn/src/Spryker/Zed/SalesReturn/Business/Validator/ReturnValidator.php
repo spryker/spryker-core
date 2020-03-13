@@ -86,7 +86,7 @@ class ReturnValidator implements ReturnValidatorInterface
      *
      * @return bool
      */
-    protected function isOrderItemsInReturnableStates(ArrayObject $itemTransfers): bool
+    public function isOrderItemsInReturnableStates(ArrayObject $itemTransfers): bool
     {
         $returnableStateNames = $this->salesReturnConfig->getReturnableStateNames();
 

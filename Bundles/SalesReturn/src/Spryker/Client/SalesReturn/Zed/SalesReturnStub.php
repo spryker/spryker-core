@@ -8,6 +8,8 @@
 namespace Spryker\Client\SalesReturn\Zed;
 
 use Generated\Shared\Transfer\CreateReturnRequestTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
@@ -82,5 +84,23 @@ class SalesReturnStub implements SalesReturnStubInterface
         );
 
         return $returnResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\SalesReturn\Communication\Controller\GatewayController::getReturnableItemsAction()
+     *
+     * @param \Generated\Shared\Transfer\ReturnableItemFilterTransfer $returnableItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getReturnableItems(ReturnableItemFilterTransfer $returnableItemFilterTransfer): ItemCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer */
+        $itemCollectionTransfer = $this->zedRequestClient->call(
+            '/sales-return/gateway/get-returnable-items',
+            $returnableItemFilterTransfer
+        );
+
+        return $itemCollectionTransfer;
     }
 }

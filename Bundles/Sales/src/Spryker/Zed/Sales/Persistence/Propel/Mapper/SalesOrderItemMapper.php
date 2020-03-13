@@ -10,7 +10,6 @@ namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -56,8 +55,18 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $itemTransfers[] = (new ItemTransfer())
                 ->fromArray($salesOrderItemEntity->toArray(), true)
-                ->setProcess($salesOrderItemEntity->getProcess()->getName())
                 ->setOrderReference($salesOrderItemEntity->getOrder()->getOrderReference())
+                ->setSumGrossPrice($salesOrderItemEntity->getGrossPrice())
+                ->setSumNetPrice($salesOrderItemEntity->getNetPrice())
+                ->setSumPrice($salesOrderItemEntity->getPrice())
+                ->setSumSubtotalAggregation($salesOrderItemEntity->getSubtotalAggregation())
+                ->setSumDiscountAmountAggregation($salesOrderItemEntity->getDiscountAmountAggregation())
+                ->setSumDiscountAmountFullAggregation($salesOrderItemEntity->getDiscountAmountFullAggregation())
+                ->setSumExpensePriceAggregation($salesOrderItemEntity->getExpensePriceAggregation())
+                ->setSumTaxAmount($salesOrderItemEntity->getTaxAmount())
+                ->setSumTaxAmountFullAggregation($salesOrderItemEntity->getTaxAmountFullAggregation())
+                ->setSumPriceToPayAggregation($salesOrderItemEntity->getPriceToPayAggregation())
+                ->setProcess($salesOrderItemEntity->getProcess()->getName())
                 ->setState($this->mapSalesOrderItemEntityToItemStateTransfer($salesOrderItemEntity, new ItemStateTransfer()));
         }
 
@@ -78,30 +87,6 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
             ->fromArray($salesOrderItemEntity->getState()->toArray(), true)
             ->setIdSalesOrder($salesOrderItemEntity->getFkSalesOrder());
 
-        $latestOrderItemStateHistoryEntity = $this->extractLatestOrderItemStateHistory($salesOrderItemEntity);
-
-        if ($latestOrderItemStateHistoryEntity) {
-            $itemStateTransfer->setCreatedAt($latestOrderItemStateHistoryEntity->getCreatedAt());
-        }
-
         return $itemStateTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory|null
-     */
-    protected function extractLatestOrderItemStateHistory(SpySalesOrderItem $salesOrderItemEntity): ?SpyOmsOrderItemStateHistory
-    {
-        $latestOrderItemStateHistoryEntity = $salesOrderItemEntity->getStateHistories()->getIterator()->current();
-
-        foreach ($salesOrderItemEntity->getStateHistories() as $omsOrderItemStateHistory) {
-            if ($omsOrderItemStateHistory->getIdOmsOrderItemStateHistory() > $latestOrderItemStateHistoryEntity->getIdOmsOrderItemStateHistory()) {
-                $latestOrderItemStateHistoryEntity = $omsOrderItemStateHistory;
-            }
-        }
-
-        return $latestOrderItemStateHistoryEntity;
     }
 }
