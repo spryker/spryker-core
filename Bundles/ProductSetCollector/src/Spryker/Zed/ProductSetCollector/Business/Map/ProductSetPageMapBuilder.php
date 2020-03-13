@@ -125,8 +125,11 @@ class ProductSetPageMapBuilder implements PageMapInterface
      *
      * @return void
      */
-    protected function setSearchResultData(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, ProductSetStorageTransfer $productSetStorageTransfer)
-    {
+    protected function setSearchResultData(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        ProductSetStorageTransfer $productSetStorageTransfer
+    ) {
         foreach ($productSetStorageTransfer->modifiedToArray() as $key => $value) {
             if ($value !== null) {
                 $pageMapBuilder->addSearchResultData($pageMapTransfer, $key, $value);

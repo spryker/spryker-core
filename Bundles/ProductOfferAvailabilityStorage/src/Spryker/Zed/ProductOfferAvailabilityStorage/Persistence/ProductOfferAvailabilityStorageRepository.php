@@ -99,8 +99,10 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
      *
      * @return \Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage|null
      */
-    public function findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(string $offerReference, string $storeName): ?SpyProductOfferAvailabilityStorage
-    {
+    public function findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(
+        string $offerReference,
+        string $storeName
+    ): ?SpyProductOfferAvailabilityStorage {
         return $this->getFactory()
             ->getProductOfferAvailabilityStoragePropelQuery()
             ->filterByProductOfferReference($offerReference)

@@ -106,8 +106,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function findShoppingListPaginatedItems(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
-    {
+    public function findShoppingListPaginatedItems(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer {
         $shoppingListItemQuery = $this->getFactory()
             ->createShoppingListItemQuery()
             ->filterByFkShoppingList($shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList());
@@ -367,8 +368,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
-    {
+    public function getShoppingListCompanyBusinessUnitsByShoppingListId(
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListCompanyBusinessUnitCollectionTransfer {
         $shoppingListsCompanyBusinessUnits = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())

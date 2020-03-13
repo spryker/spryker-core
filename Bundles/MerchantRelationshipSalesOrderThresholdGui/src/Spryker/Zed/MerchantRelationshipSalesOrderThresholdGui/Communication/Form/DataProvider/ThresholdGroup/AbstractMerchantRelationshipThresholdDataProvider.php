@@ -52,8 +52,10 @@ abstract class AbstractMerchantRelationshipThresholdDataProvider
      *
      * @return array
      */
-    protected function mapLocalizedMessages(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer, array $data): array
-    {
+    protected function mapLocalizedMessages(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer,
+        array $data
+    ): array {
         foreach ($merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages() as $localizedMessage) {
             $data[$localizedMessage->getLocaleCode()][LocalizedMessagesType::FIELD_MESSAGE] = $localizedMessage->getMessage();
         }

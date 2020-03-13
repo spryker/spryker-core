@@ -194,8 +194,10 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    protected function createCmsPageAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, string $localeName): CmsPageAttributesTransfer
-    {
+    protected function createCmsPageAttributesTransfer(
+        SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes,
+        string $localeName
+    ): CmsPageAttributesTransfer {
         $pageAttributeTransfer = new CmsPageAttributesTransfer();
         $pageAttributeTransfer->setName($spyCmsPageLocalizedAttributes->getName());
         $pageAttributeTransfer->setLocaleName($localeName);
@@ -209,8 +211,10 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
      */
-    protected function createCmsPageMetaAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, string $localeName): CmsPageMetaAttributesTransfer
-    {
+    protected function createCmsPageMetaAttributesTransfer(
+        SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes,
+        string $localeName
+    ): CmsPageMetaAttributesTransfer {
         $pageMetaAttributeTransfer = new CmsPageMetaAttributesTransfer();
         $pageMetaAttributeTransfer->setLocaleName($localeName);
         $pageMetaAttributeTransfer->setMetaTitle($spyCmsPageLocalizedAttributes->getMetaTitle());

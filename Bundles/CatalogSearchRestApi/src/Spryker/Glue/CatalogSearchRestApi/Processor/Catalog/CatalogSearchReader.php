@@ -212,8 +212,10 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function buildCatalogSearchResponse(RestRequestInterface $restRequest, RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer): RestResponseInterface
-    {
+    protected function buildCatalogSearchResponse(
+        RestRequestInterface $restRequest,
+        RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+    ): RestResponseInterface {
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH,
             null,

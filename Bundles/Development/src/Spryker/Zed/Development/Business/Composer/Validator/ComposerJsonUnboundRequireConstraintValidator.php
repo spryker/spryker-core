@@ -20,8 +20,10 @@ class ComposerJsonUnboundRequireConstraintValidator implements ComposerJsonValid
      *
      * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
      */
-    public function validate(array $composerJsonArray, ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer): ComposerJsonValidationResponseTransfer
-    {
+    public function validate(
+        array $composerJsonArray,
+        ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer
+    ): ComposerJsonValidationResponseTransfer {
         if (!isset($composerJsonArray[static::REQUIRE])) {
             return $composerJsonValidationResponseTransfer;
         }
