@@ -79,6 +79,6 @@ class PriceProductOfferStorageFactory extends AbstractFactory
      */
     protected function getPriceProductOfferStoragePriceExtractorPlugins(): array
     {
-        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_PRICE_EXTRACTOR);
+        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_STORAGE_PRICE_EXTRACTOR);
     }
 }

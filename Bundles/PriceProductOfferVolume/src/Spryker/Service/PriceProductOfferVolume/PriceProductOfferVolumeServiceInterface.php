@@ -13,7 +13,8 @@ interface PriceProductOfferVolumeServiceInterface
 {
     /**
      * Specification:
-     * - Returns PriceProductTransfers with min volume quantity.
+     * - Finds a minimal volume price for provided quantity.
+     * - Returns singular item prices if matching volume price can not be found.
      *
      * @api
      *
