@@ -21,6 +21,10 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     public const FILTER_FIELD_TYPE_ALL = 'all';
     public const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
 
+    protected const COLUMN_FIRST_NAME = 'first_name';
+    protected const COLUMN_LAST_NAME = 'last_name';
+    protected const COLUMN_FULL_NAME = 'full_name';
+
     /**
      * @see \Propel\Runtime\ActiveQuery\Criteria::EQUAL
      */
@@ -66,7 +70,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
      */
-    public function expandQueryJoinCollectionWithCompanyUserEmailFilter(
+    public function expandQueryJoinCollectionWithCompanyUserFilter(
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer {
@@ -79,9 +83,15 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
             return $queryJoinCollectionTransfer;
         }
 
-        return $queryJoinCollectionTransfer->addQueryJoin(
+        $queryJoinCollectionTransfer->addQueryJoin(
             $this->createCompanyUserEmailFilterQueryJoin($filterFieldTransfer->getValue())
         );
+
+        $queryJoinCollectionTransfer->addQueryJoin(
+            $this->createCompanyUserNameFilterQueryJoin($filterFieldTransfer->getValue())
+        );
+
+        return $queryJoinCollectionTransfer;
     }
 
     /**
@@ -129,5 +139,23 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
             ->setValue($searchString);
 
         return (new QueryJoinTransfer())->addQueryWhereCondition($queryWhereConditionTransfer);
+    }
+
+    /**
+     * @param string $searchString
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinTransfer
+     */
+    protected function createCompanyUserNameFilterQueryJoin(string $searchString): QueryJoinTransfer
+    {
+        $withColumn = sprintf('CONCAT(%s,\' \', %s)', static::COLUMN_FIRST_NAME, static::COLUMN_LAST_NAME);
+
+        $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
+            ->setMergeWithCondition(OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL)
+            ->setColumn($withColumn)
+            ->setValue($searchString);
+
+        return (new QueryJoinTransfer())->setWithColumns([static::COLUMN_FULL_NAME => $withColumn])
+            ->addQueryWhereCondition($queryWhereConditionTransfer);
     }
 }

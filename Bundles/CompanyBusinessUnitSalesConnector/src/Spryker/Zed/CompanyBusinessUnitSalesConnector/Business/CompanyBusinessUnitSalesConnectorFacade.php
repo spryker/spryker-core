@@ -102,13 +102,13 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
      */
-    public function expandQueryJoinCollectionWithCompanyUserEmailFilter(
+    public function expandQueryJoinCollectionWithCompanyUserFilter(
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer {
         return $this->getFactory()
             ->createOrderSearchQueryExpander()
-            ->expandQueryJoinCollectionWithCompanyUserEmailFilter($filterFieldTransfers, $queryJoinCollectionTransfer);
+            ->expandQueryJoinCollectionWithCompanyUserFilter($filterFieldTransfers, $queryJoinCollectionTransfer);
     }
 
     /**
@@ -120,10 +120,10 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @return bool
      */
-    public function isCompanyUserEmailFilterApplicable(array $filterFieldTransfers): bool
+    public function isCompanyUserFilterApplicable(array $filterFieldTransfers): bool
     {
         return $this->getFactory()
             ->createFilterFieldChecker()
-            ->isCompanyUserEmailFilterApplicable($filterFieldTransfers);
+            ->isCompanyUserFilterApplicable($filterFieldTransfers);
     }
 }

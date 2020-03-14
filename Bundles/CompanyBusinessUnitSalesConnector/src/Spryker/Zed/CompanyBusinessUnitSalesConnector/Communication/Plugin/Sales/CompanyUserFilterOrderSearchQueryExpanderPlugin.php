@@ -14,11 +14,11 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginI
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacadeInterface getFacade()
  */
-class CompanyUserEmailFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
+class CompanyUserFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Returns true if filtering by company user email could be applied, false otherwise.
+     * - Returns true if filtering by company user name and email could be applied, false otherwise.
      *
      * @api
      *
@@ -28,12 +28,12 @@ class CompanyUserEmailFilterOrderSearchQueryExpanderPlugin extends AbstractPlugi
      */
     public function isApplicable(array $filterFieldTransfers): bool
     {
-        return $this->getFacade()->isCompanyUserEmailFilterApplicable($filterFieldTransfers);
+        return $this->getFacade()->isCompanyUserFilterApplicable($filterFieldTransfers);
     }
 
     /**
      * {@inheritDoc}
-     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfer to filter by company user email.
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to filter by company user name and email.
      *
      * @api
      *
@@ -46,7 +46,7 @@ class CompanyUserEmailFilterOrderSearchQueryExpanderPlugin extends AbstractPlugi
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer {
-        return $this->getFacade()->expandQueryJoinCollectionWithCompanyUserEmailFilter(
+        return $this->getFacade()->expandQueryJoinCollectionWithCompanyUserFilter(
             $filterFieldTransfers,
             $queryJoinCollectionTransfer
         );

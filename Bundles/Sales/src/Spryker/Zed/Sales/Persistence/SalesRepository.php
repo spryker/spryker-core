@@ -99,10 +99,12 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             $orderListTransfer->getPagination()
         );
 
-        return $this->mapSalesOrderEntityCollectionToOrderListTransfer(
+        $r = $this->mapSalesOrderEntityCollectionToOrderListTransfer(
             $salesOrderQuery->find(),
             $orderListTransfer
         );
+
+        return $r;
     }
 
     /**

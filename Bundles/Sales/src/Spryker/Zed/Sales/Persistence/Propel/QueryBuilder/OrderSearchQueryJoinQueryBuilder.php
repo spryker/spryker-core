@@ -30,6 +30,13 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
         foreach ($queryJoinCollectionTransfer->getQueryJoins() as $queryJoinTransfer) {
             $salesOrderQuery = $this->addSalesOrderQueryJoin($salesOrderQuery, $queryJoinTransfer);
 
+            if ($queryJoinTransfer->getWithColumns()) {
+                $salesOrderQuery = $this->addSalesOrderQueryWithColumns(
+                    $salesOrderQuery,
+                    $queryJoinTransfer->getWithColumns()
+                );
+            }
+
             if ($queryJoinTransfer->getQueryWhereConditions()->count()) {
                 $salesOrderQuery = $this->addSalesOrderQueryWhereConditionGroup(
                     $salesOrderQuery,
@@ -41,6 +48,23 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
 
         if ($whereConditionGroups) {
             $salesOrderQuery->where($whereConditionGroups, Criteria::LOGICAL_AND);
+        }
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param string[] $withColumns
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function addSalesOrderQueryWithColumns(
+        SpySalesOrderQuery $salesOrderQuery,
+        array $withColumns
+    ): SpySalesOrderQuery {
+        foreach ($withColumns as $name => $withColumn) {
+            $salesOrderQuery->withColumn($withColumn, $name);
         }
 
         return $salesOrderQuery;

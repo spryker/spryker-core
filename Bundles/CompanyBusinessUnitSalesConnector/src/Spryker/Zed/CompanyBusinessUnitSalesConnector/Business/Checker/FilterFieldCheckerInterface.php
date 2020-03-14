@@ -21,5 +21,5 @@ interface FilterFieldCheckerInterface
      *
      * @return bool
      */
-    public function isCompanyUserEmailFilterApplicable(array $filterFieldTransfers): bool;
+    public function isCompanyUserFilterApplicable(array $filterFieldTransfers): bool;
 }
