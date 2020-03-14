@@ -34,6 +34,7 @@ interface SalesReturnClientInterface
     /**
      * Specification:
      * - Makes Zed request.
+     * - Applies ordering by id_sales_return (DESC) by default.
      * - Retrieves returns from Persistence by criteria from ReturnFilterTransfer.
      * - Expands found returns with return item, totals, sales order items.
      *
