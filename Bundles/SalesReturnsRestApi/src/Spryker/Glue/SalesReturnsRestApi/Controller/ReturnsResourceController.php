@@ -30,7 +30,7 @@ class ReturnsResourceController extends AbstractController
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestReturnDetailsAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request.",
-     *              "404": "Retrun not found."
+     *              "404": "Return not found."
      *          }
      *     },
      *     "getCollection": {
@@ -67,7 +67,7 @@ class ReturnsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Bad Request"
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })

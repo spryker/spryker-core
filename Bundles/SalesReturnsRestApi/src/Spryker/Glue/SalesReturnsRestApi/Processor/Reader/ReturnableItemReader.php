@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -55,31 +54,24 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
      */
     public function getReturnableItems(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $returnableItemFilterTransfer = $this->createReturnableItemFilterTransfer($restRequest);
+        $returnableItemFilterTransfer = $this->createReturnableItemFilter($restRequest);
         $itemCollectionTransfer = $this->salesReturnClient->getReturnableItems($returnableItemFilterTransfer);
 
         $restOrderItemsAttributesTransfers = $this->returnResourceMapper
             ->mapItemCollectionTransferToRestOrderItemsAttributesTransfers($itemCollectionTransfer);
 
-        return $this->createRestResponse($returnableItemFilterTransfer, $restOrderItemsAttributesTransfers);
+        return $this->createRestResponse($restOrderItemsAttributesTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnableItemFilterTransfer $returnableItemFilterTransfer
      * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer[] $restOrderItemsAttributesTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function createRestResponse(
-        ReturnableItemFilterTransfer $returnableItemFilterTransfer,
         array $restOrderItemsAttributesTransfers
     ): RestResponseInterface {
-        $restResponse = $this
-            ->restResourceBuilder
-            ->createRestResponse(
-                count($restOrderItemsAttributesTransfers),
-                $returnableItemFilterTransfer->getFilter()->getLimit() ?? 0
-            );
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         foreach ($restOrderItemsAttributesTransfers as $restOrderItemsAttributesTransfer) {
             $restResponse->addResource(
@@ -99,19 +91,10 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
      *
      * @return \Generated\Shared\Transfer\ReturnableItemFilterTransfer
      */
-    protected function createReturnableItemFilterTransfer(RestRequestInterface $restRequest): ReturnableItemFilterTransfer
+    protected function createReturnableItemFilter(RestRequestInterface $restRequest): ReturnableItemFilterTransfer
     {
-        $filterTransfer = new FilterTransfer();
-
-        if ($restRequest->getPage()) {
-            $filterTransfer
-                ->setOffset($restRequest->getPage()->getOffset())
-                ->setLimit($restRequest->getPage()->getLimit() ?? 0);
-        }
-
         return (new ReturnableItemFilterTransfer())
             ->fromArray($restRequest->getHttpRequest()->query->all(), true)
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-            ->setFilter($filterTransfer);
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
     }
 }

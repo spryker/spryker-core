@@ -53,6 +53,8 @@
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="CreateReturnRequest">
@@ -76,6 +78,7 @@
 
     <transfer name="ReturnReasonCollection">
         <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ReturnCollection">

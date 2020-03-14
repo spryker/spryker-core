@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnItemFilterTransfer;
+use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -44,11 +45,13 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
+     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
      */
-    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): array
+    public function getReturnReasonCollectionByFilter(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer
     {
         $returnReasonQuery = $this->getFactory()->getSalesReturnReasonPropelQuery();
+
+        $paginationTransfer = (new PaginationTransfer())->setNbResults($returnReasonQuery->count());
 
         $returnReasonQuery = $this->buildQueryFromCriteria(
             $returnReasonQuery,
@@ -59,7 +62,8 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
 
         return $this->getFactory()
             ->createReturnReasonMapper()
-            ->mapReturnReasonEntityCollectionToReturnReasonTransfers($returnReasonQuery->find());
+            ->mapReturnReasonEntityCollectionToReturnReasonCollection($returnReasonQuery->find())
+            ->setPagination($paginationTransfer);
     }
 
     /**
@@ -85,13 +89,6 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
         $salesReturnQuery = $this->getFactory()->getSalesReturnPropelQuery();
 
         $salesReturnQuery = $this->setSalesReturnFilters($salesReturnQuery, $returnFilterTransfer);
-
-        $salesReturnQuery = $this->buildQueryFromCriteria(
-            $salesReturnQuery,
-            $returnFilterTransfer->getFilter()
-        );
-
-        $salesReturnQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
         return $this->getFactory()
             ->createReturnMapper()
@@ -138,6 +135,18 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
         if ($returnFilterTransfer->getPagination()) {
             $salesReturnQuery = $this->preparePagination($salesReturnQuery, $returnFilterTransfer->getPagination());
         }
+
+        if (!$returnFilterTransfer->getPagination()) {
+            $returnFilterTransfer->setPagination((new PaginationTransfer())->setNbResults($salesReturnQuery->count()));
+        }
+
+        // TODO: should we handle case with Pagination:: and Filter::?
+        $salesReturnQuery = $this->buildQueryFromCriteria(
+            $salesReturnQuery,
+            $returnFilterTransfer->getFilter()
+        );
+
+        $salesReturnQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
         return $salesReturnQuery;
     }

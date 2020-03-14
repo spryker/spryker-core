@@ -9,6 +9,7 @@ namespace Spryker\Glue\SalesReturnsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
@@ -74,15 +75,16 @@ class ReturnReader implements ReturnReaderInterface
     protected function getReturnAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
         $returnFilterTransfer = $this->createReturnFilter($restRequest);
-
-        $returnTransfers = $this->salesReturnClient
-            ->getReturns($returnFilterTransfer)
-            ->getReturns();
+        $returnCollectionTransfer = $this->salesReturnClient->getReturns($returnFilterTransfer);
 
         $restReturnsAttributesTransfers = $this->returnResourceMapper
-            ->mapReturnTransfersToRestReturnsAttributesTransfers($returnTransfers);
+            ->mapReturnTransfersToRestReturnsAttributesTransfers($returnCollectionTransfer->getReturns());
 
-        return $this->createRestResponse($returnFilterTransfer, $restReturnsAttributesTransfers);
+        return $this->createRestResponse(
+            $returnFilterTransfer,
+            $restReturnsAttributesTransfers,
+            $returnCollectionTransfer->getPagination()
+        );
     }
 
     /**
@@ -116,17 +118,19 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
      * @param \Generated\Shared\Transfer\RestReturnsAttributesTransfer[] $restReturnsAttributesTransfers
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function createRestResponse(
         ReturnFilterTransfer $returnFilterTransfer,
-        array $restReturnsAttributesTransfers
+        array $restReturnsAttributesTransfers,
+        PaginationTransfer $paginationTransfer
     ): RestResponseInterface {
         $restResponse = $this
             ->restResourceBuilder
             ->createRestResponse(
-                count($restReturnsAttributesTransfers),
+                $paginationTransfer->getNbResults(),
                 $returnFilterTransfer->getFilter()->getLimit() ?? 0
             );
 

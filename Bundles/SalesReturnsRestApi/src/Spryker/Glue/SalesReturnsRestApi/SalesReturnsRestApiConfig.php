@@ -33,7 +33,7 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
         return [
             SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATE_RETURN => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_RETURN_CANT_BE_CREATED,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_MESSAGE_RETURN_CANT_BE_CREATED,
             ],
             SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURN_NOT_FOUND => [

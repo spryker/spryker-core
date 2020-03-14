@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 
 /**
@@ -232,5 +233,82 @@ class GetReturnsTest extends Unit
 
         // Assert
         $this->assertCount(1, $returnCollectionTransfer->getReturns());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnsRetrievesReturnsByAscOrderDirection(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $firstReturnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $secondReturnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+
+        $returnFilterTransfer = (new ReturnFilterTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setFilter((new FilterTransfer())->setOrderDirection('ASC'));
+
+        // Act
+        $returnCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturns($returnFilterTransfer);
+
+        // Assert
+        $this->assertCount(2, $returnCollectionTransfer->getReturns());
+        $this->assertEquals($firstReturnTransfer, $returnCollectionTransfer->getReturns()->offsetGet(0));
+        $this->assertEquals($secondReturnTransfer, $returnCollectionTransfer->getReturns()->offsetGet(1));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnsRetrievesReturnsByPagination(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $lastReturnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+
+        $returnFilterTransfer = (new ReturnFilterTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setPagination((new PaginationTransfer())->setPage(1)->setMaxPerPage(2));
+
+        // Act
+        $returnCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturns($returnFilterTransfer);
+
+        // Assert
+        $this->assertCount(2, $returnCollectionTransfer->getReturns());
+        $this->assertEquals($lastReturnTransfer, $returnCollectionTransfer->getReturns()->offsetGet(0));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnsEnsureThatPaginationNbResultsExists(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+
+        $returnFilterTransfer = (new ReturnFilterTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setFilter((new FilterTransfer())->setLimit(1));
+
+        // Act
+        $returnCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturns($returnFilterTransfer);
+
+        // Assert
+        $this->assertSame(3, $returnCollectionTransfer->getPagination()->getNbResults());
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReturn\Business\Reader;
 
 use ArrayObject;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
@@ -22,6 +23,9 @@ use Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface;
 class ReturnReader implements ReturnReaderInterface
 {
     protected const GLOSSARY_KEY_RETURN_NOT_EXISTS = 'return.validation.error.not_exists';
+
+    protected const ID_SALES_RETURN_SORT_FIELD = 'id_sales_return';
+    protected const DEFAULT_SORT_DIRECTION = 'DESC';
 
     /**
      * @var \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface
@@ -84,6 +88,8 @@ class ReturnReader implements ReturnReaderInterface
      */
     public function getReturnCollection(ReturnFilterTransfer $returnFilterTransfer): ReturnCollectionTransfer
     {
+        $returnFilterTransfer = $this->setDefaultFilter($returnFilterTransfer);
+
         $returnCollectionTransfer = $this->salesReturnRepository->getReturnCollectionByFilter($returnFilterTransfer);
 
         $returnCollectionTransfer = $this->expandReturnCollectionWithReturnItems($returnCollectionTransfer);
@@ -228,6 +234,26 @@ class ReturnReader implements ReturnReaderInterface
         }
 
         return $returnCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnFilterTransfer
+     */
+    protected function setDefaultFilter(ReturnFilterTransfer $returnFilterTransfer): ReturnFilterTransfer
+    {
+        $filterTransfer = $returnFilterTransfer->getFilter() ?? new FilterTransfer();
+
+        $defaultFilterTransfer = (new FilterTransfer())
+            ->setOrderBy(static::ID_SALES_RETURN_SORT_FIELD)
+            ->setOrderDirection(static::DEFAULT_SORT_DIRECTION);
+
+        $defaultFilterTransfer->fromArray($filterTransfer->modifiedToArray());
+
+        $returnFilterTransfer->setFilter($defaultFilterTransfer);
+
+        return $returnFilterTransfer;
     }
 
     /**
