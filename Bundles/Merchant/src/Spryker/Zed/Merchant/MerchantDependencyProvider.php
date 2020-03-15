@@ -9,6 +9,7 @@ namespace Spryker\Zed\Merchant;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeBridge;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceBridge;
 
 /**
@@ -16,6 +17,7 @@ use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceBridge;
  */
 class MerchantDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_URL = 'url facade';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
     /**
      * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::PLUGINS_MERCHANT_POST_CREATE or PLUGINS_MERCHANT_POST_UPDATE instead.
@@ -37,6 +39,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantPostCreatePlugins($container);
         $container = $this->addMerchantPostUpdatePlugins($container);
         $container = $this->addMerchantExpanderPlugins($container);
+        $container = $this->addUrlFacade($container);
 
         return $container;
     }
@@ -145,5 +148,19 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     protected function getMerchantExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUrlFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_URL, function (Container $container) {
+            return new MerchantToUrlFacadeBridge($container->getLocator()->url()->facade());
+        });
+
+        return $container;
     }
 }

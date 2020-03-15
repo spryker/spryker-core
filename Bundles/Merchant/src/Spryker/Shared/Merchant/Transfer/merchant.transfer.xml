@@ -57,4 +57,37 @@
         <property name="pagination" type="Pagination"/>
     </transfer>
 
+    <transfer name="Url">
+        <property name="idUrl" type="int"/>
+        <property name="fkResourceMerchant" type="int"/>
+        <property name="urlPrefix" type="string"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
 </transfers>
